@@ -1,0 +1,39 @@
+<mat-card>
+  <mat-card-title>{{'general.locations.edit.contactTitle' | translate}}</mat-card-title>
+  <mat-card-content>
+    <mat-list *ngIf="members; else loadingTemplate">
+
+      <mat-list-item *ngIf="!location.assignedContacts || location.assignedContacts.length === 0">
+        <p>{{ 'general.locations.edit.contact.noContacts' | translate}}</p>
+      </mat-list-item>
+
+      <mat-list-item *ngFor="let contact of location.assignedContacts; let i = index">
+        <h4 matLine>
+          <a [routerLink]="['/members/detail', contact.assignedMember]" *ngIf="contact.isMember">
+            {{ (members | filterBy: ['id'] : contact.assignedMember)[0].lastName}}
+            {{ (members | filterBy: ['id'] : contact.assignedMember)[0].firstName}}
+          </a>
+        </h4>
+        <span *ngIf="!contact.isMember" matLine>
+      {{contact.lastName}} {{contact.firstName}}<br/>
+      <a *ngIf="contact.contact.email" [href]="'mailto:' + contact.contact.email">{{contact.contact.email}} ,</a>
+      {{contact.contact.phoneMobile}}
+    </span>
+
+        <p matLine [innerHtml]="contact.description"></p>
+        <!--<button mat-raised-button
+                *ngIf="showLinks"
+                color="danger"
+                (click)="removeLocationContact(i)"
+                title="{{ 'general.locations.edit.contact.deleteContact' | translate}}">
+          <mat-icon>delete</mat-icon>
+        </button>-->
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
+
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

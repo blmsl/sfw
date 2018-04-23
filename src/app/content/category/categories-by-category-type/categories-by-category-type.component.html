@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-title>
+    <mat-icon>donut_small</mat-icon>
+    {{'general.categories.list.categoriesByCategoryType' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content *ngIf="isDataAvailable">
+    <canvas height="200" baseChart class="chart"
+            [data]="doughnutChartData"
+            [labels]="doughnutChartLabels"
+            [options]="doughnutOptions"
+            [chartType]="doughnutChartType"></canvas>
+  </mat-card-content>
+</mat-card>

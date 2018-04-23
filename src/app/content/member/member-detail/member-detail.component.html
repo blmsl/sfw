@@ -1,0 +1,81 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex="100">
+    <div class="mat-card-top"
+         *ngIf="member; else loadingTemplate">
+
+      <mat-card>
+        <mat-card-title>
+          <mat-icon>mode_edit</mat-icon>
+          {{'general.menu.member.detail' | translate}}
+        </mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+
+        <mat-card-content>
+
+          <mat-tab-group [dynamicHeight]="true">
+            <mat-tab label="{{'general.members.tabs.main' | translate}}">
+              <member-detail-main [member]="member"></member-detail-main>
+            </mat-tab>
+            <mat-tab label="{{'general.members.tabs.driveAndDFB' | translate}}">
+              <member-detail-drive [member]="member"></member-detail-drive>
+            </mat-tab>
+            <mat-tab label="{{'general.members.tabs.interview' | translate}}">
+              <div fxLayout="row"
+                   fxLayoutWrap="wrap">
+                <div fxFlex.gt-sm="49"
+                     fxFlex="100">
+                  <member-detail-interviews [member]="member"></member-detail-interviews>
+                </div>
+                <div fxFlexOffset.gt-sm="2"
+                     fxFlex.gt-sm="49"
+                     fxFlex="100">
+                  <member-detail-profile [member]="member"></member-detail-profile>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="{{'general.members.tabs.otherOpinions' | translate}}">
+              <member-detail-opinions [member]="member"
+                                      [members]="members$ | async">
+              </member-detail-opinions>
+            </mat-tab>
+            <mat-tab label="{{'general.members.tabs.media' | translate}}">
+              <p>Mit dem Mitglied verknüpfte Fotos, Videos etc.</p>
+            </mat-tab>
+            <mat-tab label="{{'general.members.tabs.functions' | translate}}">
+              <member-functions [member]="member"
+                                [categories]="categories$ | async"
+                                [clubs]="clubs$ | async"
+                                [teams]="teams$ | async">
+              </member-functions>
+            </mat-tab>
+            <mat-tab label="{{'general.members.tabs.statistics' | translate}}">
+              Spielstatistiken
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <div class="button-row">
+            <a mat-raised-button color="primary" [routerLink]="['/members']">
+              {{'general.menu.member.list' | translate}}
+            </a>
+            <a mat-raised-button color="accent" [routerLink]="['/members/edit', member.id]">
+              {{'general.edit' | translate }}
+            </a>
+            <a mat-raised-button color="warn" (click)="removeMember(member)">
+              {{'general.delete' | translate }}
+            </a>
+          </div>
+        </mat-card-actions>
+
+      </mat-card>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

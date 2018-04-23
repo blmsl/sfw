@@ -1,0 +1,58 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     [formGroup]="form"
+     *ngIf="users$ | async as users; else loadingTemplate">
+
+  <div fxFlex="100"
+       formGroupName="publication">
+    <mat-form-field fxFlex="49">
+      <input matInput
+             disabled
+             [matDatepicker]="date"
+             placeholder="{{'general.publication.publicationDateLabel' | translate}}">
+      <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+      <mat-datepicker disabled="false"
+                      touchUi="true"
+                      #date>
+      </mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxFlexOffset="2"
+                    fxFlex="49"><!-- atp-time-picker-->
+      <input matInput
+             formControlName="time"
+             placeholder="{{'general.publication.publicationTimeLabel' | translate}}">
+    </mat-form-field>
+  </div>
+
+  <div fxFlex="100"
+       formGroupName="publication">
+    <mat-form-field fxFlex="100">
+      <mat-select placeholder="{{'general.publication.choosePublisher' | translate}}"
+                  formControlName="from">
+        <mat-option value="system">{{'general.creation.viaScript' | translate}}</mat-option>
+        <mat-option *ngFor="let user of users | orderBy: ['firstName', 'lastName', 'email']"
+                    [value]="user.id">
+          {{user.firstName && user.lastName ? user.firstName + ' ' + user.lastName : user.email}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxFlex="100"
+       formGroupName="publication">
+    <mat-form-field fxFlex="100">
+      <mat-select placeholder="{{'general.publication.publicationStateLabel' | translate}}"
+                  formControlName="status">
+        <mat-option value="0">{{'general.publication.saveAsDraft' | translate}}</mat-option>
+        <mat-option value="1">{{'general.publication.publishNow' | translate}}</mat-option>
+        <mat-option value="2">{{'general.publication.selectDate' | translate}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

@@ -1,0 +1,79 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex="100">
+    <div class="mat-card-top"
+         *ngIf="club; else loadingTemplate">
+
+      <mat-card>
+        <mat-card-title>
+          <mat-icon>mode_edit</mat-icon>
+          {{'general.menu.club.detail' | translate}}
+        </mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+
+        <mat-card-content>
+
+          <mat-tab-group [dynamicHeight]="true">
+            <mat-tab label="{{'general.clubs.edit.mainTitle' | translate}}">
+              <club-detail-main [locations]="locations$ | async"
+                                [members]="members$ | async"
+                                [club]="club">
+              </club-detail-main>
+            </mat-tab>
+
+            <mat-tab label="{{ 'general.clubs.edit.historyTitle' | translate }}">
+              <club-detail-history [club]="club"></club-detail-history>
+            </mat-tab>
+
+            <mat-tab label="{{ 'general.clubs.edit.managementTitle' | translate }}">
+              <club-detail-management [members]="members$ | async"
+                                      [positions]="positions$ | async"
+                                      [club]="club"></club-detail-management>
+            </mat-tab>
+
+            <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
+              <!-- ToDo: Dateiliste -->
+              <span style="color: red">Dateien</span>
+            </mat-tab>
+
+            <mat-tab label="{{ 'general.clubs.edit.honoraries.title' | translate}}">
+              <club-detail-honoraries [club]="club"
+                                      [members]="members$ | async"
+                                      [articles]="articles$ | async">
+              </club-detail-honoraries>
+            </mat-tab>
+
+            <mat-tab label="{{ 'general.clubs.edit.statistics.title' | translate}}">
+              <club-detail-statistics [teams]="teams$ | async"
+                                      [seasons]="seasons$ | async"
+                                      [members]="members$ | async"
+                                      [club]="club">
+              </club-detail-statistics>
+            </mat-tab>
+
+          </mat-tab-group>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <div class="button-row">
+            <a mat-raised-button color="primary" [routerLink]="['/clubs']">
+              {{'general.menu.club.list' | translate}}
+            </a>
+            <a mat-raised-button color="accent" [routerLink]="['/clubs/edit', club.id]">
+              {{'general.edit' | translate }}
+            </a>
+            <a mat-raised-button color="warn" (click)="removeClub(club)">
+              {{'general.delete' | translate }}
+            </a>
+          </div>
+        </mat-card-actions>
+
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

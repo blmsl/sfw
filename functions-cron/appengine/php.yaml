@@ -1,0 +1,25 @@
+#runtime: php
+#env: flex
+runtime: php55
+api_version: 1
+service: default
+threadsafe: yes
+
+# runtime_config:
+#  document_root: .
+
+handlers:
+- url: /_ah/.*
+  script: ./php/start.php
+
+- url: /test.php
+  script: ./php/test.php
+  # secure: always
+
+- url: /team/standings
+  script: app.php
+  login: admin
+
+- url: /.*
+  script: ./php/team/index.php
+  #login: admin

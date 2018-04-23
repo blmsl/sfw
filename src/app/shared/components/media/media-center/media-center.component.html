@@ -1,0 +1,106 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     [formGroup]="form">
+
+  <div fxFlex.gt-sm="100"
+       fxFlex.gt-xs="100"
+       fxFlex="100">
+
+    <mat-card>
+      <mat-card-title>
+        <mat-icon>file_upload</mat-icon>
+        {{ 'general.media.centerTitle' | translate }}
+      </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutWrap="wrap">
+          <div fxFlex="100">
+            <mat-tab-group [dynamicHeight]="true">
+              <mat-tab label="{{'general.media.list.title' | translate}}">
+
+                <div fxLayout="row" fxLayoutWrap="wrap">
+                  <div fxFlex.gt-xs="100" fxFlex.gt-sm="64" fxFlex="100">
+
+                    <!--<media-gallery
+                      [path]="uploaderOptions.path"
+                      [id]="uploaderOptions.id">
+                    </media-gallery>-->
+
+                  </div>
+
+                  <div fxFlexOffset="2" fxFlex.gt-xs="100" fxFlex.gt-sm="34" fxFlex="100">
+
+                    <mat-tab-group [dynamicHeight]="true">
+                      <mat-tab label="ToDo">
+                        <ul class="text-md">
+                          <li>
+                            Liste
+                            <ul>
+                              <li>Übersicht über alle bisherigen Uploads (Liste mit Videos, Bildern, Dokumenten etc.)
+                              </li>
+                              <li> Anlegen / Editieren und Löschen von Galerien mit Titel, Datum und verknüpfen mit einem Artikel und Author (User), Veröffentlichung (Sichtbarkeit im Frontend) festlegen
+                              <li> Verschieben von Dateien in diese Galerien per Drag & Drop
+                              <li> Löschen von Bildern, Editieren des Titels
+                              <li> Veröffentlichung einer Galerie oder einzelnen Fotos in sozialen Medien
+                              <li>bei Bildern/Videos mit einem Bild zur Vorschau, ansonsten einfach ne CSS-Box mit der
+                                Datei-Extension im Mittelpunkt
+                              </li>
+                              <li>Datei fürs Frontend sperren</li>
+                              <li>Dateiinfos editieren (Titel, Author, Beschreibung)</li>
+                              <li>Upload der Datei mit Fortschrittsanzeige, mit Pausieren, Fortsetzen und Abbrechen
+                                Buttons -
+                                anschließend Anzeige eines Löschen-Buttons
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            Upload
+                            <ul>
+                              <li>Festlegen der möglichen Dateitypen und Mime-Types, maximale Dateigröße, Queue-Limit
+                                und den Pfad für den Upload
+                              </li>
+                              <li>Einzelner oder Multi-Upload</li>
+                              <li>Dropzone: ja / nein</li>
+                              <li> Queue anzeigen (ja / nein)</li>
+                              <li> automatischer Upload nach der Dateiauswahl (ja / nein)</li>
+                              <li>Datei nach dem Upload aus der Queue löschen (ja / nein)</li>
+                              <li>Übergabe der hochgeladenen Datei an die Parent-Component (onFileUploadCompleted()?) -
+                                zum Verknüpfen mit dem jeweiligen Objekt
+                              </li>
+                              <li>Wenn bereits ein Bild vorhanden ist (bei einem Single-Upload), soll das alte Bild
+                                gelöscht werden
+                              </li>
+                              <li>Wenn ein Objekt, für das ich gerade eine Datei hochlade, noch nicht vorhanden ist,
+                                soll die Datei beim Speichern des Hauptobjektes trotzdem verknüpft werden
+                              </li>
+                              <li>Upload von Bildern von unsplash.com</li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </mat-tab>
+                      <mat-tab label="{{'general.media.gallery.title' | translate}}">
+
+                      </mat-tab>
+                      <mat-tab label="{{'general.media.gallery.create' | translate}}">
+                        Galerie erstellen
+                      </mat-tab>
+                    </mat-tab-group>
+                  </div>
+
+                </div>
+              </mat-tab>
+              <mat-tab label="{{'general.media.uploader.title' | translate}}">
+                <!--<media-uploader
+                  (uploadCompleted)="uploadCompleted.emit($event)"
+                  [form]="form"
+                  [uploaderOptions]="uploaderOptions">
+                </media-uploader>-->
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

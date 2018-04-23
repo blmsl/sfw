@@ -1,0 +1,59 @@
+<h3><p>{{'general.members.edit.interviews.title' | translate}}</h3>
+<p>{{'general.members.edit.interviews.text' | translate}}</p>
+
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     [formGroup]="form">
+
+  <div fxFlex="100"
+       formArrayName="interviews">
+
+    <button mat-raised-button
+            style="margin-bottom: 25px"
+            type="button"
+            color="primary"
+            (click)="addEntry()">
+      {{'general.members.edit.interviews.addEntry' | translate}}
+    </button>
+
+    <div *ngIf="showForm">
+      <div *ngIf="articles$ | async as articles; else loadingTemplate">
+        <div fxLayout="row"
+             fxLayoutWrap="wrap"
+             *ngFor="let control of form.get('interviews')['controls']; let i = index">
+
+          <div fxFlex="100"
+               [formGroupName]="i">
+
+            <div fxLayout="row"
+                 fxLayoutWrap="wrap">
+
+              <mat-form-field fxFlex="90">
+                <mat-select placeholder="{{'general.members.edit.interviews.articleTitle' | translate}}"
+                            formControlName="assignedArticleId">
+                  <mat-option *ngFor="let article of articles | orderBy: ['title']"
+                              [value]="article.id">
+                    {{article.title}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <button mat-icon-button
+                      (click)="delete.emit(i)"
+                      color="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

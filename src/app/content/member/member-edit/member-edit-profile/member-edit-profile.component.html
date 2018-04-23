@@ -1,0 +1,61 @@
+<h3>{{'general.members.edit.profile.title' | translate}}</h3>
+<p>{{'general.members.edit.profile.text' | translate}}</p>
+
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     [formGroup]="form">
+
+  <div fxFlex="100"
+       formArrayName="profile">
+
+      <button mat-raised-button
+              style="margin-bottom: 25px"
+              type="button"
+              color="primary"
+              (click)="add.emit(true)">
+        {{'general.members.edit.profile.addEntry' | translate}}
+      </button>
+
+      <div fxLayout="row"
+           fxLayoutWrap="wrap"
+           *ngFor="let control of form.get('profile')['controls']; let i = index">
+
+        <div fxFlex="100"
+             [formGroupName]="i">
+
+          <div fxLayout="row"
+               fxLayoutWrap="wrap">
+
+            <mat-form-field fxFlex.gt-sm="45"
+                            fxFlex="100">
+              <input matInput
+                     placeholder="{{'general.members.edit.profile.entry' | translate}}"
+                     formControlName="entry"/>
+            </mat-form-field>
+
+            <mat-form-field fxFlexOffset.gt-sm="2"
+                            fxFlex.gt-sm="45"
+                            fxFlex="100">
+              <input matInput
+                     placeholder="{{'general.members.edit.profile.value' | translate}}"
+                     formControlName="value"/>
+            </mat-form-field>
+
+            <button fxFlexOffset.gt-sm="2"
+                    fxFlex.gt-sm="6"
+                    mat-icon-button
+                    (click)="delete.emit(i)"
+                    color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+

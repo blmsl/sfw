@@ -1,0 +1,173 @@
+<div fxLayout="row" [formGroup]="form">
+
+  <mat-form-field fxFlex.gt-xs="33"
+                  fxFlex="100">
+    <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}" formControlName="limit">
+      <mat-option [value]="members.length" *ngIf="members">
+        {{ 'general.pagination.allItems' | translate}}
+      </mat-option>
+      <mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}
+        {{ 'general.items' | translate}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlexOffset="1"
+                  fxFlex.gt-xs="33"
+                  fxFlex="100">
+    <input matInput
+           placeholder="{{ 'general.typeToFilter' | translate}}"
+           formControlName="searchFor"/>
+  </mat-form-field>
+
+  <div fxFlexOffset="1"
+       fxFlex.gt-xs="33"
+       fxFlex="100"
+       style="margin-bottom: 15px">
+    <a mat-raised-button color="primary" [routerLink]="['./edit/new']">
+      {{ 'general.members.detail.main.createMember' | translate}}
+    </a>
+  </div>
+</div>
+
+<div fxLayout="row" [formGroup]="form">
+
+  <div fxFlex="100"
+       *ngIf="members && clubMemberStates && ahMemberStates; else loadingTemplate">
+    <ngx-datatable #myTable
+                   class='material'
+                   [columnMode]="'force'"
+                   [headerHeight]="50"
+                   [footerHeight]="50"
+                   [rowHeight]="'auto'"
+                   [limit]="form.controls['limit'].value"
+                   [rows]="members
+                   | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']
+                   | filterBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday',
+                                'playerstatus', 'dfbData.ageGroup', 'dfbData.passNumber', 'dfbData.guestPlayer.type']
+                                 : form.controls['searchFor'].value">
+
+      <ngx-datatable-column name="{{'general.members.detail.main.lastName' | translate}}, {{'general.members.detail.main.firstName' | translate}}">
+        <ng-template let-row="row" let-value="mainData.lastName" ngx-datatable-cell-template>
+          {{row.mainData.lastName}}, {{row.mainData.firstName}}
+          ({{'general.members.detail.main.' + row.mainData.gender | translate}})
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{'general.members.detail.main.isImported' | translate}}">
+        <ng-template let-row="row" let-value="isImported" ngx-datatable-cell-template>
+          {{ row.isImported ? ('general.yes' | translate) : ('general.no' | translate) }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{'general.members.detail.main.birthday' | translate}}">
+        <ng-template let-row="row" let-value="mainData.birthday" ngx-datatable-cell-template>
+          <span *ngIf="row.mainData.birthday">{{ row.mainData.birthday | date: 'dd.MM.yy'}}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{'general.members.detail.main.ageGroupAndPassData' | translate}}">
+        <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
+          <span *ngIf="row.dfbData">
+            {{ row.dfbData.ageGroup }} <span *ngIf="row.dfbData.playerStatus">({{row.dfbData.playerStatus}})</span><br />
+            {{ row.dfbData.passNumber}}
+            <span *ngIf="row.dfbData.passPrint">({{row.dfbData.passPrint  | date: 'dd.MM.yy'}})</span>
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{'general.members.detail.main.guestPlayerData' | translate}}">
+        <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
+          <span *ngIf="row.dfbData && row.dfbData.guestPlayer.guestRight">
+            {{row.dfbData.guestPlayer.guestRight  | date: 'dd.MM.yy'}} <br />
+            ({{row.dfbData.guestPlayer.type}} {{row.dfbData.guestPlayer.season}})
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{'general.members.detail.main.address' | translate}}">
+        <ng-template let-row="row" let-value="address" ngx-datatable-cell-template>
+          <span *ngIf="row.address">
+            {{ row.address.streetName }} <span *ngIf="row.address.houseNumber">{{row.address.houseNumber}}</span><br />
+            {{ row.address.zip}} {{row.address.city}}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{'general.members.detail.drive.club' | translate}}">
+        <ng-template let-row="row" let-value="clubData" ngx-datatable-cell-template>
+          <span *ngIf="row.clubData">
+            <span *ngIf="row.clubData.joined" style="color: green">{{ row.clubData.joined | date : 'dd.MM.yy' }}<br /></span>
+            <span *ngIf="row.clubData.left" style="color: red">{{ row.clubData.left | date : 'dd.MM.yy' }}<br /></span>
+            <span *ngIf="row.clubData.payment">{{ row.clubData.payment }} &euro;<br /></span>
+            <span *ngIf="row.clubData.status && row.clubData.status !== '?'">
+              {{(clubMemberStates | filterBy: ['value'] : row.clubData.status)
+              ? ('general.members.clubMemberStates.' + (clubMemberStates | filterBy: ['value'] : row.clubData.status)[0].title | translate) : ''}}
+            </span>
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{'general.members.detail.drive.ah' | translate}}">
+        <ng-template let-row="row" let-value="clubData" ngx-datatable-cell-template>
+          <span *ngIf="row.ahData">
+            <span *ngIf="row.ahData.joined" style="color: green">{{ row.ahData.joined | date : 'dd.MM.yy' }}<br /></span>
+            <span *ngIf="row.ahData.left" style="color: red">{{ row.ahData.left | date : 'dd.MM.yy' }}<br /></span>
+            <span *ngIf="row.ahData.payment">{{ row.ahData.payment }} &euro;<br /></span>
+            <span *ngIf="row.ahData.status">
+             {{(ahMemberStates | filterBy: ['value'] : row.ahData.status)
+              ? ('general.members.ahMemberStates.' + (ahMemberStates | filterBy: ['value'] : row.ahData.status)[0].title | translate) : ''}}
+            </span>
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{'general.tables.colTitles.actions' | translate}}">
+        <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
+          <div class="button-row">
+            <detail-link [objectId]="row.id"></detail-link>
+            <edit-link [objectId]="row.id"></edit-link>
+            <a mat-icon-button color="warn" (click)="removeMember(row)">
+              <mat-icon>delete</mat-icon>
+            </a>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-footer>
+        <ng-template
+          ngx-datatable-footer-template
+          let-rowCount="rowCount"
+          let-pageSize="pageSize"
+          let-selectedCount="selectedCount"
+          let-curPage="curPage"
+          let-offset="offset">
+          <div style="padding: 5px 10px" fxHide.xs>
+            <div class="">{{ 'general.items' | translate}}: {{rowCount}} |
+              {{pageSize}} {{'general.itemsPerPage' | translate}} |
+              {{'general.currentPage' | translate}}: {{curPage}}
+            </div>
+          </div>
+
+          <datatable-pager
+            [pagerLeftArrowIcon]="'datatable-icon-left'"
+            [pagerRightArrowIcon]="'datatable-icon-right'"
+            [pagerPreviousIcon]="'datatable-icon-prev'"
+            [pagerNextIcon]="'datatable-icon-skip'"
+            [page]="curPage"
+            [size]="pageSize"
+            [count]="rowCount"
+            [hidden]="!((rowCount / pageSize) > 1)"
+            (change)="myTable.onFooterPage($event)">
+          </datatable-pager>
+
+        </ng-template>
+      </ngx-datatable-footer>
+
+    </ngx-datatable>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

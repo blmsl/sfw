@@ -1,0 +1,87 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex.gt-sm="25"
+       fxFlex="100">
+
+    <mat-card class="card-widget mat-teal">
+      <div mat-card-widget>
+        <div mat-card-float-icon>
+          <mat-icon>local_offer</mat-icon>
+        </div>
+        <div class="pl-0">
+          <h2 mat-card-widget-title>{{(users$ | async)?.length}}</h2>
+          <p>{{'general.users.list.title' | translate}}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div fxFlex.gt-sm="25"
+       fxFlex="100">
+    <mat-card class="card-widget mat-purple">
+      <div mat-card-widget>
+        <div mat-card-float-icon>
+          <mat-icon>phone</mat-icon>
+        </div>
+        <div class="pl-0">
+          <h2 mat-card-widget-title>
+            {{(users$ | async | filterBy: ['assignedRoles.admin'] : true)?.length}}
+          </h2>
+          <p>{{'general.users.list.adminTitle' | translate}}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div fxFlex.gt-sm="25"
+       fxFlex="100">
+    <mat-card class="card-widget mat-red">
+      <div mat-card-widget>
+        <div mat-card-float-icon>
+          <mat-icon>notifications</mat-icon>
+        </div>
+        <div class="pl-0">
+          <h2 mat-card-widget-title>
+            {{(users$ | async
+            | filterBy: ['assignedRoles.admin'] : false
+            | filterBy: ['assignedRoles.editor'] : true)?.length}}
+          </h2>
+          <p>{{'general.users.list.editorTitle' | translate}}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div fxFlex.gt-sm="25"
+       fxFlex="100">
+    <mat-card class="card-widget mat-indigo">
+      <div mat-card-widget>
+        <div mat-card-float-icon>
+          <mat-icon>email</mat-icon>
+        </div>
+        <div class="pl-0">
+          <h2 mat-card-widget-title>
+            {{(users$ | async
+            | filterBy: ['assignedRoles.admin'] : false
+            | filterBy: ['assignedRoles.editor'] : false
+            | filterBy: ['assignedRoles.subscriber'] : true)?.length}}
+          </h2>
+          <p>{{'general.users.list.guestTitle' | translate}}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<mat-card>
+  <mat-card-title>
+    <mat-icon>people</mat-icon>
+    {{'general.menu.user.main' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
+    <user-list
+      [users]="users$ | async"
+      (remove)="removeUser($event)"
+      (update)="updateUser($event)">
+    </user-list>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,18 @@
+<div class="taskboard page-height">
+  <div class="taskboard-wrapper" *ngFor="let type of (filteredTaskTypes ? filteredTaskTypes : taskTypes)">
+    <div class="taskboard-list">
+      <div class="taskboard-header text-uppercase">
+        <strong>{{ 'general.menu.' + type + '.main' | translate }}</strong>
+      </div>
+      <div class="taskboard-cards">
+        <div class="taskboard-task"
+             *ngFor="let task of tasks | filterBy: ['type'] : type | orderBy:'title'"
+             [ngClass]="task.priority">
+          <div class="taskboard-task-title">{{task.title}}</div>
+          <small class="card-text text-muted" [innerHtml]="task.description"></small>
+          <a href (click)="completeTask(task)">{{'general.tasks.list.done' | translate}}?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

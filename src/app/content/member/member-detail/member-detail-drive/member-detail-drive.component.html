@@ -1,0 +1,104 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     *ngIf="member">
+
+  <div fxFlex.gt-sm="32"
+       fxFlex.gt-xs="100">
+    <h3>{{'general.members.detail.drive.club' | translate}}</h3>
+    <mat-list dense *ngIf="member.clubData; else noClubTemplate">
+      <mat-list-item>
+        <span>{{'general.members.detail.drive.clubData.status' | translate}}</span>
+        {{('general.members.clubMemberStates.' +memberStateService.getMemberStateByValue(member.clubData.status) |
+        translate)}}
+      </mat-list-item>
+      <mat-list-item>
+        <span>{{'general.members.detail.drive.clubData.joined' | translate}}</span>
+        {{ member.clubData.joined ? (member.clubData.joined | date: 'dd.MM.yy') : '-' }}
+      </mat-list-item>
+      <mat-list-item>
+        <span>{{'general.members.detail.drive.clubData.left' | translate}}</span>
+        {{ member.clubData.left ? (member.clubData.left | date: 'dd.MM.yy') : '-' }}
+      </mat-list-item>
+      <mat-list-item>
+        <span>{{'general.members.detail.drive.clubData.payment' | translate}}</span>
+        <span *ngIf="member.clubData.payment">{{ member.clubData.payment }} &euro;</span>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <div fxFlexOffset="2"
+       fxFlex.gt-sm="32"
+       fxFlex.gt-xs="100">
+    <h3>{{'general.members.detail.drive.ah' | translate}}</h3>
+    <mat-list dense *ngIf="member.ahData; else noAHTemplate">
+      <mat-list-item>
+        <span>{{'general.members.detail.drive.ahData.status' | translate}}</span>
+        {{('general.members.ahMemberStates.' +memberStateService.getAHMemberStateByValue(member.ahData.status) |
+        translate)}}
+      </mat-list-item>
+      <mat-list-item>
+        <span>{{'general.members.detail.drive.ahData.joined' | translate}}</span>
+        {{ member.ahData.joined ? (member.ahData.joined | date: 'dd.MM.yy') : '-' }}
+      </mat-list-item>
+      <mat-list-item>
+        <span>{{'general.members.detail.drive.ahData.left' | translate}}</span>
+        {{ member.ahData.left ? (member.ahData.left | date: 'dd.MM.yy') : '-' }}
+      </mat-list-item>
+      <mat-list-item>
+        <span>{{'general.members.detail.drive.ahData.payment' | translate}}</span>
+        <span *ngIf="member.ahData.payment">{{ member.ahData.payment }} &euro;</span>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <div fxFlexOffset="2"
+       fxFlex.gt-sm="32"
+       fxFlex.gt-xs="100">
+    <h3>{{'general.members.detail.drive.dfb.title' | translate}}</h3>
+    <mat-list dense *ngIf="member.dfbData; else noDFBTemplate">
+      <mat-list-item>
+        <span>{{'general.members.detail.drive.dfb.status' | translate}}</span>
+        {{ member.dfbData.ageGroup }} {{ member.dfbData.playerStatus ? '(' + member.dfbData.playerStatus +')' : '' }}
+        <br/>
+        {{ member.dfbData.allowedToPlay }}
+      </mat-list-item>
+      <mat-list-item>
+        <span>{{'general.members.detail.drive.dfb.pass' | translate}}</span>
+        {{ member.dfbData.passNumber }} <br/>
+        {{ member.dfbData.passPrint ? (member.dfbData.passPrint | date: 'dd.MM.yy') : ''}}
+      </mat-list-item>
+      <mat-list-item>
+        <span>{{'general.members.detail.drive.dfb.eligible' | translate}}</span>
+        {{ member.dfbData.eligibleForOfficialMatches ? ((member.dfbData.eligibleForOfficialMatches | date: 'dd.MM.yy') +
+        ' ' + ('general.members.detail.drive.dfb.official' | translate)) : '' }}<br/>
+        {{ member.dfbData.eligibleForFriendlyMatches ? ((member.dfbData.eligibleForFriendlyMatches | date: 'dd.MM.yy') +
+        ' ' + ('general.members.detail.drive.dfb.friendly' | translate)) : '' }}
+      </mat-list-item>
+      <mat-list-item *ngIf="member.dfbData.guestPlayer && member.dfbData.guestPlayer.guestRight !== ''">
+        <span>{{'general.members.detail.drive.dfb.guest' | translate}}</span>
+        <span style="font-weight: normal">
+          {{ member.dfbData.guestPlayer.guestRight }} <br/>
+          {{ member.dfbData.guestPlayer.season }} <br/>
+          {{ member.dfbData.guestPlayer.type }}
+        </span>
+      </mat-list-item>
+      <mat-list-item *ngIf="member.dfbData.signOut">
+        <span>{{'general.members.detail.drive.dfb.signOut' | translate}}</span>
+        {{ member.dfbData.signOut }}
+      </mat-list-item>
+    </mat-list>
+
+  </div>
+</div>
+
+<ng-template #noDFBTemplate>
+  <p>{{'general.members.detail.drive.noDFBData' | translate}}</p>
+</ng-template>
+
+<ng-template #noClubTemplate>
+  <p>{{'general.members.detail.drive.noClubData' | translate}}</p>
+</ng-template>
+
+<ng-template #noAHTemplate>
+  <p>{{'general.members.detail.drive.noAHData' | translate}}</p>
+</ng-template>

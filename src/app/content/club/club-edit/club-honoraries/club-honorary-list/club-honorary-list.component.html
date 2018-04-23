@@ -1,0 +1,18 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     *ngIf="club">
+
+  <div fxFlex="100">
+
+    <p *ngIf="!club.honoraries.length">Keine Mitglieder verknüpft.</p>
+
+    <div fxLayout="row"
+         fxLayoutWrap="wrap"
+         *ngFor="let honorary of club.honoraries; let i = index">
+
+      <div fxFlex="40">{{honorary.assignedMember}}</div>
+      <div fxFlex="40">{{honorary.assignedArticle}}</div>
+      <div fxFlex="20">{{honorary.startDate | date : 'dd.MM.yy'}}</div>
+    </div>
+  </div>
+</div>

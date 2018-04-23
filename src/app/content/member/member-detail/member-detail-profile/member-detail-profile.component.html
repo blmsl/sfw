@@ -1,0 +1,24 @@
+<h3>{{'general.members.edit.profile.title' | translate}}</h3>
+
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex="100">
+
+    <p *ngIf="!member.profile || member.profile.length === 0">
+      {{'general.members.edit.profile.noEntries' | translate}}
+    </p>
+
+    <mat-list dense>
+      <mat-list-item *ngFor="let entry of member.profile">
+        <span fxFlex.gt-sm="40"
+              fxFlex="100">{{entry.entry}}
+        </span>
+        <span fxFlex.gt-sm="60"
+              fxFlex="100">{{entry.value}}
+        </span>
+      </mat-list-item>
+
+    </mat-list>
+  </div>
+</div>

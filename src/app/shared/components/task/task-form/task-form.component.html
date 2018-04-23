@@ -1,0 +1,65 @@
+<form class="form-horizontal" novalidate (ngSubmit)="saveTask()" [formGroup]="form">
+  <mat-card>
+    <mat-card-content>
+      <div fxLayout="row" fxLayoutWrap="wrap">
+        <div fxFlex.gt-xs="100" fxFlex.gt-sm="100" fxFlex="100" style="margin-bottom: 15px;">
+          <mat-form-field hintLabel="Max {{titleMaxLength}} characters" style="width: 100%">
+            <input matInput maxlength="{{titleMaxLength}}"
+                   placeholder="{{'general.tasks.edit.title' | translate}}"
+                   formControlName="title">
+            <mat-hint align="end">{{form.get('title').value.length || 0}}/{{titleMaxLength}}</mat-hint>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-xs="100" fxFlex.gt-sm="50" fxFlex="100">
+          <mat-form-field style="width: 95%">
+            <mat-select placeholder="{{'general.tasks.edit.type' | translate}}"
+                        formControlName="type">
+              <mat-option *ngFor="let taskType of taskService.getTaskTypes()" [value]="taskType">
+                {{ 'general.menu.' + taskType + '.main' | translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-xs="100" fxFlex.gt-sm="50" fxFlex="100">
+          <mat-form-field style="width: 100%">
+            <mat-select placeholder="{{'general.tasks.edit.priority' | translate}}"
+                        formControlName="priority">
+              <mat-option *ngFor="let priority of taskService.getPriorities()" [value]="priority.value">
+                {{ 'general.tasks.priorities.' + priority.title | translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100">
+          <label>{{'general.tasks.edit.description' | translate}}</label>
+          <quill-editor [style]="{height: '250px'}"
+                        formControlName="description"
+                        placeholder="{{'general.tasks.edit.description' | translate}}">
+          </quill-editor>
+        </div>
+
+        <p *ngIf="error">
+          {{ error.code | translate}}
+        </p>
+
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div class="button-row">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+          {{ 'general.tasks.edit.saveTask' | translate }}
+        </button>
+        <a mat-raised-button color="accent" (click)="cancel()">
+          {{ 'general.tasks.edit.cancel' | translate }}
+        </a>
+        <!--<a mat-raised-button color="warn"
+           (click)="removeTask()"
+           *ngIf="task && task.id">
+          {{'general.tasks.list.removeTask' | translate}}
+        </a>-->
+      </div>
+    </mat-card-actions>
+
+  </mat-card>
+</form>

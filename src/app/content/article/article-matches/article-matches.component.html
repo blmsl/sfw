@@ -1,0 +1,97 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex.gt-sm="25"
+       fxFlex="100">
+
+    <mat-card class="card-widget mat-grey">
+      <div mat-card-widget>
+        <div class="pl-0">
+          <h2 mat-card-widget-title></h2>
+          <p>{{'general.articles.matches.all' | translate}}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div fxFlex.gt-sm="25"
+       fxFlex="100">
+    <mat-card class="card-widget mat-teal">
+      <div mat-card-widget>
+        <div class="pl-0">
+          <h2 mat-card-widget-title></h2>
+          <p>{{'general.articles.matches.won' | translate}}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div fxFlex.gt-sm="25"
+       fxFlex="100">
+    <mat-card class="card-widget mat-yellow">
+      <div mat-card-widget>
+        <div class="pl-0">
+          <h2 mat-card-widget-title></h2>
+          <p>{{'general.articles.matches.draw' | translate}}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div fxFlex.gt-sm="25"
+       fxFlex="100">
+    <mat-card class="card-widget mat-red">
+      <div mat-card-widget>
+        <div mat-card-float-icon>
+          <mat-icon>email</mat-icon>
+        </div>
+        <div class="pl-0">
+          <h2 mat-card-widget-title></h2>
+          <p>{{'general.articles.matches.lost' | translate}}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+  <div fxFlex="100">
+    <mat-card *ngIf="matches$ | async as matches; else loadingTemplate">
+      <mat-card-title>
+        <h2 mat-card-widget-title>{{'general.dashboard.matches' | translate}}</h2>
+        <hr>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
+                       [dynamicHeight]="true">
+
+          <mat-tab label="{{'general.dashboard.upComingMatches' | translate}}">
+            <match-list [categories]="categories"
+                        [showResultInputs]="false"
+                        [matches]="matches | orderBy: ['startDate'] | matchFilter : 'endDate' : '>='">
+            </match-list>
+          </mat-tab>
+
+          <mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
+            <match-list [categories]="categories"
+                        [events]="matchService.getOtherEventList() | orderBy: ['title']"
+                        [showResultInputs]="true"
+                        [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<='">
+            </match-list>
+          </mat-tab>
+
+          <mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
+            <match-list [categories]="categories"
+                        [events]="matchService.getOtherEventList() | orderBy: ['title']"
+                        [showResultInputs]="true"
+                        [matches]="matches | matchFilter : 'endDate' : '<=' | orderBy: ['-endDate']">
+            </match-list>
+          </mat-tab>
+
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

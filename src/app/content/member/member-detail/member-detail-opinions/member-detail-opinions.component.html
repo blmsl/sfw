@@ -1,0 +1,23 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+  <div fxFlex="100">
+
+    <h2>{{'general.members.detail.opinions.title' | translate}}</h2>
+
+    <p *ngIf="!member.opinions || member.opinions.length === 0">
+      {{'general.members.detail.opinions.noEntries' | translate}}
+    </p>
+
+    <mat-list dense
+              *ngIf="members; else loadingTemplate">
+      <mat-list-item *ngFor="let opinion of member.opinions">
+        {{opinion | json}}
+      </mat-list-item>
+    </mat-list>
+
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

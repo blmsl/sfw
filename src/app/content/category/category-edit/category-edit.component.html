@@ -1,0 +1,62 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     [formGroup]="form">
+
+  <mat-card>
+    <mat-card-title>
+      <mat-icon>mode_edit</mat-icon>
+      {{ 'general.menu.category.edit' | translate}}
+    </mat-card-title>
+
+    <mat-card-subtitle></mat-card-subtitle>
+
+    <mat-card-content *ngIf="category; else loadingTemplate">
+
+      <div fxLayout="row"
+           fxLayoutWrap="wrap"
+           *ngIf="categoryTypes$ | async as categoryTypes; else loadingTemplate">
+
+        <mat-form-field fxFlex.gt-sm="49"
+                        fxFlex="100"
+                        hintLabel="Max {{titleMaxLength}} characters">
+          <input matInput maxlength="{{titleMaxLength}}"
+                 placeholder="{{'general.categories.list.colTitles.title' | translate}}"
+                 formControlName="title">
+          <mat-hint align="end">{{form.get('title').value.length || 0}}/{{titleMaxLength}}</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlexOffset="2"
+                        fxFlex.gt-sm="49"
+                        fxFlex="100">
+          <mat-select placeholder="{{'general.categories.list.colTitles.category' | translate}}"
+                      formControlName="assignedCategoryType">
+            <mat-option *ngFor="let categoryType of categoryTypes | orderBy: 'link'"
+                        [value]="categoryType.id">
+              {{ 'general.menu.' + categoryType.link + '.main' | translate}}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end">
+            {{'general.categories.edit.categoryDefaultPlaceholder' | translate }}
+          </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row"
+           fxLayoutWrap="wrap" style="margin-top: 25px">
+        <div fxFlex="100">
+          <label>{{'general.categories.edit.descriptionPlaceHolder' | translate}}</label>
+          <quill-editor [style]="{height: '250px'}"
+                        formControlName="description"
+                        placeholder="{{'general.categories.edit.descriptionPlaceHolder' | translate}}">
+          </quill-editor>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

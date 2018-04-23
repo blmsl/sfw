@@ -1,0 +1,35 @@
+<mat-card *ngIf="sponsor">
+  <div class="media-grid">
+    <figure>
+      <div class="sponsor-badge">
+        <h3>{{ sponsor.title }}</h3>
+      </div>
+      <img [src]="sponsor.imageUrl" *ngIf="sponsor.imageUrl">
+      <figcaption>
+        <p>
+          <a [routerLink]="['/sponsors/details', sponsor.id]"
+             matTooltip="{{'general.sponsors.list.view' | translate}}"
+             matTooltipPosition="left">
+            <mat-icon>pageview</mat-icon>
+          </a>
+          <a [routerLink]="['/sponsors/edit', sponsor.id]"
+             matTooltip="{{'general.sponsors.list.edit' | translate}}"
+             matTooltipPosition="left">
+            <mat-icon>build</mat-icon>
+          </a>
+          <a (click)="removeSponsor.emit(sponsor)"
+             matTooltip="{{'general.sponsors.list.delete' | translate}}"
+             matTooltipPosition="left">
+            <mat-icon>delete</mat-icon>
+          </a>
+        </p>
+      </figcaption>
+    </figure>
+  </div>
+  <mat-card-content [perfectScrollbar]="config" [disabled]="mediaMatcher.matches" style="max-height: 250px">
+    <div>
+      <span [innerHtml]="sponsor.description"></span>
+      <span class="mat-text-muted text-sm" [innerHtml]="sponsor.internalInfo">}</span>
+    </div>
+  </mat-card-content>
+</mat-card>

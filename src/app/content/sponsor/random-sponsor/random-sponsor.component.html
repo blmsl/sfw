@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-title>
+    <mat-icon>list</mat-icon>
+    {{'general.sponsors.list.randomSponsorTitle' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
+
+    <!--<div class="card card-inverse card-info" *ngIf="sponsors.length > 0; else noSponsorsTemplate">-->
+    {{sponsors | sample | json}}
+    <!--<img class="card-img-top" [src]="(sponsors | sample).imageUrl" title="{{sponsors[0].title}}">
+    <div class="card-block">
+      <span class="badge badge-warning" *ngFor="let category of sponsors[0].assignedCategories">
+        {{(categories | filterBy: ['id'] : category)[0].title}}
+      </span>
+      <h4 class="card-title">{{sponsors[0].title}}</h4>
+      <div class="card-text">{{sponsors[0].description}}</div>
+    </div>-->
+  </mat-card-content>
+</mat-card>
+
+<ng-template #noSponsorsTemplate>
+   {{'general.sponsors.list.noRandomSponsorFound' | translate }}
+</ng-template>

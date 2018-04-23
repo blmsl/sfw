@@ -1,0 +1,81 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex="100">
+
+    <p *ngIf="!form['controls'][0]">
+      {{'general.timeLine.noEvents' | translate}}
+    </p>
+
+    <mat-accordion [hideToggle]="true"
+                   dense
+                   class="example-headers-align">
+
+      <mat-expansion-panel *ngFor="let control of form.controls; let i = index; let first = first; let last = last"
+                           [expanded]="step === i"
+                           (opened)="setStep(i)"
+                           hideToggle="true">
+        <mat-expansion-panel-header fxLayout="row">
+
+          <mat-panel-title fxFlex.gt-sm="40"
+                           fxFlex="100">
+            {{control.get('title').value}}
+          </mat-panel-title>
+
+          <mat-panel-description fxLayout="row"
+                                 fxFlex.gt-sm="60"
+                                 fxFlex="100"
+                                 fxHide.xs="true">
+
+            <span fxFlex="70">
+              {{control.get('startDate').value | date: 'dd.MM.yy'}}
+              <span *ngIf="control.get('endDate').value">&ndash; {{control.get('endDate').value | date: 'dd.MM.yy'}}</span>
+            </span>
+
+            <mat-icon fxFlex="10"
+                      *ngIf="control.get('icon').value">
+              {{control.get('icon').value}}
+            </mat-icon>
+
+            <a fxFlex="10" (click)="edit.emit(i)"
+               *ngIf="showLinks">
+              <mat-icon color="accent">edit</mat-icon>
+            </a>
+
+            <a fxFlex="10" (click)="delete.emit(i)"
+               *ngIf="showLinks">
+              <mat-icon color="warn">delete</mat-icon>
+            </a>
+
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div *ngIf="step === i">Verknüpften Artikel anzeigen</div>
+
+        <mat-action-row *ngIf="step === i">
+          <button
+            mat-button
+            color="warn"
+            (click)="prevStep()"
+            [disabled]="first">
+            &laquo;
+          </button>
+
+          <button mat-button
+                  color="primary"
+                  (click)="nextStep()"
+                  [disabled]="last">
+            &raquo;
+          </button>
+        </mat-action-row>
+
+      </mat-expansion-panel>
+
+    </mat-accordion>
+
+  </div>
+</div>
+
+<ng-template #noEventsTemplate>
+  <p style="color: red">{{ 'general.timeLine.noEvents' | translate}}</p>
+</ng-template>

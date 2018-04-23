@@ -1,0 +1,122 @@
+<h3><p>{{'general.members.edit.opinions.title' | translate}}</h3>
+<p>{{'general.members.edit.opinions.text' | translate}}</p>
+
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     *ngIf="members; else loadingTemplate"
+     [formGroup]="form">
+
+  <div fxFlex="100"
+       formArrayName="opinions">
+
+    <button mat-raised-button
+            style="margin-bottom: 25px"
+            type="button"
+            color="primary"
+            (click)="add.emit(true)">
+      {{'general.members.edit.opinions.addEntry' | translate}}
+    </button>
+
+    <div fxLayout="row"
+         fxLayoutWrap="wrap"
+         *ngFor="let control of form.get('opinions')['controls']; let i = index; let last = last">
+
+      <div fxFlex="100"
+           [formGroupName]="i">
+
+        <div fxLayout="row"
+             fxLayoutWrap="wrap">
+
+          <div fxFlex="100"
+               style="margin-bottom: 40px;">
+            <button mat-raised-button
+                    [disabled]="form.get('opinions')['controls'][i]['controls']['type'].value === 'text'"
+                    (click)="toggleMemberLookup.emit({'id': i, 'type': 'text' })"
+                    color="primary">
+              {{'general.members.edit.opinions.perTextField' | translate}}
+            </button>
+
+            <button mat-raised-button
+                    [disabled]="form.get('opinions')['controls'][i]['controls']['type'].value === 'select'"
+                    (click)="toggleMemberLookup.emit({'id': i, 'type': 'select' })"
+                    color="primary">
+              {{'general.members.edit.opinions.perSelectField' | translate}}
+            </button>
+          </div>
+
+          <div *ngIf="form.get('opinions')['controls'][i]['controls']['type'].value === 'text'"
+               fxFlex.gt-sm="90"
+               fxFlex="100"
+               formGroupName="name">
+            <div fxLayout="row"
+                 fxLayoutWrap="wrap">
+              <mat-form-field fxFlex.gt-sm="49"
+                              fxFlex="100">
+                <input matInput
+                       placeholder="{{'general.members.edit.opinions.firstName' | translate}}"
+                       formControlName="firstName"/>
+              </mat-form-field>
+              <mat-form-field fxFlexOffset.gt-sm="2"
+                              fxFlex.gt-sm="49"
+                              fxFlex="100">
+                <input matInput
+                       placeholder="{{'general.members.edit.opinions.lastName' | translate}}"
+                       formControlName="lastName"/>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div *ngIf="form.get('opinions')['controls'][i]['controls']['type'].value === 'select'"
+               fxFlex.gt-sm="90"
+               fxFlex="100"
+               formGroupName="assignedMember">
+            <div fxLayout="row"
+                 fxLayoutWrap="wrap">
+              <mat-form-field fxFlex="100">
+                <mat-select placeholder="{{'general.members.edit.opinions.userTitle' | translate}}"
+                            formControlName="assignedMember">
+                  <mat-option
+                    *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
+                    [value]="member.id">
+                    {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date:
+                    'dd.MM.yy'}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxFlex.gt-sm="10"
+               fxFlex="100"
+               class="text-md-right">
+            <button mat-icon-button
+                    (click)="delete.emit(i)"
+                    color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+        </div>
+
+        <div fxLayout="row"
+             fxLayoutWrap="wrap">
+          <div fxFlex="100">
+            <h3>{{'general.members.edit.opinions.comment' | translate}}</h3>
+            <quill-editor [style]="{height: '150px'}"
+                          formControlName="comment">
+            </quill-editor>
+          </div>
+        </div>
+
+        <hr *ngIf="!last" style="margin: 25px 0;"/>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

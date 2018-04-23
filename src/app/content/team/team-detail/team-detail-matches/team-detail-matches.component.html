@@ -1,0 +1,40 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex.gt-sm="50"
+       fxFlex="100">
+    <mat-card class="card-widget">
+      <mat-card-header class="mat-yellow">
+        <mat-card-title>{{'general.teams.detail.matchPlan.pastMatches' | translate}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <match-list *ngIf="categories && matches && events && team; else loadingTemplate"
+                      [categories]="categories"
+                      [events]="events"
+                      [showResultInputs]="true"
+                      [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<=' | matchFilter: 'assignedTeam' : '===' : team.id">
+          </match-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex.gt-sm="50"
+       fxFlex="100">
+    <mat-card class="card-widget">
+      <mat-card-header class="mat-teal">
+        <mat-card-title>{{'general.teams.detail.matchPlan.upcomingMatches' | translate}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <match-list *ngIf="categories && matches && team; else loadingTemplate"
+                    [categories]="categories"
+                    [matches]="matches | orderBy: ['startDate'] | matchFilter : 'startDate' : '>=' | matchFilter: 'assignedTeam' : '===' : team.id">
+        </match-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

@@ -1,0 +1,20 @@
+<mat-card>
+  <mat-card-title>
+    <mat-icon>donut_small</mat-icon>
+    {{'general.locations.list.locationsByCategory' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
+    <canvas *ngIf="isDataAvailable; else loadingTemplate"
+            baseChart
+            class="chart"
+            [data]="doughnutChartData"
+            [labels]="doughnutChartLabels"
+            [options]="doughnutOptions"
+            [chartType]="doughnutChartType"></canvas>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

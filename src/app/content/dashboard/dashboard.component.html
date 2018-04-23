@@ -1,0 +1,305 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex.gt-sm="50"
+       fxFlex="100">
+
+    <div fxLayout="column">
+
+      <div fxFlex="100">
+        <mat-card class="profile-post">
+          <form fxLayout="row"
+                [formGroup]="mindForm">
+            <textarea formControlName="comment"
+                      placeholder="{{'general.dashboard.mindText' | translate}}"
+                      rows="6">
+            </textarea>
+          </form>
+          <hr>
+          <mat-card-actions>
+            <div fxLayout="row">
+              <button mat-icon-button>
+                <mat-icon>insert_photo</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>insert_link</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>location_on</mat-icon>
+              </button>
+              <span fxFlex></span>
+              <button mat-raised-button color="primary">Post</button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+
+    <div fxLayout="row"
+         fxLayoutWrap="wrap">
+
+      <div fxFlex.gt-xs="100"
+           fxFlex.gt-sm="49"
+           fxFlex="100">
+        <!--<mat-card>
+          <mat-card-title class="mat-red">
+            <h2 mat-card-widget-title>{{'general.dashboard.birthdays' | translate}}</h2>
+            <hr>
+          </mat-card-title>
+          <mat-card-content>
+            <mat-list *ngIf="members$ | async as members; else loadingTemplate">
+
+              <h3 mat-subheader>{{'general.dashboard.today' | translate}}, {{today.format('DD.MM.YY')}}</h3>
+
+              <mat-list-item *ngFor="let member of members | birthdayFilter: today; let last = last">
+                <img mat-list-avatar
+                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
+                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
+                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
+                <p mat-line>
+              <span class="demo-secondary-text">
+                {{'general.dashboard.isGetting' | translate}}
+                {{memberService.calculateAge(member.mainData.birthday)}}
+                {{'general.dashboard.yearsOld' | translate}}
+              </span>
+                </p>
+                <mat-divider inset="true" *ngIf="!last"></mat-divider>
+              </mat-list-item>
+
+              <mat-divider></mat-divider>
+
+              <h3 mat-subheader>{{'general.dashboard.tomorrow' | translate}}, {{tomorrow.format('DD.MM.YY')}}</h3>
+
+              <mat-list-item *ngFor="let member of members | birthdayFilter: tomorrow; let last = last">
+                <img mat-list-avatar
+                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
+                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
+                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
+                <p mat-line>
+              <span class="demo-secondary-text">
+                {{'general.dashboard.willGet' | translate}}
+                {{memberService.calculateAge(member.mainData.birthday)}}
+                {{'general.dashboard.yearsOld' | translate}}
+              </span>
+                </p>
+                <mat-divider inset="true" *ngIf="!last"></mat-divider>
+              </mat-list-item>
+
+              <mat-divider></mat-divider>
+
+              <h3 mat-subheader>{{'general.dashboard.yesterday' | translate}}, {{yesterday.format('DD.MM.YY')}}</h3>
+
+              <mat-list-item *ngFor="let member of members | birthdayFilter: yesterday; let last = last">
+                <img mat-list-avatar
+                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
+                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
+                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
+                <p mat-line>
+              <span class="demo-secondary-text">
+                {{'general.dashboard.got' | translate}}
+                {{memberService.calculateAge(member.mainData.birthday)}}
+                {{'general.dashboard.yearsOld' | translate}}
+              </span>
+                </p>
+                <mat-divider inset="true" *ngIf="!last"></mat-divider>
+              </mat-list-item>
+
+            </mat-list>
+          </mat-card-content>
+        </mat-card>-->
+      </div>
+
+      <div fxFlex.gt-sm="49"
+           fxFlexOffset.gt-sm="2"
+           fxFlex="100">
+       <!-- <mat-card>
+          <mat-card-title class="mat-blue">
+            <h2 mat-card-widget-title>{{'general.dashboard.lastArticles' | translate}}</h2>
+            <hr>
+          </mat-card-title>
+          <mat-card-content>
+            <mat-list *ngIf="articles$ | async as articles; else loadingTemplate">
+              <mat-list-item *ngIf="articles.length === 0">Keine Artikel gefunden.</mat-list-item>
+              <mat-list-item *ngFor="let article of articles | orderBy: ['-publication.at'] | slice: 0:10">
+                <img mat-list-avatar [src]="article.imageURL" alt="{{article.title}}">
+                <h3 matLine> {{article.title}} </h3>
+                <p matLine> {{article.publication.date}} - {{article.publication.text}} </p>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>-->
+      </div>
+    </div>
+  </div>
+
+  <div fxFlex.gt-sm="50"
+       fxFlex="100">
+
+    <div fxLayout="row"
+         fxLayoutWrap="wrap">
+
+      <div fxFlex.gt-sm="50"
+           fxFlex="100">
+        <mat-card class="card-widget mat-teal">
+          <div mat-card-widget>
+            <div mat-card-float-icon>
+              <mat-icon>grade</mat-icon>
+            </div>
+            <div class="pl-0">
+              <h2 mat-card-widget-title>{{angularVersion}}</h2>
+              <p>Angular</p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <div fxFlex.gt-sm="50"
+           fxFlex="100">
+        <mat-card class="card-widget mat-purple">
+          <div mat-card-widget>
+            <div mat-card-float-icon>
+              <mat-icon>code</mat-icon>
+            </div>
+            <div class="pl-0">
+              <h2 mat-card-widget-title>{{env.production ? 'Production' : 'Development'}}</h2>
+              <p>Environment</p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+    <div fxLayout="row"
+         fxLayoutWrap="wrap">
+      <div fxFlex.gt-sm="50"
+           fxFlex="100">
+        <mat-card class="card-widget mat-teal">
+          <div mat-card-widget>
+            <div mat-card-float-icon>
+              <mat-icon>grade</mat-icon>
+            </div>
+            <div class="pl-0">
+              <h2 mat-card-widget-title>
+                <a class="pull-right" href="https://travis-ci.org/Meistercoach83/sfw" target="_blank">
+                  <img src="https://travis-ci.org/Meistercoach83/sfw.svg?branch=master"/>
+                </a>
+              </h2>
+              <p>{{'general.dashboard.buildStatus' | translate}}</p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <div fxFlex.gt-sm="50"
+           fxFlex="100">
+        <mat-card class="card-widget mat-purple">
+          <div mat-card-widget>
+            <div mat-card-float-icon>
+              <mat-icon>grade</mat-icon>
+            </div>
+            <div class="pl-0">
+              <h2 mat-card-widget-title>
+                <a class="pull-right" href="https://david-dm.org/Meistercoach83/sfw" target="_blank">
+                  <img src="https://david-dm.org/Meistercoach83/sfw/status.svg"/>
+                </a>
+              </h2>
+              <p>{{'general.dashboard.dependencyStatus' | translate}}</p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <div fxFlex.gt-sm="50"
+           fxFlex="100">
+        <mat-card class="card-widget mat-teal">
+          <div mat-card-widget>
+            <div mat-card-float-icon>
+              <mat-icon>grade</mat-icon>
+            </div>
+            <div class="pl-0">
+              <h2 mat-card-widget-title>
+                <a class="pull-right" href="https://david-dm.org/Meistercoach83/sfw" target="_blank">
+                  <img src="https://david-dm.org/Meistercoach83/sfw/dev-status.svg"/>
+                </a>
+              </h2>
+              <p>{{'general.dashboard.devDependencyStatus' | translate}}</p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <div fxFlex.gt-sm="50"
+           fxFlex="100">
+        <mat-card class="card-widget mat-purple">
+          <div mat-card-widget>
+            <div mat-card-float-icon>
+              <mat-icon>grade</mat-icon>
+            </div>
+            <div class="pl-0">
+              <h2 mat-card-widget-title>
+                <a class="pull-right" href="https://badge.fury.io/gh/Meistercoach83%2F-sfw" target="_blank">
+                  <img src="https://badge.fury.io/gh/Meistercoach83%2Fsfw.svg"/>
+                </a>
+              </h2>
+              <p>{{'general.dashboard.gitVersion' | translate}}</p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+    </div>
+
+
+    <mat-card>
+      <mat-card-title class="mat-amber">
+        <h2 mat-card-widget-title>{{'general.dashboard.matches' | translate}}</h2>
+        <hr>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
+                       [dynamicHeight]="true">
+
+          <!--<mat-tab label="{{'general.dashboard.upComingMatches' | translate}}">
+            <div *ngIf="matches$ | async as matches; else loadingTemplate"
+                 [perfectScrollbar]="config">
+              <match-list [categories]="categories"
+                          [showResultInputs]="false"
+                          [matches]="matches | orderBy: ['startDate'] | matchFilter : 'endDate' : '>=' | matchFilter: 'endDate' : '<=' : inTwoWeeks">
+              </match-list>
+            </div>
+          </mat-tab>
+
+          <!--<mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
+            <div *ngIf="matches$ | async as matches; else loadingTemplate"
+                 style="max-height: 40vh;"
+                 [perfectScrollbar]="config">
+              <match-list [categories]="categories"
+                          [events]="matchService.getOtherEventList() | orderBy: ['title']"
+                          [showResultInputs]="true"
+                          [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<=' | matchFilter: 'endDate' : '>=' : inLastTwoWeeks">
+              </match-list>
+            </div>
+          </mat-tab>-->
+
+          <!--<mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
+            <div *ngIf="matches$ | async as matches; else loadingTemplate"
+                 [perfectScrollbar]="config">
+              <match-list [categories]="categories"
+                          [events]="matchService.getOtherEventList() | orderBy: ['title']"
+                          [showResultInputs]="true"
+                          [matches]="matches | matchFilter : 'endDate' : '<=' | orderBy: ['-endDate'] | matchNoResultFilter | slice: 0:20">
+              </match-list>
+            </div>
+          </mat-tab>-->
+
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
+
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

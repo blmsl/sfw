@@ -1,0 +1,68 @@
+<div class="md-editor-container" [class.fullscreen]="isFullScreen">
+  <div class="tool-bar" *ngIf="!hideToolbar && mode != 'preview'">
+    <div class="button-row">
+      <button mat-icon-button type="button" title="Bold" (click)="insertContent('Bold')" *ngIf="!_hideIcons.Bold">
+        <mat-icon>format_bold</mat-icon>
+      </button>
+      <button mat-icon-button type="button" title="Italic" (click)="insertContent('Italic')" *ngIf="!_hideIcons.Italic">
+        <mat-icon>format_italic</mat-icon>
+      </button>
+      <button mat-icon-button type="button" title="Heading" (click)="insertContent('Heading')" *ngIf="!_hideIcons.Heading">
+        <mat-icon>title</mat-icon>
+      </button>
+      <button mat-icon-button type="button" title="Refrence" (click)="insertContent('Refrence')" *ngIf="!_hideIcons.Refrence">
+        <mat-icon>format_quote</mat-icon>
+      </button>
+
+      |
+
+      <button mat-icon-button type="button" title="Link" (click)="insertContent('Link')" *ngIf="!_hideIcons.Link">
+        <mat-icon>link</mat-icon>
+      </button>
+      <button mat-icon-button type="button" title="Image" (click)="insertContent('Image')" *ngIf="!_hideIcons.Image">
+        <mat-icon>image</mat-icon>
+      </button>
+
+      |
+
+      <button mat-icon-button type="button" title="Unordered List" (click)="insertContent('Ul')" *ngIf="!_hideIcons.Ul">
+        <mat-icon>format_list_bulleted</mat-icon>
+      </button>
+      <button mat-icon-button type="button" title="Ordered List" (click)="insertContent('Ol')" *ngIf="!_hideIcons.Ol">
+        <mat-icon>format_list_numbered</mat-icon>
+      </button>
+      <button mat-icon-button type="button" title="Code Block" (click)="insertContent('Code')" *ngIf="!_hideIcons.Code">
+        <mat-icon>code</mat-icon>
+      </button>
+
+      <button mat-icon-button type="button" [attr.title]="showPreviewPanel ? 'Hide Preview' : 'Show Preview'" (click)="togglePreview()"
+        *ngIf="!_hideIcons.TogglePreview">
+        <mat-icon>eye</mat-icon>
+      </button>
+
+      <button mat-icon-button type="button" [class.active]="isFullScreen" (click)="fullScreenToggle()"
+              *ngIf="!_hideIcons.FullScreen">
+        <mat-icon>fullscreen</mat-icon>
+      </button>
+
+      <button mat-icon-button type="button" (click)="openMarkdownHelp()">
+          <mat-icon>help_outline</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="editor-container">
+    <div [style.display]="mode == 'preview' ? 'none' : null">
+      <div class="editor-panel" [style.height]="height">
+        <div class="ace-editor" #aceEditor></div>
+      </div>
+    </div>
+    <div [style.display]="showPreviewPanel ? 'block' : 'none'" (click)="previewPanelClick($event)">
+      <div class="preview-panel" [innerHtml]="_previewHtml" [style.height]="height"></div>
+    </div>
+  </div>
+  <div *ngIf="maxlength > 0 && mode != 'preview'">
+    <div class="text-right md-footer">
+      {{ markdownValue?.length }} / {{ maxlength }}
+    </div>
+  </div>
+</div>

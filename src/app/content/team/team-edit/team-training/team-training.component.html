@@ -1,0 +1,33 @@
+<div fxLayout="column"
+     [formGroup]="form">
+
+  <p style="margin-bottom: 25px;">{{'general.teams.edit.training.description' | translate}}</p>
+
+  <p *ngIf="!form.controls['assignedTrainings']">{{'general.teams.edit.training.noTraining' | translate}}</p>
+
+  <div formArrayName="assignedTrainings">
+    <div *ngFor="let training of form.controls['assignedTrainings']['controls']; let i=index">
+      <div [formGroupName]="i"
+           fxFlex="100">
+        <team-training-form
+          (removeTraining)="removeTraining.emit(i)"
+          [weekdays]="weekdays"
+          [locations]="locations"
+          [form]="form.controls['assignedTrainings']['controls'][i]">
+        </team-training-form>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <button fxFlex.gt-sm="10"
+            fxFlex.gt-xs="50"
+            mat-raised-button
+            type="button"
+            color="primary"
+            (click)="addTraining.emit(true)">
+      {{ 'general.teams.edit.training.add' | translate}}
+    </button>
+  </div>
+
+</div>

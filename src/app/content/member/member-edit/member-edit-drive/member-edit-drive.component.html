@@ -1,0 +1,201 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     [formGroup]="form">
+
+  <div fxFlex.gt-sm="32"
+       fxFlex="100"
+       formGroupName="clubData">
+
+    <div fxLayout="column">
+
+      <h3>{{'general.members.detail.drive.club' | translate}}</h3>
+
+      <mat-form-field>
+        <mat-select placeholder="{{'general.members.detail.drive.clubData.status' | translate}}"
+                    formControlName="status">
+          <mat-option *ngFor="let status of memberStateService.getMemberStates()"
+                      [value]="status">{{('general.members.clubMemberStates.' + status | translate)}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               placeholder="{{'general.members.detail.drive.clubData.payment' | translate}}"
+               formControlName="payment"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               formControlName="joined"
+               [matDatepicker]="clubJoinedPicker"
+               placeholder="{{'general.members.detail.drive.clubData.joined' | translate}}">
+        <mat-datepicker-toggle matSuffix [for]="clubJoinedPicker"></mat-datepicker-toggle>
+        <mat-datepicker disabled="false"
+                        touchUi="true"
+                        #clubJoinedPicker>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               formControlName="left"
+               [matDatepicker]="clubLeftPicker"
+               placeholder="{{'general.members.detail.drive.clubData.left' | translate}}">
+        <mat-datepicker-toggle matSuffix [for]="clubLeftPicker"></mat-datepicker-toggle>
+        <mat-datepicker disabled="false"
+                        touchUi="true"
+                        #clubLeftPicker>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="{{'general.teams.edit.assignedClub' | translate}}"
+                    formControlName="assignedClub">
+          <!--<mat-option *ngFor="let status of memberStateService.getMemberStates()"
+                      [value]="status">{{('general.members.clubMemberStates.' + status | translate)}}
+          </mat-option>-->
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+  </div>
+
+  <div fxFlexOffset="2"
+       fxFlex.gt-sm="32"
+       fxFlex.gt-xs="100"
+       formGroupName="ahData">
+
+    <div fxLayout="column">
+
+      <h3>{{'general.members.detail.drive.ah' | translate}}</h3>
+
+
+      <mat-form-field>
+        <mat-select placeholder="{{'general.members.detail.drive.clubData.status' | translate}}"
+                    formControlName="status">
+          <mat-option *ngFor="let status of memberStateService.getAHStates()"
+                      [value]="status">{{('general.members.ahMemberStates.' + status | translate)}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               placeholder="{{'general.members.detail.drive.ahData.payment' | translate}}"
+               formControlName="payment"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               formControlName="joined"
+               [matDatepicker]="ahJoinedPicker"
+               placeholder="{{'general.members.detail.drive.ahData.joined' | translate}}">
+        <mat-datepicker-toggle matSuffix [for]="ahJoinedPicker"></mat-datepicker-toggle>
+        <mat-datepicker disabled="false"
+                        touchUi="true"
+                        #ahJoinedPicker>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               formControlName="left"
+               [matDatepicker]="ahLeftPicker"
+               placeholder="{{'general.members.detail.drive.ahData.left' | translate}}">
+        <mat-datepicker-toggle matSuffix [for]="ahLeftPicker"></mat-datepicker-toggle>
+        <mat-datepicker disabled="false"
+                        touchUi="true"
+                        #ahLeftPicker>
+        </mat-datepicker>
+      </mat-form-field>
+
+    </div>
+  </div>
+
+  <div fxFlexOffset="2"
+       fxFlex.gt-sm="32"
+       fxFlex.gt-xs="100"
+       formGroupName="dfbData">
+
+    <div fxLayout="column">
+
+      <h3>{{'general.members.detail.drive.dfb.title' | translate}}</h3>
+
+      <mat-form-field>
+        <input matInput
+               placeholder="{{'general.members.detail.drive.dfb.ageGroup' | translate}}"
+               formControlName="ageGroup"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               placeholder="{{'general.members.detail.drive.dfb.playerStatus' | translate}}"
+               formControlName="playerStatus"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               placeholder="{{'general.members.detail.drive.dfb.allowedToPlay' | translate}}"
+               formControlName="allowedToPlay"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               placeholder="{{'general.members.detail.drive.dfb.passNumber' | translate}}"
+               formControlName="passNumber"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               formControlName="passPrint"
+               [matDatepicker]="passPrintPicker"
+               placeholder="{{'general.members.detail.drive.dfb.passPrint' | translate}}">
+        <mat-datepicker-toggle matSuffix [for]="passPrintPicker"></mat-datepicker-toggle>
+        <mat-datepicker disabled="false"
+                        touchUi="true"
+                        #passPrintPicker>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               formControlName="eligibleForFriendlyMatches"
+               [matDatepicker]="eligibleForFriendlyMatchesPicker"
+               placeholder="{{'general.members.detail.drive.dfb.friendly' | translate}}">
+        <mat-datepicker-toggle matSuffix [for]="eligibleForFriendlyMatchesPicker"></mat-datepicker-toggle>
+        <mat-datepicker disabled="false"
+                        touchUi="true"
+                        #eligibleForFriendlyMatchesPicker>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               formControlName="eligibleForOfficialMatches"
+               [matDatepicker]="eligibleForOfficialMatchesPicker"
+               placeholder="{{'general.members.detail.drive.dfb.official' | translate}}">
+        <mat-datepicker-toggle matSuffix [for]="eligibleForOfficialMatchesPicker"></mat-datepicker-toggle>
+        <mat-datepicker disabled="false"
+                        touchUi="true"
+                        #eligibleForOfficialMatchesPicker>
+        </mat-datepicker>
+      </mat-form-field>
+
+
+      <mat-list-item *ngIf="member.dfbData.guestPlayer && member.dfbData.guestPlayer.guestRight !== ''">
+        <span>{{'general.members.detail.drive.dfb.guest' | translate}}</span>
+        <span style="font-weight: normal">
+             {{ member.dfbData.guestPlayer.guestRight }} <br/>
+             {{ member.dfbData.guestPlayer.season }} <br/>
+             {{ member.dfbData.guestPlayer.type }}
+           </span>
+      </mat-list-item>
+      <mat-list-item *ngIf="member.dfbData.signOut">
+        <span>{{'general.members.detail.drive.dfb.signOut' | translate}}</span>
+        {{ member.dfbData.signOut }}
+      </mat-list-item>
+
+    </div>
+  </div>
+</div>

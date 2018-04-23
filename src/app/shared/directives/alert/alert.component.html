@@ -1,0 +1,6 @@
+<div *ngIf="message" class="mp-2">
+  <p style="color: white; padding: 5px"
+     [style.background-color]="message.type === 'success' ? 'green' : 'darkred'">
+	{{ message.text.code ? (message.text.code | translate) : (message.text | translate) }}
+  </p>
+</div>

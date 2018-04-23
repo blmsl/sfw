@@ -1,0 +1,118 @@
+/*
+.profile-card {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  margin: 10px 1%;
+  max-height: 240px;
+  width: 100%;
+}
+
+.profile-card * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.profile-card img {
+  margin-left: 50%;
+  opacity: 1;
+  width: 50%;
+  filter: blur(0px);
+  -webkit-transition: all 0.35s;
+  transition: all 0.35s;
+}
+
+.profile-card .caption {
+  background-color: #fff;
+  border-right: 1px solid darkgrey;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+}
+
+.inline-edit {
+  color: black;
+  position: absolute;
+  bottom: 50%;
+  right: 0;
+}
+
+.profile-card .caption h4, .profile-card .caption p, .profile-card .caption span {
+  color: #000000;
+  text-align: right;
+  position: absolute;
+  padding: 10px;
+}
+
+.profile-card .caption h4 {
+  font-size: 1.1em;
+  bottom: 50%;
+  right: 0;
+  font-weight: 300;
+  text-transform: uppercase;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.profile-card .caption p {
+  top: 50%;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.profile-card .caption span {
+  bottom: 0;
+}
+
+.profile-card .icons {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  padding: 10px;
+  opacity: 0;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.profile-card .icons i {
+  margin: 3px;
+  padding: 3px;
+  color: #fff;
+  box-shadow: 0 0 5px #fff;
+}
+
+.profile-card:hover .icons {
+  opacity: 1;
+}
+
+.profile-card:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 35px;
+  width: 35px;
+  background: url('http://sfwinterbach.com/?APF_tools_media-action:SFWstreamMedia=namespace:APPLICATION_media_images_sfw_frontend|extension:gif|filebody:Logo') no-repeat;
+  background-size: 35px 35px;
+  content: '';
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+
+.profile-card:hover > img,
+.profile-card.hover > img {
+  opacity: 0.5;
+  filter: blur(5px);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+@media (min-width: $resL) {
+  .profile-card img {
+    min-height: 240px;
+  }
+}
+*/

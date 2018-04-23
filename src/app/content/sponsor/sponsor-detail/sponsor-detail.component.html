@@ -1,0 +1,99 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+
+  <div fxFlex="100">
+    <mat-card class="mat-card-top">
+      <mat-card-title>
+        <mat-icon>details</mat-icon>
+        {{'general.menu.sponsor.detail' | translate}}
+      </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+
+      <mat-card-content *ngIf="sponsor; else loadingTemplate">
+
+        <mat-tab-group [dynamicHeight]="true">
+          <mat-tab label="{{'general.sponsors.edit.mainTitle' | translate}}">
+
+            <div fxLayout="row" fxLayoutWrap="wrap">
+              <div fxFlex.gt-sm="62" fxFlex.gt-xs="100" fxFlex="100">
+                <h1>{{'general.sponsors.edit.title' | translate}}: {{sponsor.title}}</h1>
+                {{'general.sponsors.edit.link' | translate}}:
+                <a target="_blank" style="color: red" href="{{sponsor.externalLink}}">
+                  {{'general.sponsors.edit.linkTitle' | translate}}
+                </a>
+                <br />
+                <hr style="margin: 25px" />
+                <div [innerHtml]="sponsor.description"></div>
+              </div>
+
+              <div fxFlexOffset="3" fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100">
+                <h3>{{'general.sponsors.edit.imageUrl' | translate}}</h3>
+                <img [src]="sponsor.imageUrl" *ngIf="sponsor.imageUrl" />
+              </div>
+
+            </div>
+          </mat-tab>
+          <mat-tab label="{{'general.sponsors.edit.moreTitle' | translate}}">
+            <h1>{{'general.sponsors.edit.title' | translate}}: {{sponsor.title}}</h1>
+            <div fxLayout="row" fxLayoutWrap="wrap">
+              <div fxFlex.gt-sm="34" fxFlex.gt-xs="100" fxFlex="100">
+                {{'general.sponsors.edit.link' | translate}}:
+                <a target="_blank" style="color: red" href="{{sponsor.externalLink}}">
+                  {{'general.sponsors.edit.linkTitle' | translate}}
+                </a>
+                <br />
+                <hr style="margin: 25px" />
+                <div [innerHtml]="sponsor.internalInfo"></div>
+              </div>
+              <div fxFlexOffset="3"
+                   fxFlex.gt-sm="35"
+                   fxFlex.gt-xs="100">
+                <h4>{{'general.sponsors.edit.timeTitle' | translate}}</h4>
+                <mat-list>
+                  <mat-list-item>
+                    <span>{{'general.sponsors.edit.startDate' | translate}}: </span>
+                    {{sponsor.startDate ? (sponsor.startDate | date: 'shortDate') : ('general.sponsors.edit.noStartDate' | translate)}}
+                  </mat-list-item>
+                  <mat-list-item>
+                    <span>{{'general.sponsors.edit.endDate' | translate}}: </span>
+                    {{sponsor.endDate ? (sponsor.endDate | date: 'shortDate' ) : ('general.sponsors.edit.noEndDate' | translate)}}
+                  </mat-list-item>
+                </mat-list>
+              </div>
+              <div fxFlexOffset="3"
+                   fxFlex.gt-sm="25"
+                   fxFlex.gt-xs="100">
+                <h4>{{'general.sponsors.edit.category' | translate}}</h4>
+                <mat-list>
+                  <mat-list-item *ngFor="let categoryId of sponsor.assignedCategories">
+                    <a [routerLink]="['/categories/details', categoryId]"
+                       *ngFor="let category of categories$ | async | filterBy: ['id']: categoryId">
+                      {{category.title}}
+                    </a>
+                  </mat-list-item>
+                </mat-list>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+
+      <mat-card-actions *ngIf="sponsor">
+        <div class="button-row">
+          <a mat-raised-button color="primary" [routerLink]="['/sponsors']">
+            {{'general.menu.sponsor.list' | translate}}
+          </a>
+          <a mat-raised-button color="accent" [routerLink]="['/sponsors/edit', sponsor.id]">
+            {{'general.edit' | translate }}
+          </a>
+          <a mat-raised-button color="warn" (click)="removeSponsor(sponsor)">
+            {{'general.delete' | translate }}
+          </a>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

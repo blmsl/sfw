@@ -1,0 +1,54 @@
+<div [formGroup]="form">
+  <h3>{{'general.locations.edit.addressTitle' | translate}}</h3>
+
+  <div formGroupName="address" fxLayout="column">
+
+    <div>
+      <mat-form-field fxFlex.gt-sm="66"
+                      fxFlex.gt-xs="100"
+                      fxFlex="100">
+        <input matInput
+               placeholder="{{'general.street' | translate}}"
+               formControlName="streetName"/>
+      </mat-form-field>
+
+      <mat-form-field fxFlexOffset="2"
+                      fxFlex.gt-sm="32"
+                      fxFlex.gt-xs="100"
+                      fxFlex="100">
+        <input matInput type="number"
+               placeholder="{{'general.houseNumber' | translate}}"
+               formControlName="houseNumber"/>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field fxFlex.gt-sm="32"
+                      fxFlex.gt-xs="100"
+                      fxFlex="100">
+        <input matInput
+               placeholder="{{'general.zip' | translate}}"
+               formControlName="zip"/>
+      </mat-form-field>
+
+      <mat-form-field fxFlexOffset="2"
+                      fxFlex.gt-sm="32"
+                      fxFlex.gt-xs="100"
+                      fxFlex="100">
+        <input matInput
+               placeholder="{{'general.city' | translate}}"
+               formControlName="city"/>
+      </mat-form-field>
+
+      <mat-form-field fxFlexOffset="2"
+                      fxFlex.gt-sm="32"
+                      fxFlex.gt-xs="100"
+                      fxFlex="100">
+        <input matInput
+               placeholder="{{'general.county' | translate}}"
+               formControlName="county"/>
+      </mat-form-field>
+    </div>
+
+  </div>
+</div>

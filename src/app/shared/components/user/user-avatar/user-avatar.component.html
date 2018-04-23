@@ -1,0 +1,5 @@
+<p *ngFor="let user of users$ | async | filterBy: ['id'] : userId">
+  <a [routerLink]="['/users/detail', user.id]">
+    {{user.firstName ? user.firstName + ' ' + user.lastName : user.displayName}}
+  </a>
+</p>

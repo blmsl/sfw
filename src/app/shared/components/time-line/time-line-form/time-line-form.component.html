@@ -1,0 +1,105 @@
+<div fxLayout="row"
+     [formGroup]="form"
+     fxLayoutWrap="wrap">
+
+
+  <div fxFlex="100"
+       *ngFor="let control of form.controls; let i = index; let first = first; let last = last">
+
+    <mat-card *ngIf="i === selectedTimeLineEvent"
+              [formGroupName]="i">
+
+      <mat-card-title>{{'general.timeLine.addEvent' | translate}}</mat-card-title>
+
+      <mat-card-content>
+
+        <div fxLayout="row"
+             fxLayoutWrap="wrap">
+
+          <mat-form-field fxFlex.gt-sm="50"
+                          fxFlex="100">
+            <input matInput placeholder="{{ 'general.timeLine.title' | translate}}" formControlName="title"/>
+          </mat-form-field>
+
+          <mat-form-field fxFlexOffset="1"
+                          fxFlex.gt-sm="49"
+                          fxFlex="100">
+            <input matInput placeholder="{{ 'general.timeLine.subTitle' | translate}}" formControlName="subTitle"/>
+          </mat-form-field>
+
+          <mat-form-field fxFlex.gt-sm="50"
+                          fxFlex="100">
+            <input matInput
+                   readonly="readonly"
+                   [matDatepicker]="dp3"
+                   formControlName="startDate"
+                   placeholder="{{'general.timeLine.startDate' | translate}}">
+            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field fxFlexOffset="1"
+                          fxFlex.gt-sm="49"
+                          fxFlex="100">
+            <input matInput
+                   readonly
+                   [matDatepicker]="dp4"
+                   formControlName="endDate"
+                   placeholder="{{'general.timeLine.endDate' | translate}}">
+            <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+            <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field fxFlex.gt-sm="50"
+                          fxFlex="100">
+            <input matInput placeholder="{{ 'general.timeLine.icon' | translate}}" formControlName="icon"/>
+          </mat-form-field>
+
+          <mat-form-field fxFlexOffset="1"
+                          fxFlex.gt-sm="49"
+                          fxFlex="100">
+            <mat-select placeholder="{{ 'general.timeLine.color' | translate}}" formControlName="color">
+              <mat-option *ngFor="let color of colors"
+                          [value]="color">
+                {{color | translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="100">
+            <mat-select placeholder="{{ 'general.timeLine.assignedArticle' | translate}}"
+                        formControlName="assignedArticle">
+              <mat-option *ngFor="let article of articles$ | async | orderBy: ['title']"
+                          [value]="article.id">
+                {{article.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <div class="button-row">
+          <button mat-raised-button
+                  [disabled]="!form.controls[i].valid"
+                  color="primary"
+                  type="button"
+                  (click)="save.emit(true)">
+            {{ 'general.timeLine.saveEvent' | translate}}
+          </button>
+          <button type="button"
+                  mat-raised-button
+                  color="accent"
+                  (click)="delete.emit(i)">
+            {{'general.timeLine.deleteEvent' | translate}}
+          </button>
+        </div>
+      </mat-card-actions>
+
+    </mat-card>
+  </div>
+
+</div>

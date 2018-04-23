@@ -1,0 +1,29 @@
+<div fxFlex="100"
+     *ngIf="members; else loadingTemplate">
+
+  <h3>{{ 'general.clubs.edit.honoraries.title' | translate}}
+    <small>{{ 'general.clubs.edit.honoraries.subTitle' | translate}}</small>
+  </h3>
+
+  <p *ngIf="(members | filterBy: ['clubData.assignedClub']: club.id | filterBy: ['clubData.status'] : 2).length === 0">
+    {{ 'general.clubs.edit.honoraries.noHonoraries' | translate}}
+  </p>
+
+  <mat-list>
+    <mat-list-item
+      *ngFor="let honorary of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday'] | filterBy: ['clubData.assignedClub']: club.id | filterBy: ['clubData.status'] : 2">
+      <mat-list-item>
+        <!--<img mat-list-avatar src="{{item.photo}}" alt="">-->
+        <h3 matLine> <!--{{(articles | filterBy: ['id'] : honorary.assignedArticle)[0].title}} -->
+          {{honorary.mainData.lastName}} {{honorary.mainData.firstName}} {{honorary.mainData.birthday | date: 'dd.MM.yy'}}
+        </h3>
+        <p matLine> since {{honorary.startDate}} </p>
+      </mat-list-item>
+    </mat-list-item>
+  </mat-list>
+
+</div>
+
+<ng-template #loadingTemplate>#
+  <loading-indicator></loading-indicator>
+</ng-template>

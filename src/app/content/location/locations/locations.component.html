@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-title>
+    <mat-icon>list</mat-icon>
+    {{'general.menu.location.main' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
+    <location-list
+      [locations]="locations$ | async"
+      [categories]="categories$ | async"
+      [categoryTypes]="categoryTypes$ | async | filterBy: ['link'] : 'location.types'">
+    </location-list>
+  </mat-card-content>
+</mat-card>

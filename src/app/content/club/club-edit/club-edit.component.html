@@ -1,0 +1,95 @@
+<form novalidate
+      (ngSubmit)="saveClub()"
+      [formGroup]="form">
+
+  <div fxLayout="row"
+       fxLayoutWrap="wrap">
+
+    <div fxFlex="100">
+      <div class="mat-card-top"
+           *ngIf="club; else loadingTemplate">
+        <mat-card>
+          <mat-card-title>
+            <mat-icon>mode_edit</mat-icon>
+            {{ club.id ? ('general.menu.club.edit' | translate) : 'general.menu.club.create' | translate }}
+          </mat-card-title>
+          <mat-card-subtitle></mat-card-subtitle>
+
+          <mat-card-content>
+
+            <mat-tab-group [dynamicHeight]="true"
+                           *ngIf="members$ | async as members; else loadingTemplate">
+
+              <mat-tab label="{{'general.clubs.edit.mainTitle' | translate}}">
+                <club-edit-main (logoUploadCompleted)="logoUploadCompleted($event)"
+                                [locations]="locations$ | async"
+                                [members]="members"
+                                [form]="form">
+                </club-edit-main>
+              </mat-tab>
+
+              <mat-tab label="{{ 'general.clubs.edit.historyTitle' | translate }}">
+                <club-history (add)="addTimeLineEvent($event)"
+                              (delete)="removeTimeLineEvent($event)"
+                              (edit)="editTimeLineEvent($event)"
+                              (save)="saveTimeLineEvent($event)"
+                              [selectedTimeLineEvent]="selectedClubTimeLineEvent"
+                              [form]="form">
+                </club-history>
+              </mat-tab>
+
+              <mat-tab label="{{ 'general.clubs.edit.managementTitle' | translate }}">
+                <club-management (add)="addClubManagementPosition($event)"
+                                 (delete)="removeClubManagementPosition($event)"
+                                 (save)="saveClubManagementPosition($event)"
+                                 [selectedClubManagementPosition]="selectedClubManagementPosition"
+                                 [members]="members"
+                                 [showLinks]="true"
+                                 [club]="club"
+                                 [positions]="positions$ | async"
+                                 [form]="form">
+                </club-management>
+              </mat-tab>
+
+              <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
+                Dateien
+              </mat-tab>
+
+              <mat-tab
+                label="{{'general.tables.colTitles.creation' | translate }} & {{'general.tables.colTitles.publication' | translate }}">
+                <div fxLayout="row"
+                     fxLayoutWrap="wrap">
+                  <div fxFlex.gt-sm="30"
+                       fxFlex="100">
+                    <creation-form [form]="form"></creation-form>
+                  </div>
+                </div>
+              </mat-tab>
+
+              <mat-tab label="{{ 'general.clubs.edit.honoraries.title' | translate}}">
+                <club-honoraries (add)="addHonorary($event)"
+                                 (delete)="removeHonorary($event)"
+                                 (save)="saveHonorary($event)"
+                                 [members]="members | filterBy: ['clubData.status'] : '2'"
+                                 [selectedHonorary]="selectedHonorary"
+                                 [form]="form">
+                </club-honoraries>
+              </mat-tab>
+
+              <!--<mat-tab label="test">
+                <pre>{{club | json}}</pre>
+              </mat-tab>-->
+
+            </mat-tab-group>
+          </mat-card-content>
+
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

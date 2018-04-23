@@ -1,0 +1,79 @@
+.uploader-content {
+  margin: 0 24px 24px;
+}
+
+.dropZone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-weight: 200;
+  height: 300px;
+  border: 2px dashed #f16624;
+  border-radius: 5px;
+  background: white;
+  margin: 10px 0;
+}
+.dropZone.hovering {
+  border: 2px solid #f16624;
+  color: #dadada !important;
+}
+.dropZone .file-label {
+  font-size: 1.2em;
+}
+
+.dropZone .upload-form {
+  border: 1px solid #ababab;
+  width: 99%;
+}
+
+.image-uploader-unsplash {
+  -webkit-transition: opacity 0.5s ease;
+  height: 36px;
+  opacity: 0.37;
+  transition: opacity 0.5s ease;
+  width: 36px;
+}
+
+.dropZone .upload-form, .image-uploader label, .singleUploadProgress {
+  -webkit-box-flex: 1;
+  display: -webkit-box;
+  display: flex;
+  flex-grow: 1;
+}
+
+.idropZone .image-cancel {
+  -webkit-box-align: center;
+  align-items: center;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.2);
+  display: flex;
+  font-size: 13px;
+  line-height: 10px;
+  padding: 8px;
+  position: absolute;
+  right: 10px;
+  text-decoration: none;
+  top: 10px;
+  z-index: 300;
+}
+
+.dropZone .image-cancel:hover {
+  background: #f05230;
+  color: #fff;
+  cursor: pointer;
+}
+
+.dropZone img {
+  display: block;
+  line-height: 0;
+  margin: 0 auto;
+  max-width: 100%;
+  min-width: 200px;
+}
+
+.aligner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

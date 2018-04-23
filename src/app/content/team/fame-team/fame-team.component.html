@@ -1,0 +1,124 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex="100"
+       *ngIf="teams$ | async as teams; else loadingTemplate">
+    <mat-card
+      *ngFor="let teamOfTheMonth of teamsOfTheMonth$ | async | filterBy: ['month']: currentMonth">
+      <mat-card-content
+        *ngFor="let team of teams | filterBy: ['id'] : teamOfTheMonth.assignedTeamId">
+
+        <div fxLayout="row">
+          <span fxFlex.gt-sm="35"
+                fxFlex="100">
+            <h1>{{'general.teams.fame.title' | translate}} <b>{{getTitle()}}</b></h1>
+
+            <img *ngIf="team.logoURL" [src]="team.logoURL"/>
+
+            <h3 style="margin: 25px 0;"> {{team.title}} ({{team.subTitle}})</h3>
+
+            <p class="mt-xs mb-xs" *ngIf="seasons$ | async as seasons; else loadingTemplate">
+              {{'general.teams.fame.season' | translate}}:
+              <span *ngFor="let season of seasons |filterBy: ['id']: team.assignedSeason">
+                  {{season.title}}
+                </span>
+            </p>
+
+
+            <p *ngIf="categories$ | async as categories; else loadingTemplate">
+              {{'general.teams.fame.categories' | translate}}:
+              <span *ngFor="let assignedCategory of team.assignedTeamCategories; let last = last">
+                  <a [routerLink]="['/categories/detail',category.id ]"
+                     *ngFor="let category of categories | filterBy: ['id'] : assignedCategory">
+                    {{category.title}}
+                  </a><span *ngIf="!last">, </span>
+                </span>
+            </p>
+
+
+            <h3 style="margin-top: 25px;">{{'general.teams.edit.management.title' | translate}}</h3>
+            <span class="block mt-xs mb-xs" *ngIf="!team.assignedPositions.length">
+              {{'general.teams.edit.position.noPosition' | translate}}
+            </span>
+
+            <p *ngIf="members$ | async as members; else loadingTemplate">
+            <span class="block mt-xs mb-xs" *ngFor="let position of team.assignedPositions | orderBy: 'position.type'">
+              {{position.title}}
+              <a [routerLink]="['/members/detail', position.assignedMember]">
+                {{(members | filterBy: ['id'] : position.assignedMember)[0].mainData.lastName}} {{(members | filterBy: ['id'] : position.assignedMember)[0].mainData.firstName}}
+                {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.birthday | date: 'dd.MM.yy'}}
+                ({{position.position}})
+              </a>
+            </span>
+            </p>
+
+            <h3 style="margin-top: 25px">{{'general.teams.fame.playerList' | translate}}
+              ({{team.assignedPlayers.length}} {{'general.teams.fame.players' | translate}})
+            </h3>
+            <ul *ngIf="members$ | async as members; else loadingTemplate">
+              <li *ngFor="let playerId of team.assignedPlayers">
+                <a [routerLink]="['/members/detail', playerId]">
+                  {{ (members | filterBy: ['id'] : playerId)[0].mainData.lastName}}
+                  {{ (members | filterBy: ['id'] : playerId)[0].mainData.firstName}}
+                  {{ (members | filterBy: ['id'] : playerId)[0].mainData.birthday | date: 'dd.MM.yy'}}
+                </a>
+              </li>
+            </ul>
+
+            <a [routerLink]="['/teams/detail', team.id]"
+               mat-raised-button
+               color="primary">{{'general.teams.fame.viewProfile' | translate}}
+            </a>
+          </span>
+
+          <div fxFlex.gt-sm="55"
+               fxFlex="100">
+            <figure *ngIf="team.photoURL; else noPhotoTemplate">
+              <div>
+                <img fxFlex="100"
+                     [src]="team.photoURL"
+                     alt="">
+              </div>
+              <div class="text-xs-left">
+                <small>{{'general.teams.fame.photoDescription' | translate}}</small>
+                {{team.photoDescription}}
+              </div>
+            </figure>
+          </div>
+        </div>
+      </mat-card-content>
+      <hr>
+      <mat-card-content>
+        <!-- ToDo: Statistiken -->
+        <div fxLayout="row" class="text-xs-center">
+          <div fxFlex="33" style="color: green">
+            <h1 class="ma-0"><b>23,8K</b></h1>
+            <small>{{'general.teams.fame.wins' | translate}}</small>
+          </div>
+          <div fxFlex="33" style="color: red">
+            <h1 class="ma-0"><b>569</b></h1>
+            <small>{{'general.teams.fame.loss' | translate}}</small>
+          </div>
+          <div fxFlex="33">
+            <h1 class="ma-0"><b>67</b></h1>
+            <small>{{'general.teams.fame.draws' | translate}}</small>
+          </div>
+        </div>
+      </mat-card-content>
+      <!--<hr>
+      <mat-card-content>
+        <h4 class="mt-0">About</h4>
+        <p>Infotext</p>
+      </mat-card-content>-->
+    </mat-card>
+  </div>
+
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>
+
+<ng-template #noPhotoTemplate>
+  <p>{{'general.teams.fame.noPhoto' | translate}}</p>
+</ng-template>

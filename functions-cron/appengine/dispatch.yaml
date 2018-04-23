@@ -1,0 +1,9 @@
+# application: simple-sample
+
+dispatch:
+- url: "*/python/*"
+  module: pymodule
+
+- url: "*/php/*"
+  module: default
+

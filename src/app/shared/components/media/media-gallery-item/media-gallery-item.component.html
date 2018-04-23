@@ -1,0 +1,59 @@
+<!--<div class="profile-card">
+
+  <a href="#mediaPreview" (click)="setSelectedItem(item)" data-toggle="modal" data-target="#mediaPreview">
+    <img class="img-fluid img-thumbnail" [src]="
+      (item.fileType === 'image/jpeg' || item.fileType === 'image/png'
+      || item.fileType === 'image/gif' || item.fileType === 'image') ?
+       item.url : 'http://via.placeholder.com/350?text=' + item.fileType"/>
+  </a>
+
+</div>
+
+<div class="modal fade" id="mediaPreview" tabindex="-1" role="dialog" aria-labelledby="mediaPreview" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" *ngIf="selectedItem">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="mediaPreviewTitle">
+          {{'general.uploader.preview' | translate}}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xl-12">
+              <img
+                *ngIf="(item.fileType === 'image/jpeg' || item.fileType === 'image/png' || item.fileType === 'image/gif' || item.fileType === 'image')"
+                class="img-fluid img-thumbnail" title="{{item.title}}" [src]="item.url "/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xl-6">
+              <select title="{{'general.uploader.moveItemToGallery' | translate}}" class="form-control" style="color: black;"
+                      [(ngModel)]="item.assignedItemGallery" (ngModelChange)="moveItemToGallery(item)">
+                <option value="" selected>{{'general.uploader.noGallery' | translate}}</option>
+                <option *ngFor="let gallery of assignedGalleries" [value]="gallery.id">{{gallery.title}}</option>
+              </select>
+            </div>
+            <div class="col-xl-6">
+              <h4 inline-edit [(ngModel)]="item.title" [item]="item" label="Title" [required]="true" type="text"></h4>
+              <p inline-edit [(ngModel)]="item.description" [item]="item" label="Description" [required]="true" type="text"></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-12">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger">Delete Item</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->

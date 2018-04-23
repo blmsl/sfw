@@ -1,0 +1,80 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     *ngIf="positions && members; else loadingTemplate"
+     [formGroup]="form">
+
+  <div fxFlex.gt-sm="47"
+       fxFlex.gt-xs="100"
+       formGroupName="management">
+
+    <div fxLayout="row"
+         fxLayoutWrap="wrap">
+
+      <div fxFlex="100">
+        <h3>{{'general.clubs.edit.management.current.title' | translate}}</h3>
+        <div style="height: 180px; width: 100%; background-color: #7c7c7c;">
+          <ul>
+            <li>Foto ( + Upload)</li>
+            <lI>Foto-Beschreibung</lI>
+          </ul>
+        </div>
+      </div>
+
+      <div fxFlex="100" style="margin-top: 50px;">
+        <label>
+          {{'general.clubs.edit.management.current.description' | translate}}
+        </label>
+        <quill-editor formControlName="photoDescription">
+        </quill-editor>
+      </div>
+    </div>
+  </div>
+
+
+  <div fxFlex.gt-sm="50"
+       fxFlexOffset.gt-sm="3"
+       fxFlex="100">
+
+    <div *ngIf="selectedClubManagementPosition === -1">
+      <h3>{{'general.clubs.edit.management.positions.title' | translate}}</h3>
+
+      <button mat-raised-button
+              style="margin-bottom: 25px"
+              type="button"
+              color="primary"
+              (click)="add.emit(true)">
+        {{'general.clubs.edit.management.positions.addMember' | translate}}
+      </button>
+
+      <club-management-list [form]="form"
+                            [members]="members"
+                            [positions]="positions"
+                            [showLinks]="showLinks"
+                            [club]="club"
+                            [selectedClubManagementPosition]="selectedClubManagementPosition"
+                            (add)="add.emit($event)"
+                            (delete)="delete.emit($event)"
+                            (edit)="edit.emit($event)">
+      </club-management-list>
+    </div>
+
+    <div *ngIf="selectedClubManagementPosition !== -1">
+      <h3>{{'general.clubs.edit.management.list.title' | translate}}</h3>
+
+      <club-management-form [form]="form"
+                            [members]="members"
+                            [positions]="positions"
+                            [selectedClubManagementPosition]="selectedClubManagementPosition"
+                            (delete)="delete.emit($event)"
+                            (save)="save.emit($event)">
+      </club-management-form>
+    </div>
+
+  </div>
+
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>
+

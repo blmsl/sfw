@@ -1,0 +1,27 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     [formGroup]="form">
+
+  <div fxFlex="100"
+       formGroupName="creation">
+    <mat-form-field fxFlex="100">
+      <input matInput
+             placeholder="{{'general.creation.creationDate' | translate}}"
+             formControlName="at">
+    </mat-form-field>
+  </div>
+
+  <div fxFlex="100"
+       formGroupName="creation">
+    <mat-form-field fxFlex="100">
+      <mat-select placeholder="{{'general.creation.author' | translate}}"
+                  formControlName="from">
+        <mat-option value="system">{{'general.creation.viaScript' | translate}}</mat-option>
+        <mat-option *ngFor="let user of users| orderBy: ['firstName', 'lastName', 'email']"
+                    [value]="user.id">
+          {{user.firstName && user.lastName ? user.firstName + ' ' + user.lastName : user.email}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

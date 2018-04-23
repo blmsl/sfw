@@ -1,0 +1,72 @@
+<div *ngIf="members$ | async as members; else loadingTemplate">
+  <div fxLayout="row"
+       fxLayoutWrap="wrap"
+       *ngFor="let memberOfTheWeek of membersOfTheWeek$ | async">
+
+    <h2 fxFlex="100" *ngIf="getTitle(memberOfTheWeek) === currentWeek">
+      {{'general.menu.member.fame' | translate}} {{ getTitle(memberOfTheWeek) }}
+    </h2>
+
+    <div fxFlex.gt-sm="25"
+         fxFlex="100" *ngFor="let entry of memberOfTheWeek[currentWeek]">
+      <mat-card>
+        <mat-card-content *ngFor="let member of members | filterBy: ['id']: entry.assignedMemberId">
+          <div fxLayout="row">
+            <div fxFlex="55">
+              <h1 class="ma-0"><b>{{'general.members.fame.' + entry.type | translate}}</b></h1>
+              <small>{{member.contact ? member.contact.email : '&nbsp;'}}</small>
+              <p class="mt-xs mb-xs">{{member.mainData.firstName}} {{member.mainData.lastName}}</p>
+              <p class="block mt-xs mb-xs">{{member.mainData.birthday ? (member.mainData.birthday | date : 'dd.MM.yy') : ''}}</p>
+              <a [routerLink]="['/members/detail', member.id]" mat-raised-button color="primary">
+                {{'general.members.fame.viewProfile' | translate}}
+              </a>
+            </div>
+            <div fxFlex="45">
+              <figure>
+                <div class="text-xs-center">
+                  <img [src]="memberService.getProfileImage(member)"
+                       alt="{{member.mainData.firstName}} {{member.mainData.lastName}}"
+                       class="radius-circle">
+                  <!--<div class="text-md mt10">Account Usage</div>-->
+                </div>
+                <div class="ma-xs">
+                </div>
+                <!--<div class="text-xs-center">
+                  <small>234Gb of 879Gb</small>
+                </div>-->
+              </figure>
+            </div>
+          </div>
+        </mat-card-content>
+        <!--<hr>
+        <mat-card-content>
+          <div fxLayout="row" class="text-xs-center">
+            <div fxFlex="33">
+              <h1 class="ma-0"><b>23,8K</b></h1>
+              <small>Followers</small>
+            </div>
+            <div fxFlex="33">
+              <h1 class="ma-0"><b>569</b></h1>
+              <small>Following</small>
+            </div>
+            <div fxFlex="33">
+              <h1 class="ma-0"><b>67</b></h1>
+              <small>Posts</small>
+            </div>
+          </div>
+        </mat-card-content>
+        <hr>
+        <mat-card-content>
+          <h4 class="mt-0">About</h4>
+          <pre>{{entry | json}}</pre>
+          <p>Test</p>
+        </mat-card-content>-->
+      </mat-card>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

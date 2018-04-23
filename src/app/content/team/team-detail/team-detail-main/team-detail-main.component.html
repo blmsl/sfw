@@ -1,0 +1,77 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex.gt-sm="70"
+       fxFlex="100">
+    <mat-list *ngIf="team && seasons && clubs && categories; else loadingTemplate">
+
+      <mat-list-item>
+        <h4>{{'general.teams.edit.title' | translate}}</h4>
+        <span class="right">{{team.title}}</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <h4>{{'general.teams.edit.subTitle' | translate}}</h4>
+        <span class="right">{{team.subTitle}}</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <h4>{{'general.teams.edit.assignedClub' | translate}}</h4>
+        <span class="right">
+          <a [routerLink]="['clubs/detail', club.id]"
+             *ngFor="let club of clubs | filterBy: ['id'] : team.assignedClub">
+            {{club.title}}
+          </a>
+        </span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <h4>{{'general.teams.edit.externalLink' | translate}}</h4>
+        <span class="right">
+          <a target="_blank" [href]="team.externalTeamLink">{{team.externalTeamLink}}</a>
+        </span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <h4>{{'general.teams.edit.assignedSeason' | translate}}</h4>
+        <span class="right"
+              *ngFor="let season of seasons | filterBy: ['id'] : team.assignedSeason">
+          {{season.title}}
+        </span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <h4>{{'general.teams.edit.assignedCategories' | translate}}</h4>
+        <span class="right">
+          <a [routerLink]="['/categories/detail', categoryId]"
+             *ngFor="let categoryId of team.assignedTeamCategories; let last = last">
+            {{(categories | filterBy: ['id'] : categoryId)[0].title}}<span *ngIf="!last">, </span>
+          </a>
+        </span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <h4>{{'general.teams.edit.isOfficialTeam' | translate}}</h4>
+        <mat-checkbox class="right"
+                      [disabled]="true"
+                      [checked]="team.isOfficialTeam">
+        </mat-checkbox>
+      </mat-list-item>
+
+    </mat-list>
+  </div>
+
+  <div fxFlex.gt-sm="30"
+       fxFlex="100">
+    <h3>{{'general.teams.edit.photo.title' | translate}}</h3>
+    <p>ToDo</p>
+
+    <h3>{{'general.teams.edit.logo.title' | translate}}</h3>
+    <img [src]="team.logoURL" *ngIf="team.logoURL" />
+  </div>
+</div>
+
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

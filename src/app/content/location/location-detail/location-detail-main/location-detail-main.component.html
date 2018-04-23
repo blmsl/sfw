@@ -1,0 +1,38 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-subtitle>{{'general.locations.list.colTitles.name' | translate}}</mat-card-subtitle>
+    <mat-card-title>{{location.title}}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-header *ngIf="location.fupaLink">
+    <mat-card-subtitle>{{'general.locations.edit.fupaPlaceholder' | translate}}</mat-card-subtitle>
+    <mat-card-title><a target="_blank" [href]="location.fupaLink">{{location.fupaLink}}</a></mat-card-title>
+  </mat-card-header>
+
+  <mat-card-header>
+    <mat-card-subtitle>{{'general.locations.list.colTitles.type' | translate}}</mat-card-subtitle>
+    <mat-card-title>
+      <a *ngFor="let category of categories | filterBy: ['id']: location.assignedCategory"
+         [routerLink]="['/categories/detail', location.assignedCategory]">
+        {{category.title}}
+      </a>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-header>
+    <mat-card-subtitle>{{'general.locations.list.colTitles.address' | translate}}</mat-card-subtitle>
+    <mat-card-title>
+      <div>
+        {{location.address.streetName}} {{location.address.houseNumber ? location.address.houseNumber : ''}}<br/>
+        {{location.address.zip}} {{location.address.city}}<br/>
+        {{location.address.county}}
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+
+</mat-card>
+
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

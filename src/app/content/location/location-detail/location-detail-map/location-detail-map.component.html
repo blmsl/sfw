@@ -1,0 +1,31 @@
+<small>{{formattedAddress}}</small>
+
+<div *ngIf="response">
+  <div id="map_canvas" class="sebm-google-map-container">
+    <agm-map
+      [latitude]="lat"
+      [longitude]="lng"
+      [zoom]="zoom"
+      [disableDefaultUI]="false"
+      [zoomControl]="false"
+      (mapClick)="mapClicked($event)">
+
+      <agm-marker
+        *ngFor="let m of markers; let i = index"
+        (markerClick)="clickedMarker(m.label, i)"
+        [latitude]="m.lat"
+        [longitude]="m.lng"
+        [label]="m.label">
+
+        <agm-info-window>
+          <h1 style="color: black;">{{location.title}}</h1>
+          <address style="color: black;">
+            {{location.address.streetName}} {{location.address.houseNumber}}<br/>
+            {{location.address.zip}} {{location.address.city}}
+          </address>
+        </agm-info-window>
+
+      </agm-marker>
+    </agm-map>
+  </div>
+</div>

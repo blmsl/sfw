@@ -1,0 +1,24 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap" >
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-title>
+        <mat-icon>event</mat-icon>
+        {{'general.menu.event.main' | translate}}
+      </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+      <mat-card-content>
+        Display Calendar
+        <!--<angular2-fullcalendar *ngIf="isInitialized; else loadingTemplate"
+                               #calendar
+                               id="calendar"
+                               [options]="calendarOptions">
+        </angular2-fullcalendar>-->
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

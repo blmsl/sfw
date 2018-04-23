@@ -1,0 +1,22 @@
+:host {
+  height: 70vh;
+  min-height: 70vh;
+}
+
+.mat-grid-tile {
+  margin: 10px 0;
+  padding: 10px 0;
+}
+
+quill-editor, .ql-editor {
+  height: 85%;
+  padding: 25px 0;
+}
+
+/*
+.mat-action-row {
+  align-items: left;
+  justify-content: flex-start !important;
+  text-align: left;
+}
+*/

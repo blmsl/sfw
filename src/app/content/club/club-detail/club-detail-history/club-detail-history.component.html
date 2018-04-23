@@ -1,0 +1,21 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex.gt-sm="55"
+       fxFlex.gt-xs="100"
+       fxFlex="100">
+    <h3>{{'general.clubs.edit.history' | translate}}</h3>
+    <div [innerHTML]="club.history"></div>
+  </div>
+
+  <div fxFlexOffset="5"
+       fxFlex.gt-sm="40"
+       fxFlex.gt-xs="100"
+       fxFlex="100">
+    <h3>{{'general.clubs.edit.timeLineTitle' | translate}}</h3>
+    <time-line-list [showLinks]="false"
+               [form]="form.controls['timeLine']">
+    </time-line-list>
+  </div>
+
+</div>

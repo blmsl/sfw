@@ -1,0 +1,85 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+
+  <div fxFlex="100">
+    <mat-card class="mat-card-top">
+      <mat-card-title>
+        <mat-icon>details</mat-icon>
+        {{'general.menu.team.detail' | translate}}
+      </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+
+      <mat-card-content *ngIf="team; else loadingTemplate">
+        <mat-tab-group class="demo-tab-group" [dynamicHeight]="true">
+          <mat-tab label="{{'general.teams.edit.mainTitle' | translate}}">
+            <team-detail-main [seasons]="seasons$ | async"
+                              [clubs]="clubs$ | async"
+                              [categories]="categories$ | async"
+                              [team]="team">
+            </team-detail-main>
+          </mat-tab>
+
+          <mat-tab label="{{'general.teams.edit.management.title' | translate}}">
+            <team-detail-positions [team]="team"
+                                   [categories]="categories$ | async"
+                                   [members]="members$ | async">
+            </team-detail-positions>
+          </mat-tab>
+
+          <mat-tab label="{{'general.teams.edit.training.title' | translate}}">
+            <team-detail-training [team]="team"
+                                  [locations]="locations$ | async">
+            </team-detail-training>
+          </mat-tab>
+
+          <mat-tab label="{{'general.teams.edit.timeLine.title' | translate}}">
+            <team-detail-events [team]="team"></team-detail-events>
+          </mat-tab>
+
+          <mat-tab label="{{'general.teams.edit.matches.title' | translate}}">
+            <team-detail-matches [categories]="categories$ | async"
+                                 [matches]="matches$ | async"
+                                 [events]="matchService.getOtherEventList() | orderBy: ['title']"
+                                 [team]="team">
+            </team-detail-matches>
+          </mat-tab>
+
+          <mat-tab
+            label="{{'general.teams.edit.competitions.title' | translate}} &amp; {{'general.teams.edit.standings.title' | translate}}">
+            <team-detail-standings [team]="team"></team-detail-standings>
+          </mat-tab>
+
+          <mat-tab label="{{'general.teams.edit.media.title' | translate}}">
+            <team-detail-media [team]="team"></team-detail-media>
+          </mat-tab>
+
+        </mat-tab-group>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <div class="button-row">
+          <a mat-raised-button color="primary" [routerLink]="['/teams']">
+            {{'general.menu.team.list' | translate}}
+          </a>
+          <a mat-raised-button color="accent" [routerLink]="['/teams/edit', team.id]">
+            {{'general.edit' | translate }}
+          </a>
+          <a mat-raised-button color="warn" (click)="removeTeam(team)">
+            {{'general.delete' | translate }}
+          </a>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>
+
+<ng-template #noArticlesTemplate>
+  <p>{{ 'general.teams.detail.noAssignedArticles' | translate }}</p>
+</ng-template>
+
+<ng-template #noImageTemplate>
+  <p>{{ 'general.teams.edit.noLogo' | translate }}</p>
+</ng-template>

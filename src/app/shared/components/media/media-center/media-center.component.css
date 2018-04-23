@@ -1,0 +1,19 @@
+ng-sidebar-container {
+  height: 100%;
+}
+
+:host >>> .ng-sidebar {
+  width: 99%;
+  background-color: #ff6600 !important;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  z-index: 1 !important;
+}
+
+ng-sidebar-container {
+  flex-basis: 100%;
+  width: auto !important;
+}

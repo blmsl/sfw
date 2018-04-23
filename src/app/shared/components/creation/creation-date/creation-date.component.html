@@ -1,0 +1,3 @@
+<span *ngIf="creation">
+  {{ moment(creation).fromNow() }} ({{moment(creation).format('L') }}, {{moment(creation).format('LT') }} {{'general.oClock' | translate}})
+</span>

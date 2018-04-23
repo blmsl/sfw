@@ -1,0 +1,18 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-title>
+        <mat-icon>list</mat-icon>
+        {{'general.menu.club.main' | translate}}
+      </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+      <mat-card-content>
+        <club-list
+          [clubs$]="clubs$ | async"
+          (remove)="removeClub($event)"
+          (update)="updateClub($event)">
+        </club-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

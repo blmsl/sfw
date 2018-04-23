@@ -1,0 +1,19 @@
+<div style="display:inline-block;width:100%;overflow-y:auto;">
+  <ul class="timeLine timeLine-horizontal">
+
+    <li class="timeLine-item" *ngFor="let event of timeLineEvents">
+      <div  [class]="'timeLine-badge ' + event.color"><i *ngIf="event.icon" [class]="'fa fa-' + event.icon"></i></div>
+      <div class="timeLine-panel">
+        <div class="timeLine-heading">
+          <h5 class="timeLine-title">{{event.title}}</h5>
+          <p><small class="text-muted"><i class="fa fa-clock-o"></i>
+            {{ event.assignedItemType === 'main' ? (event.date | date: 'dd.MM.yy') : (event.date + ' - ' + event.subTitle)}}
+          </small></p>
+        </div>
+        <div class="timeLine-body" [innerHtml]="event.text">
+        </div>
+      </div>
+    </li>
+
+  </ul>
+</div>

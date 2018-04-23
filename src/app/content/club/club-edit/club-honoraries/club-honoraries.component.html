@@ -1,0 +1,39 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap"
+     [formGroup]="form">
+
+  <div fxFlex.gt-sm="49"
+       fxFlex="100">
+    <h3>{{'general.clubs.edit.honoraries.title' | translate}}</h3>
+    <p>{{'general.clubs.edit.honoraries.description' | translate}}</p>
+    <club-honorary-list [club]="club"
+                        [members]="members">
+    </club-honorary-list>
+  </div>
+
+  <div fxFlex.gt-sm="49"
+       fxFlexOffset.gt-sm="2"
+       fxFlex="100">
+    <button mat-raised-button
+            style="margin-bottom: 25px"
+            *ngIf="selectedHonorary === -1"
+            type="button"
+            color="primary"
+            (click)="add.emit(true)">
+      {{'general.clubs.edit.honoraries.addHonorary' | translate}}
+    </button>
+
+    <club-honorary-form [form]="form"
+                        [members]="members"
+                        [selectedHonorary]="selectedHonorary"
+                        (delete)="delete.emit($event)"
+                        (save)="save.emit($event)">
+    </club-honorary-form>
+  </div>
+</div>
+
+
+
+
+
+

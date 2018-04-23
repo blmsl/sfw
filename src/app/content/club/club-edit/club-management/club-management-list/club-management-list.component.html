@@ -1,0 +1,59 @@
+<mat-accordion class="example-headers-align"
+               [displayMode]="'flat'">
+  <mat-expansion-panel
+    *ngFor="let category of positions | orderBy: ['title']; let i = index; let first = first; let last = last"
+    [expanded]="step === i"
+    (opened)="setStep(i)"
+    hideToggle="false">
+
+    <mat-expansion-panel-header [collapsedHeight]="'24px'" [expandedHeight]="'24px'">
+      <mat-panel-title>
+        {{category.title}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-tab-group class="mat-tab-group"
+                   *ngIf="step === i"
+                   [dynamicHeight]="true">
+      <mat-tab label="{{'general.clubs.edit.management.positions.todoTitle' | translate}}">
+        <div [innerHtml]="category.description | sanitizeHtml"></div>
+        <a mat-raised-button
+           color="warn"
+           [routerLink]="['/categories/edit', category.id]">
+          {{'general.clubs.edit.management.positions.editToDos' | translate}}
+        </a>
+      </mat-tab>
+      <mat-tab label="{{'general.clubs.edit.management.positions.timeLineTitle' | translate}}">
+        <p *ngIf="(club.management.positions | filterBy: ['assignedPosition'] : category.id).length === 0">
+          {{'general.clubs.edit.management.positions.noPersons' | translate}}
+        </p>
+        <mat-list>
+          <mat-list-item
+            *ngFor="let position of club.management.positions | filterBy: ['assignedPosition'] : category.id | orderBy: '-startDate'">
+                <span fxFlex="35">
+                  {{position.startDate | date: 'dd.MM.yy' }}
+                  <span *ngIf="position.endDate">&ndash; {{position.endDate | date: 'dd.MM.yy' }}</span>
+                </span>
+            <a fxFlex="50"
+               fxFlexOffset="5"
+               [routerLink]="['/members/edit', position.assignedMember]">
+              {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.lastName}}
+              {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.firstName}}
+              {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.birthday | date:
+              'dd.MM.yy'}}
+            </a>
+            <!--<a fxFlex="5" (click)="edit.emit(position)"
+               *ngIf="showLinks">
+              <mat-icon color="accent">edit</mat-icon>
+            </a>-->
+            <a fxFlex="5" (click)="deleteManagementPosition(position)"
+               *ngIf="showLinks">
+              <mat-icon color="warn">delete</mat-icon>
+            </a>
+          </mat-list-item>
+        </mat-list>
+      </mat-tab>
+    </mat-tab-group>
+
+  </mat-expansion-panel>
+</mat-accordion>

@@ -1,0 +1,31 @@
+<h3>{{'general.members.edit.interviews.title' | translate}}</h3>
+
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+
+  <div fxFlex="100">
+
+    <p *ngIf="!member.assignedInterviews || member.assignedInterviews.length === 0">
+      {{'general.members.edit.interviews.noEntries' | translate}}
+    </p>
+
+    <div *ngIf="member.assignedInterviews && member.assignedInterviews.length > 0">
+      <mat-list dense *ngIf="articles$ | async as articles; else loadingTemplate">
+        <mat-list-item *ngFor="let entry of articles | filterBy: ['id'] : member.assignedInterviews">
+        <span fxFlex.gt-sm="40"
+              fxFlex="100">{{entry.entry}}
+        </span>
+          <span fxFlex.gt-sm="60"
+                fxFlex="100">{{entry.value}}
+        </span>
+        </mat-list-item>
+
+      </mat-list>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

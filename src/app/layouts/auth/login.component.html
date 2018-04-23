@@ -1,0 +1,42 @@
+<div class="session">
+  <div class="session-content">
+    <div class="session-wrapper">
+      <mat-card>
+        <mat-card-content>
+
+          <div class="text-xs-center pb-1">
+            <img src="/assets/sfw/sfw.png" alt="{{ 'siteTitle' | translate }}"/>
+            <!--<p class="mat-text-muted"
+               [innerHtml]="sanitizer.bypassSecurityTrustHtml('Global.Login.defaultLoginMessage' | translate)"></p>-->
+          </div>
+
+          <sign-in
+            *ngIf="showSignInForm"
+            [@authAnimation]="showSignInForm"
+            [passwordMinLength]="passwordMinLength"
+            [passwordMaxLength]="passwordMaxLength"
+            [signUpStatus]="signUpStatus"
+            [showVerification]="showVerification"
+            (toggleFormVisibility)="toggleFormVisibility($event)">
+          </sign-in>
+
+          <sign-up
+            *ngIf="showSignUpForm"
+            [@authAnimation]="showSignUpForm"
+            [nameMinLength]="nameMinLength"
+            [passwordMinLength]="passwordMinLength"
+            [passwordMaxLength]="passwordMaxLength"
+            (toggleFormVisibility)="toggleFormVisibility($event)">
+          </sign-up>
+
+          <forgot-password
+            *ngIf="showPasswordForm"
+            [@authAnimation]="showPasswordForm"
+            (toggleFormVisibility)="toggleFormVisibility($event)">
+          </forgot-password>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

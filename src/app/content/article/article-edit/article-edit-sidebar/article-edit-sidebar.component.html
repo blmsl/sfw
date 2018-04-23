@@ -1,0 +1,44 @@
+<div fxLayout="row"
+     fxLayoutWrap="wrap">
+  <div fxFlex="100" style="text-align: right">
+    <button mat-raised-button (click)="notifications.toggle()">Close</button>
+  </div>
+
+  <div fxFlex="100">
+
+    <mat-tab-group [formGroup]="form"
+                   [dynamicHeight]="true"
+                   *ngIf="categories && categoryTypes && locations && matches && members && seasons && teams; else loadingTemplate">
+
+      <mat-tab label="Artikel-Daten">
+        <sidebar-main-data [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
+                           [categories]="categories"
+                           [locations]="locations"
+                           [members]="members"
+                           [seasons]="seasons"
+                           [teams]="teams"
+                           [form]="form">
+        </sidebar-main-data>
+      </mat-tab>
+
+      <mat-tab label="Soziale Netzwerke">
+        <sidebar-meta-data [form]="form"
+                           [applications]="applicationService.applications$ | async">
+        </sidebar-meta-data>
+      </mat-tab>
+
+      <mat-tab [disabled]="!form.get('isMatch').value"
+               label="Spieldaten">
+        <sidebar-match-data [form]="form"
+                            [matches]="matches">
+        </sidebar-match-data>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

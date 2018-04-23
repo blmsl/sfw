@@ -1,0 +1,129 @@
+<div [formGroup]="form"
+     fxLayout="column"
+     fxLayoutAlign="space-between stretch">
+
+  <div style="border: 1px solid #cecece; min-height: 150px; text-align: center">
+    Post Image
+  </div>
+
+  <div class="row">
+    <mat-form-field fxFlex.gt-sm="49"
+                    fxFlex="100"
+                    hintLabel="Max 50 characters">
+      <input matInput maxlength="50" formControlName="subTitle"
+             placeholder="{{'general.articles.edit.subTitle' | translate}}">
+    </mat-form-field>
+
+    <mat-form-field fxFlexOffset.gt-sm="2"
+                    fxFlex.gt-sm="49"
+                    fxFlex="100">
+      <input matInput formControlName="postURL"
+             placeholder="{{'general.articles.edit.postURL' | translate}}">
+      <mat-hint align="end">
+        <a *ngIf="form.get('postURL').value" [href]="form.get('postURL').value">Visit Link</a>
+      </mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field fxFlex.gt-sm="49"
+                    fxFlex="100">
+      <input matInput maxlength="24" formControlName="articleDate"
+             placeholder="{{'general.articles.edit.articleDate' | translate}}">
+    </mat-form-field>
+
+    <div fxFlexOffset.gt-sm="2"
+         fxFlex.gt-sm="49"
+         fxFlex="100">
+      <tag-input formControlName="assignedTags"
+                 [editable]="true">
+      </tag-input>
+    </div>
+  </div>
+
+  <div class="row">
+    <mat-form-field formGroupName="creation"
+                    fxFlex.gt-sm="49"
+                    fxFlex="100">
+      <mat-select placeholder="{{'general.articles.edit.author' | translate}}"
+                  formControlName="by">
+        <mat-option
+          *ngFor="let member of members | orderBy: ['mainData.firstName', 'mainData.lastName', 'mainData.birthday']"
+          [value]="member.id">
+          {{member.mainData.firstName}} {{member.mainData.lastName}}
+          {{ member.mainData.birthday | date: 'dd.MM.yy' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlexOffset.gt-sm="2"
+                    fxFlex.gt-sm="49"
+                    fxFlex="100">
+      <mat-select placeholder="{{'general.articles.edit.assignedLocation' | translate}}"
+                  formControlName="assignedLocation">
+        <mat-option
+          *ngFor="let location of locations | orderBy: ['title']"
+          [value]="location.id">
+          {{location.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field fxFlex.gt-sm="49"
+                    fxFlex="100">
+      <mat-select placeholder="{{'general.articles.edit.assignedTeams' | translate}}"
+                  formControlName="assignedTeams" multiple>
+        <mat-optgroup *ngFor="let season of seasons | orderBy: ['-title']"
+                      [label]="season.title">
+          <mat-option
+            *ngFor="let team of teams | filterBy: ['assignedSeason'] : season.id | orderBy: ['title', 'subTitle']"
+            [value]="team.id">
+            {{team.title}} {{team.subTitle}}
+          </mat-option>
+        </mat-optgroup>
+
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlexOffset.gt-sm="2"
+                    fxFlex.gt-sm="49"
+                    fxFlex="100">
+      <mat-select placeholder="{{'general.articles.edit.assignedArticleCategories' | translate}}"
+                  formControlName="assignedCategories" multiple>
+        <mat-optgroup *ngFor="let categoryType of categoryTypes"
+                      [label]="'general.menu.' + categoryType.link + '.main' | translate">
+          <mat-option
+            *ngFor="let category of categories | filterBy: ['assignedCategoryType'] : categoryType.id | orderBy: ['title']"
+            [value]="category.id">
+            {{category.title}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-checkbox fxFlex="100"
+                  formControlName="isFeaturedPost">
+      {{'general.articles.edit.isFeaturedPost' | translate}}
+    </mat-checkbox>
+  </div>
+
+  <div class="row">
+    <mat-checkbox fxFlex="100"
+                  formControlName="isMatch">
+      {{'general.articles.edit.isArticleAMatch' | translate}}
+    </mat-checkbox>
+  </div>
+
+  <div class="row">
+    <button (click)="remove.emit()"
+            type="button"
+            mat-raised-button color="warn">
+      {{'general.articles.edit.deleteArticle' | translate}}
+    </button>
+  </div>
+
+</div>

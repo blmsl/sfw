@@ -1,0 +1,64 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div fxLayout="column" fxLayoutAlign="space-around">
+
+    <ng-template #signUpAlertContainer></ng-template>
+
+    <div class="pb-1">
+      <mat-form-field>
+        <input matInput placeholder="{{'Global.Register.FirstName' | translate}}" formControlName="firstName">
+      </mat-form-field>
+    </div>
+    <div class="pb-1">
+      <mat-form-field>
+        <input matInput placeholder="{{'Global.Register.LastName' | translate}}" formControlName="lastName">
+      </mat-form-field>
+    </div>
+    <div class="pb-1">
+      <mat-form-field>
+        <input matInput placeholder="{{'Global.Register.Email' | translate}}" formControlName="email">
+      </mat-form-field>
+    </div>
+
+
+    <div formGroupName="passwords">
+      <div class="pb-1">
+        <mat-form-field>
+          <input matInput
+                 type="password"
+                 placeholder="{{'Global.Register.RepeatPassword' | translate}}"
+                 formControlName="confirmPassword">
+        </mat-form-field>
+      </div>
+
+      <div class="pb-1">
+        <mat-form-field>
+          <input matInput
+                 type="password"
+                 placeholder="{{'Global.Login.Password' | translate}}"
+                 formControlName="password">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="pb-1">
+      <mat-checkbox formControlName="agree"></mat-checkbox>
+      {{'Global.Register.termsAndConditions' | translate}}
+    </div>
+
+    <button mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!form.valid || isLoading">
+      <mat-progress-spinner
+        [diameter]="15"
+        mode="indeterminate"
+        *ngIf="isLoading">
+      </mat-progress-spinner>
+      {{'Global.Register.RegisterLinkText' | translate}}
+    </button>
+  </div>
+  <div class="pt-1 pb-1 text-xs-center">
+    <a (click)="togglePasswordForm()">{{'Global.Login.forgotPasswordButton' | translate}}?</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a (click)="toggleSignUpForm()">{{'general.cancel' | translate}}</a>
+  </div>
+</form>

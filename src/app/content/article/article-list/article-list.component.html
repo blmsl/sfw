@@ -1,0 +1,108 @@
+<form novalidate
+      [formGroup]="form">
+
+  <div fxLayout="row"
+       fxLayoutWrap="wrap"
+       *ngIf="users; else loadingTemplate">
+
+    <mat-form-field fxFlex.gt-sm="10"
+                    fxFlex="100">
+      <mat-select placeholder="{{ 'general.articles.list.allStatus' | translate}}"
+                  formControlName="status">
+        <mat-option [value]=""
+                    *ngIf="!form.get('status').value">
+          {{ 'general.articles.list.allStatus' | translate}}
+        </mat-option>
+        <!--<mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}
+          {{ 'general.items' | translate}}
+        </mat-option>-->
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlexOffset.gt-sm="3"
+                    fxFlex.gt-sm="10"
+                    fxFlex="100">
+      <mat-select placeholder="{{ 'general.articles.list.allAuthors' | translate}}"
+                  formControlName="author">
+        <mat-option [value]=""
+                    *ngIf="!form.get('author').value">
+          {{ 'general.articles.list.allAuthors' | translate}}
+        </mat-option>
+        <mat-option *ngFor="let user of users | orderBy: ['lastName', 'firstName']"
+                    [value]="user.id">
+          {{ user.firstName }} {{ user.lastName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlexOffset.gt-sm="3"
+                    fxFlex.gt-sm="10"
+                    fxFlex="100">
+      <mat-select placeholder="{{ 'general.articles.list.allTags' | translate}}"
+                  formControlName="tags">
+        <mat-option [value]=""
+                    *ngIf="!form.get('tags').value">
+          {{ 'general.articles.list.allTags' | translate}}
+        </mat-option>
+        <!--<mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}
+          {{ 'general.items' | translate}}
+        </mat-option>-->
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlexOffset.gt-sm="50"
+                    fxFlex.gt-sm="14"
+                    fxFlex="100">
+      <mat-select formControlName="sorting">
+        <mat-option value="-">{{ 'general.articles.list.sortDateDesc' | translate}}</mat-option>
+        <mat-option value="">{{ 'general.articles.list.sortDateAsc' | translate}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="direction"
+       fxLayoutAlign="center center"
+       *ngIf="users">
+
+    <div fxFlex.gt-sm="80"
+         fxFlex="100"
+         class="container"
+         (onScroll)="scrollHandler($event)"
+         [bottomOffset]="200"
+         [topOffset]="200"
+         scrollable>
+
+      <mat-list>
+        <mat-list-item *ngFor="let article of paginationService.data | async">
+          <span matLine><h1>{{article.title}}</h1></span>
+          <p matLine [innerHTML]="article.text"></p>
+          <div matLine style="margin-top: 10px;">
+            <button mat-raised-button
+                    color="warn"
+                    type="button">{{article.publication.status}}
+            </button>
+            {{'general.from' | translate}} author — {{'general.articles.list.lastEdited'}} timeAgo
+          </div>
+          <hr style="margin: 25px 0" matLine />
+          <div style="height: 100px;" matLine></div>
+        </mat-list-item>
+
+      </mat-list>
+
+      <p *ngIf="paginationService.done | async" style="text-align: center">
+        {{'general.articles.list.noResult' | translate}}.<br /><br />
+        <a mat-raised-button
+           [routerLink]="['/articles/create']"
+           color="primary">{{'general.articles.list.addArticle' | translate}}
+        </a>
+      </p>
+
+      <loading-indicator *ngIf="paginationService.loading | async"></loading-indicator>
+
+    </div>
+  </div>
+</form>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>
