@@ -1,6 +1,8 @@
 export const environment = {
+  appId: 'sfw-app',
   production: true,
   firebug: false,
+  gaTrackingCode: 'UA-109145893-2',
   googleAnalytics: true,
   firebaseConfig: {
     apiKey: 'AIzaSyDn8wfxEjBylgNnqCvRMcK0uR8gSpE3GFs',

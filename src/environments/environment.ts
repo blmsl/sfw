@@ -4,8 +4,10 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
+  appId: 'sfw-app',
   production: false,
   firebug: false,
+  gaTrackingCode: 'UA-109145893-2',
   googleAnalytics: false,
   firebaseConfig: {
     apiKey: 'AIzaSyDn8wfxEjBylgNnqCvRMcK0uR8gSpE3GFs',

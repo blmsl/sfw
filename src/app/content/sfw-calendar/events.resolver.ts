@@ -20,7 +20,7 @@ export class EventsResolver implements Resolve<ICalendarEvent[]> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICalendarEvent[]> {
 
-    console.log('add match-fixtures to calendar');
+    console.log('Events-resolver: add match-fixtures to calendar');
 
     return this.memberService.members$.pipe(
       switchMap((members: IMember[]) => {

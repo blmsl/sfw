@@ -3,7 +3,7 @@
 
 module.exports = function (config) {
   config.set({
-    basePath: '',
+    basePath: '..',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
@@ -15,15 +15,21 @@ module.exports = function (config) {
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
+    files: [
+      { pattern: './src/test.ts', watched: false }
+    ],
     preprocessors: {
       './src/test.ts': ['@angular-devkit/build-angular']
+    },
+    mime: {
+      'text/x-typescript': ['ts','tsx']
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly' ],
       fixWebpackSourcePaths: true
     },
     angularCli: {
-      codeCoverage: true,
+      config: './angular.json',
       environment: 'dev'
     },
     reporters: config.angularCli && config.angularCli.codeCoverage
