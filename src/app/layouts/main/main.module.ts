@@ -6,7 +6,10 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreModule
+} from 'angularfire2/firestore';
 
 import { environment } from '../../../environments/environment';
 import { AuthGuard } from '../../shared/services/auth/auth.guard';
@@ -20,9 +23,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 @NgModule({
   imports: [
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule.enablePersistence(),
-    AngularFireDatabaseModule,
     CommonModule,
     HttpClientModule,
     RouterModule.forChild(mainRoutes),
@@ -44,4 +44,5 @@ export function HttpLoaderFactory(http: HttpClient) {
     UnAuthGuard
   ]
 })
-export class MainModule { }
+export class MainModule {
+}
