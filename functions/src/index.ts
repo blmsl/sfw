@@ -12,21 +12,21 @@ import * as admin from 'firebase-admin';
 
 admin.initializeApp();
 
-import * as user from './user';
+import * as user from './user/index';
 export const newUserCreated = user.userCreated;
 export const onUserDelete = user.userDeleted;
 export const userPresence = user.userPresence;
 
-import * as shortener from './url-shortener';
+import * as shortener from './url-shortener/index';
 export const urlShortener = shortener.shortener;
 
-import * as member from './member';
+import * as member from './member/index';
 export const birthdayReminder = member.birthdayReminderCron;
 export const memberOfTheWeekCron = member.memberOfTheWeekCron;
 export const dfbMemberCron = member.dfbMemberCron;
 export const driveMemberCron = member.driveMemberCron;
 
-import * as team from './team';
+import * as team from './team/index';
 export const spielplanCron = team.spielplanCron;
 export const teamCron = team.teamOfTheMonthCron;
 // export const wettbewerbeCron = team.wettbewerbeCron;

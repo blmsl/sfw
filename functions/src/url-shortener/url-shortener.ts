@@ -19,7 +19,9 @@ export const urlShortener = functions.database.ref('/links/{linkID}').onCreate((
         snap.ref.set({
           original: originalUrl,
           short: response.data.id,
-        }).then(() => resolve()).catch(err => reject(err));
+        })
+          .then(() => resolve())
+          .catch((error:any) => reject(error));
       }
     });
   });

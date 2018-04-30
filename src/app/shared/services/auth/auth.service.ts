@@ -53,7 +53,8 @@ export class AuthService implements OnDestroy {
   }
 
   signIn(credentials) {
-    return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password)
+    return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
+    /*
       .then(
         (authUser: firebase.User) => {
           if (authUser.emailVerified) {
@@ -63,27 +64,11 @@ export class AuthService implements OnDestroy {
             });
           }
         }
-      );
+      ); */
   }
 
   register(values: IUser): Promise<any> {
-    return this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password)
-      .then(authUser => {
-        authUser.sendEmailVerification()
-          .then(() => {
-            delete values.password;
-            values.providerId = authUser.providerId;
-            values.id = authUser.uid;
-            values.assignedRoles = {
-              subscriber: true,
-              editor: false,
-              admin: false
-            };
-            values.emailVerified = authUser.emailVerified;
-            values.creation = this.getCreation();
-            return this.updateUser(values);
-          });
-      });
+    return this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password);
   }
 
   private oAuthLogin(provider) {

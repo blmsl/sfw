@@ -17,7 +17,7 @@ function calculateAge(birthday: string) {
 }
 
 const today = moment().format("MM-DD");
-let recipients: {
+const recipients: {
   email: string,
   name: string,
   age: number
@@ -34,8 +34,8 @@ export const birthdayReminderCron = functions.pubsub.topic('daily-tick').onPubli
       value.forEach(function(doc) {
         const memberData = doc.data();
         if (moment(memberData.mainData.birthday).format("MM-DD") === today) {
-          if (memberData.contac && memberData.contact.email) {
-            let data = {
+          if (memberData.contact && memberData.contact.email) {
+            const data = {
               email: memberData.contact.email,
               name: memberData.mainData.firstName + ' ' + memberData.mainData.lastName,
               age: calculateAge(memberData.mainData.birthday)
@@ -47,12 +47,11 @@ export const birthdayReminderCron = functions.pubsub.topic('daily-tick').onPubli
       });
       birthdayList += '</ul>';
       return birthdayList;
-    }).then((birthdayList) => {
+    }).then((list) => {
 
       // if no there are no birthdays today
-      if (birthdayList === '<ul></ul>') {
+      if (list === '<ul></ul>') {
         console.log('No birthdays today' + moment().format("DD.MM"));
-        return true;
       }
 
       const welcomeMsg = {
@@ -76,7 +75,7 @@ export const birthdayReminderCron = functions.pubsub.topic('daily-tick').onPubli
         name: string,
         age: number
       }) => {
-        console.log('send email to ' + recipient.email + ' - ' + recipient.name + ' ' + recipient.age);
+        console.log('ToDo: send email to ' + recipient.email + ' - ' + recipient.name + ' ' + recipient.age);
       });
 
     });

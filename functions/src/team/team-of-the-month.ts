@@ -16,7 +16,7 @@ export const teamOfTheWeekCron = functions.pubsub.topic('monthly-tick').onPublis
     .collection('teams')
     .get()
     .then((values: any) => {
-      let teamList: any = [];
+      const teamList: any = [];
 
       values.forEach(function(doc: any) {
         const teamData = doc.data();

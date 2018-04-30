@@ -16,7 +16,7 @@ export const memberOfTheWeekCron = functions.pubsub.topic('weekly-tick').onPubli
     .collection('members')
     .get()
     .then((values) => {
-      let memberList: any = [];
+      const memberList: any = [];
 
       values.forEach(function(doc) {
         const memberData = doc.data();
@@ -29,35 +29,33 @@ export const memberOfTheWeekCron = functions.pubsub.topic('weekly-tick').onPubli
 
     }).then((memberList) => {
 
-      let msg: any = '';
-
       const now = moment();
 
       // if (memberList.length > 0) {
 
-      let clubList = memberList.filter((member: any) => {
+      const clubList = memberList.filter((member: any) => {
         return member.clubData && member.clubData.status && member.clubData.status > 0 && member.clubData.status !== 2;
       });
       const clubSample = clubList[Math.floor(Math.random() * clubList.length)];
 
-      let ahList = memberList.filter((member: any) => {
+      const ahList = memberList.filter((member: any) => {
         return member.ahData && member.ahData.status && member.ahData.status > 0;
       });
       const ahSample = ahList[Math.floor(Math.random() * ahList.length)];
 
-      let playerList = memberList.filter((member: any) => {
+      const playerList = memberList.filter((member: any) => {
         return member.dfbData;
       });
       const playerSample = playerList[Math.floor(Math.random() * playerList.length)];
 
-      let honoraryList = memberList.filter((member: any) => {
+      const honoraryList = memberList.filter((member: any) => {
         return member.clubData && member.clubData.status && member.clubData.status === 2;
       });
       const honorarySample = honoraryList[Math.floor(Math.random() * honoraryList.length)];
 
       const docId: string = now.week() + '-' + now.format('YY');
 
-      let data: any = {};
+      const data: any = {};
       data[docId] = [
         {
           type: 'club',

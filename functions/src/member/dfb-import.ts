@@ -27,7 +27,7 @@ export const dfbMemberCron = functions.database.ref('/dfb-members/{userId}').onW
         .where('mainData.lastName', '==', data.lastName)
         .where('mainData.birthday', '==', birthDate)
         .get()
-        .then((values: FirebaseFirestore.QuerySnapshot) => {
+        .then((userSnapshot: FirebaseFirestore.QuerySnapshot) => {
 
           const mainData = {
             firstName: data.firstName,
@@ -52,7 +52,7 @@ export const dfbMemberCron = functions.database.ref('/dfb-members/{userId}').onW
             allowedToPlay: data.allowedToPlay
           };
 
-          let memberData: any = {
+          const memberData: any = {
             isImported: true,
             mainData: mainData,
             clubData: {
@@ -60,7 +60,7 @@ export const dfbMemberCron = functions.database.ref('/dfb-members/{userId}').onW
             },
             dfbData: dfbData
           };
-          if (values.empty) {
+          if (userSnapshot.empty) {
             memberData.id = db.collection(memberPath).doc().id;
             memberData.creation = {
               from: 'system',
@@ -69,7 +69,7 @@ export const dfbMemberCron = functions.database.ref('/dfb-members/{userId}').onW
             return db.collection(memberPath).doc(memberData.id).set(memberData);
           }
           else {
-            const doc = values.docs[0];
+            const doc = userSnapshot.docs[0];
             return doc.ref.set(memberData, { merge: true });
           }
         })

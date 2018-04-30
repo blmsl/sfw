@@ -59,7 +59,7 @@ export const driveMemberCron = functions.database.ref('/drive-members/{userId}')
         payment: data.ahPayment ? data.ahPayment : '',
       } : {};
 
-      let memberData: any = {
+      const memberData: any = {
         isImported: true,
         mainData: mainData,
         address: addressData,

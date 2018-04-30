@@ -20,7 +20,8 @@ import { IUser }       from '../interfaces/user/user.interface';
 @Injectable()
 export class UnAuthGuard implements CanActivate {
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router,
+              private authService: AuthService) {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
@@ -29,7 +30,7 @@ export class UnAuthGuard implements CanActivate {
       map((user: IUser) => !user),
       tap((isLoggedOut: boolean) => {
         if (!isLoggedOut) {
-          this.router.navigate([ '/' ]).then();
+          return this.router.navigate([ '/dashboard' ]);
         }
       })
     );

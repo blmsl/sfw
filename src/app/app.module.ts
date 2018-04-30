@@ -22,13 +22,4 @@ import { CommonModule }              from '@angular/common';
   ]
 })
 export class AppModule {
-  /*constructor(private afs: AngularFirestore) {
-   console.log('App-Module: Firestore .enablePersistence() is off');
-   const firestore = afs.app.firestore();
-   // firebase.firestore.setLogLevel('debug');
-   const settings = {
-   timestampsInSnapshots: true
-   };
-   firestore.settings(settings);
-   }*/
 }
