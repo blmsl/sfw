@@ -13,19 +13,19 @@ import {
   Validators
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ICategory } from '../../../shared/interfaces/category.interface';
-import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
-import { CategoryService } from '../../../shared/services/category/category.service';
-import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
+import { ICategory }            from '../../../shared/interfaces/category.interface';
+import { ICategoryType }        from '../../../shared/interfaces/category-type.interface';
+import { CategoryService }      from '../../../shared/services/category/category.service';
+import { CategoryTypeService }  from '../../../shared/services/category-type/category-type.service';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
-import { UserService } from '../../../shared/services/user/user.service';
-import { IUser } from '../../../shared/interfaces/user.interface';
-import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material';
+import { UserService }          from '../../../shared/services/user/user.service';
+import { IUser }                from '../../../shared/interfaces/user/user.interface';
+import { SnackbarComponent }    from '../../../shared/components/snackbar/snackbar.component';
+import { MatSnackBar }          from '@angular/material';
 import {
   debounceTime,
   distinctUntilChanged
-} from 'rxjs/operators';
+}                               from 'rxjs/operators';
 
 @Component({
   selector: 'category-edit',

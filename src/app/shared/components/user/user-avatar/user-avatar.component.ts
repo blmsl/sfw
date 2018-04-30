@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user/user.service';
-import { Observable } from 'rxjs';
-import { IUser } from '../../../interfaces/user.interface';
+import { UserService }              from '../../../services/user/user.service';
+import { Observable }               from 'rxjs';
+import { IUser }                    from '../../../interfaces/user/user.interface';
 
 @Component({
   selector: 'user-avatar',

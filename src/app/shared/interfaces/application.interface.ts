@@ -1,5 +1,5 @@
-import { IRole } from './role.interface';
-import { IStaticPage } from './static-page.interface';
+import { IRole }          from './user/role.interface';
+import { IStaticPage }    from './static-page.interface';
 import { ISocialNetwork } from './social-network.interface';
 
 export interface IApplication {

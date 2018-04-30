@@ -25,8 +25,8 @@
         <mat-form-field>
           <input matInput
                  type="password"
-                 placeholder="{{'Global.Register.RepeatPassword' | translate}}"
-                 formControlName="confirmPassword">
+                 placeholder="{{'Global.Login.Password' | translate}}"
+                 formControlName="password">
         </mat-form-field>
       </div>
 
@@ -34,8 +34,8 @@
         <mat-form-field>
           <input matInput
                  type="password"
-                 placeholder="{{'Global.Login.Password' | translate}}"
-                 formControlName="password">
+                 placeholder="{{'Global.Register.RepeatPassword' | translate}}"
+                 formControlName="confirmPassword">
         </mat-form-field>
       </div>
     </div>
@@ -45,15 +45,16 @@
       {{'Global.Register.termsAndConditions' | translate}}
     </div>
 
+    <mat-progress-spinner
+      [diameter]="15"
+      mode="indeterminate"
+      *ngIf="isLoading">
+    </mat-progress-spinner>
+
     <button mat-raised-button
             color="primary"
             type="submit"
-            [disabled]="!form.valid || isLoading">
-      <mat-progress-spinner
-        [diameter]="15"
-        mode="indeterminate"
-        *ngIf="isLoading">
-      </mat-progress-spinner>
+            [disabled]="!form.valid">
       {{'Global.Register.RegisterLinkText' | translate}}
     </button>
   </div>

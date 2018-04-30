@@ -1,12 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { TaskService } from '../../../services/task/task.service';
+import { TaskService }                         from '../../../services/task/task.service';
 import {
   Observable,
   Subscription
-} from 'rxjs';
-import { ITask } from '../../../interfaces/task.interface';
-import { AuthService } from '../../../services/auth/auth.service';
-import { IUser } from '../../../interfaces/user.interface';
+}                                              from 'rxjs';
+import { ITask }                               from '../../../interfaces/task.interface';
+import { AuthService }                         from '../../../services/auth/auth.service';
+import { IUser }                               from '../../../interfaces/user/user.interface';
 
 @Component({
   selector: 'tasks',

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IUser } from '../../../shared/interfaces/user.interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService } from '../../../shared/services/auth/auth.service';
+import { IUser }                                          from '../../../shared/interfaces/user/user.interface';
+import { FormBuilder, FormGroup }                         from '@angular/forms';
+import { AuthService }                                    from '../../../shared/services/auth/auth.service';
 
 @Component({
   selector: 'user-list',

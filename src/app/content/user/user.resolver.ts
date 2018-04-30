@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable }                                                   from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { IUser } from '../../shared/interfaces/user.interface';
-import { UserService } from '../../shared/services/user/user.service';
+import { Observable }                                                   from 'rxjs';
+import { IUser }                                                        from '../../shared/interfaces/user/user.interface';
+import { UserService }                                                  from '../../shared/services/user/user.service';
 import {
   map,
   take
-} from 'rxjs/operators';
+}                                                                       from 'rxjs/operators';
 
 @Injectable()
 export class UserResolver implements Resolve<IUser> {

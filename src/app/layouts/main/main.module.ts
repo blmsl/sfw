@@ -11,11 +11,11 @@ import {
   AngularFirestoreModule
 } from 'angularfire2/firestore';
 
-import { environment } from '../../../environments/environment';
-import { AuthGuard } from '../../shared/services/auth/auth.guard';
-import { AuthService } from '../../shared/services/auth/auth.service';
-import { UnAuthGuard } from '../../shared/services/auth/unauth.guard';
-import { mainRoutes } from './main.routing';
+import { environment }               from '../../../environments/environment';
+import { AuthGuard }                 from '../../shared/guards/auth.guard';
+import { AuthService }               from '../../shared/services/auth/auth.service';
+import { UnAuthGuard }               from '../../shared/guards/unauth.guard';
+import { mainRoutes }                from './main.routing';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 export function HttpLoaderFactory(http: HttpClient) {

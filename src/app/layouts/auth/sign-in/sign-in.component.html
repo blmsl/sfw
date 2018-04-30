@@ -22,15 +22,16 @@
 
     <div class="mat-text-warn" *ngIf="error">{{error}}</div>
 
+    <mat-progress-spinner
+      [diameter]="15"
+      mode="indeterminate"
+      *ngIf="isLoading">
+    </mat-progress-spinner>
+
     <button mat-raised-button
             color="primary"
             type="submit"
-            [disabled]="!form.valid || isLoading">
-      <mat-progress-spinner
-        [diameter]="15"
-        mode="indeterminate"
-        *ngIf="isLoading">
-      </mat-progress-spinner>
+            [disabled]="!form.valid && !isLoading">
       {{ !isLoading ? ('Global.Login.loginButton' | translate) : '' }}
     </button>
   </div>

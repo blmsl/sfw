@@ -29,18 +29,18 @@ import { LocationDetailContactComponent } from './location-detail/location-detai
 import { ArticleService } from '../../shared/services/article/article.service';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { LocationDetailMediaComponent } from './location-detail/location-detail-media/location-detail-media.component';
-import { LocationEditComponent } from './location-edit/location-edit.component';
-import { QuillModule } from 'ngx-quill';
+import { LocationEditComponent }        from './location-edit/location-edit.component';
+import { QuillModule }                  from 'ngx-quill';
 import { LocationEditAddressComponent } from './location-edit/location-edit-address/location-edit-address.component';
 import { LocationEditContactComponent } from './location-edit/location-edit-contact/location-edit-contact.component';
 import { LocationContactFormComponent } from './location-edit/location-contact-form/location-contact-form.component';
-import { PendingChangesGuard } from '../../shared/services/auth/pending-changes.guard';
+import { PendingChangesGuard }          from '../../shared/guards/pending-changes.guard';
 import { LocationsByCategoryComponent } from './location-statistics/locations-by-category/locations-by-category.component';
-import { ChartsModule } from 'ng2-charts';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PublicationModule } from '../../shared/components/publication/publication.module';
-import { CreationModule } from '../../shared/components/creation/creation.module';
-import { SharedCategoryModule } from '../../shared/components/category/shared-category.module';
+import { ChartsModule }                 from 'ng2-charts';
+import { PerfectScrollbarModule }       from 'ngx-perfect-scrollbar';
+import { PublicationModule }            from '../../shared/components/publication/publication.module';
+import { CreationModule }               from '../../shared/components/creation/creation.module';
+import { SharedCategoryModule }         from '../../shared/components/category/shared-category.module';
 import { LocationStatisticsComponent } from './location-statistics/location-statistics.component';
 import { MatchService } from '../../shared/services/match/match.service';
 

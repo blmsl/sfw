@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable }      from '@angular/core';
 import {
   Observable,
   of
-} from 'rxjs';
-import { IArticle } from '../../interfaces/article.interface';
+}                          from 'rxjs';
+import { IArticle }        from '../../interfaces/article.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
-import { AuthService } from '../auth/auth.service';
-import { IPublication } from '../../interfaces/publication.interface';
-import * as moment from 'moment';
+}                          from 'angularfire2/firestore';
+import { AuthService }     from '../auth/auth.service';
+import { IPublication }    from '../../interfaces/publication.interface';
+import * as moment         from 'moment';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class ArticleService {
@@ -20,7 +21,7 @@ export class ArticleService {
 
   articles$: Observable<IArticle[]>;
 
-  constructor(private afs: AngularFirestore, private authService: AuthService) {
+  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, private authService: AuthService) {
     this.collectionRef = this.afs.collection<IArticle>(this.path);
     this.articles$ = this.collectionRef.valueChanges();
   }
@@ -47,7 +48,7 @@ export class ArticleService {
       status: 0,
       date: moment().toISOString(),
       time: '',
-      from: this.authService.id
+      from: this.afAuth.auth.currentUser.uid
     };
     const article: IArticle = {
       id: this.afs.createId(),
