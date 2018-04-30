@@ -25,7 +25,7 @@ export const APP_ID = 'sfw-app';
       appId: environment.appId
     }),
     BrowserTransferStateModule,
-    environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : []
+    // environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : []
   ]
 })
 export class AppBrowserModule {
