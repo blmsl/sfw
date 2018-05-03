@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { ArticleService } from '../../../shared/services/article/article.service';
-import { CategoryService }   from '../../../shared/services/category/category.service';
-import { IArticle }          from '../../../shared/interfaces/article.interface';
-import { Observable }        from 'rxjs';
+import { CategoryService } from '../../../shared/services/category/category.service';
+import { IArticle } from '../../../shared/interfaces/article.interface';
+import { Observable } from 'rxjs';
 import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
-import { MatSnackBar }       from '@angular/material';
-import { ICategory }         from '../../../shared/interfaces/category.interface';
-import { UserService }       from '../../../shared/services/user/user.service';
-import { IUser }             from '../../../shared/interfaces/user/user.interface';
+import { MatSnackBar } from '@angular/material';
+import { ICategory } from '../../../shared/interfaces/category.interface';
+import { UserService } from '../../../shared/services/user/user.service';
+import { IUser } from '../../../shared/interfaces/user/user.interface';
 
 @Component({
   selector: 'articles',

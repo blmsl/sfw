@@ -35,11 +35,6 @@ export const MENUITEMS = [
         icon: 'textsms'
       },
       {
-        state: 'matches',
-        name: 'match',
-        icon: 'games'
-      },
-      {
         state: 'dashboard',
         name: 'dashboard',
         icon: 'trending_up'
@@ -50,6 +45,12 @@ export const MENUITEMS = [
         icon: 'wrap_text'
       }
     ]
+  },
+  {
+    state: 'matches',
+    name: 'matches',
+    type: 'link',
+    icon: 'event'
   },
   {
     state: 'categories',

@@ -28,7 +28,7 @@ import { ArticleDashboardComponent } from './article-dashboard/article-dashboard
 import { ArticleEditComponent } from './article-edit/article-edit.component';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { ArticleMatchesComponent } from './article-matches/article-matches.component';
-import { MatchModule } from '../../shared/components/match/match.module';
+import { SharedMatchModule } from '../../shared/components/match/shared-match.module';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { MatchService } from '../../shared/services/match/match.service';
 import { MemberService } from '../../shared/services/member/member.service';
@@ -47,6 +47,7 @@ import { ApplicationService } from '../../shared/services/application/applicatio
 import { SidebarMatchDataComponent } from './article-edit/article-edit-sidebar/sidebar-match-data/sidebar-match-data.component';
 import { SidebarMainDataComponent } from './article-edit/article-edit-sidebar/sidebar-main-data/sidebar-main-data.component';
 import { SfwEditorModule } from '../../shared/components/editor/sfw-editor.module';
+import { ArticleListFilterComponent } from './article-list/article-list-filter/article-list-filter.component';
 
 @NgModule({
   imports: [
@@ -63,7 +64,7 @@ import { SfwEditorModule } from '../../shared/components/editor/sfw-editor.modul
     MatSnackBarModule,
     MatTabsModule,
     MatToolbarModule,
-    MatchModule,
+    SharedMatchModule,
     PerfectScrollbarModule,
     RouterModule.forChild(articleRoutes),
     SfwEditorModule,
@@ -82,7 +83,8 @@ import { SfwEditorModule } from '../../shared/components/editor/sfw-editor.modul
     ScrollableDirective,
     SidebarMetaDataComponent,
     SidebarMatchDataComponent,
-    SidebarMainDataComponent
+    SidebarMainDataComponent,
+    ArticleListFilterComponent
   ],
   providers: [
     ApplicationService,

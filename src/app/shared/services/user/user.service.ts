@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                     from 'angularfire2/firestore';
-import { IUser }      from '../../interfaces/user/user.interface';
+} from 'angularfire2/firestore';
+import { IUser } from '../../interfaces/user/user.interface';
 import { Observable } from 'rxjs';
 
 @Injectable()

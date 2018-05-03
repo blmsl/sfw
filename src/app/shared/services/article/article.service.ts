@@ -1,16 +1,10 @@
-import { Injectable }      from '@angular/core';
-import {
-  Observable,
-  of
-}                          from 'rxjs';
-import { IArticle }        from '../../interfaces/article.interface';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-}                          from 'angularfire2/firestore';
-import { AuthService }     from '../auth/auth.service';
-import { IPublication }    from '../../interfaces/publication.interface';
-import * as moment         from 'moment';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { IArticle } from '../../interfaces/article.interface';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AuthService } from '../auth/auth.service';
+import { IPublication } from '../../interfaces/publication.interface';
+import * as moment from 'moment';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
@@ -20,6 +14,16 @@ export class ArticleService {
   private path = `articles`;
 
   articles$: Observable<IArticle[]>;
+
+  public publicationStati: {
+    value: number,
+    title: string
+  }[] = [
+    { value: 0, title: 'draft' },
+    { value: 1, title: 'published'},
+    { value: 2, title: 'scheduled'},
+    { value: 3, title: 'featured'}
+  ];
 
   constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, private authService: AuthService) {
     this.collectionRef = this.afs.collection<IArticle>(this.path);
@@ -77,5 +81,6 @@ export class ArticleService {
     };
     return of(article);
   }
+
 
 }

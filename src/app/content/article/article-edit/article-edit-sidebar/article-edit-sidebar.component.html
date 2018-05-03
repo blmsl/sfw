@@ -1,23 +1,19 @@
 <div fxLayout="row"
      fxLayoutWrap="wrap">
-  <div fxFlex="100" style="text-align: right">
-    <button mat-raised-button (click)="notifications.toggle()">Close</button>
-  </div>
 
   <div fxFlex="100">
-
-    <mat-tab-group [formGroup]="form"
-                   [dynamicHeight]="true"
-                   *ngIf="categories && categoryTypes && locations && matches && members && seasons && teams; else loadingTemplate">
-
+    <mat-tab-group *ngIf="categories && categoryTypes && locations && seasons && users && teams; else loadingTemplate"
+                   [formGroup]="form"
+                   [dynamicHeight]="true">
       <mat-tab label="Artikel-Daten">
-        <sidebar-main-data [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
+        <sidebar-main-data [form]="form"
+                           [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
                            [categories]="categories"
                            [locations]="locations"
-                           [members]="members"
+                           [users]="users"
                            [seasons]="seasons"
                            [teams]="teams"
-                           [form]="form">
+                           (remove)="remove.emit($event)">
         </sidebar-main-data>
       </mat-tab>
 
@@ -26,17 +22,10 @@
                            [applications]="applicationService.applications$ | async">
         </sidebar-meta-data>
       </mat-tab>
-
-      <mat-tab [disabled]="!form.get('isMatch').value"
-               label="Spieldaten">
-        <sidebar-match-data [form]="form"
-                            [matches]="matches">
-        </sidebar-match-data>
-      </mat-tab>
-
+      <mat-tab label="Close" (click)="notifications.toggle()"></mat-tab>
     </mat-tab-group>
-
   </div>
+
 </div>
 
 <ng-template #loadingTemplate>

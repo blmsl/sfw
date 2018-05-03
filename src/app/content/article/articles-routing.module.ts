@@ -5,7 +5,6 @@ import { ArticleEditComponent } from './article-edit/article-edit.component';
 import { ArticleResolver } from './article.resolver';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { ArticleMatchesComponent } from './article-matches/article-matches.component';
-import { ApplicationResolver } from '../setting/application.resolver';
 
 export const articleRoutes: Routes = [
   {

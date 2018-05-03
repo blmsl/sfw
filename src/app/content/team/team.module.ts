@@ -11,13 +11,15 @@ import {
   MatCheckboxModule,
   MatDatepickerModule,
   MatFormFieldModule,
-  MatInputModule, MatListModule, MatSelectModule, MatSnackBarModule,
+  MatInputModule,
+  MatListModule,
+  MatSelectModule,
+  MatSnackBarModule,
   MatTabsModule
 } from '@angular/material';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
 import { TeamEditComponent } from './team-edit/team-edit.component';
 import { QuillModule } from 'ngx-quill';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { CategoryService } from '../../shared/services/category/category.service';
 import { ClubService } from '../../shared/services/club/club.service';
 import { MemberService } from '../../shared/services/member/member.service';
@@ -41,7 +43,7 @@ import { TeamDetailTrainingComponent } from './team-detail/team-detail-training/
 import { CreationModule } from '../../shared/components/creation/creation.module';
 import { TeamOfTheMonthService } from '../../shared/services/team/team-of-the-month.service';
 import { TeamDetailMatchesComponent } from './team-detail/team-detail-matches/team-detail-matches.component';
-import { MatchModule } from '../../shared/components/match/match.module';
+import { SharedMatchModule } from '../../shared/components/match/shared-match.module';
 import { MatchService } from '../../shared/services/match/match.service';
 import { TeamDetailStandingsComponent } from './team-detail/team-detail-standings/team-detail-standings.component';
 import { TeamDetailMediaComponent } from './team-detail/team-detail-media/team-detail-media.component';
@@ -61,7 +63,7 @@ import { ChartsModule } from 'ng2-charts';
     MatSelectModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatchModule,
+    SharedMatchModule,
     QuillModule,
     RouterModule.forChild(teamRoutes),
     SharedModule,

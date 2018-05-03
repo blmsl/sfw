@@ -1,5 +1,5 @@
 import { ICreation } from '../creation.interface';
-import { IRole }     from './role.interface';
+import { IRole } from './role.interface';
 
 export interface IUser {
   id?: string;

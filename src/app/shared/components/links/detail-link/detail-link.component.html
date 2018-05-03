@@ -1,5 +1,8 @@
-<a mat-icon-button color="primary" [routerLink]="['../detail', objectId]">
-  <mat-icon>info outline</mat-icon>
+<a mat-icon-button
+   color="primary"
+   [routerLink]="['../detail', objectId]">
+  <mat-icon *ngIf="!title">info outline</mat-icon>
+  <span *ngIf="title">{{title}}</span>
 </a>
 
 

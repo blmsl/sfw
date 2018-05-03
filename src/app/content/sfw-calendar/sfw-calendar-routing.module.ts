@@ -5,15 +5,14 @@ import { EventsResolver } from './events.resolver';
 export const sfwCalendarRoutes: Routes = [
 
   {
-    path: '',
+    path: 'list',
     component: CalendarDashboardComponent,
-    pathMatch: 'full',
     resolve: {
       calendarEvents: EventsResolver
     }
   },
   {
     path: '**',
-    redirectTo: ''
+    redirectTo: 'list'
   }
 ];

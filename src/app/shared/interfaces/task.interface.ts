@@ -1,5 +1,5 @@
 import { ICreation } from './creation.interface';
-import { IUser }     from './user/user.interface';
+import { IUser } from './user/user.interface';
 
 export interface ITask {
   id?: string;

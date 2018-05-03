@@ -1,24 +1,17 @@
-import { NgModule }                from '@angular/core';
-import { AppComponent }            from './app.component';
-import {
-  BrowserModule,
-  BrowserTransferStateModule
-}                                  from '@angular/platform-browser';
-import { environment }             from '../environments/environment';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ServiceWorkerModule }     from '@angular/service-worker';
-import {
-  AngularFirestore,
-  AngularFirestoreModule
-}                                  from 'angularfire2/firestore';
-import { AppModule }               from './app.module';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AppModule } from './app.module';
 
 export const APP_ID = 'sfw-app';
 
 @NgModule({
-  bootstrap: [ AppComponent ],
+  bootstrap: [AppComponent],
   imports: [
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AppModule,
     BrowserAnimationsModule,
     BrowserModule.withServerTransition({
@@ -29,13 +22,4 @@ export const APP_ID = 'sfw-app';
   ]
 })
 export class AppBrowserModule {
-  constructor(private afs: AngularFirestore) {
-    console.log('App-Module: Firestore .enablePersistence() is off');
-    const firestore = afs.app.firestore();
-    // firebase.firestore.setLogLevel('debug');
-    const settings = {
-      timestampsInSnapshots: true
-    };
-    firestore.settings(settings);
-  }
 }

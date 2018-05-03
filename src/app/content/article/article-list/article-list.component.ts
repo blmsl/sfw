@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, Output, ViewChild }          from '@angular/core';
-import { IArticle }                                                   from '../../../shared/interfaces/article.interface';
-import { ICategory }                                                  from '../../../shared/interfaces/category.interface';
-import { FormBuilder, FormGroup }                                     from '@angular/forms';
-import { IUser }                                                      from '../../../shared/interfaces/user/user.interface';
-import { PaginationService }                                          from '../../../shared/services/pagination/pagination.service';
-import { ScrollEvent }                                                from '../../../shared/directives/scrollable/scrollable.directive';
+import { Component, Input, ViewChild } from '@angular/core';
+import { IArticle } from '../../../shared/interfaces/article.interface';
+import { ICategory } from '../../../shared/interfaces/category.interface';
+import { IUser } from '../../../shared/interfaces/user/user.interface';
+import { PaginationService } from '../../../shared/services/pagination/pagination.service';
+import { ScrollEvent } from '../../../shared/directives/scrollable/scrollable.directive';
 import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 
 @Component({
@@ -21,20 +20,11 @@ export class ArticleListComponent {
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
 
   public config: PerfectScrollbarConfigInterface = {};
-  public form: FormGroup;
 
-  constructor(private fb: FormBuilder,
-    public paginationService: PaginationService) {
+  constructor(public paginationService: PaginationService) {
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      author: '',
-      status: '',
-      tags: '',
-      sorting: '-'
-    });
-
     this.paginationService.init('articles', 'articleDate', { reverse: true, prepend: false });
   }
 

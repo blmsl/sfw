@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup }                from '@angular/forms';
-import { UserService }              from '../../../services/user/user.service';
-import { Observable }               from 'rxjs';
-import { IUser }                    from '../../../interfaces/user/user.interface';
+import { FormGroup } from '@angular/forms';
+import { UserService } from '../../../services/user/user.service';
+import { Observable } from 'rxjs';
+import { IUser } from '../../../interfaces/user/user.interface';
 
 @Component({
   selector: 'publication-form',

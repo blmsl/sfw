@@ -36,6 +36,7 @@ export class EventsResolver implements Resolve<ICalendarEvent[]> {
           }
         });
         this.events$.push(...memberEvents);
+        console.log(this.events$);
         return this.events$;
       })
     );

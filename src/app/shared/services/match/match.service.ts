@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
 import { IMatch } from '../../interfaces/match.interface';
+import { of } from 'rxjs/index';
 
 @Injectable()
 export class MatchService {
@@ -54,8 +55,8 @@ export class MatchService {
     return this.afs.doc<IMatch>(this.path + '/' + matchId).valueChanges();
   }
 
-  setNewMatch(): IMatch {
-    return {
+  setNewMatch(): Observable<IMatch> {
+    return of({
       homeTeam: {
         externalTeamLink: '',
         logoURL: '',
@@ -74,6 +75,6 @@ export class MatchService {
       endDate: null,
       matchLink: '',
       matchType: ''
-    };
+    });
   }
 }

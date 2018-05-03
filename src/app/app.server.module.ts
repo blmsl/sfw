@@ -1,15 +1,15 @@
-import {NgModule} from '@angular/core';
-import {ServerModule, ServerTransferStateModule} from '@angular/platform-server';
-import {ModuleMapLoaderModule} from '@nguniversal/module-map-ngfactory-loader';
+import { NgModule } from '@angular/core';
+import { ServerModule, ServerTransferStateModule } from '@angular/platform-server';
+import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
 
-import {AppModule}                          from './app.module';
-import {AppComponent}                       from './app.component';
-import { NoopAnimationsModule }             from '@angular/platform-browser/animations';
+import { AppModule } from './app.module';
+import { AppComponent } from './app.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 // import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 // import * as fs                              from 'fs';
-import { BrowserModule }                    from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 // import { Observable, Observer }             from 'rxjs/index';
-import { environment }                      from '../environments/environment';
+import { environment } from '../environments/environment';
 
 /*
 export function universalLoader(): TranslateLoader {
@@ -40,4 +40,4 @@ export function universalLoader(): TranslateLoader {
   ],
   bootstrap: [AppComponent],
 })
-export class AppServerModule {}
+export class AppServerModule { }

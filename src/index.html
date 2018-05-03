@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Administration Backend</title>
-  <meta name="description" content="Admin Backend with Service Worker" />
+  <meta name="description" content="Admin Backend with Service Worker"/>
   <base href="/">
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,7 +37,7 @@
   <link rel="apple-touch-icon" sizes="144x144" href="assets/sfw/favicon/apple-icon-144x144.png">
   <link rel="apple-touch-icon" sizes="152x152" href="assets/sfw/favicon/apple-icon-152x152.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/sfw/favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="assets/sfw/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/sfw/favicon/android-icon-192x192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/sfw/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="96x96" href="assets/sfw/favicon/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/sfw/favicon/favicon-16x16.png">
@@ -74,10 +74,12 @@
       width: 100%;
       height: 100%;
     }
+
     .loading::before {
       content: '';
       background-color: #fff;
     }
+
     .loading::after {
       font-family: "Helvetica Neue", Helvetica, sans-serif;
       content: 'LOADING';
@@ -90,8 +92,11 @@
       opacity: 0.8;
       animation: animation 1s alternate infinite;
     }
+
     @keyframes animation {
-      to { opacity: 0.2; }
+      to {
+        opacity: 0.2;
+      }
     }
   </style>
 </head>
@@ -100,5 +105,15 @@
   <div class="loading"></div>
 </app-root>
 <noscript><p>Sorry, JavaScript must be enabled to use this app</p></noscript>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-YOUR_TRACKING_ID', {'send_page_view': false});
+</script>
 </body>
 </html>

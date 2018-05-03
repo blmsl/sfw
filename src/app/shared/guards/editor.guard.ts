@@ -1,9 +1,9 @@
-import { Injectable }                                               from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
-import { AuthService }                                              from '../services/auth/auth.service';
-import { Observable }                                               from 'rxjs';
-import { map, take, tap }                                           from 'rxjs/operators';
-import { IUser }                                                    from '../interfaces/user/user.interface';
+import { AuthService } from '../services/auth/auth.service';
+import { Observable } from 'rxjs';
+import { map, take, tap } from 'rxjs/operators';
+import { IUser } from '../interfaces/user/user.interface';
 
 @Injectable()
 export class EditorGuard implements CanActivate {

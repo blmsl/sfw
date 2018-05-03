@@ -10,14 +10,17 @@
     <mat-form-field fxFlex.gt-sm="49"
                     fxFlex="100"
                     hintLabel="Max 50 characters">
-      <input matInput maxlength="50" formControlName="subTitle"
+      <input matInput
+             maxlength="50"
+             formControlName="subTitle"
              placeholder="{{'general.articles.edit.subTitle' | translate}}">
     </mat-form-field>
 
     <mat-form-field fxFlexOffset.gt-sm="2"
                     fxFlex.gt-sm="49"
                     fxFlex="100">
-      <input matInput formControlName="postURL"
+      <input matInput
+             formControlName="postURL"
              placeholder="{{'general.articles.edit.postURL' | translate}}">
       <mat-hint align="end">
         <a *ngIf="form.get('postURL').value" [href]="form.get('postURL').value">Visit Link</a>
@@ -28,16 +31,18 @@
   <div class="row">
     <mat-form-field fxFlex.gt-sm="49"
                     fxFlex="100">
-      <input matInput maxlength="24" formControlName="articleDate"
+      <input matInput
+             maxlength="24"
+             formControlName="articleDate"
              placeholder="{{'general.articles.edit.articleDate' | translate}}">
     </mat-form-field>
 
     <div fxFlexOffset.gt-sm="2"
          fxFlex.gt-sm="49"
          fxFlex="100">
-      <tag-input formControlName="assignedTags"
+      <!--<tag-input formControlName="assignedTags"
                  [editable]="true">
-      </tag-input>
+      </tag-input>-->
     </div>
   </div>
 
@@ -47,11 +52,9 @@
                     fxFlex="100">
       <mat-select placeholder="{{'general.articles.edit.author' | translate}}"
                   formControlName="by">
-        <mat-option
-          *ngFor="let member of members | orderBy: ['mainData.firstName', 'mainData.lastName', 'mainData.birthday']"
-          [value]="member.id">
-          {{member.mainData.firstName}} {{member.mainData.lastName}}
-          {{ member.mainData.birthday | date: 'dd.MM.yy' }}
+        <mat-option *ngFor="let user of users | orderBy: ['firstName', 'lastName']"
+                    [value]="user.id">
+          {{user.firstName}} {{user.lastName}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -74,7 +77,8 @@
     <mat-form-field fxFlex.gt-sm="49"
                     fxFlex="100">
       <mat-select placeholder="{{'general.articles.edit.assignedTeams' | translate}}"
-                  formControlName="assignedTeams" multiple>
+                  formControlName="assignedTeams"
+                  multiple>
         <mat-optgroup *ngFor="let season of seasons | orderBy: ['-title']"
                       [label]="season.title">
           <mat-option
@@ -105,16 +109,31 @@
   </div>
 
   <div class="row">
-    <mat-checkbox fxFlex="100"
-                  formControlName="isFeaturedPost">
-      {{'general.articles.edit.isFeaturedPost' | translate}}
+
+    <mat-checkbox fxFlex.gt-sm="49"
+                  fxFlex="100"
+                  formControlName="isMatch">
+      {{'general.articles.edit.isArticleAMatch' | translate}}
     </mat-checkbox>
+
+    <mat-form-field fxFlexOffset.gt-sm="2" *ngIf="form.get('isMatch').value"
+                    fxFlex.gt-sm="49"
+                    fxFlex="100">
+      <mat-select placeholder="{{'general.articles.edit.assignedMatch' | translate}}"
+                  formControlName="assignedMatch">
+        <mat-option *ngFor="let match of matches | orderBy: ['startDate', 'title']"
+                    [value]="match.id">
+          {{match.startDate | date: 'd.M.Y'}}: {{match.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
   <div class="row">
-    <mat-checkbox fxFlex="100"
-                  formControlName="isMatch">
-      {{'general.articles.edit.isArticleAMatch' | translate}}
+    <mat-checkbox fxFlex.gt-sm="49"
+                  fxFlex="100"
+                  formControlName="isFeaturedPost">
+      {{'general.articles.edit.isFeaturedPost' | translate}}
     </mat-checkbox>
   </div>
 

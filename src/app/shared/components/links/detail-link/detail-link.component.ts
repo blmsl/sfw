@@ -8,13 +8,15 @@ import { Component, Input } from '@angular/core';
 export class DetailLinkComponent {
 
   @Input() objectId: string;
-  @Input() type: string;
+  @Input() title: string;
+  /* @Input() type: string;
+
 
   @Input() buttonType: string = 'mat-raised-button';
   @Input() buttonColor: string = '';
   @Input() showIcon: boolean;
   @Input() showText: boolean;
-  @Input() buttonDisabledStatus: boolean = false;
+  @Input() buttonDisabledStatus: boolean = false; */
 
   constructor() {
   }

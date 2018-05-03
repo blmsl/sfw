@@ -10,7 +10,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { CategoryService } from '../../shared/services/category/category.service';
 import { CategoryTypeService } from '../../shared/services/category-type/category-type.service';
 import { BirthdayModule } from '../../shared/components/birthday/birthday.module';
-import { MatchModule } from '../../shared/components/match/match.module';
+import { SharedMatchModule } from '../../shared/components/match/shared-match.module';
 import { ArticleService } from '../../shared/services/article/article.service';
 
 @NgModule({
@@ -22,7 +22,7 @@ import { ArticleService } from '../../shared/services/article/article.service';
     MatMenuModule,
     // MatProgressBarModule,
     MatTabsModule,
-    MatchModule,
+    SharedMatchModule,
     // NgxDatatableModule,
     PerfectScrollbarModule,
     RouterModule.forChild(dashboardRoutes),

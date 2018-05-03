@@ -19,11 +19,12 @@
       <div fxFlex.gt-sm="12"
            fxFlex="100">
         <div class="button-row">
-          <button mat-raised-button [matMenuTriggerFor]="menu">Publish &darr;</button>
+          <button mat-raised-button
+                  [matMenuTriggerFor]="menu">Publish &darr;</button>
 
-          <!--<button mat-icon-button (click)="notifications.toggle()">
+          <button mat-icon-button (click)="notifications.toggle()">
             <mat-icon>settings</mat-icon>
-          </button>-->
+          </button>
         </div>
 
         <mat-menu #menu="matMenu" formGroupName="publication">
@@ -31,7 +32,8 @@
             <h4>Ready to publish your post?</h4>
 
             <mat-radio-group class="radio-group" formControlName="status">
-              <mat-radio-button (click)="changeStatus(publication.value)" class="radio-button"
+              <mat-radio-button (click)="changeStatus(publication.value)"
+                                class="radio-button"
                                 *ngFor="let publication of publicationOptions"
                                 [value]="publication.value" style="margin: 10px 0">
                 {{publication.text}}<br/>
@@ -49,27 +51,25 @@
         </mat-menu>
 
       </div>
-      <!--<mat-sidenav #notifications
+      <mat-sidenav #notifications
                    position="end"
                    class="chat-panel"
                    mode="over"
                    fxFlex="60"
                    opened="false">
         <article-edit-sidebar (remove)="remove()"
-                              [notifications]="notifications"
                               [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
                               [categories]="categories$ | async"
                               [locations]="locations$ | async"
-                              [matches]="matches$ | async"
-                              [members]="members$ | async"
+                              [users]="users$ | async"
                               [seasons]="seasons$ | async"
                               [teams]="teams$ | async"
+                              [notifications]="notifications"
                               [form]="form">
         </article-edit-sidebar>
-      </mat-sidenav>-->
+      </mat-sidenav>
     </div>
   </div>
-
 
   <sfw-editor name="text"
              formControlName="text"
@@ -79,49 +79,6 @@
              required
              maxlength="500">
   </sfw-editor>
-
-  <!--
-  <div fxLayout="row"
-       fxLayoutWrap="wrap">
-
-    <div fxFlex.gt-sm="50"
-         fxFlex="100"
-         class="editor-header editor-header--first">
-    </div>
-
-    <div fxFlex.gt-sm="50"
-         fxFlex="100"
-         class="editor-header">
-      <mat-toolbar style="background-color: transparent">
-        <mat-toolbar-row>
-          <h3 class="title">Preview</h3>
-          <span class="toolbar-spacer"></span>
-          <a class="toolbar-icon" (click)="toggleView()">
-            <mat-icon>eye</mat-icon>
-          </a>
-        </mat-toolbar-row>
-      </mat-toolbar>
-    </div>
-  </div>
-
-  <div class="content">
-    <pre>{{form.getRawValue() | json}}</pre>
-    <textarea fxFlex.gt-sm="50"
-              fxFlex="100"
-              style="padding: 0 16px;margin: 0;overflow: auto;border: none;"
-              formControlName="text">
-    </textarea>
-    <div fxFlex.gt-sm="50"
-         fxFlex="100">
-      <pre>{{form.getRawValue() | json}}</pre>
-    </div>
-  </div>
-
-  <footer style="padding: 5px;" *ngIf="!viewSrcMode">
-    <span *ngIf="enableWordsCount">Words: <span class="counter">{{words}}</span></span>
-    <i class="separator"></i>
-    <span *ngIf="enableCharactersCount">Characters: <span class="counter">{{characters}}</span></span>
-  </footer>-->
 
 </div>
 

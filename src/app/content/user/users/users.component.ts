@@ -1,7 +1,7 @@
-import { Component }   from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../../shared/services/user/user.service';
-import { Observable }  from 'rxjs';
-import { IUser }       from '../../../shared/interfaces/user/user.interface';
+import { Observable } from 'rxjs';
+import { IUser } from '../../../shared/interfaces/user/user.interface';
 
 @Component({
   selector: 'app-users',

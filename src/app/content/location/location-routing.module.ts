@@ -1,11 +1,11 @@
-import { RouterModule, Routes }        from '@angular/router';
-import { ModuleWithProviders }         from '@angular/core';
-import { LocationsComponent }          from './locations/locations.component';
-import { LocationResolver }            from './location.resolver';
-import { LocationDetailComponent }     from './location-detail/location-detail.component';
-import { LocationMapComponent }        from './location-map/location-map.component';
-import { LocationEditComponent }       from './location-edit/location-edit.component';
-import { PendingChangesGuard }         from '../../shared/guards/pending-changes.guard';
+import { RouterModule, Routes } from '@angular/router';
+import { ModuleWithProviders } from '@angular/core';
+import { LocationsComponent } from './locations/locations.component';
+import { LocationResolver } from './location.resolver';
+import { LocationDetailComponent } from './location-detail/location-detail.component';
+import { LocationMapComponent } from './location-map/location-map.component';
+import { LocationEditComponent } from './location-edit/location-edit.component';
+import { PendingChangesGuard } from '../../shared/guards/pending-changes.guard';
 import { LocationStatisticsComponent } from './location-statistics/location-statistics.component';
 
 export const routes: Routes = [

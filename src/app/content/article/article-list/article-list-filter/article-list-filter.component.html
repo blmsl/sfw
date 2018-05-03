@@ -1,0 +1,59 @@
+<div fxLayout="row"
+     [formGroup]="form"
+     *ngIf="users"
+     fxLayoutWrap="wrap">
+
+  <mat-form-field fxFlex.gt-sm="10"
+                  fxFlex="100">
+    <mat-select placeholder="{{ 'general.articles.list.allStatus' | translate}}"
+                formControlName="status">
+      <mat-option [value]=""
+                  *ngIf="!form.get('status').value">
+        {{ 'general.articles.list.allStatus' | translate}}
+      </mat-option>
+      <mat-option *ngFor="let option of publicationStati" [value]="option.value">
+        {{ option.title }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlexOffset.gt-sm="3"
+                  fxFlex.gt-sm="10"
+                  fxFlex="100">
+    <mat-select placeholder="{{ 'general.articles.list.allAuthors' | translate}}"
+                formControlName="author">
+      <mat-option [value]=""
+                  *ngIf="!form.get('author').value">
+        {{ 'general.articles.list.allAuthors' | translate}}
+      </mat-option>
+      <mat-option *ngFor="let user of users | orderBy: ['lastName', 'firstName']"
+                  [value]="user.id">
+        {{ user.firstName }} {{ user.lastName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlexOffset.gt-sm="3"
+                  fxFlex.gt-sm="10"
+                  fxFlex="100">
+    <mat-select placeholder="{{ 'general.articles.list.allTags' | translate}}"
+                formControlName="tags">
+      <mat-option [value]=""
+                  *ngIf="!form.get('tags').value">
+        {{ 'general.articles.list.allTags' | translate}}
+      </mat-option>
+      <!--<mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}
+        {{ 'general.items' | translate}}
+      </mat-option>-->
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlexOffset.gt-sm="50"
+                  fxFlex.gt-sm="14"
+                  fxFlex="100">
+    <mat-select formControlName="sorting">
+      <mat-option value="-">{{ 'general.articles.list.sortDateDesc' | translate}}</mat-option>
+      <mat-option value="">{{ 'general.articles.list.sortDateAsc' | translate}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

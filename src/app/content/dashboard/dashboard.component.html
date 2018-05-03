@@ -1,39 +1,39 @@
 <div fxLayout="row"
      fxLayoutWrap="wrap">
 
-  <div fxFlex.gt-sm="50"
-       fxFlex="100">
+  <!--<div fxFlex.gt-sm="50"
+      fxFlex="100">
 
-    <div fxLayout="column">
+  <div fxLayout="column">
 
-      <div fxFlex="100">
-        <mat-card class="profile-post">
-          <form fxLayout="row"
-                [formGroup]="mindForm">
-            <textarea formControlName="comment"
-                      placeholder="{{'general.dashboard.mindText' | translate}}"
-                      rows="6">
-            </textarea>
-          </form>
-          <hr>
-          <mat-card-actions>
-            <div fxLayout="row">
-              <button mat-icon-button>
-                <mat-icon>insert_photo</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>insert_link</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>location_on</mat-icon>
-              </button>
-              <span fxFlex></span>
-              <button mat-raised-button color="primary">Post</button>
-            </div>
-          </mat-card-actions>
-        </mat-card>
-      </div>
-    </div>
+     <div fxFlex="100">
+       <mat-card class="profile-post">
+         <form fxLayout="row"
+               [formGroup]="mindForm">
+           <textarea formControlName="comment"
+                     placeholder="{{'general.dashboard.mindText' | translate}}"
+                     rows="6">
+           </textarea>
+         </form>
+         <hr>
+         <mat-card-actions>
+           <div fxLayout="row">
+             <button mat-icon-button>
+               <mat-icon>insert_photo</mat-icon>
+             </button>
+             <button mat-icon-button>
+               <mat-icon>insert_link</mat-icon>
+             </button>
+             <button mat-icon-button>
+               <mat-icon>location_on</mat-icon>
+             </button>
+             <span fxFlex></span>
+             <button mat-raised-button color="primary">Post</button>
+           </div>
+         </mat-card-actions>
+       </mat-card>
+     </div>
+   </div>
 
     <div fxLayout="row"
          fxLayoutWrap="wrap">
@@ -106,7 +106,7 @@
 
             </mat-list>
           </mat-card-content>
-        </mat-card>-->
+        </mat-card>
       </div>
 
       <div fxFlex.gt-sm="49"
@@ -127,10 +127,10 @@
               </mat-list-item>
             </mat-list>
           </mat-card-content>
-        </mat-card>-->
+        </mat-card>
       </div>
     </div>
-  </div>
+  </div>-->
 
   <div fxFlex.gt-sm="50"
        fxFlex="100">
@@ -250,7 +250,7 @@
     </div>
 
 
-    <mat-card>
+    <!--<mat-card>
       <mat-card-title class="mat-amber">
         <h2 mat-card-widget-title>{{'general.dashboard.matches' | translate}}</h2>
         <hr>
@@ -259,7 +259,7 @@
         <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
                        [dynamicHeight]="true">
 
-          <!--<mat-tab label="{{'general.dashboard.upComingMatches' | translate}}">
+          <mat-tab label="{{'general.dashboard.upComingMatches' | translate}}">
             <div *ngIf="matches$ | async as matches; else loadingTemplate"
                  [perfectScrollbar]="config">
               <match-list [categories]="categories"
@@ -269,7 +269,7 @@
             </div>
           </mat-tab>
 
-          <!--<mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
+          <mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
             <div *ngIf="matches$ | async as matches; else loadingTemplate"
                  style="max-height: 40vh;"
                  [perfectScrollbar]="config">
@@ -279,9 +279,9 @@
                           [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<=' | matchFilter: 'endDate' : '>=' : inLastTwoWeeks">
               </match-list>
             </div>
-          </mat-tab>-->
+          </mat-tab>
 
-          <!--<mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
+          <mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
             <div *ngIf="matches$ | async as matches; else loadingTemplate"
                  [perfectScrollbar]="config">
               <match-list [categories]="categories"
@@ -290,11 +290,11 @@
                           [matches]="matches | matchFilter : 'endDate' : '<=' | orderBy: ['-endDate'] | matchNoResultFilter | slice: 0:20">
               </match-list>
             </div>
-          </mat-tab>-->
+          </mat-tab>
 
         </mat-tab-group>
       </mat-card-content>
-    </mat-card>
+    </mat-card>-->
   </div>
 
 </div>

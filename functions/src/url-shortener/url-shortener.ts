@@ -21,7 +21,7 @@ export const urlShortener = functions.database.ref('/links/{linkID}').onCreate((
           short: response.data.id,
         })
           .then(() => resolve())
-          .catch((error:any) => reject(error));
+          .catch((error: any) => reject(error));
       }
     });
   });

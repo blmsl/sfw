@@ -1,6 +1,6 @@
-import { environment }       from '../environments/environment';
+import { environment } from '../environments/environment';
 
-export const fireBug = () =>  new Promise((resolve) => {
+export const fireBug = () => new Promise((resolve) => {
   if (environment.firebug) {
     const fb = document.createElement('script');
     fb.type = 'text/javascript'; fb.src = '../firebug-lite/build/firebug-lite.js';

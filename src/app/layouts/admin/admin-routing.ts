@@ -31,6 +31,10 @@ export const adminRoutes: Routes = [
         loadChildren: '../../content/location/location.module#LocationModule'
       },
       {
+        path: 'matches',
+        loadChildren: '../../content/match/match.module#MatchModule'
+      },
+      {
         path: 'members',
         loadChildren: '../../content/member/member.module#MemberModule'
       },

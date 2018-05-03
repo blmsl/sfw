@@ -777,6 +777,9 @@
           "main": "Platzarten"
         }
       },
+      "matches": {
+        "main": "Spiele"
+      },
       "member": {
         "main": "Mitglieder",
         "detail": "Mitgliederdetails",

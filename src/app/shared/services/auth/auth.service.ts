@@ -1,19 +1,19 @@
 import {
   Injectable,
   OnDestroy
-}                              from '@angular/core';
-import { AngularFireAuth }     from 'angularfire2/auth';
+} from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
 import {
   AngularFirestore,
   AngularFirestoreDocument
-}                              from 'angularfire2/firestore';
-import * as firebase           from 'firebase/app';
-import * as moment             from 'moment';
-import { Observable }          from 'rxjs';
-import { ICreation }           from '../../interfaces/creation.interface';
-import { IUser }               from '../../interfaces/user/user.interface';
+} from 'angularfire2/firestore';
+import * as firebase from 'firebase/app';
+import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { ICreation } from '../../interfaces/creation.interface';
+import { IUser } from '../../interfaces/user/user.interface';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { first }               from 'rxjs/internal/operators';
+import { first } from 'rxjs/internal/operators';
 
 // Presence System
 // https://www.youtube.com/watch?v=2ZDeT5hLIBQ&feature=push-u&attr_tag=EDwjeHaWKNSWOoZT-6
@@ -29,8 +29,8 @@ export class AuthService implements OnDestroy {
   // private authSubscription: ISubscription;
 
   constructor(private afAuth: AngularFireAuth,
-              private db: AngularFireDatabase,
-              private afs: AngularFirestore) {
+    private db: AngularFireDatabase,
+    private afs: AngularFirestore) {
 
     this.user$ = this.afAuth.authState
       .switchMap((user: any) => {
@@ -161,28 +161,28 @@ export class AuthService implements OnDestroy {
 
 
   canRead(user: IUser): boolean {
-    const allowed = [ 'admin', 'editor', 'subscriber' ];
+    const allowed = ['admin', 'editor', 'subscriber'];
     return this.checkAuthorization(user, allowed);
   }
 
   canWrite(user: IUser): boolean {
-    const allowed = [ 'admin', 'editor' ];
+    const allowed = ['admin', 'editor'];
     return this.checkAuthorization(user, allowed);
   }
 
   canEdit(user: IUser): boolean {
-    const allowed = [ 'admin', 'editor' ];
+    const allowed = ['admin', 'editor'];
     return this.checkAuthorization(user, allowed);
   }
 
   canDelete(user: IUser): boolean {
-    const allowed = [ 'admin' ];
+    const allowed = ['admin'];
     return this.checkAuthorization(user, allowed);
   }
 
   private checkAuthorization(user: IUser, allowedRoles: string[]): boolean {
     for (const role in allowedRoles) {
-      if (user && user.assignedRoles[ allowedRoles[ role ] ]) {
+      if (user && user.assignedRoles[allowedRoles[role]]) {
         return true;
       }
     }

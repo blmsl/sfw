@@ -7,8 +7,8 @@ import { ILocation } from '../../../../shared/interfaces/location.interface';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import { ISeason } from '../../../../shared/interfaces/season.interface';
 import { IMatch } from '../../../../shared/interfaces/match.interface';
-import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { ApplicationService } from '../../../../shared/services/application/application.service';
+import { IUser } from '../../../../shared/interfaces/user/user.interface';
 
 @Component({
   selector: 'article-edit-sidebar',
@@ -22,8 +22,7 @@ export class ArticleEditSidebarComponent {
   @Input() categories: ICategory[];
   @Input() categoryTypes: ICategoryType[];
   @Input() locations: ILocation[];
-  @Input() matches: IMatch[];
-  @Input() members: IMember[];
+  @Input() users: IUser[];
   @Input() seasons: ISeason[];
   @Input() teams: ITeam[];
 

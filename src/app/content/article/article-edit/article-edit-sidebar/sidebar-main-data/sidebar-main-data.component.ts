@@ -6,6 +6,8 @@ import { ISeason } from '../../../../../shared/interfaces/season.interface';
 import { ITeam } from '../../../../../shared/interfaces/team/team.interface';
 import { ICategory } from '../../../../../shared/interfaces/category.interface';
 import { ICategoryType } from '../../../../../shared/interfaces/category-type.interface';
+import { IUser } from '../../../../../shared/interfaces/user/user.interface';
+import { IMatch } from '../../../../../shared/interfaces/match.interface';
 
 @Component({
   selector: 'sidebar-main-data',
@@ -18,7 +20,8 @@ export class SidebarMainDataComponent implements OnInit {
   @Input() categories: ICategory[];
   @Input() categoryTypes: ICategoryType[];
   @Input() locations: ILocation[];
-  @Input() members: IMember[];
+  @Input() users: IUser[];
+  @Input() matches: IMatch[];
   @Input() seasons: ISeason[];
   @Input() teams: ITeam[];
 

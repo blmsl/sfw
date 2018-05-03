@@ -1,17 +1,7 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IArticle } from '../../../shared/interfaces/article.interface';
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
@@ -26,9 +16,9 @@ import { ISeason } from '../../../shared/interfaces/season.interface';
 import { IMatch } from '../../../shared/interfaces/match.interface';
 import { MatchService } from '../../../shared/services/match/match.service';
 import { ArticleService } from '../../../shared/services/article/article.service';
-import { MemberService } from '../../../shared/services/member/member.service';
-import { IMember } from '../../../shared/interfaces/member/member.interface';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { UserService } from '../../../shared/services/user/user.service';
+import { IUser } from '../../../shared/interfaces/user/user.interface';
 
 @Component({
   selector: 'article-edit',
@@ -42,7 +32,7 @@ export class ArticleEditComponent implements OnInit {
   public categoryTypes$: Observable<ICategoryType[]>;
   public locations$: Observable<ILocation[]>;
   public matches$: Observable<IMatch[]>;
-  public members$: Observable<IMember[]>;
+  public users$: Observable<IUser[]>;
   public seasons$: Observable<ISeason[]>;
   public teams$: Observable<ITeam[]>;
 
@@ -74,23 +64,21 @@ export class ArticleEditComponent implements OnInit {
   ];
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private articleService: ArticleService,
-    private categoryService: CategoryService,
-    private categoryTypeService: CategoryTypeService,
-    private locationService: LocationService,
-    private matchService: MatchService,
-    private memberService: MemberService,
-    private seasonService: SeasonService,
-    private teamService: TeamService,
-    private fb: FormBuilder) {
-    // this.categories$ = categoryService.categories$;
+              private router: Router,
+              private articleService: ArticleService,
+              private categoryService: CategoryService,
+              private categoryTypeService: CategoryTypeService,
+              private locationService: LocationService,
+              private userService: UserService,
+              private seasonService: SeasonService,
+              private teamService: TeamService,
+              private fb: FormBuilder) {
+    this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
-    /* this.locations$ = locationService.locations$;
-     this.matches$ = matchService.matches$;
-     this.members$ = memberService.members$;
-     this.seasons$ = seasonService.seasons$;
-     this.teams$ = teamService.teams$; */
+    this.locations$ = locationService.locations$;
+    this.users$ = userService.users$;
+    this.seasons$ = seasonService.seasons$;
+    this.teams$ = teamService.teams$;
   }
 
   ngOnInit() {
@@ -100,22 +88,22 @@ export class ArticleEditComponent implements OnInit {
 
     this.form = this.fb.group({
       title: [this.article.title, [Validators.required, Validators.minLength(10)]],
-      // subTitle: [this.article.subTitle],
+      subTitle: [this.article.subTitle],
       text: [this.article.text, [Validators.required, Validators.minLength(10)]],
-      publication: this.initPublication()
-      /* creation: this.initCreation(),
-       meta: this.initMetaData(),
-       articleDate: this.article.articleDate,
-       // postImage: string;
-       postURL: [this.article.postURL],
-       assignedTags: [this.article.assignedTags],
-       assignedCategories: [this.article.assignedCategories],
-       assignedTeams: [this.article.assignedTeams],
-       assignedLocation: [this.article.assignedLocation],
-       assignedSeason: [this.article.assignedSeason],
-       assignedMatch: [this.article.assignedMatch],
-       isFeaturedPost: [this.article.isFeaturedPost],
-       isMatch: !!(this.article.assignedMatch) */
+      publication: this.initPublication(),
+      creation: this.initCreation(),
+      meta: this.initMetaData(),
+      articleDate: this.article.articleDate,
+      // postImage: string;
+      postURL: [this.article.postURL],
+      assignedTags: [this.article.assignedTags],
+      assignedCategories: [this.article.assignedCategories],
+      assignedTeams: [this.article.assignedTeams],
+      assignedLocation: [this.article.assignedLocation],
+      assignedSeason: [this.article.assignedSeason],
+      assignedMatch: [this.article.assignedMatch],
+      isFeaturedPost: [this.article.isFeaturedPost],
+      isMatch: !!(this.article.assignedMatch)
     });
 
     this.form.valueChanges.pipe(
@@ -179,7 +167,7 @@ export class ArticleEditComponent implements OnInit {
   }
 
   redirectToList(): void {
-    this.router.navigate(['/categories']).then();
+    this.router.navigate(['/articles']).then();
   }
 
 }

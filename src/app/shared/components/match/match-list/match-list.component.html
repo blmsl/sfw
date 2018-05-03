@@ -1,61 +1,32 @@
-<div fxLayout="column"
-     [formGroup]="form">
-  <div fxFlex="100"
-       *ngIf="matches && categories; else loadingTemplate">
+<div fxLayout="column">
+  <div fxFlex="100" *ngIf="matches && categories; else loadingTemplate">
 
     <p *ngIf="matches.length === 0">{{'general.matches.list.noMatches' | translate}}</p>
 
-    <mat-list dense
-              formGroupName="matches">
+    <mat-list dense>
+      <mat-list-item *ngFor="let match of matches">
 
-      <mat-list-item [@changeSuccessBackgroundColor]="matches[i].fadeOutAnimation"
-                     *ngFor="let formControl of form.controls['matches']['controls']; let i = index">
         <img style="border-radius: 0"
              mat-list-avatar
-             src="{{matches[i].homeTeam.logoURL}}"
-             title="{{matches[i].homeTeam.title}}" />
+             src="{{match.homeTeam.logoURL}}"
+             title="{{match.homeTeam.title}}"/>
+
         <img style="border-radius: 0"
              mat-list-avatar
-             src="{{matches[i].guestTeam.logoURL}}"
-             title="{{matches[i].guestTeam.title}}" />
+             src="{{match.guestTeam.logoURL}}"
+             title="{{match.guestTeam.title}}"/>
 
-        <h3 matLine
-            [formGroupName]="i">
-          {{matches[i].homeTeam.title}} &ndash; {{matches[i].guestTeam.title}}
-
-          <span formGroupName="result"
-                *ngIf="showResultInputs"
-                style="position: absolute; right: 0;">
-
-            <input matInput
-                   style="width: 35px;"
-                   formControlName="homeTeamGoals"
-                   type="number" />:
-
-            <input matInput
-                   style="width: 35px;"
-                   formControlName="guestTeamGoals"
-                   type="number" />
-
-            <span style="margin: 0 5px;">&nbsp;</span>
-
-            <select name="event" formControlName="otherEvent">
-              <option [value]="">-</option>
-              <option *ngFor="let event of events"
-                      [value]="event.id">
-                {{event.title}}
-              </option>
-            </select>
-
-          </span>
+        <h3 matLine>
+          <detail-link [objectId]="match.id"
+                       [title]="match.homeTeam.title + '&ndash;' + match.guestTeam.title"></detail-link>
         </h3>
 
         <p matLine>
-          <span *ngFor="let category of categories | filterBy: ['id'] : matches[i].assignedTeamCategory">
+          <span *ngFor="let category of categories | filterBy: ['id'] : match.assignedTeamCategory">
             {{category.title}}
           </span>
-          - {{matches[i].matchType}}
-          - {{matches[i].startDate | date: 'dd.MM.yy HH:mm'}}
+          - {{match.matchType}}
+          - {{match.startDate | date: 'dd.MM.yy HH:mm'}}
         </p>
       </mat-list-item>
     </mat-list>

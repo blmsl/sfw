@@ -1,6 +1,6 @@
-import * as admin     from 'firebase-admin';
+import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
-import * as moment    from 'moment';
+import * as moment from 'moment';
 
 const SENDGRID_API_KEY = functions.config().sendgrid.key;
 
@@ -36,7 +36,7 @@ export const userCreated = functions.auth.user().onCreate((event: any) => {
         from: 'admin@sfwinterbach.com',
         subject: 'Neuer Benutzer',
         templateId: '758f452a-aa4d-4664-8088-5a5ce2a814ac',
-        substitutionWrappers: [ '{{', '}}' ],
+        substitutionWrappers: ['{{', '}}'],
         substitutions: {
           email: firebaseUser.email,
           name: 'Thomas',

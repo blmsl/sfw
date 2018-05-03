@@ -13,12 +13,12 @@ import * as admin from 'firebase-admin';
 admin.initializeApp();
 
 import * as user from './user/index';
-export const newUserCreated = user.userCreated;
-export const onUserDelete = user.userDeleted;
-export const userPresence = user.userPresence;
+export const newUserCreation = user.userCreated;
+// export const onUserDelete = user.userDeleted;
+// export const userPresence = user.userPresence;
 
-import * as shortener from './url-shortener/index';
-export const urlShortener = shortener.shortener;
+// import * as shortener from './url-shortener/index';
+// export const urlShortener = shortener.shortener;
 
 import * as member from './member/index';
 export const birthdayReminder = member.birthdayReminderCron;
@@ -26,8 +26,8 @@ export const memberOfTheWeekCron = member.memberOfTheWeekCron;
 export const dfbMemberCron = member.dfbMemberCron;
 export const driveMemberCron = member.driveMemberCron;
 
-import * as team from './team/index';
-export const spielplanCron = team.spielplanCron;
-export const teamCron = team.teamOfTheMonthCron;
+// import * as team from './team/index';
+// export const spielplanCron = team.spielplanCron;
+// export const teamCron = team.teamOfTheMonthCron;
 // export const wettbewerbeCron = team.wettbewerbeCron;
-export const deleteMatchCron = team.deleteMatchCron;
+// export const deleteMatchCron = team.deleteMatchCron;

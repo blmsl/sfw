@@ -4,20 +4,20 @@ import {
   OnDestroy,
   OnInit,
   ViewChild
-}                           from '@angular/core';
+} from '@angular/core';
 import {
   NavigationEnd,
   Router
-}                           from '@angular/router';
+} from '@angular/router';
 import {
   PerfectScrollbarConfigInterface,
   PerfectScrollbarDirective
-}                           from 'ngx-perfect-scrollbar';
-import { AuthService }      from '../../shared/services/auth/auth.service';
+} from 'ngx-perfect-scrollbar';
+import { AuthService } from '../../shared/services/auth/auth.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription }     from 'rxjs';
-import { filter }           from 'rxjs/operator/filter';
-import { tap }              from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operator/filter';
+import { tap } from 'rxjs/operators';
 
 const SMALL_WIDTH_BREAKPOINT = 960;
 
@@ -48,11 +48,11 @@ export class AdminComponent implements OnInit, OnDestroy {
   public config: PerfectScrollbarConfigInterface = {};
 
   constructor(private router: Router,
-              public translate: TranslateService,
-              public authService: AuthService,
-              private zone: NgZone) {
+    public translate: TranslateService,
+    public authService: AuthService,
+    private zone: NgZone) {
 
-    translate.addLangs([ 'de', 'en', 'fr' ]);
+    translate.addLangs(['de', 'en', 'fr']);
     translate.setDefaultLang('de');
 
     const browserLang: string = translate.getBrowserLang();
@@ -73,7 +73,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       })
     ).subscribe((event: NavigationEnd) => {
       document.querySelector('.app-inner > .mat-drawer-content > div').scrollTop = 0;
-      if(event.url) {
+      if (event.url) {
         this.url = event.url;
       }
       this.runOnRouteChange();
