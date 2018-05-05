@@ -5,6 +5,7 @@ import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AppModule } from './app.module';
+import { OverlayModule } from "@angular/cdk/overlay";
 
 export const APP_ID = 'sfw-app';
 
@@ -18,6 +19,7 @@ export const APP_ID = 'sfw-app';
       appId: environment.appId
     }),
     BrowserTransferStateModule,
+    OverlayModule
     // environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : []
   ]
 })
