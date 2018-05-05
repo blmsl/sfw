@@ -24,7 +24,6 @@ export class CategoryTypeService {
     this.afs.collection(this.path).doc(categoryType.id).set(categoryType);
   }
 
-
   removeCategoryType(categoryType: ICategoryType): Promise<any> {
     return this.afs.collection(this.path).doc(categoryType.id).delete();
   }

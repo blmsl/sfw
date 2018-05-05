@@ -253,7 +253,6 @@ export class MemberEditComponent implements OnInit {
     control.removeAt($event);
   }
 
-
   // Steckbrief
   initProfile(): FormArray {
     const formArray = [];

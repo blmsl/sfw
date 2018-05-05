@@ -40,7 +40,6 @@ export class ClubManagementListComponent implements OnInit {
     const control = <FormArray>this.form.controls['management']['controls']['positions'];
     control.removeAt(position);
 
-
     console.log(this.form.controls['management']['controls']['positions']['controls']);
     // console.log(position);
     // console.log(this.club.management.positions.indexOf(position));

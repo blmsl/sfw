@@ -9,8 +9,8 @@ import { IUploaderOptions } from '../../interfaces/media/uploader-options.interf
 import { Upload } from './upload.class';
 import { AuthService } from '../auth/auth.service';
 import { MediaItemService } from './media-item.service';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
+
+
 
 export type FilterFunction = {
   name: string,

@@ -15,7 +15,7 @@ import { ICategory } from '../../../shared/interfaces/category.interface';
 import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material';
 import { IClubHonorary } from '../../../shared/interfaces/club/club-honorary.interface';
-import 'rxjs/add/operator/debounceTime';
+
 import {
   debounceTime,
   distinctUntilChanged

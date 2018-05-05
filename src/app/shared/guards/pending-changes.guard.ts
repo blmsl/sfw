@@ -19,5 +19,4 @@ export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate
       confirm('ACHTUNG: Du hast nicht gespeicherte Änderungen. Drücke Abbrechen zum Verwerfen dieser Änderungen oder speichere sie ab.');
   }
 
-
 }

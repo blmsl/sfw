@@ -4,8 +4,8 @@ import {
   of
 } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/map';
+
+
 import { IMember } from '../../interfaces/member/member.interface';
 
 @Injectable()
@@ -37,7 +37,6 @@ export class MemberService {
   getMemberById(memberId: string): Observable<IMember | null> {
     return this.afs.doc<IMember>(this.path + '/' + memberId).valueChanges();
   }
-
 
   getZodiac(birthday) {
     const dateOfBirth = new Date(birthday);

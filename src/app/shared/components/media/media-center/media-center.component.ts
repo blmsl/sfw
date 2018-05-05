@@ -14,7 +14,7 @@ import { IUploaderOptions } from '../../../interfaces/media/uploader-options.int
 export class MediaCenterComponent implements OnInit {
 
   @Input() uploaderOptions: IUploaderOptions;
-  // @Input() uploaderConfig: IUploaderConfig;
+  @Input() uploaderConfig: IUploaderConfig;
   @Input() form: FormGroup;
 
   @Output() uploadCompleted = new EventEmitter(false);

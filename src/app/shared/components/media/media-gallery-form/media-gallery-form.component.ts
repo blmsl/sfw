@@ -30,7 +30,6 @@ export class MediaGalleryFormComponent implements OnInit {
 
   // public gallery: IMediaGallery;
 
-
   constructor(// private mediaGalleryService: MediaGalleryService,
     private authService: AuthService) {
   }
@@ -54,7 +53,6 @@ export class MediaGalleryFormComponent implements OnInit {
       console.log(changes);
     });
   }
-
 
   saveMediaGallery() {
     /* this.mediaGalleryService.createMediaGallery(this.gallery).then(

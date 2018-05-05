@@ -1,11 +1,13 @@
+
+import {take, tap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   Observable
 } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import 'rxjs/add/operator/scan';
-import 'rxjs/add/operator/take';
+
+
 
 @Injectable()
 export class PaginationService {
@@ -68,7 +70,6 @@ export class PaginationService {
     return null;
   }
 
-
   private mapAndUpdate(col: AngularFirestoreCollection<any>) {
     if (this._done.value || this._loading.value) {
       return;
@@ -76,8 +77,8 @@ export class PaginationService {
 
     this._loading.next(true);
 
-    return col.snapshotChanges()
-      .do((arr: any[]) => {
+    return col.snapshotChanges().pipe(
+      tap((arr: any[]) => {
 
         let values = arr.map((snapshot) => {
           const data = snapshot.payload.doc.data();
@@ -93,8 +94,8 @@ export class PaginationService {
         if (!values.length) {
           this._done.next(true);
         }
-      })
-      .take(1)
+      }),
+      take(1),)
       .subscribe();
   }
 

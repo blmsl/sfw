@@ -16,5 +16,4 @@ export class FileSelectDirective {
     this.selectedFiles.emit($event.target.files);
   }
 
-
 }

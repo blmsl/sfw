@@ -53,4 +53,3 @@ export class LocationDetailComponent implements OnInit {
   }
 
 }
-

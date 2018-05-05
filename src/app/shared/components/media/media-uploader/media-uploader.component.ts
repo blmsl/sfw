@@ -13,6 +13,7 @@ import { SnackbarComponent } from '../../snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material';
 import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
 import { tap } from 'rxjs/operators';
+import { Observable } from "rxjs/index";
 
 @Component({
   selector: 'media-uploader',
@@ -30,9 +31,19 @@ export class MediaUploaderComponent implements OnInit {
   public currentUploads: Upload[] = [];
   public isHovering: boolean;
   public canUpload: boolean = true;
+  // Progress monitoring
+  percentage: Observable<number>;
+
+  snapshot: Observable<any>;
+
+  // Download URL
+  downloadURL: Observable<string>;
 
   constructor(public snackBar: MatSnackBar,
     private mediaUploaderService: MediaUploaderService) {
+    this.uploaderConfig = {
+      autoUpload: false
+    }
   }
 
   ngOnInit() {
@@ -90,60 +101,51 @@ export class MediaUploaderComponent implements OnInit {
     }
   }
 
-
   uploadFiles() {
 
     this.currentUploads.forEach((fileUpload: Upload) => {
 
       const uploadTask = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
 
-      /*if (uploadTask.error) {
-        console.log(uploadTask.error.message);
-      }*/
-      console.log(uploadTask);
-      console.log(typeof uploadTask);
+      this.percentage = uploadTask.percentageChanges();
+      this.downloadURL = uploadTask.downloadURL();
 
-      //fileUpload.percentage$ = uploadTask.percentageChanges();
-      // fileUpload.downloadUrl$ = uploadTask.downloadURL();
-
-      /* uploadTask.snapshotChanges().pipe(
+      this.snapshot = uploadTask.snapshotChanges().pipe(
         tap(snapshot => {
 
-            console.log('changes');
-            console.log(fileUpload);
+          console.log('changes');
+          console.log(fileUpload);
 
-            fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+          fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
 
-            if (snapshot.bytesTransferred === snapshot.totalBytes) {
-              console.log('upload completed');
-              this.uploadCompleted.emit(fileUpload);
+          if (snapshot.bytesTransferred === snapshot.totalBytes) {
+            console.log('upload completed');
+            this.uploadCompleted.emit(fileUpload);
 
-              if (this.uploaderConfig.removeAfterUpload) {
-                this.deleteFromQueue(fileUpload);
-                if (this.currentUploads.length === 0) {
-                  this.clearQueue();
-                }
+            if (this.uploaderConfig.removeAfterUpload) {
+              this.deleteFromQueue(fileUpload);
+              if (this.currentUploads.length === 0) {
+                this.clearQueue();
               }
-
             }
-          }, (error: any) => {
-            this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
-            this.snackBar.openFromComponent(SnackbarComponent, {
-              data: {
-                status: 'error',
-                message: error.message
-              },
-              duration: 2500
-            });
+
           }
+        }, (error: any) => {
+          this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            data: {
+              status: 'error',
+              message: error.message
+            },
+            duration: 2500
+          });
+        }
         ));
 
-
-      /*
-      /* const mediaItem = this.mediaItemService.setNewMediaItem(upload);
-       return this.mediaItemService.createMediaItem(mediaItem).then(() => {
-       return mediaItem
-       }); */
+      // const mediaItem = this.mediaItemService.setNewMediaItem(upload);
+      // return this.mediaItemService.createMediaItem(mediaItem).then(() => {
+      //   return mediaItem
+      // });
     });
   }
 

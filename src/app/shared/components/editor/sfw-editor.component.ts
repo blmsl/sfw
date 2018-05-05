@@ -62,7 +62,6 @@ export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, 
   }
   _mode: string;
 
-
   @Input()
   get options(): any {
     return this._options;

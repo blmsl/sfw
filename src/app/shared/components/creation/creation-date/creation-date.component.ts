@@ -17,5 +17,4 @@ export class CreationDateComponent {
     this.moment = moment;
   }
 
-
 }

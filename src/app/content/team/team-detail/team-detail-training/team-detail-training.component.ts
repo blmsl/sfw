@@ -12,7 +12,6 @@ export class TeamDetailTrainingComponent implements OnInit {
   @Input() team: ITeam;
   @Input() locations: ILocation;
 
-
   constructor() {
   }
 
