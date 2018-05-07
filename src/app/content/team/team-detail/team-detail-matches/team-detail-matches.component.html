@@ -11,7 +11,6 @@
           <match-list *ngIf="categories && matches && events && team; else loadingTemplate"
                       [categories]="categories"
                       [events]="events"
-                      [showResultInputs]="true"
                       [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<=' | matchFilter: 'assignedTeam' : '===' : team.id">
           </match-list>
       </mat-card-content>

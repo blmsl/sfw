@@ -263,7 +263,6 @@
             <div *ngIf="matches$ | async as matches; else loadingTemplate"
                  [perfectScrollbar]="config">
               <match-list [categories]="categories"
-                          [showResultInputs]="false"
                           [matches]="matches | orderBy: ['startDate'] | matchFilter : 'endDate' : '>=' | matchFilter: 'endDate' : '<=' : inTwoWeeks">
               </match-list>
             </div>
@@ -275,7 +274,6 @@
                  [perfectScrollbar]="config">
               <match-list [categories]="categories"
                           [events]="matchService.getOtherEventList() | orderBy: ['title']"
-                          [showResultInputs]="true"
                           [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<=' | matchFilter: 'endDate' : '>=' : inLastTwoWeeks">
               </match-list>
             </div>
@@ -286,7 +284,6 @@
                  [perfectScrollbar]="config">
               <match-list [categories]="categories"
                           [events]="matchService.getOtherEventList() | orderBy: ['title']"
-                          [showResultInputs]="true"
                           [matches]="matches | matchFilter : 'endDate' : '<=' | orderBy: ['-endDate'] | matchNoResultFilter | slice: 0:20">
               </match-list>
             </div>
