@@ -65,7 +65,6 @@
 
           <mat-tab label="{{'general.dashboard.upComingMatches' | translate}}">
             <match-list [categories]="categories"
-                        [showResultInputs]="false"
                         [matches]="matches | orderBy: ['startDate'] | matchFilter : 'endDate' : '>='">
             </match-list>
           </mat-tab>
@@ -73,7 +72,6 @@
           <mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
             <match-list [categories]="categories"
                         [events]="matchService.getOtherEventList() | orderBy: ['title']"
-                        [showResultInputs]="true"
                         [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<='">
             </match-list>
           </mat-tab>
@@ -81,7 +79,6 @@
           <mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
             <match-list [categories]="categories"
                         [events]="matchService.getOtherEventList() | orderBy: ['title']"
-                        [showResultInputs]="true"
                         [matches]="matches | matchFilter : 'endDate' : '<=' | orderBy: ['-endDate']">
             </match-list>
           </mat-tab>
