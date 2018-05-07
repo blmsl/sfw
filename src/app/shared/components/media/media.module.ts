@@ -19,9 +19,7 @@ import { MediaUploadFormComponent } from './media-uploader/media-upload-form/med
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgPipesModule } from 'ngx-pipes';
 import { MediaItemService } from '../../services/media/media-item.service';
-import { DropZoneDirective } from '../../directives/media/drop-zone.directive';
-import { FileSizePipe } from '../../pipes/file-size.pipe';
-import { FileSelectDirective } from '../../directives/media/file-select.directive';
+import { MediaUploaderModule } from "src/app/shared/components/media/media-uploader/media-uploader.module";
 
 @NgModule({
   imports: [
@@ -39,23 +37,19 @@ import { FileSelectDirective } from '../../directives/media/file-select.directiv
     MatTabsModule,
     NgPipesModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    MediaUploaderModule
   ],
   declarations: [
-    DropZoneDirective,
-    FileSelectDirective,
-    FileSizePipe,
     MediaCenterComponent,
     MediaGalleryComponent,
     MediaGalleryFormComponent,
     MediaGalleryItemComponent,
     MediaGalleryListComponent,
-    MediaUploaderComponent,
     MediaUploadFormComponent
   ],
   exports: [
     MediaCenterComponent,
-    MediaUploaderComponent
   ],
   providers: [
     MediaItemService,

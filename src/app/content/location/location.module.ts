@@ -43,6 +43,7 @@ import { CreationModule } from '../../shared/components/creation/creation.module
 import { SharedCategoryModule } from '../../shared/components/category/shared-category.module';
 import { LocationStatisticsComponent } from './location-statistics/location-statistics.component';
 import { MatchService } from '../../shared/services/match/match.service';
+import { MediaUploaderModule } from "src/app/shared/components/media/media-uploader/media-uploader.module";
 
 @NgModule({
   imports: [
@@ -63,7 +64,8 @@ import { MatchService } from '../../shared/services/match/match.service';
     PublicationModule,
     QuillModule,
     SharedCategoryModule,
-    SharedModule
+    SharedModule,
+    MediaUploaderModule
   ],
   declarations: [
     LocationContactFormComponent,

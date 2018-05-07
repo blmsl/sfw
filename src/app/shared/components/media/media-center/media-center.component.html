@@ -93,7 +93,6 @@
               <mat-tab label="{{'general.media.uploader.title' | translate}}">
                 <media-uploader
                   (uploadCompleted)="uploadCompleted.emit($event)"
-                  [form]="form"
                   [uploaderOptions]="uploaderOptions">
                 </media-uploader>
               </mat-tab>

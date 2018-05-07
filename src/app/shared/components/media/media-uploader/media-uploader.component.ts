@@ -5,7 +5,6 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
 import { Upload } from '../../../services/media/upload.class';
 import { MediaUploaderService } from '../../../services/media/media-uploader.service';
@@ -14,6 +13,9 @@ import { MatSnackBar } from '@angular/material';
 import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
 import { tap } from 'rxjs/operators';
 import { Observable } from "rxjs/index";
+import { AngularFireUploadTask } from "angularfire2/storage";
+import { AngularFirestore, AngularFirestoreCollection } from "angularfire2/firestore";
+import { MediaUploader } from "src/app/shared/components/media/media-uploader/media-uploader";
 
 @Component({
   selector: 'media-uploader',
@@ -24,13 +26,16 @@ export class MediaUploaderComponent implements OnInit {
 
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
-  @Input() form: FormGroup;
 
   @Output() uploadCompleted: EventEmitter<any> = new EventEmitter<any>(false);
 
   public currentUploads: Upload[] = [];
   public isHovering: boolean;
   public canUpload: boolean = true;
+
+  // Main task
+  task: AngularFireUploadTask;
+
   // Progress monitoring
   percentage: Observable<number>;
 
@@ -40,7 +45,8 @@ export class MediaUploaderComponent implements OnInit {
   downloadURL: Observable<string>;
 
   constructor(public snackBar: MatSnackBar,
-    private mediaUploaderService: MediaUploaderService) {
+              private mediaUploaderService: MediaUploaderService,
+              private fireStore: AngularFirestore) {
     this.uploaderConfig = {
       autoUpload: false
     }
@@ -105,22 +111,30 @@ export class MediaUploaderComponent implements OnInit {
 
     this.currentUploads.forEach((fileUpload: Upload) => {
 
-      const uploadTask = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
+      this.task = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
 
-      this.percentage = uploadTask.percentageChanges();
-      this.downloadURL = uploadTask.downloadURL();
+      this.percentage = this.task.percentageChanges();
+      this.downloadURL = this.task.downloadURL();
 
-      this.snapshot = uploadTask.snapshotChanges().pipe(
+      this.snapshot = this.task.snapshotChanges().pipe(
         tap(snapshot => {
-
-          console.log('changes');
-          console.log(fileUpload);
 
           fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
 
           if (snapshot.bytesTransferred === snapshot.totalBytes) {
-            console.log('upload completed');
-            this.uploadCompleted.emit(fileUpload);
+            const snapshotTask = snapshot.task;
+            snapshotTask.then( (res) => {
+
+              const list: AngularFirestoreCollection<MediaUploader> = this.fireStore.collection('files');
+              list.add({
+                itemID: this.uploaderOptions.itemID,
+                downloadURL: res.downloadURL
+              });
+
+              this.uploadCompleted.emit();
+            });
+
+
 
             if (this.uploaderConfig.removeAfterUpload) {
               this.deleteFromQueue(fileUpload);
@@ -151,7 +165,7 @@ export class MediaUploaderComponent implements OnInit {
 
   clearQueue(): void {
     this.currentUploads = [];
-    this.form.controls['imageUrl'].reset();
+    //this.form.controls['imageUrl'].reset();
   }
 
   deleteFromQueue(upload): void {

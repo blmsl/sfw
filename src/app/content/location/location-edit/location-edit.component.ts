@@ -28,6 +28,10 @@ import {
   debounceTime,
   distinctUntilChanged
 } from 'rxjs/operators';
+import { IUploaderOptions } from "src/app/shared/interfaces/media/uploader-options.interface";
+import { AngularFireStorage } from "angularfire2/storage";
+import { MediaItemService } from "src/app/shared/services/media/media-item.service";
+import { AngularFirestore, AngularFirestoreCollection } from "angularfire2/firestore";
 
 @Component({
   selector: 'location-edit',
@@ -47,15 +51,19 @@ export class LocationEditComponent implements OnInit {
   public categories$: Observable<ICategory[]>;
   public categoryTypes$: Observable<ICategoryType[]>;
   public members$: Observable<IMember[]>;
+  public uploaderOptions: IUploaderOptions;
 
   constructor(private router: Router,
-    private fb: FormBuilder,
-    private snackBar: MatSnackBar,
-    private route: ActivatedRoute,
-    public categoryService: CategoryService,
-    public categoryTypeService: CategoryTypeService,
-    public locationService: LocationService,
-    private memberService: MemberService) {
+              private fb: FormBuilder,
+              private storage: AngularFireStorage,
+              private fireStore: AngularFirestore,
+              private snackBar: MatSnackBar,
+              private route: ActivatedRoute,
+              public categoryService: CategoryService,
+              public categoryTypeService: CategoryTypeService,
+              public locationService: LocationService,
+              private mediaItemService: MediaItemService,
+              private memberService: MemberService) {
     this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
     this.members$ = memberService.members$;
@@ -65,7 +73,16 @@ export class LocationEditComponent implements OnInit {
     this.route.data.subscribe((data: { location: ILocation }) => {
       this.location = data.location;
       this.savedLocation = Object.freeze(Object.assign({}, this.location));
+
+
+      this.uploaderOptions = {
+        queueLimit: 1,
+        path: this.location.title + "/" + this.location.id,
+        itemID: this.location.id
+      };
     });
+
+
 
     this.form = this.fb.group({
       title: [this.location.title, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
@@ -189,4 +206,10 @@ export class LocationEditComponent implements OnInit {
     this.router.navigate(['/locations']).then();
   }
 
+  uploadCompleted() {
+    const collection: AngularFirestoreCollection<any> = this.fireStore.collection("files",ref => ref.where("itemID", "==", this.location.id));
+    collection.valueChanges().subscribe( (result) => {
+      console.log(result);
+    })
+  }
 }
