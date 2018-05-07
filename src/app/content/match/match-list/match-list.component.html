@@ -27,7 +27,7 @@
                    [dynamicHeight]="true">
 
       <mat-tab label="{{'general.dashboard.upComingMatches' | translate}}">
-        <div [perfectScrollbar]="config"><!-- [showResultInputs]="true" -->
+        <div [perfectScrollbar]="config">
           <match-list [categories]="categories"
                       [matches]="matches | orderBy: ['startDate'] | matchFilter : 'endDate' : '>=' | matchFilter: 'endDate' : '<=' : inTwoWeeks">
           </match-list>
@@ -35,7 +35,7 @@
       </mat-tab>
 
       <mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
-        <div [perfectScrollbar]="config"><!-- [showResultInputs]="true" -->
+        <div [perfectScrollbar]="config">
           <match-list [categories]="categories"
                       [events]="matchService.getOtherEventList() | orderBy: ['title']"
                       [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<=' | matchFilter: 'endDate' : '>=' : inLastTwoWeeks">
@@ -44,8 +44,7 @@
       </mat-tab>
 
       <mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
-        <div [perfectScrollbar]="config"><!-- [showResultInputs]="true" -->
-          <match-list [categories]="categories"
+        <div [perfectScrollbar]="config">
                       [events]="matchService.getOtherEventList() | orderBy: ['title']"
                       [matches]="matches | matchFilter : 'endDate' : '<=' | orderBy: ['-endDate'] | matchNoResultFilter | slice: 0:20">
           </match-list>
