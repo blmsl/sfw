@@ -1,27 +1,12 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
-import {
-  FormControl,
-  FormGroup
-} from '@angular/forms';
-import { AuthService } from '../../../services/auth/auth.service';
-import {
-  debounceTime,
-  distinctUntilChanged
-} from 'rxjs/operators';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'media-gallery-form',
   templateUrl: './media-gallery-form.component.html'
 })
-export class MediaGalleryFormComponent implements OnInit {
+export class MediaGalleryFormComponent {
 
-  @Input() assignedItem: string;
+  /* @Input() assignedItem: string;
   @Input() assignedItemType: string;
 
   @Output() toggleGalleryForm = new EventEmitter(false);
@@ -40,7 +25,7 @@ export class MediaGalleryFormComponent implements OnInit {
      assignedItem: this.assignedItem,
      assignedItemType: this.assignedItemType,
      creation: this.authService.getCreation()
-     }; */
+     };
 
     this.form = new FormGroup({
       title: new FormControl('')
@@ -61,7 +46,7 @@ export class MediaGalleryFormComponent implements OnInit {
      this.toggleGalleryForm.emit(true);
      },
      (error: any) => console.log(error)
-     ); */
-  }
+     );
+  } */
 
 }

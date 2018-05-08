@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'media-gallery-list',
@@ -6,13 +6,13 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class MediaGalleryListComponent implements OnInit {
 
-  // @Input() assignedGalleries: IMediaGallery[];
+  /* @Input() assignedGalleries: IMediaGallery[];
   // @Input() items: IMediaItem[];
   @Input() assignedItem: any;
 
   @Output() setMediaGallery = new EventEmitter(false);
   @Output() removeMediaGallery = new EventEmitter(false);
-
+  */
   ngOnInit() {
   }
 
