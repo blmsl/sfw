@@ -45,6 +45,7 @@
 
       <mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
         <div [perfectScrollbar]="config">
+          <match-list [categories]="categories"
                       [events]="matchService.getOtherEventList() | orderBy: ['title']"
                       [matches]="matches | matchFilter : 'endDate' : '<=' | orderBy: ['-endDate'] | matchNoResultFilter | slice: 0:20">
           </match-list>
