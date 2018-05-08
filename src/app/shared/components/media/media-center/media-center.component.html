@@ -94,10 +94,9 @@
                 </div>
               </mat-tab>
               <mat-tab label="{{'general.media.uploader.title' | translate}}">
-                <media-uploader
-                  (uploadCompleted)="uploadCompleted.emit($event)"
-                  [uploaderConfig]="uploaderConfig"
-                  [uploaderOptions]="uploaderOptions">
+                <media-uploader (uploadCompleted)="uploadCompleted.emit($event)"
+                                [uploaderConfig]="uploaderConfig"
+                                [uploaderOptions]="uploaderOptions">
                 </media-uploader>
               </mat-tab>
             </mat-tab-group>

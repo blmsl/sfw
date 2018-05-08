@@ -114,8 +114,7 @@
        fxFlex.gt-sm="30"
        fxFlex.gt-xs="100">
     <h3>Wappen</h3>
-    <media-uploader [form]="form"
-                    (uploadCompleted)="logoUploadCompleted.emit($event)"
+    <media-uploader (uploadCompleted)="logoUploadCompleted.emit($event)"
                     [uploaderConfig]="uploaderConfig"
                     [uploaderOptions]="uploaderOptions">
     </media-uploader>

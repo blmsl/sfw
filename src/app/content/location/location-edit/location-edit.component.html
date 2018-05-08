@@ -79,9 +79,8 @@
                     <mat-card-content>
                       <img [src]="location.imageUrl | async" class="md-card-image" *ngIf="location.imageUrl"/>
 
-                      <media-uploader
-                        (uploadCompleted)="uploadCompleted($event)"
-                        [uploaderOptions]="uploaderOptions">
+                      <media-uploader (uploadCompleted)="uploadCompleted($event)"
+                                      [uploaderOptions]="uploaderOptions">
                       </media-uploader>
                     </mat-card-content>
                   </mat-card>
