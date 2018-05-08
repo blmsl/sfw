@@ -31,4 +31,3 @@ export class IsEmptyPipe implements PipeTransform {
   }
 
 }
-

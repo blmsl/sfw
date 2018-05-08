@@ -90,4 +90,3 @@ import { MemberOfTheWeekService } from '../../shared/services/member/member-of-t
 
 export class MemberModule {
 }
-

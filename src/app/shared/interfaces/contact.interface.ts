@@ -5,4 +5,3 @@ export interface IContact {
   phoneWork?: string;
   phoneMobile?: string;
 }
-

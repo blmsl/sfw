@@ -1,3 +1,7 @@
+
+import {of as observableOf,  Observable } from 'rxjs';
+
+import {switchMap} from 'rxjs/operators';
 import {
   Injectable,
   OnDestroy
@@ -9,7 +13,6 @@ import {
 } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
 import { ICreation } from '../../interfaces/creation.interface';
 import { IUser } from '../../interfaces/user/user.interface';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -32,14 +35,14 @@ export class AuthService implements OnDestroy {
     private db: AngularFireDatabase,
     private afs: AngularFirestore) {
 
-    this.user$ = this.afAuth.authState
-      .switchMap((user: any) => {
+    this.user$ = this.afAuth.authState.pipe(
+      switchMap((user: any) => {
         if (user) {
           return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
         } else {
-          return Observable.of(null);
+          return observableOf(null);
         }
-      });
+      }));
   }
 
   isLoggedIn() {
@@ -158,7 +161,6 @@ export class AuthService implements OnDestroy {
    );
    });
    }*/
-
 
   canRead(user: IUser): boolean {
     const allowed = ['admin', 'editor', 'subscriber'];

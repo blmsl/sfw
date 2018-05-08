@@ -29,7 +29,6 @@ export interface IArticle {
   assignedLocation?: ILocation;
   assignedTeams?: ITeam[];
 
-
   assignedSeason?: ISeason;
   assignedMatch?: IMatch;
 

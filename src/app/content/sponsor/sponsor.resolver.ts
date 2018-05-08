@@ -37,5 +37,4 @@ export class SponsorResolver implements Resolve<ISponsor> {
     );
   }
 
-
 }

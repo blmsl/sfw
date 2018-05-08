@@ -82,5 +82,4 @@ export class ArticleService {
     return of(article);
   }
 
-
 }

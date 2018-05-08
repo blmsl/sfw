@@ -16,7 +16,7 @@ import {
 import { AuthService } from '../../shared/services/auth/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operator/filter';
+
 import { tap } from 'rxjs/operators';
 
 const SMALL_WIDTH_BREAKPOINT = 960;

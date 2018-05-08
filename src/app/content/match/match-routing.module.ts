@@ -4,7 +4,6 @@ import { MatchListComponent } from './match-list/match-list.component';
 import { MatchResolver } from './match.resolver';
 import { MatchDetailComponent } from './match-detail/match-detail.component';
 
-
 const routes: Routes = [
   {
     path: 'list',

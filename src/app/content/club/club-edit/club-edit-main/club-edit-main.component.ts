@@ -42,11 +42,11 @@ export class ClubEditMainComponent implements OnInit {
     showQueue: false
   };
 
-  public uploaderOptions: IUploaderOptions = {
-    allowedMimeType: ['image.*'],
-    // allowedFileType: ['jpeg', 'jpg', 'gif', 'bmp', 'png'],
-    // maxFileSize: 10000000,
-    // queueLimit: 1
-  };
+  // public uploaderOptions: IUploaderOptions = {
+  //   allowedMimeType: ['image.*'],
+  //   allowedFileType: ['jpeg', 'jpg', 'gif', 'bmp', 'png'],
+  //   maxFileSize: 10000000,
+  //   queueLimit: 1
+  // };
 
 }

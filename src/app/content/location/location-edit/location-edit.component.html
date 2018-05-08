@@ -77,15 +77,12 @@
                   <mat-card>
                     <mat-card-title>{{'general.locations.edit.photoTitle' | translate}}</mat-card-title>
                     <mat-card-content>
-                      <img [src]="location.imageUrl" class="md-card-image" *ngIf="location.imageUrl"/>
+                      <img [src]="location.imageUrl | async" class="md-card-image" *ngIf="location.imageUrl"/>
 
-                      <!--<media-uploader
-                        (uploadCompleted)="logoUploadCompleted($event)"
-                        (removedMedia)="removedMedia($event)"
-                        [form]="form"
-                        [uploaderOptions]="logoUploaderOptions"
-                        [uploaderConfig]="logoUploaderConfig">
-                      </media-uploader>-->
+                      <media-uploader
+                        (uploadCompleted)="uploadCompleted($event)"
+                        [uploaderOptions]="uploaderOptions">
+                      </media-uploader>
                     </mat-card-content>
                   </mat-card>
                 </div>

@@ -5,7 +5,6 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
 import { Upload } from '../../../services/media/upload.class';
 import { MediaUploaderService } from '../../../services/media/media-uploader.service';
@@ -13,6 +12,10 @@ import { SnackbarComponent } from '../../snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material';
 import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
 import { tap } from 'rxjs/operators';
+import { Observable } from "rxjs/index";
+import { AngularFireUploadTask } from "angularfire2/storage";
+import { AngularFirestore, AngularFirestoreCollection } from "angularfire2/firestore";
+import { MediaUploader } from "src/app/shared/components/media/media-uploader/media-uploader";
 
 @Component({
   selector: 'media-uploader',
@@ -23,7 +26,6 @@ export class MediaUploaderComponent implements OnInit {
 
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
-  @Input() form: FormGroup;
 
   @Output() uploadCompleted: EventEmitter<any> = new EventEmitter<any>(false);
 
@@ -31,8 +33,23 @@ export class MediaUploaderComponent implements OnInit {
   public isHovering: boolean;
   public canUpload: boolean = true;
 
+  // Main task
+  task: AngularFireUploadTask;
+
+  // Progress monitoring
+  percentage: Observable<number>;
+
+  snapshot: Observable<any>;
+
+  // Download URL
+  downloadURL: Observable<string>;
+
   constructor(public snackBar: MatSnackBar,
-    private mediaUploaderService: MediaUploaderService) {
+              private mediaUploaderService: MediaUploaderService,
+              private fireStore: AngularFirestore) {
+    this.uploaderConfig = {
+      autoUpload: false
+    }
   }
 
   ngOnInit() {
@@ -90,66 +107,65 @@ export class MediaUploaderComponent implements OnInit {
     }
   }
 
-
   uploadFiles() {
 
     this.currentUploads.forEach((fileUpload: Upload) => {
 
-      const uploadTask = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
+      this.task = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
 
-      /*if (uploadTask.error) {
-        console.log(uploadTask.error.message);
-      }*/
-      console.log(uploadTask);
-      console.log(typeof uploadTask);
+      this.percentage = this.task.percentageChanges();
+      this.downloadURL = this.task.downloadURL();
 
-      //fileUpload.percentage$ = uploadTask.percentageChanges();
-      // fileUpload.downloadUrl$ = uploadTask.downloadURL();
-
-      /* uploadTask.snapshotChanges().pipe(
+      this.snapshot = this.task.snapshotChanges().pipe(
         tap(snapshot => {
 
-            console.log('changes');
-            console.log(fileUpload);
+          fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
 
-            fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+          if (snapshot.bytesTransferred === snapshot.totalBytes) {
+            const snapshotTask = snapshot.task;
+            snapshotTask.then( (res) => {
 
-            if (snapshot.bytesTransferred === snapshot.totalBytes) {
-              console.log('upload completed');
-              this.uploadCompleted.emit(fileUpload);
+              const list: AngularFirestoreCollection<MediaUploader> = this.fireStore.collection('files');
+              list.add({
+                itemID: this.uploaderOptions.itemID,
+                downloadURL: res.downloadURL
+              });
 
-              if (this.uploaderConfig.removeAfterUpload) {
-                this.deleteFromQueue(fileUpload);
-                if (this.currentUploads.length === 0) {
-                  this.clearQueue();
-                }
-              }
-
-            }
-          }, (error: any) => {
-            this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
-            this.snackBar.openFromComponent(SnackbarComponent, {
-              data: {
-                status: 'error',
-                message: error.message
-              },
-              duration: 2500
+              this.uploadCompleted.emit();
             });
+
+
+
+            if (this.uploaderConfig.removeAfterUpload) {
+              this.deleteFromQueue(fileUpload);
+              if (this.currentUploads.length === 0) {
+                this.clearQueue();
+              }
+            }
+
           }
+        }, (error: any) => {
+          this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            data: {
+              status: 'error',
+              message: error.message
+            },
+            duration: 2500
+          });
+        }
         ));
 
-
-      /*
-      /* const mediaItem = this.mediaItemService.setNewMediaItem(upload);
-       return this.mediaItemService.createMediaItem(mediaItem).then(() => {
-       return mediaItem
-       }); */
+      // const mediaItem = this.mediaItemService.setNewMediaItem(upload);
+      // return this.mediaItemService.createMediaItem(mediaItem).then(() => {
+      //   return mediaItem
+      // });
     });
   }
 
   clearQueue(): void {
     this.currentUploads = [];
-    this.form.controls['imageUrl'].reset();
+    //this.form.controls['imageUrl'].reset();
   }
 
   deleteFromQueue(upload): void {

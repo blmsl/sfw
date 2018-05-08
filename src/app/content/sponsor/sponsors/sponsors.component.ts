@@ -20,7 +20,6 @@ export class SponsorsComponent implements OnDestroy {
   public mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
-
   constructor(private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,
     private categoryService: CategoryService,

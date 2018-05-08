@@ -46,4 +46,3 @@ export const articleRoutes: Routes = [
     redirectTo: ''
   }
 ];
-

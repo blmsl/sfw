@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/map';
+
+
 import { IMatch } from '../../interfaces/match.interface';
 import { of } from 'rxjs/index';
 

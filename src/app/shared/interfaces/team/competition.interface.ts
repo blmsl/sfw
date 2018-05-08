@@ -4,4 +4,3 @@ export interface ICompetition {
   standings?: string;
   matches?: string;
 }
-

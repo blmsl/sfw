@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ISeason } from '../../interfaces/season.interface';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/map';
+
+
 
 @Injectable()
 export class SeasonService {

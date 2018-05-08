@@ -18,7 +18,6 @@ export class MemberEditOtherOpinionsComponent implements OnInit {
 
   @Output() toggleMemberLookup: EventEmitter<{ id: number, type: string }> = new EventEmitter<{ id: number, type: string }>(false);
 
-
   constructor() {
   }
 
