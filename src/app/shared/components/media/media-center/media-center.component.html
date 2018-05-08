@@ -15,16 +15,16 @@
              fxLayoutWrap="wrap">
 
           <div fxFlex="100">
-            <mat-tab-group [dynamicHeight]="true">
-              <mat-tab label="{{'general.media.list.title' | translate}}">
+            <mat-tab-group *ngIf="mediaItems$ | async as mediaItems; else loadingTemplate"
+                           [dynamicHeight]="true">
+              <mat-tab label="{{'general.media.list.title' | translate}} {{'(' + mediaItems.length + ')' }}">
 
                 <div fxLayout="row"
                      fxLayoutWrap="wrap">
 
                   <div fxFlex.gt-sm="75"
                        fxFlex="100">
-                    <media-gallery *ngIf="mediaItems$ | async as mediaItems; else loadingTemplate"
-                                   [mediaItems]="mediaItems"
+                    <media-gallery [mediaItems]="mediaItems"
                                    (removeMediaItem)="removeMediaItem.emit($event)">
                     </media-gallery>
                   </div>
