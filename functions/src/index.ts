@@ -1,5 +1,8 @@
 'use strict';
 
+// add sendgrid to env: firebase functions:config:set sendgrid.key=KEY
+// firebase deploy only-functions
+
 // add cronJobs via gcloud console:
 // gcloud app deploy app.yaml cron.yaml php.yaml --version=2
 // https://console.cloud.google.com/logs
