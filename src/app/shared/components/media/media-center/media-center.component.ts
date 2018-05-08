@@ -4,12 +4,12 @@ import {
   Input,
   OnInit,
   Output
-}                           from '@angular/core';
-import { IUploaderConfig }  from '../../../interfaces/media/uploader-config.interface';
+} from '@angular/core';
+import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
 import { MediaItemService } from '../../../services/media/media-item.service';
-import { IMediaItem }       from '../../../interfaces/media/media-item.interface';
-import { Observable }       from 'rxjs/Rx';
+import { IMediaItem } from '../../../interfaces/media/media-item.interface';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'media-center',

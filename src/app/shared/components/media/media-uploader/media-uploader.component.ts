@@ -4,26 +4,26 @@ import {
   Input,
   OnInit,
   Output
-}                                from '@angular/core';
-import { IUploaderOptions }      from '../../../interfaces/media/uploader-options.interface';
-import { Upload }                from '../../../services/media/upload.class';
-import { MediaUploaderService }  from '../../../services/media/media-uploader.service';
-import { SnackbarComponent }     from '../../snackbar/snackbar.component';
-import { MatSnackBar }           from '@angular/material';
-import { IUploaderConfig }       from '../../../interfaces/media/uploader-config.interface';
-import { tap }                   from 'rxjs/operators';
-import { Observable }            from 'rxjs/index';
+} from '@angular/core';
+import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
+import { Upload } from '../../../services/media/upload.class';
+import { MediaUploaderService } from '../../../services/media/media-uploader.service';
+import { SnackbarComponent } from '../../snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material';
+import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs/index';
 import { AngularFireUploadTask } from 'angularfire2/storage';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                                from 'angularfire2/firestore';
-import { IMediaItem }            from '../../../interfaces/media/media-item.interface';
+} from 'angularfire2/firestore';
+import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 
 @Component({
   selector: 'media-uploader',
   templateUrl: 'media-uploader.component.html',
-  styleUrls: [ 'media-uploader.component.scss' ]
+  styleUrls: ['media-uploader.component.scss']
 })
 export class MediaUploaderComponent implements OnInit {
 
@@ -43,9 +43,9 @@ export class MediaUploaderComponent implements OnInit {
   downloadURL: Observable<string>;
 
   constructor(public snackBar: MatSnackBar,
-              private afs: AngularFirestore,
-              private mediaUploaderService: MediaUploaderService,
-              private fireStore: AngularFirestore) {
+    private afs: AngularFirestore,
+    private mediaUploaderService: MediaUploaderService,
+    private fireStore: AngularFirestore) {
   }
 
   ngOnInit() {
@@ -69,7 +69,7 @@ export class MediaUploaderComponent implements OnInit {
     // const reader = new FileReader();
 
     for (let i = 0; i < fileArray.length; i++) {
-      const fileUpload = new Upload(fileArray[ i ]);
+      const fileUpload = new Upload(fileArray[i]);
       this.currentUploads.push(fileUpload);
       /*  Preview
        reader.onload = (event: any) => {
@@ -108,7 +108,7 @@ export class MediaUploaderComponent implements OnInit {
 
     this.currentUploads.forEach((fileUpload: Upload) => {
 
-      if(!this.uploaderOptions.itemID){
+      if (!this.uploaderOptions.itemID) {
         this.uploaderOptions.itemID = this.afs.createId();
       }
 
@@ -120,47 +120,47 @@ export class MediaUploaderComponent implements OnInit {
       this.snapshot = this.task.snapshotChanges().pipe(
         tap(snapshot => {
 
-            fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+          fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
 
-            if (snapshot.bytesTransferred === snapshot.totalBytes) {
-              const snapshotTask = snapshot.task;
-              snapshotTask.then((res) => {
-                console.log(fileUpload);
-                console.log(res);
+          if (snapshot.bytesTransferred === snapshot.totalBytes) {
+            const snapshotTask = snapshot.task;
+            snapshotTask.then((res) => {
+              console.log(fileUpload);
+              console.log(res);
 
-                const list: AngularFirestoreCollection<IMediaItem> = this.fireStore.collection('files');
-                list.add({
-                  file: {
-                    size: fileUpload.file.size,
-                    name: fileUpload.file.name,
-                    type: fileUpload.file.type
-                  },
-                  itemID: this.uploaderOptions.itemID,
-                  downloadURL: res.downloadURL
-                });
-
-                this.uploadCompleted.emit();
+              const list: AngularFirestoreCollection<IMediaItem> = this.fireStore.collection('files');
+              list.add({
+                file: {
+                  size: fileUpload.file.size,
+                  name: fileUpload.file.name,
+                  type: fileUpload.file.type
+                },
+                itemID: this.uploaderOptions.itemID,
+                downloadURL: res.downloadURL
               });
 
-
-              if (this.uploaderConfig.removeAfterUpload) {
-                this.deleteFromQueue(fileUpload);
-                if (this.currentUploads.length === 0) {
-                  this.clearQueue();
-                }
-              }
-
-            }
-          }, (error: any) => {
-            this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
-            this.snackBar.openFromComponent(SnackbarComponent, {
-              data: {
-                status: 'error',
-                message: error.message
-              },
-              duration: 2500
+              this.uploadCompleted.emit();
             });
+
+
+            if (this.uploaderConfig.removeAfterUpload) {
+              this.deleteFromQueue(fileUpload);
+              if (this.currentUploads.length === 0) {
+                this.clearQueue();
+              }
+            }
+
           }
+        }, (error: any) => {
+          this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            data: {
+              status: 'error',
+              message: error.message
+            },
+            duration: 2500
+          });
+        }
         ));
 
       // const mediaItem = this.mediaItemService.setNewMediaItem(upload);

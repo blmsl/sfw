@@ -20,6 +20,8 @@ import { FileSelectDirective }      from '../../directives/media/file-select.dir
 import { FileSizePipe }             from '../../pipes/file-size.pipe';
 import { MediaGalleryComponent }    from './media-gallery/media-gallery.component';
 import { MediaGalleryItemComponent } from './media-gallery/media-gallery-item/media-gallery-item.component';
+import { MediaGalleryFormComponent } from './media-gallery-form/media-gallery-form.component';
+import { MediaGalleryListComponent } from './media-gallery-list/media-gallery-list.component';
 
 @NgModule({
   imports: [
@@ -40,7 +42,9 @@ import { MediaGalleryItemComponent } from './media-gallery/media-gallery-item/me
   ],
   declarations: [
     MediaCenterComponent,
+    MediaGalleryFormComponent,
     MediaGalleryItemComponent,
+    MediaGalleryListComponent,
     MediaUploaderComponent,
     MediaGalleryComponent,
     DropZoneDirective,
@@ -50,7 +54,9 @@ import { MediaGalleryItemComponent } from './media-gallery/media-gallery-item/me
   exports: [
     MediaCenterComponent,
     MediaGalleryComponent,
+    MediaGalleryFormComponent,
     MediaGalleryItemComponent,
+    MediaGalleryListComponent,
     MediaUploaderComponent
   ],
   providers: [

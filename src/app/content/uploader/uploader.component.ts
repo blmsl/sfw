@@ -1,12 +1,12 @@
 import {
   Component,
   OnInit
-}                            from '@angular/core';
-import { IUploaderConfig }   from '../../shared/interfaces/media/uploader-config.interface';
-import { IUploaderOptions }  from '../../shared/interfaces/media/uploader-options.interface';
-import { AngularFirestore }  from 'angularfire2/firestore';
+} from '@angular/core';
+import { IUploaderConfig } from '../../shared/interfaces/media/uploader-config.interface';
+import { IUploaderOptions } from '../../shared/interfaces/media/uploader-options.interface';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
-import { MatSnackBar }       from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'uploader',
@@ -30,7 +30,7 @@ export class UploaderComponent implements OnInit {
     queueLimit: 4
   };
 
-  constructor(private afs: AngularFirestore, private snackBar: MatSnackBar,) {
+  constructor(private afs: AngularFirestore, private snackBar: MatSnackBar, ) {
     this.uploaderOptions.path += '/' + afs.createId();
   }
 

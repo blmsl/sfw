@@ -1,16 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ILocation } from '../../../../shared/interfaces/location.interface';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
-import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-options.interface';
 import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
 
 @Component({
@@ -34,7 +26,6 @@ export class ClubEditMainComponent implements OnInit {
   }
 
   public uploaderConfig: IUploaderConfig = {
-    showOptions: true,
     autoUpload: true,
     showDropZone: true,
     multiple: false,

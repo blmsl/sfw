@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                     from 'angularfire2/firestore';
+} from 'angularfire2/firestore';
 import { IMediaItem } from '../../interfaces/media/media-item.interface';
 
 @Injectable()

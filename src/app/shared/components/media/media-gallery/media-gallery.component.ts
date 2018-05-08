@@ -5,14 +5,14 @@ import {
   Input,
   OnInit,
   Output
-}                     from '@angular/core';
+} from '@angular/core';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 
 @Component({
   selector: 'media-gallery',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'media-gallery.component.html',
-  styleUrls: [ './media-gallery.component.scss' ]
+  styleUrls: ['./media-gallery.component.scss']
 })
 export class MediaGalleryComponent implements OnInit {
 
