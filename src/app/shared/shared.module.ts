@@ -21,10 +21,10 @@ import { UserService } from './services/user/user.service';
 import { RouterModule } from '@angular/router';
 import { SubmitIfValidDirective } from './directives/submit/submit-if-valid.directive';
 import { MediaModule } from './components/media/media.module';
+import { LoadingIndicatorModule } from './components/loading-indicator/loading-indicator.module';
 
 @NgModule({
   declarations: [
-    LoadingIndicatorComponent,
     SanitizeHtmlPipe,
     SnackbarComponent,
     SubmitIfValidDirective
@@ -40,8 +40,8 @@ import { MediaModule } from './components/media/media.module';
     MatSnackBarModule,
     MediaModule,
     FlexLayoutModule,
+    LoadingIndicatorModule,
     LinkModule,
-    LoadingIndicatorComponent,
     NgPipesModule,
     NgxDatatableModule,
     ReactiveFormsModule,

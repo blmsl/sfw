@@ -22,6 +22,7 @@ import { MediaGalleryComponent }    from './media-gallery/media-gallery.componen
 import { MediaGalleryItemComponent } from './media-gallery/media-gallery-item/media-gallery-item.component';
 import { MediaGalleryFormComponent } from './media-gallery-form/media-gallery-form.component';
 import { MediaGalleryListComponent } from './media-gallery-list/media-gallery-list.component';
+import { LoadingIndicatorModule } from '../loading-indicator/loading-indicator.module';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { MediaGalleryListComponent } from './media-gallery-list/media-gallery-li
     FlexLayoutModule,
     MatButtonModule,
     MatCardModule,
+    LoadingIndicatorModule,
     // MatCheckboxModule,
     MatGridListModule,
     MatIconModule,

@@ -23,7 +23,8 @@
 
                   <div fxFlex.gt-sm="75"
                        fxFlex="100">
-                    <media-gallery [mediaItems]="mediaItems$ | async"
+                    <media-gallery *ngIf="mediaItems$ | async as mediaItems; else loadingTemplate"
+                                   [mediaItems]="mediaItems"
                                    (removeMediaItem)="removeMediaItem.emit($event)">
                     </media-gallery>
                   </div>
@@ -106,3 +107,7 @@
     </mat-card>
   </div>
 </div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>
