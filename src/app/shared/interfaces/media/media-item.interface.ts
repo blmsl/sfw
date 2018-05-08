@@ -1,27 +1,20 @@
 import { ICreation } from '../creation.interface';
-import { Observable } from 'rxjs';
 
-export interface IMediaItem {
+export class IMediaItem {
 
-  id: string;
-  name: string;
+  itemID: string;
+  downloadURL: string;
 
-  assignedObjects: {
-    id: string;
-    type: string;
-  }[];
-
-  downloadUrl: Observable<string> | string;
-  size: number;
-  type: string;
+  file: {
+    size?: number;
+    type?: string;
+    name?: string;
+  };
 
   description?: string;
   fileCredits?: string;
-
-  isExternal: boolean;
-
-  creation: ICreation;
-
+  isExternal?: boolean;
+  creation?: ICreation;
   assignedItemGallery?: string;
   // publication?: IPublication;
 }

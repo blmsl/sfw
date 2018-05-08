@@ -1,5 +1,5 @@
 
-import {take, tap} from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
@@ -95,7 +95,7 @@ export class PaginationService {
           this._done.next(true);
         }
       }),
-      take(1),)
+      take(1), )
       .subscribe();
   }
 

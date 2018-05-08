@@ -1,37 +1,28 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+}                     from '@angular/core';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
-import { MediaItemService } from '../../../services/media/media-item.service';
-import { Observable } from 'rxjs';
+
 @Component({
   selector: 'media-gallery',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'media-gallery.component.html'
+  templateUrl: 'media-gallery.component.html',
+  styleUrls: [ './media-gallery.component.scss' ]
 })
 export class MediaGalleryComponent implements OnInit {
 
-  @Input() id: string;
-  @Input() path: string;
+  @Input() mediaItems: IMediaItem[];
 
-  public mediaItems: Observable<IMediaItem[]>;
+  @Output() removeMediaItem: EventEmitter<string> = new EventEmitter<string>(false);
 
-  constructor(private mediaItemService: MediaItemService) {
-    this.mediaItems = mediaItemService.mediaItems$;
+  constructor() {
   }
 
   ngOnInit() {
   }
-
-  /*
-  removeMediaGallery(gallery: IMediaGallery) {
-    console.log(gallery);
-  }
-
-  updateMediaItem(item: IMediaItem) {
-    this.mediaItemService.updateMediaItem(item.id, item);
-  }
-
-  removeMediaItem(item: IMediaItem) {
-    this.mediaItemService.removeMediaItem(item);
-  }
-  */
 }

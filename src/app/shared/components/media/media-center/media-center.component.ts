@@ -1,7 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+}                           from '@angular/core';
+import { IUploaderConfig }  from '../../../interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
+import { MediaItemService } from '../../../services/media/media-item.service';
+import { IMediaItem }       from '../../../interfaces/media/media-item.interface';
+import { Observable }       from 'rxjs/Rx';
 
 @Component({
   selector: 'media-center',
@@ -15,22 +23,14 @@ export class MediaCenterComponent implements OnInit {
 
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
-  @Input() form: FormGroup;
+  @Output() uploadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() removeMediaItem: EventEmitter<string> = new EventEmitter<string>(false);
 
-  @Output() uploadCompleted = new EventEmitter(false);
-  @Output() removedMedia = new EventEmitter(false);
+  public mediaItems$: Observable<IMediaItem[]>;
 
-  /* @Input() objectId: string;
-  @Input() objectType: string;
-  @Input() uploaderOptions: any;
-  @Input() showUploader: boolean = false;
-  @Input() showGalleryForm: boolean = false;
-  @Output() notifyParentComponent = new EventEmitter(false);
+  constructor(private mediaItemService: MediaItemService) {
+    this.mediaItems$ = mediaItemService.mediaItems$;
 
-  // public selectedMediaGallery: IMediaGallery; */
-
-  constructor(/* public mediaItemService: MediaItemService,
-    public mediaGalleryService: MediaGalleryService */) {
   }
 
   ngOnInit() {

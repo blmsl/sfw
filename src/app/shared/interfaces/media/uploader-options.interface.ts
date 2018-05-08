@@ -7,7 +7,7 @@ export interface IUploaderOptions {
   id?: string;
   itemID: string;
   maxFileSize?: number;
-  path: string;
+  path?: string;
   queueLimit?: number;
   queueSize?: number;
 }

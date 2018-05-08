@@ -1,10 +1,7 @@
 <div fxLayout="row"
-     fxLayoutWrap="wrap"
-     [formGroup]="form">
+     fxLayoutWrap="wrap">
 
-  <div fxFlex.gt-sm="100"
-       fxFlex.gt-xs="100"
-       fxFlex="100">
+  <div fxFlex="100">
 
     <mat-card>
       <mat-card-title>
@@ -14,22 +11,26 @@
       <mat-card-subtitle></mat-card-subtitle>
 
       <mat-card-content>
-        <div fxLayout="row" fxLayoutWrap="wrap">
+        <div fxLayout="row"
+             fxLayoutWrap="wrap">
+
           <div fxFlex="100">
             <mat-tab-group [dynamicHeight]="true">
               <mat-tab label="{{'general.media.list.title' | translate}}">
 
-                <div fxLayout="row" fxLayoutWrap="wrap">
-                  <div fxFlex.gt-xs="100" fxFlex.gt-sm="64" fxFlex="100">
+                <div fxLayout="row"
+                     fxLayoutWrap="wrap">
 
-                    <!--<media-gallery
-                      [path]="uploaderOptions.path"
-                      [id]="uploaderOptions.id">
-                    </media-gallery>-->
-
+                  <div fxFlex.gt-sm="75"
+                       fxFlex="100">
+                    <media-gallery [mediaItems]="mediaItems$ | async"
+                                   (removeMediaItem)="removeMediaItem.emit($event)">
+                    </media-gallery>
                   </div>
 
-                  <div fxFlexOffset="2" fxFlex.gt-xs="100" fxFlex.gt-sm="34" fxFlex="100">
+                  <div fxFlexOffset.gt-sm="2"
+                       fxFlex.gt-sm="23"
+                       fxFlex="100">
 
                     <mat-tab-group [dynamicHeight]="true">
                       <mat-tab label="ToDo">
@@ -39,7 +40,8 @@
                             <ul>
                               <li>Übersicht über alle bisherigen Uploads (Liste mit Videos, Bildern, Dokumenten etc.)
                               </li>
-                              <li> Anlegen / Editieren und Löschen von Galerien mit Titel, Datum und verknüpfen mit einem Artikel und Author (User), Veröffentlichung (Sichtbarkeit im Frontend) festlegen
+                              <li> Anlegen / Editieren und Löschen von Galerien mit Titel, Datum und verknüpfen mit
+                                einem Artikel und Author (User), Veröffentlichung (Sichtbarkeit im Frontend) festlegen
                               <li> Verschieben von Dateien in diese Galerien per Drag & Drop
                               <li> Löschen von Bildern, Editieren des Titels
                               <li> Veröffentlichung einer Galerie oder einzelnen Fotos in sozialen Medien
@@ -93,6 +95,7 @@
               <mat-tab label="{{'general.media.uploader.title' | translate}}">
                 <media-uploader
                   (uploadCompleted)="uploadCompleted.emit($event)"
+                  [uploaderConfig]="uploaderConfig"
                   [uploaderOptions]="uploaderOptions">
                 </media-uploader>
               </mat-tab>

@@ -12,14 +12,15 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CommonModule } from '@angular/common';
 import { LinkModule } from './components/links/link.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NgPipesModule } from 'ngx-pipes';
-import { SnackbarComponent } from './components/snackbar/snackbar.component';
-import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
+import { ReactiveFormsModule }       from '@angular/forms';
+import { NgPipesModule }             from 'ngx-pipes';
+import { SnackbarComponent }         from './components/snackbar/snackbar.component';
+import { SanitizeHtmlPipe }          from './pipes/sanitize-html.pipe';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
-import { UserService } from './services/user/user.service';
-import { RouterModule } from '@angular/router';
-import { SubmitIfValidDirective } from './directives/submit/submit-if-valid.directive';
+import { UserService }               from './services/user/user.service';
+import { RouterModule }              from '@angular/router';
+import { SubmitIfValidDirective }    from './directives/submit/submit-if-valid.directive';
+import { MediaModule }               from './components/media/media.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { SubmitIfValidDirective } from './directives/submit/submit-if-valid.dire
     MatIconModule,
     MatTabsModule,
     MatSnackBarModule,
+    MediaModule,
     FlexLayoutModule,
     LinkModule,
     LoadingIndicatorComponent,
@@ -44,19 +46,14 @@ import { SubmitIfValidDirective } from './directives/submit/submit-if-valid.dire
     NgxDatatableModule,
     ReactiveFormsModule,
     SanitizeHtmlPipe,
-    // SubmitIfValidDirective,
     TranslateModule
   ],
   imports: [
     CommonModule,
     MatProgressSpinnerModule,
-    /* NgPipesModule,
-    RouterModule,
-    TranslateModule*/
+    MediaModule
   ],
   providers: [
-    /* MenuItemsService,
-    UserService */
   ]
 })
 export class SharedModule {

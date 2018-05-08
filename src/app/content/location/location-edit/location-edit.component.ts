@@ -54,16 +54,16 @@ export class LocationEditComponent implements OnInit {
   public uploaderOptions: IUploaderOptions;
 
   constructor(private router: Router,
-              private fb: FormBuilder,
-              private storage: AngularFireStorage,
-              private fireStore: AngularFirestore,
-              private snackBar: MatSnackBar,
-              private route: ActivatedRoute,
-              public categoryService: CategoryService,
-              public categoryTypeService: CategoryTypeService,
-              public locationService: LocationService,
-              private mediaItemService: MediaItemService,
-              private memberService: MemberService) {
+    private fb: FormBuilder,
+    private storage: AngularFireStorage,
+    private fireStore: AngularFirestore,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    public categoryService: CategoryService,
+    public categoryTypeService: CategoryTypeService,
+    public locationService: LocationService,
+    private mediaItemService: MediaItemService,
+    private memberService: MemberService) {
     this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
     this.members$ = memberService.members$;
@@ -207,8 +207,8 @@ export class LocationEditComponent implements OnInit {
   }
 
   uploadCompleted() {
-    const collection: AngularFirestoreCollection<any> = this.fireStore.collection("files",ref => ref.where("itemID", "==", this.location.id));
-    collection.valueChanges().subscribe( (result) => {
+    const collection: AngularFirestoreCollection<any> = this.fireStore.collection("files", ref => ref.where("itemID", "==", this.location.id));
+    collection.valueChanges().subscribe((result) => {
       console.log(result);
     })
   }

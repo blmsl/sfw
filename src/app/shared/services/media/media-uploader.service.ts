@@ -1,15 +1,12 @@
 import {
   AngularFireStorage,
   AngularFireUploadTask
-} from 'angularfire2/storage';
-import { Injectable } from '@angular/core';
-import { FileType } from '../../interfaces/media/file-type.interface';
-import { AngularFirestore } from 'angularfire2/firestore';
+}                           from 'angularfire2/storage';
+import { Injectable }       from '@angular/core';
+import { FileType }         from '../../interfaces/media/file-type.interface';
 import { IUploaderOptions } from '../../interfaces/media/uploader-options.interface';
-import { Upload } from './upload.class';
-import { AuthService } from '../auth/auth.service';
-import { MediaItemService } from './media-item.service';
-
+import { Upload }           from './upload.class';
+import { AuthService }      from '../auth/auth.service';
 
 
 export type FilterFunction = {
@@ -25,26 +22,29 @@ export class MediaUploaderService {
   public options: IUploaderOptions;
 
   constructor(private authService: AuthService,
-              private storage: AngularFireStorage,
-              private mediaItemService: MediaItemService,
-              private afs: AngularFirestore) {
+              private storage: AngularFireStorage) {
   }
 
   public upload(upload: Upload, options: IUploaderOptions): AngularFireUploadTask {
 
-    options.id = this.afs.createId();
-    options.path = options.path + "/" + options.id;
+
     this.initOptions(options);
+    console.log(this.options);
     const arrayOfFilters = this._getFilters(this.options.filters ? this.options.filters : []);
 
     if (this._isValidFile(upload, arrayOfFilters, this.options)) {
 
+      console.log(upload.file);
+
+      const metaData: any = {
+        id: options.itemID,
+        name: upload.file.name,
+        size: upload.file.size,
+        type: upload.file.type
+      };
+
       try {
-        return this.storage.upload(options.path, upload.file, {
-          customMetadata: {
-            id: options.id
-          }
-        });
+        return this.storage.upload(options.path + '/' + options.itemID, upload.file, metaData);
       }
       catch (e) {
         throw ({
@@ -53,10 +53,10 @@ export class MediaUploaderService {
         });
       }
     } else {
-      const filter: any = arrayOfFilters[this._failFilterIndex];
+      const filter: any = arrayOfFilters[ this._failFilterIndex ];
       console.log(filter);
       throw ({
-        message: filter,
+        message: filter.name,
         file: upload.file.name
       });
     }
@@ -83,14 +83,14 @@ export class MediaUploaderService {
       });
     }
 
-    if (this.options.allowedFileType) {
+    if (this.options.allowedFileType && this.options.allowedFileType.length > 0) {
       this.options.filters.unshift({
         name: 'fileType',
         fn: this._fileTypeFilter
       });
     }
 
-    if (this.options.allowedMimeType) {
+    if (this.options.allowedMimeType && this.options.allowedMimeType.length > 0) {
       this.options.filters.unshift({
         name: 'mimeType',
         fn: this._mimeTypeFilter
@@ -119,12 +119,13 @@ export class MediaUploaderService {
   }
 
   private _mimeTypeFilter(upload: Upload): boolean {
-    console.log(upload);
-    return !(this.options.allowedMimeType && this.options.allowedMimeType.indexOf(upload.file.type) === -1);
+    console.log('filter mimeType ' + upload.file.type + ' --> ' + !(this.options.allowedMimeType.indexOf(upload.file.type) === -1));
+    return !(this.options.allowedMimeType.indexOf(upload.file.type) === -1);
   }
 
   private _fileTypeFilter(upload: Upload): boolean {
-    return !(this.options.allowedFileType && this.options.allowedFileType.indexOf(FileType.getMimeClass(upload)) === -1);
+    console.log('filter type');
+    return !(this.options.allowedFileType.indexOf(FileType.getMimeClass(upload)) === -1);
   }
 
   private _isValidFile(file: Upload, filters: FilterFunction[], options: IUploaderOptions): boolean {

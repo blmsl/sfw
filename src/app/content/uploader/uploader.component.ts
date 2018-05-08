@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { IUploaderConfig } from '../../shared/interfaces/media/uploader-config.interface';
-import { IUploaderOptions } from '../../shared/interfaces/media/uploader-options.interface';
-import { IMediaItem } from '../../shared/interfaces/media/media-item.interface';
+import {
+  Component,
+  OnInit
+}                            from '@angular/core';
+import { IUploaderConfig }   from '../../shared/interfaces/media/uploader-config.interface';
+import { IUploaderOptions }  from '../../shared/interfaces/media/uploader-options.interface';
+import { AngularFirestore }  from 'angularfire2/firestore';
+import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
+import { MatSnackBar }       from '@angular/material';
 
 @Component({
   selector: 'uploader',
@@ -10,47 +14,36 @@ import { IMediaItem } from '../../shared/interfaces/media/media-item.interface';
 })
 export class UploaderComponent implements OnInit {
 
-  public form: FormGroup;
   public uploaderConfig: IUploaderConfig = {
-    showOptions: false,
     autoUpload: false,
     showDropZone: true,
-    multiple: false,
+    multiple: true,
     removeAfterUpload: true,
-    showQueue: false
+    showQueue: true
   };
 
   public uploaderOptions: IUploaderOptions = {
-    queueLimit: 1,
-    path: '',
-    id: ''
+    allowedMimeType: [],
+    allowedFileType: [],
+    itemID: '',
+    path: 'not-categorized',
+    queueLimit: 4
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private afs: AngularFirestore, private snackBar: MatSnackBar,) {
+    this.uploaderOptions.path += '/' + afs.createId();
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      imageUrl: '',
-      uploaderConfig: this.initUploaderConfig()
+  }
+
+  uploadCompleted(): void {
+    this.snackBar.openFromComponent(SnackbarComponent, {
+      data: {
+        status: 'success',
+        message: 'upload.successful'
+      },
+      duration: 2500
     });
-
-    this.form.valueChanges.subscribe((changes: any) => {
-      delete changes.imageUrl;
-      this.uploaderConfig = changes.options;
-    });
   }
-
-  initUploaderConfig() {
-    return this.fb.group(this.uploaderConfig);
-  }
-
-  uploadCompleted(mediaItem: IMediaItem): void {
-    console.log(mediaItem);
-  }
-
-  removedMedia($event): void {
-    console.log($event);
-  }
-
 }
