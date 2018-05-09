@@ -11,7 +11,7 @@
             *ngFor="let mediaItem of mediaItems">
     <mat-card-title fxLayout.gt-xs="row"
                     fxLayout.xs="column">
-      <span fxFlex="80%">{{mediaItem.file.name}}</span>
+      <span fxFlex="80%">{{mediaItem.file ? mediaItem.file.name : 'TEST'}}</span>
       <mat-icon fxFlex="10%">mode_edit</mat-icon>
       <mat-icon fxFlex="10%">delete</mat-icon>
     </mat-card-title>
