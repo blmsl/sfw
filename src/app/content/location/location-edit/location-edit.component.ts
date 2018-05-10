@@ -40,7 +40,7 @@ export class LocationEditComponent implements OnInit {
   public members$: Observable<IMember[]>;
 
   public uploaderConfig: IUploaderConfig = {
-    autoUpload: false,
+    autoUpload: true,
     showDropZone: true,
     multiple: true,
     removeAfterUpload: true,
@@ -48,11 +48,8 @@ export class LocationEditComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    allowedMimeType: [],
-    allowedFileType: [],
     itemID: '',
     path: 'locations',
-    queueLimit: 4
   };
 
   constructor(private router: Router,
@@ -77,12 +74,10 @@ export class LocationEditComponent implements OnInit {
       this.savedLocation = Object.freeze(Object.assign({}, this.location));
 
       this.uploaderOptions = {
-        queueLimit: 1,
-        path: this.uploaderOptions.path + '/' + this.location.title, //  + '/' + this.location.id,
+        path: this.uploaderOptions.path + '/' + this.location.title,
         itemID: this.location.id
       };
     });
-
 
     this.form = this.fb.group({
       title: [this.location.title, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
