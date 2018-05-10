@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { IMediaItem } from '../../interfaces/media/media-item.interface';
+import { AngularFireStorage } from 'angularfire2/storage';
 
 @Injectable()
 export class MediaItemService {
@@ -13,42 +11,24 @@ export class MediaItemService {
   private path = `files`;
   public mediaItems$: Observable<IMediaItem[]>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private storage: AngularFireStorage) {
     this.collectionRef = this.afs.collection<IMediaItem>(this.path);
     this.mediaItems$ = this.collectionRef.valueChanges();
   }
 
-  /*
-   createMediaItem(mediaItem: IMediaItem): Promise<void> {
-   if (!mediaItem.id) {
-   mediaItem.id = this.afs.createId();
-   }
-   return this.afs.collection(this.path).doc(mediaItem.id).set(mediaItem);
-   }
+  createMediaItem(mediaItem: IMediaItem): Promise<void> {
+    console.log(mediaItem);
+    return this.afs.collection(this.path).doc(mediaItem.id).set(mediaItem);
+  }
 
-   removeMediaItem(mediaItem: IMediaItem): Promise<any> {
-   return this.afs.collection(this.path).doc(mediaItem.id).delete();
-   }
 
-   updateMediaItem(mediaItemId: string, mediaItem: IMediaItem): Promise<any> {
-   return this.afs.collection(this.path).doc(mediaItemId).update(mediaItem);
-   }
+  removeMediaItem(mediaItem: IMediaItem): Promise<void> {
+    return this.afs.collection(this.path).doc(mediaItem.itemID).delete();
+  }
 
-   getMediaItemById(mediaItemId: string): Observable<IMediaItem> {
-   return this.afs.doc<IMediaItem>(this.path + '/' + mediaItemId).valueChanges();
-   }
+  deleteMediaFileFromStorage(mediaItem) {
+    return this.storage.storage.refFromURL(mediaItem.downloadURL).delete();
+  }
 
-   /* setNewMediaItem(upload: Upload): IMediaItem {
-   return {
-   id: upload.id,
-   assignedObjects: upload.assignedObjects,
-   downloadUrl: upload.downloadUrl,
-   name: upload.file.name,
-   size: upload.file.size,
-   type: upload.file.t,
-   isExternal: false,
-   creation: this.authService.getCreation()
-   };
-   } */
 
 }

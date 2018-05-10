@@ -1,4 +1,22 @@
-#make-3D-space {
+.mediaItem .header, .mediaItem .footer {
+  background-color: lightgrey;
+  color: #000;
+}
+
+.mediaItem img {
+  cursor: pointer;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.mediaItem:hover img {
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+/* #make-3D-space {
   transform-style: preserve-3d;
   transition: transform 5s;
   // margin-left: -167px;
@@ -452,4 +470,4 @@ div.shadow {
   -ms-transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
   transform: rotate(135deg);
-}
+} */

@@ -30,8 +30,10 @@ export class UploaderComponent implements OnInit {
     queueLimit: 4
   };
 
-  constructor(private afs: AngularFirestore, private snackBar: MatSnackBar, ) {
-    this.uploaderOptions.path += '/' + afs.createId();
+  constructor(private afs: AngularFirestore, private snackBar: MatSnackBar) {
+    const id = afs.createId();
+    this.uploaderOptions.id = id;
+    this.uploaderOptions.path += '/' + id;
   }
 
   ngOnInit() {

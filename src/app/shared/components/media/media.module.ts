@@ -5,10 +5,10 @@ import {
   MatButtonModule,
   MatCardModule,
   MatGridListModule,
-  MatIconModule,
+  MatIconModule, MatMenuModule,
   MatProgressBarModule,
-  MatTabsModule
-}                                   from '@angular/material';
+  MatTabsModule, MatToolbarModule
+} from '@angular/material';
 import { MediaCenterComponent }     from './media-center/media-center.component';
 import { MediaUploaderService }     from '../../services/media/media-uploader.service';
 import { AngularFireStorageModule } from 'angularfire2/storage';
@@ -33,11 +33,12 @@ import { LoadingIndicatorModule } from '../loading-indicator/loading-indicator.m
     MatButtonModule,
     MatCardModule,
     LoadingIndicatorModule,
-    // MatCheckboxModule,
+    MatMenuModule,
     MatGridListModule,
     MatIconModule,
     MatProgressBarModule,
     // MatSnackBarModule,
+    MatToolbarModule,
     MatTabsModule,
     // NgPipesModule,
     TranslateModule

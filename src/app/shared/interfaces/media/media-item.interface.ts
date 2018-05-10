@@ -2,7 +2,9 @@ import { ICreation } from '../creation.interface';
 
 export class IMediaItem {
 
-  itemID: string;
+  id: string;
+
+  itemID: string; // id from parent object
   downloadURL: string;
 
   file: {

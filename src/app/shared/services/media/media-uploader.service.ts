@@ -27,24 +27,20 @@ export class MediaUploaderService {
 
   public upload(upload: Upload, options: IUploaderOptions): AngularFireUploadTask {
 
-
     this.initOptions(options);
-    console.log(this.options);
     const arrayOfFilters = this._getFilters(this.options.filters ? this.options.filters : []);
 
     if (this._isValidFile(upload, arrayOfFilters, this.options)) {
 
-      console.log(upload.file);
-
       const metaData: any = {
-        id: options.itemID,
+        itemID: options.itemID,
         name: upload.file.name,
         size: upload.file.size,
         type: upload.file.type
       };
 
       try {
-        return this.storage.upload(options.path + '/' + options.itemID, upload.file, metaData);
+        return this.storage.upload(options.path + '/' + options.itemID + '/' + options.id, upload.file, metaData);
       }
       catch (e) {
         throw ({

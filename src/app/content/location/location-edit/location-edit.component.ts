@@ -1,21 +1,10 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '../../../shared/services/location/location.service';
 import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
 import { ILocation } from '../../../shared/interfaces/location.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
@@ -24,14 +13,12 @@ import { MemberService } from '../../../shared/services/member/member.service';
 import { IMember } from '../../../shared/interfaces/member/member.interface';
 import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material';
-import {
-  debounceTime,
-  distinctUntilChanged
-} from 'rxjs/operators';
-import { IUploaderOptions } from "src/app/shared/interfaces/media/uploader-options.interface";
-import { AngularFireStorage } from "angularfire2/storage";
-import { MediaItemService } from "src/app/shared/services/media/media-item.service";
-import { AngularFirestore, AngularFirestoreCollection } from "angularfire2/firestore";
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { IUploaderOptions } from 'src/app/shared/interfaces/media/uploader-options.interface';
+import { AngularFireStorage } from 'angularfire2/storage';
+import { MediaItemService } from 'src/app/shared/services/media/media-item.service';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
 
 @Component({
   selector: 'location-edit',
@@ -51,19 +38,34 @@ export class LocationEditComponent implements OnInit {
   public categories$: Observable<ICategory[]>;
   public categoryTypes$: Observable<ICategoryType[]>;
   public members$: Observable<IMember[]>;
-  public uploaderOptions: IUploaderOptions;
+
+  public uploaderConfig: IUploaderConfig = {
+    autoUpload: false,
+    showDropZone: true,
+    multiple: true,
+    removeAfterUpload: true,
+    showQueue: true
+  };
+
+  public uploaderOptions: IUploaderOptions = {
+    allowedMimeType: [],
+    allowedFileType: [],
+    itemID: '',
+    path: 'locations',
+    queueLimit: 4
+  };
 
   constructor(private router: Router,
-    private fb: FormBuilder,
-    private storage: AngularFireStorage,
-    private fireStore: AngularFirestore,
-    private snackBar: MatSnackBar,
-    private route: ActivatedRoute,
-    public categoryService: CategoryService,
-    public categoryTypeService: CategoryTypeService,
-    public locationService: LocationService,
-    private mediaItemService: MediaItemService,
-    private memberService: MemberService) {
+              private fb: FormBuilder,
+              private storage: AngularFireStorage,
+              private fireStore: AngularFirestore,
+              private snackBar: MatSnackBar,
+              private route: ActivatedRoute,
+              public categoryService: CategoryService,
+              public categoryTypeService: CategoryTypeService,
+              public locationService: LocationService,
+              private mediaItemService: MediaItemService,
+              private memberService: MemberService) {
     this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
     this.members$ = memberService.members$;
@@ -74,14 +76,12 @@ export class LocationEditComponent implements OnInit {
       this.location = data.location;
       this.savedLocation = Object.freeze(Object.assign({}, this.location));
 
-
       this.uploaderOptions = {
         queueLimit: 1,
-        path: this.location.title + "/" + this.location.id,
+        path: this.uploaderOptions.path + '/' + this.location.title, //  + '/' + this.location.id,
         itemID: this.location.id
       };
     });
-
 
 
     this.form = this.fb.group({
@@ -207,7 +207,7 @@ export class LocationEditComponent implements OnInit {
   }
 
   uploadCompleted() {
-    const collection: AngularFirestoreCollection<any> = this.fireStore.collection("files", ref => ref.where("itemID", "==", this.location.id));
+    const collection: AngularFirestoreCollection<any> = this.fireStore.collection('files', ref => ref.where('itemID', '==', this.location.id));
     collection.valueChanges().subscribe((result) => {
       console.log(result);
     })

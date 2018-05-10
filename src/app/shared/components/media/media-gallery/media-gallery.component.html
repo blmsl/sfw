@@ -1,62 +1,25 @@
-<div fxLayout="row"
-     fxLayoutWrap="wrap"
-     *ngIf="mediaItems && mediaItems.length > 0; else noMediaItemsTemplate">
+<mat-grid-list [gutterSize]="20"
+               [cols]="breakpoint"
+               (window:resize)="onResize($event)"
+               *ngIf="mediaItems && mediaItems.length > 0; else noMediaItemsTemplate">
 
+  <mat-grid-tile class="mediaItem"
+                 *ngFor="let mediaItem of mediaItems">
+    <mat-grid-tile-header class="header">
+      <h3 matLine>{{mediaItem.file ? mediaItem.file.name : 'TEST'}}</h3>
+    </mat-grid-tile-header>
+    <img [src]="mediaItem.downloadURL"
+         alt="{{mediaItem.file ? mediaItem.file.name : 'TEST'}}"/>
+    <mat-grid-tile-footer class="footer">
+      <a mat-icon-button><mat-icon>info</mat-icon></a>
+      <a (click)="removeMediaItem.emit(mediaItem)"
+         mat-icon-button color="warn">
+        <mat-icon>delete</mat-icon>
+      </a>
+    </mat-grid-tile-footer>
+  </mat-grid-tile>
+</mat-grid-list>
 
-  <mat-card fxFlex.gt-sm="25"
-            fxFlex.gt-xs="32"
-            fxFlexOffset.gt-sm="2"
-            fxFlex="100"
-            class="card-picture"
-            *ngFor="let mediaItem of mediaItems">
-    <mat-card-title fxLayout.gt-xs="row"
-                    fxLayout.xs="column">
-      <span fxFlex="80%">{{mediaItem.file ? mediaItem.file.name : 'TEST'}}</span>
-      <mat-icon fxFlex="10%">mode_edit</mat-icon>
-      <mat-icon fxFlex="10%">delete</mat-icon>
-    </mat-card-title>
-    <img mat-card-image [src]="mediaItem.downloadURL">
-  </mat-card>
-
-  <!--
-  <div id="product-card">
-    <div id="product-front">
-      <div class="shadow"></div>
-      <img [src]="mediaItem.downloadURL" alt="{{mediaItem.file.name}}" />
-      <div class="image_overlay"></div>
-      <div id="view_details">View details</div>
-      <div class="stats">
-        <div class="stats-container">
-          <span class="product_price">$39</span>
-          <span class="product_name">Adidas Originals</span>
-          <p>Men's running shirt</p>
-
-          <div class="product-options">
-            <strong>SIZES</strong>
-            <span>XS, S, M, L, XL, XXL</span>
-            <strong>COLORS</strong>
-            <div class="colors">
-              <div class="c-blue"><span></span></div>
-              <div class="c-red"><span></span></div>
-              <div class="c-white"><span></span></div>
-              <div class="c-green"><span></span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>-->
-  <!--<media-gallery-item fxFlex.gt-sm="50"
-                      fxFlex.gt-xs="100"
-                      fxFlex="25"
-                      style="border: 1px solid red"
-                      *ngFor="let mediaItem of mediaItems"
-                      [mediaItem]="mediaItem">
-  </media-gallery-item>
-  <!-- [assignedGalleries]="mediaGalleryService.mediaGalleries$ | async | filterBy: ['assignedItem'] : assignedItem"
-     (updateMediaItem)="updateMediaItem($event)"
-     (removeMediaItem)="removeMediaItem($event)" -->
-</div>
 
 <ng-template #noMediaItemsTemplate>
   <p><strong>{{ 'general.info' | translate }}</strong> {{ 'general.media.noItemsFound' | translate }}</p>

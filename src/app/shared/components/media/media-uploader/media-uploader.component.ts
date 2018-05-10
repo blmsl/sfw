@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
 import { Upload } from '../../../services/media/upload.class';
 import { MediaUploaderService } from '../../../services/media/media-uploader.service';
@@ -14,11 +8,8 @@ import { IUploaderConfig } from '../../../interfaces/media/uploader-config.inter
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/index';
 import { AngularFireUploadTask } from 'angularfire2/storage';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from 'angularfire2/firestore';
-import { IMediaItem } from '../../../interfaces/media/media-item.interface';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { MediaItemService } from '../../../services/media/media-item.service';
 
 @Component({
   selector: 'media-uploader',
@@ -43,9 +34,9 @@ export class MediaUploaderComponent implements OnInit {
   downloadURL: Observable<string>;
 
   constructor(public snackBar: MatSnackBar,
-    private afs: AngularFirestore,
-    private mediaUploaderService: MediaUploaderService,
-    private fireStore: AngularFirestore) {
+              private afs: AngularFirestore,
+              private mediaItemService: MediaItemService,
+              private mediaUploaderService: MediaUploaderService) {
   }
 
   ngOnInit() {
@@ -108,9 +99,10 @@ export class MediaUploaderComponent implements OnInit {
 
     this.currentUploads.forEach((fileUpload: Upload) => {
 
-      if (!this.uploaderOptions.itemID) {
+      this.uploaderOptions.id = this.afs.createId();
+      /*if (!this.uploaderOptions.itemID) {
         this.uploaderOptions.itemID = this.afs.createId();
-      }
+      } */
 
       this.task = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
 
@@ -120,59 +112,55 @@ export class MediaUploaderComponent implements OnInit {
       this.snapshot = this.task.snapshotChanges().pipe(
         tap(snapshot => {
 
-          fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+            fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
 
-          if (snapshot.bytesTransferred === snapshot.totalBytes) {
-            const snapshotTask = snapshot.task;
-            snapshotTask.then((res) => {
-              console.log(fileUpload);
-              console.log(res);
+            if (snapshot.bytesTransferred === snapshot.totalBytes) {
+              const snapshotTask = snapshot.task;
+              snapshotTask.then((res) => {
 
-              const list: AngularFirestoreCollection<IMediaItem> = this.fireStore.collection('files');
-              list.add({
-                file: {
-                  size: fileUpload.file.size,
-                  name: fileUpload.file.name,
-                  type: fileUpload.file.type
-                },
-                itemID: this.uploaderOptions.itemID,
-                downloadURL: res.downloadURL
+                const mediaItem = {
+                  id: this.uploaderOptions.id,
+                  file: {
+                    size: fileUpload.file.size,
+                    name: fileUpload.file.name,
+                    type: fileUpload.file.type
+                  },
+                  itemID: this.uploaderOptions.itemID,
+                  downloadURL: res.downloadURL
+                };
+
+                this.mediaItemService.createMediaItem(mediaItem).then(
+                  () => {
+                    this.uploadCompleted.emit();
+                    if (this.uploaderConfig.removeAfterUpload) {
+                      this.deleteFromQueue(fileUpload);
+                      if (this.currentUploads.length === 0) {
+                        this.clearQueue();
+                      }
+                    }
+                  }
+                ).catch((error: any) => console.log(error));
               });
 
-              this.uploadCompleted.emit();
-            });
 
-
-            if (this.uploaderConfig.removeAfterUpload) {
-              this.deleteFromQueue(fileUpload);
-              if (this.currentUploads.length === 0) {
-                this.clearQueue();
-              }
             }
-
+          }, (error: any) => {
+            this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
+            this.snackBar.openFromComponent(SnackbarComponent, {
+              data: {
+                status: 'error',
+                message: error.message
+              },
+              duration: 2500
+            });
           }
-        }, (error: any) => {
-          this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
-          this.snackBar.openFromComponent(SnackbarComponent, {
-            data: {
-              status: 'error',
-              message: error.message
-            },
-            duration: 2500
-          });
-        }
         ));
 
-      // const mediaItem = this.mediaItemService.setNewMediaItem(upload);
-      // return this.mediaItemService.createMediaItem(mediaItem).then(() => {
-      //   return mediaItem
-      // });
     });
   }
 
   clearQueue(): void {
     this.currentUploads = [];
-    //this.form.controls['imageUrl'].reset();
   }
 
   deleteFromQueue(upload): void {
