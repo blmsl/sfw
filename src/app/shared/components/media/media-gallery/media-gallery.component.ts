@@ -5,8 +5,10 @@ import {
   Input,
   OnInit,
   Output
-} from '@angular/core';
-import { IMediaItem } from '../../../interfaces/media/media-item.interface';
+}                                 from '@angular/core';
+import { IMediaItem }             from '../../../interfaces/media/media-item.interface';
+import { MatDialog }              from '@angular/material';
+import { MediaItemInfoComponent } from '../media-item-info/media-item-info.component';
 
 @Component({
   selector: 'media-gallery',
@@ -21,7 +23,7 @@ export class MediaGalleryComponent implements OnInit {
 
   public breakpoint: number;
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -30,5 +32,12 @@ export class MediaGalleryComponent implements OnInit {
 
   onResize(event) {
     this.breakpoint = (event.target.innerWidth <= 600) ? 1 : (event.target.innerWidth <= 1024) ? 2 : 3;
+  }
+
+  openDialog(mediaItem: IMediaItem){
+    let dialogRef = this.dialog.open(MediaItemInfoComponent, {
+      data: { mediaItem: mediaItem }
+    });
+
   }
 }

@@ -1,15 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
 import { Upload } from '../../../services/media/upload.class';
-import { MediaUploaderService } from '../../../services/media/media-uploader.service';
-import { SnackbarComponent } from '../../snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material';
-import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
-import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs/index';
+import { MediaUploaderService }  from '../../../services/media/media-uploader.service';
+import { SnackbarComponent }     from '../../snackbar/snackbar.component';
+import { MatSnackBar }           from '@angular/material';
+import { IUploaderConfig }       from '../../../interfaces/media/uploader-config.interface';
+import { tap }                   from 'rxjs/operators';
+import { Observable }            from 'rxjs/index';
 import { AngularFireUploadTask } from 'angularfire2/storage';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { MediaItemService } from '../../../services/media/media-item.service';
+import { AngularFirestore }      from 'angularfire2/firestore';
+import { MediaItemService }      from '../../../services/media/media-item.service';
+import { FileUploader }          from 'ng2-file-upload';
 
 @Component({
   selector: 'media-uploader',
@@ -26,12 +27,6 @@ export class MediaUploaderComponent implements OnInit {
   public currentUploads: Upload[] = [];
   public isHovering: boolean;
   public canUpload: boolean = true;
-
-  task: AngularFireUploadTask;
-
-  percentage: Observable<number>;
-  snapshot: Observable<any>;
-  downloadURL: Observable<string>;
 
   constructor(public snackBar: MatSnackBar,
               private afs: AngularFirestore,
@@ -57,6 +52,8 @@ export class MediaUploaderComponent implements OnInit {
   }
 
   initUploader(fileArray: File[]): void {
+
+    this.clearQueue();
     // const reader = new FileReader();
 
     for (let i = 0; i < fileArray.length; i++) {
@@ -74,7 +71,7 @@ export class MediaUploaderComponent implements OnInit {
 
     // Start Auto Upload?
     if (this.canUpload && this.uploaderConfig.autoUpload) {
-      this.uploadFiles();
+      this.uploadMultipleFiles();
     }
   }
 
@@ -95,68 +92,76 @@ export class MediaUploaderComponent implements OnInit {
     }
   }
 
-  uploadFiles() {
+  upload(fileUpload: Upload){
 
-    this.currentUploads.forEach((fileUpload: Upload) => {
-
+    // create Id, if not exists
+    if(!this.uploaderOptions.id) {
       this.uploaderOptions.id = this.afs.createId();
-      /*if (!this.uploaderOptions.itemID) {
-        this.uploaderOptions.itemID = this.afs.createId();
-      } */
+    }
 
-      this.task = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
+    fileUpload.task = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
+    fileUpload.percentage = fileUpload.task.percentageChanges();
+    fileUpload.downloadURL = fileUpload.task.downloadURL();
 
-      this.percentage = this.task.percentageChanges();
-      this.downloadURL = this.task.downloadURL();
+    fileUpload.snapshot = fileUpload.task.snapshotChanges().pipe(
+      tap(snapshot => {
 
-      this.snapshot = this.task.snapshotChanges().pipe(
-        tap(snapshot => {
+          fileUpload.status = snapshot.state;
+          fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
 
-            fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+          if (snapshot.bytesTransferred === snapshot.totalBytes) {
+            const snapshotTask = snapshot.task;
+            snapshotTask.then((res) => {
 
-            if (snapshot.bytesTransferred === snapshot.totalBytes) {
-              const snapshotTask = snapshot.task;
-              snapshotTask.then((res) => {
+              const mediaItem = {
+                id: this.uploaderOptions.id,
+                file: {
+                  size: fileUpload.file.size,
+                  name: fileUpload.file.name,
+                  type: fileUpload.file.type
+                },
+                itemID: this.uploaderOptions.itemID,
+                downloadURL: res.downloadURL
+              };
 
-                const mediaItem = {
-                  id: this.uploaderOptions.id,
-                  file: {
-                    size: fileUpload.file.size,
-                    name: fileUpload.file.name,
-                    type: fileUpload.file.type
-                  },
-                  itemID: this.uploaderOptions.itemID,
-                  downloadURL: res.downloadURL
-                };
-
-                this.mediaItemService.createMediaItem(mediaItem).then(
-                  () => {
-                    this.uploadCompleted.emit();
-                    if (this.uploaderConfig.removeAfterUpload) {
-                      this.deleteFromQueue(fileUpload);
-                      if (this.currentUploads.length === 0) {
-                        this.clearQueue();
-                      }
+              this.mediaItemService.createMediaItem(mediaItem).then(
+                () => {
+                  this.uploadCompleted.emit();
+                  if (this.uploaderConfig.removeAfterUpload) {
+                    this.deleteFromQueue(fileUpload);
+                    if (this.currentUploads.length === 0) {
+                      this.clearQueue();
                     }
                   }
-                ).catch((error: any) => console.log(error));
-              });
-
-
-            }
-          }, (error: any) => {
-            this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
-            this.snackBar.openFromComponent(SnackbarComponent, {
-              data: {
-                status: 'error',
-                message: error.message
-              },
-              duration: 2500
+                }
+              ).catch((error: any) => this.showErrorMessage(error));
             });
-          }
-        ));
 
+
+          }
+        }, (error: any) => {
+          this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
+          this.showErrorMessage(error);
+        }
+      ));
+  }
+
+  showErrorMessage(error: any){
+    this.snackBar.openFromComponent(SnackbarComponent, {
+      data: {
+        status: 'error',
+        message: error.message
+      },
+      duration: 2500
     });
+  }
+
+  uploadSingleFile(fileUpload: Upload){
+    this.upload(fileUpload);
+  }
+
+  uploadMultipleFiles() {
+    this.currentUploads.forEach((fileUpload: Upload) => this.upload(fileUpload));
   }
 
   clearQueue(): void {
@@ -166,5 +171,23 @@ export class MediaUploaderComponent implements OnInit {
   deleteFromQueue(upload): void {
     this.currentUploads.splice(this.currentUploads.indexOf(upload), 1);
     this.checkQueueLength();
+  }
+
+  pauseUpload(upload: Upload){
+    upload.task.pause();
+  }
+
+  resumeUpload(upload: Upload){
+    upload.task.resume();
+  }
+
+  cancelUpload(upload: Upload){
+    upload.task.cancel();
+    upload.status = 'canceled';
+  }
+
+  deleteUpload(upload: Upload){
+    const index = this.currentUploads.indexOf(upload);
+    this.currentUploads.splice(index, 1);
   }
 }

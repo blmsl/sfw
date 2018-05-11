@@ -536,8 +536,18 @@
       "list": {
         "title": "Hochgeladene Dateien"
       },
+      "noItemsFound": "Es wurden noch keine Dateien hochgeladen",
       "upload": {
         "actions": "Aktionen",
+        "author": "Hochgeladen von",
+        "date": "Datum",
+        "file": {
+          "info": "Dateiinformationen",
+          "link": "Link zur Datei",
+          "name": "Dateiname",
+          "size": "Größe",
+          "type": "Typ"
+        },
         "name": "Dateiname",
         "percentage": "%",
         "preview": "Vorschau",
@@ -547,12 +557,18 @@
       },
       "uploader": {
         "cancel": "Abbrechen",
+        "canceled": "abgebrochen",
         "clearQueue": "Warteschlange löschen",
         "config": "Optionen",
         "delete": "Löschen",
+        "finished": "hochgeladen",
+        "notStarted": "nicht gestartet",
         "pause": "Pausieren",
+        "paused": "pausiert",
         "queue": "Warteschlange",
         "resume": "Fortsetzen",
+        "running": "lädt hoch ...",
+        "successfulUpload": "Die Datei wurden erfolgreich übertragen.",
         "start": "Hochladen",
         "title": "Uploader",
         "uploadFile": "Hochladen",

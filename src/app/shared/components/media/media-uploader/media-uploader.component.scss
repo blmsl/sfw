@@ -7,7 +7,6 @@
   border: 2px dashed #f16624;
   border-radius: 5px;
   background: white;
-  margin: 10px 0;
 }
 
 .hovering {
@@ -17,4 +16,12 @@
 
 progress::-webkit-progress-value {
   transition: width 0.1s ease;
+}
+
+.actions {
+  background-color: blue;
+  display: flex;
+  align-items: right;
+  justify-content: flex-end;
+  flex-direction: row;
 }

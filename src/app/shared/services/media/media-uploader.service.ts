@@ -1,12 +1,12 @@
 import {
   AngularFireStorage,
   AngularFireUploadTask
-} from 'angularfire2/storage';
-import { Injectable } from '@angular/core';
-import { FileType } from '../../interfaces/media/file-type.interface';
+}                           from 'angularfire2/storage';
+import { Injectable }       from '@angular/core';
+import { FileType }         from '../../interfaces/media/file-type.interface';
 import { IUploaderOptions } from '../../interfaces/media/uploader-options.interface';
-import { Upload } from './upload.class';
-import { AuthService } from '../auth/auth.service';
+import { Upload }           from './upload.class';
+import { AuthService }      from '../auth/auth.service';
 
 
 export type FilterFunction = {
@@ -22,7 +22,7 @@ export class MediaUploaderService {
   public options: IUploaderOptions;
 
   constructor(private authService: AuthService,
-    private storage: AngularFireStorage) {
+              private storage: AngularFireStorage) {
   }
 
   public upload(upload: Upload, options: IUploaderOptions): AngularFireUploadTask {
@@ -39,17 +39,16 @@ export class MediaUploaderService {
         type: upload.file.type
       };
 
-      try {
-        return this.storage.upload(options.path + '/' + options.itemID + '/' + options.id, upload.file, metaData);
-      }
-      catch (e) {
-        throw ({
-          message: e.message,
-          file: upload.file.name
-        });
-      }
+      return this.storage.upload(options.path + '/' + options.itemID + '/' + options.id, upload.file, metaData);
+      /*}
+       catch (e) {
+       return Observable.throw({
+       message: e.message,
+       file: upload.file.name
+       });
+       }*/
     } else {
-      const filter: any = arrayOfFilters[this._failFilterIndex];
+      const filter: any = arrayOfFilters[ this._failFilterIndex ];
       console.log(filter);
       throw ({
         message: filter.name,

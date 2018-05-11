@@ -1,0 +1,28 @@
+<h3>{{'general.media.upload.file.info' | translate}}</h3>
+
+<table *ngIf="data.mediaItem as mediaItem">
+  <tr>
+    <th>{{'general.media.upload.author' | translate}}</th>
+    <td></td>
+  </tr>
+  <tr>
+    <th>{{'general.media.upload.date' | translate}}</th>
+    <td></td>
+  </tr>
+  <tr>
+    <th>{{'general.media.upload.file.name' | translate}}</th>
+    <td>{{mediaItem.file.name}}</td>
+  </tr>
+  <tr>
+    <th>{{'general.media.upload.file.size' | translate}}</th>
+    <td>{{mediaItem.file.size | fileSize}}</td>
+  </tr>
+  <tr>
+    <th>{{'general.media.upload.file.type' | translate}}</th>
+    <td>{{mediaItem.file.type}}</td>
+  </tr>
+  <tr>
+    <th>{{'general.media.upload.file.link' | translate}}</th>
+    <td><a target="_blank" [href]="mediaItem.downloadURL">{{'general.media.upload.file.link' | translate}}</a></td>
+  </tr>
+</table>

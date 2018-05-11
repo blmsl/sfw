@@ -1,22 +1,18 @@
-import { Observable } from 'rxjs';
+import { Observable }            from 'rxjs';
+import { AngularFireUploadTask } from 'angularfire2/storage';
 
 export class Upload {
 
   file: File;
 
-  downloadUrl$: Observable<string> | string;
-  percentage$: Observable<number>;
+  downloadURL: Observable<string | null>;
+  task: AngularFireUploadTask;
+  percentage: Observable<number | undefined>;
+
   isActive: boolean;
-  error: Observable<any>;
 
-  /*
-  assignedObjects: {
-    id: string;
-    type: string;
-  }[];
-
-  previewImage: string;
-  snapshot: Observable<any>; */
+  status: string;
+  snapshot: any;
 
   constructor(file) {
     this.file = file;

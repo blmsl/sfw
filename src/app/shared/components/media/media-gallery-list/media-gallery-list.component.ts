@@ -6,13 +6,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MediaGalleryListComponent implements OnInit {
 
-  /* @Input() assignedGalleries: IMediaGallery[];
-  // @Input() items: IMediaItem[];
-  @Input() assignedItem: any;
-
-  @Output() setMediaGallery = new EventEmitter(false);
-  @Output() removeMediaGallery = new EventEmitter(false);
-  */
   ngOnInit() {
   }
 

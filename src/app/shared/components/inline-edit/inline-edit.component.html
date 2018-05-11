@@ -1,0 +1,24 @@
+<span *ngIf="editing">
+  <mat-form-field fxFlex="100">
+    <input matInput
+           (blur)="onBlur($event)"
+           [type]="type"
+           [required]="required"
+           [value]="title"
+           #inlineEditControl />
+  </mat-form-field>
+
+  <!--<input #inlineEditControl
+         [required]="required"
+         (blur)="onBlur($event)"
+         [name]="value"
+         [(ngModel)]="value"
+         [type]="type"
+         [placeholder]="label"/>-->
+</span>
+
+<span *ngIf="!editing"
+      class="inline-edit"
+      (click)="edit(value)">
+  {{title}}
+</span>

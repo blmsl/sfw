@@ -42,7 +42,6 @@ export class LocationEditComponent implements OnInit {
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,
     showDropZone: true,
-    multiple: true,
     removeAfterUpload: true,
     showQueue: true
   };
@@ -50,6 +49,7 @@ export class LocationEditComponent implements OnInit {
   public uploaderOptions: IUploaderOptions = {
     itemID: '',
     path: 'locations',
+    queueLimit: 1
   };
 
   constructor(private router: Router,

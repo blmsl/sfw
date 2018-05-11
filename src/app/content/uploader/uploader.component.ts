@@ -17,17 +17,14 @@ export class UploaderComponent implements OnInit {
   public uploaderConfig: IUploaderConfig = {
     autoUpload: false,
     showDropZone: true,
-    multiple: true,
-    removeAfterUpload: true,
+    removeAfterUpload: false,
     showQueue: true
   };
 
   public uploaderOptions: IUploaderOptions = {
-    allowedMimeType: [],
-    allowedFileType: [],
     itemID: '',
     path: 'not-categorized',
-    queueLimit: 4
+    queueLimit: 25
   };
 
   constructor(private afs: AngularFirestore, private snackBar: MatSnackBar) {
@@ -43,7 +40,17 @@ export class UploaderComponent implements OnInit {
     this.snackBar.openFromComponent(SnackbarComponent, {
       data: {
         status: 'success',
-        message: 'upload.successful'
+        message: 'general.media.uploader.successfulUpload'
+      },
+      duration: 2500
+    });
+  }
+
+  uploadError($event: any): void {
+    this.snackBar.openFromComponent(SnackbarComponent, {
+      data: {
+        status: 'error',
+        message: $event
       },
       duration: 2500
     });

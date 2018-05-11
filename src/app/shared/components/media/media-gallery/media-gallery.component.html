@@ -6,12 +6,47 @@
   <mat-grid-tile class="mediaItem"
                  *ngFor="let mediaItem of mediaItems">
     <mat-grid-tile-header class="header">
-      <h3 matLine>{{mediaItem.file ? mediaItem.file.name : 'TEST'}}</h3>
+      <h3 matLine
+          inline-edit
+          [title]="mediaItem.file.name"
+          [required]="true"
+          [disabled]="false"
+          [type]="'text'"
+          class="inline-edit">
+      </h3>
     </mat-grid-tile-header>
-    <img [src]="mediaItem.downloadURL"
+
+    <img *ngIf="mediaItem.file.type.indexOf('image') > -1"
+         [src]="mediaItem.downloadURL"
          alt="{{mediaItem.file ? mediaItem.file.name : 'TEST'}}"/>
+
+    <audio *ngIf="mediaItem.file.type.indexOf('audio') > -1" controls>
+      <source [src]="mediaItem.downloadURL" type="audio/ogg">
+      <source [src]="mediaItem.downloadURL" type="audio/mpeg">
+      Your browser does not support the audio tag.
+    </audio>
+
+    <video *ngIf="mediaItem.file.type.indexOf('video') > -1" controls>
+      <source [src]="mediaItem.downloadURL" type="video/mp4">
+      <source [src]="mediaItem.downloadURL" type="video/ogg">
+      Your browser does not support the video tag.
+    </video>
+
+    <a
+      *ngIf="
+      mediaItem.file.type.indexOf('video') === -1
+      && mediaItem.file.type.indexOf('image') === -1
+      && mediaItem.file.type.indexOf('audio') === -1"
+      [href]="mediaItem.downloadURL"
+      target="_blank">
+      {{mediaItem.file ? mediaItem.file.name : 'TEST'}}
+    </a>
+
     <mat-grid-tile-footer class="footer">
-      <a mat-icon-button><mat-icon>info</mat-icon></a>
+      <a mat-icon-button
+         (click)="openDialog(mediaItem)">
+        <mat-icon>info</mat-icon>
+      </a>
       <a (click)="removeMediaItem.emit(mediaItem)"
          mat-icon-button color="warn">
         <mat-icon>delete</mat-icon>

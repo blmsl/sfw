@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ILocation } from '../../../../shared/interfaces/location.interface';
-import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
-import { IMember } from '../../../../shared/interfaces/member/member.interface';
-import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
+import { FormGroup }                                                 from '@angular/forms';
+import { ILocation }                                                 from '../../../../shared/interfaces/location.interface';
+import { QuillEditorComponent }                                      from 'ngx-quill/src/quill-editor.component';
+import { IMember }                                                   from '../../../../shared/interfaces/member/member.interface';
+import { IUploaderConfig }                                           from '../../../../shared/interfaces/media/uploader-config.interface';
+import { IUploaderOptions }                                          from '../../../../shared/interfaces/media/uploader-options.interface';
 
 @Component({
   selector: 'club-edit-main',
@@ -28,16 +29,15 @@ export class ClubEditMainComponent implements OnInit {
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,
     showDropZone: true,
-    multiple: false,
     removeAfterUpload: true,
     showQueue: false
   };
 
-  // public uploaderOptions: IUploaderOptions = {
-  //   allowedMimeType: ['image.*'],
-  //   allowedFileType: ['jpeg', 'jpg', 'gif', 'bmp', 'png'],
-  //   maxFileSize: 10000000,
-  //   queueLimit: 1
-  // };
+  public uploaderOptions: IUploaderOptions = {
+    itemID: '123',
+     allowedMimeType: ['image.*'],
+     allowedFileType: ['jpeg', 'jpg', 'gif', 'bmp', 'png'],
+     queueLimit: 1
+  };
 
 }
