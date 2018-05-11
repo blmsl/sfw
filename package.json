@@ -20,7 +20,7 @@
     "start:prod": "ng serve --prod",
     "start:prod:aot": "ng serve --prod --aot",
     "build": "ng build",
-    "build:prod": "npm run build -- -prod",
+    "build:prod": "npm run build --prod",
     "build:prod:aot": "npm run build -- --aot",
     "build:ci": "npm run build:prod && npm run build:prod:aot",
     "build:demo": "npm run build:prod:aot --",
