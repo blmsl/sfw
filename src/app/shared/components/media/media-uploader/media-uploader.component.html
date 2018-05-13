@@ -2,7 +2,8 @@
   <mat-card-header>
     <mat-card-title-group>
       <mat-card-title>
-        <mat-icon>cloud_upload</mat-icon> {{uploaderOptions.queueLimit > 1 ? 'Multiple Upload' : 'Single Upload' }}
+        <mat-icon>cloud_upload</mat-icon>
+        {{uploaderOptions.queueLimit > 1 ? 'Multiple Upload' : 'Single Upload' }}
       </mat-card-title>
     </mat-card-title-group>
 
@@ -99,7 +100,9 @@
           <div fxFlex="15">{{upload.file.name}}</div>
 
           <div fxFlex="19" fxFlexOffset="1">
-            <a *ngIf="upload.downloadURL | async as url" target="_blank" [href]="url">
+            <a *ngIf="upload.downloadURL | async as url"
+               target="_blank"
+               [href]="url">
               {{'general.media.upload.preview' | translate }}
             </a>
           </div>
@@ -121,20 +124,20 @@
             <span *ngIf="!(upload.percentage | async)">{{'general.media.uploader.notStarted' | translate}}</span>
 
             <span *ngIf="(upload.percentage | async) === 100" style="color: green">
-          {{'general.media.uploader.finished' | translate }}
-        </span>
+              {{'general.media.uploader.finished' | translate }}
+            </span>
 
             <span *ngIf="upload.status === 'running'">
-          {{'general.media.uploader.running' | translate }}
-        </span>
+              {{'general.media.uploader.running' | translate }}
+            </span>
 
             <span *ngIf="upload.status === 'paused'" style="color: orange">
-          {{'general.media.uploader.paused' | translate}}
-        </span>
+              {{'general.media.uploader.paused' | translate}}
+            </span>
 
             <span *ngIf="upload.status === 'canceled'" style="color: red">
-          {{'general.media.uploader.canceled' | translate}}
-        </span>
+              {{'general.media.uploader.canceled' | translate}}
+            </span>
           </div>
 
           <div fxFlex="21" fxFlexOffset="1">
@@ -169,11 +172,12 @@
             </button>
 
             <!-- Cancel-Button, when Upload is started -->
-            <button *ngIf="(upload.percentage | async) && upload.status !== 'finished' && upload.status !== 'canceled'"
-                    (click)="cancelUpload(upload)"
-                    type="button"
-                    mat-raised-button
-                    color="warn">
+            <button
+              *ngIf="(upload.percentage | async) && (upload.percentage | async) !== 100 && upload.status !== 'canceled'"
+              (click)="cancelUpload(upload)"
+              type="button"
+              mat-raised-button
+              color="warn">
               {{'general.media.uploader.cancel' | translate}}
             </button>
 
@@ -193,28 +197,6 @@
       </mat-list>
 
     </div>
-
-    <!--<div fxLayout="row"
-         class="aligner"
-         style="margin: 25px 0"
-         *ngIf="currentUploads.length > 1">
-      <div fxFlex="100">
-        <div class="button-row" *ngIf="currentUploads.length > 1">
-          <button [disabled]="!canUpload"
-                  *ngIf="!uploaderConfig.autoUpload"
-                  (click)="uploadMultipleFiles()"
-                  mat-raised-button
-                  color="primary">
-            {{'general.media.uploader.uploadAll' | translate}}
-          </button>
-          <button (click)="clearQueue()"
-                  mat-raised-button
-                  color="accent">
-            {{'general.media.uploader.clearQueue' | translate}}
-          </button>
-        </div>
-      </div>
-    </div>-->
 
   </mat-card-content>
 </mat-card>
