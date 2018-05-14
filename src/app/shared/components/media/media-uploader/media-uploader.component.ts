@@ -23,6 +23,7 @@ export class MediaUploaderComponent implements OnInit {
   @Input() uploaderConfig: IUploaderConfig;
 
   @Output() uploadCompleted: EventEmitter<any> = new EventEmitter<any>(false);
+  @Output() unsplashSidebar: EventEmitter<void> = new EventEmitter<void>(false);
 
   public currentUploads: Upload[] = [];
   public isHovering: boolean;
@@ -175,10 +176,12 @@ export class MediaUploaderComponent implements OnInit {
 
   pauseUpload(upload: Upload){
     upload.task.pause();
+    upload.status = 'paused';
   }
 
   resumeUpload(upload: Upload){
     upload.task.resume();
+    upload.status = 'running';
   }
 
   cancelUpload(upload: Upload){

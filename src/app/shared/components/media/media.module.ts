@@ -5,11 +5,14 @@ import {
   MatButtonModule,
   MatCardModule,
   MatDialogModule,
+  MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
+  MatInputModule,
   MatListModule,
   MatMenuModule,
   MatProgressBarModule,
+  MatSidenavModule,
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
@@ -27,7 +30,10 @@ import { MediaGalleryFormComponent } from './media-gallery-form/media-gallery-fo
 import { MediaGalleryListComponent } from './media-gallery-list/media-gallery-list.component';
 import { LoadingIndicatorModule }    from '../loading-indicator/loading-indicator.module';
 import { InlineEditModule }          from '../inline-edit/inline-edit.module';
-import { MediaItemInfoComponent } from './media-item-info/media-item-info.component';
+import { MediaItemInfoComponent }    from './media-item-info/media-item-info.component';
+import { MediaGalleriesComponent }   from './media-galleries/media-galleries.component';
+import { NgPipesModule }             from 'ngx-pipes';
+import { MediaGalleryService }       from '../../services/media/media-gallery.service';
 
 @NgModule({
   imports: [
@@ -38,6 +44,8 @@ import { MediaItemInfoComponent } from './media-item-info/media-item-info.compon
     FlexLayoutModule,
     MatButtonModule,
     MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatDialogModule,
     LoadingIndicatorModule,
     MatMenuModule,
@@ -45,8 +53,10 @@ import { MediaItemInfoComponent } from './media-item-info/media-item-info.compon
     MatListModule,
     MatIconModule,
     MatProgressBarModule,
+    MatSidenavModule,
     MatToolbarModule,
     MatTabsModule,
+    NgPipesModule,
     TranslateModule
   ],
   declarations: [
@@ -58,7 +68,8 @@ import { MediaItemInfoComponent } from './media-item-info/media-item-info.compon
     DropZoneDirective,
     FileSelectDirective,
     FileSizePipe,
-    MediaItemInfoComponent
+    MediaItemInfoComponent,
+    MediaGalleriesComponent
   ],
   exports: [
     MediaCenterComponent,
@@ -68,9 +79,11 @@ import { MediaItemInfoComponent } from './media-item-info/media-item-info.compon
     MediaUploaderComponent
   ],
   entryComponents: [
-    MediaItemInfoComponent
+    MediaItemInfoComponent,
+    MediaGalleryFormComponent
   ],
   providers: [
+    MediaGalleryService,
     MediaUploaderService,
     MediaItemService
   ]

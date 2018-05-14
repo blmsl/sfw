@@ -36,10 +36,6 @@ export class ArticleEditComponent implements OnInit {
   public seasons$: Observable<ISeason[]>;
   public teams$: Observable<ITeam[]>;
 
-  // public enableWordsCount: boolean = true;
-  // public enableCharactersCount: boolean = true;
-  public viewSrcMode: boolean = false;
-
   public words: number = 0;
   public characters: number = 0;
 
@@ -152,10 +148,6 @@ export class ArticleEditComponent implements OnInit {
   changeStatus(value: any) {
     console.log(value);
     return false;
-  }
-
-  toggleView(): void {
-    this.viewSrcMode = !this.viewSrcMode;
   }
 
   remove(): void {

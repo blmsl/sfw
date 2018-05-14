@@ -27,17 +27,17 @@ export class MediaGalleryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.breakpoint = (window.screen.width <= 600) ? 1 : (window.screen.width <= 1024) ? 2 : 3;
+    this.breakpoint = (window.screen.width <= 600) ? 1 : (window.screen.width <= 1024) ? 2 : 5;
   }
 
   onResize(event) {
-    this.breakpoint = (event.target.innerWidth <= 600) ? 1 : (event.target.innerWidth <= 1024) ? 2 : 3;
+    this.breakpoint = (event.target.innerWidth <= 600) ? 1 : (event.target.innerWidth <= 1024) ? 2 : 5;
   }
 
   openDialog(mediaItem: IMediaItem){
-    let dialogRef = this.dialog.open(MediaItemInfoComponent, {
+    this.dialog.open(MediaItemInfoComponent, {
       data: { mediaItem: mediaItem }
     });
-
   }
+
 }

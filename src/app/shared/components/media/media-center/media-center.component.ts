@@ -3,12 +3,14 @@ import {
   EventEmitter,
   Input,
   Output
-}                           from '@angular/core';
-import { IUploaderConfig }  from '../../../interfaces/media/uploader-config.interface';
-import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
-import { MediaItemService } from '../../../services/media/media-item.service';
-import { IMediaItem }       from '../../../interfaces/media/media-item.interface';
-import { Observable }       from 'rxjs/Rx';
+}                            from '@angular/core';
+import { IUploaderConfig }   from '../../../interfaces/media/uploader-config.interface';
+import { IUploaderOptions }  from '../../../interfaces/media/uploader-options.interface';
+import { MediaItemService }  from '../../../services/media/media-item.service';
+import { IMediaItem }        from '../../../interfaces/media/media-item.interface';
+import { Observable }        from 'rxjs/Rx';
+import { SnackbarComponent } from '../../snackbar/snackbar.component';
+import { MatSnackBar }       from '@angular/material';
 
 @Component({
   selector: 'media-center',
@@ -27,14 +29,24 @@ export class MediaCenterComponent {
 
   public mediaItems$: Observable<IMediaItem[]>;
 
-  constructor(private mediaItemService: MediaItemService) {
+  constructor(private mediaItemService: MediaItemService,
+              public snackBar: MatSnackBar) {
     this.mediaItems$ = mediaItemService.mediaItems$;
   }
 
-  removeMediaItem(mediaItem: IMediaItem): Promise<any> {
-    return this.mediaItemService.removeMediaItem(mediaItem)
+  removeMediaItem(mediaItem: IMediaItem): void {
+    this.mediaItemService.removeMediaItem(mediaItem)
       .then(() => {
         return this.mediaItemService.deleteMediaFileFromStorage(mediaItem);
+      })
+      .then(() => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          data: {
+            status: 'success',
+            message: 'general.media.uploader.removedFile'
+          },
+          duration: 2500
+        });
       })
       .catch(error => this.uploadError.emit(error));
   }

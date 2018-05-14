@@ -530,7 +530,10 @@
         "queueLimit": "Du hast zu viele Dateien zum Upload ausgewählt."
       },
       "gallery": {
+        "close": "Schließen",
         "create": "Neue Sammlung",
+        "noGalleriesFound": "Es wurden noch keine Galerien gespeichert",
+        "filter": "Sammlung suchen",
         "title": "Sammlungen"
       },
       "list": {
@@ -566,6 +569,7 @@
         "pause": "Pausieren",
         "paused": "pausiert",
         "queue": "Warteschlange",
+        "removedFile": "Die Datei wurde unwiderruflich gelöscht.",
         "resume": "Fortsetzen",
         "running": "lädt hoch ...",
         "successfulUpload": "Die Datei wurden erfolgreich übertragen.",

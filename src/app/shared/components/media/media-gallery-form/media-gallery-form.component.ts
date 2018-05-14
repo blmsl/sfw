@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Input
+}                           from '@angular/core';
+import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
 
 @Component({
   selector: 'media-gallery-form',
@@ -6,6 +10,7 @@ import { Component } from '@angular/core';
 })
 export class MediaGalleryFormComponent {
 
+  @Input() uploaderOptions: IUploaderOptions;
   /* @Input() assignedItem: string;
   @Input() assignedItemType: string;
 

@@ -1,0 +1,33 @@
+<mat-card>
+  <mat-card-title formGroup="form">
+    <mat-form-field>
+      <input matInput
+             placeholder="{{'general.media.gallery.filter' | translate}}"
+             formControlName="search">
+    </mat-form-field>
+  </mat-card-title>
+  <mat-card-content>
+
+    <media-gallery-list [mediaGalleries]="mediaGalleries$ | async | filterBy: ['title'] : search"></media-gallery-list>
+
+    <button type="button"
+            mat-raised-button
+            (click)="openGalleryForm()"
+            color="accent">
+      <mat-icon>create_new_folder</mat-icon>
+      {{'general.media.gallery.create' | translate}}
+    </button>
+
+    <button type="button"
+            color="primary"
+            mat-raised-button
+            (click)="closeGallerySidebar.emit()">
+      {{'general.media.gallery.close' | translate}}
+    </button>
+
+  </mat-card-content>
+</mat-card>
+
+
+
+

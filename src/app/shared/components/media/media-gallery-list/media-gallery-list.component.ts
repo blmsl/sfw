@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit
+}                        from '@angular/core';
+import { IMediaGallery } from '../../../interfaces/media/media-gallery.interface';
 
 @Component({
   selector: 'media-gallery-list',
@@ -6,9 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MediaGalleryListComponent implements OnInit {
 
+  @Input() mediaGalleries: IMediaGallery[];
+
   ngOnInit() {
   }
 
   constructor() {
   }
+
 }
