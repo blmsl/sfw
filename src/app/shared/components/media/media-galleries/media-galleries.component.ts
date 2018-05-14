@@ -1,24 +1,15 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output
-} from '@angular/core';
-import { MediaGalleryService }       from '../../../services/media/media-gallery.service';
-import { Observable }                from 'rxjs/Rx';
-import { IMediaGallery }             from '../../../interfaces/media/media-gallery.interface';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-}                                    from '@angular/forms';
-import { MatDialog }                 from '@angular/material';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MediaGalleryService } from '../../../services/media/media-gallery.service';
+import { Observable } from 'rxjs/Rx';
+import { IMediaGallery } from '../../../interfaces/media/media-gallery.interface';
+import { FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material';
 import { MediaGalleryFormComponent } from '../media-gallery-form/media-gallery-form.component';
 
 @Component({
   selector: 'media-galleries',
   templateUrl: './media-galleries.component.html',
-  styleUrls: [ './media-galleries.component.scss' ]
+  styleUrls: ['./media-galleries.component.scss']
 })
 export class MediaGalleriesComponent implements OnInit {
 
@@ -28,15 +19,14 @@ export class MediaGalleriesComponent implements OnInit {
   public form: FormGroup;
 
   constructor(public dialog: MatDialog,
-              private mediaGalleryService: MediaGalleryService,
-              private fb: FormBuilder) {
+              private mediaGalleryService: MediaGalleryService) {
     this.mediaGalleries$ = mediaGalleryService.mediaGalleries$;
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      search: [ '', [ Validators.required, Validators.minLength(3) ] ]
-    });
+    /* this.form = this.fb.group({
+      search: ['', [Validators.required, Validators.minLength(3)]]
+    }); */
   }
 
   openGalleryForm() {

@@ -2,11 +2,24 @@
   {{'general.media.gallery.noGalleriesFound' | translate}}
 </p>
 
-<ul>
-  <li *ngFor="let mediaGallery of mediaGalleries | orderBy: ['title']">
-    {{mediaGallery.title}}
-  </li>
-</ul>
+
+<mat-nav-list>
+  <mat-list-item *ngFor="let mediaGallery of mediaGalleries | orderBy: ['title']">
+    <a mat-line inline-edit
+       [title]="mediaGallery.title"
+       [required]="true"
+       [disabled]="false"
+       [type]="'text'"
+       class="inline-edit">{{ mediaGallery.title }} (0)</a>
+    <!--<button mat-icon-button>
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>info</mat-icon>
+    </button>-->
+  </mat-list-item>
+</mat-nav-list>
+
 
 <!--
 <pre>{{uploaderOptions | json}}</pre>

@@ -42,27 +42,39 @@
 
         <mat-tab-group *ngIf="mediaItems$ | async as mediaItems; else loadingTemplate"
                        [dynamicHeight]="true">
-          <mat-tab label="{{'general.media.list.title' | translate}} {{'(' + mediaItems.length + ')' }}">
+          <mat-tab label="{{'general.media.list.title' | translate}} {{'(' + mediaItems.length + ')' }}" >
 
-            <button mat-raised-button
-                    style="margin-bottom: 25px;"
-                    color="accent"
-                    (click)="mediaGallerySidebar.open(true)"
-                    type="button">
-              <mat-icon>folder_special</mat-icon>
-              {{'general.media.gallery.list' | translate }}
-            </button>
+            <div [class.is-mobile]="mobileQuery.matches">
 
-            <media-gallery [mediaItems]="mediaItems"
-                           (removeMediaItem)="removeMediaItem($event)">
-            </media-gallery>
+              <mat-toolbar class="toolbar">
+                <button mat-raised-button
+                        (click)="mediaGallerySidebar.toggle()">
+                  <mat-icon>folder_special</mat-icon>
+                  {{'general.media.gallery.list' | translate }}
+                </button>
+              </mat-toolbar>
 
-            <mat-sidenav #mediaGallerySidebar
-                         position="start"
-                         mode="push"
-                         opened="false">
-              <media-galleries (closeGallerySidebar)="mediaGallerySidebar.close()"></media-galleries>
-            </mat-sidenav>
+              <mat-sidenav-container fxFlexFill>
+                <mat-sidenav #mediaGallerySidebar
+                             class="container"
+                             [opened]="false"
+                             [fixedInViewport]="mobileQuery.matches"
+                             [fixedTopGap]="56"
+                             [mode]="mobileQuery.matches ? 'over' : 'side'"
+                             fxLayout="column">
+                  <media-galleries (closeGallerySidebar)="mediaGallerySidebar.toggle()"
+                                   fxLayout="column">
+                  </media-galleries>
+                </mat-sidenav>
+
+                <mat-sidenav-content fxFlexFill>
+                  <media-gallery [mediaItems]="mediaItems"
+                                 (removeMediaItem)="removeMediaItem($event)">
+                  </media-gallery>
+                </mat-sidenav-content>
+              </mat-sidenav-container>
+
+            </div>
 
           </mat-tab>
           <mat-tab label="{{'general.media.uploader.title' | translate}}">
@@ -73,6 +85,7 @@
             </media-uploader>
           </mat-tab>
         </mat-tab-group>
+
 
       </mat-card-content>
     </mat-card>

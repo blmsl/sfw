@@ -1,28 +1,39 @@
 <div fxLayout="row"
-     fxLayoutWrap="wrap"
-     [formGroup]="form">
+     fxLayoutWrap="wrap" *ngIf="!isLoading; else loadingTemplate">
 
-  <div fxFlex="100">
+  <div fxFlex="100"
+       [formGroup]="form">
 
     <mat-card>
       <mat-card-title>
-        Neue Sammlung erstellen
+        {{'general.media.gallery.create' | translate}}
       </mat-card-title>
       <mat-card-content>
-        <ul>
-          <li>Titel</li>
-          <li>Beschreibung</li>
-          <li>Datum</li>
-          <li>Author</li>
-        </ul>
+
+        <div fxLayout="column">
+
+          <mat-form-field fxFlex="90">
+            <input matInput
+                   placeholder="{{'general.media.gallery.form.title' | translate}}"
+                   formControlName="title">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="90">
+            <input matInput
+                   placeholder="{{'general.media.gallery.form.description' | translate}}"
+                   formControlName="description">
+          </mat-form-field>
+        </div>
 
         <button type="button"
+                (click)="saveMediaGallery()"
                 mat-raised-button color="accent"
                 [disabled]="!form.valid">
           Save
         </button>
 
         <button type="button"
+                (click)="closeDialog()"
                 mat-raised-button color="primary">
           Cancel
         </button>
@@ -30,3 +41,7 @@
     </mat-card>
   </div>
 </div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

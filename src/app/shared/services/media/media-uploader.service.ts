@@ -1,12 +1,12 @@
 import {
   AngularFireStorage,
   AngularFireUploadTask
-}                           from 'angularfire2/storage';
-import { Injectable }       from '@angular/core';
-import { FileType }         from '../../interfaces/media/file-type.interface';
+} from 'angularfire2/storage';
+import { Injectable } from '@angular/core';
+import { FileType } from '../../interfaces/media/file-type.interface';
 import { IUploaderOptions } from '../../interfaces/media/uploader-options.interface';
-import { Upload }           from './upload.class';
-import { AuthService }      from '../auth/auth.service';
+import { Upload } from './upload.class';
+import { AuthService } from '../auth/auth.service';
 
 
 export type FilterFunction = {
@@ -22,7 +22,7 @@ export class MediaUploaderService {
   public options: IUploaderOptions;
 
   constructor(private authService: AuthService,
-              private storage: AngularFireStorage) {
+    private storage: AngularFireStorage) {
   }
 
   public upload(upload: Upload, options: IUploaderOptions): AngularFireUploadTask {
@@ -48,7 +48,7 @@ export class MediaUploaderService {
        });
        }*/
     } else {
-      const filter: any = arrayOfFilters[ this._failFilterIndex ];
+      const filter: any = arrayOfFilters[this._failFilterIndex];
       console.log(filter);
       throw ({
         message: filter.name,

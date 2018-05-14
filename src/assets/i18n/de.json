@@ -532,6 +532,12 @@
       "gallery": {
         "close": "Schließen",
         "create": "Neue Sammlung",
+        "form": {
+          "author": "Author",
+          "description": "Beschreibung der Sammlung",
+          "title": "Titel der Sammlung"
+        },
+        "list": "Sammlungen",
         "noGalleriesFound": "Es wurden noch keine Galerien gespeichert",
         "filter": "Sammlung suchen",
         "title": "Sammlungen"

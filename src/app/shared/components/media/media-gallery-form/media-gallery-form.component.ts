@@ -1,8 +1,7 @@
-import {
-  Component,
-  Input
-}                           from '@angular/core';
-import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
+import { Component, Inject } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MediaGalleryService } from '../../../services/media/media-gallery.service';
 
 @Component({
   selector: 'media-gallery-form',
@@ -10,48 +9,52 @@ import { IUploaderOptions } from '../../../interfaces/media/uploader-options.int
 })
 export class MediaGalleryFormComponent {
 
-  @Input() uploaderOptions: IUploaderOptions;
-  /* @Input() assignedItem: string;
-  @Input() assignedItemType: string;
-
-  @Output() toggleGalleryForm = new EventEmitter(false);
-
+  // @Input() uploaderOptions: IUploaderOptions;
   public form: FormGroup;
+  public isLoading: boolean = false;
 
-  // public gallery: IMediaGallery;
-
-  constructor(// private mediaGalleryService: MediaGalleryService,
-    private authService: AuthService) {
+  constructor(private fb: FormBuilder,
+              private mediaGalleryService: MediaGalleryService,
+              public dialogRef: MatDialogRef<MediaGalleryFormComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
+
   ngOnInit() {
-    /*this.gallery = {
-     title: '',
-     assignedItem: this.assignedItem,
-     assignedItemType: this.assignedItemType,
-     creation: this.authService.getCreation()
-     };
-
-    this.form = new FormGroup({
-      title: new FormControl('')
+    this.form = this.fb.group({
+      title: '',
+      description: '',
+      creation: this.fb.group({
+        by: ''
+      })
     });
+  }
 
-    this.form.valueChanges.pipe(
-      debounceTime(1000),
-      distinctUntilChanged()
-    ).subscribe((changes: any) => {
-      console.log(changes);
-    });
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 
   saveMediaGallery() {
-    /* this.mediaGalleryService.createMediaGallery(this.gallery).then(
-     () => {
-     this.form.reset();
-     this.toggleGalleryForm.emit(true);
-     },
-     (error: any) => console.log(error)
-     );
-  } */
+    this.isLoading = true;
+    this.mediaGalleryService.createMediaGallery(this.form.getRawValue())
+      .then(() => {
+          this.form.reset();
+          this.closeDialog();
+          this.showStatusMessage('success', '');
+          this.isLoading = false;
+        }
+      )
+      .catch((error: any) => {
+          this.closeDialog();
+          this.showStatusMessage('error', error.message);
+          this.isLoading = false;
+        }
+      )
+  }
+
+  showStatusMessage(status: string, message: string) {
+    console.log(status);
+    console.log(message);
+  }
 
 }

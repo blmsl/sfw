@@ -1,6 +1,6 @@
-import { NgModule }            from '@angular/core';
+import { NgModule } from '@angular/core';
 import { InlineEditComponent } from './inline-edit.component';
-import { CommonModule }        from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   MatFormFieldModule,
   MatInputModule

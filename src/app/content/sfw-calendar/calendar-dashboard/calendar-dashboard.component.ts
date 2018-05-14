@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import * as $                           from 'jquery';
-import { CalendarModule }                from 'ap-angular-fullcalendar';
+import * as $ from 'jquery';
+import { CalendarModule } from 'ap-angular-fullcalendar';
 /* import  * as fullcalendar from 'fullcalendar';
 import * as moment from 'moment';
 import { CalendarComponent } from 'ap-angular2-fullcalendar'; */
-import { ActivatedRoute }               from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 // import { OptionsInput } from 'fullcalendar';
 
 @Component({

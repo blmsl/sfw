@@ -1,10 +1,10 @@
-import { Injectable }                                   from '@angular/core';
-import { Observable }                                   from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { IMediaItem }                                   from '../../interfaces/media/media-item.interface';
-import { AngularFireStorage }                           from 'angularfire2/storage';
-import { ICreation }                                    from '../../interfaces/creation.interface';
-import { AuthService }                                  from '../auth/auth.service';
+import { IMediaItem } from '../../interfaces/media/media-item.interface';
+import { AngularFireStorage } from 'angularfire2/storage';
+import { ICreation } from '../../interfaces/creation.interface';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class MediaItemService {
@@ -14,8 +14,8 @@ export class MediaItemService {
   public mediaItems$: Observable<IMediaItem[]>;
 
   constructor(private afs: AngularFirestore,
-              private authService: AuthService,
-              private storage: AngularFireStorage) {
+    private authService: AuthService,
+    private storage: AngularFireStorage) {
     this.collectionRef = this.afs.collection<IMediaItem>(this.path);
     this.mediaItems$ = this.collectionRef.valueChanges();
   }

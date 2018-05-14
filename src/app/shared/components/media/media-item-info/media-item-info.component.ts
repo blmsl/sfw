@@ -16,7 +16,7 @@ import {
 export class MediaItemInfoComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<MediaItemInfoComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }
