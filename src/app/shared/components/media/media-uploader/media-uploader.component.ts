@@ -162,7 +162,12 @@ export class MediaUploaderComponent implements OnInit {
   }
 
   uploadMultipleFiles() {
-    this.currentUploads.forEach((fileUpload: Upload) => this.upload(fileUpload));
+    this.currentUploads.forEach((fileUpload: Upload) => {
+      if (this.currentUploads.length > 1) {
+        this.uploaderOptions.id = this.afs.createId();
+      }
+      this.upload(fileUpload)
+    });
   }
 
   clearQueue(): void {
