@@ -5,8 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'categories-by-category-type',
-  templateUrl: 'categories-by-category-type.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: 'categories-by-category-type.component.html'
 })
 export class CategoriesByCategoryTypeComponent implements OnChanges {
 

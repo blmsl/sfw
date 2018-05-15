@@ -1,32 +1,53 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  NgZone,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import { ActivatedRoute }    from '@angular/router';
+import * as moment           from 'moment';
+import { CalendarComponent } from 'ap-angular-fullcalendar';
 import * as $ from 'jquery';
-import { CalendarModule } from 'ap-angular-fullcalendar';
-/* import  * as fullcalendar from 'fullcalendar';
-import * as moment from 'moment';
-import { CalendarComponent } from 'ap-angular2-fullcalendar'; */
-import { ActivatedRoute } from '@angular/router';
-// import { OptionsInput } from 'fullcalendar';
+import 'fullcalendar';
+import { OptionsInput } from 'fullcalendar';
 
 @Component({
   selector: 'calendar-dashboard',
-  templateUrl: './calendar-dashboard.component.html',
-  styleUrls: ['./calendar-dashboard.component.scss']
+  templateUrl: './calendar-dashboard.component.html'
 })
-export class CalendarDashboardComponent /* implements OnInit */ {
+export class CalendarDashboardComponent implements OnInit, AfterViewInit {
 
-  /* @ViewChild('calendar') calendar: CalendarComponent;
-  calendarOptions: OptionsInput;
+  // @ViewChild('calendar') calendar: CalendarComponent;
+  public calendarOptions: OptionsInput;
   public isInitialized: boolean = false;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private element:ElementRef,
+              private zone: NgZone) {
+  }
+
+  ngAfterViewInit(){
+    setTimeout(() => {
+      this.zone.runOutsideAngular(() => {
+        $('angular2-fullcalendar').fullCalendar(this.calendarOptions);
+        this.isInitialized = true;
+      })
+    }, 100)
+  }
+
+  onCalendarInit(){
+    console.log('now');
   }
 
   ngOnInit() {
+
     this.route.data.subscribe((data: { calendarEvents: any[] }) => {
 
-      let cal = $('calendar');
+      // let cal = $('calendar');
       // cal.fullcalendar('renderEvents', data.calendarEvents, true);
-      this.isInitialized = true;
+      // this.isInitialized = true;
 
       this.calendarOptions = {
         allDayText: 'ganztägig',
@@ -63,13 +84,13 @@ export class CalendarDashboardComponent /* implements OnInit */ {
         timezone: 'local',
         validRange: {
           start: moment().subtract('6', 'months').format('YYYY-MM-DD'),
-          end: moment().add('1', 'years').endOf('year').format('YYYY-MM-DD'),
+          end: moment().add('1', 'years').endOf('year').format('YYYY-MM-DD')
         },
         weekNumbers: true,
         weekNumberTitle: 'KW'
       };
 
     });
-  } */
+  }
 
 }

@@ -1,28 +1,33 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { ICalendarEvent } from '../../shared/interfaces/calendar-event.interface';
-import { MemberService } from '../../shared/services/member/member.service';
-import { IMember } from '../../shared/interfaces/member/member.interface';
+import { Injectable }      from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  RouterStateSnapshot
+}                          from '@angular/router';
+import { Observable }      from 'rxjs';
+import { ICalendarEvent }  from '../../shared/interfaces/calendar-event.interface';
+import { MemberService }   from '../../shared/services/member/member.service';
+import { IMember }         from '../../shared/interfaces/member/member.interface';
 import { CalendarService } from '../../shared/services/calendar/calendar.service';
-import * as moment from 'moment';
-import { switchMap } from 'rxjs/operators';
-import { tap } from 'rxjs/internal/operators';
+import * as moment         from 'moment';
+import { switchMap }       from 'rxjs/operators';
+import {
+  take
+} from 'rxjs/internal/operators';
 
 @Injectable()
 export class EventsResolver implements Resolve<ICalendarEvent[]> {
 
-  private events$: any[] = [];
+  public events$: any[] = [];
 
   constructor(private memberService: MemberService,
-    private calendarService: CalendarService) {
+              private calendarService: CalendarService) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICalendarEvent[]> {
 
-    console.log('Events-resolver: add match-fixtures to calendar');
-
     return this.memberService.members$.pipe(
+      take(1),
       switchMap((members: IMember[]) => {
 
         const memberEvents: ICalendarEvent[] = [];
@@ -36,18 +41,17 @@ export class EventsResolver implements Resolve<ICalendarEvent[]> {
           }
         });
         this.events$.push(...memberEvents);
-        console.log(this.events$);
         return this.events$;
       })
     );
     /* return this.calendarService.getCalendarEvents().map((calEvents: any) => {
-      calEvents.items.forEach((event: ICalendarEvent) => {
-        const startDate = event.start.dateTime.substr(0, 10);
-        const calendarEvent: any = {
-          title: event.summary,
-          start: startDate
-        };
-        this.events$.push(calendarEvent);
-      }); */
+     calEvents.items.forEach((event: ICalendarEvent) => {
+     const startDate = event.start.dateTime.substr(0, 10);
+     const calendarEvent: any = {
+     title: event.summary,
+     start: startDate
+     };
+     this.events$.push(calendarEvent);
+     }); */
   }
 }

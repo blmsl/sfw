@@ -1,16 +1,3 @@
-<div fxLayout="row"
-     fxLayoutWrap="wrap">
-
-  <div fxFlex="100"
-       *ngIf="categories$ | async as categories; else loadingTemplate">
-    <categories-by-category-type
-      [categories]="categories"
-      [categoryTypes]="categoryTypes$ | async">
-    </categories-by-category-type>
-  </div>
-
-</div>
-
-<ng-template #loadingTemplate>
-  <loading-indicator></loading-indicator>
-</ng-template>
+<categories-by-category-type [categories]="categories$ | async"
+                             [categoryTypes]="categoryTypes$ | async">
+</categories-by-category-type>

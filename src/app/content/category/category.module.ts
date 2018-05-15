@@ -19,7 +19,6 @@ import {
   MatSelectModule,
   MatTabsModule
 } from '@angular/material';
-import { CategoryAssignedObjectsComponent } from './category-detail/category-assigned-objects/category-assigned-objects.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
 import { QuillModule } from 'ngx-quill';
 import { UserService } from '../../shared/services/user/user.service';
@@ -44,7 +43,6 @@ import { CategoryStatisticsComponent } from './category-statistics/category-stat
     SharedModule
   ],
   declarations: [
-    CategoryAssignedObjectsComponent,
     CategoryDetailComponent,
     CategoryEditComponent,
     CategoryListComponent,

@@ -2,35 +2,34 @@ import {
   Component,
   OnInit,
   ViewChild
-} from '@angular/core';
+}                               from '@angular/core';
 import {
   ActivatedRoute,
   Router
-} from '@angular/router';
+}                               from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
   Validators
-} from '@angular/forms';
-import { Observable } from 'rxjs';
-import { ICategory } from '../../../shared/interfaces/category.interface';
-import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
-import { CategoryService } from '../../../shared/services/category/category.service';
-import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
+}                               from '@angular/forms';
+import { Observable }           from 'rxjs';
+import { ICategory }            from '../../../shared/interfaces/category.interface';
+import { ICategoryType }        from '../../../shared/interfaces/category-type.interface';
+import { CategoryService }      from '../../../shared/services/category/category.service';
+import { CategoryTypeService }  from '../../../shared/services/category-type/category-type.service';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
-import { UserService } from '../../../shared/services/user/user.service';
-import { IUser } from '../../../shared/interfaces/user/user.interface';
-import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material';
+import { UserService }          from '../../../shared/services/user/user.service';
+import { IUser }                from '../../../shared/interfaces/user/user.interface';
+import { MatSnackBar }          from '@angular/material';
 import {
   debounceTime,
   distinctUntilChanged
-} from 'rxjs/operators';
+}                               from 'rxjs/operators';
+import { AlertService }         from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'category-edit',
-  templateUrl: 'category-edit.component.html',
-  styleUrls: ['category-edit.component.css']
+  templateUrl: 'category-edit.component.html'
 })
 
 export class CategoryEditComponent implements OnInit {
@@ -45,12 +44,13 @@ export class CategoryEditComponent implements OnInit {
   public titleMaxLength: number = 50;
 
   constructor(private categoryService: CategoryService,
-    private snackBar: MatSnackBar,
-    private categoryTypeService: CategoryTypeService,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private userService: UserService) {
+              private snackBar: MatSnackBar,
+              private alertService: AlertService,
+              private categoryTypeService: CategoryTypeService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -60,8 +60,8 @@ export class CategoryEditComponent implements OnInit {
     this.users$ = this.userService.users$;
 
     this.form = this.fb.group({
-      title: [this.category.title, [Validators.required, Validators.minLength(5), Validators.maxLength(this.titleMaxLength)]],
-      assignedCategoryType: [this.category.assignedCategoryType, [Validators.required]],
+      title: [ this.category.title, [ Validators.required, Validators.minLength(5), Validators.maxLength(this.titleMaxLength) ] ],
+      assignedCategoryType: [ this.category.assignedCategoryType, [ Validators.required ] ],
       description: this.category.description,
       creation: this.initCreation()
     });
@@ -102,31 +102,14 @@ export class CategoryEditComponent implements OnInit {
         if (redirect) {
           this.redirectToList();
         }
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            status: 'success',
-            message: 'general.applications.updateMessage'
-          },
-          duration: 2500,
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
+        this.alertService.showSnackBar('success', 'general.applications.updateMessage');
       },
-      (error: any) => console.log(error)
+      (error: any) => this.alertService.showSnackBar('error', error.message)
     );
   }
 
-  /*
-   cancel() {
-   this.redirectToList();
-   }
-
-   removeCategory(event: ICategory) {
-   this.categoryService.removeCategory(event).then(() => this.redirectToList());
-   } */
-
   redirectToList() {
-    this.router.navigate(['/categories']).then();
+    this.router.navigate([ '/categories' ]).then();
   }
 
 }
