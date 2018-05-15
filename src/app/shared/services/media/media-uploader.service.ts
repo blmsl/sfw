@@ -40,13 +40,6 @@ export class MediaUploaderService {
       };
 
       return this.storage.upload(options.path + '/' + options.itemID + '/' + options.id, upload.file, metaData);
-      /*}
-       catch (e) {
-       return Observable.throw({
-       message: e.message,
-       file: upload.file.name
-       });
-       }*/
     } else {
       const filter: any = arrayOfFilters[this._failFilterIndex];
       console.log(filter);

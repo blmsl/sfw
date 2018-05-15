@@ -94,7 +94,6 @@ export class MediaUploaderComponent implements OnInit {
   }
 
   upload(fileUpload: Upload) {
-
     // create Id, if not exists
     if (!this.uploaderOptions.id) {
       this.uploaderOptions.id = this.afs.createId();
@@ -111,6 +110,7 @@ export class MediaUploaderComponent implements OnInit {
         fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
 
         if (snapshot.bytesTransferred === snapshot.totalBytes) {
+
           const snapshotTask = snapshot.task;
           snapshotTask.then((res) => {
 

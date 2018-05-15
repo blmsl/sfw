@@ -42,11 +42,11 @@
 
         <mat-tab-group *ngIf="mediaItems$ | async as mediaItems; else loadingTemplate"
                        [dynamicHeight]="true">
-          <mat-tab label="{{'general.media.list.title' | translate}} {{'(' + mediaItems.length + ')' }}" >
+          <mat-tab label="{{'general.media.list.title' | translate}} {{'(' + mediaItems.length + ')' }}">
 
-            <div [class.is-mobile]="mobileQuery.matches">
 
-              <mat-toolbar class="toolbar">
+            <div class="container" [class.is-mobile]="mobileQuery.matches">
+              <mat-toolbar color="primary" class="toolbar">
                 <button mat-raised-button
                         (click)="mediaGallerySidebar.toggle()">
                   <mat-icon>folder_special</mat-icon>
@@ -54,26 +54,23 @@
                 </button>
               </mat-toolbar>
 
-              <mat-sidenav-container fxFlexFill>
+              <mat-sidenav-container class="sidenav-container"
+                                     [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
                 <mat-sidenav #mediaGallerySidebar
-                             class="container"
-                             [opened]="false"
-                             [fixedInViewport]="mobileQuery.matches"
-                             [fixedTopGap]="56"
                              [mode]="mobileQuery.matches ? 'over' : 'side'"
-                             fxLayout="column">
-                  <media-galleries (closeGallerySidebar)="mediaGallerySidebar.toggle()"
-                                   fxLayout="column">
-                  </media-galleries>
+                             [fixedInViewport]="mobileQuery.matches"
+                             fixedTopGap="56">
+                  <!-- class="sidenav"
+                                   fxLayout="column" -->
+                  <media-galleries (closeGallerySidebar)="mediaGallerySidebar.toggle()"></media-galleries>
                 </mat-sidenav>
 
-                <mat-sidenav-content fxFlexFill>
+                <mat-sidenav-content>
                   <media-gallery [mediaItems]="mediaItems"
                                  (removeMediaItem)="removeMediaItem($event)">
                   </media-gallery>
                 </mat-sidenav-content>
               </mat-sidenav-container>
-
             </div>
 
           </mat-tab>
