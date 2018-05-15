@@ -9,11 +9,14 @@
 
     <!-- ToDo: Nur anzeigen, wenn auch tatsächlich ein Foto vorhanden ist -->
     <button mat-icon-button
+            color="warn"
+            (click)="removeMediaItem(currentImage)"
             *ngIf="uploaderOptions.queueLimit === 1 && currentImage"
             type="button">
       <mat-icon>delete</mat-icon>
     </button>
     <button mat-icon-button
+            color="accent"
             (click)="unsplashSidebar.emit()"
             type="button">
       <mat-icon>add_a_photo</mat-icon>
@@ -23,7 +26,10 @@
 
   <mat-card-content>
 
-    <pre>{{currentImage | json}}</pre>
+    <img mat-card-image
+         style="padding-bottom: 25px"
+         *ngIf="uploaderOptions.queueLimit === 1 && isImage(currentImage.file)"
+         [src]="currentImage.downloadURL" />
 
     <div class="dropZone"
          dropZone

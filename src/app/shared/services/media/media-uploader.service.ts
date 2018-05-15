@@ -1,7 +1,4 @@
-import {
-  AngularFireStorage,
-  AngularFireUploadTask
-} from 'angularfire2/storage';
+import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { Injectable } from '@angular/core';
 import { FileType } from '../../interfaces/media/file-type.interface';
 import { IUploaderOptions } from '../../interfaces/media/uploader-options.interface';
@@ -22,7 +19,7 @@ export class MediaUploaderService {
   public options: IUploaderOptions;
 
   constructor(private authService: AuthService,
-    private storage: AngularFireStorage) {
+              private storage: AngularFireStorage) {
   }
 
   public upload(upload: Upload, options: IUploaderOptions): AngularFireUploadTask {
@@ -33,23 +30,15 @@ export class MediaUploaderService {
     if (this._isValidFile(upload, arrayOfFilters, this.options)) {
 
       const metaData: any = {
-        itemID: options.itemID,
+        itemId: options.itemId,
         name: upload.file.name,
         size: upload.file.size,
         type: upload.file.type
       };
 
       // Use the other upload method from firebase to work with promises
-      return this.storage.ref(options.path + '/' + options.itemID + '/' + options.id).put(upload.file,metaData);
+      return this.storage.ref(options.path + '/' + options.itemId + '/' + options.id).put(upload.file, metaData);
 
-      //return this.storage.upload(options.path + '/' + options.itemID + '/' + options.id, upload.file, metaData);
-      /*}
-       catch (e) {
-       return Observable.throw({
-       message: e.message,
-       file: upload.file.name
-       });
-       }*/
     } else {
       const filter: any = arrayOfFilters[this._failFilterIndex];
       console.log(filter);
@@ -122,8 +111,8 @@ export class MediaUploaderService {
   }
 
   private _fileTypeFilter(upload: Upload): boolean {
-    console.log('filter type');
-    return !(this.options.allowedFileType.indexOf(FileType.getMimeClass(upload)) === -1);
+    console.log('filter fileType ' + FileType.getMimeClass(upload.file) + ' --> ' + !(this.options.allowedFileType.indexOf(FileType.getMimeClass(upload.file)) === -1));
+    return !(this.options.allowedFileType.indexOf(FileType.getMimeClass(upload.file)) === -1);
   }
 
   private _isValidFile(file: Upload, filters: FilterFunction[], options: IUploaderOptions): boolean {

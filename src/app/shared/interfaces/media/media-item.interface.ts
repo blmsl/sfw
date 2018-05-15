@@ -4,7 +4,7 @@ export class IMediaItem {
 
   id: string;
 
-  itemID: string; // id from parent object
+  itemId: string; // id from parent object
   downloadURL: string;
 
   file: {

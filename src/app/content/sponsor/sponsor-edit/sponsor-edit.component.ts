@@ -9,10 +9,14 @@ import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material';
-import {
-  debounceTime,
-  distinctUntilChanged
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
+import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
+import { MediaItemService } from '../../../shared/services/media/media-item.service';
+import { IMediaItem } from '../../../shared/interfaces/media/media-item.interface';
+
+
+const SMALL_WIDTH_BREAKPOINT = 600;
 
 @Component({
   selector: 'sponsor-edit',
@@ -28,17 +32,42 @@ export class SponsorEditComponent implements OnInit {
 
   public titleMaxLength: number = 50;
 
+  public uploaderConfig: IUploaderConfig = {
+    autoUpload: true,
+    showDropZone: true,
+    removeAfterUpload: true,
+    showQueue: false
+  };
+
+  public uploaderOptions: IUploaderOptions = {
+    itemId: '',
+    path: 'sponsors/logos',
+    queueLimit: 1,
+    allowedMimeType: ['image/jpeg','image/jpg', 'image/png', 'image/gif'],
+    allowedFileType: ['image']
+  };
+
+  public currentImage: IMediaItem;
+
   constructor(private route: ActivatedRoute,
-    public snackBar: MatSnackBar,
-    private fb: FormBuilder,
-    private router: Router,
-    private sponsorService: SponsorService,
-    public categoryService: CategoryService) {
+              public snackBar: MatSnackBar,
+              private fb: FormBuilder,
+              private router: Router,
+              private mediaItemService: MediaItemService,
+              private sponsorService: SponsorService,
+              public categoryService: CategoryService) {
     this.categories$ = categoryService.getCategoriesByCategoryType('sponsor.types');
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { sponsor: ISponsor }) => this.sponsor = data.sponsor);
+    this.route.data.subscribe((data: { sponsor: ISponsor }) => {
+      this.sponsor = data.sponsor;
+      this.uploaderOptions.itemId = this.uploaderOptions.id = this.sponsor.id;
+
+      this.mediaItemService.getMediaItemByItemId(this.sponsor.id).subscribe((mediaItems: IMediaItem[]) => {
+        this.currentImage = mediaItems ? mediaItems[0] : null;
+      })
+    });
 
     this.form = this.fb.group({
       title: [this.sponsor.title, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],

@@ -1,25 +1,19 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-}                               from '@angular/core';
-import { IUploaderOptions }     from '../../../interfaces/media/uploader-options.interface';
-import { Upload }               from '../../../services/media/upload.class';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
+import { Upload } from '../../../services/media/upload.class';
 import { MediaUploaderService } from '../../../services/media/media-uploader.service';
-import { SnackbarComponent }    from '../../snackbar/snackbar.component';
-import { MatSnackBar }          from '@angular/material';
-import { IUploaderConfig }      from '../../../interfaces/media/uploader-config.interface';
-import { AngularFirestore }     from 'angularfire2/firestore';
-import { MediaItemService }     from '../../../services/media/media-item.service';
-import { IMediaItem }           from '../../../interfaces/media/media-item.interface';
-import { AlertService }         from '../../../services/alert/alert.service';
+import { MatSnackBar } from '@angular/material';
+import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { MediaItemService } from '../../../services/media/media-item.service';
+import { IMediaItem } from '../../../interfaces/media/media-item.interface';
+import { AlertService } from '../../../services/alert/alert.service';
+import { FileType } from '../../../interfaces/media/file-type.interface';
 
 @Component({
   selector: 'media-uploader',
   templateUrl: 'media-uploader.component.html',
-  styleUrls: [ 'media-uploader.component.scss' ]
+  styleUrls: ['media-uploader.component.scss']
 })
 export class MediaUploaderComponent implements OnInit {
 
@@ -64,7 +58,7 @@ export class MediaUploaderComponent implements OnInit {
     // const reader = new FileReader();
 
     for (let i = 0; i < fileArray.length; i++) {
-      const fileUpload = new Upload(fileArray[ i ]);
+      const fileUpload = new Upload(fileArray[i]);
       this.currentUploads.push(fileUpload);
       /*  Preview
        reader.onload = (event: any) => {
@@ -78,7 +72,9 @@ export class MediaUploaderComponent implements OnInit {
 
     // Start Auto Upload?
     if (this.canUpload && this.uploaderConfig.autoUpload) {
-      this.uploadMultipleFiles();
+      this.uploadMultipleFiles().then(
+        () => this.alertService.showSnackBar('success', 'general.media.uploader.finishedAll')
+      );
     }
   }
 
@@ -102,54 +98,49 @@ export class MediaUploaderComponent implements OnInit {
 
     fileUpload.task = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
     fileUpload.percentage = fileUpload.task.percentageChanges();
-    // fileUpload.downloadURL = fileUpload.task.;
 
-    return fileUpload.task.then().then((snapshot) => {
-      fileUpload.status = snapshot.state;
-      fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+    return fileUpload.task
+      .then()
+      .then((snapshot) => {
+        fileUpload.status = snapshot.state;
+        fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
 
-      if (snapshot.bytesTransferred === snapshot.totalBytes) {
-        const snapshotTask = snapshot.task;
-        snapshotTask.then((res) => {
+        if (snapshot.bytesTransferred === snapshot.totalBytes) {
+          const snapshotTask = snapshot.task;
+          return snapshotTask;
+        }
+      })
+      .then((res: any) => {
+        fileUpload.downloadURL = res.downloadURL;
+        const mediaItem = {
+          id: id,
+          file: {
+            size: fileUpload.file.size,
+            name: fileUpload.file.name,
+            type: fileUpload.file.type
+          },
+          itemId: this.uploaderOptions.itemId,
+          downloadURL: res.downloadURL
+        };
+        return mediaItem;
+      })
+      .then((mediaItem: IMediaItem) => {
+        return this.mediaItemService.createMediaItem(mediaItem);
+      })
+      .then(() => {
+        this.alertService.showSnackBar('success', 'general.media.uploader.singleFinished');
+        if (this.uploaderConfig.removeAfterUpload) {
+          this.deleteFromQueue(fileUpload);
+          if (this.currentUploads.length === 0) {
+            this.clearQueue();
+          }
+        }
+      })
+      .catch((error: any) => {
+        this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
+        this.alertService.showSnackBar('error', error.message);
+      });
 
-          fileUpload.downloadURL = res.downloadURL;
-
-          const mediaItem = {
-            id: id,
-            file: {
-              size: fileUpload.file.size,
-              name: fileUpload.file.name,
-              type: fileUpload.file.type
-            },
-            itemID: this.uploaderOptions.itemID,
-            downloadURL: res.downloadURL
-          };
-
-          this.mediaItemService.createMediaItem(mediaItem).then(() => {
-            if (this.uploaderConfig.removeAfterUpload) {
-              this.deleteFromQueue(fileUpload);
-              if (this.currentUploads.length === 0) {
-                this.clearQueue();
-              }
-            }
-          }).catch((error: any) => this.showErrorMessage(error));
-        });
-      }
-    }).catch((error) => {
-      this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
-      this.showErrorMessage(error);
-    });
-
-  }
-
-  showErrorMessage(error: any) {
-    this.snackBar.openFromComponent(SnackbarComponent, {
-      data: {
-        status: 'error',
-        message: error.message
-      },
-      duration: 2500
-    });
   }
 
   uploadSingleFile(fileUpload: Upload, id?: string) {
@@ -204,5 +195,13 @@ export class MediaUploaderComponent implements OnInit {
   deleteUpload(upload: Upload) {
     const index = this.currentUploads.indexOf(upload);
     this.currentUploads.splice(index, 1);
+  }
+
+  isImage(file: any){
+    return FileType.getMimeClass(file) === 'image';
+  }
+
+  removeMediaItem(mediaItem: IMediaItem){
+    console.log(mediaItem);
   }
 }

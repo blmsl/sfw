@@ -47,7 +47,7 @@ export class LocationEditComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    itemID: '',
+    itemId: '',
     path: 'locations',
     queueLimit: 1
   };
@@ -75,7 +75,7 @@ export class LocationEditComponent implements OnInit {
 
       this.uploaderOptions = {
         path: this.uploaderOptions.path + '/' + this.location.title,
-        itemID: this.location.id
+        itemId: this.location.id
       };
     });
 
@@ -202,7 +202,7 @@ export class LocationEditComponent implements OnInit {
   }
 
   uploadCompleted() {
-    const collection: AngularFirestoreCollection<any> = this.fireStore.collection('files', ref => ref.where('itemID', '==', this.location.id));
+    const collection: AngularFirestoreCollection<any> = this.fireStore.collection('files', ref => ref.where('itemId', '==', this.location.id));
     collection.valueChanges().subscribe((result) => {
       console.log(result);
     })

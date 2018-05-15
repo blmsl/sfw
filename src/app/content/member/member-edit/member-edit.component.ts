@@ -55,7 +55,7 @@ export class MemberEditComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    itemID: '',
+    itemId: '',
     path: 'members/profile-images',
     queueLimit: 1
   };
@@ -76,7 +76,7 @@ export class MemberEditComponent implements OnInit {
     this.route.data.subscribe((data: { member: IMember }) => {
       this.member = data.member;
       this.savedMember = Object.freeze(Object.assign({}, this.member));
-      this.uploaderOptions.itemID = this.uploaderOptions.id = this.member.id;
+      this.uploaderOptions.itemId = this.uploaderOptions.id = this.member.id;
     });
 
     this.form = this.fb.group({

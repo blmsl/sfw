@@ -110,7 +110,7 @@ export class AuthService implements OnDestroy {
 
   public getCreation(): ICreation {
     return {
-      at: moment().toISOString(),
+      at: new Date(),
       from: this.afAuth.auth.currentUser.uid
     };
   }

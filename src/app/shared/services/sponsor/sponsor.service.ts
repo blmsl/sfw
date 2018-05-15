@@ -6,6 +6,7 @@ import {
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AuthService } from '../auth/auth.service';
 import { ISponsor } from '../../interfaces/sponsor.interface';
+import { IMediaItem } from '../../interfaces/media/media-item.interface';
 
 @Injectable()
 export class SponsorService {

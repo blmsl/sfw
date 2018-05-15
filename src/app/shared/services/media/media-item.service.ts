@@ -14,8 +14,8 @@ export class MediaItemService {
   public mediaItems$: Observable<IMediaItem[]>;
 
   constructor(private afs: AngularFirestore,
-    private authService: AuthService,
-    private storage: AngularFireStorage) {
+              private authService: AuthService,
+              private storage: AngularFireStorage) {
     this.collectionRef = this.afs.collection<IMediaItem>(this.path);
     this.mediaItems$ = this.collectionRef.valueChanges();
   }
@@ -23,7 +23,7 @@ export class MediaItemService {
   createMediaItem(mediaItem: IMediaItem): Promise<void> {
     const creation: ICreation = this.authService.getCreation();
     mediaItem.creation = creation;
-    return this.afs.collection(this.path).doc(mediaItem.id).set(mediaItem);
+    return this.afs.collection(this.path).doc(mediaItem.id).set(mediaItem, { merge: true });
   }
 
   removeMediaItem(mediaItem: IMediaItem): Promise<void> {
@@ -32,6 +32,11 @@ export class MediaItemService {
 
   deleteMediaFileFromStorage(mediaItem) {
     return this.storage.storage.refFromURL(mediaItem.downloadURL).delete();
+  }
+
+  getMediaItemByItemId(itemId: string): Observable<IMediaItem[]>{
+    const collection: AngularFirestoreCollection<IMediaItem> = this.afs.collection('files', ref => ref.where('itemId', '==', itemId));
+    return collection.valueChanges();
   }
 
 }

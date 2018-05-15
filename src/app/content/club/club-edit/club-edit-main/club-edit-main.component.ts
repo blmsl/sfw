@@ -34,7 +34,7 @@ export class ClubEditMainComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    itemID: '123',
+    itemId: '123',
     allowedMimeType: ['image.*'],
     allowedFileType: ['jpeg', 'jpg', 'gif', 'bmp', 'png'],
     queueLimit: 1

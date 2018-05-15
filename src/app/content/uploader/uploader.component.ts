@@ -22,7 +22,7 @@ export class UploaderComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    itemID: '',
+    itemId: '',
     path: 'not-categorized',
     queueLimit: 25
   };
