@@ -64,7 +64,7 @@
     "ace-code-editor": "^1.2.3",
     "amazing-time-picker": "^1.5.3",
     "angular-gtag": "^1.0.2",
-    "angularfire2": "^5.0.0-rc.7",
+    "angularfire2": "^5.0.0-rc.8.1-next",
     "ap-angular-fullcalendar": "^1.6.4",
     "core-js": "^2.5.5",
     "firebase": "^4.13.1",

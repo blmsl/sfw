@@ -102,7 +102,7 @@ export class MediaUploaderComponent implements OnInit {
 
     fileUpload.task = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
     fileUpload.percentage = fileUpload.task.percentageChanges();
-    fileUpload.downloadURL = fileUpload.task.downloadURL();
+    // fileUpload.downloadURL = fileUpload.task.;
 
     return fileUpload.task.then().then((snapshot) => {
       fileUpload.status = snapshot.state;
@@ -111,6 +111,8 @@ export class MediaUploaderComponent implements OnInit {
       if (snapshot.bytesTransferred === snapshot.totalBytes) {
         const snapshotTask = snapshot.task;
         snapshotTask.then((res) => {
+
+          fileUpload.downloadURL = res.downloadURL;
 
           const mediaItem = {
             id: id,

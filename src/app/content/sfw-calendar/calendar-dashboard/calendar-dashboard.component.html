@@ -5,12 +5,9 @@
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-    <angular2-fullcalendar *ngIf="isInitialized; else loadingTemplate"
-                           #calendar
-                           id="calendar"
-                           (initialized)="onCalendarInit($event)"
-                           [options]="calendarOptions">
-    </angular2-fullcalendar>
+    <app-fullcalendar *ngIf="events$; else loadingTemplate"
+                      [events]="events$">
+    </app-fullcalendar>
   </mat-card-content>
 </mat-card>
 
