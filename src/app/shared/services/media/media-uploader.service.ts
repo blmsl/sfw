@@ -39,7 +39,17 @@ export class MediaUploaderService {
         type: upload.file.type
       };
 
-      return this.storage.upload(options.path + '/' + options.itemID + '/' + options.id, upload.file, metaData);
+      // Use the other upload method from firebase to work with promises
+      return this.storage.ref(options.path + '/' + options.itemID + '/' + options.id).put(upload.file,metaData);
+
+      //return this.storage.upload(options.path + '/' + options.itemID + '/' + options.id, upload.file, metaData);
+      /*}
+       catch (e) {
+       return Observable.throw({
+       message: e.message,
+       file: upload.file.name
+       });
+       }*/
     } else {
       const filter: any = arrayOfFilters[this._failFilterIndex];
       console.log(filter);
