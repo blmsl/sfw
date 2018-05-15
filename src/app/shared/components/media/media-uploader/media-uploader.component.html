@@ -9,7 +9,7 @@
 
     <!-- ToDo: Nur anzeigen, wenn auch tatsächlich ein Foto vorhanden ist -->
     <button mat-icon-button
-            *ngIf="uploaderOptions.queueLimit === 1"
+            *ngIf="uploaderOptions.queueLimit === 1 && currentImage"
             type="button">
       <mat-icon>delete</mat-icon>
     </button>
@@ -23,23 +23,10 @@
 
   <mat-card-content>
 
-    <ul>
-      <li>
-        Upload
-        <ul>
-          <li>Wenn bereits ein Bild vorhanden ist (bei einem Single-Upload), soll das alte Bild
-            gelöscht werden
-          </li>
-          <li>Wenn ein Objekt, für das ich gerade eine Datei hochlade, noch nicht vorhanden ist,
-            soll die Datei beim Speichern des Hauptobjektes trotzdem verknüpft werden
-          </li>
-          <li>Upload von Bildern von unsplash.com</li>
-        </ul>
-      </li>
-    </ul>
+    <pre>{{currentImage | json}}</pre>
 
     <div class="dropZone"
-         dropZone=""
+         dropZone
          (hovered)="toggleHover($event)"
          (dropped)="handleDrop($event)"
          [class.hovering]="isHovering">

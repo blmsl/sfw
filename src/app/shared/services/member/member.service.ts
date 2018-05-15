@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import {
   Observable,
   of
-} from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-
-
-import { IMember } from '../../interfaces/member/member.interface';
+}                     from 'rxjs';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+}                     from 'angularfire2/firestore';
+import { IMember }    from '../../interfaces/member/member.interface';
+import { IMediaItem } from '../../interfaces/media/media-item.interface';
 
 @Injectable()
 export class MemberService {
@@ -30,12 +32,20 @@ export class MemberService {
     return this.afs.collection(this.path).doc(member.id).delete();
   }
 
-  updateMember(memberId: string, member: IMember): Promise<any> {
-    return this.afs.collection(this.path).doc(memberId).update(member);
+  updateMember(memberId: string, member: IMember)/*: Promise<any>*/ {
+    console.log('update');
+    console.log(memberId);
+    console.log(member);
+    this.afs.collection(this.path).doc(memberId)
+      .update(member)
+      .then(
+        (data) => console.log(data),
+        (error) => console.log(error))
+      .catch((error) => console.log(error));
   }
 
   getMemberById(memberId: string): Observable<IMember | null> {
-    return this.afs.doc<IMember>(this.path + '/' + memberId).valueChanges();
+    return this.afs.collection(this.path).doc<IMember>(memberId).valueChanges();
   }
 
   getZodiac(birthday) {
@@ -58,8 +68,8 @@ export class MemberService {
       'Sagittarius',
       'Capricorn'
     ];
-    const lastDay = [19, 18, 20, 20, 21, 21, 22, 22, 21, 22, 21, 20, 19];
-    return (day > lastDay[month]) ? zodiac[month * 1 + 1] : zodiac[month];
+    const lastDay = [ 19, 18, 20, 20, 21, 21, 22, 22, 21, 22, 21, 20, 19 ];
+    return (day > lastDay[ month ]) ? zodiac[ month * 1 + 1 ] : zodiac[ month ];
   }
 
   calculateAge(birthday) {
@@ -69,54 +79,58 @@ export class MemberService {
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
-  getProfileImage(member: IMember) {
-    return member.profileImageUrl
-      ? member.profileImageUrl
-      : (member.mainData.gender === 'female'
-        ? 'assets/images/placeholder/avatar_female.jpg'
-        : 'assets/images/placeholder/avatar_male.jpg');
+  getProfileImage(member: IMember): Observable<IMediaItem[]> {
+    const collection: AngularFirestoreCollection<IMediaItem> = this.afs.collection('files/members/profile-images', ref => ref.where('itemId', '==', member.id));
+    return collection.valueChanges();
+
+    /* return member.profileImageUrl
+     ? member.profileImageUrl
+     : (member.mainData.gender === 'female'
+     ? 'assets/images/placeholder/avatar_female.jpg'
+     : 'assets/images/placeholder/avatar_male.jpg'); */
   }
+
 
   setNewMember(): Observable<IMember> {
     return of(null);
     /*
-    const mainData: IMemberMainData = {
-      gender: 'male',
-      birthday: moment().format('YYYY-MM-DD')
-    };
-    const otherData: IMemberOtherData = {};
-    const address: IAddress = {};
-    const contact: IContact = {};
-    const clubData: IMemberData = {
-      assignedMember: '',
-      status: 0
-    };
-    const dfbData: IMemberDFBData = {
-      guestPlayer: null
-    };
-    const profile: IProfile = {
-      playerInfo: {
-        strongFoot: ''
-      },
-      favorites: {}
-    };
-    const ahData: IMemberAHData = {
-      status: 0
-    };
-    const data: IMember = {
-      isImported: false,
-      creation: this.authService.getCreation(),
-      mainData: mainData,
-      otherData: otherData,
-      address: address,
-      contact: contact,
-      clubData: clubData,
-      dfbData: dfbData,
-      ahData: ahData,
-      interview: [],
-      profile: profile
-    };
-    return data;
-    */
+     const mainData: IMemberMainData = {
+     gender: 'male',
+     birthday: moment().format('YYYY-MM-DD')
+     };
+     const otherData: IMemberOtherData = {};
+     const address: IAddress = {};
+     const contact: IContact = {};
+     const clubData: IMemberData = {
+     assignedMember: '',
+     status: 0
+     };
+     const dfbData: IMemberDFBData = {
+     guestPlayer: null
+     };
+     const profile: IProfile = {
+     playerInfo: {
+     strongFoot: ''
+     },
+     favorites: {}
+     };
+     const ahData: IMemberAHData = {
+     status: 0
+     };
+     const data: IMember = {
+     isImported: false,
+     creation: this.authService.getCreation(),
+     mainData: mainData,
+     otherData: otherData,
+     address: address,
+     contact: contact,
+     clubData: clubData,
+     dfbData: dfbData,
+     ahData: ahData,
+     interview: [],
+     profile: profile
+     };
+     return data;
+     */
   }
 }

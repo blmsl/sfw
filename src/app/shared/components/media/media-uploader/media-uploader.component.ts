@@ -1,26 +1,31 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
-import { Upload } from '../../../services/media/upload.class';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+}                               from '@angular/core';
+import { IUploaderOptions }     from '../../../interfaces/media/uploader-options.interface';
+import { Upload }               from '../../../services/media/upload.class';
 import { MediaUploaderService } from '../../../services/media/media-uploader.service';
-import { SnackbarComponent } from '../../snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material';
-import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
-import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs/index';
-import { AngularFireUploadTask } from 'angularfire2/storage';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { MediaItemService } from '../../../services/media/media-item.service';
-import { FileUploader } from 'ng2-file-upload';
+import { SnackbarComponent }    from '../../snackbar/snackbar.component';
+import { MatSnackBar }          from '@angular/material';
+import { IUploaderConfig }      from '../../../interfaces/media/uploader-config.interface';
+import { tap }                  from 'rxjs/operators';
+import { AngularFirestore }     from 'angularfire2/firestore';
+import { MediaItemService }     from '../../../services/media/media-item.service';
+import { IMediaItem }           from '../../../interfaces/media/media-item.interface';
 
 @Component({
   selector: 'media-uploader',
   templateUrl: 'media-uploader.component.html',
-  styleUrls: ['media-uploader.component.scss']
+  styleUrls: [ 'media-uploader.component.scss' ]
 })
 export class MediaUploaderComponent implements OnInit {
 
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
+  @Input() currentImage: IMediaItem | null;
 
   @Output() uploadCompleted: EventEmitter<any> = new EventEmitter<any>(false);
   @Output() unsplashSidebar: EventEmitter<void> = new EventEmitter<void>(false);
@@ -30,9 +35,9 @@ export class MediaUploaderComponent implements OnInit {
   public canUpload: boolean = true;
 
   constructor(public snackBar: MatSnackBar,
-    private afs: AngularFirestore,
-    private mediaItemService: MediaItemService,
-    private mediaUploaderService: MediaUploaderService) {
+              private afs: AngularFirestore,
+              private mediaItemService: MediaItemService,
+              private mediaUploaderService: MediaUploaderService) {
   }
 
   ngOnInit() {
@@ -58,7 +63,7 @@ export class MediaUploaderComponent implements OnInit {
     // const reader = new FileReader();
 
     for (let i = 0; i < fileArray.length; i++) {
-      const fileUpload = new Upload(fileArray[i]);
+      const fileUpload = new Upload(fileArray[ i ]);
       this.currentUploads.push(fileUpload);
       /*  Preview
        reader.onload = (event: any) => {
@@ -106,44 +111,44 @@ export class MediaUploaderComponent implements OnInit {
     fileUpload.snapshot = fileUpload.task.snapshotChanges().pipe(
       tap(snapshot => {
 
-        fileUpload.status = snapshot.state;
-        fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+          fileUpload.status = snapshot.state;
+          fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
 
-        if (snapshot.bytesTransferred === snapshot.totalBytes) {
+          if (snapshot.bytesTransferred === snapshot.totalBytes) {
 
-          const snapshotTask = snapshot.task;
-          snapshotTask.then((res) => {
+            const snapshotTask = snapshot.task;
+            snapshotTask.then((res) => {
 
-            const mediaItem = {
-              id: this.uploaderOptions.id,
-              file: {
-                size: fileUpload.file.size,
-                name: fileUpload.file.name,
-                type: fileUpload.file.type
-              },
-              itemID: this.uploaderOptions.itemID,
-              downloadURL: res.downloadURL
-            };
+              const mediaItem = {
+                id: this.uploaderOptions.id,
+                file: {
+                  size: fileUpload.file.size,
+                  name: fileUpload.file.name,
+                  type: fileUpload.file.type
+                },
+                itemID: this.uploaderOptions.itemID,
+                downloadURL: res.downloadURL
+              };
 
-            this.mediaItemService.createMediaItem(mediaItem).then(
-              () => {
-                this.uploadCompleted.emit();
-                if (this.uploaderConfig.removeAfterUpload) {
-                  this.deleteFromQueue(fileUpload);
-                  if (this.currentUploads.length === 0) {
-                    this.clearQueue();
+              this.mediaItemService.createMediaItem(mediaItem).then(
+                () => {
+                  this.uploadCompleted.emit();
+                  if (this.uploaderConfig.removeAfterUpload) {
+                    this.deleteFromQueue(fileUpload);
+                    if (this.currentUploads.length === 0) {
+                      this.clearQueue();
+                    }
                   }
                 }
-              }
-            ).catch((error: any) => this.showErrorMessage(error));
-          });
+              ).catch((error: any) => this.showErrorMessage(error));
+            });
 
 
+          }
+        }, (error: any) => {
+          this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
+          this.showErrorMessage(error);
         }
-      }, (error: any) => {
-        this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
-        this.showErrorMessage(error);
-      }
       ));
   }
 
@@ -166,7 +171,7 @@ export class MediaUploaderComponent implements OnInit {
       if (this.currentUploads.length > 1) {
         this.uploaderOptions.id = this.afs.createId();
       }
-      this.upload(fileUpload)
+      this.upload(fileUpload);
     });
   }
 

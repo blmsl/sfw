@@ -706,7 +706,7 @@
           "comment": "Der Kommentar",
           "firstName": "Vorname des Kommentators",
           "lastName": "Nachname des Kommentators",
-          "perSelectField": "aus der Mitgliederliste wählen",
+          "perSelectField": "aus der Mitgliederliste",
           "perTextField": "freie Texteingabe",
           "userTitle": "Wähle bitte das Mitglied aus der Liste",
           "text": "Hier können Aussagen von Mitspielern, ehemaligen Trainern usw. erfasst werden.",

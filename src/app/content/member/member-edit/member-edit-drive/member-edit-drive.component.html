@@ -1,5 +1,5 @@
-<div fxLayout="row"
-     fxLayoutWrap="wrap"
+<div fxLayout.gt-sm="row"
+     fxLayout="column"
      [formGroup]="form">
 
   <div fxFlex.gt-sm="32"
@@ -183,7 +183,8 @@
       </mat-form-field>
 
 
-      <mat-list-item *ngIf="member.dfbData.guestPlayer && member.dfbData.guestPlayer.guestRight !== ''">
+      <mat-list-item
+        *ngIf="member.dfbData && member.dfbData.guestPlayer && member.dfbData.guestPlayer.guestRight !== ''">
         <span>{{'general.members.detail.drive.dfb.guest' | translate}}</span>
         <span style="font-weight: normal">
              {{ member.dfbData.guestPlayer.guestRight }} <br/>
@@ -191,7 +192,7 @@
              {{ member.dfbData.guestPlayer.type }}
            </span>
       </mat-list-item>
-      <mat-list-item *ngIf="member.dfbData.signOut">
+      <mat-list-item *ngIf="member.dfbData && member.dfbData.signOut">
         <span>{{'general.members.detail.drive.dfb.signOut' | translate}}</span>
         {{ member.dfbData.signOut }}
       </mat-list-item>

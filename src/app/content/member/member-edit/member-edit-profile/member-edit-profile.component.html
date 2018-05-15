@@ -1,8 +1,8 @@
 <h3>{{'general.members.edit.profile.title' | translate}}</h3>
 <p>{{'general.members.edit.profile.text' | translate}}</p>
 
-<div fxLayout="row"
-     fxLayoutWrap="wrap"
+<div fxLayout.gt-sm="row"
+     fxLayout="column"
      [formGroup]="form">
 
   <div fxFlex="100"
@@ -23,8 +23,8 @@
         <div fxFlex="100"
              [formGroupName]="i">
 
-          <div fxLayout="row"
-               fxLayoutWrap="wrap">
+          <div fxLayout.gt-sm="row"
+               fxLayout="column">
 
             <mat-form-field fxFlex.gt-sm="45"
                             fxFlex="100">
