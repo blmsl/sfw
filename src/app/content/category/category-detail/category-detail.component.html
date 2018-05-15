@@ -45,18 +45,25 @@
         </mat-card>
       </mat-card-content>
 
-      <mat-card-actions>
-        <div class="button-row">
-          <a mat-raised-button color="primary" [routerLink]="['/categories']">
+      <mat-card-actions fxLayout.xs="column" fxLayoutGap="10px">
+          <button type="button"
+                  mat-raised-button
+                  color="primary"
+                  [routerLink]="['/categories']">
             {{'general.menu.category.list' | translate}}
-          </a>
-          <a mat-raised-button color="accent" [routerLink]="['/categories/edit', category.id]">
+          </button>
+          <button type="button"
+                  mat-raised-button
+                  color="accent"
+                  [routerLink]="['/categories/edit', category.id]">
             {{'general.edit' | translate }}
-          </a>
-          <a mat-raised-button color="warn" (click)="removeCategory(category)">
+          </button>
+          <button type="button"
+                  mat-raised-button
+                  color="warn"
+                  (click)="removeCategory(category)">
             {{'general.delete' | translate }}
-          </a>
-        </div>
+          </button>
       </mat-card-actions>
     </mat-card>
   </div>

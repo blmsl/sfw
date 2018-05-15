@@ -14,6 +14,7 @@ import { IUploaderConfig }      from '../../../interfaces/media/uploader-config.
 import { AngularFirestore }     from 'angularfire2/firestore';
 import { MediaItemService }     from '../../../services/media/media-item.service';
 import { IMediaItem }           from '../../../interfaces/media/media-item.interface';
+import { AlertService }         from '../../../services/alert/alert.service';
 
 @Component({
   selector: 'media-uploader',
@@ -34,6 +35,7 @@ export class MediaUploaderComponent implements OnInit {
   public canUpload: boolean = true;
 
   constructor(public snackBar: MatSnackBar,
+              private alertService: AlertService,
               private afs: AngularFirestore,
               private mediaItemService: MediaItemService,
               private mediaUploaderService: MediaUploaderService) {
@@ -84,13 +86,7 @@ export class MediaUploaderComponent implements OnInit {
     this.uploaderOptions.queueSize = this.currentUploads.length;
     if (this.currentUploads.length > this.uploaderOptions.queueLimit) {
       this.canUpload = false;
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          status: 'error',
-          message: 'general.media.filter.queueLimit'
-        },
-        duration: 2500
-      });
+      this.alertService.showSnackBar('error', 'general.media.filter.queueLimit');
       this.currentUploads = [];
     } else {
       this.canUpload = true;
@@ -99,48 +95,48 @@ export class MediaUploaderComponent implements OnInit {
 
   upload(fileUpload: Upload, id: string): Promise<any> {
 
-      // create Id, if not exists
-      if (!this.uploaderOptions.id) {
-        this.uploaderOptions.id = this.afs.createId();
-      }
+    // create Id, if not exists
+    if (!this.uploaderOptions.id) {
+      this.uploaderOptions.id = this.afs.createId();
+    }
 
-      fileUpload.task = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
-      fileUpload.percentage = fileUpload.task.percentageChanges();
-      fileUpload.downloadURL = fileUpload.task.downloadURL();
+    fileUpload.task = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
+    fileUpload.percentage = fileUpload.task.percentageChanges();
+    fileUpload.downloadURL = fileUpload.task.downloadURL();
 
-      return fileUpload.task.then().then( (snapshot) => {
-        fileUpload.status = snapshot.state;
-        fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+    return fileUpload.task.then().then((snapshot) => {
+      fileUpload.status = snapshot.state;
+      fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
 
-        if (snapshot.bytesTransferred === snapshot.totalBytes) {
-          const snapshotTask = snapshot.task;
-          snapshotTask.then((res) => {
+      if (snapshot.bytesTransferred === snapshot.totalBytes) {
+        const snapshotTask = snapshot.task;
+        snapshotTask.then((res) => {
 
-            const mediaItem = {
-              id: id,
-              file: {
-                size: fileUpload.file.size,
-                name: fileUpload.file.name,
-                type: fileUpload.file.type
-              },
-              itemID: this.uploaderOptions.itemID,
-              downloadURL: res.downloadURL
-            };
+          const mediaItem = {
+            id: id,
+            file: {
+              size: fileUpload.file.size,
+              name: fileUpload.file.name,
+              type: fileUpload.file.type
+            },
+            itemID: this.uploaderOptions.itemID,
+            downloadURL: res.downloadURL
+          };
 
-            this.mediaItemService.createMediaItem(mediaItem).then(() => {
-              if (this.uploaderConfig.removeAfterUpload) {
-                this.deleteFromQueue(fileUpload);
-                if (this.currentUploads.length === 0) {
-                  this.clearQueue();
-                }
+          this.mediaItemService.createMediaItem(mediaItem).then(() => {
+            if (this.uploaderConfig.removeAfterUpload) {
+              this.deleteFromQueue(fileUpload);
+              if (this.currentUploads.length === 0) {
+                this.clearQueue();
               }
-            }).catch((error: any) => this.showErrorMessage(error));
-          });
-        }
-      }).catch( (error) => {
-        this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
-        this.showErrorMessage(error);
-      })
+            }
+          }).catch((error: any) => this.showErrorMessage(error));
+        });
+      }
+    }).catch((error) => {
+      this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
+      this.showErrorMessage(error);
+    });
 
   }
 
@@ -158,7 +154,7 @@ export class MediaUploaderComponent implements OnInit {
     if (!id) {
       id = this.uploaderOptions.id;
     }
-    this.upload(fileUpload, id).then( () => {
+    this.upload(fileUpload, id).then(() => {
       this.uploadCompleted.emit();
     });
   }
@@ -174,10 +170,11 @@ export class MediaUploaderComponent implements OnInit {
     });
 
     // after pushed all promises from upload, wait till all are done and then emit the completion
-    Promise.all(promises).then( () => {
+    Promise.all(promises).then(() => {
       this.uploadCompleted.emit();
-    })
+    });
   }
+
   clearQueue(): void {
     this.currentUploads = [];
   }

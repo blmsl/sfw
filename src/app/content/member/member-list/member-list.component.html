@@ -1,36 +1,42 @@
-<div fxLayout="row" [formGroup]="form">
+<div fxLayout.gt-sm="row"
+     fxLayout="column"
+     fxLayoutGap="10px"
+     [formGroup]="form">
 
-  <mat-form-field fxFlex.gt-xs="33"
-                  fxFlex="100">
-    <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}" formControlName="limit">
-      <mat-option [value]="members.length" *ngIf="members">
+  <mat-form-field fxFlex="100">
+    <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}"
+                formControlName="limit">
+      <mat-option [value]="members.length"
+                  *ngIf="members">
         {{ 'general.pagination.allItems' | translate}}
       </mat-option>
-      <mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}
-        {{ 'general.items' | translate}}
+      <mat-option *ngFor="let option of itemsPerPageOptions"
+                  [value]="option">
+        {{ option }} {{ 'general.items' | translate}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlexOffset="1"
-                  fxFlex.gt-xs="33"
-                  fxFlex="100">
+  <mat-form-field fxFlex="100">
     <input matInput
            placeholder="{{ 'general.typeToFilter' | translate}}"
            formControlName="searchFor"/>
   </mat-form-field>
 
-  <div fxFlexOffset="1"
-       fxFlex.gt-xs="33"
-       fxFlex="100"
-       style="margin-bottom: 15px">
-    <a mat-raised-button color="primary" [routerLink]="['./edit/new']">
+  <div fxFlex="100">
+    <button type="button"
+            mat-raised-button
+            color="primary"
+            [routerLink]="['./edit/new']">
       {{ 'general.members.detail.main.createMember' | translate}}
-    </a>
+    </button>
   </div>
 </div>
 
-<div fxLayout="row" [formGroup]="form">
+<div style="margin-top: 25px"
+     fxLayout="column"
+     fxLayout.gt-sm="row"
+     [formGroup]="form">
 
   <div fxFlex="100"
        *ngIf="members && clubMemberStates && ahMemberStates; else loadingTemplate">

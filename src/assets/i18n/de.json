@@ -231,6 +231,7 @@
           "title": "Titel",
           "category": "Kategorie"
         },
+        "deleted": "Die Kategorie wurde gelöscht.",
         "createCategory": "Kategorie erstellen",
         "filterByAssignedCategoryType": "Aus der Kategorie",
         "filterTitle": "Kategorien filtern nach",
@@ -654,6 +655,7 @@
           "comment": "Bemerkung",
           "contact": "Kontaktdaten",
           "createMember": "Mitglied erstellen",
+          "delete": "Mitglied löschen",
           "email": "E-Mail",
           "fax": "Fax-Nr.",
           "female": "Frau",
@@ -727,6 +729,9 @@
         "ah": "AH-Mitglied",
         "player": "Spieler",
         "viewProfile": "Profil anzeigen"
+      },
+      "list": {
+        "deleted": "Das Mitglied wurde gelöscht."
       },
       "statistics": {
         "ahTitle": "Alte Herren",
