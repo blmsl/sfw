@@ -1,29 +1,23 @@
-<div fxLayout="row"
-     fxLayoutWrap="wrap">
-  <div fxFlex="100">
-    <mat-card>
-      <mat-card-title>
-        <mat-toolbar-row>
-          <mat-icon>list</mat-icon>
-          {{'general.menu.article.main' | translate}}
-          <span class="spacer"></span>
-          <a mat-raised-button
-             [routerLink]="['/articles/create']"
-             color="primary">{{'general.articles.list.addArticle' | translate}}
-          </a>
-        </mat-toolbar-row>
+<mat-card>
+  <mat-card-title>
+    <mat-toolbar-row>
+      <mat-icon>list</mat-icon>
+      {{'general.menu.article.main' | translate}}
+      <span class="spacer"></span>
+      <button mat-raised-button
+         [routerLink]="['/articles/create']"
+         color="primary">
+        {{'general.articles.list.addArticle' | translate}}
+      </button>
+    </mat-toolbar-row>
 
-      </mat-card-title>
-      <mat-card-subtitle></mat-card-subtitle>
-      <mat-card-content>
-        <article-list
-          [categories]="categories$ | async"
-          [users]="users$ | async"
-          [articles]="articles$ | async"
-          (remove)="removeArticle($event)"
-          (update)="updateArticle($event)">
-        </article-list>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>
+  </mat-card-title>
+  <mat-card-content>
+    <article-list [categories]="categories$ | async"
+                  [users]="users$ | async"
+                  [articles]="articles$ | async"
+                  (remove)="removeArticle($event)"
+                  (update)="updateArticle($event)">
+    </article-list>
+  </mat-card-content>
+</mat-card>

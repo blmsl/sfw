@@ -31,7 +31,8 @@
           <div style="padding: 10px 20px;">
             <h4>Ready to publish your post?</h4>
 
-            <mat-radio-group class="radio-group" formControlName="status">
+            <mat-radio-group class="radio-group"
+                             formControlName="status">
               <mat-radio-button (click)="changeStatus(publication.value)"
                                 class="radio-button"
                                 *ngFor="let publication of publicationOptions"
@@ -57,7 +58,7 @@
                    mode="over"
                    fxFlex="60"
                    opened="false">
-        <article-edit-sidebar (remove)="remove()"
+        <!--<article-edit-sidebar (remove)="remove()"
                               [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
                               [categories]="categories$ | async"
                               [locations]="locations$ | async"
@@ -66,14 +67,14 @@
                               [teams]="teams$ | async"
                               [notifications]="notifications"
                               [form]="form">
-        </article-edit-sidebar>
+        </article-edit-sidebar>-->
       </mat-sidenav>
     </div>
   </div>
 
   <sfw-editor name="text"
              formControlName="text"
-             [height]="'200px'"
+             [height]="'75vh'"
              [mode]="'editor'"
              [options]="options"
              required

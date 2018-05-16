@@ -9,14 +9,14 @@ import { IPublication } from './publication.interface';
 
 export interface IArticle {
 
-  id?: string;
+  id: string;
   title: string;
   subTitle?: string;
 
   postImage?: string;
   postURL?: string;
 
-  text: string;
+  text?: string;
 
   articleDate?: string;
 
@@ -43,16 +43,16 @@ export interface IArticle {
     }[];
   }[];
 
-  meta: {
-    main: {
+  meta?: {
+    main?: {
       description: string;
       title: string;
     },
-    facebook: {
+    facebook?: {
       description: string;
       title: string;
     },
-    twitter: {
+    twitter?: {
       description: string;
       title: string;
     }

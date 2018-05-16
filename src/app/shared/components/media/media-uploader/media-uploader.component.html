@@ -26,8 +26,6 @@
 
   <mat-card-content>
 
-    <pre>{{uploaderOptions | json}}</pre>
-
     <img mat-card-image
          style="padding-bottom: 25px"
          *ngIf="currentImage && uploaderOptions.queueLimit === 1"
@@ -94,7 +92,7 @@
     <div fxLayout="row">
 
       <mat-list fxFlex="100"
-                *ngIf="uploaderConfig.showQueue">
+                *ngIf="uploaderConfig.showQueue && currentUploads.length > 0">
         <h3 matSubheader>{{'general.media.uploader.queue' | translate}}</h3>
 
         <mat-list-item>

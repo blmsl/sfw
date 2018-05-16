@@ -1,9 +1,13 @@
-<article-list-filter *ngIf="users"
-                     [users]="users">
-</article-list-filter>
+<div fxLayout="direction"
+     fxLayoutAlign="center center" style="margin-bottom: 25px;">
+  <article-list-filter fxFlex.gt-sm="80"
+                       fxFlex="100"
+                       [users]="users">
+  </article-list-filter>
+</div>
 
 <div fxLayout="direction"
-     fxLayoutAlign="center center">
+     fxLayoutAlign="center center" *ngIf="articles && categories && users; else loadingTemplate">
 
   <div fxFlex.gt-sm="80"
        fxFlex="100"
@@ -14,7 +18,7 @@
        scrollable>
 
     <mat-list>
-      <mat-list-item *ngFor="let article of paginationService.data | async">
+      <mat-list-item *ngFor="let article of articles">
         <span matLine>
           <h1>{{article.title}}</h1>
         </span>
@@ -29,14 +33,9 @@
         <hr style="margin: 25px 0" matLine/>
         <div style="height: 100px;" matLine></div>
       </mat-list-item>
-
     </mat-list>
 
-    <p *ngIf="paginationService.done | async" style="text-align: center">
-      {{'general.articles.list.noResult' | translate}}
-    </p>
-
-    <loading-indicator *ngIf="paginationService.loading | async"></loading-indicator>
+    <p *ngIf="articles.length === 0" style="text-align: center">{{'general.articles.list.noResult' | translate}}</p>
 
   </div>
 </div>

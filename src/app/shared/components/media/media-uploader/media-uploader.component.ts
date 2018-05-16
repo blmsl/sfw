@@ -33,6 +33,7 @@ export class MediaUploaderComponent implements OnInit {
   public currentUploads: Upload[] = [];
   public isHovering: boolean;
   public canUpload: boolean = true;
+  public env;
 
   constructor(public snackBar: MatSnackBar,
               private alertService: AlertService,

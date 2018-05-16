@@ -1,10 +1,10 @@
-<div fxLayout="row"
+<div fxLayout.gt-sm="row"
+     fxLayout="column"
+     fxLayoutGap="15px"
      [formGroup]="form"
-     *ngIf="users"
-     fxLayoutWrap="wrap">
+     *ngIf="users">
 
-  <mat-form-field fxFlex.gt-sm="10"
-                  fxFlex="100">
+  <mat-form-field fxFlex.gt-sm="100">
     <mat-select placeholder="{{ 'general.articles.list.allStatus' | translate}}"
                 formControlName="status">
       <mat-option [value]=""
@@ -17,9 +17,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlexOffset.gt-sm="3"
-                  fxFlex.gt-sm="10"
-                  fxFlex="100">
+  <mat-form-field fxFlex="30">
     <mat-select placeholder="{{ 'general.articles.list.allAuthors' | translate}}"
                 formControlName="author">
       <mat-option [value]=""
@@ -33,9 +31,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlexOffset.gt-sm="3"
-                  fxFlex.gt-sm="10"
-                  fxFlex="100">
+  <mat-form-field fxFlex="100">
     <mat-select placeholder="{{ 'general.articles.list.allTags' | translate}}"
                 formControlName="tags">
       <mat-option [value]=""
@@ -48,9 +44,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlexOffset.gt-sm="50"
-                  fxFlex.gt-sm="14"
-                  fxFlex="100">
+  <mat-form-field fxFlex="100">
     <mat-select formControlName="sorting">
       <mat-option value="-">{{ 'general.articles.list.sortDateDesc' | translate}}</mat-option>
       <mat-option value="">{{ 'general.articles.list.sortDateAsc' | translate}}</mat-option>

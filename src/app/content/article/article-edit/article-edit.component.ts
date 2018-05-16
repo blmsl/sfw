@@ -14,7 +14,6 @@ import { ITeam } from '../../../shared/interfaces/team/team.interface';
 import { SeasonService } from '../../../shared/services/season/season.service';
 import { ISeason } from '../../../shared/interfaces/season.interface';
 import { IMatch } from '../../../shared/interfaces/match.interface';
-import { MatchService } from '../../../shared/services/match/match.service';
 import { ArticleService } from '../../../shared/services/article/article.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { UserService } from '../../../shared/services/user/user.service';
@@ -60,15 +59,15 @@ export class ArticleEditComponent implements OnInit {
   ];
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private articleService: ArticleService,
-    private categoryService: CategoryService,
-    private categoryTypeService: CategoryTypeService,
-    private locationService: LocationService,
-    private userService: UserService,
-    private seasonService: SeasonService,
-    private teamService: TeamService,
-    private fb: FormBuilder) {
+              private router: Router,
+              private articleService: ArticleService,
+              private categoryService: CategoryService,
+              private categoryTypeService: CategoryTypeService,
+              private locationService: LocationService,
+              private userService: UserService,
+              private seasonService: SeasonService,
+              private teamService: TeamService,
+              private fb: FormBuilder) {
     this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
     this.locations$ = locationService.locations$;
@@ -115,26 +114,26 @@ export class ArticleEditComponent implements OnInit {
   initMetaData(): FormGroup {
     return this.fb.group({
       main: this.fb.group({
-        title: this.article.meta.main.title,
-        description: this.article.meta.main.description
+        title: this.article.meta && this.article.meta.main ? this.article.meta.main.title : '',
+        description: this.article.meta && this.article.meta.main ? this.article.meta.main.description  : '',
       }),
       facebook: this.fb.group({
-        title: this.article.meta.facebook.title,
-        description: this.article.meta.facebook.description
+        title: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.title : '',
+        description: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.description : '',
       }),
       twitter: this.fb.group({
-        title: this.article.meta.twitter.title,
-        description: this.article.meta.twitter.description
+        title: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter : '',
+        description: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.description : '',
       })
     });
   }
 
   initPublication(): FormGroup {
     return this.fb.group({
-      by: this.article.publication.from,
-      date: this.article.publication.date,
-      time: this.article.publication.time,
-      status: this.article.publication.status
+      by: this.article.publication ? this.article.publication.from : null,
+      date: this.article.publication ? this.article.publication.date : '',
+      time: this.article.publication ? this.article.publication.time : '',
+      status: this.article.publication ? this.article.publication.status : 0
     });
   }
 
