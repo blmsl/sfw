@@ -13,6 +13,8 @@ export class IMediaItem {
     name?: string;
   };
 
+  path?: string;
+
   description?: string;
   fileCredits?: string;
   isExternal?: boolean;

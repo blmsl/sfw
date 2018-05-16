@@ -5,12 +5,12 @@ import {
   Input,
   OnInit,
   Output
-}                        from '@angular/core';
-import { ICategory }     from '../../../shared/interfaces/category.interface';
+} from '@angular/core';
+import { ICategory } from '../../../shared/interfaces/category.interface';
 import {
   FormBuilder,
   FormGroup
-}                        from '@angular/forms';
+} from '@angular/forms';
 import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
 
 @Component({
@@ -26,7 +26,7 @@ export class CategoryListComponent implements OnInit {
   @Output() update: EventEmitter<any> = new EventEmitter(false);
 
   public form: FormGroup;
-  public itemsPerPageOptions = [ 5, 10, 25, 50, 100 ];
+  public itemsPerPageOptions = [5, 10, 25, 50, 100];
 
   constructor(private fb: FormBuilder) {
   }

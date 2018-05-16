@@ -19,7 +19,7 @@ export class MediaUploaderService {
   public options: IUploaderOptions;
 
   constructor(private authService: AuthService,
-              private storage: AngularFireStorage) {
+    private storage: AngularFireStorage) {
   }
 
   public upload(upload: Upload, options: IUploaderOptions): AngularFireUploadTask {
@@ -29,15 +29,18 @@ export class MediaUploaderService {
 
     if (this._isValidFile(upload, arrayOfFilters, this.options)) {
 
+      const path = options.path + '/' + options.itemId + '/' + options.id;
+
       const metaData: any = {
         itemId: options.itemId,
         name: upload.file.name,
         size: upload.file.size,
-        type: upload.file.type
+        type: upload.file.type,
+        path: path
       };
 
       // Use the other upload method from firebase to work with promises
-      return this.storage.ref(options.path + '/' + options.itemId + '/' + options.id).put(upload.file, metaData);
+      return this.storage.ref(path).put(upload.file, metaData);
 
     } else {
       const filter: any = arrayOfFilters[this._failFilterIndex];

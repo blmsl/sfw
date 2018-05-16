@@ -14,9 +14,9 @@ export class MediaGalleryFormComponent {
   public isLoading: boolean = false;
 
   constructor(private fb: FormBuilder,
-              private mediaGalleryService: MediaGalleryService,
-              public dialogRef: MatDialogRef<MediaGalleryFormComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+    private mediaGalleryService: MediaGalleryService,
+    public dialogRef: MatDialogRef<MediaGalleryFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
 
@@ -38,17 +38,17 @@ export class MediaGalleryFormComponent {
     this.isLoading = true;
     this.mediaGalleryService.createMediaGallery(this.form.getRawValue())
       .then(() => {
-          this.form.reset();
-          this.closeDialog();
-          this.showStatusMessage('success', '');
-          this.isLoading = false;
-        }
+        this.form.reset();
+        this.closeDialog();
+        this.showStatusMessage('success', '');
+        this.isLoading = false;
+      }
       )
       .catch((error: any) => {
-          this.closeDialog();
-          this.showStatusMessage('error', error.message);
-          this.isLoading = false;
-        }
+        this.closeDialog();
+        this.showStatusMessage('error', error.message);
+        this.isLoading = false;
+      }
       )
   }
 

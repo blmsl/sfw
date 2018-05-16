@@ -1,8 +1,8 @@
-import { Component }     from '@angular/core';
+import { Component } from '@angular/core';
 import { MemberService } from '../../../shared/services/member/member.service';
-import { IMember }       from '../../../shared/interfaces/member/member.interface';
-import { Observable }    from 'rxjs';
-import { AlertService }  from '../../../shared/services/alert/alert.service';
+import { IMember } from '../../../shared/interfaces/member/member.interface';
+import { Observable } from 'rxjs';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'members',
@@ -13,7 +13,7 @@ export class MembersComponent {
   public members$: Observable<IMember[]>;
 
   constructor(private memberService: MemberService,
-              private alertService: AlertService) {
+    private alertService: AlertService) {
     this.members$ = memberService.members$;
   }
 

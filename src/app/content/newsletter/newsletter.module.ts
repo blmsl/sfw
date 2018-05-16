@@ -1,5 +1,5 @@
-import { NgModule }                from '@angular/core';
-import { CommonModule }            from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NewsletterListComponent } from './newsletter-list/newsletter-list.component';
 import { newsletterRoutingModule } from './newsletter-routing.module';
 import {

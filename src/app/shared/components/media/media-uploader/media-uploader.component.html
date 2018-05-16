@@ -26,10 +26,12 @@
 
   <mat-card-content>
 
+    <pre>{{uploaderOptions | json}}</pre>
+
     <img mat-card-image
          style="padding-bottom: 25px"
-         *ngIf="uploaderOptions.queueLimit === 1 && isImage(currentImage.file)"
-         [src]="currentImage.downloadURL" />
+         *ngIf="currentImage && uploaderOptions.queueLimit === 1"
+         [src]="currentImage" />
 
     <div class="dropZone"
          dropZone
@@ -109,7 +111,7 @@
           <div fxFlex="15">{{upload.file.name}}</div>
 
           <div fxFlex="19" fxFlexOffset="1">
-            <a *ngIf="upload.downloadURL | async as url"
+            <a *ngIf="upload.downloadURL"
                target="_blank"
                [href]="url">
               {{'general.media.upload.preview' | translate }}

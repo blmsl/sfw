@@ -30,7 +30,7 @@ export class FullcalendarComponent implements OnInit {
     displayEventEnd: true,
     editable: false,
     events: null,
-    eventClick: function (event) {
+    eventClick: function(event) {
       // opens events in a popup window
       // window.open(event.url, 'gcalevent', 'width=700,height=600');
       return false;
@@ -78,7 +78,7 @@ export class FullcalendarComponent implements OnInit {
       displayEventEnd: true,
       editable: false,
       events: this.events,
-      eventClick: function (event) {
+      eventClick: function(event) {
         // opens events in a popup window
         // window.open(event.url, 'gcalevent', 'width=700,height=600');
         return false;

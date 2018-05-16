@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import {
   Observable,
   of
-}                     from 'rxjs';
+} from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                     from 'angularfire2/firestore';
-import { IMember }    from '../../interfaces/member/member.interface';
+} from 'angularfire2/firestore';
+import { IMember } from '../../interfaces/member/member.interface';
 import { IMediaItem } from '../../interfaces/media/media-item.interface';
 
 @Injectable()
@@ -68,8 +68,8 @@ export class MemberService {
       'Sagittarius',
       'Capricorn'
     ];
-    const lastDay = [ 19, 18, 20, 20, 21, 21, 22, 22, 21, 22, 21, 20, 19 ];
-    return (day > lastDay[ month ]) ? zodiac[ month * 1 + 1 ] : zodiac[ month ];
+    const lastDay = [19, 18, 20, 20, 21, 21, 22, 22, 21, 22, 21, 20, 19];
+    return (day > lastDay[month]) ? zodiac[month * 1 + 1] : zodiac[month];
   }
 
   calculateAge(birthday) {

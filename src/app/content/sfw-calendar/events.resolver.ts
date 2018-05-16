@@ -14,7 +14,7 @@ export class EventsResolver implements Resolve<ICalendarEvent[]> {
   public events$: any[] = [];
 
   constructor(private memberService: MemberService,
-              private calendarService: CalendarService) {
+    private calendarService: CalendarService) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICalendarEvent[]> {

@@ -2,36 +2,36 @@ import {
   Component,
   HostListener,
   OnInit
-}                           from '@angular/core';
-import { MemberService }    from '../../../shared/services/member/member.service';
-import { IMember }          from '../../../shared/interfaces/member/member.interface';
+} from '@angular/core';
+import { MemberService } from '../../../shared/services/member/member.service';
+import { IMember } from '../../../shared/interfaces/member/member.interface';
 import {
   ActivatedRoute,
   Router
-}                           from '@angular/router';
+} from '@angular/router';
 import {
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
   Validators
-}                           from '@angular/forms';
-import { Observable }       from 'rxjs';
-import { IProfile }         from '../../../shared/interfaces/member/profile.interface';
-import { IInterview }       from '../../../shared/interfaces/member/interview.interface';
-import { IOpinion }         from '../../../shared/interfaces/member/opinion.interface';
+} from '@angular/forms';
+import { Observable } from 'rxjs';
+import { IProfile } from '../../../shared/interfaces/member/profile.interface';
+import { IInterview } from '../../../shared/interfaces/member/interview.interface';
+import { IOpinion } from '../../../shared/interfaces/member/opinion.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                           from 'rxjs/operators';
+} from 'rxjs/operators';
 import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
-import { IUploaderConfig }  from '../../../shared/interfaces/media/uploader-config.interface';
-import { AlertService }     from '../../../shared/services/alert/alert.service';
+import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'member-edit',
   templateUrl: './member-edit.component.html',
-  styleUrls: [ './member-edit.component.scss' ]
+  styleUrls: ['./member-edit.component.scss']
 })
 export class MemberEditComponent implements OnInit {
 
@@ -61,12 +61,12 @@ export class MemberEditComponent implements OnInit {
   };
 
   constructor(public route: ActivatedRoute,
-              //private clubService: ClubService,
-              //private teamService: TeamService,
-              private fb: FormBuilder,
-              private alertService: AlertService,
-              public memberService: MemberService,
-              private router: Router) {
+    //private clubService: ClubService,
+    //private teamService: TeamService,
+    private fb: FormBuilder,
+    private alertService: AlertService,
+    public memberService: MemberService,
+    private router: Router) {
     //this.clubs$ = clubService.clubs$;
     this.members$ = memberService.members$;
     //this.teams$ = this.teamService.teams$;
@@ -199,7 +199,7 @@ export class MemberEditComponent implements OnInit {
     const formArray = [];
     if (this.member.assignedInterviews) {
       for (let i = 0; i < this.member.assignedInterviews.length; i++) {
-        formArray.push(this.initInterview(this.member.assignedInterviews[ i ]));
+        formArray.push(this.initInterview(this.member.assignedInterviews[i]));
       }
     }
     return this.fb.array(formArray);
@@ -207,12 +207,12 @@ export class MemberEditComponent implements OnInit {
 
   initInterview(interview: IInterview): FormGroup {
     return this.fb.group({
-      assignedArticleId: [ interview.assignedArticleId ? interview.assignedArticleId : '', [ Validators.required, Validators.maxLength(100) ] ]
+      assignedArticleId: [interview.assignedArticleId ? interview.assignedArticleId : '', [Validators.required, Validators.maxLength(100)]]
     });
   }
 
   addInterview(): void {
-    const control = <FormArray>this.form.controls[ 'interviews' ];
+    const control = <FormArray>this.form.controls['interviews'];
     const interview: IInterview = {
       assignedArticleId: ''
     };
@@ -221,7 +221,7 @@ export class MemberEditComponent implements OnInit {
   }
 
   removeInterview($event: number): void {
-    const control = <FormArray>this.form.controls[ 'interviews' ];
+    const control = <FormArray>this.form.controls['interviews'];
     control.removeAt($event);
   }
 
@@ -232,7 +232,7 @@ export class MemberEditComponent implements OnInit {
     const formArray = [];
     if (this.member.opinions) {
       for (let i = 0; i < this.member.opinions.length; i++) {
-        formArray.push(this.initOpinion(this.member.opinions[ i ]));
+        formArray.push(this.initOpinion(this.member.opinions[i]));
       }
     }
     return this.fb.array(formArray);
@@ -240,36 +240,36 @@ export class MemberEditComponent implements OnInit {
 
   initOpinion(opinion: IOpinion): FormGroup {
     return this.fb.group({
-      type: [ opinion ? opinion.type : 'select' ],
+      type: [opinion ? opinion.type : 'select'],
       name: this.initNameModel(opinion),
       assignedMember: this.initAssignedMemberModel(opinion),
-      comment: [ opinion ? opinion.comment : '', [ Validators.required ] ]
+      comment: [opinion ? opinion.comment : '', [Validators.required]]
     });
   }
 
   // Das sagen die anderen
   toggleMemberLookup($event: { id: number, type: string }) {
-    const ctrl: FormControl = (<any>this.form).controls[ 'opinions' ][ 'controls' ][ $event.id ].controls[ 'type' ];
+    const ctrl: FormControl = (<any>this.form).controls['opinions']['controls'][$event.id].controls['type'];
     ctrl.setValue($event.type);
   }
 
   initNameModel(opinion: IOpinion) {
     return this.fb.group({
-      firstName: [ opinion.name.firstName ],
-      lastName: [ opinion.name.lastName ]
+      firstName: [opinion.name.firstName],
+      lastName: [opinion.name.lastName]
       // , [Validators.required, Validators.minLength(5), Validators.maxLength(100)]
     });
   }
 
   initAssignedMemberModel(opinion: IOpinion): FormGroup {
     return this.fb.group({
-      assignedMember: [ opinion.assignedMember ]
+      assignedMember: [opinion.assignedMember]
       // , [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ]
     });
   }
 
   addOpinion(): void {
-    const control = <FormArray>this.form.controls[ 'opinions' ];
+    const control = <FormArray>this.form.controls['opinions'];
     const opinion: IOpinion = {
       type: 'select',
       name: {
@@ -284,7 +284,7 @@ export class MemberEditComponent implements OnInit {
   }
 
   removeOpinion($event: number): void {
-    const control = <FormArray>this.form.controls[ 'opinions' ];
+    const control = <FormArray>this.form.controls['opinions'];
     control.removeAt($event);
   }
 
@@ -293,7 +293,7 @@ export class MemberEditComponent implements OnInit {
     const formArray = [];
     if (this.member.profile) {
       for (let i = 0; i < this.member.profile.length; i++) {
-        formArray.push(this.initProfileEntry(this.member.profile[ i ]));
+        formArray.push(this.initProfileEntry(this.member.profile[i]));
       }
     }
     return this.fb.array(formArray);
@@ -301,13 +301,13 @@ export class MemberEditComponent implements OnInit {
 
   initProfileEntry(profile: IProfile): FormGroup {
     return this.fb.group({
-      entry: [ profile ? profile.entry : '', [ Validators.required, Validators.maxLength(100) ] ],
-      value: [ profile ? profile.value : '', [ Validators.required, Validators.maxLength(100) ] ]
+      entry: [profile ? profile.entry : '', [Validators.required, Validators.maxLength(100)]],
+      value: [profile ? profile.value : '', [Validators.required, Validators.maxLength(100)]]
     });
   }
 
   addProfileEntry(): void {
-    const control = <FormArray>this.form.controls[ 'profile' ];
+    const control = <FormArray>this.form.controls['profile'];
     const profile: IProfile = {
       entry: '',
       value: ''
@@ -317,7 +317,7 @@ export class MemberEditComponent implements OnInit {
   }
 
   removeProfileEntry($event: number): void {
-    const control = <FormArray>this.form.controls[ 'profile' ];
+    const control = <FormArray>this.form.controls['profile'];
     control.removeAt($event);
   }
 
@@ -351,6 +351,6 @@ export class MemberEditComponent implements OnInit {
   }
 
   redirectToList() {
-    this.router.navigate([ '/members' ]).then();
+    this.router.navigate(['/members']).then();
   }
 }

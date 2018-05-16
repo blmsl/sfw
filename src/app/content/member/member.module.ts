@@ -31,12 +31,12 @@ import { MemberFunctionsComponent } from './member-functions/member-functions.co
 import { ClubService } from '../../shared/services/club/club.service';
 import { TeamService } from '../../shared/services/team/team.service';
 import { MemberDetailOpinionsComponent } from './member-detail/member-detail-opinions/member-detail-opinions.component';
-import { CategoryService }               from '../../shared/services/category/category.service';
-import { CategoryTypeService }           from '../../shared/services/category-type/category-type.service';
-import { IsEmptyPipe }                   from '../../shared/pipes/is-empty.pipe';
-import { BirthdayModule }                from '../../shared/components/birthday/birthday.module';
-import { MemberOfTheWeekService }        from '../../shared/services/member/member-of-the-week.service';
-import { MediaModule }                   from '../../shared/components/media/media.module';
+import { CategoryService } from '../../shared/services/category/category.service';
+import { CategoryTypeService } from '../../shared/services/category-type/category-type.service';
+import { IsEmptyPipe } from '../../shared/pipes/is-empty.pipe';
+import { BirthdayModule } from '../../shared/components/birthday/birthday.module';
+import { MemberOfTheWeekService } from '../../shared/services/member/member-of-the-week.service';
+import { MediaModule } from '../../shared/components/media/media.module';
 import { MediaItemService } from '../../shared/services/media/media-item.service';
 
 @NgModule({

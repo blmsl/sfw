@@ -1,25 +1,31 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
-import { Upload } from '../../../services/media/upload.class';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+}                               from '@angular/core';
+import { IUploaderOptions }     from '../../../interfaces/media/uploader-options.interface';
+import { Upload }               from '../../../services/media/upload.class';
 import { MediaUploaderService } from '../../../services/media/media-uploader.service';
-import { MatSnackBar } from '@angular/material';
-import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { MediaItemService } from '../../../services/media/media-item.service';
-import { IMediaItem } from '../../../interfaces/media/media-item.interface';
-import { AlertService } from '../../../services/alert/alert.service';
-import { FileType } from '../../../interfaces/media/file-type.interface';
+import { MatSnackBar }          from '@angular/material';
+import { IUploaderConfig }      from '../../../interfaces/media/uploader-config.interface';
+import { AngularFirestore }     from 'angularfire2/firestore';
+import { MediaItemService }     from '../../../services/media/media-item.service';
+import { IMediaItem }           from '../../../interfaces/media/media-item.interface';
+import { AlertService }         from '../../../services/alert/alert.service';
+import { FileType }             from '../../../interfaces/media/file-type.interface';
 
 @Component({
   selector: 'media-uploader',
   templateUrl: 'media-uploader.component.html',
-  styleUrls: ['media-uploader.component.scss']
+  styleUrls: [ 'media-uploader.component.scss' ]
 })
 export class MediaUploaderComponent implements OnInit {
 
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
-  @Input() currentImage: IMediaItem | null;
+  @Input() currentImage: string | null;
 
   @Output() uploadCompleted: EventEmitter<any> = new EventEmitter<any>(false);
   @Output() unsplashSidebar: EventEmitter<void> = new EventEmitter<void>(false);
@@ -58,7 +64,7 @@ export class MediaUploaderComponent implements OnInit {
     // const reader = new FileReader();
 
     for (let i = 0; i < fileArray.length; i++) {
-      const fileUpload = new Upload(fileArray[i]);
+      const fileUpload = new Upload(fileArray[ i ]);
       this.currentUploads.push(fileUpload);
       /*  Preview
        reader.onload = (event: any) => {
@@ -111,20 +117,23 @@ export class MediaUploaderComponent implements OnInit {
         }
       })
       .then((res: any) => {
+
         fileUpload.downloadURL = res.downloadURL;
-        const mediaItem = {
+        const mediaItem: IMediaItem = {
           id: id,
           file: {
             size: fileUpload.file.size,
             name: fileUpload.file.name,
-            type: fileUpload.file.type
+            type: fileUpload.file.type,
           },
           itemId: this.uploaderOptions.itemId,
-          downloadURL: res.downloadURL
+          downloadURL: res.downloadURL,
+          path: res.metadata.fullPath
         };
         return mediaItem;
       })
       .then((mediaItem: IMediaItem) => {
+        console.log(mediaItem);
         return this.mediaItemService.createMediaItem(mediaItem);
       })
       .then(() => {
@@ -156,7 +165,7 @@ export class MediaUploaderComponent implements OnInit {
     const promises: Promise<any>[] = [];
 
     this.currentUploads.forEach((fileUpload: Upload) => {
-      if (this.currentUploads.length > 1) {
+      if (this.currentUploads.length >= 1 && !this.uploaderOptions.id) {
         this.uploaderOptions.id = this.afs.createId();
       }
       promises.push(this.upload(fileUpload, this.uploaderOptions.id));
@@ -197,11 +206,11 @@ export class MediaUploaderComponent implements OnInit {
     this.currentUploads.splice(index, 1);
   }
 
-  isImage(file: any){
+  isImage(file: any) {
     return FileType.getMimeClass(file) === 'image';
   }
 
-  removeMediaItem(mediaItem: IMediaItem){
+  removeMediaItem(mediaItem: IMediaItem) {
     console.log(mediaItem);
   }
 }

@@ -5,5 +5,12 @@
 }
 
 .media-grid figure {
-  min-height: 150px;
+  background-color: transparent;
+  padding: 0 15px;
+}
+
+.media-grid img {
+  border-bottom: 1px dashed #cecece;
+  min-height: 100px;
+  max-height: 300px;
 }

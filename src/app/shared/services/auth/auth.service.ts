@@ -110,7 +110,7 @@ export class AuthService implements OnDestroy {
 
   public getCreation(): ICreation {
     return {
-      at: new Date(),
+      at: firebase.firestore.FieldValue.serverTimestamp(),
       from: this.afAuth.auth.currentUser.uid
     };
   }

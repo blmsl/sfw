@@ -1061,6 +1061,7 @@
         "allSponsorTypes": "Alle Sponsoren anzeigen",
         "createSponsor": "Sponsor hinzufügen",
         "delete": "Löschen",
+        "deleted": "Der Sponsor und die angehängten Dateien wurden gelöscht",
         "edit": "Editieren",
         "editSponsorTitle": "Sponsor editieren",
         "filter": "filtern",

@@ -1,12 +1,12 @@
 import {
   Injectable,
-}                                        from '@angular/core';
-import { NavigationStart, Router }       from '@angular/router';
+} from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 import {
   Observable,
   Subject
-}                                        from 'rxjs';
-import { SnackbarComponent }             from '../../components/snackbar/snackbar.component';
+} from 'rxjs';
+import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
 import {
   MatSnackBar,
   MatSnackBarConfig,
@@ -21,7 +21,7 @@ export class AlertService {
   private keepAfterNavigationChange = false;
 
   constructor(private _router: Router,
-              public snackBar: MatSnackBar) {
+    public snackBar: MatSnackBar) {
     // clear alert message on route change
     _router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
@@ -46,7 +46,7 @@ export class AlertService {
     this.subject.next({ type: 'danger', text: message });
   }
 
-  showSnackBar(status: string, message: string, duration?: number, horizontalPosition?: MatSnackBarHorizontalPosition, verticalPosition?: MatSnackBarVerticalPosition){
+  showSnackBar(status: string, message: string, duration?: number, horizontalPosition?: MatSnackBarHorizontalPosition, verticalPosition?: MatSnackBarVerticalPosition) {
     const config: MatSnackBarConfig = {
       data: {
         status: status,

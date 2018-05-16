@@ -23,6 +23,9 @@ export const newUserCreation = user.userCreated;
 // import * as shortener from './url-shortener/index';
 // export const urlShortener = shortener.shortener;
 
+import * as media from './media';
+export const removeMediaItemCron = media.deleteMediaCron;
+
 import * as member from './member/index';
 export const birthdayReminder = member.birthdayReminderCron;
 export const memberOfTheWeekCron = member.memberOfTheWeekCron;
