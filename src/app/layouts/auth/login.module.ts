@@ -22,6 +22,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AlertService } from '../../shared/services/alert/alert.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { TermsOfUseComponent } from '../../shared/components/terms-of-use/terms-of-use.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ForgotPasswordComponent,
     LoginComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    TermsOfUseComponent
   ],
   imports: [
     CommonModule,
