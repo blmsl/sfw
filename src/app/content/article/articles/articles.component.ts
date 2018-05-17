@@ -21,9 +21,9 @@ export class ArticlesComponent {
   public users$: Observable<IUser[]>;
 
   constructor(private articleService: ArticleService,
-              private userService: UserService,
-              private alertService: AlertService,
-              private categoryService: CategoryService) {
+    private userService: UserService,
+    private alertService: AlertService,
+    private categoryService: CategoryService) {
     this.users$ = userService.users$;
     this.articles$ = articleService.articles$;
     this.categories$ = categoryService.categories$;

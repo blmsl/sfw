@@ -1,14 +1,14 @@
-import { Injectable }  from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Observable,
   of
-}                      from 'rxjs';
+} from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                      from 'angularfire2/firestore';
+} from 'angularfire2/firestore';
 import { AuthService } from '../auth/auth.service';
-import { ISponsor }    from '../../interfaces/sponsor.interface';
+import { ISponsor } from '../../interfaces/sponsor.interface';
 
 @Injectable()
 export class SponsorService {
@@ -18,7 +18,7 @@ export class SponsorService {
   sponsors$: Observable<ISponsor[]>;
 
   constructor(private afs: AngularFirestore,
-              private authService: AuthService) {
+    private authService: AuthService) {
     this.collectionRef = this.afs.collection<ISponsor>(this.path);
     this.sponsors$ = this.collectionRef.valueChanges();
   }

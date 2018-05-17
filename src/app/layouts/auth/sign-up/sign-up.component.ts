@@ -1,9 +1,20 @@
-import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUser } from '../../../shared/interfaces/user/user.interface';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 import { AlertComponent } from '../../../shared/directives/alert/alert.component';
+import { MatDialog } from '@angular/material';
+import { TermsOfUseComponent } from '../../../shared/components/terms-of-use/terms-of-use.component';
 
 @Component({
   selector: 'sign-up',
@@ -26,9 +37,9 @@ export class SignUpComponent implements OnInit {
   }) signUpAlertContainer: ViewContainerRef;
 
   constructor(private fb: FormBuilder,
-    private authService: AuthService,
-    private alertService: AlertService,
-    private cfr: ComponentFactoryResolver) {
+              private authService: AuthService,
+              private alertService: AlertService,
+              private cfr: ComponentFactoryResolver) {
   }
 
   ngOnInit() {
@@ -46,8 +57,8 @@ export class SignUpComponent implements OnInit {
           Validators.minLength(this.passwordMinLength),
           Validators.maxLength(this.passwordMaxLength)]],
       }, {
-          validator: this.passwordConfirming
-        }),
+        validator: this.passwordConfirming
+      }),
       agree: [false, [Validators.required, this.validateAgreement]],
     });
   }

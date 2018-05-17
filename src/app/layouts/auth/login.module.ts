@@ -5,7 +5,15 @@ import { UnAuthGuard } from '../../shared/guards/unauth.guard';
 import { AlertComponent } from '../../shared/directives/alert/alert.component';
 import { AuthService } from '../../shared/services/auth/auth.service';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatCardModule, MatCheckboxModule, MatIconModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule, MatDialogModule,
+  MatIconModule,
+  MatInputModule,
+  MatProgressSpinnerModule,
+  MatSnackBarModule
+} from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -29,9 +37,11 @@ import { TranslateModule } from '@ngx-translate/core';
     MatCardModule,
     MatCheckboxModule,
     MatInputModule,
+    MatDialogModule,
     MatCheckboxModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     RouterModule.forChild(loginRoutes),

@@ -5,12 +5,12 @@ import {
   OnInit,
   Output,
   ViewChild
-}                           from '@angular/core';
-import { ISponsor }         from '../../../../shared/interfaces/sponsor.interface';
+} from '@angular/core';
+import { ISponsor } from '../../../../shared/interfaces/sponsor.interface';
 import {
   PerfectScrollbarConfigInterface,
   PerfectScrollbarDirective
-}                           from 'ngx-perfect-scrollbar';
+} from 'ngx-perfect-scrollbar';
 import { MediaItemService } from '../../../../shared/services/media/media-item.service';
 
 const SMALL_WIDTH_BREAKPOINT = 960;
@@ -18,7 +18,7 @@ const SMALL_WIDTH_BREAKPOINT = 960;
 @Component({
   selector: 'sponsor-item',
   templateUrl: './sponsor-item.component.html',
-  styleUrls: [ './sponsor-item.component.scss' ]
+  styleUrls: ['./sponsor-item.component.scss']
 })
 export class SponsorItemComponent implements OnInit {
 

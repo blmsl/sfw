@@ -45,26 +45,26 @@ export class MemberEditOtherOpinionsComponent implements OnInit {
         const selectFieldCtrl = formControl['controls'][i]['controls']['assignedMember'];
 
 
-        if (changes[ i ].type === 'text') {
+        if (changes[i].type === 'text') {
           Object.keys(textFieldCtrl.controls).forEach(key => {
-            textFieldCtrl.controls[ key ].setValidators([ Validators.required, Validators.minLength(3) ]);
+            textFieldCtrl.controls[key].setValidators([Validators.required, Validators.minLength(3)]);
             // textFieldCtrl.controls[ key ].updateValueAndValidity();
           });
 
           Object.keys(selectFieldCtrl.controls).forEach(key => {
-            selectFieldCtrl.controls[ key ].setValidators(null);
+            selectFieldCtrl.controls[key].setValidators(null);
             // selectFieldCtrl.controls[ key ].updateValueAndValidity();
           });
         }
 
-        if (changes[ i ].type === 'select') {
+        if (changes[i].type === 'select') {
           Object.keys(selectFieldCtrl.controls).forEach(key => {
-            selectFieldCtrl.controls[ key ].setValidators([ Validators.required, Validators.minLength(3) ]);
+            selectFieldCtrl.controls[key].setValidators([Validators.required, Validators.minLength(3)]);
             // selectFieldCtrl.controls[ key ].updateValueAndValidity();
           });
 
           Object.keys(textFieldCtrl.controls).forEach(key => {
-            textFieldCtrl.controls[ key ].setValidators(null);
+            textFieldCtrl.controls[key].setValidators(null);
             // textFieldCtrl.controls[ key ].updateValueAndValidity();
           });
         }

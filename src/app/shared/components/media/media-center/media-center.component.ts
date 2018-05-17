@@ -5,16 +5,16 @@ import {
   Input,
   OnDestroy,
   Output
-}                            from '@angular/core';
-import { IUploaderConfig }   from '../../../interfaces/media/uploader-config.interface';
-import { IUploaderOptions }  from '../../../interfaces/media/uploader-options.interface';
-import { MediaItemService }  from '../../../services/media/media-item.service';
-import { IMediaItem }        from '../../../interfaces/media/media-item.interface';
-import { Observable }        from 'rxjs/Rx';
+} from '@angular/core';
+import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
+import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
+import { MediaItemService } from '../../../services/media/media-item.service';
+import { IMediaItem } from '../../../interfaces/media/media-item.interface';
+import { Observable } from 'rxjs/Rx';
 import { SnackbarComponent } from '../../snackbar/snackbar.component';
-import { MatSnackBar }       from '@angular/material';
-import { MediaMatcher }      from '@angular/cdk/layout';
-import { AlertService }      from '../../../services/alert/alert.service';
+import { MatSnackBar } from '@angular/material';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { AlertService } from '../../../services/alert/alert.service';
 
 @Component({
   selector: 'media-center',
@@ -37,10 +37,10 @@ export class MediaCenterComponent implements OnDestroy {
   readonly _mobileQueryListener: () => void;
 
   constructor(private mediaItemService: MediaItemService,
-              private alertService: AlertService,
-              private changeDetectorRef: ChangeDetectorRef,
-              private media: MediaMatcher,
-              public snackBar: MatSnackBar) {
+    private alertService: AlertService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private media: MediaMatcher,
+    public snackBar: MatSnackBar) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);

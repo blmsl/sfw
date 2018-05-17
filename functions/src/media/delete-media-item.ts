@@ -8,7 +8,7 @@ export const deleteMediaItemCron = functions.firestore.document('files/{mediaIte
 
   const storage = admin.storage().bucket(bucketName);
 
-  if(snap && snap.get('path')){
+  if (snap && snap.get('path')) {
     return storage.file(snap.get('path')).delete();
   }
 

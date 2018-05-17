@@ -59,15 +59,15 @@ export class ArticleEditComponent implements OnInit {
   ];
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private articleService: ArticleService,
-              private categoryService: CategoryService,
-              private categoryTypeService: CategoryTypeService,
-              private locationService: LocationService,
-              private userService: UserService,
-              private seasonService: SeasonService,
-              private teamService: TeamService,
-              private fb: FormBuilder) {
+    private router: Router,
+    private articleService: ArticleService,
+    private categoryService: CategoryService,
+    private categoryTypeService: CategoryTypeService,
+    private locationService: LocationService,
+    private userService: UserService,
+    private seasonService: SeasonService,
+    private teamService: TeamService,
+    private fb: FormBuilder) {
     this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
     this.locations$ = locationService.locations$;
@@ -115,7 +115,7 @@ export class ArticleEditComponent implements OnInit {
     return this.fb.group({
       main: this.fb.group({
         title: this.article.meta && this.article.meta.main ? this.article.meta.main.title : '',
-        description: this.article.meta && this.article.meta.main ? this.article.meta.main.description  : '',
+        description: this.article.meta && this.article.meta.main ? this.article.meta.main.description : '',
       }),
       facebook: this.fb.group({
         title: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.title : '',
