@@ -1,18 +1,10 @@
-
-import { of as observableOf, Observable } from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { switchMap } from 'rxjs/operators';
-import {
-  Injectable,
-  OnDestroy
-} from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument
-} from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
-import * as moment from 'moment';
 import { ICreation } from '../../interfaces/creation.interface';
 import { IUser } from '../../interfaces/user/user.interface';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -32,8 +24,8 @@ export class AuthService implements OnDestroy {
   // private authSubscription: ISubscription;
 
   constructor(private afAuth: AngularFireAuth,
-    private db: AngularFireDatabase,
-    private afs: AngularFirestore) {
+              private db: AngularFireDatabase,
+              private afs: AngularFirestore) {
 
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
@@ -43,10 +35,6 @@ export class AuthService implements OnDestroy {
           return observableOf(null);
         }
       }));
-  }
-
-  isLoggedIn() {
-    return this.afAuth.authState.pipe(first()).toPromise();
   }
 
   ngOnDestroy() {
