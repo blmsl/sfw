@@ -37,9 +37,9 @@ export class SignUpComponent implements OnInit {
   }) signUpAlertContainer: ViewContainerRef;
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService,
-              private alertService: AlertService,
-              private cfr: ComponentFactoryResolver) {
+    private authService: AuthService,
+    private alertService: AlertService,
+    private cfr: ComponentFactoryResolver) {
   }
 
   ngOnInit() {
@@ -57,8 +57,8 @@ export class SignUpComponent implements OnInit {
           Validators.minLength(this.passwordMinLength),
           Validators.maxLength(this.passwordMaxLength)]],
       }, {
-        validator: this.passwordConfirming
-      }),
+          validator: this.passwordConfirming
+        }),
       agree: [false, [Validators.required, this.validateAgreement]],
     });
   }

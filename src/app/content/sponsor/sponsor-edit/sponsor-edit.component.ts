@@ -46,12 +46,12 @@ export class SponsorEditComponent implements OnInit {
   public currentImage: string;
 
   constructor(private route: ActivatedRoute,
-              private alertService: AlertService,
-              private fb: FormBuilder,
-              private router: Router,
-              private mediaItemService: MediaItemService,
-              private sponsorService: SponsorService,
-              public categoryService: CategoryService) {
+    private alertService: AlertService,
+    private fb: FormBuilder,
+    private router: Router,
+    private mediaItemService: MediaItemService,
+    private sponsorService: SponsorService,
+    public categoryService: CategoryService) {
     this.categories$ = categoryService.getCategoriesByCategoryType('sponsor.types');
   }
 
