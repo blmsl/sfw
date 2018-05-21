@@ -29,8 +29,15 @@ export const removeMediaItemCron = media.deleteMediaCron;
 import * as member from './member/index';
 export const birthdayReminder = member.birthdayReminderCron;
 export const memberOfTheWeekCron = member.memberOfTheWeekCron;
-export const dfbMemberCron = member.dfbMemberCron;
-export const driveMemberCron = member.driveMemberCron;
+
+export const dfbMemberWriteCron = member.dfbMemberWrite;
+export const dfbMemberDeleteCron = member.dfbMemberDelete;
+export const dfbMemberUpdateCron = member.dfbMemberUpdate;
+
+export const driveMemberWriteCron = member.driveMemberWrite;
+export const driveMemberDeleteCron = member.driveMemberDelete;
+export const driveMemberUpdateCron = member.driveMemberUpdate;
+export const driveDeleteDbCron = member.driveDeleteDb;
 
 // import * as team from './team/index';
 // export const spielplanCron = team.spielplanCron;

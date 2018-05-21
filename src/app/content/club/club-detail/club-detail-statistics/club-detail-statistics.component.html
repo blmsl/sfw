@@ -1,5 +1,5 @@
 <div fxLayout="row"
-     fxLayoutWrap="wrap">
+     >
 
   <div fxFlex.gt-sm="25"
        fxFlex="100">
@@ -9,7 +9,7 @@
       <mat-list-item *ngFor="let memberState of memberStateService.getMemberStates()">
         <div matLine
              fxLayout="row"
-             fxLayoutWrap="wrap">
+             >
           <span fxFlex="60">{{'general.members.clubMemberStates.' + memberState.title | translate}}</span>
           <span fxFlex="40">{{(members | filterBy: ['clubData.assignedClub'] : club.id | filterBy: ['clubData.status'] : memberState.value).length}}</span>
         </div>

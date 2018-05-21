@@ -11,6 +11,6 @@ if (environment.production) {
 }
 
 fireBug().then(() => {
-  platformBrowserDynamic().bootstrapModule(AppBrowserModule).then();
+  platformBrowserDynamic().bootstrapModule(AppBrowserModule).then(() => console.log('Application loaded'));
 });
 googleAnalytics();

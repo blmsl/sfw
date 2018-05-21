@@ -1,14 +1,17 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-export const dfbMemberCron = functions.database.ref('/dfb-members/{userId}').onWrite((change, context) => {
+const db = admin.firestore();
+const memberPath = 'members';
+
+export const dfbMemberWriteCron = functions.database.ref('/dfb-members/{userId}').onWrite((change, context) => {
 
   const data = change.after.val();
 
   if (!data) return true;
 
-  const db = admin.firestore();
-  const memberPath = 'members';
+  console.log(data);
+  console.log('write dfb-member');
 
   return db.collection('clubs')
     .where('title', '==', data.assignedClub)
@@ -53,7 +56,7 @@ export const dfbMemberCron = functions.database.ref('/dfb-members/{userId}').onW
           };
 
           const memberData: any = {
-            isImported: true,
+            dfbImport: true,
             mainData: mainData,
             clubData: {
               assignedClub: clubId
@@ -64,16 +67,36 @@ export const dfbMemberCron = functions.database.ref('/dfb-members/{userId}').onW
             memberData.id = db.collection(memberPath).doc().id;
             memberData.creation = {
               from: 'system',
-              at: new Date()
+              at: admin.database.ServerValue.TIMESTAMP
             };
-            return db.collection(memberPath).doc(memberData.id).set(memberData);
+            return db.collection(memberPath).doc(data.firstName + '-' + data.lastName + '-' + birthDate).set(memberData);
           }
           else {
+            console.log('member is already here');
+            console.log(userSnapshot.docs[0].id);
             const doc = userSnapshot.docs[0];
             return doc.ref.set(memberData, { merge: true });
           }
         })
         .catch((error: any) => console.error(error));
-
     });
+});
+
+export const dfbMemberDeleteCron = functions.database.ref('/dfb-members/{userId}').onDelete((snap, context) => {
+  const data = snap.val();
+  return db.collection(memberPath).doc(data.firstName + '-' + data.lastName + '-' + data.birthday)
+    .delete()
+    .catch((error: any) => console.error(error));
+});
+
+export const dfbMemberUpdateCron = functions.database.ref('/dfb-members/{userId}').onUpdate((change, context) => {
+
+  const data = change.after.val();
+
+  if (!data) return true;
+
+  console.log(data);
+  console.log('updated dfb-member');
+
+  return true;
 });

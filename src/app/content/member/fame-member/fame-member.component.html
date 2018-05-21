@@ -1,6 +1,6 @@
 <div *ngIf="members$ | async as members; else loadingTemplate">
   <div fxLayout="row"
-       fxLayoutWrap="wrap"
+
        *ngFor="let memberOfTheWeek of membersOfTheWeek$ | async">
 
     <h2 fxFlex="100" *ngIf="getTitle(memberOfTheWeek) === currentWeek">

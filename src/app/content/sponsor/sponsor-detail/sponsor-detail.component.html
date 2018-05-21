@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutWrap="wrap">
+<div fxLayout="row" >
 
   <div fxFlex="100">
     <mat-card class="mat-card-top">
@@ -13,7 +13,7 @@
         <mat-tab-group [dynamicHeight]="true">
           <mat-tab label="{{'general.sponsors.edit.mainTitle' | translate}}">
 
-            <div fxLayout="row" fxLayoutWrap="wrap">
+            <div fxLayout="row" >
               <div fxFlex.gt-sm="62" fxFlex.gt-xs="100" fxFlex="100">
                 <h1>{{'general.sponsors.edit.title' | translate}}: {{sponsor.title}}</h1>
                 {{'general.sponsors.edit.link' | translate}}:
@@ -34,7 +34,7 @@
           </mat-tab>
           <mat-tab label="{{'general.sponsors.edit.moreTitle' | translate}}">
             <h1>{{'general.sponsors.edit.title' | translate}}: {{sponsor.title}}</h1>
-            <div fxLayout="row" fxLayoutWrap="wrap">
+            <div fxLayout="row" >
               <div fxFlex.gt-sm="34" fxFlex.gt-xs="100" fxFlex="100">
                 {{'general.sponsors.edit.link' | translate}}:
                 <a target="_blank" style="color: red" href="{{sponsor.externalLink}}">

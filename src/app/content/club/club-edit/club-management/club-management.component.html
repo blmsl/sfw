@@ -1,5 +1,5 @@
 <div fxLayout="row"
-     fxLayoutWrap="wrap"
+
      *ngIf="positions && members; else loadingTemplate"
      [formGroup]="form">
 
@@ -8,7 +8,7 @@
        formGroupName="management">
 
     <div fxLayout="row"
-         fxLayoutWrap="wrap">
+         >
 
       <div fxFlex="100">
         <h3>{{'general.clubs.edit.management.current.title' | translate}}</h3>

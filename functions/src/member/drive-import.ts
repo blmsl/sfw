@@ -4,12 +4,19 @@ import * as admin from 'firebase-admin';
 const db = admin.firestore();
 const memberPath = 'members';
 
-export const driveMemberCron = functions.database.ref('/drive-members/{userId}').onWrite((change, context) => {
+export const driveDeleteDbCron = functions.database.ref('/drive-members').onDelete((change, context) => {
+  console.log('delete database driveMembers');
+  return true;
+});
+
+export const driveMemberWriteCron = functions.database.ref('/drive-members/{userId}').onWrite((change, context) => {
 
   const data = change.after.val();
 
   if (!data) return true;
 
+  console.log(data);
+  console.log('added');
 
   let birthDate = '';
   if (data.birthday !== '') {
@@ -21,7 +28,7 @@ export const driveMemberCron = functions.database.ref('/drive-members/{userId}')
     .where('mainData.lastName', '==', data.lastName)
     .where('mainData.birthday', '==', birthDate)
     .get()
-    .then((value: FirebaseFirestore.QuerySnapshot) => {
+    .then((userSnapshot: FirebaseFirestore.QuerySnapshot) => {
 
       const mainData = {
         title: data.title ? data.title : '',
@@ -60,7 +67,7 @@ export const driveMemberCron = functions.database.ref('/drive-members/{userId}')
       } : {};
 
       const memberData: any = {
-        isImported: true,
+        driveImport: true,
         mainData: mainData,
         address: addressData,
         contact: contactData,
@@ -72,20 +79,39 @@ export const driveMemberCron = functions.database.ref('/drive-members/{userId}')
         },
         comment: data.comment ? data.comment : ''
       };
-      if (value.empty) {
+      if (userSnapshot.empty) {
         memberData.id = db.collection(memberPath).doc().id;
         memberData.creation = {
           from: 'system',
-          at: new Date()
+          at: admin.database.ServerValue.TIMESTAMP
         };
-        return db.collection(memberPath).doc(memberData.id).set(memberData);
-
+        return db.collection(memberPath).doc(data.firstName + '-' + data.lastName + '-' + birthDate).set(memberData);
       }
       else {
-        const doc = value.docs[0];
+        console.log('member is already here');
+        console.log(userSnapshot.docs[0].id);
+        const doc = userSnapshot.docs[0];
         return doc.ref.set(memberData, { merge: true });
       }
     })
     .catch((error: any) => console.error(error));
+});
 
+export const driveMemberDeleteCron = functions.database.ref('/drive-members/{userId}').onDelete((snap, context) => {
+  const data = snap.val();
+  return db.collection(memberPath).doc(data.firstName + '-' + data.lastName + '-' + data.birthday)
+    .delete()
+    .catch((error: any) => console.error(error));
+});
+
+export const driveMemberUpdateCron = functions.database.ref('/drive-members/{userId}').onUpdate((change, context) => {
+
+  const data = change.after.val();
+
+  if (!data) return true;
+
+  console.log(data);
+  console.log('updated dfb-member');
+
+  return true;
 });

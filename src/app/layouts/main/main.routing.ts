@@ -6,11 +6,11 @@ export const mainRoutes: Routes = [
   {
     path: 'login',
     loadChildren: '../auth/login.module#LoginModule',
-    canActivate: [UnAuthGuard]
+    // canActivate: [UnAuthGuard]
   },
   {
     path: '',
     loadChildren: '../admin/admin.module#AdminModule',
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   }
 ];

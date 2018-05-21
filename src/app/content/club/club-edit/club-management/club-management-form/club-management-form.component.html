@@ -1,12 +1,12 @@
 <div fxLayout="row"
-     fxLayoutWrap="wrap"
+
      [formGroup]="form">
 
   <div fxFlex="100"
        *ngFor="let control of form.controls['management']['controls']['positions']['controls']; let i = index">
 
     <div fxLayout="row"
-         fxLayoutWrap="wrap"
+
          formGroupName="management">
 
       <div fxFlex="100"
@@ -20,7 +20,7 @@
           <mat-card-content [formGroupName]="i">
 
             <div fxLayout="row"
-                 fxLayoutWrap="wrap">
+                 >
 
               <mat-form-field fxFlex.gt-sm="50"
                               fxFlex="100">
