@@ -20,9 +20,9 @@ enableLogging(environment.enableLogging);
     AngularFirestoreModule.enablePersistence(),
     AngularFireDatabaseModule,
     CommonModule,
-    ServiceWorkerModule.register("/ngsw-worker.js", {
+    /* ServiceWorkerModule.register("/ngsw-worker.js", {
       enabled: environment.production
-    }),
+    }),*/
     RouterModule.forRoot(appRoutes, { enableTracing: environment.routerTracing })
     // GtagModule.forRoot({ trackingId: 'UA-YOUR_TRACKING_ID', trackPageviews: true })
   ],
