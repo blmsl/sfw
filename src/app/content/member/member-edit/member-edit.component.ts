@@ -105,14 +105,19 @@ export class MemberEditComponent implements OnInit {
       }
     });
 
-    if (this.member.isImported) {
+    if (this.member.dfbImport) {
+      this.form.get('dfbData').disable();
+      this.form.get('mainData').disable();
+    }
+
+    if(this.member.driveImport){
       this.form.get('address').disable();
       this.form.get('ahData').disable();
       this.form.get('clubData').disable();
-      this.form.get('dfbData').disable();
       this.form.get('contact').disable();
       this.form.get('mainData').disable();
     }
+
   }
 
   initAddress(): FormGroup {

@@ -15,7 +15,7 @@
       <mat-list-item>
         <!--<img mat-list-avatar src="{{item.photo}}" alt="">-->
         <h3 matLine> <!--{{(articles | filterBy: ['id'] : honorary.assignedArticle)[0].title}} -->
-          {{honorary.mainData.lastName}} {{honorary.mainData.firstName}} {{honorary.mainData.birthday | date: 'dd.MM.yy'}}
+          {{honorary.mainData.lastName}} {{honorary.mainData.firstName}} {{honorary.mainData.birthday}} | date: 'dd.MM.yy'
         </h3>
         <p matLine> since {{honorary.startDate}} </p>
       </mat-list-item>

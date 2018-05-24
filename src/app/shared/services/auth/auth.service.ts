@@ -7,8 +7,6 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 import * as firebase from 'firebase/app';
 import { ICreation } from '../../interfaces/creation.interface';
 import { IUser } from '../../interfaces/user/user.interface';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { first } from 'rxjs/internal/operators';
 
 // Presence System
 // https://www.youtube.com/watch?v=2ZDeT5hLIBQ&feature=push-u&attr_tag=EDwjeHaWKNSWOoZT-6
@@ -18,14 +16,13 @@ import { first } from 'rxjs/internal/operators';
 @Injectable()
 export class AuthService implements OnDestroy {
 
-  public user$: Observable<IUser | null>;
+  public user$: Observable<IUser>;
   // private mouseEvents: ISubscription;
   // private timer: ISubscription;
   // private authSubscription: ISubscription;
 
   constructor(private afAuth: AngularFireAuth,
-    private db: AngularFireDatabase,
-    private afs: AngularFirestore) {
+              private afs: AngularFirestore) {
 
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
@@ -69,12 +66,12 @@ export class AuthService implements OnDestroy {
       });
   }
 
-  googleLogin() {
+  googleLogin(): Promise<any> {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
 
-  facebookLogin() {
+  facebookLogin(): Promise<any> {
     const provider = new firebase.auth.FacebookAuthProvider();
     return this.oAuthLogin(provider);
   }

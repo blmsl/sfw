@@ -1,5 +1,4 @@
-<div fxLayout="row"
-     >
+<div fxLayout="row">
 
   <div fxFlex.gt-sm="25"
        fxFlex="100">
@@ -9,7 +8,7 @@
       <mat-list-item *ngFor="let memberState of memberStateService.getMemberStates()">
         <div matLine
              fxLayout="row"
-             >
+        >
           <span fxFlex="60">{{'general.members.clubMemberStates.' + memberState.title | translate}}</span>
           <span fxFlex="40">{{(members | filterBy: ['clubData.assignedClub'] : club.id | filterBy: ['clubData.status'] : memberState.value).length}}</span>
         </div>
@@ -26,18 +25,19 @@
     </h3>
 
     <div *ngIf="seasons && teams; else loadingTemplate">
-      <mat-list dense
-                *ngFor="let season of seasons | orderBy: ['-title']">
-        <mat-list-item>
-          <h3 matLine *ngIf="!isCurrentSeason(season)">{{season.title}}</h3>
-          <p matLine>
-            <a *ngFor="let team of teams | filterBy: ['assignedSeason']: season.id | orderBy: ['title']; let last = last"
-            [routerLink]="['/teams/detail', team.id]">{{team.title}} {{team.subTitle}}
-            </a>
-            <span *ngIf="!last">,</span>
-          </p>
-        </mat-list-item>
-      </mat-list>
+
+      <mat-card *ngFor="let season of seasons | orderBy: ['-title']">
+        <mat-card-title>{{season.title}}</mat-card-title>
+        <mat-card-content>
+          <mat-list dense>
+            <mat-list-item *ngFor="let team of teams | filterBy: ['assignedSeason']: season.id | orderBy: ['title']; let last = last">
+              <a [routerLink]="['/teams/detail', team.id]">{{team.title}} {{team.subTitle}}</a>
+            </mat-list-item>
+            <mat-list-item *ngIf="(teams | filterBy: ['assignedSeason']: season.id).length && !last">,</mat-list-item>
+            <mat-list-item *ngIf="!(teams | filterBy: ['assignedSeason']: season.id).length">Für diese Saison wurden keine Mannschaften angemeldet.</mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 

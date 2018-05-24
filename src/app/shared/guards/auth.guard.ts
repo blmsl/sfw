@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { IUser } from '../interfaces/user/user.interface';
 import { AuthService } from '../services/auth/auth.service';
+import { take } from 'rxjs/internal/operators';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -14,10 +15,8 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.user$.pipe(
-      map((user: IUser) => {
-        console.log(!!user);
-        return !!user;
-      }),
+      take(1),
+      map((user: IUser) =>  !!user),
       tap((user: boolean) => {
         console.log(user);
         if (!user) {

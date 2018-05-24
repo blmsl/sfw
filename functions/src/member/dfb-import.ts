@@ -67,7 +67,7 @@ export const dfbMemberWriteCron = functions.database.ref('/dfb-members/{userId}'
             memberData.id = db.collection(memberPath).doc().id;
             memberData.creation = {
               from: 'system',
-              at: admin.database.ServerValue.TIMESTAMP
+              at: admin.firestore.FieldValue.serverTimestamp()
             };
             return db.collection(memberPath).doc(data.firstName + '-' + data.lastName + '-' + birthDate).set(memberData);
           }

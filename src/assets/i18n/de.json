@@ -5,6 +5,7 @@
   "auth/invalid-email": "Du hast keine gültige E-Mail Adresse eingegeben.",
   "auth/user-disabled": "Dein Benutzeraccount wurde von einem Administrator deaktiviert.",
   "auth/user-not-found": "Ein Benutzer mit diesen Daten wurde nicht in unserem System gefunden.",
+  "auth/operation-not-allowed": "Diese Login-Methode wurde gesperrt.",
   "auth/wrong-password": "Du hast ein falsches Passwort für diesen Account angegeben.",
   "auth/send-verification": "Eine weitere E-Mail zur Bestätigung Deines Accounts wurde Dir gesendet.",
   "auth/successful-signup": "Deine Registrierung war erfolgreich! Wir haben Dir eine E-Mail gesendet zum Bestätigen Deiner Adresse gesendet. Nach dem Klicken des Links in der Mail hast Du Zugriff auf das System.",
@@ -12,6 +13,10 @@
   "Required": "Hier wird eine Eingabe benötigt",
   "Global": {
     "Login": {
+      "facebookLogin": "Facebook",
+      "twitterLogin": "Twitter",
+      "googleLogin": "Google",
+      "socialLogin": "Anmeldung mit ...",
       "defaultLoginMessage": "Benutze die E-Mail <span style='font-weight: 500;'>demo@demo.com</span> und das Passwort <span style='font-weight: 500;'>demo123</span> für einen Demo&ndash;Zugang!",
       "passwordResetSentMessage": "Eine E-Mail zum Zurücksetzen Deines Passwortes wurde gesendet.",
       "adminArea": {

@@ -18,7 +18,7 @@ enableLogging(environment.enableLogging);
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
-    AngularFireDatabaseModule,
+    // AngularFireDatabaseModule,
     CommonModule,
     /* ServiceWorkerModule.register("/ngsw-worker.js", {
       enabled: environment.production
