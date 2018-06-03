@@ -2,17 +2,13 @@
      fxLayout="column"
      fxLayoutGap="15px"
      [formGroup]="form"
-     *ngIf="users">
+     *ngIf="users$ | async as users; else loadingTemplate">
 
   <mat-form-field fxFlex.gt-sm="100">
-    <mat-select placeholder="{{ 'general.articles.list.allStatus' | translate}}"
+    <mat-select placeholder="{{ 'general.articles.list.statuses.all' | translate}}"
                 formControlName="status">
-      <mat-option [value]=""
-                  *ngIf="!form.get('status').value">
-        {{ 'general.articles.list.allStatus' | translate}}
-      </mat-option>
-      <mat-option *ngFor="let option of publicationStati" [value]="option.value">
-        {{ option.title }}
+      <mat-option *ngFor="let option of publicationStatuses" [value]="option.value">
+        {{ 'general.articles.list.statuses.' + option.title | translate }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -20,10 +16,7 @@
   <mat-form-field fxFlex="30">
     <mat-select placeholder="{{ 'general.articles.list.allAuthors' | translate}}"
                 formControlName="author">
-      <mat-option [value]=""
-                  *ngIf="!form.get('author').value">
-        {{ 'general.articles.list.allAuthors' | translate}}
-      </mat-option>
+      <mat-option [value]="">{{ 'general.articles.list.allAuthors' | translate}}</mat-option>
       <mat-option *ngFor="let user of users | orderBy: ['lastName', 'firstName']"
                   [value]="user.id">
         {{ user.firstName }} {{ user.lastName }}
@@ -34,10 +27,7 @@
   <mat-form-field fxFlex="100">
     <mat-select placeholder="{{ 'general.articles.list.allTags' | translate}}"
                 formControlName="tags">
-      <mat-option [value]=""
-                  *ngIf="!form.get('tags').value">
-        {{ 'general.articles.list.allTags' | translate}}
-      </mat-option>
+      <mat-option [value]="">{{ 'general.articles.list.allTags' | translate}}</mat-option>
       <!--<mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}
         {{ 'general.items' | translate}}
       </mat-option>-->
@@ -51,3 +41,7 @@
     </mat-select>
   </mat-form-field>
 </div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

@@ -159,8 +159,7 @@
       },
       "list": {
         "addArticle": "Neuer Artikel",
-        "allAuthors": "Alle Artikel anzeigen",
-        "allStatus": "Alle Artikel",
+        "allAuthors": "Artikel aller Authoren",
         "allTags": "Alle Schlagworte",
         "articlesPerPage": "Artikel pro Seite",
         "colTitles": {
@@ -183,6 +182,13 @@
         "noResult": "Es wurden noch keine Artikel erstellt",
         "sortDateAsc": "Älteste zuerst",
         "sortDateDesc": "Neueste zuerst",
+        "statuses": {
+          "all": "Alle Artikel",
+          "draft": "Nur Entwürfe",
+          "featured": "Hervorgehobene Artikel",
+          "published": "Bereits veröffentlichte Artikel",
+          "scheduled": "Zur Veröffentlichung geplante Artikel"
+        },
         "title": "Artikel"
       },
       "matches": {

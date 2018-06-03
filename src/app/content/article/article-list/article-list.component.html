@@ -1,13 +1,5 @@
 <div fxLayout="direction"
-     fxLayoutAlign="center center" style="margin-bottom: 25px;">
-  <article-list-filter fxFlex.gt-sm="80"
-                       fxFlex="100"
-                       [users]="users">
-  </article-list-filter>
-</div>
-
-<div fxLayout="direction"
-     fxLayoutAlign="center center" *ngIf="articles && categories && users; else loadingTemplate">
+     fxLayoutAlign="center center" *ngIf="articles && categories; else loadingTemplate">
 
   <div fxFlex.gt-sm="80"
        fxFlex="100"
@@ -23,19 +15,23 @@
           <h1>{{article.title}}</h1>
         </span>
         <p matLine [innerHTML]="article.text"></p>
-        <div matLine style="margin-top: 10px;">
+        <div matLine
+             style="margin-top: 10px;">
           <button mat-raised-button
                   color="warn"
                   type="button">{{article.publication.status}}
           </button>
           {{'general.from' | translate}} author — {{'general.articles.list.lastEdited'}} timeAgo
         </div>
-        <hr style="margin: 25px 0" matLine/>
-        <div style="height: 100px;" matLine></div>
+        <hr style="margin: 25px 0"
+            matLine/>
+        <div style="height: 100px;"
+             matLine></div>
       </mat-list-item>
     </mat-list>
 
-    <p *ngIf="articles.length === 0" style="text-align: center">{{'general.articles.list.noResult' | translate}}</p>
+    <p *ngIf="articles.length === 0"
+       style="text-align: center">{{'general.articles.list.noResult' | translate}}</p>
 
   </div>
 </div>

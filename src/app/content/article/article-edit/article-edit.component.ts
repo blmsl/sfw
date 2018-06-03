@@ -1,23 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { IArticle } from '../../../shared/interfaces/article.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CategoryService } from '../../../shared/services/category/category.service';
-import { Observable } from 'rxjs';
-import { ICategory } from '../../../shared/interfaces/category.interface';
-import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
-import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
-import { LocationService } from '../../../shared/services/location/location.service';
-import { TeamService } from '../../../shared/services/team/team.service';
-import { ILocation } from '../../../shared/interfaces/location.interface';
-import { ITeam } from '../../../shared/interfaces/team/team.interface';
-import { SeasonService } from '../../../shared/services/season/season.service';
-import { ISeason } from '../../../shared/interfaces/season.interface';
-import { IMatch } from '../../../shared/interfaces/match.interface';
 import { ArticleService } from '../../../shared/services/article/article.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { UserService } from '../../../shared/services/user/user.service';
-import { IUser } from '../../../shared/interfaces/user/user.interface';
+
+const SMALL_WIDTH_BREAKPOINT = 960;
 
 @Component({
   selector: 'article-edit',
@@ -26,8 +14,11 @@ import { IUser } from '../../../shared/interfaces/user/user.interface';
 })
 export class ArticleEditComponent implements OnInit {
 
+  @ViewChild('articleSideBar') articleSideBar;
+
   public article: IArticle;
-  public categories$: Observable<ICategory[]>;
+  public mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
+  /* public categories$: Observable<ICategory[]>;
   public categoryTypes$: Observable<ICategoryType[]>;
   public locations$: Observable<ILocation[]>;
   public matches$: Observable<IMatch[]>;
@@ -36,14 +27,17 @@ export class ArticleEditComponent implements OnInit {
   public teams$: Observable<ITeam[]>;
 
   public words: number = 0;
-  public characters: number = 0;
+  public characters: number = 0; */
 
   public form: FormGroup;
 
   public options: any = {
+    dir: 'right',
     maxLines: 90000,
     printMargin: false
   };
+
+  public sidePanelOpened: boolean = false;
 
   public publicationOptions: any[] = [
     {
@@ -59,21 +53,26 @@ export class ArticleEditComponent implements OnInit {
   ];
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private articleService: ArticleService,
-    private categoryService: CategoryService,
-    private categoryTypeService: CategoryTypeService,
-    private locationService: LocationService,
-    private userService: UserService,
-    private seasonService: SeasonService,
-    private teamService: TeamService,
-    private fb: FormBuilder) {
-    this.categories$ = categoryService.categories$;
+              private router: Router,
+              private zone: NgZone,
+              private articleService: ArticleService,
+              /* private categoryService: CategoryService,
+              private categoryTypeService: CategoryTypeService,
+              private locationService: LocationService,
+              private userService: UserService,
+              private seasonService: SeasonService,
+              private teamService: TeamService, */
+              private fb: FormBuilder) {
+    /* this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
     this.locations$ = locationService.locations$;
     this.users$ = userService.users$;
     this.seasons$ = seasonService.seasons$;
-    this.teams$ = teamService.teams$;
+    this.teams$ = teamService.teams$; */
+
+    this.mediaMatcher.addListener(mql => zone.run(() => {
+      this.mediaMatcher = mql;
+    }));
   }
 
   ngOnInit() {
@@ -87,7 +86,7 @@ export class ArticleEditComponent implements OnInit {
       text: [this.article.text, [Validators.required, Validators.minLength(10)]],
       publication: this.initPublication(),
       creation: this.initCreation(),
-      meta: this.initMetaData(),
+      /* meta: this.initMetaData(),
       articleDate: this.article.articleDate,
       // postImage: string;
       postURL: [this.article.postURL],
@@ -98,7 +97,7 @@ export class ArticleEditComponent implements OnInit {
       assignedSeason: [this.article.assignedSeason],
       assignedMatch: [this.article.assignedMatch],
       isFeaturedPost: [this.article.isFeaturedPost],
-      isMatch: !!(this.article.assignedMatch)
+      isMatch: !!(this.article.assignedMatch) */
     });
 
     this.form.valueChanges.pipe(
@@ -108,7 +107,10 @@ export class ArticleEditComponent implements OnInit {
       console.log(changes);
       // changes.isMatch = null;
     });
+  }
 
+  isOver(): boolean {
+    return true;
   }
 
   initMetaData(): FormGroup {

@@ -14,18 +14,20 @@ export class ArticleService {
 
   articles$: Observable<IArticle[]>;
 
-  public publicationStati: {
+  public publicationStatuses: {
     value: number,
     title: string
   }[] = [
-      { value: 0, title: 'draft' },
-      { value: 1, title: 'published' },
-      { value: 2, title: 'scheduled' },
-      { value: 3, title: 'featured' }
-    ];
+    { value: 0, title: 'all' },
+    { value: 1, title: 'published' },
+    { value: 2, title: 'scheduled' },
+    { value: 3, title: 'draft' },
+    { value: 4, title: 'featured' }
+  ];
 
-  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth,
-    private authService: AuthService) {
+  constructor(private afs: AngularFirestore,
+              private afAuth: AngularFireAuth,
+              private authService: AuthService) {
     this.collectionRef = this.afs.collection<IArticle>(this.path);
     this.articles$ = this.collectionRef.valueChanges();
   }
@@ -47,14 +49,10 @@ export class ArticleService {
   }
 
   setNewArticle(): Observable<IArticle> {
-    const publication: IPublication = {
-      status: 0,
-      from: this.afAuth.auth.currentUser.uid
-    };
     const article: IArticle = {
-      id: this.afs.createId(),
-      publication: publication,
       title: '',
+      id: this.afs.createId(),
+      publication: this.authService.getPublication(),
       creation: this.authService.getCreation()
     };
     return of(article);

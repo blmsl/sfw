@@ -7,6 +7,7 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 import * as firebase from 'firebase/app';
 import { ICreation } from '../../interfaces/creation.interface';
 import { IUser } from '../../interfaces/user/user.interface';
+import { IPublication } from '../../interfaces/publication.interface';
 
 // Presence System
 // https://www.youtube.com/watch?v=2ZDeT5hLIBQ&feature=push-u&attr_tag=EDwjeHaWKNSWOoZT-6
@@ -17,6 +18,7 @@ import { IUser } from '../../interfaces/user/user.interface';
 export class AuthService implements OnDestroy {
 
   public user$: Observable<IUser>;
+  public userId: string;
   // private mouseEvents: ISubscription;
   // private timer: ISubscription;
   // private authSubscription: ISubscription;
@@ -27,6 +29,7 @@ export class AuthService implements OnDestroy {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
         if (user) {
+          this.userId = user.uid;
           return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
         } else {
           return observableOf(null);
@@ -96,7 +99,14 @@ export class AuthService implements OnDestroy {
   public getCreation(): ICreation {
     return {
       at: firebase.firestore.FieldValue.serverTimestamp(),
-      from: this.afAuth.auth.currentUser.uid
+      from: this.userId
+    };
+  }
+
+  public getPublication(): IPublication {
+    return {
+      status: 0,
+      from: this.userId
     };
   }
 

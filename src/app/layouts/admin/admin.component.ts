@@ -1,18 +1,6 @@
-import {
-  Component,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-import {
-  NavigationEnd,
-  Router
-} from '@angular/router';
-import {
-  PerfectScrollbarConfigInterface,
-  PerfectScrollbarDirective
-} from 'ngx-perfect-scrollbar';
+import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { AuthService } from '../../shared/services/auth/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -29,10 +17,10 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   private _router: Subscription;
 
-  mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
-  url: string;
-  sidePanelOpened;
-  options = {
+  public mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
+  public url: string;
+  public sidePanelOpened;
+  public options = {
     collapsed: false,
     compact: false,
     boxed: false,
@@ -40,7 +28,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     dir: 'ltr'
   };
 
-  currentLang = 'en';
+  public currentLang = 'en';
 
   @ViewChild('sidemenu') sidemenu;
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;

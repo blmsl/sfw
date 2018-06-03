@@ -13,8 +13,17 @@
 
   </mat-card-title>
   <mat-card-content>
+
+    <div fxLayout="direction"
+         fxLayoutAlign="center center"
+         style="margin-bottom: 25px;">
+      <article-list-filter fxFlex.gt-sm="80"
+                           fxFlex="100"
+                           [form]="form">
+      </article-list-filter>
+    </div>
+
     <article-list [categories]="categories$ | async"
-                  [users]="users$ | async"
                   [articles]="articles$ | async"
                   (remove)="removeArticle($event)"
                   (update)="updateArticle($event)">

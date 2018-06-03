@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../../../shared/services/article/article.service';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { IArticle } from '../../../shared/interfaces/article.interface';
@@ -7,6 +7,9 @@ import { ICategory } from '../../../shared/interfaces/category.interface';
 import { UserService } from '../../../shared/services/user/user.service';
 import { IUser } from '../../../shared/interfaces/user/user.interface';
 import { AlertService } from '../../../shared/services/alert/alert.service';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/internal/operators';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'articles',
@@ -14,19 +17,35 @@ import { AlertService } from '../../../shared/services/alert/alert.service';
   styleUrls: ['articles.component.scss']
 })
 
-export class ArticlesComponent {
+export class ArticlesComponent implements OnInit {
 
   public articles$: Observable<IArticle[]>;
   public categories$: Observable<ICategory[]>;
-  public users$: Observable<IUser[]>;
+  public form: FormGroup;
 
   constructor(private articleService: ArticleService,
-    private userService: UserService,
-    private alertService: AlertService,
-    private categoryService: CategoryService) {
-    this.users$ = userService.users$;
+              private userService: UserService,
+              private alertService: AlertService,
+              private fb: FormBuilder,
+              private categoryService: CategoryService) {
     this.articles$ = articleService.articles$;
     this.categories$ = categoryService.categories$;
+  }
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      author: '',
+      status: '',
+      tags: '',
+      sorting: '-'
+    });
+
+    this.form.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()
+    ).subscribe((changes: any) => {
+      console.log(changes);
+    });
   }
 
   removeArticle($event) {
