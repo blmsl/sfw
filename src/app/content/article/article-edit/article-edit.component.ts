@@ -53,16 +53,16 @@ export class ArticleEditComponent implements OnInit {
   ];
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private zone: NgZone,
-              private articleService: ArticleService,
-              /* private categoryService: CategoryService,
-              private categoryTypeService: CategoryTypeService,
-              private locationService: LocationService,
-              private userService: UserService,
-              private seasonService: SeasonService,
-              private teamService: TeamService, */
-              private fb: FormBuilder) {
+    private router: Router,
+    private zone: NgZone,
+    private articleService: ArticleService,
+    /* private categoryService: CategoryService,
+    private categoryTypeService: CategoryTypeService,
+    private locationService: LocationService,
+    private userService: UserService,
+    private seasonService: SeasonService,
+    private teamService: TeamService, */
+    private fb: FormBuilder) {
     /* this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
     this.locations$ = locationService.locations$;

@@ -135,10 +135,10 @@ export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, 
   };
 
   constructor(public dialog: MatDialog,
-              @Attribute('required') public required: boolean = false,
-              @Attribute('maxlength') public maxlength: number = -1,
-              private _renderer: Renderer2,
-              private _domSanitizer: DomSanitizer) {
+    @Attribute('required') public required: boolean = false,
+    @Attribute('maxlength') public maxlength: number = -1,
+    private _renderer: Renderer2,
+    private _domSanitizer: DomSanitizer) {
     this.sf = screenfull;
   }
 

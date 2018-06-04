@@ -38,11 +38,11 @@ export class SignInComponent implements OnInit {
   public error: string;
 
   constructor(private alertService: AlertService,
-              public authService: AuthService,
-              private cfr: ComponentFactoryResolver,
-              private fb: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router) {
+    public authService: AuthService,
+    private cfr: ComponentFactoryResolver,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router) {
   }
 
   ngOnInit() {

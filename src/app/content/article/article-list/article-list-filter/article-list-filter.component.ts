@@ -22,7 +22,7 @@ export class ArticleListFilterComponent implements OnInit {
   }[];
 
   constructor(private userService: UserService,
-              private articleService: ArticleService) {
+    private articleService: ArticleService) {
     this.users$ = userService.users$;
     this.publicationStatuses = articleService.publicationStatuses;
   }
