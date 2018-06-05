@@ -1,19 +1,29 @@
 <?php
 
-function scrap_info($scrap_url) {
+function curlRequest($url){
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
+    $str = curl_exec($curl);
+    curl_close($curl);
+    return str_get_html($str);
+}
 
+function scrap_competitions($scrap_url){
     global $output;
-
     $html = file_get_html($scrap_url);
+    var_dump($html);
 
-    if ($html && is_object($html) && isset($html->nodes)) {
+    /*if ($html && is_object($html) && isset($html->nodes)) {
 
-        $items = $html->find("#team-fixture-league-tables tr");
+        $items = $html->find(".team-competitions a");
+        var_dump($items);
 
-// loop through items on current page
+        /* loop through items on current page
         foreach ($items as $item) {
 
-            $output_item = array();
+            /*$output_item = array();
 
             $counter = 0;
             $tds = $item->find("td");
@@ -28,7 +38,30 @@ function scrap_info($scrap_url) {
                 $output[] = $output_item;
             }
         }
+        $html->clear();
+    }*/
+}
 
+function scrap_standings($html) {
+    global $output;
+    if ($html && is_object($html) && isset($html->nodes)) {
+        $items = $html->find("#team-fixture-league-tables tr");
+        // loop through items on current page
+        foreach ($items as $item) {
+            $output_item = array();
+            $counter = 0;
+            $tds = $item->find("td");
+            foreach ($tds as $td) {
+                if ($counter > 0) {
+                    $output_item[] = trim($td->plaintext);
+                }
+                $counter++;
+            }
+
+            if (!empty($output_item)) {
+                $output[] = $output_item;
+            }
+        }
         $html->clear();
     }
 }

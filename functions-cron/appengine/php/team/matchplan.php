@@ -1,5 +1,15 @@
 <?php
 
+use Google\Cloud\Firestore\FirestoreClient;
+
+$db = new FirestoreClient();
+$collection = $db->collection('clubs');
+var_dump($collection);
+
+/*
+$link = 'http://www.fussball.de/ajax.club.matchplan/-/id/' . $clubId . '/mime-type/HTML/mode/PAGE/show-filter/false/max/9999/datum-von/' . $currentSeason["StartDate"]->format('Y-m-d') . '/datum-bis/' . $currentSeason["EndDate"]->format('Y-m-d') . '/show-venues/checked/offset/0';
+
+/*
 require '../../vendor/autoload.php';
 
 new FireStoreApiClient();
@@ -116,4 +126,4 @@ foreach ($clubList AS $key => $club) {
         }
     }
 }
-echo "Import durchgeführt!";
+echo "Import durchgeführt!";*/
