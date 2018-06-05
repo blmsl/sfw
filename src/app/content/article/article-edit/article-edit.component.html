@@ -1,20 +1,53 @@
-<div class="header"
-     [formGroup]="form" fxLayoutAlign="center center">
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav mode="side" opened>
+    <h3>{{ 'general.menu.main' | translate }}
+      <span fxFlex></span>
+      <span class="menu-badge mat-">1223</span>
+    </h3>
+  </mat-sidenav>
+  <mat-sidenav-content style="overflow: hidden">
+    <div class="header"
+         [formGroup]="form" fxLayoutAlign="center center">
 
-  <h2 class="title">Title</h2>
-  <input class="title-document"
-         type="text"
-         placeholder="{{'general.articles.edit.title' | translate}}"
-         formControlName="title">
+      <h2 class="title">Title</h2>
+      <input class="title-document"
+             type="text"
+             placeholder="{{'general.articles.edit.title' | translate}}"
+             formControlName="title">
 
-  <span class="spacer"></span>
-  <button mat-raised-button
-          [matMenuTriggerFor]="menu">Publish &darr;
-  </button>
-  <button mat-icon-button (click)="notifications.toggle()">
-    <mat-icon>settings</mat-icon>
-  </button>
-</div>
+      <span class="spacer"></span>
+      <!--<button mat-raised-button-->
+      <!--[matMenuTriggerFor]="menu">Publish &darr;-->
+      <!--</button>-->
+      <button mat-icon-button (click)="notifications.toggle()">
+        <mat-icon>settings</mat-icon>
+      </button>
+    </div>
+
+    <sfw-editor [mode]="'editor'"
+                [options]="options">
+    </sfw-editor>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<!--<div class="header"-->
+     <!--[formGroup]="form" fxLayoutAlign="center center">-->
+
+  <!--<h2 class="title">Title</h2>-->
+  <!--<input class="title-document"-->
+         <!--type="text"-->
+         <!--placeholder="{{'general.articles.edit.title' | translate}}"-->
+         <!--formControlName="title">-->
+
+  <!--<span class="spacer"></span>-->
+  <!--<button mat-raised-button-->
+          <!--[matMenuTriggerFor]="menu">Publish &darr;-->
+  <!--</button>-->
+  <!--<button mat-icon-button (click)="notifications.toggle()">-->
+    <!--<mat-icon>settings</mat-icon>-->
+  <!--</button>-->
+<!--</div>-->
 
 <!--
 <div fxLayout="direction"
