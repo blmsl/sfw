@@ -16,5 +16,13 @@
     "phpunit/phpunit": "^4.0",
     "symfony/browser-kit": "~3",
     "symfony/process": "~3"
-  }
+  },
+  "psr-4": {
+    "Google\\Cloud\\Samples\\Firestore\\": "src/"
+  },
+  "files": [
+    "firestore/src/initialize.php",
+    "firestore/src/initialize_project_id.php",
+    "firestore/src/add_data.php"
+  ]
 }
