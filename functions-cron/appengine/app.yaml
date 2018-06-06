@@ -4,8 +4,8 @@ api_version: 1
 threadsafe: true
 service: pymodule
 
-#runtime_config:
-#  python_version: 3
+runtime_config:
+  document_root: .
 
 handlers:
 - url: /hello.*

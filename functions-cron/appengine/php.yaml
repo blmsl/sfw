@@ -1,23 +1,32 @@
-#runtime: php
-#env: flex
-runtime: php55
+runtime: php
+env: flex
+#runtime: php55
 api_version: 1
 service: default
 threadsafe: yes
 
-#runtime_config:
-#  document_root: .
+runtime_config:
+  document_root: php
 
-handlers:
-- url: /teams/competitions
-  script: ./php/team/competitions.php
-  # login: admin
+# This sample incurs costs to run on the App Engine flexible environment.
+# The settings below are to reduce costs during testing and are not appropriate
+# for production use. For more information, see:
+# https://cloud.google.com/appengine/docs/flexible/python/configuring-your-app-with-app-yaml
+manual_scaling:
+  instances: 1
 
-- url: /teams/matchplan
-  script: ./php/team/matchplan.php
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
 
-- url: /teams/standings
-  script: ./php/team/standings.php
-
-- url: /.*
-  script: ./php/start.php
+#handlers:
+#- url: /teams/competitions
+#  script: ./php/team/competitions.php
+#  login: admin
+#- url: /teams/matchplan
+#  script: ./php/team/matchplan.php
+#- url: /teams/standings
+#  script: ./php/team/standings.php
+#- url: /.*
+#  script: ./php/start.php

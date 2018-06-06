@@ -13,10 +13,9 @@ function curlRequest($url)
 
 function scrap_matchPlan($html, $clubName)
 {
-    global $output;
-
     $savedMatchDate = NULL;
     $i = 0;
+    $output = array();
     $matchData = array();
 
     if ($html && is_object($html) && isset($html->nodes)) {
@@ -43,7 +42,7 @@ function scrap_matchPlan($html, $clubName)
                 elseif ($item->getAttribute('class') === "odd row-competition hidden-small" || $item->getAttribute('class') === "row-competition hidden-small") {
 
                     $matchDate = setMatchDate($item->plaintext, $savedMatchDate);
-                    if ($matchDate) {
+                    if ($matchDate && key_exists("assignedMainCategory", $matchData)) {
                         $matchData["matchStartDate"] = $savedMatchDate = $matchDate;
                         $matchData["matchEndDate"] = getMatchDuration($matchData["assignedMainCategory"], $matchData);
                     }
@@ -120,6 +119,7 @@ function scrap_matchPlan($html, $clubName)
         }
         $html->clear();
     }
+    return $output;
 }
 
 function scrap_competitions($scrap_url)

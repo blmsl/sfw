@@ -4,13 +4,16 @@ header("Content-Type: text/html; charset=utf-8");
 
 require "../simple_html_dom.php";
 require "../functions.php";
+require "../../vendor/autoload.php";
 
-/*
-namespace Google\Cloud\Samples\Firestore;
 use Google\Cloud\Firestore\FirestoreClient;
-require __DIR__ . '/vendor/autoload.php';
-*/
+
 $clubId = '00ES8GNBEO00001UVV0AG08LVUPGND5I';
+$db = new FirestoreClient();
+
+$dbClubs = $db->collection('clubs');
+$dbMatches = $db->collection('matches');
+$dbSeasons = $db->collection('seasons');
 
 $currentSeason = array(
     'StartDate' => new DateTime('2017-07-01'),
@@ -19,17 +22,33 @@ $currentSeason = array(
 
 $url = 'http://www.fussball.de/ajax.club.matchplan/-/id/' . $clubId . '/mime-type/HTML/mode/PAGE/show-filter/false/max/9999/datum-von/' . $currentSeason["StartDate"]->format('Y-m-d') . '/datum-bis/' . $currentSeason["EndDate"]->format('Y-m-d') . '/show-venues/checked/offset/0';
 
-$output = array();
 $curlRequest = curlRequest($url);
-scrap_matchPlan($curlRequest, 'SF Winterbach');
 
-echo generateHeader();
+$output = scrap_matchPlan($curlRequest, 'SF Winterbach');
+var_dump($output);
 
-if($output) {
-    echo generateMatchPlanTable($output);
+/*
+$ref = $db->collection('matches')->newDocument();
+
+
+$batch = $db->batch();
+foreach ($output as $key => $match) {
+    $ref = $db->collection('matches')->newDocument();
+    $batch->set($ref, [
+        'name' => 'New York City'
+    ]);
+    // $batch->create($ref, $match);
 }
-else{
-    echo "<p>Keine Spiele gefunden</p>";
+$batch->commit();
+*/
+
+#$dbMatches->add($output);
+// add all results
+foreach($output as $match){
+    $addedDoc = $dbMatches->add($match);
+    printf('Added document with ID: %s' . PHP_EOL, $addedDoc->id());
 }
 
-echo generateFooter();
+// retrieve all documents from database
+$matches = $dbMatches->documents();
+echo generateMatchPlanTable($matches);

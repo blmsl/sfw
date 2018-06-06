@@ -8,6 +8,7 @@
 // https://console.cloud.google.com/logs
 // gcloud app browse
 // https://console.cloud.google.com/functions/list?project=sfw-dev
+// https://sfw-dev.appspot.com/team/matchplan.php
 // dev_appserver.py D:\sfw\functions-cron\appengine\app.yaml D:\sfw\functions-cron\appengine\php.yaml D:\sfw\functions-cron\appengine\dispatch.yaml --port=9090
 
 import * as admin from 'firebase-admin';
