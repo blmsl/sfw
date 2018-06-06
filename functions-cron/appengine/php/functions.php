@@ -18,8 +18,10 @@ function scrap_matchPlan($html, $clubName)
     $output = array();
     $matchData = array();
 
+    echo count($html);
     if ($html && is_object($html) && isset($html->nodes)) {
         $items = $html->find("div.fixtures-matches-table > table > tbody > tr");
+        echo count($items);
         foreach($items AS $item){
 
             if($i > 0){
@@ -119,16 +121,18 @@ function scrap_matchPlan($html, $clubName)
         }
         $html->clear();
     }
+    var_dump($output);
     return $output;
 }
 
+/*
 function scrap_competitions($scrap_url)
 {
-    global $output;
+    // global $output;
     $html = file_get_html($scrap_url);
     var_dump($html);
 
-    /*if ($html && is_object($html) && isset($html->nodes)) {
+    if ($html && is_object($html) && isset($html->nodes)) {
 
         $items = $html->find(".team-competitions a");
         var_dump($items);
@@ -152,12 +156,12 @@ function scrap_competitions($scrap_url)
             }
         }
         $html->clear();
-    }*/
+    }
 }
 
 function scrap_standings($html)
 {
-    global $output;
+    // global $output;
     if ($html && is_object($html) && isset($html->nodes)) {
         $items = $html->find("#team-fixture-league-tables tr");
         // loop through items on current page
@@ -201,7 +205,7 @@ function get_value($element, $selector_string, $index, $type = "text")
     }
 
     return trim($value);
-}
+} */
 
 function getMainTeamCategoryName($teamCategoryName)
 {

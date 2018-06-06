@@ -43,7 +43,7 @@ $batch->commit();
 */
 
 #$dbMatches->add($output);
-// add all results
+/* add all results
 foreach($output as $match){
     $addedDoc = $dbMatches->add($match);
     printf('Added document with ID: %s' . PHP_EOL, $addedDoc->id());
@@ -51,4 +51,4 @@ foreach($output as $match){
 
 // retrieve all documents from database
 $matches = $dbMatches->documents();
-echo generateMatchPlanTable($matches);
+echo generateMatchPlanTable($matches); */
