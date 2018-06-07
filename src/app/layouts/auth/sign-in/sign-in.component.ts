@@ -1,4 +1,13 @@
-import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth/auth.service';
@@ -29,7 +38,7 @@ export class SignInComponent implements OnInit {
   public error: string;
 
   constructor(private alertService: AlertService,
-    private authService: AuthService,
+    public authService: AuthService,
     private cfr: ComponentFactoryResolver,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -98,6 +107,30 @@ export class SignInComponent implements OnInit {
     const factory = this.cfr.resolveComponentFactory(AlertComponent);
     const ref = this[target].createComponent(factory);
     ref.changeDetectorRef.detectChanges();
+  }
+
+  socialLogin(provider: string): Promise<any> {
+    const _that = this;
+    this.isLoading = true;
+    let loginAction;
+    switch (provider) {
+      case 'facebook':
+        loginAction = this.authService.facebookLogin();
+        break;
+      case 'google':
+        loginAction = this.authService.googleLogin();
+        break;
+    }
+    return loginAction
+      .then(() => {
+        return this.router.navigate([this.returnUrl])
+      })
+      .catch((error: any) => {
+        _that.isLoading = false;
+        _that.showDemoLoginMessage = false;
+        _that.showAlert('signInAlertContainer');
+        _that.alertService.error(error.code);
+      });
   }
 
 }

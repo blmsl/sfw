@@ -5,7 +5,7 @@ export interface IUploaderOptions {
   allowedFileType?: Array<string>;
   filters?: Array<FilterFunction>;
   id?: string;
-  itemID: string;
+  itemId: string;
   maxFileSize?: number;
   path?: string;
   queueLimit?: number;

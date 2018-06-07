@@ -1,5 +1,5 @@
 <div fxLayout="row"
-     fxLayoutWrap="wrap"
+
      *ngFor="let control of form.get('honoraries')['controls']; let i = index"
      [formGroup]="form">
   <div fxFlex.gt-sm="100"
@@ -15,7 +15,7 @@
       <mat-card-content [formGroupName]="i">
 
         <div fxLayout="row"
-             fxLayoutWrap="wrap">
+             >
 
           <mat-form-field fxFlex.gt-sm="32"
                           fxFlex="100">

@@ -10,7 +10,10 @@ import { IOpinion } from './opinion.interface';
 
 export interface IMember {
   id?: string;
-  isImported: boolean;
+
+  driveImport: boolean;
+  dfbImport: boolean;
+
   mainData: IMemberMainData;
   address?: IAddress;
   contact?: IContact;

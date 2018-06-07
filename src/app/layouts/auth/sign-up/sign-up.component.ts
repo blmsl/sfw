@@ -1,9 +1,20 @@
-import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUser } from '../../../shared/interfaces/user/user.interface';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 import { AlertComponent } from '../../../shared/directives/alert/alert.component';
+import { MatDialog } from '@angular/material';
+import { TermsOfUseComponent } from '../../../shared/components/terms-of-use/terms-of-use.component';
 
 @Component({
   selector: 'sign-up',

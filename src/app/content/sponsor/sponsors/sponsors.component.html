@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutWrap="wrap">
+<div fxLayout="row" >
 
   <div fxFlex="100">
 
@@ -6,7 +6,7 @@
       <mat-card-title>
 
         <div fxLayout="row"
-             fxLayoutWrap="wrap">
+             >
 
           <div fxFlex.gt-sm="49"
                fxFlex="50">
@@ -36,7 +36,7 @@
       </mat-card-title>
       <mat-card-content>
 
-        <div fxLayout="row" fxLayoutWrap="wrap">
+        <div fxLayout="row" >
 
           <div fxFlex="100" [class.is-mobile]="mobileQuery.matches">
             <mat-sidenav-container class="sideNav-container"
@@ -60,7 +60,7 @@
                   {{'general.sponsors.list.noSponsorsFound' | translate}}
                 </p>
                 <div fxLayout="row"
-                     fxLayoutWrap="wrap">
+                     >
                   <div *ngFor="let sponsor of sponsors$ | async | categoryFilter: 'assignedCategories' : currentFilter"
                        fxFlex.gt-sm="33.3333"
                        fxFlex.gt-xs="100"

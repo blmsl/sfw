@@ -1,22 +1,23 @@
-<div fxLayout="row"
-     fxLayoutWrap="wrap"
+<div fxLayout.gt-sm="row"
+     fxLayout="column"
+     fxLayoutGap="10px"
      [formGroup]="form">
 
-  <mat-form-field fxFlex.gt-sm="19"
-                  fxFlex="100">
-    <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}" formControlName="limit">
-      <mat-option [value]="categories.length" *ngIf="categories">
+  <mat-form-field fxFlex="100">
+    <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}"
+                formControlName="limit">
+      <mat-option [value]="categories.length"
+                  *ngIf="categories">
         {{ 'general.pagination.allItems' | translate}}
       </mat-option>
-      <mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}
-        {{ 'general.items' | translate}}
+      <mat-option *ngFor="let option of itemsPerPageOptions"
+                  [value]="option">
+        {{ option }} {{ 'general.items' | translate}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlexOffset.gt-sm="2"
-                  fxFlex.gt-sm="19"
-                  fxFlex="100">
+  <mat-form-field fxFlex="100">
     <mat-select placeholder="{{ 'general.pagination.filterByCategory' | translate}}"
                 formControlName="categoryTypeControl">
       <mat-option [value]="">{{ 'general.pagination.allItems' | translate}}</mat-option>
@@ -26,25 +27,24 @@
     </mat-select>
   </mat-form-field>
 
-  <div fxFlexOffset.gt-sm="2"
-       fxFlex.gt-sm="31"
-       fxFlex="100">
+  <div fxFlex="100">
     <input style="width: 95%;padding: 10px" placeholder="{{ 'general.typeToFilter' | translate}}"
            formControlName="searchFor"/>
   </div>
 
-  <div fxFlexOffset.gt-sm="2"
-       fxFlex.gt-sm="25"
-       fxFlex="100">
-    <button type="button" mat-raised-button color="primary" [routerLink]="['./edit/new']">
+  <div fxFlex="100">
+    <button type="button"
+            mat-raised-button
+            color="primary"
+            [routerLink]="['./edit/new']">
       {{ 'general.categories.list.createCategory' | translate}}
     </button>
   </div>
 </div>
 
 <div style="margin-top: 25px"
-     fxLayout="row"
-     fxLayoutWrap="wrap"
+     fxLayout="column"
+     fxLayout.gt-sm="row"
      [formGroup]="form">
 
   <div fxFlex="100"
@@ -64,6 +64,7 @@
           {{row.title}}
         </ng-template>
       </ngx-datatable-column>
+
       <ngx-datatable-column name="{{'general.categories.list.colTitles.category' | translate}}">
         <ng-template let-row="row" let-value="assignedCategoryType" ngx-datatable-cell-template>
           {{ 'general.menu.' + (categoryTypes | filterBy: ['id'] : row.assignedCategoryType)[0].link + '.main' |

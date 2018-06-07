@@ -1,5 +1,5 @@
 <div fxLayout="row"
-     fxLayoutWrap="wrap"
+
      [formGroup]="form">
 
   <div fxFlex="100">
@@ -92,7 +92,7 @@
             <mat-tab
               label="{{'general.locations.edit.addressTitle' | translate}} {{'general.and' | translate }} {{'general.locations.edit.contactTitle' | translate}}">
               <div fxLayout="row"
-                   fxLayoutWrap="wrap">
+                   >
                 <div fxFlex.gt-sm="49"
                      fxFlex="100">
                   <location-edit-address
@@ -126,7 +126,7 @@
             <mat-tab label="{{'general.tables.colTitles.creation' | translate }}">
               <!--  & {{'general.tables.colTitles.publication' | translate }} -->
               <!--<div fxLayout="row"
-                   fxLayoutWrap="wrap">
+                   >
                 <div fxFlex.gt-sm="30"
                      fxFlex="100">-->
               <creation-form [form]="form"></creation-form>

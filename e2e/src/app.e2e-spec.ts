@@ -1,10 +1,10 @@
-import { PrimerPage } from './app.po';
+import { AppPage } from './app.po';
 
-describe('primer App', function() {
-  let page: PrimerPage;
+describe('workspace-project App', () => {
+  let page: AppPage;
 
   beforeEach(() => {
-    page = new PrimerPage();
+    page = new AppPage();
   });
 
   it('should expect true to be true', () => {

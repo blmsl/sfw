@@ -7,12 +7,12 @@ import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
-import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material';
-import {
-  debounceTime,
-  distinctUntilChanged
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
+import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
+import { MediaItemService } from '../../../shared/services/media/media-item.service';
+import { AlertService } from '../../../shared/services/alert/alert.service';
+
 
 @Component({
   selector: 'sponsor-edit',
@@ -28,17 +28,42 @@ export class SponsorEditComponent implements OnInit {
 
   public titleMaxLength: number = 50;
 
+  public uploaderConfig: IUploaderConfig = {
+    autoUpload: true,
+    showDropZone: true,
+    removeAfterUpload: true,
+    showQueue: false
+  };
+
+  public uploaderOptions: IUploaderOptions = {
+    itemId: '',
+    path: 'sponsors/logos',
+    queueLimit: 1,
+    allowedMimeType: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'],
+    allowedFileType: ['image']
+  };
+
+  public currentImage: string;
+
   constructor(private route: ActivatedRoute,
-    public snackBar: MatSnackBar,
+    private alertService: AlertService,
     private fb: FormBuilder,
     private router: Router,
+    private mediaItemService: MediaItemService,
     private sponsorService: SponsorService,
     public categoryService: CategoryService) {
     this.categories$ = categoryService.getCategoriesByCategoryType('sponsor.types');
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { sponsor: ISponsor }) => this.sponsor = data.sponsor);
+    this.route.data.subscribe((data: { sponsor: ISponsor }) => {
+      this.sponsor = data.sponsor;
+      this.uploaderOptions.itemId = this.uploaderOptions.id = this.sponsor.id;
+
+      this.mediaItemService
+        .getCurrentImage('sponsor', this.sponsor.id, this.sponsor.id)
+        .subscribe((imageUrl: string) => this.currentImage = imageUrl);
+    });
 
     this.form = this.fb.group({
       title: [this.sponsor.title, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
@@ -65,27 +90,19 @@ export class SponsorEditComponent implements OnInit {
   saveSponsor(redirect: boolean = false): void {
     let action;
 
-    if (this.sponsor.id) {
-      action = this.sponsorService.updateSponsor(this.sponsor.id, this.sponsor);
-    } else {
-      action = this.sponsorService.createSponsor(this.sponsor);
-    }
+    //if (this.sponsor.id) {
+    //  action = this.sponsorService.updateSponsor(this.sponsor.id, this.sponsor);
+    //} else {
+    action = this.sponsorService.createSponsor(this.sponsor);
+    //}
     action.then(
       () => {
         if (redirect) {
           this.redirectToList();
         }
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            status: 'success',
-            message: 'general.applications.updateMessage'
-          },
-          duration: 2500,
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
+        this.alertService.showSnackBar('success', 'general.applications.updateMessage');
       },
-      (error: any) => console.log(error)
+      (error: any) => this.alertService.showSnackBar('error', error.message)
     );
   }
 

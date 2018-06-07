@@ -7,8 +7,7 @@ import { CategoryService } from '../../../shared/services/category/category.serv
 
 @Component({
   selector: 'category-statistics',
-  templateUrl: './category-statistics.component.html',
-  styleUrls: ['./category-statistics.component.scss']
+  templateUrl: './category-statistics.component.html'
 })
 export class CategoryStatisticsComponent {
 

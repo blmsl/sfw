@@ -4,7 +4,6 @@ import { IArticle } from '../../interfaces/article.interface';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AuthService } from '../auth/auth.service';
 import { IPublication } from '../../interfaces/publication.interface';
-import * as moment from 'moment';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
@@ -15,23 +14,25 @@ export class ArticleService {
 
   articles$: Observable<IArticle[]>;
 
-  public publicationStati: {
+  public publicationStatuses: {
     value: number,
     title: string
   }[] = [
-      { value: 0, title: 'draft' },
+      { value: 0, title: 'all' },
       { value: 1, title: 'published' },
       { value: 2, title: 'scheduled' },
-      { value: 3, title: 'featured' }
+      { value: 3, title: 'draft' },
+      { value: 4, title: 'featured' }
     ];
 
-  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, private authService: AuthService) {
+  constructor(private afs: AngularFirestore,
+    private afAuth: AngularFireAuth,
+    private authService: AuthService) {
     this.collectionRef = this.afs.collection<IArticle>(this.path);
     this.articles$ = this.collectionRef.valueChanges();
   }
 
   createArticle(article: IArticle): Promise<void> {
-    article.id = this.afs.createId();
     return this.afs.collection(this.path).doc(article.id).set(article);
   }
 
@@ -48,36 +49,11 @@ export class ArticleService {
   }
 
   setNewArticle(): Observable<IArticle> {
-    const publication: IPublication = {
-      status: 0,
-      date: moment().toISOString(),
-      time: '',
-      from: this.afAuth.auth.currentUser.uid
-    };
     const article: IArticle = {
-      id: this.afs.createId(),
-      publication: publication,
       title: '',
-      subTitle: '',
-      text: '',
-      articleDate: moment().toISOString(),
-      postURL: '',
-      creation: this.authService.getCreation(),
-      isFeaturedPost: false,
-      meta: {
-        main: {
-          description: '',
-          title: ''
-        },
-        facebook: {
-          description: '',
-          title: ''
-        },
-        twitter: {
-          description: '',
-          title: ''
-        }
-      }
+      id: this.afs.createId(),
+      publication: this.authService.getPublication(),
+      creation: this.authService.getCreation()
     };
     return of(article);
   }

@@ -2,7 +2,7 @@
 <p>{{'general.members.edit.interviews.text' | translate}}</p>
 
 <div fxLayout="row"
-     fxLayoutWrap="wrap"
+
      [formGroup]="form">
 
   <div fxFlex="100"
@@ -19,14 +19,14 @@
     <div *ngIf="showForm">
       <div *ngIf="articles$ | async as articles; else loadingTemplate">
         <div fxLayout="row"
-             fxLayoutWrap="wrap"
+
              *ngFor="let control of form.get('interviews')['controls']; let i = index">
 
           <div fxFlex="100"
                [formGroupName]="i">
 
             <div fxLayout="row"
-                 fxLayoutWrap="wrap">
+                 >
 
               <mat-form-field fxFlex="90">
                 <mat-select placeholder="{{'general.members.edit.interviews.articleTitle' | translate}}"

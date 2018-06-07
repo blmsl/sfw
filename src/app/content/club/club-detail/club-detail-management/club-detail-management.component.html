@@ -1,11 +1,11 @@
 <div fxLayout="row"
-     fxLayoutWrap="wrap">
+     >
 
   <div fxFlex.gt-sm="40"
        fxFlex.gt-xs="100">
 
     <div fxLayout="row"
-         fxLayoutWrap="wrap">
+         >
 
       <div fxFlex="100">
         <h3>{{'general.clubs.edit.management.current.title' | translate}}</h3>
@@ -53,7 +53,7 @@
                 <a [routerLink]="['/members/edit', position.assignedMember]">
                   {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.lastName}}
                   {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.firstName}}
-                  {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.birthday | date: 'dd.MM.yy'}}
+                  {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.birthday}} | date: 'dd.MM.yy'
                 </a>
               </mat-list-item>
             </mat-list>

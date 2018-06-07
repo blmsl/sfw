@@ -1,8 +1,8 @@
 <h3><p>{{'general.members.edit.opinions.title' | translate}}</h3>
 <p>{{'general.members.edit.opinions.text' | translate}}</p>
 
-<div fxLayout="row"
-     fxLayoutWrap="wrap"
+<div fxLayout.gt-sm="row"
+     fxLayout="column"
      *ngIf="members; else loadingTemplate"
      [formGroup]="form">
 
@@ -18,14 +18,14 @@
     </button>
 
     <div fxLayout="row"
-         fxLayoutWrap="wrap"
+
          *ngFor="let control of form.get('opinions')['controls']; let i = index; let last = last">
 
       <div fxFlex="100"
            [formGroupName]="i">
 
-        <div fxLayout="row"
-             fxLayoutWrap="wrap">
+        <div fxLayout.gt-sm="row"
+             fxLayout="column">
 
           <div fxFlex="100"
                style="margin-bottom: 40px;">
@@ -49,7 +49,7 @@
                fxFlex="100"
                formGroupName="name">
             <div fxLayout="row"
-                 fxLayoutWrap="wrap">
+                 >
               <mat-form-field fxFlex.gt-sm="49"
                               fxFlex="100">
                 <input matInput
@@ -71,7 +71,7 @@
                fxFlex="100"
                formGroupName="assignedMember">
             <div fxLayout="row"
-                 fxLayoutWrap="wrap">
+                 >
               <mat-form-field fxFlex="100">
                 <mat-select placeholder="{{'general.members.edit.opinions.userTitle' | translate}}"
                             formControlName="assignedMember">
@@ -99,7 +99,7 @@
         </div>
 
         <div fxLayout="row"
-             fxLayoutWrap="wrap">
+             >
           <div fxFlex="100">
             <h3>{{'general.members.edit.opinions.comment' | translate}}</h3>
             <quill-editor [style]="{height: '150px'}"

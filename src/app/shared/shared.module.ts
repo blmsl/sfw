@@ -18,6 +18,7 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { SubmitIfValidDirective } from './directives/submit/submit-if-valid.directive';
 import { MediaModule } from './components/media/media.module';
 import { LoadingIndicatorModule } from './components/loading-indicator/loading-indicator.module';
+import { AlertService } from './services/alert/alert.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,9 @@ import { LoadingIndicatorModule } from './components/loading-indicator/loading-i
     MatProgressSpinnerModule,
     MediaModule
   ],
-  providers: []
+  providers: [
+    AlertService
+  ]
 })
 export class SharedModule {
 }

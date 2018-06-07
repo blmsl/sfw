@@ -51,7 +51,7 @@ export const birthdayReminderCron = functions.pubsub.topic('daily-tick').onPubli
 
       // if no there are no birthdays today
       if (list === '<ul></ul>') {
-        console.log('No birthdays today' + moment().format("DD.MM"));
+        birthdayList += '<li>Heute hat niemand Geburtstag.</li>';
       }
 
       const welcomeMsg = {
@@ -70,13 +70,15 @@ export const birthdayReminderCron = functions.pubsub.topic('daily-tick').onPubli
       return sgMail.send(welcomeMsg);
     }).then(() => {
 
-      recipients.forEach((recipient: {
+      console.log('ToDo: send email to ' + recipients);
+
+      /* recipients.forEach((recipient: {
         email: string,
         name: string,
         age: number
       }) => {
         console.log('ToDo: send email to ' + recipient.email + ' - ' + recipient.name + ' ' + recipient.age);
-      });
+      }); */
 
     });
 

@@ -20,17 +20,16 @@ import { CategoryTypeService } from '../../../shared/services/category-type/cate
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
 import { UserService } from '../../../shared/services/user/user.service';
 import { IUser } from '../../../shared/interfaces/user/user.interface';
-import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material';
 import {
   debounceTime,
   distinctUntilChanged
 } from 'rxjs/operators';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'category-edit',
-  templateUrl: 'category-edit.component.html',
-  styleUrls: ['category-edit.component.css']
+  templateUrl: 'category-edit.component.html'
 })
 
 export class CategoryEditComponent implements OnInit {
@@ -46,6 +45,7 @@ export class CategoryEditComponent implements OnInit {
 
   constructor(private categoryService: CategoryService,
     private snackBar: MatSnackBar,
+    private alertService: AlertService,
     private categoryTypeService: CategoryTypeService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -102,28 +102,11 @@ export class CategoryEditComponent implements OnInit {
         if (redirect) {
           this.redirectToList();
         }
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            status: 'success',
-            message: 'general.applications.updateMessage'
-          },
-          duration: 2500,
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
+        this.alertService.showSnackBar('success', 'general.applications.updateMessage');
       },
-      (error: any) => console.log(error)
+      (error: any) => this.alertService.showSnackBar('error', error.message)
     );
   }
-
-  /*
-   cancel() {
-   this.redirectToList();
-   }
-
-   removeCategory(event: ICategory) {
-   this.categoryService.removeCategory(event).then(() => this.redirectToList());
-   } */
 
   redirectToList() {
     this.router.navigate(['/categories']).then();

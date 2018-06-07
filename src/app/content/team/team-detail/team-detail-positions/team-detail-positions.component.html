@@ -1,5 +1,5 @@
 <div fxLayout="row"
-     fxLayoutWrap="wrap"
+
      *ngIf="team && members && categories; else loadingTemplate">
 
   <div fxFlex.gt-sm="49"
@@ -25,7 +25,7 @@
 
     <div *ngFor="let position of team.assignedPositions | orderBy: 'position.type'"
          fxLayout="row"
-         fxLayoutWrap="wrap">
+         >
       <h4 fxFlex="100">{{ (categories | filterBy: ['id'] : position.type)[0].title}}:</h4>
 
       <mat-list dense

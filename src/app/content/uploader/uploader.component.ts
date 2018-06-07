@@ -17,20 +17,20 @@ export class UploaderComponent implements OnInit {
   public uploaderConfig: IUploaderConfig = {
     autoUpload: false,
     showDropZone: true,
-    removeAfterUpload: false,
+    removeAfterUpload: true,
     showQueue: true
   };
 
   public uploaderOptions: IUploaderOptions = {
-    itemID: '',
+    itemId: '',
     path: 'not-categorized',
     queueLimit: 25
   };
 
   constructor(private afs: AngularFirestore, private snackBar: MatSnackBar) {
-    const id = afs.createId();
-    this.uploaderOptions.id = id;
-    this.uploaderOptions.path += '/' + id;
+    // const id = afs.createId();
+    // this.uploaderOptions.id = id;
+    // this.uploaderOptions.path += '/' + id;
   }
 
   ngOnInit() {

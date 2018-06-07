@@ -1,5 +1,4 @@
-<div fxLayout="row"
-     fxLayoutWrap="wrap">
+<div fxLayout="row">
 
   <!--<div fxFlex.gt-sm="50"
       fxFlex="100">
@@ -36,79 +35,79 @@
    </div>
 
     <div fxLayout="row"
-         fxLayoutWrap="wrap">
+         >-->
 
-      <div fxFlex.gt-xs="100"
-           fxFlex.gt-sm="49"
-           fxFlex="100">
-        <!--<mat-card>
-          <mat-card-title class="mat-red">
-            <h2 mat-card-widget-title>{{'general.dashboard.birthdays' | translate}}</h2>
-            <hr>
-          </mat-card-title>
-          <mat-card-content>
-            <mat-list *ngIf="members$ | async as members; else loadingTemplate">
+  <div fxFlex.gt-sm="24"
+       fxFlex="100">
+    <mat-card>
+      <mat-card-title class="mat-red">
+        <h2 mat-card-widget-title>{{'general.dashboard.birthdays' | translate}}</h2>
+        <hr>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-list *ngIf="members$ | async as members; else loadingTemplate">
 
-              <h3 mat-subheader>{{'general.dashboard.today' | translate}}, {{today.format('DD.MM.YY')}}</h3>
+          <h3 mat-subheader>{{'general.dashboard.today' | translate}}, {{today.format('DD.MM.YY')}}</h3>
 
-              <mat-list-item *ngFor="let member of members | birthdayFilter: today; let last = last">
-                <img mat-list-avatar
-                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
-                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
-                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
-                <p mat-line>
+          <mat-list-item *ngFor="let member of members | birthdayFilter: today; let last = last">
+            <img mat-list-avatar
+                 [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
+                 alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
+            <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
+            <p mat-line>
               <span class="demo-secondary-text">
                 {{'general.dashboard.isGetting' | translate}}
                 {{memberService.calculateAge(member.mainData.birthday)}}
                 {{'general.dashboard.yearsOld' | translate}}
               </span>
-                </p>
-                <mat-divider inset="true" *ngIf="!last"></mat-divider>
-              </mat-list-item>
+            </p>
+            <mat-divider inset="true" *ngIf="!last"></mat-divider>
+          </mat-list-item>
 
-              <mat-divider></mat-divider>
+          <mat-divider></mat-divider>
 
-              <h3 mat-subheader>{{'general.dashboard.tomorrow' | translate}}, {{tomorrow.format('DD.MM.YY')}}</h3>
+          <h3 mat-subheader>{{'general.dashboard.tomorrow' | translate}}, {{tomorrow.format('DD.MM.YY')}}</h3>
 
-              <mat-list-item *ngFor="let member of members | birthdayFilter: tomorrow; let last = last">
-                <img mat-list-avatar
-                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
-                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
-                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
-                <p mat-line>
+          <mat-list-item *ngFor="let member of members | birthdayFilter: tomorrow; let last = last">
+            <img mat-list-avatar
+                 [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
+                 alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
+            <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
+            <p mat-line>
               <span class="demo-secondary-text">
                 {{'general.dashboard.willGet' | translate}}
                 {{memberService.calculateAge(member.mainData.birthday)}}
                 {{'general.dashboard.yearsOld' | translate}}
               </span>
-                </p>
-                <mat-divider inset="true" *ngIf="!last"></mat-divider>
-              </mat-list-item>
+            </p>
+            <mat-divider inset="true" *ngIf="!last"></mat-divider>
+          </mat-list-item>
 
-              <mat-divider></mat-divider>
+          <mat-divider></mat-divider>
 
-              <h3 mat-subheader>{{'general.dashboard.yesterday' | translate}}, {{yesterday.format('DD.MM.YY')}}</h3>
+          <h3 mat-subheader>{{'general.dashboard.yesterday' | translate}}, {{yesterday.format('DD.MM.YY')}}</h3>
 
-              <mat-list-item *ngFor="let member of members | birthdayFilter: yesterday; let last = last">
-                <img mat-list-avatar
-                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
-                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
-                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
-                <p mat-line>
+          <mat-list-item *ngFor="let member of members | birthdayFilter: yesterday; let last = last">
+            <img mat-list-avatar
+                 [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
+                 alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
+            <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
+            <p mat-line>
               <span class="demo-secondary-text">
                 {{'general.dashboard.got' | translate}}
                 {{memberService.calculateAge(member.mainData.birthday)}}
                 {{'general.dashboard.yearsOld' | translate}}
               </span>
-                </p>
-                <mat-divider inset="true" *ngIf="!last"></mat-divider>
-              </mat-list-item>
+            </p>
+            <mat-divider inset="true" *ngIf="!last"></mat-divider>
+          </mat-list-item>
 
-            </mat-list>
-          </mat-card-content>
-        </mat-card>
-      </div>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
+  <!--
       <div fxFlex.gt-sm="49"
            fxFlexOffset.gt-sm="2"
            fxFlex="100">
@@ -135,8 +134,7 @@
   <div fxFlex.gt-sm="50"
        fxFlex="100">
 
-    <div fxLayout="row"
-         fxLayoutWrap="wrap">
+    <div fxLayout="row">
 
       <div fxFlex.gt-sm="50"
            fxFlex="100">
@@ -170,7 +168,7 @@
     </div>
 
     <div fxLayout="row"
-         fxLayoutWrap="wrap">
+    >
       <div fxFlex.gt-sm="50"
            fxFlex="100">
         <mat-card class="card-widget mat-teal">

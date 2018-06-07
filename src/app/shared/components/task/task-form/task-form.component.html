@@ -1,7 +1,7 @@
 <form class="form-horizontal" novalidate (ngSubmit)="saveTask()" [formGroup]="form">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row" fxLayoutWrap="wrap">
+      <div fxLayout="row" >
         <div fxFlex.gt-xs="100" fxFlex.gt-sm="100" fxFlex="100" style="margin-bottom: 15px;">
           <mat-form-field hintLabel="Max {{titleMaxLength}} characters" style="width: 100%">
             <input matInput maxlength="{{titleMaxLength}}"

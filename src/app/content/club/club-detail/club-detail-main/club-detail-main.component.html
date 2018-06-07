@@ -1,5 +1,5 @@
 <div fxLayout="row"
-     fxLayoutWrap="wrap">
+     >
 
   <div fxFlex.gt-sm="75"
        fxFlex.gt-xs="100">
@@ -35,7 +35,7 @@
       <mat-list-item *ngIf="club.info && club.info.assignedContact; else noAssignedContactTemplate">
         <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.contact' | translate}}</h3>
         <span *ngFor="let member of members | filterBy: ['id'] : club.info.assignedContact">
-            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
+            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday }} | date: 'dd.MM.yy'
         </span>
       </mat-list-item>
 

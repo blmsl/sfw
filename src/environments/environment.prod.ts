@@ -1,6 +1,7 @@
 export const environment = {
   appId: 'sfw-app',
   production: true,
+  enableLogging: true,
   firebug: false,
   gaTrackingCode: 'UA-109145893-2',
   googleAnalytics: true,

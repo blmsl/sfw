@@ -1,11 +1,22 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit
+} from '@angular/core';
 import { MemberService } from '../../../shared/services/member/member.service';
 import { IMember } from '../../../shared/interfaces/member/member.interface';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { Observable } from 'rxjs';
-import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material';
 import { IProfile } from '../../../shared/interfaces/member/profile.interface';
 import { IInterview } from '../../../shared/interfaces/member/interview.interface';
 import { IOpinion } from '../../../shared/interfaces/member/opinion.interface';
@@ -13,6 +24,9 @@ import {
   debounceTime,
   distinctUntilChanged
 } from 'rxjs/operators';
+import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
+import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'member-edit',
@@ -33,12 +47,25 @@ export class MemberEditComponent implements OnInit {
   //public clubs$: Observable<IClub[]>;
   //public teams$: Observable<ITeam[]>;
 
+  public uploaderConfig: IUploaderConfig = {
+    autoUpload: true,
+    showDropZone: true,
+    removeAfterUpload: true,
+    showQueue: false
+  };
+
+  public uploaderOptions: IUploaderOptions = {
+    itemId: '',
+    path: 'members/profile-images',
+    queueLimit: 1
+  };
+
   constructor(public route: ActivatedRoute,
-    public snackBar: MatSnackBar,
     //private clubService: ClubService,
     //private teamService: TeamService,
     private fb: FormBuilder,
-    private memberService: MemberService,
+    private alertService: AlertService,
+    public memberService: MemberService,
     private router: Router) {
     //this.clubs$ = clubService.clubs$;
     this.members$ = memberService.members$;
@@ -49,6 +76,7 @@ export class MemberEditComponent implements OnInit {
     this.route.data.subscribe((data: { member: IMember }) => {
       this.member = data.member;
       this.savedMember = Object.freeze(Object.assign({}, this.member));
+      this.uploaderOptions.itemId = this.uploaderOptions.id = this.member.id;
     });
 
     this.form = this.fb.group({
@@ -71,18 +99,25 @@ export class MemberEditComponent implements OnInit {
     ).subscribe((changes: IMember) => {
       this.member = Object.assign({}, this.member, changes);
       if (!this.form.invalid) {
+        console.log('save');
+        console.log(this.member);
         this.saveMember();
       }
     });
 
-    if (this.member.isImported) {
+    if (this.member.dfbImport) {
+      this.form.get('dfbData').disable();
+      this.form.get('mainData').disable();
+    }
+
+    if (this.member.driveImport) {
       this.form.get('address').disable();
       this.form.get('ahData').disable();
       this.form.get('clubData').disable();
-      this.form.get('dfbData').disable();
       this.form.get('contact').disable();
       this.form.get('mainData').disable();
     }
+
   }
 
   initAddress(): FormGroup {
@@ -91,7 +126,7 @@ export class MemberEditComponent implements OnInit {
       county: this.member.address ? this.member.address.county : '',
       houseNumber: this.member.address ? this.member.address.houseNumber : '',
       streetName: this.member.address ? this.member.address.streetName : '',
-      zip: this.member.address ? this.member.address.zip : '',
+      zip: this.member.address ? this.member.address.zip : ''
     });
   }
 
@@ -100,7 +135,7 @@ export class MemberEditComponent implements OnInit {
       joined: this.member.ahData ? this.member.ahData.joined : '',
       left: this.member.ahData ? this.member.ahData.left : '',
       payment: this.member.ahData ? this.member.ahData.payment : '',
-      status: this.member.ahData ? this.member.ahData.status : '',
+      status: this.member.ahData ? this.member.ahData.status : ''
     });
   }
 
@@ -111,7 +146,7 @@ export class MemberEditComponent implements OnInit {
       left: this.member.clubData ? this.member.clubData.left : '',
       payment: this.member.clubData ? this.member.clubData.payment : '',
       positionsInClub: this.member.contact ? this.member.clubData.positionsInClub : '',
-      status: this.member.contact ? this.member.clubData.status : '',
+      status: this.member.contact ? this.member.clubData.status : ''
     });
   }
 
@@ -121,7 +156,7 @@ export class MemberEditComponent implements OnInit {
       fax: this.member.contact ? this.member.contact.fax : '',
       phoneHome: this.member.contact ? this.member.contact.phoneHome : '',
       phoneMobile: this.member.contact ? this.member.contact.phoneMobile : '',
-      phoneWork: this.member.contact ? this.member.contact.phoneWork : '',
+      phoneWork: this.member.contact ? this.member.contact.phoneWork : ''
     });
   }
 
@@ -177,7 +212,7 @@ export class MemberEditComponent implements OnInit {
 
   initInterview(interview: IInterview): FormGroup {
     return this.fb.group({
-      assignedArticleId: [interview.assignedArticleId ? interview.assignedArticleId : '', [Validators.required, Validators.maxLength(100)]],
+      assignedArticleId: [interview.assignedArticleId ? interview.assignedArticleId : '', [Validators.required, Validators.maxLength(100)]]
     });
   }
 
@@ -211,8 +246,8 @@ export class MemberEditComponent implements OnInit {
   initOpinion(opinion: IOpinion): FormGroup {
     return this.fb.group({
       type: [opinion ? opinion.type : 'select'],
-      name: this.initNameModel(),
-      assignedMember: this.initAssignedMemberModel(),
+      name: this.initNameModel(opinion),
+      assignedMember: this.initAssignedMemberModel(opinion),
       comment: [opinion ? opinion.comment : '', [Validators.required]]
     });
   }
@@ -223,16 +258,18 @@ export class MemberEditComponent implements OnInit {
     ctrl.setValue($event.type);
   }
 
-  initNameModel() {
+  initNameModel(opinion: IOpinion) {
     return this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-      lastName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      firstName: [opinion.name.firstName],
+      lastName: [opinion.name.lastName]
+      // , [Validators.required, Validators.minLength(5), Validators.maxLength(100)]
     });
   }
 
-  initAssignedMemberModel(): FormGroup {
+  initAssignedMemberModel(opinion: IOpinion): FormGroup {
     return this.fb.group({
-      assignedMember: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]]
+      assignedMember: [opinion.assignedMember]
+      // , [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ]
     });
   }
 
@@ -240,7 +277,10 @@ export class MemberEditComponent implements OnInit {
     const control = <FormArray>this.form.controls['opinions'];
     const opinion: IOpinion = {
       type: 'select',
-      name: '',
+      name: {
+        firstName: '',
+        lastName: ''
+      },
       assignedMember: null,
       comment: ''
     };
@@ -267,7 +307,7 @@ export class MemberEditComponent implements OnInit {
   initProfileEntry(profile: IProfile): FormGroup {
     return this.fb.group({
       entry: [profile ? profile.entry : '', [Validators.required, Validators.maxLength(100)]],
-      value: [profile ? profile.value : '', [Validators.required, Validators.maxLength(100)]],
+      value: [profile ? profile.value : '', [Validators.required, Validators.maxLength(100)]]
     });
   }
 
@@ -294,23 +334,21 @@ export class MemberEditComponent implements OnInit {
     } else {
       action = this.memberService.createMember(this.member);
     }
-    action.then(
-      () => {
+    /*action.then(() => {
+        console.log(1);
         if (redirect) {
           this.redirectToList();
         }
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            status: 'success',
-            message: 'general.applications.updateMessage'
-          },
-          duration: 2500,
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
+        this.alertService.showSnackBar('success', 'general.members.edit.saved');
       },
-      (error: any) => console.log(error)
-    );
+      (error: any) => {
+        console.log(2);
+        this.alertService.showSnackBar('error', error.message);
+      }
+    ).catch((error: any) => {
+      console.log(3);
+      this.alertService.showSnackBar('error', error.message);
+    }); */
   }
 
   cancel() {

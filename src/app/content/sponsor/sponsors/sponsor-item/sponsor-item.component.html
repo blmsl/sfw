@@ -4,7 +4,9 @@
       <div class="sponsor-badge">
         <h3>{{ sponsor.title }}</h3>
       </div>
-      <img [src]="sponsor.imageUrl" *ngIf="sponsor.imageUrl">
+      <img [src]="currentImage"
+           mat-card-image
+           *ngIf="currentImage; else loadingTemplate"/>
       <figcaption>
         <p>
           <a [routerLink]="['/sponsors/details', sponsor.id]"
@@ -26,10 +28,18 @@
       </figcaption>
     </figure>
   </div>
-  <mat-card-content [perfectScrollbar]="config" [disabled]="mediaMatcher.matches" style="max-height: 250px">
+  <mat-card-content [perfectScrollbar]="config"
+                    [disabled]="mediaMatcher.matches"
+                    style="max-height: 250px">
     <div>
       <span [innerHtml]="sponsor.description"></span>
-      <span class="mat-text-muted text-sm" [innerHtml]="sponsor.internalInfo">}</span>
+      <span class="mat-text-muted text-sm"
+            [innerHtml]="sponsor.internalInfo">}
+      </span>
     </div>
   </mat-card-content>
 </mat-card>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

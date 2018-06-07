@@ -4,12 +4,12 @@
       [formGroup]="form">
 
   <div fxLayout="row"
-       fxLayoutWrap="wrap">
+       >
 
     <div fxFlex.gt-sm="50"
          fxFlex="100">
 
-      <div fxLayout="row" fxLayoutWrap="wrap">
+      <div fxLayout="row" >
         <mat-form-field fxFlex.gt-sm="49"
                         fxFlex="100">
           <input matInput maxlength="{{titleMaxLength}}"
@@ -28,7 +28,7 @@
         </mat-form-field>
       </div>
 
-      <div fxLayout="row" fxLayoutWrap="wrap">
+      <div fxLayout="row" >
         <mat-form-field fxFlex="100">
           <mat-select placeholder="{{'general.teams.edit.assignedCategories' | translate}}"
                       formControlName="assignedTeamCategories"
@@ -45,7 +45,7 @@
         </mat-form-field>
       </div>
 
-      <div fxLayout="row" fxLayoutWrap="wrap">
+      <div fxLayout="row" >
         <mat-form-field fxFlex.gt-sm="49"
                         fxFlex="100">
           <mat-select placeholder="{{'general.teams.edit.assignedClub' | translate}}"
@@ -71,7 +71,7 @@
       </div>
 
       <div fxLayout="row"
-           fxLayoutWrap="wrap">
+           >
         <mat-form-field fxFlex="100">
           <input matInput
                  placeholder="{{'general.teams.edit.externalLink' | translate}}"
@@ -80,7 +80,7 @@
       </div>
 
       <div fxLayout="row"
-           fxLayoutWrap="wrap">
+           >
         <div fxFlex="100"
              style="margin: 25px 0;">
           <mat-checkbox formControlName="isOfficialTeam" fxFlex="95">

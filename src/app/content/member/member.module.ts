@@ -36,6 +36,8 @@ import { CategoryTypeService } from '../../shared/services/category-type/categor
 import { IsEmptyPipe } from '../../shared/pipes/is-empty.pipe';
 import { BirthdayModule } from '../../shared/components/birthday/birthday.module';
 import { MemberOfTheWeekService } from '../../shared/services/member/member-of-the-week.service';
+import { MediaModule } from '../../shared/components/media/media.module';
+import { MediaItemService } from '../../shared/services/media/media-item.service';
 
 @NgModule({
   imports: [
@@ -49,6 +51,7 @@ import { MemberOfTheWeekService } from '../../shared/services/member/member-of-t
     MatSelectModule,
     MatSnackBarModule,
     MatTabsModule,
+    MediaModule,
     memberRoutingModule,
     PerfectScrollbarModule,
     QuillModule,
@@ -79,6 +82,7 @@ import { MemberOfTheWeekService } from '../../shared/services/member/member-of-t
     CategoryService,
     CategoryTypeService,
     ClubService,
+    MediaItemService,
     MemberOfTheWeekService,
     MemberResolver,
     MemberService,

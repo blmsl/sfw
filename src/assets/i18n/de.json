@@ -5,6 +5,7 @@
   "auth/invalid-email": "Du hast keine gültige E-Mail Adresse eingegeben.",
   "auth/user-disabled": "Dein Benutzeraccount wurde von einem Administrator deaktiviert.",
   "auth/user-not-found": "Ein Benutzer mit diesen Daten wurde nicht in unserem System gefunden.",
+  "auth/operation-not-allowed": "Diese Login-Methode wurde gesperrt.",
   "auth/wrong-password": "Du hast ein falsches Passwort für diesen Account angegeben.",
   "auth/send-verification": "Eine weitere E-Mail zur Bestätigung Deines Accounts wurde Dir gesendet.",
   "auth/successful-signup": "Deine Registrierung war erfolgreich! Wir haben Dir eine E-Mail gesendet zum Bestätigen Deiner Adresse gesendet. Nach dem Klicken des Links in der Mail hast Du Zugriff auf das System.",
@@ -12,6 +13,10 @@
   "Required": "Hier wird eine Eingabe benötigt",
   "Global": {
     "Login": {
+      "facebookLogin": "Facebook",
+      "twitterLogin": "Twitter",
+      "googleLogin": "Google",
+      "socialLogin": "Anmeldung mit ...",
       "defaultLoginMessage": "Benutze die E-Mail <span style='font-weight: 500;'>demo@demo.com</span> und das Passwort <span style='font-weight: 500;'>demo123</span> für einen Demo&ndash;Zugang!",
       "passwordResetSentMessage": "Eine E-Mail zum Zurücksetzen Deines Passwortes wurde gesendet.",
       "adminArea": {
@@ -154,8 +159,7 @@
       },
       "list": {
         "addArticle": "Neuer Artikel",
-        "allAuthors": "Alle Artikel anzeigen",
-        "allStatus": "Alle Artikel",
+        "allAuthors": "Artikel aller Authoren",
         "allTags": "Alle Schlagworte",
         "articlesPerPage": "Artikel pro Seite",
         "colTitles": {
@@ -178,6 +182,13 @@
         "noResult": "Es wurden noch keine Artikel erstellt",
         "sortDateAsc": "Älteste zuerst",
         "sortDateDesc": "Neueste zuerst",
+        "statuses": {
+          "all": "Alle Artikel",
+          "draft": "Nur Entwürfe",
+          "featured": "Hervorgehobene Artikel",
+          "published": "Bereits veröffentlichte Artikel",
+          "scheduled": "Zur Veröffentlichung geplante Artikel"
+        },
         "title": "Artikel"
       },
       "matches": {
@@ -231,6 +242,7 @@
           "title": "Titel",
           "category": "Kategorie"
         },
+        "deleted": "Die Kategorie wurde gelöscht.",
         "createCategory": "Kategorie erstellen",
         "filterByAssignedCategoryType": "Aus der Kategorie",
         "filterTitle": "Kategorien filtern nach",
@@ -654,6 +666,7 @@
           "comment": "Bemerkung",
           "contact": "Kontaktdaten",
           "createMember": "Mitglied erstellen",
+          "delete": "Mitglied löschen",
           "email": "E-Mail",
           "fax": "Fax-Nr.",
           "female": "Frau",
@@ -706,7 +719,7 @@
           "comment": "Der Kommentar",
           "firstName": "Vorname des Kommentators",
           "lastName": "Nachname des Kommentators",
-          "perSelectField": "aus der Mitgliederliste wählen",
+          "perSelectField": "aus der Mitgliederliste",
           "perTextField": "freie Texteingabe",
           "userTitle": "Wähle bitte das Mitglied aus der Liste",
           "text": "Hier können Aussagen von Mitspielern, ehemaligen Trainern usw. erfasst werden.",
@@ -727,6 +740,9 @@
         "ah": "AH-Mitglied",
         "player": "Spieler",
         "viewProfile": "Profil anzeigen"
+      },
+      "list": {
+        "deleted": "Das Mitglied wurde gelöscht."
       },
       "statistics": {
         "ahTitle": "Alte Herren",
@@ -1056,6 +1072,7 @@
         "allSponsorTypes": "Alle Sponsoren anzeigen",
         "createSponsor": "Sponsor hinzufügen",
         "delete": "Löschen",
+        "deleted": "Der Sponsor und die angehängten Dateien wurden gelöscht",
         "edit": "Editieren",
         "editSponsorTitle": "Sponsor editieren",
         "filter": "filtern",

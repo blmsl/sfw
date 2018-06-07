@@ -1,5 +1,5 @@
 <div fxLayout="row"
-     fxLayoutWrap="wrap"
+
      *ngIf="locations; else loadingTemplate"
      [formGroup]="form">
 
@@ -7,7 +7,7 @@
        fxFlex.gt-xs="100">
 
     <div fxLayout="row"
-         fxLayoutWrap="wrap">
+         >
 
       <mat-form-field fxFlex.gt-sm="33"
                       fxFlex.gt-xs="100">
@@ -33,7 +33,7 @@
     </div>
 
     <div fxLayout="row"
-         fxLayoutWrap="wrap"
+
          formGroupName="info">
       <mat-form-field fxFlex.gt-sm="16"
                       fxFlex.gt-xs="100">
@@ -80,7 +80,7 @@
     </div>
 
     <div fxLayout="row"
-         fxLayoutWrap="wrap"
+
          formGroupName="fussballde">
       <mat-form-field fxFlex.gt-sm="33"
                       fxFlex.gt-xs="100">
@@ -99,7 +99,7 @@
     </div>
 
     <div fxLayout="row"
-         fxLayoutWrap="wrap"
+
          style="margin-top: 25px">
       <div fxFlex="100">
         <label>{{'general.clubs.edit.description' | translate}}</label>

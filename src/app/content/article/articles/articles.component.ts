@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../../../shared/services/article/article.service';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { IArticle } from '../../../shared/interfaces/article.interface';
 import { Observable } from 'rxjs';
-import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { UserService } from '../../../shared/services/user/user.service';
 import { IUser } from '../../../shared/interfaces/user/user.interface';
+import { AlertService } from '../../../shared/services/alert/alert.service';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/internal/operators';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'articles',
@@ -15,62 +17,46 @@ import { IUser } from '../../../shared/interfaces/user/user.interface';
   styleUrls: ['articles.component.scss']
 })
 
-export class ArticlesComponent {
+export class ArticlesComponent implements OnInit {
 
   public articles$: Observable<IArticle[]>;
   public categories$: Observable<ICategory[]>;
-  public users$: Observable<IUser[]>;
+  public form: FormGroup;
 
   constructor(private articleService: ArticleService,
     private userService: UserService,
-    private categoryService: CategoryService,
-    public snackBar: MatSnackBar) {
-    this.users$ = userService.users$;
+    private alertService: AlertService,
+    private fb: FormBuilder,
+    private categoryService: CategoryService) {
     this.articles$ = articleService.articles$;
     this.categories$ = categoryService.categories$;
   }
 
+  ngOnInit() {
+    this.form = this.fb.group({
+      author: '',
+      status: '',
+      tags: '',
+      sorting: '-'
+    });
+
+    this.form.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()
+    ).subscribe((changes: any) => {
+      console.log(changes);
+    });
+  }
+
   removeArticle($event) {
     this.articleService.removeArticle($event).then(
-      () => {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            status: 'success',
-            message: 'general.articles.edit.deleteSuccess'
-          },
-          duration: 2500
-        });
-      },
-      (error: any) => {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            status: 'error',
-            message: error
-          },
-          duration: 2500
-        });
-      });
+      () => this.alertService.showSnackBar('success', 'general.articles.edit.deleteSuccess'),
+      (error: any) => this.alertService.showSnackBar('error', error.message));
   }
 
   updateArticle($event) {
     this.articleService.updateArticle($event.article.id, $event.article).then(
-      () => {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            status: 'success',
-            message: 'general.articles.edit.updateSuccess'
-          },
-          duration: 2500
-        });
-      },
-      (error: any) => {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            status: 'error',
-            message: error
-          },
-          duration: 2500
-        });
-      });
+      () => this.alertService.showSnackBar('success', 'general.articles.edit.updateSuccess'),
+      (error: any) => this.alertService.showSnackBar('error', error.message));
   }
 }

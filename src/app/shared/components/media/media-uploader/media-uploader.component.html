@@ -9,11 +9,14 @@
 
     <!-- ToDo: Nur anzeigen, wenn auch tatsächlich ein Foto vorhanden ist -->
     <button mat-icon-button
-            *ngIf="uploaderOptions.queueLimit === 1"
+            color="warn"
+            (click)="removeMediaItem(currentImage)"
+            *ngIf="uploaderOptions.queueLimit === 1 && currentImage"
             type="button">
       <mat-icon>delete</mat-icon>
     </button>
     <button mat-icon-button
+            color="accent"
             (click)="unsplashSidebar.emit()"
             type="button">
       <mat-icon>add_a_photo</mat-icon>
@@ -23,23 +26,13 @@
 
   <mat-card-content>
 
-    <ul>
-      <li>
-        Upload
-        <ul>
-          <li>Wenn bereits ein Bild vorhanden ist (bei einem Single-Upload), soll das alte Bild
-            gelöscht werden
-          </li>
-          <li>Wenn ein Objekt, für das ich gerade eine Datei hochlade, noch nicht vorhanden ist,
-            soll die Datei beim Speichern des Hauptobjektes trotzdem verknüpft werden
-          </li>
-          <li>Upload von Bildern von unsplash.com</li>
-        </ul>
-      </li>
-    </ul>
+    <img mat-card-image
+         style="padding-bottom: 25px"
+         *ngIf="currentImage && uploaderOptions.queueLimit === 1"
+         [src]="currentImage" />
 
     <div class="dropZone"
-         dropZone=""
+         dropZone
          (hovered)="toggleHover($event)"
          (dropped)="handleDrop($event)"
          [class.hovering]="isHovering">
@@ -99,7 +92,7 @@
     <div fxLayout="row">
 
       <mat-list fxFlex="100"
-                *ngIf="uploaderConfig.showQueue">
+                *ngIf="uploaderConfig.showQueue && currentUploads.length > 0">
         <h3 matSubheader>{{'general.media.uploader.queue' | translate}}</h3>
 
         <mat-list-item>
@@ -116,7 +109,7 @@
           <div fxFlex="15">{{upload.file.name}}</div>
 
           <div fxFlex="19" fxFlexOffset="1">
-            <a *ngIf="upload.downloadURL | async as url"
+            <a *ngIf="upload.downloadURL"
                target="_blank"
                [href]="url">
               {{'general.media.upload.preview' | translate }}

@@ -1,22 +1,31 @@
 import {
-  Component,
-  ViewChild,
-  forwardRef,
-  Attribute,
-  Input,
-  ElementRef,
   AfterViewInit,
-  Renderer2
+  Attribute,
+  Component,
+  ElementRef,
+  forwardRef,
+  Input,
+  Renderer2,
+  ViewChild
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, Validator, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator
+} from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import * as screenfull from "screenfull";
+import * as screenfull from 'screenfull';
 import { MarkdownHelpComponent } from './markdown-help/markdown-help.component';
 import { MatDialog } from '@angular/material';
 
 declare let ace: any;
 declare let marked: any;
 declare let hljs: any;
+
+const XSMALL_WIDTH_BREAKPOINT = 480;
 
 @Component({
   selector: 'sfw-editor',
@@ -45,7 +54,7 @@ export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, 
   hideToolbar: boolean = false;
 
   @Input()
-  height: string = "300px";
+  height: string = '300px';
 
   @Input()
   preRender: Function;
@@ -54,18 +63,21 @@ export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, 
   get mode(): string {
     return this._mode || 'editor';
   }
+
   set mode(value: string) {
     if (!value || (value.toLowerCase() !== 'editor' && value.toLowerCase() !== 'preview')) {
       value = 'editor';
     }
     this._mode = value;
   }
+
   _mode: string;
 
   @Input()
   get options(): any {
     return this._options;
   }
+
   set options(value: any) {
     this._options = value || {
       showBorder: true,
@@ -76,12 +88,16 @@ export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, 
       this._hideIcons[v] = true;
     });
   }
+
+  mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${XSMALL_WIDTH_BREAKPOINT}px)`);
+
   _options: any;
   _hideIcons: any = {};
 
   get markdownValue(): any {
     return this._markdownValue || '';
   }
+
   set markdownValue(value: any) {
     this._markdownValue = value;
     this._onChange(value);
@@ -97,6 +113,7 @@ export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, 
       }, 100);
     }
   }
+
   _markdownValue: any;
 
   _renderMarkTimeout: any;
@@ -111,12 +128,13 @@ export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, 
 
   // added TH
   public sf: any;
-  public dialog: MatDialog;
 
-  _onChange = (_: any) => { };
-  _onTouched = () => { };
+  _onChange = (_: any) => {
+  };
+  _onTouched = () => {
+  };
 
-  constructor(
+  constructor(public dialog: MatDialog,
     @Attribute('required') public required: boolean = false,
     @Attribute('maxlength') public maxlength: number = -1,
     private _renderer: Renderer2,
@@ -157,10 +175,10 @@ export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, 
     this.editor = ace.edit(editorElement);
     this.editor.$blockScrolling = Infinity;
     this.editor.getSession().setUseWrapMode(true);
-    this.editor.getSession().setMode("ace/mode/markdown");
+    this.editor.getSession().setMode('ace/mode/markdown');
     this.editor.setValue(this.markdownValue || '');
 
-    this.editor.on("change", (e: any) => {
+    this.editor.on('change', (e: any) => {
       let val = this.editor.getValue();
       this.markdownValue = val;
     });
@@ -239,7 +257,7 @@ export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, 
         break;
       case 'Code':
         initText = 'Source Code';
-        selectedText = "```language\r\n" + (selectedText || initText) + "\r\n```";
+        selectedText = '```language\r\n' + (selectedText || initText) + '\r\n```';
         startSize = 3;
         break;
     }

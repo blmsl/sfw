@@ -6,13 +6,12 @@ import { MemberService } from '../../shared/services/member/member.service';
 import { IMember } from '../../shared/interfaces/member/member.interface';
 import { CalendarService } from '../../shared/services/calendar/calendar.service';
 import * as moment from 'moment';
-import { switchMap } from 'rxjs/operators';
-import { tap } from 'rxjs/internal/operators';
+import { first, map, switchMap, take, takeLast, tap } from 'rxjs/internal/operators';
 
 @Injectable()
 export class EventsResolver implements Resolve<ICalendarEvent[]> {
 
-  private events$: any[] = [];
+  public events$: any[] = [];
 
   constructor(private memberService: MemberService,
     private calendarService: CalendarService) {
@@ -20,12 +19,10 @@ export class EventsResolver implements Resolve<ICalendarEvent[]> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICalendarEvent[]> {
 
-    console.log('Events-resolver: add match-fixtures to calendar');
-
     return this.memberService.members$.pipe(
       switchMap((members: IMember[]) => {
-
         const memberEvents: ICalendarEvent[] = [];
+
         members.forEach((member: IMember) => {
           if (member.mainData.birthday) {
             const event: any = {
@@ -36,18 +33,27 @@ export class EventsResolver implements Resolve<ICalendarEvent[]> {
           }
         });
         this.events$.push(...memberEvents);
-        console.log(this.events$);
         return this.events$;
-      })
+      }),
+
+      map(() => {
+        return this.events$;
+      }),
+      first()
     );
-    /* return this.calendarService.getCalendarEvents().map((calEvents: any) => {
-      calEvents.items.forEach((event: ICalendarEvent) => {
-        const startDate = event.start.dateTime.substr(0, 10);
-        const calendarEvent: any = {
-          title: event.summary,
-          start: startDate
-        };
-        this.events$.push(calendarEvent);
+
+    /*
+    return this.calendarService.getCalendarEvents().map(
+      (calEvents: any) => {
+        calEvents.items.forEach((event: ICalendarEvent) => {
+          const startDate = event.start.dateTime.substr(0, 10);
+          const calendarEvent: any = {
+            title: event.summary,
+            start: startDate
+          };
+          this.events$.push(calendarEvent);
+        });
+        return this.events$;
       }); */
   }
 }

@@ -1,8 +1,13 @@
-.md-editor-container {
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+
+.editor-container {
   margin-bottom: 15px;
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
-
+/*
 .md-editor-container.fullscreen {
   margin: 0;
   position: fixed;
@@ -26,6 +31,7 @@
   height: 100%;
 }
 
+/*
 .md-editor-container .tool-bar {
   background-color: whitesmoke;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -78,3 +84,4 @@
   font-size: 12px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
+*/

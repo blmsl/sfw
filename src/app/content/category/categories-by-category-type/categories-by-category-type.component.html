@@ -4,11 +4,17 @@
     {{'general.categories.list.categoriesByCategoryType' | translate}}
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
-  <mat-card-content *ngIf="isDataAvailable">
-    <canvas height="200" baseChart class="chart"
+  <mat-card-content>
+    <canvas *ngIf="isDataAvailable; else loadingTemplate"
+            height="200"
+            baseChart
             [data]="doughnutChartData"
             [labels]="doughnutChartLabels"
             [options]="doughnutOptions"
             [chartType]="doughnutChartType"></canvas>
   </mat-card-content>
 </mat-card>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>
