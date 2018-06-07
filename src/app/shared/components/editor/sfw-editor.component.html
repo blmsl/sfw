@@ -1,28 +1,5 @@
-<div class="editor-container"
-     [class.fullscreen]="isFullScreen">
-
-  <div class="editor-container"
-       [style.height]="height">
-
-    <div [style.display]="mode == 'preview' ? 'none' : null">
-
-      <div class="ace-editor" #aceEditor></div>
-
-    </div>
-    <div [style.display]="showPreviewPanel && !mediaMatcher.matches ? 'block' : 'none'"
-         (click)="previewPanelClick($event)">
-      <div class="preview-panel"
-           [innerHtml]="_previewHtml"
-           [style.height]="height">
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="maxlength > 0 && mode != 'preview'">
-    <div class="text-right md-footer">
-      {{ markdownValue?.length }} / {{ maxlength }}
-    </div>
-  </div>
+<div fxFlexFill fxLayout="column wrap">
+  <div fxFlex = 89% style="background-color: blue;">1</div>
 
   <div class="tool-bar" *ngIf="!hideToolbar && mode !== 'preview'">
     <div class="button-row">
@@ -84,5 +61,33 @@
     </div>
 
   </div>
-
 </div>
+<!--<div class="editor-container"-->
+     <!--[class.fullscreen]="isFullScreen">-->
+
+  <!--<div class="editor-container"-->
+       <!--[style.height]="height">-->
+
+    <!--<div [style.display]="mode == 'preview' ? 'none' : null">-->
+
+      <!--<div class="ace-editor" #aceEditor></div>-->
+
+    <!--</div>-->
+    <!--<div [style.display]="showPreviewPanel && !mediaMatcher.matches ? 'block' : 'none'"-->
+         <!--(click)="previewPanelClick($event)">-->
+      <!--<div class="preview-panel"-->
+           <!--[innerHtml]="_previewHtml"-->
+           <!--[style.height]="height">-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+
+  <!--<div *ngIf="maxlength > 0 && mode != 'preview'">-->
+    <!--<div class="text-right md-footer">-->
+      <!--{{ markdownValue?.length }} / {{ maxlength }}-->
+    <!--</div>-->
+  <!--</div>-->
+
+
+
+<!--</div>-->

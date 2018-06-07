@@ -2,6 +2,12 @@
   flex: 1 1 auto;
 }
 
+.tool-bar {
+  position: absolute;
+  bottom: 0;
+  background-color: #fafafa;
+  width: 100%;
+}
 
 .editor-container {
   margin-bottom: 15px;
