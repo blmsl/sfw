@@ -13,13 +13,17 @@
   <mat-sidenav-content style="overflow: hidden">
     <div class="header"
          [formGroup]="form"
+         fxLayout.gt-sm="row"
+         fxLayout="column"
          fxLayoutAlign="center center">
 
-      <h2 class="title">Title</h2>
-      <input class="title-document"
-             type="text"
-             placeholder="{{'general.articles.edit.title' | translate}}"
-             formControlName="title">
+      <div fxFlex="column">
+        <h2 class="title">Title</h2>
+        <input class="title-document"
+               type="text"
+               placeholder="{{'general.articles.edit.title' | translate}}"
+               formControlName="title">
+      </div>
 
       <span class="spacer"></span>
       <button mat-raised-button [matMenuTriggerFor]="menu">Publish &darr;</button>

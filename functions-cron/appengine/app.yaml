@@ -1,21 +1,21 @@
-runtime: python
-env: flex
+#runtime: python
+#env: flex
 
-api_version: 1
-threadsafe: true
-service: pymodule
+#api_version: 1
+#threadsafe: true
+#service: pymodule
 
-runtime_config:
-  python_version: 3
-  document_root: python
+#runtime_config:
+#  python_version: 3
+#  document_root: python
 
-manual_scaling:
-  instances: 1
+#manual_scaling:
+#  instances: 1
 
-resources:
-  cpu: 1
-  memory_gb: 0.5
-  disk_size_gb: 10
+#resources:
+#  cpu: 1
+#  memory_gb: 0.5
+#  disk_size_gb: 10
 
 #handlers:
 #- url: /hello.*
