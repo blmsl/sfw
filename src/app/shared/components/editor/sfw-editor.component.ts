@@ -47,8 +47,8 @@ const XSMALL_WIDTH_BREAKPOINT = 480;
 
 export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, Validator {
 
-  @ViewChild('aceEditor')
-  aceEditorContainer: ElementRef;
+  //@ViewChild('aceEditor')
+  //aceEditorContainer: ElementRef;
 
   @Input()
   hideToolbar: boolean = false;
@@ -171,7 +171,7 @@ export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, 
   }
 
   ngAfterViewInit() {
-    let editorElement = this.aceEditorContainer.nativeElement;
+    /*let editorElement = this.aceEditorContainer.nativeElement;
     this.editor = ace.edit(editorElement);
     this.editor.$blockScrolling = Infinity;
     this.editor.getSession().setUseWrapMode(true);
@@ -181,7 +181,7 @@ export class SFWEditorComponent implements AfterViewInit, ControlValueAccessor, 
     this.editor.on('change', (e: any) => {
       let val = this.editor.getValue();
       this.markdownValue = val;
-    });
+    }); */
   }
 
   openMarkdownHelp(): void {

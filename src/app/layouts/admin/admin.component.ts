@@ -60,7 +60,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         return event instanceof NavigationEnd;
       })
     ).subscribe((event: NavigationEnd) => {
-      document.querySelector('.app-inner > .mat-drawer-content > div').scrollTop = 0;
+      document.querySelector('.app-inner > .mat-drawer-content').scrollTop = 0;
       if (event.url) {
         this.url = event.url;
       }

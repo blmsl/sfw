@@ -1,13 +1,19 @@
 <mat-sidenav-container fxFlexFill>
-  <mat-sidenav mode="side" opened>
+
+  <mat-sidenav #settings
+               position="end"
+               class="chat-panel"
+               mode="side">
     <h3>{{ 'general.menu.main' | translate }}
       <span fxFlex></span>
       <span class="menu-badge mat-">1223</span>
     </h3>
   </mat-sidenav>
+
   <mat-sidenav-content style="overflow: hidden">
     <div class="header"
-         [formGroup]="form" fxLayoutAlign="center center">
+         [formGroup]="form"
+         fxLayoutAlign="center center">
 
       <h2 class="title">Title</h2>
       <input class="title-document"
@@ -16,10 +22,33 @@
              formControlName="title">
 
       <span class="spacer"></span>
-      <!--<button mat-raised-button-->
-      <!--[matMenuTriggerFor]="menu">Publish &darr;-->
-      <!--</button>-->
-      <button mat-icon-button (click)="notifications.toggle()">
+      <button mat-raised-button [matMenuTriggerFor]="menu">Publish &darr;</button>
+
+      <mat-menu #menu="matMenu"
+                formGroupName="publication">
+        <div style="padding: 10px 20px;">
+          <h4>Ready to publish your post?</h4>
+          <mat-radio-group class="radio-group"
+                           formControlName="status">
+            <mat-radio-button (click)="changeStatus(publication.value)"
+                              class="radio-button"
+                              *ngFor="let publication of publicationOptions"
+                              [value]="publication.value" style="margin: 10px 0">
+              {{publication.text}}<br/>
+              <span style="color: #cecece">
+                  {{publication.description}}
+                </span>
+            </mat-radio-button>
+          </mat-radio-group>
+          <hr style="margin: 25px 0;"/>
+          <div class="button-row">
+            <button mat-button type="button">Cancel</button>
+            <button mat-raised-button type="button" color="primary">Publish</button>
+          </div>
+        </div>
+      </mat-menu>
+
+      <button mat-icon-button (click)="settings.toggle()">
         <mat-icon>settings</mat-icon>
       </button>
     </div>
@@ -29,121 +58,6 @@
     </sfw-editor>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-
-<!--<div class="header"-->
-     <!--[formGroup]="form" fxLayoutAlign="center center">-->
-
-  <!--<h2 class="title">Title</h2>-->
-  <!--<input class="title-document"-->
-         <!--type="text"-->
-         <!--placeholder="{{'general.articles.edit.title' | translate}}"-->
-         <!--formControlName="title">-->
-
-  <!--<span class="spacer"></span>-->
-  <!--<button mat-raised-button-->
-          <!--[matMenuTriggerFor]="menu">Publish &darr;-->
-  <!--</button>-->
-  <!--<button mat-icon-button (click)="notifications.toggle()">-->
-    <!--<mat-icon>settings</mat-icon>-->
-  <!--</button>-->
-<!--</div>-->
-
-<!--
-<div fxLayout="direction"
-     fxLayoutAlign="center center"
-     [formGroup]="form">
-  <div fxFlex="100">
-    <h2 class="title">Title</h2>
-    <input class="title-document"
-           type="text"
-           placeholder="{{'general.articles.edit.title' | translate}}"
-           formControlName="title">
-  </div>
-  <div fxFlex></div>
-  <div class="button-row"
-       fxFlex="">
-    <button mat-raised-button
-            [matMenuTriggerFor]="menu">Publish &darr;
-    </button>
-    <button mat-icon-button (click)="notifications.toggle()">
-      <mat-icon>settings</mat-icon>
-    </button>
-  </div>
-  <mat-menu #menu="matMenu"
-            formGroupName="publication">
-    <div style="padding: 10px 20px;">
-      <h4>Ready to publish your post?</h4>
-      <mat-radio-group class="radio-group"
-                       formControlName="status">
-        <mat-radio-button (click)="changeStatus(publication.value)"
-                          class="radio-button"
-                          *ngFor="let publication of publicationOptions"
-                          [value]="publication.value" style="margin: 10px 0">
-          {{publication.text}}<br/>
-          <span style="color: #cecece">
-                  {{publication.description}}
-                </span>
-        </mat-radio-button>
-      </mat-radio-group>
-      <hr style="margin: 25px 0;"/>
-      <div class="button-row">
-        <button mat-button type="button">Cancel</button>
-        <button mat-raised-button type="button" color="primary">Publish</button>
-      </div>
-    </div>
-  </mat-menu>
-</div>
-<!--
-<div fxLayout.gt-sm="row"
-     fxLayout="column"
-     fxLayoutGap="10px"
-     [formGroup]="form">
-</div>
-<!--
-<div [formGroup]="form">
-  <sfw-editor formControlName="text"
-              [height]="'75vh'"
-              [mode]="'editor'"
-              [options]="options">
-  </sfw-editor>
-</div>
-<!--<mat-sidenav-container class="app-inner">
-  <mat-sidenav #articleSideBar class="sidebar-panel"
-               id="sidebar-panel"
-               [mode]="'over'">
-    <h3>{{ 'general.menu.main' | translate }}
-      <span fxFlex></span>
-      <span class="menu-badge mat-">1223</span>
-    </h3>
-  </mat-sidenav>
-  <div fxLayout="column">
-    <h3>Sidebar</h3>
-    <button mat-icon-button (click)="articleSideBar.toggle()">
-      <mat-icon>settings</mat-icon>
-    </button>
-    <p>Content</p>
-  </div>
-</mat-sidenav-container>
-<!--
-<mat-sidenav-container class="app-inner">
-  <mat-sidenav #articleSideBar
-               class="sidebar-panel"
-               id="sidebar-panel"
-               [mode]="isOver() ? 'over' : 'side'"
-               [opened]="!isOver()"
-               [opened]="false">
-  </mat-sidenav>
-  <div>
-    <h1>Titel</h1>
-    <h1>Editor</h1>
-    <h1>Footer</h1>
-    <button mat-icon-button (click)="articleSideBar.toggle()">
-      <mat-icon>settings</mat-icon>
-    </button>
-  </div>
-</mat-sidenav-container>-->
-
 
 <!--
 <div class="page-wrap"
