@@ -18,7 +18,6 @@ function scrap_matchPlan($html, $clubName)
     $output = array();
     $matchData = array();
 
-    echo count($html);
     if ($html && is_object($html) && isset($html->nodes)) {
         $items = $html->find("div.fixtures-matches-table > table > tbody > tr");
         echo count($items);
@@ -114,6 +113,7 @@ function scrap_matchPlan($html, $clubName)
                 ) {
                     $matchData["title"] = $matchData["assignedCategories"]["assignedCategory"] . ': ' . $matchData["homeTeam"]["name"] . ' - ' . $matchData["guestTeam"]["name"];
                     $output[] = $matchData;
+                    var_dump($matchDate);
                     $matchData = [];
                 }
             }
