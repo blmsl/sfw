@@ -21,7 +21,10 @@ function scrap_matchPlan($html, $clubName)
     if ($html && is_object($html) && isset($html->nodes)) {
         $items = $html->find("div.fixtures-matches-table > table > tbody > tr");
         echo count($items);
+        echo "<br />";
         foreach($items AS $item){
+
+            echo $i . "<br />";
 
             if($i > 0){
 
@@ -102,18 +105,19 @@ function scrap_matchPlan($html, $clubName)
                 }
 
                 // wenn alle Daten vorhanden -> Tabellenzeile generieren
-                if (key_exists('assignedTeam', $matchData) &&
-                    key_exists('assignedCategories', $matchData) &&
+                if (true /* key_exists('assignedTeam', $matchData) &&
+                     key_exists('assignedCategories', $matchData) &&
                     key_exists('matchStartDate', $matchData) &&
                     key_exists('matchEndDate', $matchData) &&
                     key_exists('homeTeam', $matchData) &&
-                    key_exists('guestTeam', $matchData) &&
-                    key_exists('assignedLocation', $matchData) &&
-                    key_exists('isHomeTeam', $matchData)
+                    key_exists('guestTeam', $matchData)
+                    /*&&
+                    //key_exists('assignedLocation', $matchData) &&
+                    key_exists('isHomeTeam', $matchData*/
                 ) {
                     $matchData["title"] = $matchData["assignedCategories"]["assignedCategory"] . ': ' . $matchData["homeTeam"]["name"] . ' - ' . $matchData["guestTeam"]["name"];
                     $output[] = $matchData;
-                    var_dump($matchDate);
+                    var_dump($matchData);
                     $matchData = [];
                 }
             }

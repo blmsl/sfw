@@ -3,58 +3,84 @@
   <mat-sidenav #settings
                position="end"
                class="chat-panel"
-               mode="side">
-    <h3>{{ 'general.menu.main' | translate }}
-      <span fxFlex></span>
-      <span class="menu-badge mat-">1223</span>
-    </h3>
+               [mode]="'side'"
+               [opened]="sidePanelOpened"
+               (open)="sidePanelOpened = true"
+               (close)="sidePanelOpened = false">
+
+    <div fxLayout.gt-sm="row"
+         fxLayout="column"
+         fxLayoutAlign="space-between center">
+      <span style="font-weight: bold; font-size: larger">{{ 'general.menu.main' | translate }}</span>
+      <span class="space"></span>
+      <button mat-icon-button (click)="sidePanelOpened = false">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+
+    <article-edit-sidebar (remove)="remove()"
+                          [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
+                          [categories]="categories$ | async"
+                          [locations]="locations$ | async"
+                          [users]="users$ | async"
+                          [seasons]="seasons$ | async"
+                          [teams]="teams$ | async"
+                          [notifications]="notifications"
+                          [form]="form">
+    </article-edit-sidebar>
+
   </mat-sidenav>
 
   <mat-sidenav-content style="overflow: hidden">
-    <div class="header"
-         [formGroup]="form"
-         fxLayout.gt-sm="row"
-         fxLayout="column"
-         fxLayoutAlign="center center">
 
-      <div fxFlex="column">
-        <h2 class="title">Title</h2>
+    <div class="header"
+         [formGroup]="form">
+      <h2 class="title">Title</h2>
+
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           fxLayoutAlign="space-between center">
+
+
         <input class="title-document"
                type="text"
                placeholder="{{'general.articles.edit.title' | translate}}"
                formControlName="title">
-      </div>
 
-      <span class="spacer"></span>
-      <button mat-raised-button [matMenuTriggerFor]="menu">Publish &darr;</button>
+        <span class="spacer"></span>
+        <button mat-raised-button [matMenuTriggerFor]="menu">Publish &darr;</button>
 
-      <mat-menu #menu="matMenu"
-                formGroupName="publication">
-        <div style="padding: 10px 20px;">
-          <h4>Ready to publish your post?</h4>
-          <mat-radio-group class="radio-group"
-                           formControlName="status">
-            <mat-radio-button (click)="changeStatus(publication.value)"
-                              class="radio-button"
-                              *ngFor="let publication of publicationOptions"
-                              [value]="publication.value" style="margin: 10px 0">
-              {{publication.text}}<br/>
-              <span style="color: #cecece">
+        <mat-menu #menu="matMenu"
+                  formGroupName="publication">
+          <div style="padding: 10px 20px;">
+            <h4>Ready to publish your post?</h4>
+            <mat-radio-group class="radio-group"
+                             formControlName="status">
+              <mat-radio-button (click)="changeStatus(publication.value)"
+                                class="radio-button"
+                                *ngFor="let publication of publicationOptions"
+                                [value]="publication.value" style="margin: 10px 0">
+                {{publication.text}}<br/>
+                <span style="color: #cecece">
                   {{publication.description}}
                 </span>
-            </mat-radio-button>
-          </mat-radio-group>
-          <hr style="margin: 25px 0;"/>
-          <div class="button-row">
-            <button mat-button type="button">Cancel</button>
-            <button mat-raised-button type="button" color="primary">Publish</button>
+              </mat-radio-button>
+            </mat-radio-group>
+            <hr style="margin: 25px 0;"/>
+            <div class="button-row">
+              <button mat-button type="button">Cancel</button>
+              <button mat-raised-button type="button" color="primary">Publish</button>
+            </div>
           </div>
-        </div>
-      </mat-menu>
+        </mat-menu>
 
-      <button mat-icon-button (click)="settings.toggle()">
-        <mat-icon>settings</mat-icon>
-      </button>
+        <button mat-icon-button (click)="sidePanelOpened = !sidePanelOpened">
+          <mat-icon *ngIf="sidePanelOpened">arrow_forward_ios</mat-icon>
+          <mat-icon *ngIf="!sidePanelOpened">arrow_back_ios</mat-icon>
+        </button>
+      </div>
+
     </div>
 
     <sfw-editor [mode]="'editor'"
@@ -63,36 +89,6 @@
   </mat-sidenav-content>
 </mat-sidenav-container>
 
-<!--
-<div class="page-wrap"
-     [formGroup]="form"><!-- *ngIf="categoryTypes$ | async as categoryTypes; else loadingTemplate"
-  <div class="header"
-       *ngIf="article; else loadingTemplate">
-      <mat-sidenav #notifications
-                   position="end"
-                   class="chat-panel"
-                   mode="over"
-                   fxFlex="60"
-                   opened="false">
-        <!--<article-edit-sidebar (remove)="remove()"
-                              [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
-                              [categories]="categories$ | async"
-                              [locations]="locations$ | async"
-                              [users]="users$ | async"
-                              [seasons]="seasons$ | async"
-                              [teams]="teams$ | async"
-                              [notifications]="notifications"
-                              [form]="form">
-        </article-edit-sidebar>
-      </mat-sidenav>
-    </div>
-  </div>
-  <!--<sfw-editor formControlName="text"
-             [height]="'75vh'"
-             [mode]="'editor'"
-             [options]="options">
-  </sfw-editor>
-</div>-->
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

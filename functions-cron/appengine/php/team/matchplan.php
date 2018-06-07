@@ -20,11 +20,12 @@ $currentSeason = array(
     'EndDate' => new DateTime('2018-06-30')
 );
 
-$url = 'http://www.fussball.de/ajax.club.matchplan/-/id/' . $clubId . '/mime-type/HTML/mode/PAGE/show-filter/false/max/9999/datum-von/' . $currentSeason["StartDate"]->format('Y-m-d') . '/datum-bis/' . $currentSeason["EndDate"]->format('Y-m-d') . '/show-venues/checked/offset/0';
+echo $url = 'http://www.fussball.de/ajax.club.matchplan/-/id/' . $clubId . '/mime-type/HTML/mode/PAGE/show-filter/false/max/9999/datum-von/' . $currentSeason["StartDate"]->format('Y-m-d') . '/datum-bis/' . $currentSeason["EndDate"]->format('Y-m-d') . '/show-venues/checked/offset/0';
 
 $curlRequest = curlRequest($url);
 
 $output = scrap_matchPlan($curlRequest, 'SF Winterbach');
+echo "<br />";
 var_dump($output);
 
 /*

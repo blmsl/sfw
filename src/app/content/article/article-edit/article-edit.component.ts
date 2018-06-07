@@ -14,10 +14,10 @@ const SMALL_WIDTH_BREAKPOINT = 960;
 })
 export class ArticleEditComponent implements OnInit {
 
-  @ViewChild('articleSideBar') articleSideBar;
+  @ViewChild('settings') settings;
 
+  public sidePanelOpened = true;
   public article: IArticle;
-  public mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
   /* public categories$: Observable<ICategory[]>;
   public categoryTypes$: Observable<ICategoryType[]>;
   public locations$: Observable<ILocation[]>;
@@ -36,8 +36,6 @@ export class ArticleEditComponent implements OnInit {
     maxLines: 90000,
     printMargin: false
   };
-
-  public sidePanelOpened: boolean = false;
 
   public publicationOptions: any[] = [
     {
@@ -69,10 +67,6 @@ export class ArticleEditComponent implements OnInit {
     this.users$ = userService.users$;
     this.seasons$ = seasonService.seasons$;
     this.teams$ = teamService.teams$; */
-
-    this.mediaMatcher.addListener(mql => zone.run(() => {
-      this.mediaMatcher = mql;
-    }));
   }
 
   ngOnInit() {
@@ -107,10 +101,6 @@ export class ArticleEditComponent implements OnInit {
       console.log(changes);
       // changes.isMatch = null;
     });
-  }
-
-  isOver(): boolean {
-    return true;
   }
 
   initMetaData(): FormGroup {

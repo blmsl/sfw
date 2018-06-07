@@ -32,67 +32,10 @@
   width: 80%;
 }
 
-/*
-.editor-header {
-  border-bottom: 1px solid #e8e8e8;
-}
-
-.editor-header--first {
-  border-right: 1px solid #e8e8e8;
-}
-
-.editor-header .title {
-  display: inline-block;
-}
-
-.toolbar-icon {
-  padding: 0 14px;
-}
-
-.toolbar-spacer {
+.spacer {
   flex: 1 1 auto;
-}
-
-.words,
-.settings,
-.characters {
-  color: #a0aabf;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 1px;
-  line-height: 1rem;
-  padding: 0.22001rem 0;
-  // position: absolute;
-  // right: 16px;
-  text-transform: uppercase;
-  // top: 0;
-  z-index: 5;
-}
-
-.words span,
-.characters span {
-  color: #000;
-}
-
-.split {
-  //margin: 0 !important;
-  // padding: 0 !important;
-  z-index: 3;
-}
-
-.radio-group {
-  display: inline-flex;
-  flex-direction: column;
-}
-
-.radio-button {
-  margin: 0 5px;
 }
 
 .chat-panel {
-  padding: 10px 20px;
-} */
-
-.spacer {
-  flex: 1 1 auto;
+  padding: 10px;
 }
