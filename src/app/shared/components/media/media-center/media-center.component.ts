@@ -29,9 +29,9 @@ export class MediaCenterComponent implements OnDestroy {
   readonly _mobileQueryListener: () => void;
 
   constructor(private mediaItemService: MediaItemService,
-              private changeDetectorRef: ChangeDetectorRef,
-              private media: MediaMatcher,
-              public snackBar: MatSnackBar) {
+    private changeDetectorRef: ChangeDetectorRef,
+    private media: MediaMatcher,
+    public snackBar: MatSnackBar) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);

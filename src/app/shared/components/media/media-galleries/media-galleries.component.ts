@@ -19,7 +19,7 @@ export class MediaGalleriesComponent implements OnInit {
   public form: FormGroup;
 
   constructor(public dialog: MatDialog,
-              private mediaGalleryService: MediaGalleryService) {
+    private mediaGalleryService: MediaGalleryService) {
     this.mediaGalleries$ = mediaGalleryService.mediaGalleries$;
   }
 
