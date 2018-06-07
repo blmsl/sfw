@@ -150,7 +150,6 @@ export class MediaUploaderComponent implements OnInit {
         this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
         this.alertService.showSnackBar('error', error.message);
       });
-
   }
 
   uploadSingleFile(fileUpload: Upload, id?: string) {

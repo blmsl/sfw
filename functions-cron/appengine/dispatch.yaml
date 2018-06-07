@@ -1,5 +1,3 @@
-# application: simple-sample
-
 dispatch:
 - url: "*/python/*"
   module: pymodule

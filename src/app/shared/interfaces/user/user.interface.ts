@@ -10,8 +10,8 @@ export interface IUser {
   isDisabled?: boolean;
 
   email: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   gender?: string;
   photoURL?: string;
 

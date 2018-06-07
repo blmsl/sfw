@@ -1,3 +1,3 @@
 <?php
 
-echo 'Start';
+echo date('d.m.Y H:i');

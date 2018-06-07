@@ -110,7 +110,7 @@ export class MemberEditComponent implements OnInit {
       this.form.get('mainData').disable();
     }
 
-    if(this.member.driveImport){
+    if (this.member.driveImport) {
       this.form.get('address').disable();
       this.form.get('ahData').disable();
       this.form.get('clubData').disable();

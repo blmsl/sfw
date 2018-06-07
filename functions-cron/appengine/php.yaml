@@ -1,25 +1,28 @@
-#runtime: php
-#env: flex
-runtime: php55
+runtime: php
+env: flex
+
 api_version: 1
 service: default
 threadsafe: yes
 
-# runtime_config:
-#  document_root: .
+runtime_config:
+  document_root: php
 
-handlers:
-- url: /_ah/.*
-  script: ./php/start.php
+manual_scaling:
+  instances: 1
 
-- url: /test.php
-  script: ./php/test.php
-  # secure: always
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
 
-- url: /team/standings
-  script: app.php
-  login: admin
-
-- url: /.*
-  script: ./php/team/index.php
-  #login: admin
+#handlers:
+#- url: /teams/competitions
+#  script: ./php/team/competitions.php
+#  login: admin
+#- url: /teams/matchplan
+#  script: ./php/team/matchplan.php
+#- url: /teams/standings
+#  script: ./php/team/standings.php
+#- url: /.*
+#  script: ./php/start.php

@@ -24,10 +24,10 @@ export class ArticlesComponent implements OnInit {
   public form: FormGroup;
 
   constructor(private articleService: ArticleService,
-              private userService: UserService,
-              private alertService: AlertService,
-              private fb: FormBuilder,
-              private categoryService: CategoryService) {
+    private userService: UserService,
+    private alertService: AlertService,
+    private fb: FormBuilder,
+    private categoryService: CategoryService) {
     this.articles$ = articleService.articles$;
     this.categories$ = categoryService.categories$;
   }

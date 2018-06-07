@@ -1,6 +1,7 @@
 <?php
 
-
+echo "app";
+/*
 use google\appengine\api\taskqueue\PushTask;
 use google\appengine\api\taskqueue\PushQueue;
 use Silex\Application;
@@ -29,4 +30,4 @@ $app->post('/team/standings', function (Request $req) use ($app) {
     return 'url: ' . $req->get('url');
 });
 
-return $app;
+return $app; */

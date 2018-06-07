@@ -38,10 +38,7 @@ export class MediaUploaderService {
         type: upload.file.type,
         path: path
       };
-
-      // Use the other upload method from firebase to work with promises
       return this.storage.ref(path).put(upload.file, metaData);
-
     } else {
       const filter: any = arrayOfFilters[this._failFilterIndex];
       console.log(filter);

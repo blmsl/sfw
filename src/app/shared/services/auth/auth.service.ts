@@ -1,9 +1,18 @@
-import { Observable, of as observableOf } from 'rxjs';
+import {
+  Observable,
+  of as observableOf
+} from 'rxjs';
 
 import { switchMap } from 'rxjs/operators';
-import { Injectable, OnDestroy } from '@angular/core';
+import {
+  Injectable,
+  OnDestroy
+} from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument
+} from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 import { ICreation } from '../../interfaces/creation.interface';
 import { IUser } from '../../interfaces/user/user.interface';
@@ -19,13 +28,9 @@ export class AuthService implements OnDestroy {
 
   public user$: Observable<IUser>;
   public userId: string;
-  // private mouseEvents: ISubscription;
-  // private timer: ISubscription;
-  // private authSubscription: ISubscription;
 
   constructor(private afAuth: AngularFireAuth,
-              private afs: AngularFirestore) {
-
+    private afs: AngularFirestore) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
         if (user) {
@@ -38,24 +43,19 @@ export class AuthService implements OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.authSubscription.unsubscribe();
-    //this.mouseEvents.unsubscribe();
-    //this.timer.unsubscribe();
   }
 
   signIn(credentials) {
-    return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
-    /*
-      .then(
-        (authUser: firebase.User) => {
-          if (authUser.emailVerified) {
-            return this.updateUser({
-              emailVerified: authUser.emailVerified,
-              email: authUser.email
-            });
-          }
-        }
-      ); */
+    return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password)/*.then(
+     (authUser: firebase.User) => {
+     if (authUser.emailVerified) {
+     return this.updateUser({
+     emailVerified: authUser.emailVerified,
+     email: authUser.email
+     });
+     }
+     }
+     )*/;
   }
 
   register(values: IUser): Promise<any> {
@@ -63,10 +63,9 @@ export class AuthService implements OnDestroy {
   }
 
   private oAuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((credential) => {
-        return this.updateUser(credential.user);
-      });
+    return this.afAuth.auth.signInWithPopup(provider).then((credential) => {
+      return this.updateUser(credential.user);
+    });
   }
 
   googleLogin(): Promise<any> {
@@ -91,8 +90,9 @@ export class AuthService implements OnDestroy {
     return this.afAuth.auth.signOut();
   }
 
-  private updateUser(data: any): Promise<void> {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${this.afAuth.auth.currentUser.uid}`);
+  private updateUser(data: IUser): Promise<void> {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${this.userId}`);
+    data['assignedRoles']['subscriber'] = true;  // set minimal role here
     return userRef.set(data, { merge: true });
   }
 
@@ -109,53 +109,6 @@ export class AuthService implements OnDestroy {
       from: this.userId
     };
   }
-
-  /*
-   private updateOnConnect() {
-   return this.db.object('.info/connected').valueChanges().do(connected => {
-   console.log(connected);
-
-   let status = connected.$value ? 'online' : 'offline'
-   return this.setUser({
-   onlineStatus: status
-   });
-   })
-   .subscribe();
-   const userStatusDatabaseRef = firebase.database().ref(`/status/${this.id}`);
-
-   return this.afs.doc('.info').valueChanges().subscribe((connected: any) => {
-   console.log(connected);
-   const status = connected.$value ? 'online' : 'offline';
-   return this.setUser({
-   onlineStatus: status
-   });
-   });
-   }
-
-   /*
-   private updateOnIdle() {
-   this.mouseEvents = fromEvent(document, 'mousemove')
-   .pipe(throttleTime(30000))
-   .subscribe(() => {
-   this.updateUser({
-   onlineStatus: 'online'
-   }).then(() => this.resetTimer());
-   });
-   }
-
-   private resetTimer() {
-   if (this.timer) {
-   this.timer.unsubscribe();
-   }
-
-   this.timer = timer(40000).subscribe(() => {
-   this.updateUser({
-   onlineStatus: 'away'
-   }).then(
-   // () => this.router.navigate(['/locked']).then()
-   );
-   });
-   }*/
 
   canRead(user: IUser): boolean {
     const allowed = ['admin', 'editor', 'subscriber'];
@@ -178,8 +131,9 @@ export class AuthService implements OnDestroy {
   }
 
   private checkAuthorization(user: IUser, allowedRoles: string[]): boolean {
+    if (!user) return false;
     for (const role in allowedRoles) {
-      if (user && user.assignedRoles[allowedRoles[role]]) {
+      if (user.assignedRoles[role]) {
         return true;
       }
     }
