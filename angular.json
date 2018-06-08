@@ -46,12 +46,12 @@
               "node_modules/fullcalendar/dist/fullcalendar.css",
               "node_modules/@swimlane/ngx-datatable/release/index.css",
               "node_modules/@swimlane/ngx-datatable/release/themes/material.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/font-awesome/css/font-awesome.css",
               "src/assets/fonts/data-table/icons.css",
               "src/assets/styles/app.scss"
             ],
             "scripts": [
-              "node_modules/ace-builds/src/ace.js",
-              "node_modules/marked/lib/marked.js",
               "node_modules/highlightjs/highlight.pack.js",
               "node_modules/hammerjs/hammer.min.js",
               "node_modules/chart.js/dist/Chart.bundle.min.js"

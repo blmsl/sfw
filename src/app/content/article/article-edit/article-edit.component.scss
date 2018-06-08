@@ -2,6 +2,7 @@
 
 .header {
   border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 15px;
 }
 
 .title {
@@ -29,7 +30,6 @@
   padding-left: 16px;
   padding-right: 16px;
   padding-top: 0.10001rem;
-  width: 80%;
 }
 
 .spacer {
@@ -37,5 +37,28 @@
 }
 
 .chat-panel {
+  box-shadow: 0 0 0 0 #cecece, -12px 0 8px -4px #cecece;
   padding: 10px;
+}
+
+@media (min-width:768px) {
+  .chat-panel {
+    min-width: 400px;
+  }
+}
+
+@media (min-width:960px) {
+  .chat-panel {
+    min-width: 600px;
+  }
+}
+
+@media (min-width:1280px) {
+  .chat-panel {
+    min-width: 800px;
+  }
+}
+
+app-ngx-editor, #ngxEditor {
+  height: 500px;
 }

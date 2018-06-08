@@ -17,18 +17,18 @@ import { IUser } from '../../../../shared/interfaces/user/user.interface';
 })
 export class ArticleEditSidebarComponent {
 
-  @Input() notifications: MatSidenav;
+  //@Input() notifications: MatSidenav;
   @Input() form: FormGroup;
-  @Input() categories: ICategory[];
-  @Input() categoryTypes: ICategoryType[];
-  @Input() locations: ILocation[];
-  @Input() users: IUser[];
-  @Input() seasons: ISeason[];
-  @Input() teams: ITeam[];
+  //@Input() categories: ICategory[];
+  //@Input() categoryTypes: ICategoryType[];
+  //@Input() locations: ILocation[];
+  //@Input() users: IUser[];
+  //@Input() seasons: ISeason[];
+  //@Input() teams: ITeam[];
 
-  @Output() remove: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() removeArticle: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
-  constructor(public applicationService: ApplicationService) {
+  constructor(/*public applicationService: ApplicationService*/) {
   }
 
 }

@@ -1,33 +1,55 @@
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
-import { IArticle } from '../../../shared/interfaces/article.interface';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ArticleService } from '../../../shared/services/article/article.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import {
+  Component,
+  NgZone,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+import { IArticle }           from '../../../shared/interfaces/article.interface';
+import {
+  ActivatedRoute,
+  Router
+}                             from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+}                             from '@angular/forms';
+import { ArticleService }     from '../../../shared/services/article/article.service';
+import {
+  debounceTime,
+  distinctUntilChanged
+}                             from 'rxjs/operators';
+import {
+  BreakpointObserver,
+  BreakpointState
+} from '@angular/cdk/layout';
 
 const SMALL_WIDTH_BREAKPOINT = 960;
 
 @Component({
   selector: 'article-edit',
   templateUrl: './article-edit.component.html',
-  styleUrls: ['./article-edit.component.scss']
+  styleUrls: [ './article-edit.component.scss' ]
 })
 export class ArticleEditComponent implements OnInit {
 
   @ViewChild('settings') settings;
 
   public sidePanelOpened = true;
+  public isSmallDevice: boolean = false;
+
   public article: IArticle;
   /* public categories$: Observable<ICategory[]>;
-  public categoryTypes$: Observable<ICategoryType[]>;
-  public locations$: Observable<ILocation[]>;
-  public matches$: Observable<IMatch[]>;
-  public users$: Observable<IUser[]>;
-  public seasons$: Observable<ISeason[]>;
-  public teams$: Observable<ITeam[]>;
+   public categoryTypes$: Observable<ICategoryType[]>;
+   public locations$: Observable<ILocation[]>;
+   public matches$: Observable<IMatch[]>;
+   public users$: Observable<IUser[]>;
+   public seasons$: Observable<ISeason[]>;
+   public teams$: Observable<ITeam[]>;
 
-  public words: number = 0;
-  public characters: number = 0; */
+   public words: number = 0;
+   public characters: number = 0; */
 
   public form: FormGroup;
 
@@ -51,22 +73,23 @@ export class ArticleEditComponent implements OnInit {
   ];
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private zone: NgZone,
-    private articleService: ArticleService,
-    /* private categoryService: CategoryService,
-    private categoryTypeService: CategoryTypeService,
-    private locationService: LocationService,
-    private userService: UserService,
-    private seasonService: SeasonService,
-    private teamService: TeamService, */
-    private fb: FormBuilder) {
+              public breakpointObserver: BreakpointObserver,
+              private router: Router,
+              private zone: NgZone,
+              private articleService: ArticleService,
+              /* private categoryService: CategoryService,
+               private categoryTypeService: CategoryTypeService,
+               private locationService: LocationService,
+               private userService: UserService,
+               private seasonService: SeasonService,
+               private teamService: TeamService, */
+              private fb: FormBuilder) {
     /* this.categories$ = categoryService.categories$;
-    this.categoryTypes$ = categoryTypeService.categoryTypes$;
-    this.locations$ = locationService.locations$;
-    this.users$ = userService.users$;
-    this.seasons$ = seasonService.seasons$;
-    this.teams$ = teamService.teams$; */
+     this.categoryTypes$ = categoryTypeService.categoryTypes$;
+     this.locations$ = locationService.locations$;
+     this.users$ = userService.users$;
+     this.seasons$ = seasonService.seasons$;
+     this.teams$ = teamService.teams$; */
   }
 
   ngOnInit() {
@@ -74,24 +97,36 @@ export class ArticleEditComponent implements OnInit {
       this.article = data.article;
     });
 
+    this.breakpointObserver
+      .observe(['(min-width: '+ SMALL_WIDTH_BREAKPOINT + 'px)'])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.sidePanelOpened = true;
+        } else {
+          this.sidePanelOpened = false;
+        }
+        this.isSmallDevice = !this.sidePanelOpened;
+        console.log(this.isSmallDevice);
+      });
+
     this.form = this.fb.group({
-      title: [this.article.title, [Validators.required, Validators.minLength(10)]],
-      subTitle: [this.article.subTitle],
-      text: [this.article.text, [Validators.required, Validators.minLength(10)]],
+      title: [ this.article.title, [ Validators.required, Validators.minLength(10) ] ],
+      subTitle: [ this.article.subTitle ],
+      text: [ this.article.text, [ Validators.required, Validators.minLength(10) ] ],
       publication: this.initPublication(),
       creation: this.initCreation(),
-      /* meta: this.initMetaData(),
-      articleDate: this.article.articleDate,
-      // postImage: string;
-      postURL: [this.article.postURL],
-      assignedTags: [this.article.assignedTags],
-      assignedCategories: [this.article.assignedCategories],
-      assignedTeams: [this.article.assignedTeams],
-      assignedLocation: [this.article.assignedLocation],
-      assignedSeason: [this.article.assignedSeason],
-      assignedMatch: [this.article.assignedMatch],
-      isFeaturedPost: [this.article.isFeaturedPost],
-      isMatch: !!(this.article.assignedMatch) */
+      meta: this.initMetaData(),
+       articleDate: this.article.articleDate,
+       // postImage: string;*/
+       postURL: [this.article.postURL],
+       assignedTags: [this.article.assignedTags],
+       assignedCategories: [this.article.assignedCategories],
+       assignedTeams: [this.article.assignedTeams],
+       assignedLocation: [this.article.assignedLocation],
+       assignedSeason: [this.article.assignedSeason],
+       assignedMatch: [this.article.assignedMatch],
+       isFeaturedPost: [this.article.isFeaturedPost],
+       isMatch: !!(this.article.assignedMatch)
     });
 
     this.form.valueChanges.pipe(
@@ -107,15 +142,15 @@ export class ArticleEditComponent implements OnInit {
     return this.fb.group({
       main: this.fb.group({
         title: this.article.meta && this.article.meta.main ? this.article.meta.main.title : '',
-        description: this.article.meta && this.article.meta.main ? this.article.meta.main.description : '',
+        description: this.article.meta && this.article.meta.main ? this.article.meta.main.description : ''
       }),
       facebook: this.fb.group({
         title: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.title : '',
-        description: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.description : '',
+        description: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.description : ''
       }),
       twitter: this.fb.group({
         title: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter : '',
-        description: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.description : '',
+        description: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.description : ''
       })
     });
   }
@@ -141,16 +176,18 @@ export class ArticleEditComponent implements OnInit {
     return false;
   }
 
-  remove(): void {
+  removeArticle(): void {
     if (this.article.id) {
-      this.articleService.removeArticle(this.article).then(() => this.redirectToList());
+      console.log(this.article.id);
+      // this.articleService.removeArticle(this.article).then(() => this.redirectToList());
     } else {
-      this.redirectToList();
+      console.log('unsaved article');
     }
+    this.redirectToList();
   }
 
   redirectToList(): void {
-    this.router.navigate(['/articles']).then();
+    this.router.navigate([ '/articles' ]).then();
   }
 
 }

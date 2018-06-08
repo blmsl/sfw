@@ -1,19 +1,17 @@
-import { NgModule } from '@angular/core';
-import { SFWEditorComponent } from './sfw-editor.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { NgModule }              from '@angular/core';
+import { TranslateModule }       from '@ngx-translate/core';
 import {
   MatButtonModule,
   MatDialogModule,
   MatIconModule
-} from '@angular/material';
-import { CommonModule } from '@angular/common';
+}                                from '@angular/material';
+import { CommonModule }          from '@angular/common';
 import { MarkdownHelpComponent } from './markdown-help/markdown-help.component';
-import { FlexLayoutModule } from "@angular/flex-layout";
+import { FlexLayoutModule }      from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
-    MarkdownHelpComponent,
-    SFWEditorComponent
+    MarkdownHelpComponent
   ],
   imports: [
     CommonModule,
@@ -22,9 +20,6 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MatButtonModule,
     TranslateModule,
     FlexLayoutModule
-  ],
-  exports: [
-    SFWEditorComponent
   ],
   entryComponents: [
     MarkdownHelpComponent

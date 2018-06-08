@@ -24,7 +24,7 @@ function scrap_matchPlan($html, $clubName)
         # echo "<br />";
         foreach($items AS $item){
 
-            echo $i . "<br />";
+            # echo $i . "<br />";
 
             if($i > 0){
 
@@ -46,7 +46,7 @@ function scrap_matchPlan($html, $clubName)
                 elseif ($item->getAttribute('class') === "odd row-competition hidden-small" || $item->getAttribute('class') === "row-competition hidden-small") {
 
                     $matchDate = setMatchDate($item->plaintext, $savedMatchDate);
-                    if ($matchDate && key_exists("assignedMainCategory", $matchData)) {
+                    if ($matchDate && key_exists("assignedMainCategory", $matchData["assignedCategories"])) {
                         $matchData["matchStartDate"] = $savedMatchDate = $matchDate;
                         $matchData["matchEndDate"] = getMatchDuration($matchData["assignedMainCategory"], $matchData);
                     }
@@ -105,19 +105,17 @@ function scrap_matchPlan($html, $clubName)
                 }
 
                 // wenn alle Daten vorhanden -> Tabellenzeile generieren
-                if (/* key_exists('assignedTeam', $matchData) &&
-                     key_exists('assignedCategories', $matchData) &&
+                if (key_exists('assignedTeam', $matchData) &&
+                    key_exists('assignedCategories', $matchData) &&
                     key_exists('matchStartDate', $matchData) &&
-                    key_exists('matchEndDate', $matchData) &&*/
+                    key_exists('matchEndDate', $matchData) &&
                     key_exists('homeTeam', $matchData) &&
-                    key_exists('guestTeam', $matchData)
-                    /*&&
-                    //key_exists('assignedLocation', $matchData) &&
-                    key_exists('isHomeTeam', $matchData*/
+                    key_exists('guestTeam', $matchData) &&
+                    key_exists('assignedLocation', $matchData) &&
+                    key_exists('isHomeTeam', $matchData)
                 ) {
                     $matchData["title"] = $matchData["assignedCategories"]["assignedCategory"] . ': ' . $matchData["homeTeam"]["name"] . ' - ' . $matchData["guestTeam"]["name"];
                     $output[] = $matchData;
-                    var_dump($matchData);
                     $matchData = [];
                 }
             }
@@ -125,7 +123,6 @@ function scrap_matchPlan($html, $clubName)
         }
         $html->clear();
     }
-    // var_dump($output);
     return $output;
 }
 

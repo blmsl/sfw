@@ -115,6 +115,7 @@
         "homeTeam": "Heimmannschaft",
         "isArticleAMatch": "Ist der Artikel ein Spielbericht?",
         "isHomeTeam": "Ist es ein Heimspiel?",
+        "noTags": "Schlagworte hinzufügen",
         "preview": "Vorschau",
         "previewText": "Schreibe hier den Vorbericht zum o.a. Titel",
         "previewTitle": "Artikel-Vorbericht",
@@ -123,6 +124,12 @@
         "saveAsDraft": "Als Entwurf speichern",
         "settings": "Einstellungen",
         "sidebar": {
+          "links": {
+            "title": "Verknüpfungen"
+          },
+          "main": {
+            "title": "Artikel-Daten"
+          },
           "meta": {
             "facebook": {
               "description": "Open Graph Daten",
@@ -143,9 +150,10 @@
               "imageInput": "Foto",
               "title": "Twitter",
               "titleInput": "Titel"
-            }
+            },
+            "title": "Meta-Daten"
           },
-          "title": "Weitere Einstellungen"
+          "title": "Einstellungen"
         },
         "teamName": "Verknüpfte Mannschaft",
         "text": "Der Artikel-Text",

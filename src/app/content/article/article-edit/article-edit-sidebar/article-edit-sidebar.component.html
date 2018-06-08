@@ -1,32 +1,38 @@
-<div fxLayout="row"
-     >
+<mat-tab-group [formGroup]="form"
+               [dynamicHeight]="true">
+  <!-- *ngIf="categories && categoryTypes && locations && seasons && users &&
+               teams; else loadingTemplate" -->
+  <mat-tab label="{{ 'general.articles.edit.sidebar.main.title' | translate }}">
+    <sidebar-main-data [form]="form"
+                       (removeArticle)="removeArticle.emit($event)">
+      <!-- [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
+                       [categories]="categories"
+                       [locations]="locations"
+                       [users]="users"
+                       [seasons]="seasons"
+                       [teams]="teams" -->
+    </sidebar-main-data>
 
-  <div fxFlex="100">
-    <mat-tab-group *ngIf="categories && categoryTypes && locations && seasons && users && teams; else loadingTemplate"
-                   [formGroup]="form"
-                   [dynamicHeight]="true">
-      <mat-tab label="Artikel-Daten">
-        <sidebar-main-data [form]="form"
-                           [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
-                           [categories]="categories"
-                           [locations]="locations"
-                           [users]="users"
-                           [seasons]="seasons"
-                           [teams]="teams"
-                           (remove)="remove.emit($event)">
-        </sidebar-main-data>
-      </mat-tab>
+    <div class="row" style="margin-bottom: 25px">
+      <button (click)="removeArticle.emit()"
+              type="button"
+              mat-raised-button
+              color="warn">
+        {{'general.articles.edit.deleteArticle' | translate}}
+      </button>
+    </div>
+  </mat-tab>
 
-      <mat-tab label="Soziale Netzwerke">
-        <sidebar-meta-data [form]="form"
-                           [applications]="applicationService.applications$ | async">
-        </sidebar-meta-data>
-      </mat-tab>
-      <mat-tab label="Close" (click)="notifications.toggle()"></mat-tab>
-    </mat-tab-group>
-  </div>
+  <mat-tab label="{{ 'general.articles.edit.sidebar.links.title' | translate }}">
+    <sidebar-links-data [form]="form"></sidebar-links-data>
+  </mat-tab>
 
-</div>
+  <mat-tab label="{{ 'general.articles.edit.sidebar.meta.title' | translate }}">
+    <sidebar-meta-data [form]="form">
+      <!-- [applications]="applicationService.applications$ | async" -->
+    </sidebar-meta-data>
+  </mat-tab>
+</mat-tab-group>
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

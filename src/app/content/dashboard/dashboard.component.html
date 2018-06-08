@@ -1,117 +1,113 @@
-<div fxLayout="row">
+<mat-card>
+  <mat-card-title>
+    <mat-icon>list</mat-icon>
+    {{'general.menu.category.main' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
 
-  <!--<div fxFlex.gt-sm="50"
-      fxFlex="100">
+    <div fxLayout.gt-sm="row"
+         fxLayout="column">
 
-  <div fxLayout="column">
-
-     <div fxFlex="100">
-       <mat-card class="profile-post">
-         <form fxLayout="row"
-               [formGroup]="mindForm">
+      <div fxFlex="35">
+        <mat-card class="profile-post">
+          <form fxLayout="row"
+                [formGroup]="mindForm">
            <textarea formControlName="comment"
                      placeholder="{{'general.dashboard.mindText' | translate}}"
                      rows="6">
            </textarea>
-         </form>
-         <hr>
-         <mat-card-actions>
-           <div fxLayout="row">
-             <button mat-icon-button>
-               <mat-icon>insert_photo</mat-icon>
-             </button>
-             <button mat-icon-button>
-               <mat-icon>insert_link</mat-icon>
-             </button>
-             <button mat-icon-button>
-               <mat-icon>location_on</mat-icon>
-             </button>
-             <span fxFlex></span>
-             <button mat-raised-button color="primary">Post</button>
-           </div>
-         </mat-card-actions>
-       </mat-card>
-     </div>
-   </div>
+          </form>
+          <hr>
+          <mat-card-actions>
+            <div fxLayout="row">
+              <button mat-icon-button>
+                <mat-icon>insert_photo</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>insert_link</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>location_on</mat-icon>
+              </button>
+              <span fxFlex></span>
+              <button mat-raised-button color="primary">Post</button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
 
-    <div fxLayout="row"
-         >-->
+      <div fxFlex="20">
+        <mat-card>
+          <mat-card-title class="mat-red">
+            <h2 mat-card-widget-title>{{'general.dashboard.birthdays' | translate}}</h2>
+            <hr>
+          </mat-card-title>
+          <mat-card-content>
+            <mat-list *ngIf="members$ | async as members; else loadingTemplate">
 
-  <div fxFlex.gt-sm="24"
-       fxFlex="100">
-    <mat-card>
-      <mat-card-title class="mat-red">
-        <h2 mat-card-widget-title>{{'general.dashboard.birthdays' | translate}}</h2>
-        <hr>
-      </mat-card-title>
-      <mat-card-content>
-        <mat-list *ngIf="members$ | async as members; else loadingTemplate">
+              <h3 mat-subheader>{{'general.dashboard.today' | translate}}, {{today.format('DD.MM.YY')}}</h3>
 
-          <h3 mat-subheader>{{'general.dashboard.today' | translate}}, {{today.format('DD.MM.YY')}}</h3>
-
-          <mat-list-item *ngFor="let member of members | birthdayFilter: today; let last = last">
-            <img mat-list-avatar
-                 [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
-                 alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
-            <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
-            <p mat-line>
+              <mat-list-item *ngFor="let member of members | birthdayFilter: today; let last = last">
+                <img mat-list-avatar
+                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
+                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
+                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
+                <p mat-line>
               <span class="demo-secondary-text">
                 {{'general.dashboard.isGetting' | translate}}
                 {{memberService.calculateAge(member.mainData.birthday)}}
                 {{'general.dashboard.yearsOld' | translate}}
               </span>
-            </p>
-            <mat-divider inset="true" *ngIf="!last"></mat-divider>
-          </mat-list-item>
+                </p>
+                <mat-divider inset="true" *ngIf="!last"></mat-divider>
+              </mat-list-item>
 
-          <mat-divider></mat-divider>
+              <mat-divider></mat-divider>
 
-          <h3 mat-subheader>{{'general.dashboard.tomorrow' | translate}}, {{tomorrow.format('DD.MM.YY')}}</h3>
+              <h3 mat-subheader>{{'general.dashboard.tomorrow' | translate}}, {{tomorrow.format('DD.MM.YY')}}</h3>
 
-          <mat-list-item *ngFor="let member of members | birthdayFilter: tomorrow; let last = last">
-            <img mat-list-avatar
-                 [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
-                 alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
-            <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
-            <p mat-line>
+              <mat-list-item *ngFor="let member of members | birthdayFilter: tomorrow; let last = last">
+                <img mat-list-avatar
+                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
+                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
+                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
+                <p mat-line>
               <span class="demo-secondary-text">
                 {{'general.dashboard.willGet' | translate}}
                 {{memberService.calculateAge(member.mainData.birthday)}}
                 {{'general.dashboard.yearsOld' | translate}}
               </span>
-            </p>
-            <mat-divider inset="true" *ngIf="!last"></mat-divider>
-          </mat-list-item>
+                </p>
+                <mat-divider inset="true" *ngIf="!last"></mat-divider>
+              </mat-list-item>
 
-          <mat-divider></mat-divider>
+              <mat-divider></mat-divider>
 
-          <h3 mat-subheader>{{'general.dashboard.yesterday' | translate}}, {{yesterday.format('DD.MM.YY')}}</h3>
+              <h3 mat-subheader>{{'general.dashboard.yesterday' | translate}}, {{yesterday.format('DD.MM.YY')}}</h3>
 
-          <mat-list-item *ngFor="let member of members | birthdayFilter: yesterday; let last = last">
-            <img mat-list-avatar
-                 [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
-                 alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
-            <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
-            <p mat-line>
+              <mat-list-item *ngFor="let member of members | birthdayFilter: yesterday; let last = last">
+                <img mat-list-avatar
+                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
+                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
+                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
+                <p mat-line>
               <span class="demo-secondary-text">
                 {{'general.dashboard.got' | translate}}
                 {{memberService.calculateAge(member.mainData.birthday)}}
                 {{'general.dashboard.yearsOld' | translate}}
               </span>
-            </p>
-            <mat-divider inset="true" *ngIf="!last"></mat-divider>
-          </mat-list-item>
+                </p>
+                <mat-divider inset="true" *ngIf="!last"></mat-divider>
+              </mat-list-item>
 
-        </mat-list>
-      </mat-card-content>
-    </mat-card>
-  </div>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
-  <!--
-      <div fxFlex.gt-sm="49"
-           fxFlexOffset.gt-sm="2"
-           fxFlex="100">
-       <!-- <mat-card>
+      <div fxFlex="35">
+        <mat-card>
           <mat-card-title class="mat-blue">
             <h2 mat-card-widget-title>{{'general.dashboard.lastArticles' | translate}}</h2>
             <hr>
@@ -127,18 +123,53 @@
             </mat-list>
           </mat-card-content>
         </mat-card>
+
+        <mat-card>
+          <mat-card-title class="mat-amber">
+            <h2 mat-card-widget-title>{{'general.dashboard.matches' | translate}}</h2>
+            <hr>
+          </mat-card-title>
+          <mat-card-content>
+            <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
+                           [dynamicHeight]="true">
+
+              <mat-tab label="{{'general.dashboard.upComingMatches' | translate}}">
+                <div *ngIf="matches$ | async as matches; else loadingTemplate"
+                     [perfectScrollbar]="config">
+                  <match-list [categories]="categories"
+                              [matches]="matches | orderBy: ['startDate'] | matchFilter : 'endDate' : '>=' | matchFilter: 'endDate' : '<=' : inTwoWeeks">
+                  </match-list>
+                </div>
+              </mat-tab>
+
+              <mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
+                <div *ngIf="matches$ | async as matches; else loadingTemplate"
+                     style="max-height: 40vh;"
+                     [perfectScrollbar]="config">
+                  <match-list [categories]="categories"
+                              [events]="matchService.getOtherEventList() | orderBy: ['title']"
+                              [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<=' | matchFilter: 'endDate' : '>=' : inLastTwoWeeks">
+                  </match-list>
+                </div>
+              </mat-tab>
+
+              <mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
+                <div *ngIf="matches$ | async as matches; else loadingTemplate"
+                     [perfectScrollbar]="config">
+                  <match-list [categories]="categories"
+                              [events]="matchService.getOtherEventList() | orderBy: ['title']"
+                              [matches]="matches | matchFilter : 'endDate' : '<=' | orderBy: ['-endDate'] | matchNoResultFilter | slice: 0:20">
+                  </match-list>
+                </div>
+              </mat-tab>
+
+            </mat-tab-group>
+          </mat-card-content>
+        </mat-card>
       </div>
-    </div>
-  </div>-->
 
-  <div fxFlex.gt-sm="50"
-       fxFlex="100">
-
-    <div fxLayout="row">
-
-      <div fxFlex.gt-sm="50"
-           fxFlex="100">
-        <mat-card class="card-widget mat-teal">
+      <div fxLayout="column">
+        <mat-card class="card-widget mat-teal" fxFlex="50">
           <div mat-card-widget>
             <div mat-card-float-icon>
               <mat-icon>grade</mat-icon>
@@ -149,11 +180,8 @@
             </div>
           </div>
         </mat-card>
-      </div>
 
-      <div fxFlex.gt-sm="50"
-           fxFlex="100">
-        <mat-card class="card-widget mat-purple">
+        <mat-card class="card-widget mat-purple" fxFlex="50">
           <div mat-card-widget>
             <div mat-card-float-icon>
               <mat-icon>code</mat-icon>
@@ -164,13 +192,7 @@
             </div>
           </div>
         </mat-card>
-      </div>
-    </div>
 
-    <div fxLayout="row"
-    >
-      <div fxFlex.gt-sm="50"
-           fxFlex="100">
         <mat-card class="card-widget mat-teal">
           <div mat-card-widget>
             <div mat-card-float-icon>
@@ -186,10 +208,7 @@
             </div>
           </div>
         </mat-card>
-      </div>
 
-      <div fxFlex.gt-sm="50"
-           fxFlex="100">
         <mat-card class="card-widget mat-purple">
           <div mat-card-widget>
             <div mat-card-float-icon>
@@ -205,10 +224,7 @@
             </div>
           </div>
         </mat-card>
-      </div>
 
-      <div fxFlex.gt-sm="50"
-           fxFlex="100">
         <mat-card class="card-widget mat-teal">
           <div mat-card-widget>
             <div mat-card-float-icon>
@@ -224,10 +240,7 @@
             </div>
           </div>
         </mat-card>
-      </div>
 
-      <div fxFlex.gt-sm="50"
-           fxFlex="100">
         <mat-card class="card-widget mat-purple">
           <div mat-card-widget>
             <div mat-card-float-icon>
@@ -244,56 +257,10 @@
           </div>
         </mat-card>
       </div>
-
     </div>
 
-
-    <!--<mat-card>
-      <mat-card-title class="mat-amber">
-        <h2 mat-card-widget-title>{{'general.dashboard.matches' | translate}}</h2>
-        <hr>
-      </mat-card-title>
-      <mat-card-content>
-        <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
-                       [dynamicHeight]="true">
-
-          <mat-tab label="{{'general.dashboard.upComingMatches' | translate}}">
-            <div *ngIf="matches$ | async as matches; else loadingTemplate"
-                 [perfectScrollbar]="config">
-              <match-list [categories]="categories"
-                          [matches]="matches | orderBy: ['startDate'] | matchFilter : 'endDate' : '>=' | matchFilter: 'endDate' : '<=' : inTwoWeeks">
-              </match-list>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
-            <div *ngIf="matches$ | async as matches; else loadingTemplate"
-                 style="max-height: 40vh;"
-                 [perfectScrollbar]="config">
-              <match-list [categories]="categories"
-                          [events]="matchService.getOtherEventList() | orderBy: ['title']"
-                          [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<=' | matchFilter: 'endDate' : '>=' : inLastTwoWeeks">
-              </match-list>
-            </div>
-          </mat-tab>
-
-          <mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
-            <div *ngIf="matches$ | async as matches; else loadingTemplate"
-                 [perfectScrollbar]="config">
-              <match-list [categories]="categories"
-                          [events]="matchService.getOtherEventList() | orderBy: ['title']"
-                          [matches]="matches | matchFilter : 'endDate' : '<=' | orderBy: ['-endDate'] | matchNoResultFilter | slice: 0:20">
-              </match-list>
-            </div>
-          </mat-tab>
-
-        </mat-tab-group>
-      </mat-card-content>
-    </mat-card>-->
-  </div>
-
-</div>
-
+  </mat-card-content>
+</mat-card>
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

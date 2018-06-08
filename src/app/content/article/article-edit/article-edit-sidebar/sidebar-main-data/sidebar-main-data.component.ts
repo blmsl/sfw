@@ -17,15 +17,15 @@ import { IMatch } from '../../../../../shared/interfaces/match.interface';
 export class SidebarMainDataComponent implements OnInit {
 
   @Input() form: FormGroup;
-  @Input() categories: ICategory[];
+  /*@Input() categories: ICategory[];
   @Input() categoryTypes: ICategoryType[];
   @Input() locations: ILocation[];
   @Input() users: IUser[];
   @Input() matches: IMatch[];
   @Input() seasons: ISeason[];
-  @Input() teams: ITeam[];
+  @Input() teams: ITeam[]; */
 
-  @Output() remove: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() removeArticle: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
   constructor() {
   }

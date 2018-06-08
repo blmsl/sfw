@@ -11,7 +11,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class SidebarMetaDataComponent implements OnInit {
 
-  @Input() applications: IApplication[];
+  // @Input() applications: IApplication[];
   @Input() form: FormGroup;
 
   constructor() { }

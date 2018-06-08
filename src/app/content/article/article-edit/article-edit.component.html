@@ -1,4 +1,4 @@
-<mat-sidenav-container fxFlexFill>
+<mat-sidenav-container fxFlexFill style="padding: 0 25px;">
 
   <mat-sidenav #settings
                position="end"
@@ -11,28 +11,28 @@
     <div fxLayout.gt-sm="row"
          fxLayout="column"
          fxLayoutAlign="space-between center">
-      <span style="font-weight: bold; font-size: larger">{{ 'general.menu.main' | translate }}</span>
+      <span style="font-weight: bold; font-size: larger">{{ 'general.articles.edit.sidebar.title' | translate }}</span>
       <span class="space"></span>
       <button mat-icon-button (click)="sidePanelOpened = false">
         <mat-icon>close</mat-icon>
       </button>
     </div>
 
-
-    <article-edit-sidebar (remove)="remove()"
-                          [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
+    <!--
+    [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
                           [categories]="categories$ | async"
                           [locations]="locations$ | async"
                           [users]="users$ | async"
                           [seasons]="seasons$ | async"
                           [teams]="teams$ | async"
                           [notifications]="notifications"
-                          [form]="form">
-    </article-edit-sidebar>
+                          -->
+
+    <article-edit-sidebar [form]="form"></article-edit-sidebar>
 
   </mat-sidenav>
 
-  <mat-sidenav-content style="overflow: hidden">
+  <mat-sidenav-content>
 
     <div class="header"
          [formGroup]="form">
@@ -42,14 +42,25 @@
            fxLayout="column"
            fxLayoutAlign="space-between center">
 
-
-        <input class="title-document"
+        <input fxFlex="80"
+               class="title-document"
                type="text"
                placeholder="{{'general.articles.edit.title' | translate}}"
                formControlName="title">
 
         <span class="spacer"></span>
-        <button mat-raised-button [matMenuTriggerFor]="menu">Publish &darr;</button>
+
+        <div>
+          <button mat-raised-button [matMenuTriggerFor]="menu">Publish &darr;</button>
+          <button *ngIf="isSmallDevice" mat-raised-button (click)="sidePanelOpened = !sidePanelOpened">Optionen</button>
+
+          <button *ngIf="!isSmallDevice"
+                  mat-icon-button
+                  (click)="sidePanelOpened = !sidePanelOpened">
+            <mat-icon *ngIf="sidePanelOpened">arrow_forward_ios</mat-icon>
+            <mat-icon *ngIf="!sidePanelOpened">arrow_back_ios</mat-icon>
+          </button>
+        </div>
 
         <mat-menu #menu="matMenu"
                   formGroupName="publication">
@@ -75,17 +86,15 @@
           </div>
         </mat-menu>
 
-        <button mat-icon-button (click)="sidePanelOpened = !sidePanelOpened">
-          <mat-icon *ngIf="sidePanelOpened">arrow_forward_ios</mat-icon>
-          <mat-icon *ngIf="!sidePanelOpened">arrow_back_ios</mat-icon>
-        </button>
       </div>
-
     </div>
 
-    <sfw-editor [mode]="'editor'"
-                [options]="options">
-    </sfw-editor>
+    <!-- formControlName="text" -->
+
+    <app-ngx-editor [placeholder]="'Enter text here...'"
+                    [spellcheck]="true">
+    </app-ngx-editor>
+
   </mat-sidenav-content>
 </mat-sidenav-container>
 
