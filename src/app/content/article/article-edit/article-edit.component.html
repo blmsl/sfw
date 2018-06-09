@@ -22,40 +22,57 @@
     [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
                           [categories]="categories$ | async"
                           [locations]="locations$ | async"
-                          [users]="users$ | async"
                           [seasons]="seasons$ | async"
                           [teams]="teams$ | async"
                           [notifications]="notifications"
                           -->
 
-    <article-edit-sidebar [form]="form"></article-edit-sidebar>
+    <article-edit-sidebar [form]="form"
+                          (removeArticle)="removeArticle($event)">
+    </article-edit-sidebar>
 
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content [formGroup]="form">
 
-    <div class="header"
-         [formGroup]="form">
-      <h2 class="title">Title</h2>
+    <div class="header">
+      <h2 class="title">{{'general.articles.edit.title' | translate}}</h2>
 
       <div fxLayout.gt-sm="row"
            fxLayout="column"
            fxLayoutAlign="space-between center">
 
-        <input fxFlex="80"
+        <input fxFlex="60"
                class="title-document"
                type="text"
-               placeholder="{{'general.articles.edit.title' | translate}}"
+               placeholder="{{'general.articles.edit.titlePlaceholder' | translate}}"
                formControlName="title">
 
         <span class="spacer"></span>
 
         <div>
-          <button mat-raised-button [matMenuTriggerFor]="menu">Publish &darr;</button>
-          <button *ngIf="isSmallDevice" mat-raised-button (click)="sidePanelOpened = !sidePanelOpened">Optionen</button>
+          <button mat-raised-button
+                  [matMenuTriggerFor]="menu"
+                  title="{{'general.articles.edit.publish.menuButton' | translate}}">
+            {{'general.articles.edit.publish.menuButton' | translate}} &darr;
+          </button>
+          <button *ngIf="!isSmallDevice" mat-raised-button
+                  (click)="togglePreview()"
+                  [disabled]="!form.get('text').value"
+                  [color]="showPreview ? 'warn' : ''"
+                  title="{{'general.articles.edit.show.text' | translate}}">
+            {{ showPreview ? ('general.articles.edit.show.text' | translate) :  'general.articles.edit.show.preview' | translate}}
+          </button>
+          <button *ngIf="isSmallDevice"
+                  [title]="sidePanelOpened ? ('general.articles.edit.options.close' | translate) : ('general.articles.edit.options.show' | translate)"
+                  mat-raised-button
+                  (click)="sidePanelOpened = !sidePanelOpened">
+            {{'general.articles.edit.options.title' | translate}}
+          </button>
 
           <button *ngIf="!isSmallDevice"
                   mat-icon-button
+                  [title]="sidePanelOpened ? ('general.articles.edit.options.close' | translate) : ('general.articles.edit.options.show' | translate)"
                   (click)="sidePanelOpened = !sidePanelOpened">
             <mat-icon *ngIf="sidePanelOpened">arrow_forward_ios</mat-icon>
             <mat-icon *ngIf="!sidePanelOpened">arrow_back_ios</mat-icon>
@@ -64,24 +81,28 @@
 
         <mat-menu #menu="matMenu"
                   formGroupName="publication">
-          <div style="padding: 10px 20px;">
-            <h4>Ready to publish your post?</h4>
+          <div style="padding: 10px 10px;">
+            <h5>{{'general.articles.edit.publish.question' | translate}}</h5>
             <mat-radio-group class="radio-group"
                              formControlName="status">
               <mat-radio-button (click)="changeStatus(publication.value)"
                                 class="radio-button"
                                 *ngFor="let publication of publicationOptions"
                                 [value]="publication.value" style="margin: 10px 0">
-                {{publication.text}}<br/>
+                {{ 'general.articles.edit.publish.' + publication.text | translate}}<br/>
                 <span style="color: #cecece">
-                  {{publication.description}}
+                  {{ 'general.articles.edit.publish.' + publication.description | translate}}
                 </span>
               </mat-radio-button>
             </mat-radio-group>
             <hr style="margin: 25px 0;"/>
             <div class="button-row">
-              <button mat-button type="button">Cancel</button>
-              <button mat-raised-button type="button" color="primary">Publish</button>
+              <button mat-button type="button" title="{{'general.cancel' | translate}}">
+                {{'general.cancel' | translate}}
+              </button>
+              <button mat-raised-button type="button" color="primary" title="{{'general.articles.edit.publish.button' | translate}}">
+                {{'general.articles.edit.publish.button' | translate}}
+              </button>
             </div>
           </div>
         </mat-menu>
@@ -89,11 +110,16 @@
       </div>
     </div>
 
-    <!-- formControlName="text" -->
-
-    <app-ngx-editor [placeholder]="'Enter text here...'"
+    <app-ngx-editor [placeholder]="'general.articles.edit.textPlaceholder' | translate"
+                    formControlName="text"
+                    *ngIf="!showPreview"
                     [spellcheck]="true">
     </app-ngx-editor>
+
+    <div *ngIf="showPreview">
+      <h1>{{form.get('title').value ? form.get('title').value : 'general.articles.edit.titlePlaceholder' | translate}}</h1>
+      <div [innerHtml]="form.get('text').value | sanitizeHtml"></div>
+    </div>
 
   </mat-sidenav-content>
 </mat-sidenav-container>

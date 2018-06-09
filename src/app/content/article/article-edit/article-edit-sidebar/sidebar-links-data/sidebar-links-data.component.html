@@ -1,59 +1,68 @@
 <div [formGroup]="form"
+     *ngIf="locations && seasons && categories && categoryTypes && teams; else loadingTemplate"
      fxLayout="column">
 
   <mat-form-field fxFlex.gt-sm="49">
-    <mat-select placeholder="{{'general.articles.edit.assignedLocation' | translate}}"
+    <mat-select placeholder="{{'general.articles.edit.sidebar.links.assignedLocation' | translate}}"
                 formControlName="assignedLocation">
-      <!--<mat-option *ngFor="let location of locations | orderBy: ['title']"
+      <mat-option *ngFor="let location of locations | orderBy: ['title']"
         [value]="location.id">
         {{location.title}}
-      </mat-option>-->
+      </mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field fxFlex.gt-sm="49">
-    <mat-select placeholder="{{'general.articles.edit.assignedTeams' | translate}}"
+    <mat-select placeholder="{{'general.articles.edit.sidebar.links.assignedTeams' | translate}}"
                 formControlName="assignedTeams"
                 multiple>
-      <!--<mat-optgroup *ngFor="let season of seasons | orderBy: ['-title']"
+      <mat-optgroup *ngFor="let season of seasons | orderBy: ['-title']"
                     [label]="season.title">
         <mat-option
           *ngFor="let team of teams | filterBy: ['assignedSeason'] : season.id | orderBy: ['title', 'subTitle']"
           [value]="team.id">
           {{team.title}} {{team.subTitle}}
         </mat-option>
-      </mat-optgroup>-->
+      </mat-optgroup>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field fxFlex.gt-sm="49">
-    <mat-select placeholder="{{'general.articles.edit.assignedArticleCategories' | translate}}"
+    <mat-select placeholder="{{'general.articles.edit.sidebar.links.assignedArticleCategories' | translate}}"
                 formControlName="assignedCategories" multiple>
-      <!--<mat-optgroup *ngFor="let categoryType of categoryTypes"
+      <mat-optgroup *ngFor="let categoryType of categoryTypes"
                     [label]="'general.menu.' + categoryType.link + '.main' | translate">
         <mat-option
           *ngFor="let category of categories | filterBy: ['assignedCategoryType'] : categoryType.id | orderBy: ['title']"
           [value]="category.id">
           {{category.title}}
         </mat-option>
-      </mat-optgroup>-->
+      </mat-optgroup>
     </mat-select>
   </mat-form-field>
 
   <mat-checkbox fxFlex="49" style="margin-top: 25px;"
                 formControlName="isMatch">
-    {{'general.articles.edit.isArticleAMatch' | translate}}
+    {{'general.articles.edit.sidebar.links.isArticleAMatch' | translate}}
   </mat-checkbox>
 
-  <mat-form-field *ngIf="form.get('isMatch').value"
+  <mat-form-field *ngIf="matchesListReady; else matchLoadingTemplate"
                   fxFlex="49">
-    <mat-select placeholder="{{'general.articles.edit.assignedMatch' | translate}}"
+    <mat-select placeholder="{{'general.articles.edit.sidebar.links.assignedMatch' | translate}}"
                 formControlName="assignedMatch">
-      <!--<mat-option *ngFor="let match of matches | orderBy: ['startDate', 'title']"
+      <mat-option *ngFor="let match of matches | orderBy: ['startDate', 'title']"
                   [value]="match.id">
-        {{match.startDate | date: 'd.M.Y'}}: {{match.title}}
-      </mat-option>-->
+        {{match.startDate | date: 'dd.MM.yy'}}: {{match.title}}
+      </mat-option>
     </mat-select>
   </mat-form-field>
 
 </div>
+
+<ng-template #matchLoadingTemplate>
+  <loading-indicator *ngIf="form.get('isMatch').value"></loading-indicator>
+</ng-template>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

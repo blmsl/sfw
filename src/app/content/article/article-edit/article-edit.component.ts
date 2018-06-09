@@ -5,21 +5,21 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { IArticle }           from '../../../shared/interfaces/article.interface';
+import { IArticle } from '../../../shared/interfaces/article.interface';
 import {
   ActivatedRoute,
   Router
-}                             from '@angular/router';
+} from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
   Validators
-}                             from '@angular/forms';
-import { ArticleService }     from '../../../shared/services/article/article.service';
+} from '@angular/forms';
+import { ArticleService } from '../../../shared/services/article/article.service';
 import {
   debounceTime,
   distinctUntilChanged
-}                             from 'rxjs/operators';
+} from 'rxjs/operators';
 import {
   BreakpointObserver,
   BreakpointState
@@ -30,7 +30,7 @@ const SMALL_WIDTH_BREAKPOINT = 960;
 @Component({
   selector: 'article-edit',
   templateUrl: './article-edit.component.html',
-  styleUrls: [ './article-edit.component.scss' ]
+  styleUrls: ['./article-edit.component.scss']
 })
 export class ArticleEditComponent implements OnInit {
 
@@ -40,56 +40,29 @@ export class ArticleEditComponent implements OnInit {
   public isSmallDevice: boolean = false;
 
   public article: IArticle;
-  /* public categories$: Observable<ICategory[]>;
-   public categoryTypes$: Observable<ICategoryType[]>;
-   public locations$: Observable<ILocation[]>;
-   public matches$: Observable<IMatch[]>;
-   public users$: Observable<IUser[]>;
-   public seasons$: Observable<ISeason[]>;
-   public teams$: Observable<ITeam[]>;
-
-   public words: number = 0;
-   public characters: number = 0; */
-
   public form: FormGroup;
-
-  public options: any = {
-    dir: 'right',
-    maxLines: 90000,
-    printMargin: false
-  };
 
   public publicationOptions: any[] = [
     {
-      text: 'Set it live now',
-      description: 'Publish this post immediately',
+      text: 'live.text',
+      description: 'live.description',
       value: 0
     },
     {
-      text: 'Schedule it for later',
-      description: 'Set automatic future publish date',
+      text: 'schedule.text',
+      description: 'schedule.description',
       value: 1
     }
   ];
 
+  private showPreview: boolean = false;
+
   constructor(private route: ActivatedRoute,
-              public breakpointObserver: BreakpointObserver,
-              private router: Router,
-              private zone: NgZone,
-              private articleService: ArticleService,
-              /* private categoryService: CategoryService,
-               private categoryTypeService: CategoryTypeService,
-               private locationService: LocationService,
-               private userService: UserService,
-               private seasonService: SeasonService,
-               private teamService: TeamService, */
-              private fb: FormBuilder) {
-    /* this.categories$ = categoryService.categories$;
-     this.categoryTypes$ = categoryTypeService.categoryTypes$;
-     this.locations$ = locationService.locations$;
-     this.users$ = userService.users$;
-     this.seasons$ = seasonService.seasons$;
-     this.teams$ = teamService.teams$; */
+    public breakpointObserver: BreakpointObserver,
+    private router: Router,
+    private zone: NgZone,
+    private articleService: ArticleService,
+    private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -98,7 +71,7 @@ export class ArticleEditComponent implements OnInit {
     });
 
     this.breakpointObserver
-      .observe(['(min-width: '+ SMALL_WIDTH_BREAKPOINT + 'px)'])
+      .observe(['(min-width: ' + SMALL_WIDTH_BREAKPOINT + 'px)'])
       .subscribe((state: BreakpointState) => {
         if (state.matches) {
           this.sidePanelOpened = true;
@@ -110,23 +83,23 @@ export class ArticleEditComponent implements OnInit {
       });
 
     this.form = this.fb.group({
-      title: [ this.article.title, [ Validators.required, Validators.minLength(10) ] ],
-      subTitle: [ this.article.subTitle ],
-      text: [ this.article.text, [ Validators.required, Validators.minLength(10) ] ],
+      title: [this.article.title, [Validators.required, Validators.minLength(10)]],
+      subTitle: [this.article.subTitle],
+      text: [this.article.text, [Validators.required, Validators.minLength(10)]],
       publication: this.initPublication(),
       creation: this.initCreation(),
       meta: this.initMetaData(),
-       articleDate: this.article.articleDate,
-       // postImage: string;*/
-       postURL: [this.article.postURL],
-       assignedTags: [this.article.assignedTags],
-       assignedCategories: [this.article.assignedCategories],
-       assignedTeams: [this.article.assignedTeams],
-       assignedLocation: [this.article.assignedLocation],
-       assignedSeason: [this.article.assignedSeason],
-       assignedMatch: [this.article.assignedMatch],
-       isFeaturedPost: [this.article.isFeaturedPost],
-       isMatch: !!(this.article.assignedMatch)
+      articleDate: this.article.articleDate,
+      // postImage: string;*/
+      postURL: [this.article.postURL],
+      assignedTags: [this.article.assignedTags],
+      assignedCategories: [this.article.assignedCategories],
+      assignedTeams: [this.article.assignedTeams],
+      assignedLocation: [this.article.assignedLocation],
+      assignedSeason: [this.article.assignedSeason],
+      assignedMatch: [this.article.assignedMatch],
+      isFeaturedPost: [this.article.isFeaturedPost],
+      isMatch: !!(this.article.assignedMatch)
     });
 
     this.form.valueChanges.pipe(
@@ -136,6 +109,10 @@ export class ArticleEditComponent implements OnInit {
       console.log(changes);
       // changes.isMatch = null;
     });
+  }
+
+  togglePreview():void {
+    this.showPreview = !this.showPreview;
   }
 
   initMetaData(): FormGroup {
@@ -187,7 +164,7 @@ export class ArticleEditComponent implements OnInit {
   }
 
   redirectToList(): void {
-    this.router.navigate([ '/articles' ]).then();
+    this.router.navigate(['/articles']).then();
   }
 
 }

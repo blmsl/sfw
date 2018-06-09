@@ -1,16 +1,10 @@
 <mat-tab-group [formGroup]="form"
+               (selectedTabChange)="onTabChange($event)"
                [dynamicHeight]="true">
-  <!-- *ngIf="categories && categoryTypes && locations && seasons && users &&
-               teams; else loadingTemplate" -->
+
   <mat-tab label="{{ 'general.articles.edit.sidebar.main.title' | translate }}">
     <sidebar-main-data [form]="form"
-                       (removeArticle)="removeArticle.emit($event)">
-      <!-- [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
-                       [categories]="categories"
-                       [locations]="locations"
-                       [users]="users"
-                       [seasons]="seasons"
-                       [teams]="teams" -->
+                       [users]="users$ | async">
     </sidebar-main-data>
 
     <div class="row" style="margin-bottom: 25px">
@@ -24,14 +18,23 @@
   </mat-tab>
 
   <mat-tab label="{{ 'general.articles.edit.sidebar.links.title' | translate }}">
-    <sidebar-links-data [form]="form"></sidebar-links-data>
+    <sidebar-links-data *ngIf="selectedTab === 1"
+                        [categoryTypes]="categoryTypes$ | async | categoryFilter : 'link' : ['article.types', 'team.types']"
+                        [categories]="categories$ | async"
+                        [locations]="locations$ | async"
+                        [seasons]="seasons$ | async"
+                        [teams]="teams$ | async"
+                        [form]="form">
+    </sidebar-links-data>
   </mat-tab>
 
   <mat-tab label="{{ 'general.articles.edit.sidebar.meta.title' | translate }}">
-    <sidebar-meta-data [form]="form">
-      <!-- [applications]="applicationService.applications$ | async" -->
+    <sidebar-meta-data *ngIf="selectedTab === 2"
+                       [applications]="applications$ | async"
+                       [form]="form">
     </sidebar-meta-data>
   </mat-tab>
+
 </mat-tab-group>
 
 <ng-template #loadingTemplate>

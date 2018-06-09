@@ -8,9 +8,9 @@ describe('SidebarLinksDataComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SidebarLinksDataComponent ]
+      declarations: [SidebarLinksDataComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

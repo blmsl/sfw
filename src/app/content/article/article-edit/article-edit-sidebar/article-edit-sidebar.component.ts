@@ -1,14 +1,20 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatSidenav } from '@angular/material';
-import { ICategory } from '../../../../shared/interfaces/category.interface';
-import { ICategoryType } from '../../../../shared/interfaces/category-type.interface';
+import { IUser } from '../../../../shared/interfaces/user/user.interface';
+import { Observable } from 'rxjs/Rx';
+import { UserService } from '../../../../shared/services/user/user.service';
 import { ILocation } from '../../../../shared/interfaces/location.interface';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
+import { ICategory } from '../../../../shared/interfaces/category.interface';
+import { ICategoryType } from '../../../../shared/interfaces/category-type.interface';
 import { ISeason } from '../../../../shared/interfaces/season.interface';
-import { IMatch } from '../../../../shared/interfaces/match.interface';
+import { CategoryService } from '../../../../shared/services/category/category.service';
+import { CategoryTypeService } from '../../../../shared/services/category-type/category-type.service';
+import { LocationService } from '../../../../shared/services/location/location.service';
+import { SeasonService } from '../../../../shared/services/season/season.service';
+import { TeamService } from '../../../../shared/services/team/team.service';
 import { ApplicationService } from '../../../../shared/services/application/application.service';
-import { IUser } from '../../../../shared/interfaces/user/user.interface';
+import { IApplication } from '../../../../shared/interfaces/application.interface';
 
 @Component({
   selector: 'article-edit-sidebar',
@@ -17,18 +23,44 @@ import { IUser } from '../../../../shared/interfaces/user/user.interface';
 })
 export class ArticleEditSidebarComponent {
 
-  //@Input() notifications: MatSidenav;
   @Input() form: FormGroup;
-  //@Input() categories: ICategory[];
-  //@Input() categoryTypes: ICategoryType[];
-  //@Input() locations: ILocation[];
-  //@Input() users: IUser[];
-  //@Input() seasons: ISeason[];
-  //@Input() teams: ITeam[];
+
+  public applications$: Observable<IApplication[]>;
+  public categories$: Observable<ICategory[]>;
+  public categoryTypes$: Observable<ICategoryType[]>;
+  public locations$: Observable<ILocation[]>;
+  public seasons$: Observable<ISeason[]>;
+  public teams$: Observable<ITeam[]>;
+  public users$: Observable<IUser[]>;
 
   @Output() removeArticle: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
-  constructor(/*public applicationService: ApplicationService*/) {
+  private selectedTab: number;
+
+  constructor(private userService: UserService,
+              private applicationService: ApplicationService,
+              private categoryService: CategoryService,
+              private categoryTypeService: CategoryTypeService,
+              private locationService: LocationService,
+              private seasonService: SeasonService,
+              private teamService: TeamService) {
+    this.users$ = userService.users$;
+  }
+
+  onTabChange($event): void{
+    this.selectedTab = $event.index;
+
+    if(this.selectedTab === 1 && !this.categories$){
+      this.categories$ = this.categoryService.categories$;
+      this.categoryTypes$ = this.categoryTypeService.categoryTypes$;
+      this.locations$ = this.locationService.locations$;
+      this.seasons$ = this.seasonService.seasons$;
+      this.teams$ = this.teamService.teams$;
+    }
+    if(this.selectedTab === 2){
+      this.applications$ = this.applicationService.applications$;
+    }
+
   }
 
 }

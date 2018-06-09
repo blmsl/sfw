@@ -98,36 +98,44 @@
         "writtenAt": "geschrieben am"
       },
       "edit": {
-        "author": "Author des Artikels",
-        "articleDate": "Datum des Artikels",
-        "assignedArticleCategories": "Artikel-Kategorien",
-        "assignedLocation": "Spielstätte / Ort",
-        "assignedMatch": "Verknüpftes Spiel",
-        "assignedTags": "Schlagworte zum Artikel",
-        "assignedTeams": "Verknüpfte Mannschaft(en)",
-        "cancelCreate": "Abbrechen",
-        "createdByScript": "Importiert durch Script",
         "deleteArticle": "Artikel löschen",
-        "isFeaturedPost": "Artikel festpinnen?",
-        "guestGoals": "Tore Gastmannschaft",
-        "guestTeam": "Gastmannschaft",
-        "homeGoals": "Tore Heimmannschaft",
-        "homeTeam": "Heimmannschaft",
-        "isArticleAMatch": "Ist der Artikel ein Spielbericht?",
-        "isHomeTeam": "Ist es ein Heimspiel?",
-        "noTags": "Schlagworte hinzufügen",
-        "preview": "Vorschau",
-        "previewText": "Schreibe hier den Vorbericht zum o.a. Titel",
-        "previewTitle": "Artikel-Vorbericht",
-        "publicationDate": "Veröffentlichungsdatum",
-        "publishNow": "Jetzt veröffentlichen",
-        "saveAsDraft": "Als Entwurf speichern",
+        "options": {
+          "title": "Optionen"
+        },
+        "publish": {
+          "button": "Veröffentlichen",
+          "menuButton": "Sichtbarkeit",
+          "question": "Bereit zum Veröffentlichen?",
+          "live": {
+            "text": "Jetzt veröffentlichen",
+            "description": "Der Artikel wird direkt angezeigt."
+          },
+          "schedule": {
+            "text": "Für später planen",
+            "description": "Wähle ein Veröffentlichungsdatum."
+          }
+        },
         "settings": "Einstellungen",
+        "show": {
+          "preview": "Vorschau",
+          "text": "Editor"
+        },
         "sidebar": {
           "links": {
+            "assignedArticleCategories": "Verknüpfte Kategorien",
+            "assignedLocation": "Spielstätte / Ort",
+            "assignedMatch": "Verknüpftes Spiel",
+            "assignedTeams": "Verknüpfte Mannschaften",
+            "isArticleAMatch": "Ist dieser Artikel ein Spielbericht?",
             "title": "Verknüpfungen"
           },
           "main": {
+            "author": "Author",
+            "articleDate": "Datum des Artikels",
+            "deleteArticle": "Artikel löschen",
+            "isFeaturedPost": "Artikel hervorheben?",
+            "postUrl": "Feste URL vergeben",
+            "subTitle": "Untertitel",
             "title": "Artikel-Daten"
           },
           "meta": {
@@ -155,15 +163,9 @@
           },
           "title": "Einstellungen"
         },
-        "teamName": "Verknüpfte Mannschaft",
-        "text": "Der Artikel-Text",
-        "textLabel": "Der Text",
-        "textTitle": "Artikel-Nachbericht",
-        "title": "Titel des Artikels",
-        "subTitle": "Untertitel",
-        "turnToStaticPage": "In einen statischen Artikel umwandeln",
-        "postURL": "Statische URL des Artikels",
-        "wordCount": "Wörter"
+        "textPlaceholder": "Fang´ mit Deiner Geschichte an ...",
+        "title": "Titel",
+        "titlePlaceholder": "Titel des Artikels"
       },
       "list": {
         "addArticle": "Neuer Artikel",

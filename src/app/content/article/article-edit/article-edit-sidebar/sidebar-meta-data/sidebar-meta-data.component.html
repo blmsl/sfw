@@ -1,24 +1,23 @@
-<div fxLayout="row"
-
-     [formGroup]="form">
+<div [formGroup]="form"
+     *ngIf="applications; else loadingTemplate"
+     fxLayout="column">
 
   <div fxFlex="100"
        formGroupName="meta">
 
-    <mat-accordion class="example-headers-align">
+    <mat-accordion>
       <mat-expansion-panel [expanded]="step === 0"
                            (opened)="setStep(0)"
                            hideToggle="true"
                            formGroupName="main">
         <mat-expansion-panel-header>
           <mat-panel-title>{{ 'general.articles.edit.sidebar.meta.main.title' | translate}}</mat-panel-title>
-          <mat-panel-description>
+          <mat-panel-description fxHide.xs>
             {{ 'general.articles.edit.sidebar.meta.main.description' | translate}}
           </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <div fxLayout="row"
-
+        <div fxLayout="column"
              *ngIf="step === 0">
           <mat-form-field fxFlex="100"
                           hintLabel="Max 70 characters">
@@ -46,12 +45,11 @@
                            formGroupName="facebook">
         <mat-expansion-panel-header>
           <mat-panel-title>{{ 'general.articles.edit.sidebar.meta.facebook.title' | translate}}</mat-panel-title>
-          <mat-panel-description>
+          <mat-panel-description fxHide.xs>
             {{ 'general.articles.edit.sidebar.meta.facebook.description' | translate}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div fxLayout="row"
-
+        <div fxLayout="column"
              *ngIf="step === 1">
 
           <div style="border: 1px solid #cecece; min-height: 150px; width: 100%; text-align: center">
@@ -82,12 +80,11 @@
                            formGroupName="twitter">
         <mat-expansion-panel-header>
           <mat-panel-title>{{ 'general.articles.edit.sidebar.meta.twitter.title' | translate}}</mat-panel-title>
-          <mat-panel-description>
+          <mat-panel-description fxHide.xs>
             {{ 'general.articles.edit.sidebar.meta.twitter.description' | translate}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div fxLayout="row"
-
+        <div fxLayout="column"
              *ngIf="step === 2">
 
           <div style="border: 1px solid #cecece; min-height: 150px; width: 100%; text-align: center">

@@ -1,5 +1,6 @@
 <div [formGroup]="form"
      fxLayout="column"
+     *ngIf="users; else loadingTemplate"
      fxLayoutAlign="space-between stretch">
 
   <div class="post-image">
@@ -15,13 +16,13 @@
       <input matInput
              maxlength="50"
              formControlName="subTitle"
-             placeholder="{{'general.articles.edit.subTitle' | translate}}">
+             placeholder="{{'general.articles.edit.sidebar.main.subTitle' | translate}}">
     </mat-form-field>
 
     <mat-form-field fxFlex="49">
       <input matInput
              formControlName="postURL"
-             placeholder="{{'general.articles.edit.postURL' | translate}}">
+             placeholder="{{'general.articles.edit.sidebar.main.postUrl' | translate}}">
       <mat-hint align="end">
         <a *ngIf="form.get('postURL').value" [href]="form.get('postURL').value">Visit Link</a>
       </mat-hint>
@@ -36,35 +37,32 @@
       <input matInput
              maxlength="24"
              formControlName="articleDate"
-             placeholder="{{'general.articles.edit.articleDate' | translate}}">
+             placeholder="{{'general.articles.edit.sidebar.main.articleDate' | translate}}">
     </mat-form-field>
 
     <mat-form-field fxFlex="49"
                     formGroupName="creation">
-      <mat-select placeholder="{{'general.articles.edit.author' | translate}}"
+      <mat-select placeholder="{{'general.articles.edit.sidebar.main.author' | translate}}"
                   formControlName="by">
-        <!--<mat-option *ngFor="let user of users | orderBy: ['firstName', 'lastName']"
+        <mat-option *ngFor="let user of users | orderBy: ['firstName', 'lastName']"
                     [value]="user.id">
           {{user.firstName}} {{user.lastName}}
-        </mat-option>-->
+        </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
-  <!--<div fxLayout.gt-sm="row"
-       fxLayout="column"
-       fxLayoutAlign="space-between stretch">-->
+  <tag-input fxFlex="100"
+             formControlName="assignedTags"
+             [editable]="true">
+  </tag-input>
 
-    <tag-input fxFlex="100"
-               placeholder="Testing {{'general.articles.edit.noTags' | translate}}"
-               formControlName="assignedTags"
-               [editable]="true">
-    </tag-input>
-
-    <mat-checkbox style="margin-top: 25px"
-                  formControlName="isFeaturedPost">
-      {{'general.articles.edit.isFeaturedPost' | translate}}
-    </mat-checkbox>
-
-
+  <mat-checkbox style="margin-top: 25px"
+                formControlName="isFeaturedPost">
+    {{'general.articles.edit.sidebar.main.isFeaturedPost' | translate}}
+  </mat-checkbox>
 </div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

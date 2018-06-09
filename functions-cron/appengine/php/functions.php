@@ -48,7 +48,7 @@ function scrap_matchPlan($html, $clubName)
                     $matchDate = setMatchDate($item->plaintext, $savedMatchDate);
                     if ($matchDate && key_exists("assignedMainCategory", $matchData["assignedCategories"])) {
                         $matchData["matchStartDate"] = $savedMatchDate = $matchDate;
-                        $matchData["matchEndDate"] = getMatchDuration($matchData["assignedMainCategory"], $matchData);
+                        $matchData["matchEndDate"] = getMatchDuration($matchData["assignedCategories"]["assignedMainCategory"], $matchData);
                     }
 
                 } // Treffpunkt und Platzartz
@@ -207,6 +207,14 @@ function get_value($element, $selector_string, $index, $type = "text")
 
     return trim($value);
 } */
+
+function getCurrentSeasonFromTitle($title){
+    $parts = explode('/', $title);
+    return array(
+        'StartDate' => new DateTime(substr($parts[0], -4) . '-07-01'),
+        'EndDate' =>  new DateTime($parts[1]. '-06-30')
+    );
+}
 
 function getMainTeamCategoryName($teamCategoryName)
 {
