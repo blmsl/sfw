@@ -1,18 +1,9 @@
-import {
-  Observable,
-  of as observableOf
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { switchMap } from 'rxjs/operators';
-import {
-  Injectable,
-  OnDestroy
-} from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument
-} from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 import { ICreation } from '../../interfaces/creation.interface';
 import { IUser } from '../../interfaces/user/user.interface';
@@ -30,7 +21,7 @@ export class AuthService implements OnDestroy {
   public userId: string;
 
   constructor(private afAuth: AngularFireAuth,
-    private afs: AngularFirestore) {
+              private afs: AngularFirestore) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
         if (user) {
@@ -115,7 +106,7 @@ export class AuthService implements OnDestroy {
     return this.checkAuthorization(user, allowed);
   }
 
-  canWrite(user: IUser): boolean {
+  canWrite(user: any): boolean {
     const allowed = ['admin', 'editor'];
     return this.checkAuthorization(user, allowed);
   }
@@ -132,9 +123,9 @@ export class AuthService implements OnDestroy {
 
   private checkAuthorization(user: IUser, allowedRoles: string[]): boolean {
     if (!user) return false;
-    for (const role in allowedRoles) {
+    for (const role of allowedRoles) {
       if (user.assignedRoles[role]) {
-        return true;
+        return true
       }
     }
     return false;

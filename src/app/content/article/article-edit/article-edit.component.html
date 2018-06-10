@@ -1,4 +1,5 @@
-<mat-sidenav-container fxFlexFill style="padding: 0 25px;">
+<mat-sidenav-container fxFlexFill
+                       style="padding: 0 25px;">
 
   <mat-sidenav #settings
                position="end"
@@ -18,17 +19,8 @@
       </button>
     </div>
 
-    <!--
-    [categoryTypes]="categoryTypes | categoryFilter : 'link' : ['article.types', 'team.types']"
-                          [categories]="categories$ | async"
-                          [locations]="locations$ | async"
-                          [seasons]="seasons$ | async"
-                          [teams]="teams$ | async"
-                          [notifications]="notifications"
-                          -->
-
     <article-edit-sidebar [form]="form"
-                          (removeArticle)="removeArticle($event)">
+                          (removeArticle)="removeArticle()">
     </article-edit-sidebar>
 
   </mat-sidenav>
@@ -36,7 +28,11 @@
   <mat-sidenav-content [formGroup]="form">
 
     <div class="header">
-      <h2 class="title">{{'general.articles.edit.title' | translate}}</h2>
+      <h2 class="title">{{'general.articles.edit.title' | translate}}
+        <span style="float: right; text-transform: none" [class]="articleStatus">
+          {{ 'general.articles.edit.articleStatus.' + articleStatus | translate}}
+        </span>
+      </h2>
 
       <div fxLayout.gt-sm="row"
            fxLayout="column"
@@ -85,22 +81,40 @@
             <h5>{{'general.articles.edit.publish.question' | translate}}</h5>
             <mat-radio-group class="radio-group"
                              formControlName="status">
-              <mat-radio-button (click)="changeStatus(publication.value)"
+              <mat-radio-button (click)="$event.stopPropagation()"
                                 class="radio-button"
                                 *ngFor="let publication of publicationOptions"
-                                [value]="publication.value" style="margin: 10px 0">
+                                [value]="publication.value"
+                                style="margin: 10px 0">
                 {{ 'general.articles.edit.publish.' + publication.text | translate}}<br/>
                 <span style="color: #cecece">
                   {{ 'general.articles.edit.publish.' + publication.description | translate}}
                 </span>
               </mat-radio-button>
             </mat-radio-group>
+
+            <div style="padding-left: 30px" *ngIf="form.get('publication').get('status').value === 2">
+              <p>{{ 'general.articles.edit.publish.chooseDateTime' | translate}}</p>
+              <input [value]="form.get('publication').get('dateTime').value"
+                     formControlName="dateTime"
+                     [owlDateTime]="dt3"
+                     [owlDateTimeTrigger]="dt3">
+              <owl-date-time [pickerMode]="'dialog'" #dt3></owl-date-time>
+            </div>
+
+
             <hr style="margin: 25px 0;"/>
             <div class="button-row">
-              <button mat-button type="button" title="{{'general.cancel' | translate}}">
-                {{'general.cancel' | translate}}
+              <button mat-button
+                      (click)="resetPublication()"
+                      type="button"
+                      title="{{'general.cancel' | translate}}">
+                {{ 'general.articles.edit.publish.draft' | translate}}
               </button>
-              <button mat-raised-button type="button" color="primary" title="{{'general.articles.edit.publish.button' | translate}}">
+              <button mat-raised-button
+                      type="button"
+                      color="primary"
+                      title="{{'general.articles.edit.publish.button' | translate}}">
                 {{'general.articles.edit.publish.button' | translate}}
               </button>
             </div>
@@ -115,6 +129,8 @@
                     *ngIf="!showPreview"
                     [spellcheck]="true">
     </app-ngx-editor>
+
+    <pre>{{article | json}}</pre>
 
     <div *ngIf="showPreview">
       <h1>{{form.get('title').value ? form.get('title').value : 'general.articles.edit.titlePlaceholder' | translate}}</h1>

@@ -7,6 +7,12 @@
     Post Image
   </div>
 
+  <mat-form-field input fxFlex="100">
+      <textarea matInput
+                formControlName="excerpt"
+                placeholder="{{'general.articles.edit.sidebar.main.excerpt' | translate}}"></textarea>
+  </mat-form-field>
+
   <div fxLayout.gt-sm="row"
        fxLayout="column"
        fxLayoutAlign="space-between stretch">
@@ -24,20 +30,24 @@
              formControlName="postURL"
              placeholder="{{'general.articles.edit.sidebar.main.postUrl' | translate}}">
       <mat-hint align="end">
-        <a *ngIf="form.get('postURL').value" [href]="form.get('postURL').value">Visit Link</a>
+        <a *ngIf="form.get('postURL').value"
+           target="_blank"
+           [href]="host +'/'+ form.get('postURL').value">{{host +'/'+ form.get('postURL').value}}</a>
       </mat-hint>
     </mat-form-field>
   </div>
 
   <div fxLayout.gt-sm="row"
+       style="margin-top: 15px"
        fxLayout="column"
        fxLayoutAlign="space-between stretch">
 
     <mat-form-field fxFlex="49">
       <input matInput
-             maxlength="24"
+             placeholder="{{'general.articles.edit.sidebar.main.articleDate' | translate}}"
              formControlName="articleDate"
-             placeholder="{{'general.articles.edit.sidebar.main.articleDate' | translate}}">
+             [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1">
+      <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
     </mat-form-field>
 
     <mat-form-field fxFlex="49"

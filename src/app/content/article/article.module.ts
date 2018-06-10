@@ -42,12 +42,12 @@ import { SeasonService } from '../../shared/services/season/season.service';
 import { SharedCategoryModule } from '../../shared/components/category/shared-category.module';
 import { SidebarMetaDataComponent } from './article-edit/article-edit-sidebar/sidebar-meta-data/sidebar-meta-data.component';
 import { ApplicationService } from '../../shared/services/application/application.service';
-import { SidebarMatchDataComponent } from './article-edit/article-edit-sidebar/sidebar-match-data/sidebar-match-data.component';
 import { SidebarMainDataComponent } from './article-edit/article-edit-sidebar/sidebar-main-data/sidebar-main-data.component';
 import { SfwEditorModule } from '../../shared/components/editor/sfw-editor.module';
 import { ArticleListFilterComponent } from './article-list/article-list-filter/article-list-filter.component';
 import { SidebarLinksDataComponent } from './article-edit/article-edit-sidebar/sidebar-links-data/sidebar-links-data.component';
 import { NgxEditorModule } from 'ngx-editor';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   imports: [
@@ -66,6 +66,8 @@ import { NgxEditorModule } from 'ngx-editor';
     MatToolbarModule,
     NgxEditorModule,
     SharedMatchModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     PerfectScrollbarModule,
     RouterModule.forChild(articleRoutes),
     SfwEditorModule,
@@ -83,7 +85,6 @@ import { NgxEditorModule } from 'ngx-editor';
     ArticlesComponent,
     ScrollableDirective,
     SidebarMetaDataComponent,
-    SidebarMatchDataComponent,
     SidebarMainDataComponent,
     ArticleListFilterComponent,
     SidebarLinksDataComponent

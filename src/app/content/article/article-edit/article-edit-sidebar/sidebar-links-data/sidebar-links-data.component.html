@@ -6,7 +6,7 @@
     <mat-select placeholder="{{'general.articles.edit.sidebar.links.assignedLocation' | translate}}"
                 formControlName="assignedLocation">
       <mat-option *ngFor="let location of locations | orderBy: ['title']"
-        [value]="location.id">
+                  [value]="location.id">
         {{location.title}}
       </mat-option>
     </mat-select>
@@ -41,7 +41,8 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-checkbox fxFlex="49" style="margin-top: 25px;"
+  <mat-checkbox fxFlex="49"
+                style="margin-top: 25px;"
                 formControlName="isMatch">
     {{'general.articles.edit.sidebar.links.isArticleAMatch' | translate}}
   </mat-checkbox>

@@ -8,7 +8,8 @@ import { CommonModule } from '@angular/common';
 import {
   MatButtonModule,
   MatCardModule,
-  MatCheckboxModule, MatDialogModule,
+  MatCheckboxModule,
+  MatDialogModule,
   MatIconModule,
   MatInputModule,
   MatProgressSpinnerModule,

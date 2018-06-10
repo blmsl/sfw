@@ -1,11 +1,11 @@
 <div [formGroup]="form"
-     *ngIf="applications; else loadingTemplate"
      fxLayout="column">
 
   <div fxFlex="100"
        formGroupName="meta">
 
     <mat-accordion>
+
       <mat-expansion-panel [expanded]="step === 0"
                            (opened)="setStep(0)"
                            hideToggle="true"
@@ -16,7 +16,6 @@
             {{ 'general.articles.edit.sidebar.meta.main.description' | translate}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-
         <div fxLayout="column"
              *ngIf="step === 0">
           <mat-form-field fxFlex="100"
@@ -26,7 +25,6 @@
                    formControlName="title">
             <mat-hint align="end">{{form.get('meta.main.title').value.length || 0}}</mat-hint>
           </mat-form-field>
-
           <mat-form-field fxFlex="100"
                           hintLabel="Max 156 characters">
             <textarea matInput maxlength="156"
@@ -34,34 +32,39 @@
                       formControlName="description"></textarea>
             <mat-hint align="end">{{form.get('meta.main.description').value.length || 0}}</mat-hint>
           </mat-form-field>
-
         </div>
-
       </mat-expansion-panel>
 
-      <mat-expansion-panel [expanded]="step === 1"
+
+      <mat-expansion-panel formGroupName="socialProviders"
+                           [expanded]="step === 1"
                            (opened)="setStep(1)"
                            hideToggle="true"
-                           formGroupName="facebook">
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{ 'general.articles.edit.sidebar.meta.facebook.title' | translate}}</mat-panel-title>
+                           *ngFor="let socialProvider of form.get('meta').get('socialProviders').controls; let i = index">
+        <mat-expansion-panel-header [formGroupName]="i">
+          {{i}}
+        </mat-expansion-panel-header>
+        <!--<mat-expansion-panel-header [formGroupName]="i">
+
+          <mat-panel-title>{{ 'general.articles.edit.sidebar.meta.' + socialProvider[i].title + '.title' | translate}}
+          </mat-panel-title>
           <mat-panel-description fxHide.xs>
-            {{ 'general.articles.edit.sidebar.meta.facebook.description' | translate}}
+            {{ 'general.articles.edit.sidebar.meta.' + socialProvider[i].title + '.description' | translate}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div fxLayout="column"
-             *ngIf="step === 1">
+        <!--<div fxLayout="column"
+             *ngIf="step === index + 1">
 
           <div style="border: 1px solid #cecece; min-height: 150px; width: 100%; text-align: center">
-            Facebook Image
+            {{socialProvider[i].title}} Image
           </div>
 
           <mat-form-field fxFlex="100"
                           hintLabel="Max 70 characters">
             <input matInput maxlength="70"
-                   placeholder="{{ 'general.articles.edit.sidebar.meta.facebook.titleInput' | translate}}"
+                   placeholder="{{ 'general.articles.edit.sidebar.meta.' + socialProvider[i].title + '.titleInput' | translate}}"
                    formControlName="title">
-            <mat-hint align="end">{{form.get('meta.facebook.title').value.length || 0}}</mat-hint>
+            <mat-hint align="end">{{form.get('meta.' + socialProvider[i].title + '.title').value.length || 0}}</mat-hint>
           </mat-form-field>
 
           <mat-form-field fxFlex="100"
@@ -69,44 +72,10 @@
             <textarea matInput maxlength="156"
                       placeholder="{{ 'general.articles.edit.sidebar.meta.main.descriptionInput' | translate}}"
                       formControlName="description"></textarea>
-            <mat-hint align="end">{{form.get('meta.facebook.description').value.length || 0}}</mat-hint>
+            <mat-hint align="end">{{form.get('meta.'+applications[0].social+'.description').value.length || 0}}
+            </mat-hint>
           </mat-form-field>
-        </div>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel [expanded]="step === 2"
-                           (opened)="setStep(2)"
-                           hideToggle="true"
-                           formGroupName="twitter">
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{ 'general.articles.edit.sidebar.meta.twitter.title' | translate}}</mat-panel-title>
-          <mat-panel-description fxHide.xs>
-            {{ 'general.articles.edit.sidebar.meta.twitter.description' | translate}}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div fxLayout="column"
-             *ngIf="step === 2">
-
-          <div style="border: 1px solid #cecece; min-height: 150px; width: 100%; text-align: center">
-            Twitter Image
-          </div>
-
-          <mat-form-field fxFlex="100"
-                          hintLabel="Max 70 characters">
-            <input matInput maxlength="70"
-                   placeholder="{{ 'general.articles.edit.sidebar.meta.main.titleInput' | translate}}"
-                   formControlName="title">
-            <mat-hint align="end">{{form.get('meta.twitter.title').value.length || 0}}</mat-hint>
-          </mat-form-field>
-
-          <mat-form-field fxFlex="100"
-                          hintLabel="Max 156 characters">
-            <textarea matInput maxlength="156"
-                      placeholder="{{ 'general.articles.edit.sidebar.meta.main.descriptionInput' | translate}}"
-                      formControlName="description"></textarea>
-            <mat-hint align="end">{{form.get('meta.twitter.description').value.length || 0}}</mat-hint>
-          </mat-form-field>
-        </div>
+        </div>-->
       </mat-expansion-panel>
 
     </mat-accordion>

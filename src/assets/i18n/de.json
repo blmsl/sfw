@@ -9,7 +9,8 @@
   "auth/wrong-password": "Du hast ein falsches Passwort für diesen Account angegeben.",
   "auth/send-verification": "Eine weitere E-Mail zur Bestätigung Deines Accounts wurde Dir gesendet.",
   "auth/successful-signup": "Deine Registrierung war erfolgreich! Wir haben Dir eine E-Mail gesendet zum Bestätigen Deiner Adresse gesendet. Nach dem Klicken des Links in der Mail hast Du Zugriff auf das System.",
-  "permission-denied": "Du hast keine Berechtigungen um diese Aktion durchzuführen.",
+  "permission-denied": "Du hast nicht die benötigten Berechtigungen um diese Aktion durchzuführen.",
+  "Missing or insufficient permissions.": "Du hast nicht die benötigten Berechtigungen um diese Aktion durchzuführen.",
   "Required": "Hier wird eine Eingabe benötigt",
   "Global": {
     "Login": {
@@ -98,12 +99,20 @@
         "writtenAt": "geschrieben am"
       },
       "edit": {
+        "articleStatus": {
+          "error": "NICHT gespeichert",
+          "new": "Neu",
+          "saving": "Speichere ...",
+          "success": "Gespeichert"
+        },
         "deleteArticle": "Artikel löschen",
         "options": {
           "title": "Optionen"
         },
         "publish": {
           "button": "Veröffentlichen",
+          "chooseDateTime": "Datum und Uhrzeit wählen:",
+          "draft": "Entwurf",
           "menuButton": "Sichtbarkeit",
           "question": "Bereit zum Veröffentlichen?",
           "live": {
@@ -133,6 +142,7 @@
             "author": "Author",
             "articleDate": "Datum des Artikels",
             "deleteArticle": "Artikel löschen",
+            "excerpt": "Vorschautext",
             "isFeaturedPost": "Artikel hervorheben?",
             "postUrl": "Feste URL vergeben",
             "subTitle": "Untertitel",
@@ -461,6 +471,10 @@
         "5": "Freitag",
         "6": "Samstag"
       }
+    },
+    "forbidden": {
+      "text": "Dir fehlen die Berechtigungen um die gewünschte Seite zu laden. Bitte wende Dich an einen Administrator um die Berechtiungen zu erhalten.",
+      "title": "Zugriff verboten"
     },
     "home": "Startseite",
     "locations": {

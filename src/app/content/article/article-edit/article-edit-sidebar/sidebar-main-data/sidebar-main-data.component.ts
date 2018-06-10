@@ -12,6 +12,8 @@ export class SidebarMainDataComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() users: IUser[];
 
+  public host = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+
   constructor() {
   }
 

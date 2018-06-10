@@ -30,7 +30,6 @@
 
   <mat-tab label="{{ 'general.articles.edit.sidebar.meta.title' | translate }}">
     <sidebar-meta-data *ngIf="selectedTab === 2"
-                       [applications]="applications$ | async"
                        [form]="form">
     </sidebar-meta-data>
   </mat-tab>

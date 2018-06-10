@@ -9,9 +9,10 @@ import { IPublication } from './publication.interface';
 
 export interface IArticle {
 
-  id: string;
+  id?: string;
   title: string;
   subTitle?: string;
+  excerpt?: string;
 
   postImage?: string;
   postURL?: string;
@@ -29,7 +30,7 @@ export interface IArticle {
   assignedLocation?: ILocation;
   assignedTeams?: ITeam[];
 
-  assignedSeason?: ISeason;
+  // assignedSeason?: ISeason;
   assignedMatch?: IMatch;
 
   isFeaturedPost?: boolean;

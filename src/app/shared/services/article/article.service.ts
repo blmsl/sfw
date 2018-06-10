@@ -33,6 +33,7 @@ export class ArticleService {
   }
 
   createArticle(article: IArticle): Promise<void> {
+    article.id = this.afs.createId();
     return this.afs.collection(this.path).doc(article.id).set(article);
   }
 
@@ -51,7 +52,6 @@ export class ArticleService {
   setNewArticle(): Observable<IArticle> {
     const article: IArticle = {
       title: '',
-      id: this.afs.createId(),
       publication: this.authService.getPublication(),
       creation: this.authService.getCreation()
     };

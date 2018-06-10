@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { ILocation } from '../../../../../shared/interfaces/location.interface';
 import { ITeam } from '../../../../../shared/interfaces/team/team.interface';
@@ -29,13 +29,20 @@ export class SidebarLinksDataComponent implements OnInit, OnDestroy {
 
   private matchSubscription: Subscription;
 
-  constructor(private matchService: MatchService) {
+  constructor(private fb: FormBuilder,
+              private matchService: MatchService) {
   }
 
   ngOnInit() {
     this.form.valueChanges.subscribe((changes: any) => {
-      if (changes.isMatch && !this.matches) {
-        this.loadMatches();
+      if (changes.isMatch) {
+        if (!this.matches) {
+          this.loadMatches();
+        } else {
+          this.matchesListReady = true;
+        }
+      } else {
+        this.matchesListReady = false;
       }
     });
   }
