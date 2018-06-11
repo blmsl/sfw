@@ -221,33 +221,27 @@ function get_value($element, $selector_string, $index, $type = "text")
     return trim($value);
 } */
 
+
 function saveNewLocation($parts, $dbLocations, $assignedCategory){
 
     $addedDocRef = $dbLocations->newDocument();
 
-    $streetAndHouseNumber = split_street(trim($parts[3]));
-
+    $address = generateAddressArray($parts);
     $data = array(
         "id" => $addedDocRef->id(),
-        "title" => trim($parts[0]).', '.trim($parts[1]),
+        "title" => trim($parts[0]).' '.trim($parts[1]),
         "isImported" => true,
-        "address" => array(
-            "city" => trim($parts[1]),
-            "county" => substr(trim($parts[4]),6),
-            "houseNumber" => $streetAndHouseNumber["number"],
-            "streetName" => $streetAndHouseNumber["street"],
-            "zip" => substr(trim($parts[4]),0, 5)
-        ),
+        "address" => $address,
         "assignedCategoryType" => $assignedCategory,
         'creation' => generateCreation()
     );
     var_dump($data);
+    echo $title = trim($parts[0]) .", ". trim($parts[1]) .", ". trim($parts[2]) .", ". trim($parts[3]) .", ". trim($parts[4]);
     exit();
-
 
     $addedDocRef->add($data);
     return array(
-        $data["title"] => $addedDocRef->id()
+        $title => $addedDocRef->id()
     );
 }
 
@@ -266,19 +260,50 @@ function saveNewCategory($title, $dbCategories, $assignedCategoryType){
     );
 }
 
-function split_street($streetStr)
+function generateAddressArray($addressArray)
 {
+    // format 5 Kunstrasenplatz, Hoof, Kunstrasen, Zum Sportheim, 66606 St. Wendel
+    // oder   4 Rasenplatz, Weiersbach Rasenplatz, Auf dem Langenfeld, 55768 Hoppstädten-Weiersbach
+    // oder   6 Rasenplatz, Ottweiler, Rasen, Im Alten Weiher, Im Alten Weiher, 66564 Ottweiler
+    // oder   6 Kunstrasenplatz, Wiesbach, ProWin Stadion, Kunstrasen, Landstuhlstr., 66571 Eppelborn
+    $zip = '';
+    $corporation = '';
+    $street = '';
 
-    $aMatch = array();
-    $pattern = '/(?P<address>\D+) (?P<number>\d+)(?P<numberAdd>\D*)/';
-    preg_match($pattern, $streetStr, $aMatch);
+    $city = trim($addressArray[1]);
+    if (count($addressArray) === 6) {
+        $street = trim($addressArray[4]);
+        $corporation = substr(trim($addressArray[5]), 6);
+        $zip = substr(trim($addressArray[5]), 0, 5);
+    } elseif (count($addressArray) === 5) {
+        $street = trim($addressArray[3]);
+        $corporation = substr(trim($addressArray[4]), 6);
+        $zip = substr(trim($addressArray[4]), 0, 5);
+    } elseif (count($addressArray) === 4) {
+        $city = explode(' ', trim($addressArray[1]))[0];
+        $street = trim($addressArray[2]);
+        $corporation = substr(trim($addressArray[3]), 6);
+        $zip = substr(trim($addressArray[3]), 0, 5);
+    }
 
-    $street = (isset($aMatch[1])) ? $aMatch[1] : '';
-    $number = (isset($aMatch[2])) ? $aMatch[2] : '';
-    $numberAddition = (isset($aMatch[3])) ? $aMatch[3] : '';
+    $streetName = $street;
+    $houseNumber = '';
 
-    return array('street' => $street, 'number' => $number, 'numberAddition' => $numberAddition);
+    if (preg_match('/^([^\d]*[^\d\s]) *(\d.*)$/', $street, $result)) {
+        $streetName = $result[1];
+        $houseNumber = $result[2];
+    }
 
+    if (substr($streetName, -4) === 'str.') {
+        $streetName = str_replace("str.", "straße", $streetName);
+    }
+    return $address = array(
+        'streetName' => $streetName,
+        'houseNumber' => $houseNumber,
+        'zip' => $zip,
+        'city' => $city,
+        'corporation' => $corporation
+    );
 }
 
 function getCurrentSeason($seasons, $dbSeasons)

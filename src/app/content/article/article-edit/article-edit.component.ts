@@ -1,14 +1,12 @@
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { IArticle } from '../../../shared/interfaces/article.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ArticleService } from '../../../shared/services/article/article.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { ApplicationService } from '../../../shared/services/application/application.service';
-import { IApplication } from '../../../shared/interfaces/application.interface';
-import { ISocialNetwork } from '../../../shared/interfaces/social-network.interface';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 import { CustomValidators } from 'ng2-validation';
 import * as moment from 'moment';
@@ -33,6 +31,8 @@ export class ArticleEditComponent implements OnInit {
   public socialProviders: any[] = [];
   public showPreview: boolean = false;
 
+  public items: any = [];
+
   public publicationOptions: any[] = [
     {
       text: 'live.text',
@@ -55,25 +55,6 @@ export class ArticleEditComponent implements OnInit {
               private articleService: ArticleService,
               private applicationService: ApplicationService,
               private fb: FormBuilder) {
-    this.applicationService.applications$.subscribe((applications: IApplication[]) => {
-      applications.forEach((application: IApplication) => {
-        application.social.forEach((socialProvider: ISocialNetwork) => {
-          this.addSocialProvider(socialProvider);
-        });
-      });
-    });
-  }
-
-  addSocialProvider(socialProvider: ISocialNetwork): void {
-    const items = this.form.get('meta').get('socialProviders') as FormArray;
-    items.controls ? items.controls.push(this.createItem(socialProvider)) : items.controls = [this.createItem(socialProvider)];
-  }
-
-  createItem(socialProvider: ISocialNetwork): FormGroup {
-    return this.fb.group({
-      title: this.article.meta && this.article.meta[socialProvider.title.toLowerCase()] ? this.article.meta[socialProvider.title.toLowerCase()].title : '',
-      description: this.article.meta && this.article.meta[socialProvider.title.toLowerCase()] ? this.article.meta[socialProvider.title.toLowerCase()].description : ''
-    });
   }
 
   ngOnInit() {
@@ -89,26 +70,25 @@ export class ArticleEditComponent implements OnInit {
       });
 
     this.form = this.fb.group({
-      title: [this.article.title, [Validators.required, Validators.minLength(10)]],
-      subTitle: [this.article.subTitle],
-      excerpt: [this.article.excerpt],
-      text: [this.article.text, [Validators.required, Validators.minLength(10)]],
+      title: this.article.title,
+      subTitle: this.article.subTitle,
+      excerpt: this.article.excerpt,
+      text: this.article.text,
       publication: this.initPublication(),
       creation: this.initCreation(),
       meta: this.initMetaData(),
       articleDate: this.article.articleDate,
       // postImage: string;*/
-      postURL: [this.article.postURL],
-      assignedTags: [this.article.assignedTags],
-      assignedCategories: [this.article.assignedCategories],
-      assignedTeams: [this.article.assignedTeams],
-      assignedLocation: [this.article.assignedLocation],
-      // assignedSeason: [this.article.assignedSeason],
-      assignedMatch: [this.article.assignedMatch],
-      isFeaturedPost: [this.article.isFeaturedPost],
+      postURL: this.article.postURL,
+      assignedTags: this.article.assignedTags,
+      assignedCategories: this.article.assignedCategories,
+      assignedTeams: this.article.assignedTeams,
+      assignedLocation: this.article.assignedLocation,
+      // assignedSeason: this.article.assignedSeason,
+      assignedMatch: this.article.assignedMatch,
+      isFeaturedPost: this.article.isFeaturedPost,
       isMatch: !!this.article.assignedMatch
     });
-    console.log(this.form.get('meta'));
 
     this.form.valueChanges.pipe(
       debounceTime(1500),
@@ -116,19 +96,19 @@ export class ArticleEditComponent implements OnInit {
     ).subscribe((changes: any) => {
       this.articleStatus = 'saving';
       // reset assignedMatch if checkbox is not active
-      if(!changes.isMatch){
+      if (!changes.isMatch) {
         changes.assignedMatch = null;
       }
       changes.isMatch = null;
 
       // set publication date to now if status is "publish now"
-      if(changes.publication.status === 1){
+      if (changes.publication.status === 1) {
         changes.publication.dateTime = <any> moment();
       }
 
       this.article = Object.assign({}, this.article, changes);
 
-      if (!this.form.invalid) {
+      // if (!this.form.invalid) {
         this.articleService.createArticle(changes)
           .then(() => {
             this.articleStatus = 'success';
@@ -137,7 +117,7 @@ export class ArticleEditComponent implements OnInit {
             this.alertService.showSnackBar('error', error.message);
             this.articleStatus = 'error';
           });
-      }
+      // }
     });
 
   }
@@ -152,7 +132,14 @@ export class ArticleEditComponent implements OnInit {
         title: this.article.meta && this.article.meta.main ? this.article.meta.main.title : '',
         description: this.article.meta && this.article.meta.main ? this.article.meta.main.description : ''
       }),
-      socialProviders: this.socialProviders
+      facebook: this.fb.group({
+        title: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.title : '',
+        description: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.description : ''
+      }),
+      twitter: this.fb.group({
+        title: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter : '',
+        description: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.description : ''
+      })
     });
   }
 

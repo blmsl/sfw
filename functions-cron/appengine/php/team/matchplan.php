@@ -35,6 +35,7 @@ $locations = array();
 foreach($dbLocations->documents() as $location){
     $locations[$location["title"]] = $location["id"];
 }
+var_dump($locations);
 
 $seasons = array();
 foreach($dbSeasons->documents() as $season) {
