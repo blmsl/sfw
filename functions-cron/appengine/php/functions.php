@@ -62,6 +62,11 @@ function scrap_matchPlan($html, $club, $locations, $teams, $categories, $dbCateg
                     $matchData["assignedCategories"]['assignedLocationCategory'] = $categories[$locationCategoryName];
 
                     $title = trim($parts[0]).', '.trim($parts[1]).', '.trim($parts[2]).', '.trim($parts[3]).', '.trim($parts[4]);
+
+                    if(!key_exists($title, $locations)){
+                        $locations[] = saveNewLocation($parts, $dbCategories, $categories[$locationCategoryName]);
+                    }
+
                     $matchData["assignedLocation"] = $locations[$title];
 
                 } elseif ($item->getAttribute('class') !== "thead hidden-small") {
@@ -216,8 +221,40 @@ function get_value($element, $selector_string, $index, $type = "text")
     return trim($value);
 } */
 
+function saveNewLocation($parts, $dbLocations, $assignedCategory){
+
+    $addedDocRef = $dbLocations->newDocument();
+
+    $streetAndHouseNumber = split_street(trim($parts[3]));
+
+    $data = array(
+        "id" => $addedDocRef->id(),
+        "title" => trim($parts[0]).', '.trim($parts[1]),
+        "isImported" => true,
+        "address" => array(
+            "city" => trim($parts[1]),
+            "county" => substr(trim($parts[4]),6),
+            "houseNumber" => $streetAndHouseNumber["number"],
+            "streetName" => $streetAndHouseNumber["street"],
+            "zip" => substr(trim($parts[4]),0, 5)
+        ),
+        "assignedCategoryType" => $assignedCategory,
+        'creation' => generateCreation()
+    );
+    var_dump($data);
+    exit();
+
+
+    $addedDocRef->add($data);
+    return array(
+        $data["title"] => $addedDocRef->id()
+    );
+}
+
 function saveNewCategory($title, $dbCategories, $assignedCategoryType){
-    $addedDoc = $dbCategories->add(array(
+    $addedDocRef = $dbCategories->newDocument();
+    $addedDocRef->add(array(
+        'id' => $addedDocRef->id(),
         'title' => $title,
         'description' => '',
         'assignedCategoryType' => $assignedCategoryType,
@@ -225,8 +262,23 @@ function saveNewCategory($title, $dbCategories, $assignedCategoryType){
         'publication' => generatePublication()
     ));
     return array(
-        $title => $addedDoc->id()
+        $title => $addedDocRef->id()
     );
+}
+
+function split_street($streetStr)
+{
+
+    $aMatch = array();
+    $pattern = '/(?P<address>\D+) (?P<number>\d+)(?P<numberAdd>\D*)/';
+    preg_match($pattern, $streetStr, $aMatch);
+
+    $street = (isset($aMatch[1])) ? $aMatch[1] : '';
+    $number = (isset($aMatch[2])) ? $aMatch[2] : '';
+    $numberAddition = (isset($aMatch[3])) ? $aMatch[3] : '';
+
+    return array('street' => $street, 'number' => $number, 'numberAddition' => $numberAddition);
+
 }
 
 function getCurrentSeason($seasons, $dbSeasons)
@@ -250,7 +302,9 @@ function getCurrentSeason($seasons, $dbSeasons)
             "EndDate" => $seasonEndYear->format('Y-m-d')
         );
     } else {
-        $addedDoc = $dbSeasons->add(array(
+        $addedDocRef = $dbSeasons->newDocument();
+        $addedDocRef->add(array(
+            'id' => $addedDocRef->id(),
             'title' => $title,
             'isImported' => true,
             'description' => 'Alle Informationen zur Saison ' . $seasonStartYear->format('Y') . '/' . $seasonEndYear->format('Y'),
@@ -258,7 +312,7 @@ function getCurrentSeason($seasons, $dbSeasons)
             'publication' => generatePublication()
         ));
         return array(
-            "id" => $addedDoc->id(),
+            "id" => $addedDocRef->id(),
             "StartDate" => $seasonStartYear->format('Y-m-d'),
             "EndDate" => $seasonEndYear->format('Y-m-d')
         );

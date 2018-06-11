@@ -35,7 +35,7 @@ export class ArticleEditSidebarComponent {
 
   @Output() removeArticle: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
-  private selectedTab: number;
+  public selectedTab: number;
 
   constructor(private userService: UserService,
               private applicationService: ApplicationService,

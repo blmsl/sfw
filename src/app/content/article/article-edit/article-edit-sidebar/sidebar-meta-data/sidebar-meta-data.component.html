@@ -36,23 +36,19 @@
       </mat-expansion-panel>
 
 
-      <mat-expansion-panel formGroupName="socialProviders"
+      <!--<mat-expansion-panel formGroupName="socialProviders"
                            [expanded]="step === 1"
                            (opened)="setStep(1)"
                            hideToggle="true"
                            *ngFor="let socialProvider of form.get('meta').get('socialProviders').controls; let i = index">
-        <mat-expansion-panel-header [formGroupName]="i">
-          {{i}}
-        </mat-expansion-panel-header>
-        <!--<mat-expansion-panel-header [formGroupName]="i">
-
+        <mat-expansion-panel-header>
           <mat-panel-title>{{ 'general.articles.edit.sidebar.meta.' + socialProvider[i].title + '.title' | translate}}
           </mat-panel-title>
           <mat-panel-description fxHide.xs>
             {{ 'general.articles.edit.sidebar.meta.' + socialProvider[i].title + '.description' | translate}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <!--<div fxLayout="column"
+        <div fxLayout="column"
              *ngIf="step === index + 1">
 
           <div style="border: 1px solid #cecece; min-height: 150px; width: 100%; text-align: center">
@@ -75,8 +71,8 @@
             <mat-hint align="end">{{form.get('meta.'+applications[0].social+'.description').value.length || 0}}
             </mat-hint>
           </mat-form-field>
-        </div>-->
-      </mat-expansion-panel>
+        </div>
+      </mat-expansion-panel>-->
 
     </mat-accordion>
 

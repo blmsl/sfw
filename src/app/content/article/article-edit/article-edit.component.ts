@@ -31,6 +31,7 @@ export class ArticleEditComponent implements OnInit {
   public articleStatus: string = 'new';
   public form: FormGroup;
   public socialProviders: any[] = [];
+  public showPreview: boolean = false;
 
   public publicationOptions: any[] = [
     {
@@ -44,8 +45,6 @@ export class ArticleEditComponent implements OnInit {
       value: 2
     }
   ];
-
-  private showPreview: boolean = false;
 
   constructor(private route: ActivatedRoute,
               public breakpointObserver: BreakpointObserver,
