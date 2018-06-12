@@ -120,14 +120,15 @@ function scrap_matchPlan($html, $club, $locations, $teams, $categories, $dbCateg
                     key_exists('matchStartDate', $matchData) &&
                     key_exists('matchEndDate', $matchData) &&
                     key_exists('homeTeam', $matchData) &&
-                    key_exists('guestTeam', $matchData)
-                    #key_exists('assignedLocation', $matchData) &&
+                    key_exists('guestTeam', $matchData) &&
+                    key_exists('assignedLocation', $matchData) &&
                     // $assignedCategory &&
-                    #key_exists('isHomeTeam', $matchData)
+                    key_exists('isHomeTeam', $matchData)
                 ) {
                     $matchData["title"] = $assignedCategory . ': ' . $matchData["homeTeam"]["name"] . ' - ' . $matchData["guestTeam"]["name"];
                     $output[] = $matchData;
-                    #var_dump($matchData);
+                    var_dump($matchData);
+                    exit();
                     #echo "<br />";
                     $matchData = [];
                 }
