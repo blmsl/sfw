@@ -1,0 +1,12 @@
+<cdk-virtual-scroll-viewport class="list-container lg" [itemSize]="52.5">
+  <div *cdkVirtualFor="let state of statesObservable | async;" class="list-group-item">
+     <div class="state">{{state.name}}</div>
+     <div class="capital">{{state.capital}}</div>
+  </div>
+</cdk-virtual-scroll-viewport>
+
+<cdk-virtual-scroll-viewport class="list-container list-group" autosize>
+   <div *cdkVirtualFor="let size of fixedSizeData; let i = index" class="list-group-item"  [style.height.px]="size">
+      Item {{i}}
+    </div>
+</cdk-virtual-scroll-viewport>
