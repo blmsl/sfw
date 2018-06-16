@@ -8,7 +8,7 @@ export const sfwCalendarRoutes: Routes = [
     path: 'list',
     component: CalendarDashboardComponent,
     resolve: {
-      calendarEvents: EventsResolver
+      events: EventsResolver
     }
   },
   {

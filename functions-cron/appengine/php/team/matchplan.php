@@ -46,10 +46,7 @@ $currentSeason = getCurrentSeason($seasons, $dbSeasons);
 $teams = array();
 foreach($dbTeams->documents() as $team){
     if($team["assignedSeason"] === $currentSeason){
-        $teams[$team["title"] . "-" . $team["subTitle"]] = array(
-            "teamId" => $team["id"],
-            "assignedClub" => $team["assignedClub"]
-        );
+        $teams[$team["title"] . "-" . $team["subTitle"] . "-" .$team["assignedSeason"]] = $team["id"];
     }
 }
 #var_dump($teams);
@@ -62,7 +59,7 @@ foreach ($dbClubs->documents() as $club) {
     $url = 'http://www.fussball.de/ajax.club.matchplan/-/id/' . $clubId . '/mime-type/HTML/mode/PAGE/show-filter/false/max/9999/datum-von/' . $currentSeason["StartDate"] . '/datum-bis/' . $currentSeason["EndDate"] . '/show-venues/checked/offset/0';
 
     $curlRequest = curlRequest($url);
-    $output = scrap_matchPlan($curlRequest, $club, $locations, $teams, $categories, $dbCategories, $categoryTypes);
+    $output = scrap_matchPlan($curlRequest, $club, $locations, $dbLocations, $teams, $dbTeams, $categories, $dbCategories, $categoryTypes, $currentSeason);
 
     #foreach($output as $match){
         // $addedDoc = $dbMatches->add($match);

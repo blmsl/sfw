@@ -21,7 +21,7 @@ export class AuthService implements OnDestroy {
   public userId: string;
 
   constructor(private afAuth: AngularFireAuth,
-              private afs: AngularFirestore) {
+    private afs: AngularFirestore) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
         if (user) {

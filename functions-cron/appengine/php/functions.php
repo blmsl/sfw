@@ -11,7 +11,7 @@ function curlRequest($url)
     return str_get_html($str);
 }
 
-function scrap_matchPlan($html, $club, $locations, $teams, $categories, $dbCategories, $categoryTypes)
+function scrap_matchPlan($html, $club, $locations, $dbLocations, $teams, $dbTeams, $categories, $dbCategories, $categoryTypes, $season)
 {
     $savedMatchDate = NULL;
     $i = 0;
@@ -38,6 +38,14 @@ function scrap_matchPlan($html, $club, $locations, $teams, $categories, $dbCateg
                     // setze die Saison
                     $assignedCategory = trim($parts[1]);
                     $mainCategoryName = getMainTeamCategoryName(trim($parts[1]));
+
+                    if (!key_exists($mainCategoryName, $categories)) {
+                        $categories[$mainCategoryName] = saveNewCategory($mainCategoryName, $dbCategories, $categoryTypes['team.types']);
+                    }
+                    if (!key_exists(trim($parts[1]), $categories)) {
+                        $categories[trim($parts[1])] = saveNewCategory(trim($parts[1]), $dbCategories, $categoryTypes['team.types']);
+                    }
+
                     $matchData["assignedCategories"] = array(
                         "assignedCategory" => $categories[trim($parts[1])],
                         "assignedMainCategory" => $categories[$mainCategoryName]
@@ -56,15 +64,17 @@ function scrap_matchPlan($html, $club, $locations, $teams, $categories, $dbCateg
                     // Treffpunkt-Kategorie
                     $parts = explode(',', $item->plaintext);
                     $locationCategoryName = getLocationCategoryName(trim($parts[0]));
-                    if(!key_exists($locationCategoryName, $categories)){
-                        $categories[] = saveNewCategory($locationCategoryName, $dbCategories, $categoryTypes["location.types"]);
+                    if (!key_exists($locationCategoryName, $categories)) {
+                        $categories[$locationCategoryName] = saveNewCategory($locationCategoryName, $dbCategories, $categoryTypes["location.types"]);
                     }
                     $matchData["assignedCategories"]['assignedLocationCategory'] = $categories[$locationCategoryName];
 
-                    $title = trim($parts[0]).', '.trim($parts[1]).', '.trim($parts[2]).', '.trim($parts[3]).', '.trim($parts[4]);
+                    $address = generateAddressArray($parts);
 
-                    if(!key_exists($title, $locations)){
-                        $locations[] = saveNewLocation($parts, $dbCategories, $categories[$locationCategoryName]);
+                    $title = trim($parts[0]) . ' ' . $address['streetName'] . ', ' . $address['city']; //. ' ' .$address['city']. ', ' . $address['zip'] . ' ' . $address['county'];
+
+                    if (!key_exists($title, $locations)) {
+                        $locations[$title] = saveNewLocation($title, $address, $dbLocations, $categories[$locationCategoryName]);
                     }
 
                     $matchData["assignedLocation"] = $locations[$title];
@@ -105,31 +115,48 @@ function scrap_matchPlan($html, $club, $locations, $teams, $categories, $dbCateg
 
                         $teamData = null;
                         if ($matchData["isHomeTeam"]) {
-                            $teamData = $matchData["homeTeam"]["name"];
+                            $teamData = $matchData["homeTeam"];
                         } elseif ($matchData["isGuestTeam"]) {
-                            $teamData = $matchData["guestTeam"]["name"];
+                            $teamData = $matchData["guestTeam"];
                         }
 
-                        #$matchData["assignedTeam"] = getAssignedTeam($teams, $assignedCategory, $teamData);
+                        $subTitle = $teamData["name"] ? $teamData["name"] : $club["title"];
+
+                        if (key_exists($assignedCategory . "-" . $subTitle . "-" . $season["id"], $teams)) {
+                            $matchData["assignedTeam"] = $teams[$assignedCategory . "-" . $subTitle . "-" . $season["id"]];
+                        } else {
+                            // create new Team
+                            $matchData["assignedTeam"]
+                                = $teams[$assignedCategory . "-" . $subTitle . "-" . $season["id"]]
+                                = saveNewTeam($assignedCategory, // Title
+                                $subTitle,
+                                $teamData,
+                                $matchData["assignedCategories"]["assignedMainCategory"],
+                                $matchData["assignedCategories"]['assignedCategory'],
+                                $club,
+                                $season,
+                                $teams,
+                                $dbTeams);
+
+                        }
                     }
                 }
 
                 // wenn alle Daten vorhanden -> Tabellenzeile generieren
-                if (#key_exists('assignedTeam', $matchData) &&
+                if (key_exists('assignedTeam', $matchData) &&
                     key_exists('assignedCategories', $matchData) &&
                     key_exists('matchStartDate', $matchData) &&
                     key_exists('matchEndDate', $matchData) &&
                     key_exists('homeTeam', $matchData) &&
                     key_exists('guestTeam', $matchData) &&
                     key_exists('assignedLocation', $matchData) &&
-                    // $assignedCategory &&
                     key_exists('isHomeTeam', $matchData)
                 ) {
                     $matchData["title"] = $assignedCategory . ': ' . $matchData["homeTeam"]["name"] . ' - ' . $matchData["guestTeam"]["name"];
                     $output[] = $matchData;
                     var_dump($matchData);
-                    exit();
-                    #echo "<br />";
+                    echo PHP_EOL;
+                    echo PHP_EOL;
                     $matchData = [];
                 }
             }
@@ -222,33 +249,51 @@ function get_value($element, $selector_string, $index, $type = "text")
     return trim($value);
 } */
 
-
-function saveNewLocation($parts, $dbLocations, $assignedCategory){
-
-    $addedDocRef = $dbLocations->newDocument();
-
-    $address = generateAddressArray($parts);
-    $data = array(
+function saveNewTeam($title, $subTitle, $teamData, $mainCategory, $assignedCategory, $club, $season, $teams, $dbTeams)
+{
+    $addedDocRef = $dbTeams->newDocument();
+    printf('New Team ' . $title . ' ' . $subTitle . ' with ID ' . $addedDocRef->id() . PHP_EOL);
+    $addedDocRef->set(array(
         "id" => $addedDocRef->id(),
-        "title" => trim($parts[0]).' '.trim($parts[1]),
+        "title" => $title,
+        "subTitle" => $subTitle ? $subTitle : $club["title"],
+        "assignedClub" => $club{"id"},
+        "assignedSeason" => $season{"id"},
         "isImported" => true,
-        "address" => $address,
-        "assignedCategoryType" => $assignedCategory,
+        "isOfficialTeam" => true,
+        "externalTeamLink" => $teamData["externalTeamLink"],
+        "logoURL" => $teamData["logo"],
+        "assignedTeamCategories" => array($mainCategory, $assignedCategory),
+        "assignedPlayers" => array(),
+        "assignedPositions" => array(),
+        "assignedTrainings" => array(),
+        "assignedCompetitions" => array(),
+        "assignedEvents" => array(),
         'creation' => generateCreation()
-    );
-    var_dump($data);
-    echo $title = trim($parts[0]) .", ". trim($parts[1]) .", ". trim($parts[2]) .", ". trim($parts[3]) .", ". trim($parts[4]);
-    exit();
-
-    $addedDocRef->add($data);
-    return array(
-        $title => $addedDocRef->id()
-    );
+    ));
+    return $addedDocRef->id();
 }
 
-function saveNewCategory($title, $dbCategories, $assignedCategoryType){
+function saveNewLocation($title, $address, $dbLocations, $assignedCategory)
+{
+    $addedDocRef = $dbLocations->newDocument();
+    printf('New Location ' . $title . ' with ID ' . $addedDocRef->id() . PHP_EOL);
+    $addedDocRef->set(array(
+        "id" => $addedDocRef->id(),
+        "title" => $title,
+        "isImported" => true,
+        "address" => $address,
+        "assignedCategory" => $assignedCategory,
+        'creation' => generateCreation()
+    ));
+    return $addedDocRef->id();
+}
+
+function saveNewCategory($title, $dbCategories, $assignedCategoryType)
+{
     $addedDocRef = $dbCategories->newDocument();
-    $addedDocRef->add(array(
+    printf('New Category ' . $title . ' with ID ' . $addedDocRef->id() . PHP_EOL);
+    $addedDocRef->set(array(
         'id' => $addedDocRef->id(),
         'title' => $title,
         'description' => '',
@@ -256,9 +301,7 @@ function saveNewCategory($title, $dbCategories, $assignedCategoryType){
         'creation' => generateCreation(),
         'publication' => generatePublication()
     ));
-    return array(
-        $title => $addedDocRef->id()
-    );
+    return $addedDocRef->id();
 }
 
 function generateAddressArray($addressArray)
@@ -268,22 +311,22 @@ function generateAddressArray($addressArray)
     // oder   6 Rasenplatz, Ottweiler, Rasen, Im Alten Weiher, Im Alten Weiher, 66564 Ottweiler
     // oder   6 Kunstrasenplatz, Wiesbach, ProWin Stadion, Kunstrasen, Landstuhlstr., 66571 Eppelborn
     $zip = '';
-    $corporation = '';
+    $county = '';
     $street = '';
 
     $city = trim($addressArray[1]);
     if (count($addressArray) === 6) {
         $street = trim($addressArray[4]);
-        $corporation = substr(trim($addressArray[5]), 6);
+        $county = substr(trim($addressArray[5]), 6);
         $zip = substr(trim($addressArray[5]), 0, 5);
     } elseif (count($addressArray) === 5) {
         $street = trim($addressArray[3]);
-        $corporation = substr(trim($addressArray[4]), 6);
+        $county = substr(trim($addressArray[4]), 6);
         $zip = substr(trim($addressArray[4]), 0, 5);
     } elseif (count($addressArray) === 4) {
         $city = explode(' ', trim($addressArray[1]))[0];
         $street = trim($addressArray[2]);
-        $corporation = substr(trim($addressArray[3]), 6);
+        $county = substr(trim($addressArray[3]), 6);
         $zip = substr(trim($addressArray[3]), 0, 5);
     }
 
@@ -303,7 +346,7 @@ function generateAddressArray($addressArray)
         'houseNumber' => $houseNumber,
         'zip' => $zip,
         'city' => $city,
-        'corporation' => $corporation
+        'county' => $county
     );
 }
 

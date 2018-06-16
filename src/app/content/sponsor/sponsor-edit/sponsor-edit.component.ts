@@ -12,6 +12,7 @@ import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-confi
 import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
 import { MediaItemService } from '../../../shared/services/media/media-item.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
+import { IMediaItem } from '../../../shared/interfaces/media/media-item.interface';
 
 
 @Component({
@@ -36,14 +37,15 @@ export class SponsorEditComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
+    id: 'logo',
     itemId: '',
-    path: 'sponsors/logos',
+    path: 'sponsors',
     queueLimit: 1,
     allowedMimeType: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'],
     allowedFileType: ['image']
   };
 
-  public currentImage: string;
+  public logo: Observable<IMediaItem>;
 
   constructor(private route: ActivatedRoute,
     private alertService: AlertService,
@@ -58,11 +60,8 @@ export class SponsorEditComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: { sponsor: ISponsor }) => {
       this.sponsor = data.sponsor;
-      this.uploaderOptions.itemId = this.uploaderOptions.id = this.sponsor.id;
-
-      this.mediaItemService
-        .getCurrentImage('sponsor', this.sponsor.id, this.sponsor.id)
-        .subscribe((imageUrl: string) => this.currentImage = imageUrl);
+      this.uploaderOptions.itemId = this.uploaderOptions.itemId = this.sponsor.id;
+      this.logo = this.mediaItemService.getCurrentImage('sponsor', 'logo', this.sponsor.id);
     });
 
     this.form = this.fb.group({

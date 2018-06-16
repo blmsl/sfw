@@ -30,7 +30,7 @@ export class SidebarLinksDataComponent implements OnInit, OnDestroy {
   private matchSubscription: Subscription;
 
   constructor(private fb: FormBuilder,
-              private matchService: MatchService) {
+    private matchService: MatchService) {
   }
 
   ngOnInit() {

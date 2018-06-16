@@ -38,26 +38,26 @@ export class ArticleEditSidebarComponent {
   public selectedTab: number;
 
   constructor(private userService: UserService,
-              private applicationService: ApplicationService,
-              private categoryService: CategoryService,
-              private categoryTypeService: CategoryTypeService,
-              private locationService: LocationService,
-              private seasonService: SeasonService,
-              private teamService: TeamService) {
+    private applicationService: ApplicationService,
+    private categoryService: CategoryService,
+    private categoryTypeService: CategoryTypeService,
+    private locationService: LocationService,
+    private seasonService: SeasonService,
+    private teamService: TeamService) {
     this.users$ = userService.users$;
   }
 
-  onTabChange($event): void{
+  onTabChange($event): void {
     this.selectedTab = $event.index;
 
-    if(this.selectedTab === 1 && !this.categories$){
+    if (this.selectedTab === 1 && !this.categories$) {
       this.categories$ = this.categoryService.categories$;
       this.categoryTypes$ = this.categoryTypeService.categoryTypes$;
       this.locations$ = this.locationService.locations$;
       this.seasons$ = this.seasonService.seasons$;
       this.teams$ = this.teamService.teams$;
     }
-    if(this.selectedTab === 2){
+    if (this.selectedTab === 2) {
       this.applications$ = this.applicationService.applications$;
     }
 

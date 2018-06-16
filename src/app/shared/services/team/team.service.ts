@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ITeam } from '../../interfaces/team/team.interface';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AuthService } from '../auth/auth.service';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class TeamService {
@@ -16,7 +13,7 @@ export class TeamService {
   teams$: Observable<ITeam[]>;
 
   constructor(private afs: AngularFirestore,
-    private authService: AuthService) {
+              private authService: AuthService) {
     this.collectionRef = this.afs.collection<ITeam>(this.path);
     this.teams$ = this.collectionRef.valueChanges();
   }
@@ -38,8 +35,8 @@ export class TeamService {
     return this.afs.doc<ITeam>(this.path + '/' + teamId).valueChanges();
   }
 
-  setNewTeam(): ITeam {
-    return {
+  setNewTeam(): Observable<ITeam> {
+    return of({
       title: '',
       subTitle: '',
       isOfficialTeam: true,
@@ -52,6 +49,7 @@ export class TeamService {
       assignedEvents: [],
       assignedPositions: [],
       assignedTrainings: []
-    };
+    });
   }
+
 }

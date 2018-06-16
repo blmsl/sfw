@@ -5,7 +5,7 @@ export class Upload {
 
   file: File;
 
-  downloadURL: Observable<string | null>;
+  downloadURL: string;
   task: AngularFireUploadTask;
   percentage: Observable<number | undefined>;
 

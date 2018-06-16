@@ -1,5 +1,5 @@
 <div fxLayout="direction"
-     fxLayoutAlign="center center" *ngIf="articles && categories; else loadingTemplate">
+     fxLayoutAlign="center center">
 
   <div fxFlex.gt-sm="80"
        fxFlex="100"
@@ -9,6 +9,15 @@
        [topOffset]="200"
        scrollable>
 
+    <p class="tag is-warning" *ngIf="paginationService.done | async">I ran out of boats!</p>
+    <loading-indicator *ngIf="paginationService.loading | async"></loading-indicator>
+
+    <div *ngIf="paginationService.data | async as data">
+      <pre>{{data | json}}</pre>
+    </div>
+
+
+    <!--
     <mat-list>
       <mat-list-item *ngFor="let article of articles">
         <span matLine>
@@ -32,7 +41,7 @@
 
     <p *ngIf="articles.length === 0"
        style="text-align: center">{{'general.articles.list.noResult' | translate}}</p>
-
+    -->
   </div>
 </div>
 

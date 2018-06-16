@@ -1,20 +1,13 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
 import { Upload } from '../../../services/media/upload.class';
 import { MediaUploaderService } from '../../../services/media/media-uploader.service';
-import { MatSnackBar } from '@angular/material';
 import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { MediaItemService } from '../../../services/media/media-item.service';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 import { AlertService } from '../../../services/alert/alert.service';
-import { FileType } from '../../../interfaces/media/file-type.interface';
+import { AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 
 @Component({
   selector: 'media-uploader',
@@ -25,24 +18,36 @@ export class MediaUploaderComponent implements OnInit {
 
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
-  @Input() currentImage: string | null;
 
   @Output() uploadCompleted: EventEmitter<any> = new EventEmitter<any>(false);
-  @Output() unsplashSidebar: EventEmitter<void> = new EventEmitter<void>(false);
+  // @Output() unsplashSidebar: EventEmitter<void> = new EventEmitter<void>(false);
+
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   public currentUploads: Upload[] = [];
   public isHovering: boolean;
   public canUpload: boolean = true;
   public env;
+  public currentMediaItem: IMediaItem;
 
-  constructor(public snackBar: MatSnackBar,
-    private alertService: AlertService,
-    private afs: AngularFirestore,
-    private mediaItemService: MediaItemService,
-    private mediaUploaderService: MediaUploaderService) {
+  constructor(private alertService: AlertService,
+              private afs: AngularFirestore,
+              private el: ElementRef,
+              private mediaItemService: MediaItemService,
+              private mediaUploaderService: MediaUploaderService) {
   }
 
   ngOnInit() {
+    if (this.uploaderOptions.queueLimit === 1) {
+      this.mediaItemService.getCurrentImage(this.uploaderOptions.path, this.uploaderOptions.id, this.uploaderOptions.itemId)
+        .subscribe((mediaItem: IMediaItem) => {
+          this.currentMediaItem = mediaItem;
+        });
+    }
+  }
+
+  changeFileInput() {
+    this.fileInput.nativeElement.click();
   }
 
   handleDrop(fileList: FileList): void {
@@ -62,26 +67,21 @@ export class MediaUploaderComponent implements OnInit {
   initUploader(fileArray: File[]): void {
 
     this.clearQueue();
-    // const reader = new FileReader();
 
     for (let i = 0; i < fileArray.length; i++) {
       const fileUpload = new Upload(fileArray[i]);
       this.currentUploads.push(fileUpload);
-      /*  Preview
-       reader.onload = (event: any) => {
-       console.log(event.target);
-       file.previewImage = event.target.result;
-       };
-       // reader.readAsDataURL(file); */
     }
 
     this.checkQueueLength();
 
     // Start Auto Upload?
     if (this.canUpload && this.uploaderConfig.autoUpload) {
-      this.uploadMultipleFiles().then(
-        () => this.alertService.showSnackBar('success', 'general.media.uploader.finishedAll')
-      );
+      this.uploadMultipleFiles()
+        .then(() => this.alertService.showSnackBar('success', 'general.uploader.finishedAll'))
+        .catch((error: any) => {
+          this.alertService.showSnackBar('error', 'general.uploader.errors.' + error.message);
+        });
     }
   }
 
@@ -89,37 +89,40 @@ export class MediaUploaderComponent implements OnInit {
     this.uploaderOptions.queueSize = this.currentUploads.length;
     if (this.currentUploads.length > this.uploaderOptions.queueLimit) {
       this.canUpload = false;
-      this.alertService.showSnackBar('error', 'general.media.filter.queueLimit');
+      this.alertService.showSnackBar('error', 'general.uploader.errors.queueLimit');
       this.currentUploads = [];
     } else {
       this.canUpload = true;
     }
   }
 
-  upload(fileUpload: Upload, id: string): Promise<any> {
+  upload(fileUpload: Upload, id: string): Promise<void> {
 
     // create Id, if not exists
     if (!this.uploaderOptions.id) {
       this.uploaderOptions.id = this.afs.createId();
     }
 
-    fileUpload.task = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
-    fileUpload.percentage = fileUpload.task.percentageChanges();
+    const upload: {
+      task: AngularFireUploadTask,
+      fileRef: AngularFireStorageReference
+    } = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
 
-    return fileUpload.task
-      .then()
-      .then((snapshot) => {
-        fileUpload.status = snapshot.state;
-        fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+    fileUpload.percentage = upload.task.percentageChanges();
 
-        if (snapshot.bytesTransferred === snapshot.totalBytes) {
-          const snapshotTask = snapshot.task;
-          return snapshotTask;
-        }
-      })
-      .then((res: any) => {
+    /*
+        .catch((error: any) => {
+          this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
+          // this.alertService.showSnackBar('error', 'general.uploader.errors.' + error.message);
+        });
+    }); */
 
-        fileUpload.downloadURL = res.downloadURL;
+
+    return upload.task.then((snapshot) => {
+      fileUpload.status = snapshot.state;
+      fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+
+      upload.fileRef.getDownloadURL().subscribe((downloadURL: string) => {
         const mediaItem: IMediaItem = {
           id: id,
           file: {
@@ -128,28 +131,19 @@ export class MediaUploaderComponent implements OnInit {
             type: fileUpload.file.type,
           },
           itemId: this.uploaderOptions.itemId,
-          downloadURL: res.downloadURL,
-          path: res.metadata.fullPath
+          downloadURL: downloadURL,
         };
-        return mediaItem;
-      })
-      .then((mediaItem: IMediaItem) => {
-        console.log(mediaItem);
-        return this.mediaItemService.createMediaItem(mediaItem);
-      })
-      .then(() => {
-        this.alertService.showSnackBar('success', 'general.media.uploader.singleFinished');
-        if (this.uploaderConfig.removeAfterUpload) {
-          this.deleteFromQueue(fileUpload);
-          if (this.currentUploads.length === 0) {
-            this.clearQueue();
+        this.mediaItemService.createMediaItem(mediaItem).then(() => {
+          // this.alertService.showSnackBar('success', 'general.uploader.singleFinished');
+          if (this.uploaderConfig.removeAfterUpload) {
+            this.deleteFromQueue(fileUpload);
+            if (this.currentUploads.length === 0) {
+              this.clearQueue();
+            }
           }
-        }
-      })
-      .catch((error: any) => {
-        this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
-        this.alertService.showSnackBar('error', error.message);
+        });
       });
+    });
   }
 
   uploadSingleFile(fileUpload: Upload, id?: string) {
@@ -186,19 +180,19 @@ export class MediaUploaderComponent implements OnInit {
     this.checkQueueLength();
   }
 
-  pauseUpload(upload: Upload) {
-    upload.task.pause();
+  pauseUpload(upload: Upload): boolean {
     upload.status = 'paused';
+    return upload.task.pause();
   }
 
-  resumeUpload(upload: Upload) {
-    upload.task.resume();
+  resumeUpload(upload: Upload): boolean {
     upload.status = 'running';
+    return upload.task.resume();
   }
 
-  cancelUpload(upload: Upload) {
-    upload.task.cancel();
+  cancelUpload(upload: Upload): boolean {
     upload.status = 'canceled';
+    return upload.task.cancel();
   }
 
   deleteUpload(upload: Upload) {
@@ -206,11 +200,8 @@ export class MediaUploaderComponent implements OnInit {
     this.currentUploads.splice(index, 1);
   }
 
-  isImage(file: any) {
-    return FileType.getMimeClass(file) === 'image';
+  removeMediaItem() {
+    console.log(this.currentMediaItem);
   }
 
-  removeMediaItem(mediaItem: IMediaItem) {
-    console.log(mediaItem);
-  }
 }

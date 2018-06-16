@@ -34,11 +34,12 @@ export const driveMemberWriteCron = functions.database.ref('/drive-members/{user
         console.log('Club not found');
         return false;
       } else {
-        console.log(clubSnapshot.docs[0].id);
         return clubSnapshot.docs[0].id;
       }
     })
     .then((club) => {
+
+      console.log('Club ' + club);
 
       return db.collection(memberPath)
         .where('mainData.firstName', '==', data.firstName)
@@ -98,10 +99,11 @@ export const driveMemberWriteCron = functions.database.ref('/drive-members/{user
             comment: data.comment ? data.comment : ''
           };
           if (userSnapshot.empty) {
+            console.log('no user found');
             memberData.id = db.collection(memberPath).doc().id;
             memberData.creation = {
               from: 'system',
-              at: admin.database.ServerValue.TIMESTAMP
+              // at: admin.database.ServerValue.TIMESTAMP
             };
             return db.collection(memberPath).doc(data.lastName + '-' + data.firstName + '-' + birthDate).set(memberData);
           }

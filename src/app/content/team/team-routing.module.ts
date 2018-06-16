@@ -14,6 +14,13 @@ export const teamRoutes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'create',
+    component: TeamEditComponent,
+    resolve: {
+      team: TeamResolver
+    }
+  },
+  {
     path: 'edit/:teamId',
     component: TeamEditComponent,
     resolve: {

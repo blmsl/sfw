@@ -21,12 +21,14 @@ export class TeamResolver implements Resolve<ITeam> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITeam> {
+    if (!route.params['teamId']) {
+      return this.teamService.setNewTeam();
+    }
+
     return this.teamService.getTeamById(route.params['teamId']).pipe(
       take(1),
       map((team: ITeam) => {
-        if (route.params['teamId'] === 'new') {
-          return this.teamService.setNewTeam();
-        } else if (team && team.id) {
+        if (team && team.id) {
           return team;
         } else {
           this.router.navigate(['/teams']).then();

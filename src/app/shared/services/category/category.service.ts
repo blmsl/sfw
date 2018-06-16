@@ -34,6 +34,7 @@ export class CategoryService {
   }
 
   removeCategory(category: ICategory): Promise<void> {
+    console.log(category.id);
     return this.afs.collection(this.path).doc(category.id).delete();
   }
 

@@ -35,11 +35,11 @@ export class SponsorItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.currentImage) {
+    /* if (!this.currentImage) {
       this.mediaItemService
         .getCurrentImage('sponsor', this.sponsor.id, this.sponsor.id)
         .subscribe((imageUrl: string) => this.currentImage = imageUrl);
-    }
+    } */
   }
 
 }

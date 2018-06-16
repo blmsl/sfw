@@ -17,19 +17,23 @@ export class CategoriesComponent {
   categoryTypes$: Observable<ICategoryType[]>;
 
   constructor(private categoryService: CategoryService,
-    private alertService: AlertService,
-    private categoryTypeService: CategoryTypeService) {
+              private alertService: AlertService,
+              private categoryTypeService: CategoryTypeService) {
     this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
   }
 
   removeCategory($event) {
-    this.categoryService.removeCategory($event).then();
+    console.log($event);
+    this.categoryService.removeCategory($event).then(
+      () => this.alertService.showSnackBar('success', 'general.categories.list.deleted'),
+      (error: any) => this.alertService.showSnackBar('error', error.message)
+    );
   }
 
   updateCategory($event) {
     this.categoryService.updateCategory($event.category.id, $event.category).then(
-      () => this.alertService.showSnackBar('success', 'general.categories.list.deleted'),
+      () => this.alertService.showSnackBar('success', 'general.categories.list.updated'),
       (error: any) => this.alertService.showSnackBar('error', error.message)
     );
   }

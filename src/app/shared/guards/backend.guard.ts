@@ -9,22 +9,22 @@ import { IUser } from '../interfaces/user/user.interface';
 export class BackendGuard implements CanActivate {
 
   constructor(private authService: AuthService,
-              private router: Router) {
+    private router: Router) {
   }
 
   canActivate(next: ActivatedRouteSnapshot,
-              state: RouterStateSnapshot): Observable<boolean> {
+    state: RouterStateSnapshot): Observable<boolean> {
 
     return this.authService.user$.pipe(
       take(1),
       map((user: IUser) => !!(user && (user.assignedRoles.admin || user.assignedRoles.editor))),
-        tap((isAllowed: boolean) => {
-          if (!isAllowed) {
-            console.error('Access denied - Admins and Editors only');
-            this.router.navigate(['forbidden']).then(() => console.log(123));
-          }
-        })
-      );
+      tap((isAllowed: boolean) => {
+        if (!isAllowed) {
+          console.error('Access denied - Admins and Editors only');
+          this.router.navigate(['forbidden']).then(() => console.log(123));
+        }
+      })
+    );
 
   }
 

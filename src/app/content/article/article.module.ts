@@ -48,6 +48,7 @@ import { ArticleListFilterComponent } from './article-list/article-list-filter/a
 import { SidebarLinksDataComponent } from './article-edit/article-edit-sidebar/sidebar-links-data/sidebar-links-data.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { VirtualScrollModule } from '../../shared/components/virtual-scroll/virtual.scroll.module';
 
 @NgModule({
   imports: [

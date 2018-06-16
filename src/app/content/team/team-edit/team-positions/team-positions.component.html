@@ -1,15 +1,16 @@
-<div fxLayout="row"
+<div fxLayout.gt-sm="row"
+     fxLayout="column"
+     fxLayoutGap="10px"
+     [formGroup]="form"
+     *ngIf="members; else loadingTemplate">
 
-     *ngIf="members; else loadingTemplate"
-     [formGroup]="form">
-
-  <div fxFlex.gt-sm="45"
-       fxFlex.gt-xs="100">
-
+  <div fxFlex.gt-sm="50">
     <h3>{{'general.teams.edit.position.players' | translate}}</h3>
 
     <div fxLayout="column">
-      <mat-form-field fxFlex="100">
+      <p *ngIf="!members.length">{{'general.teams.edit.position.noMembers' | translate}}</p>
+      <mat-form-field fxFlex="100"
+                      *ngIf="members.length">
         <mat-select placeholder="{{'general.teams.edit.position.players' | translate}}"
                     formControlName="assignedPlayers"
                     multiple>
@@ -36,9 +37,7 @@
     </div>
   </div>
 
-  <div fxFlexOffset="6"
-       fxFlex.gt-sm="49"
-       fxFlex.gt-xs="100"
+  <div fxFlex.gt-sm="50"
        *ngIf="categories && categoryTypes; else loadingTemplate">
 
     <p>{{'general.teams.edit.position.description' | translate}}</p>
@@ -47,7 +46,10 @@
       {{'general.teams.edit.position.noPosition' | translate}}
     </p>
 
-    <div formArrayName="assignedPositions">
+    <p *ngIf="!members.length">{{'general.teams.edit.position.noMembers' | translate}}</p>
+
+    <div *ngIf="members.length"
+         formArrayName="assignedPositions">
       <div *ngFor="let position of form.controls['assignedPositions']['controls']; let i=index">
         <div [formGroupName]="i"
              fxFlex="100">
@@ -61,7 +63,7 @@
       </div>
     </div>
 
-    <button
+    <button *ngIf="members.length"
       mat-raised-button
       type="button"
       color="primary"
@@ -70,7 +72,6 @@
     </button>
 
   </div>
-
 </div>
 
 <ng-template #loadingTemplate>

@@ -1179,7 +1179,7 @@
         },
         "editTeam": "Mannschaft editieren",
         "externalLink": "Externer Link",
-        "isOfficialTeam": "Ist die Mannschaft eine offiziell gemeldete Mannschaft?",
+        "isOfficialTeam": "Mannschaft im Spielbetrieb?",
         "logo": {
           "noLogo": "Es wurde noch kein Wappen hochgeladen",
           "title": "Wappen"
@@ -1240,7 +1240,8 @@
           "place": "Ort",
           "startTime": "Beginn",
           "title": "Trainingszeiten und -Orte"
-        }
+        },
+        "visitExternalLink": "Anzeigen"
       },
       "fame": {
         "categories": "Kategorien",
@@ -1304,6 +1305,10 @@
       "changeImage": "Foto ändern",
       "chooseFileType": "Den Dateityp wählen",
       "deleteItem": "Datei löschen",
+      "errors": {
+        "fileType": "Du hast eine Datei mit einem falschen File-Type ausgewählt",
+        "mimeType": "Du hast eine Datei mit einem falschen Mime-Type ausgewählt"
+      },
       "fileCredits": "Rechteinhaber?",
       "fileInput": "Link zur Datei",
       "fileTitle": "Titel der Datei",

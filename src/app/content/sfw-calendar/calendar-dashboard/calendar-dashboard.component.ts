@@ -16,8 +16,8 @@ export class CalendarDashboardComponent implements OnInit {
 
 
   ngOnInit() {
-    this.route.data.subscribe((data: { calendarEvents: any[] }) => {
-      this.events$ = data.calendarEvents;
+    this.route.data.subscribe((data: { events: any[] }) => {
+      this.events$ = data.events ? data.events : [];
     });
   }
 

@@ -3,10 +3,11 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 150px;
   border: 2px dashed #f16624;
   border-radius: 5px;
-  background: white;
+  background: center center no-repeat;
+  background-size: contain;
+  min-height: 250px;
 }
 
 .hovering {

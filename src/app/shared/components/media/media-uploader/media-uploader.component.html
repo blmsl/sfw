@@ -1,37 +1,38 @@
 <mat-card>
-  <mat-card-header>
-    <mat-card-title-group>
-      <mat-card-title>
-        <mat-icon>cloud_upload</mat-icon>
-        {{uploaderOptions.queueLimit > 1 ? 'Multiple Upload' : 'Single Upload' }}
-      </mat-card-title>
-    </mat-card-title-group>
+  <mat-card-header fxLayout="row">
 
-    <!-- ToDo: Nur anzeigen, wenn auch tatsächlich ein Foto vorhanden ist -->
+    <mat-card-title>
+      <span *ngIf="uploaderConfig.headerTitle">{{uploaderConfig.headerTitle | translate}}</span>
+      <span *ngIf="!uploaderConfig.headerTitle">
+        {{uploaderOptions.queueLimit > 1 ? 'Multiple Upload' : 'Single Upload' }}
+      </span>
+    </mat-card-title>
+
+    <span fxFlex></span>
+
     <button mat-icon-button
             color="warn"
-            (click)="removeMediaItem(currentImage)"
-            *ngIf="uploaderOptions.queueLimit === 1 && currentImage"
+            (click)="removeMediaItem()"
+            *ngIf="uploaderOptions.queueLimit === 1 && currentMediaItem"
             type="button">
       <mat-icon>delete</mat-icon>
     </button>
-    <button mat-icon-button
+
+
+    <!--<button
+            mat-icon-button
             color="accent"
             (click)="unsplashSidebar.emit()"
             type="button">
       <mat-icon>add_a_photo</mat-icon>
-    </button>
+    </button>-->
 
   </mat-card-header>
 
   <mat-card-content>
 
-    <img mat-card-image
-         style="padding-bottom: 25px"
-         *ngIf="currentImage && uploaderOptions.queueLimit === 1"
-         [src]="currentImage" />
-
     <div class="dropZone"
+         [style.backgroundImage]="'url('+ (currentMediaItem ? currentMediaItem.downloadURL : '') +')'"
          dropZone
          (hovered)="toggleHover($event)"
          (dropped)="handleDrop($event)"
@@ -39,9 +40,15 @@
 
       <label class="file-label">
         <input type="file"
+               style="display: none;"
+               #fileInput
                (change)="onFileChange($event)"
                [multiple]="uploaderOptions.queueLimit > 1"/>
-
+        <button type="button"
+                mat-raised-button
+                (click)="changeFileInput()">
+          Browse
+        </button>
         <br/><br/>
 
         <span *ngIf="currentUploads.length > 0 && !(currentUploads[0].percentage | async)">

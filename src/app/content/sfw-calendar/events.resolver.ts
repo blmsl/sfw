@@ -6,23 +6,24 @@ import { MemberService } from '../../shared/services/member/member.service';
 import { IMember } from '../../shared/interfaces/member/member.interface';
 import { CalendarService } from '../../shared/services/calendar/calendar.service';
 import * as moment from 'moment';
-import { first, map, switchMap, take, takeLast, tap } from 'rxjs/internal/operators';
+import { map, switchMap, take } from 'rxjs/internal/operators';
+import { pipe } from 'rxjs/Rx';
 
 @Injectable()
 export class EventsResolver implements Resolve<ICalendarEvent[]> {
 
   public events$: any[] = [];
 
-  constructor(private memberService: MemberService,
-    private calendarService: CalendarService) {
+  constructor(private memberService: MemberService) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICalendarEvent[]> {
 
     return this.memberService.members$.pipe(
+      take(1),
       switchMap((members: IMember[]) => {
-        const memberEvents: ICalendarEvent[] = [];
 
+        const memberEvents: ICalendarEvent[] = [];
         members.forEach((member: IMember) => {
           if (member.mainData.birthday) {
             const event: any = {
@@ -34,12 +35,7 @@ export class EventsResolver implements Resolve<ICalendarEvent[]> {
         });
         this.events$.push(...memberEvents);
         return this.events$;
-      }),
-
-      map(() => {
-        return this.events$;
-      }),
-      first()
+      })
     );
 
     /*

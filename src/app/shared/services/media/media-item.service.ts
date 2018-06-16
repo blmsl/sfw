@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { IMediaItem } from '../../interfaces/media/media-item.interface';
-import { AngularFireStorage } from 'angularfire2/storage';
 import { ICreation } from '../../interfaces/creation.interface';
 import { AuthService } from '../auth/auth.service';
 import { FileType } from '../../interfaces/media/file-type.interface';
+import { map } from 'rxjs/internal/operators';
+import { of } from 'rxjs/index';
 
 @Injectable()
 export class MediaItemService {
@@ -18,8 +16,7 @@ export class MediaItemService {
   public mediaItems$: Observable<IMediaItem[]>;
 
   constructor(private afs: AngularFirestore,
-    private authService: AuthService,
-    private storage: AngularFireStorage) {
+              private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMediaItem>(this.path);
     this.mediaItems$ = this.collectionRef.valueChanges();
   }
@@ -27,7 +24,7 @@ export class MediaItemService {
   createMediaItem(mediaItem: IMediaItem): Promise<void> {
     const creation: ICreation = this.authService.getCreation();
     mediaItem.creation = creation;
-    return this.afs.collection(this.path).doc(mediaItem.id).set(mediaItem, { merge: true });
+    return this.afs.collection(this.path).doc(this.afs.createId()).set(mediaItem, { merge: true });
   }
 
   removeMediaItem(itemId): Promise<void> {
@@ -43,25 +40,33 @@ export class MediaItemService {
     });
   }
 
-  getCurrentImage(type: string, id: string, itemId: string): Observable<string> {
-    let foundFile: string;
-    return this.getMediaItemByIdAndItemId(id, itemId).valueChanges().map((mediaItems: IMediaItem[]) => {
-      mediaItems.forEach((mediaItem: IMediaItem) => {
-        if (FileType.getMimeClass(mediaItem.file) === 'image') {
-          foundFile = mediaItem.downloadURL;
-        }
-      });
-      // set default-Image
-      return foundFile ? foundFile : this.getImagePlaceHolder(type);
-    });
+  getCurrentImage(type: string, id: string, itemId: string): Observable<IMediaItem> {
+    let foundFile: IMediaItem;
+    return this.getMediaItemByIdAndItemId(id, itemId).valueChanges().pipe(
+      map((mediaItems: IMediaItem[]) => {
+        mediaItems.forEach((mediaItem: IMediaItem) => {
+          if (FileType.getMimeClass(mediaItem.file) === 'image') {
+            foundFile = mediaItem;
+          }
+        });
+        // set default-Image
+        return foundFile ? foundFile :this.getImagePlaceHolder(type);
+      })
+    );
   }
 
-  getImagePlaceHolder(type: string): string {
+  getImagePlaceHolder(type: string): IMediaItem {
     const placeholder: string = '/assets/sfw/placeholder/';
+    let mediaItem: IMediaItem;
     switch (type) {
+      case 'teams':
       case 'sponsor':
-        return placeholder.concat('no-image-found.jpg');
+        mediaItem = {
+          downloadURL : placeholder.concat('no-image-found.jpg')
+        };
     }
+    console.log(mediaItem);
+    return mediaItem;
   }
 
 }

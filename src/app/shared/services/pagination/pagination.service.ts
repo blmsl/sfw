@@ -1,41 +1,52 @@
-
-import { take, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable
-} from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/scan';
+import 'rxjs/add/operator/take';
 
+// Options to reproduce firestore queries consistently
+interface QueryConfig {
+  path: string, // path to collection
+  field: string, // field to orderBy
+  limit?: number, // limit per query
+  reverse?: boolean, // reverse order?
+  prepend?: boolean // prepend to source?
+}
 
 
 @Injectable()
 export class PaginationService {
 
+  // Source data
   private _done = new BehaviorSubject(false);
   private _loading = new BehaviorSubject(false);
   private _data = new BehaviorSubject([]);
 
-  private query: IQueryConfig;
+  private query: QueryConfig;
 
+  // Observable data
   data: Observable<any>;
   done: Observable<boolean> = this._done.asObservable();
   loading: Observable<boolean> = this._loading.asObservable();
 
-  constructor(private firestore: AngularFirestore) {
+
+  constructor(private afs: AngularFirestore) {
   }
 
-  init(path: string, field: string, opts?: any) {
+  // Initial query sets options and defines the Observable
+  init(path, field, opts?) {
     this.query = {
       path,
       field,
-      limit: 10,
+      limit: 2,
       reverse: false,
       prepend: false,
       ...opts
     };
 
-    const first = this.firestore.collection(this.query.path, (ref) => {
+    const first = this.afs.collection(this.query.path, ref => {
       return ref
         .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
         .limit(this.query.limit);
@@ -43,17 +54,19 @@ export class PaginationService {
 
     this.mapAndUpdate(first);
 
-    console.log('ToDo');
-    /* this.data = this._data.asObservable()
+    // Create the observable array for consumption in components
+    this.data = this._data.asObservable()
       .scan((acc, val) => {
-        return this.query.prepend ? val.concat(acc) : acc.concat(val)
-      });*/
+        return this.query.prepend ? val.concat(acc) : acc.concat(val);
+      });
   }
 
+
+  // Retrieves additional data from firestore
   more() {
     const cursor = this.getCursor();
 
-    const more = this.firestore.collection(this.query.path, ref => {
+    const more = this.afs.collection(this.query.path, ref => {
       return ref
         .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
         .limit(this.query.limit)
@@ -62,6 +75,8 @@ export class PaginationService {
     this.mapAndUpdate(more);
   }
 
+
+  // Determines the doc snapshot to paginate query
   private getCursor() {
     const current = this._data.value;
     if (current.length) {
@@ -70,33 +85,43 @@ export class PaginationService {
     return null;
   }
 
+
+  // Maps the snapshot to usable format the updates source
   private mapAndUpdate(col: AngularFirestoreCollection<any>) {
+
     if (this._done.value || this._loading.value) {
       return;
     }
 
+    // loading
     this._loading.next(true);
 
-    return col.snapshotChanges().pipe(
-      tap((arr: any[]) => {
+    // Map snapshot with doc ref (needed for cursor)
+    return col.valueChanges()
+      .do(arr => {
 
-        let values = arr.map((snapshot) => {
-          const data = snapshot.payload.doc.data();
-          const doc = snapshot.payload.doc;
-          return { ...data, doc };
-        });
+        // If prepending, reverse array
+        let values = this.query.prepend ? arr.reverse() : arr;
 
-        values = this.query.prepend ? values.reverse() : values;
-
+        // update source with new values, done loading
         this._data.next(values);
         this._loading.next(false);
 
+        // no more values, mark done
         if (!values.length) {
           this._done.next(true);
         }
-      }),
-      take(1), )
+      })
+      .take(1)
       .subscribe();
+
+  }
+
+
+  // Reset the page
+  reset() {
+    this._data.next([]);
+    this._done.next(false);
   }
 
 }

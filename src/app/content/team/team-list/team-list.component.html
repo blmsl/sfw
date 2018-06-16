@@ -1,44 +1,42 @@
-<div fxLayout="row"
-
+<div fxLayout.gt-sm="row"
+     fxLayout="column"
+     fxLayoutGap="10px"
      [formGroup]="form">
 
-  <div fxFlex.gt-xs="25"
-       fxFlex.gt-md="30"
-       fxFlex="100">
-    <mat-form-field style="width: 95%">
-      <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}" formControlName="limit">
-        <mat-option [value]="teams.length" *ngIf="teams">
-          {{ 'general.pagination.allItems' | translate}}
-        </mat-option>
-        <mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}
-          {{ 'general.items' | translate}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+  <mat-form-field fxFlex="100">
+    <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}" formControlName="limit">
+      <mat-option [value]="teams.length" *ngIf="teams">
+        {{ 'general.pagination.allItems' | translate}}
+      </mat-option>
+      <mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}
+        {{ 'general.items' | translate}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-  <div fxFlex.gt-xs="50"
-       fxFlex="100"
-       style="margin-bottom: 15px">
+
+  <div fxFlex="100">
     <input style="padding:10px; width: 90%"
            placeholder="{{ 'general.typeToFilter' | translate}}"
            formControlName="searchFor"/>
   </div>
 
-  <div fxFlex.gt-xs="25"
-       fxFlex="100">
-    <a mat-raised-button color="primary" [routerLink]="['./edit/new']">
+
+  <div fxFlex="100">
+    <a mat-raised-button color="primary" [routerLink]="['../create']">
       {{ 'general.teams.list.createTeam' | translate}}
     </a>
   </div>
 </div>
 
-<div fxLayout="row"
+<div style="margin-top: 25px"
+     fxLayout="column"
+     fxLayout.gt-sm="row"
      [formGroup]="form">
 
   <div fxFlex="100"
-       style="margin-top: 15px"
        *ngIf="teams && categories && clubs && seasons; else loadingTemplate">
+
     <ngx-datatable #myTable
                    class='material'
                    [columnMode]="'force'"
@@ -53,7 +51,7 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="subTitle" fxHide.xs>
+      <ngx-datatable-column name="subTitle">
         <ng-template let-column="column" ngx-datatable-header-template>
           {{'general.teams.edit.subTitle' | translate}}
         </ng-template>
@@ -68,7 +66,7 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="{{'general.teams.edit.assignedSeason' | translate}}" fxHide.xs>
+      <ngx-datatable-column name="{{'general.teams.edit.assignedSeason' | translate}}">
         <ng-template let-row="row" let-value="assignedClub" ngx-datatable-cell-template>
           <span *ngFor="let season of seasons | filterBy: ['id'] : row.assignedSeason">
             {{season.title}}

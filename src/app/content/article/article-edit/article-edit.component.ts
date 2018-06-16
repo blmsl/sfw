@@ -47,14 +47,14 @@ export class ArticleEditComponent implements OnInit {
   ];
 
   constructor(private route: ActivatedRoute,
-              public breakpointObserver: BreakpointObserver,
-              public authService: AuthService,
-              private router: Router,
-              private zone: NgZone,
-              private alertService: AlertService,
-              private articleService: ArticleService,
-              private applicationService: ApplicationService,
-              private fb: FormBuilder) {
+    public breakpointObserver: BreakpointObserver,
+    public authService: AuthService,
+    private router: Router,
+    private zone: NgZone,
+    private alertService: AlertService,
+    private articleService: ArticleService,
+    private applicationService: ApplicationService,
+    private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -103,20 +103,20 @@ export class ArticleEditComponent implements OnInit {
 
       // set publication date to now if status is "publish now"
       if (changes.publication.status === 1) {
-        changes.publication.dateTime = <any> moment();
+        changes.publication.dateTime = <any>moment();
       }
 
       this.article = Object.assign({}, this.article, changes);
 
       // if (!this.form.invalid) {
-        this.articleService.createArticle(changes)
-          .then(() => {
-            this.articleStatus = 'success';
-          })
-          .catch((error: any) => {
-            this.alertService.showSnackBar('error', error.message);
-            this.articleStatus = 'error';
-          });
+      this.articleService.createArticle(changes)
+        .then(() => {
+          this.articleStatus = 'success';
+        })
+        .catch((error: any) => {
+          this.alertService.showSnackBar('error', error.message);
+          this.articleStatus = 'error';
+        });
       // }
     });
 

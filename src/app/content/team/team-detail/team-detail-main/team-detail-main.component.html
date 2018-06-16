@@ -1,75 +1,89 @@
-<div fxLayout="row"
-     >
+<mat-card>
+  <mat-card-header>
+    <img *ngIf="teamLogo | async as logo; else loadingTemplate"
+         matCardAvatar
+         [src]="logo.downloadURL">
+    <mat-card-title>{{team.title}}</mat-card-title>
+    <mat-card-subtitle>{{team.subTitle}}</mat-card-subtitle>
+  </mat-card-header>
 
-  <div fxFlex.gt-sm="70"
-       fxFlex="100">
-    <mat-list *ngIf="team && seasons && clubs && categories; else loadingTemplate">
+  <img *ngIf="teamImage | async as image; else loadingTemplate"
+       mat-card-image
+       [src]="image.downloadURL">
 
-      <mat-list-item>
-        <h4>{{'general.teams.edit.title' | translate}}</h4>
-        <span class="right">{{team.title}}</span>
-      </mat-list-item>
+  <mat-card-content *ngIf="categories && clubs && seasons; else loadingTemplate">
 
-      <mat-list-item>
-        <h4>{{'general.teams.edit.subTitle' | translate}}</h4>
-        <span class="right">{{team.subTitle}}</span>
-      </mat-list-item>
+    <div fxLayout.gt-sm="row"
+         fxLayout="column">
+      <div>{{'general.teams.edit.assignedClub' | translate}}</div>
+      <span fxFlex></span>
+      <div>
+        <a [routerLink]="['clubs/detail', club.id]"
+           *ngFor="let club of clubs | filterBy: ['id'] : team.assignedClub">
+          {{club.title}}
+        </a>
+      </div>
+    </div>
 
-      <mat-list-item>
-        <h4>{{'general.teams.edit.assignedClub' | translate}}</h4>
-        <span class="right">
-          <a [routerLink]="['clubs/detail', club.id]"
-             *ngFor="let club of clubs | filterBy: ['id'] : team.assignedClub">
-            {{club.title}}
-          </a>
-        </span>
-      </mat-list-item>
+    <div style="margin-top: 25px"
+         fxLayout.gt-sm="row"
+         fxLayout="column">
+      <div>
+        {{'general.teams.edit.assignedCategories' | translate}}
+      </div>
+      <span fxFlex></span>
+      <div>
+        <a *ngFor="let categoryId of team.assignedTeamCategories; let last = last"
+           [routerLink]="['/categories/detail', categoryId]">
+          {{(categories | filterBy: ['id'] : categoryId)[0].title}}
+          <span *ngIf="!last">, </span>
+        </a>
+      </div>
+    </div>
 
-      <mat-list-item>
-        <h4>{{'general.teams.edit.externalLink' | translate}}</h4>
-        <span class="right">
-          <a target="_blank" [href]="team.externalTeamLink">{{team.externalTeamLink}}</a>
-        </span>
-      </mat-list-item>
+    <div style="margin-top: 25px"
+         fxLayout.gt-sm="row"
+         fxLayout="column">
+      <div>
+        {{'general.teams.edit.externalLink' | translate}}
+      </div>
+      <span fxFlex></span>
+      <div>
+        <a target="_blank" [href]="team.externalTeamLink">{{'general.teams.edit.visitExternalLink' | translate}}</a>
+      </div>
+    </div>
 
-      <mat-list-item>
-        <h4>{{'general.teams.edit.assignedSeason' | translate}}</h4>
-        <span class="right"
-              *ngFor="let season of seasons | filterBy: ['id'] : team.assignedSeason">
-          {{season.title}}
-        </span>
-      </mat-list-item>
+    <div style="margin-top: 25px"
+         fxLayout.gt-sm="row"
+         fxLayout="column">
+      <div>
+        {{'general.teams.edit.assignedSeason' | translate}}
+      </div>
+      <span fxFlex></span>
+      <div>
+            <span *ngFor="let season of seasons | filterBy: ['id'] : team.assignedSeason">
+              {{season.title}}
+            </span>
+      </div>
+    </div>
 
-      <mat-list-item>
-        <h4>{{'general.teams.edit.assignedCategories' | translate}}</h4>
-        <span class="right">
-          <a [routerLink]="['/categories/detail', categoryId]"
-             *ngFor="let categoryId of team.assignedTeamCategories; let last = last">
-            {{(categories | filterBy: ['id'] : categoryId)[0].title}}<span *ngIf="!last">, </span>
-          </a>
-        </span>
-      </mat-list-item>
-
-      <mat-list-item>
-        <h4>{{'general.teams.edit.isOfficialTeam' | translate}}</h4>
+    <div style="margin-top: 25px"
+         fxLayout.gt-sm="row"
+         fxLayout="column">
+      <div>
+        {{'general.teams.edit.isOfficialTeam' | translate}}
+      </div>
+      <span fxFlex></span>
+      <div>
         <mat-checkbox class="right"
                       [disabled]="true"
                       [checked]="team.isOfficialTeam">
         </mat-checkbox>
-      </mat-list-item>
+      </div>
+    </div>
+  </mat-card-content>
 
-    </mat-list>
-  </div>
-
-  <div fxFlex.gt-sm="30"
-       fxFlex="100">
-    <h3>{{'general.teams.edit.photo.title' | translate}}</h3>
-    <p>ToDo</p>
-
-    <h3>{{'general.teams.edit.logo.title' | translate}}</h3>
-    <img [src]="team.logoURL" *ngIf="team.logoURL" />
-  </div>
-</div>
+</mat-card>
 
 
 <ng-template #loadingTemplate>

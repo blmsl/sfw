@@ -22,9 +22,8 @@
                            [form]="form">
       </article-list-filter>
     </div>
-
+<!-- [articles]="articles$ | async" -->
     <article-list [categories]="categories$ | async"
-                  [articles]="articles$ | async"
                   (remove)="removeArticle($event)"
                   (update)="updateArticle($event)">
     </article-list>
