@@ -72,7 +72,7 @@ export class MemberService {
     return (day > lastDay[month]) ? zodiac[month * 1 + 1] : zodiac[month];
   }
 
-  calculateAge(birthday) {
+  calculateAge(birthday): number {
     const dateOfBirth = new Date(birthday);
     const ageDifMs = Date.now() - dateOfBirth.getTime();
     const ageDate = new Date(ageDifMs);
