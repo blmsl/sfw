@@ -1,39 +1,7 @@
-<div fxLayout="row"
-
-     *ngIf="positions && members; else loadingTemplate"
-     [formGroup]="form">
-
-  <div fxFlex.gt-sm="47"
-       fxFlex.gt-xs="100"
-       formGroupName="management">
-
-    <div fxLayout="row"
-         >
-
-      <div fxFlex="100">
-        <h3>{{'general.clubs.edit.management.current.title' | translate}}</h3>
-        <div style="height: 180px; width: 100%; background-color: #7c7c7c;">
-          <ul>
-            <li>Foto ( + Upload)</li>
-            <lI>Foto-Beschreibung</lI>
-          </ul>
-        </div>
-      </div>
-
-      <div fxFlex="100" style="margin-top: 50px;">
-        <label>
-          {{'general.clubs.edit.management.current.description' | translate}}
-        </label>
-        <quill-editor formControlName="photoDescription">
-        </quill-editor>
-      </div>
-    </div>
-  </div>
-
-
-  <div fxFlex.gt-sm="50"
-       fxFlexOffset.gt-sm="3"
-       fxFlex="100">
+<mat-card>
+  <mat-card-title></mat-card-title>
+  <mat-card-content *ngIf="positions && members; else loadingTemplate"
+                    [formGroup]="form">
 
     <div *ngIf="selectedClubManagementPosition === -1">
       <h3>{{'general.clubs.edit.management.positions.title' | translate}}</h3>
@@ -60,7 +28,6 @@
 
     <div *ngIf="selectedClubManagementPosition !== -1">
       <h3>{{'general.clubs.edit.management.list.title' | translate}}</h3>
-
       <club-management-form [form]="form"
                             [members]="members"
                             [positions]="positions"
@@ -70,9 +37,14 @@
       </club-management-form>
     </div>
 
-  </div>
+  </mat-card-content>
+</mat-card>
 
-</div>
+<!--
+<div fxLayout="row"
+     *ngIf="positions && members; else loadingTemplate"
+     [formGroup]="form">-->
+
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

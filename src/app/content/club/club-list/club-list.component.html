@@ -1,16 +1,20 @@
-<div fxLayout="row"
-      *ngIf="clubs$; else loadingTemplate">
+<div fxLayout="column"
+     fxLayout.gt-sm="row"
+     fxLayoutGap="10px"
+     *ngIf="clubs$; else loadingTemplate">
 
   <div fxFlex.gt-xs="33"
        fxFlex="100"
        *ngFor="let club of clubs$">
     <mat-card>
       <mat-card-header class="mt-0">
-        <img style="border-radius: 0" matCardAvatar [src]="club.logoURL">
+        <img *ngIf="getClubLogo(club) | async as logo; else loadingTemplate"
+             matCardAvatar
+             [src]="logo.downloadURL">
         <mat-card-subtitle>
           <a class="font-weight-bold mat-text-primary" target="_blank"
              *ngIf="club.fussballde.clubUrl"
-             [href]="club.fussballde.clubUrl">Fussball.de
+             [href]="club.fussballde.clubUrl">{{'general.clubs.edit.clubLink' | translate}}
           </a>
         </mat-card-subtitle>
         <mat-card-title>{{club.title}}</mat-card-title>

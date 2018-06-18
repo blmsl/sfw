@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ILocation } from '../../../../shared/interfaces/location.interface';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-options.interface';
+import { IClub } from '../../../../shared/interfaces/club/club.interface';
 
 @Component({
   selector: 'club-edit-main',
@@ -13,10 +14,9 @@ import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-o
 export class ClubEditMainComponent implements OnInit {
 
   @Input() form: FormGroup;
+  @Input() club: IClub;
   @Input() locations: ILocation[];
   @Input() members: IMember[];
-
-  @Output() logoUploadCompleted: EventEmitter<any> = new EventEmitter<any>(false);
 
   @ViewChild('description') description: QuillEditorComponent;
 
@@ -24,21 +24,22 @@ export class ClubEditMainComponent implements OnInit {
     autoUpload: true,
     showDropZone: true,
     removeAfterUpload: true,
-    showQueue: false
+    showQueue: false,
+    headerTitle: 'general.clubs.edit.logoUrl'
   };
 
   public uploaderOptions: IUploaderOptions = {
-    assignedObjects: ['clubs'],
+    assignedObjects: ['clubs', 'profile'],
     itemId: '',
-    allowedMimeType: ['image.*'],
-    allowedFileType: ['jpeg', 'jpg', 'gif', 'bmp', 'png'],
-    queueLimit: 1
+    queueLimit: 1,
+    allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
   constructor() {
   }
 
   ngOnInit() {
+    this.uploaderOptions.itemId = this.club.id;
   }
 
 }
