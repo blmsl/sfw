@@ -1,6 +1,4 @@
-<div fxLayout="row"
-     >
-
+<div fxLayout="row">
   <div fxFlex="100">
 
     <p *ngIf="!form['controls'][0]">
@@ -28,8 +26,8 @@
                                  fxHide.xs="true">
 
             <span fxFlex="70">
-              {{control.get('startDate').value | date: 'dd.MM.yy'}}
-              <span *ngIf="control.get('endDate').value">&ndash; {{control.get('endDate').value | date: 'dd.MM.yy'}}</span>
+              {{control.get('startDate').value.seconds *1000 | date: 'dd.MM.yy'}}
+              <span *ngIf="control.get('endDate').value">&ndash; {{control.get('endDate').value.seconds *1000 | date: 'dd.MM.yy'}}</span>
             </span>
 
             <mat-icon fxFlex="10"

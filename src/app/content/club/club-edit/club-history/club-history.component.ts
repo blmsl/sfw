@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
-import { ITimeLineEvent } from '../../../../shared/interfaces/time-line-event.interface';
 
 @Component({
   selector: 'club-history',
@@ -10,13 +9,7 @@ import { ITimeLineEvent } from '../../../../shared/interfaces/time-line-event.in
 })
 export class ClubHistoryComponent implements OnInit {
 
-  @Input() form: FormGroup;
-  @Input() selectedTimeLineEvent: number;
-
-  @Output() add: EventEmitter<boolean> = new EventEmitter<boolean>(false);
-  @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
-  @Output() edit: EventEmitter<boolean> = new EventEmitter<boolean>(false);
-  @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Input() form: FormGroup
 
   @ViewChild('history') history: QuillEditorComponent;
 

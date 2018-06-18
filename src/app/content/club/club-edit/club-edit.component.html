@@ -19,20 +19,28 @@
       </mat-tab>
 
       <mat-tab label="{{ 'general.clubs.edit.historyTitle' | translate }}">
-        <!--<club-history (add)="addTimeLineEvent($event)"
-                      (delete)="removeTimeLineEvent($event)"
-                      (edit)="editTimeLineEvent($event)"
-                      (save)="saveTimeLineEvent($event)"
-                      [selectedTimeLineEvent]="selectedClubTimeLineEvent"
-                      [form]="form">
-        </club-history>-->
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px">
+          <div fxFlex.gt-sm="50">
+            <club-history [form]="form"></club-history>
+          </div>
+          <div fxFlex.gt-sm="50">
+            <club-timeline (add)="addTimeLineEvent($event)"
+                           (delete)="removeTimeLineEvent($event)"
+                           (edit)="editTimeLineEvent($event)"
+                           (save)="saveTimeLineEvent($event)"
+                           [selectedTimeLineEvent]="selectedClubTimeLineEvent"
+                           [form]="form">
+            </club-timeline>
+          </div>
+        </div>
       </mat-tab>
 
       <mat-tab label="{{ 'general.clubs.edit.managementTitle' | translate }}">
         <div fxLayout="column"
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
-
           <div fxFlex.gt-sm="50">
             <club-management-photo [club]="club"
                                    [form]="form">
@@ -40,20 +48,18 @@
           </div>
 
           <div fxFlex.gt-sm="50">
-            <club-management></club-management>
+            <club-management (add)="addClubManagementPosition()"
+                             (delete)="removeClubManagementPosition($event)"
+                             (save)="saveClubManagementPosition($event)"
+                             [selectedClubManagementPosition]="selectedClubManagementPosition"
+                             [members]="members"
+                             [showLinks]="true"
+                             [club]="club"
+                             [positions]="positions$ | async"
+                             [form]="form">
+            </club-management>
           </div>
-
         </div>
-        <!--<club-management (add)="addClubManagementPosition()"
-                         (delete)="removeClubManagementPosition($event)"
-                         (save)="saveClubManagementPosition($event)"
-                         [selectedClubManagementPosition]="selectedClubManagementPosition"
-                         [members]="members"
-                         [showLinks]="true"
-                         [club]="club"
-                         [positions]="positions$ | async"
-                         [form]="form">
-        </club-management>-->
       </mat-tab>
 
       <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
@@ -69,10 +75,6 @@
                          [form]="form">
         </club-honoraries>
       </mat-tab>
-
-      <!--<mat-tab label="test">
-        <pre>{{club | json}}</pre>
-      </mat-tab>-->
 
     </mat-tab-group>
   </mat-card-content>

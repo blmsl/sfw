@@ -1,96 +1,83 @@
-<div fxLayout="row"
+<div [formGroup]="form">
 
-     [formGroup]="form">
+  <div *ngFor="let control of form.controls['management']['controls']['positions']['controls']; let i = index">
 
-  <div fxFlex="100"
-       *ngFor="let control of form.controls['management']['controls']['positions']['controls']; let i = index">
+    <div formGroupName="management">
 
-    <div fxLayout="row"
-
-         formGroupName="management">
-
-      <div fxFlex="100"
-           *ngIf="i === selectedClubManagementPosition && members && positions"
+      <div *ngIf="i === selectedClubManagementPosition && members && positions"
            formArrayName="positions">
 
-        <mat-card>
+        <div [formGroupName]="i">
 
-          <mat-card-title>{{'general.clubs.edit.management.positions.create' | translate}}</mat-card-title>
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               fxLayoutGap="10px">
+            <mat-form-field fxFlex.gt-sm="50">
+              <mat-select placeholder="{{ 'general.clubs.edit.management.positions.assignedCategory' | translate}}"
+                          formControlName="assignedPosition">
+                <mat-option *ngFor="let category of positions | orderBy: ['title']"
+                            [value]="category.id">{{category.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-card-content [formGroupName]="i">
+            <mat-form-field fxFlex.gt-sm="50">
+              <mat-select placeholder="{{ 'general.clubs.edit.management.positions.assignedMember' | translate}}"
+                          formControlName="assignedMember">
+                <mat-option
+                  *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
+                  [value]="member.id">
+                  {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date:
+                  'dd.MM.yy'}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
-            <div fxLayout="row"
-                 >
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               fxLayoutGap="10px">
+            <mat-form-field fxFlex.gt-sm="33">
+              <input matInput
+                     readonly="readonly"
+                     [matDatepicker]="dp3"
+                     formControlName="startDate"
+                     placeholder="{{'general.clubs.edit.management.positions.startDate' | translate}}">
+              <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+              <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+            </mat-form-field>
 
-              <mat-form-field fxFlex.gt-sm="50"
-                              fxFlex="100">
-                <mat-select placeholder="{{ 'general.clubs.edit.management.positions.assignedCategory' | translate}}"
-                            formControlName="assignedPosition">
-                  <mat-option *ngFor="let category of positions | orderBy: ['title']"
-                              [value]="category.id">{{category.title}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+            <mat-form-field fxFlex.gt-sm="33">
+              <input matInput
+                     readonly
+                     [matDatepicker]="dp4"
+                     formControlName="endDate"
+                     placeholder="{{'general.clubs.edit.management.positions.endDate' | translate}}">
+              <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+              <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+            </mat-form-field>
 
-              <mat-form-field fxFlexOffset="1"
-                              fxFlex.gt-sm="49"
-                              fxFlex="100">
-                <mat-select placeholder="{{ 'general.clubs.edit.management.positions.assignedMember' | translate}}"
-                            formControlName="assignedMember">
-                  <mat-option
-                    *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
-                    [value]="member.id">
-                    {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date:
-                    'dd.MM.yy'}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+          </div>
 
-              <mat-form-field fxFlex.gt-sm="50"
-                              fxFlex="100">
-                <input matInput
-                       readonly="readonly"
-                       [matDatepicker]="dp3"
-                       formControlName="startDate"
-                       placeholder="{{'general.clubs.edit.management.positions.startDate' | translate}}">
-                <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-                <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-              </mat-form-field>
+        </div>
 
-              <mat-form-field fxFlexOffset="1"
-                              fxFlex.gt-sm="49"
-                              fxFlex="100">
-                <input matInput
-                       readonly
-                       [matDatepicker]="dp4"
-                       formControlName="endDate"
-                       placeholder="{{'general.clubs.edit.management.positions.endDate' | translate}}">
-                <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
-                <mat-datepicker #dp4 disabled="false"></mat-datepicker>
-              </mat-form-field>
-
-            </div>
-
-          </mat-card-content>
-
-          <mat-card-actions>
-            <div class="button-row">
-              <button mat-raised-button
-                      [disabled]="!form.get('management.positions').valid"
-                      color="primary"
-                      type="button"
-                      (click)="save.emit(i)">
-                {{ 'general.clubs.edit.management.positions.savePosition' | translate}}
-              </button>
-              <button type="button"
-                      mat-raised-button
-                      color="accent"
-                      (click)="delete.emit(i)">
-                {{'general.clubs.edit.management.positions.deletePosition' | translate}}
-              </button>
-            </div>
-          </mat-card-actions>
-        </mat-card>
+        <div fxLayout.gt-sm="row"
+             fxLayout="column"
+             fxLayoutGap="10px">
+          <button mat-raised-button
+                  [disabled]="!form.get('management.positions').valid"
+                  color="primary"
+                  type="button"
+                  (click)="save.emit(i)">
+            {{ 'general.clubs.edit.management.positions.savePosition' | translate}}
+          </button>
+          <button type="button"
+                  mat-raised-button
+                  color="accent"
+                  (click)="delete.emit(i)">
+            {{'general.clubs.edit.management.positions.deletePosition' | translate}}
+          </button>
+        </div>
 
       </div>
     </div>

@@ -1,11 +1,13 @@
 <mat-card>
-  <mat-card-title></mat-card-title>
+  <mat-card-title>{{ selectedClubManagementPosition === -1 ?
+    ('general.clubs.edit.management.positions.title' | translate)
+    : 'general.clubs.edit.management.list.title' | translate
+    }}
+  </mat-card-title>
   <mat-card-content *ngIf="positions && members; else loadingTemplate"
                     [formGroup]="form">
 
     <div *ngIf="selectedClubManagementPosition === -1">
-      <h3>{{'general.clubs.edit.management.positions.title' | translate}}</h3>
-
       <button mat-raised-button
               style="margin-bottom: 25px"
               type="button"
@@ -13,7 +15,6 @@
               (click)="add.emit(true)">
         {{'general.clubs.edit.management.positions.addMember' | translate}}
       </button>
-
       <club-management-list [form]="form"
                             [members]="members"
                             [positions]="positions"
@@ -27,7 +28,6 @@
     </div>
 
     <div *ngIf="selectedClubManagementPosition !== -1">
-      <h3>{{'general.clubs.edit.management.list.title' | translate}}</h3>
       <club-management-form [form]="form"
                             [members]="members"
                             [positions]="positions"
@@ -39,11 +39,6 @@
 
   </mat-card-content>
 </mat-card>
-
-<!--
-<div fxLayout="row"
-     *ngIf="positions && members; else loadingTemplate"
-     [formGroup]="form">-->
 
 
 <ng-template #loadingTemplate>

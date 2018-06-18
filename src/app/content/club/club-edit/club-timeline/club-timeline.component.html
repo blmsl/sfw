@@ -1,0 +1,14 @@
+<div fxLayout="column">
+  <h3>{{'general.clubs.edit.timeLineTitle' | translate}}</h3>
+
+  <time-line (add)="add.emit($event)"
+             (cancel)="cancel($event)"
+             (delete)="delete.emit($event)"
+             (edit)="edit.emit($event)"
+             (save)="save.emit($event)"
+             [showLinks]="true"
+             [selectedTimeLineEvent]="selectedTimeLineEvent"
+             [form]="form.controls['timeLine']">
+  </time-line>
+
+</div>
