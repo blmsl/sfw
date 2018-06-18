@@ -1,9 +1,10 @@
-<div fxLayout="row"
-
+<div fxLayout.gt-sm="row"
+     fxLayout="column"
+     fxLayoutAlign="start start"
+     fxLayoutGap="10px"
      *ngIf="team && members && categories; else loadingTemplate">
 
-  <div fxFlex.gt-sm="49"
-       fxFlex="100">
+  <div fxFlex.gt-sm="50">
     <h3>{{'general.teams.edit.position.players' | translate}}</h3>
     <p *ngIf="!team.assignedPlayers">{{'general.teams.edit.players.noPlayers' | translate}}</p>
 
@@ -17,22 +18,19 @@
     </mat-list>
   </div>
 
-  <div fxFlexOffset.gt-sm="2"
-       fxFlex.gt-sm="49"
-       fxFlex="100">
+  <div fxFlex.gt-sm="50">
     <h3>{{'general.teams.edit.management.title' | translate}}</h3>
     <p *ngIf="!team.assignedPositions">{{'general.teams.edit.position.noPosition' | translate}}</p>
 
-    <div *ngFor="let position of team.assignedPositions | orderBy: 'position.type'"
-         fxLayout="row"
-         >
-      <h4 fxFlex="100">{{ (categories | filterBy: ['id'] : position.type)[0].title}}:</h4>
+    <div *ngFor="let position of team.assignedPositions | orderBy: 'type'" style="margin-bottom: 25px;">
 
-      <mat-list dense
-                fxFlex="100">
-        <mat-list-item>
-          <a *ngFor="let member of members | filterBy: ['id'] : position.assignedMember"
-             [routerLink]="['/members/detail', member.id]">
+      <!--<h4 *ngIf="!isSavedPosition(position.type)">
+        {{ (categories | filterBy: ['id'] : position.type)[0].title}}
+      </h4>-->
+
+      <mat-list dense>
+        <mat-list-item *ngFor="let member of members | filterBy: ['id'] : position.assignedMember">
+          <a [routerLink]="['/members/detail', member.id]">
             {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
             ({{position.position}})
           </a>

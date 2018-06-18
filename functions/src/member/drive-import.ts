@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 
 const db = admin.firestore();
 const memberPath = 'members';
+const clubPath = 'clubs';
 
 let data;
 
@@ -26,20 +27,31 @@ export const driveMemberWriteCron = functions.database.ref('/drive-members/{user
     birthDate = data.birthday.substring(0, 10);
   }
 
-  return db.collection('clubs')
+  return db.collection(clubPath)
     .where('title', '==', data.assignedClub)
     .get()
     .then((clubSnapshot: FirebaseFirestore.QuerySnapshot) => {
       if (clubSnapshot.empty) {
         console.log('Club not found');
-        return false;
+        let clubData = {
+          id: db.collection(clubPath).doc().id,
+          title: data.assignedClub,
+          creation: {
+            from: 'system',
+            at: admin.database.ServerValue.TIMESTAMP
+          }
+        };
+        return admin.firestore().doc(clubData.id).set(clubData).then(
+          () => {
+            return db.collection(clubPath).doc().id;
+          }
+        )
       } else {
+        console.log('Club already exists');
         return clubSnapshot.docs[0].id;
       }
     })
     .then((club) => {
-
-      console.log('Club ' + club);
 
       return db.collection(memberPath)
         .where('mainData.firstName', '==', data.firstName)
@@ -94,21 +106,21 @@ export const driveMemberWriteCron = functions.database.ref('/drive-members/{user
             ahData: ahData,
             creation: {
               from: 'system',
-              at: firebase.firestore.FieldValue.serverTimestamp(),
+              at: admin.database.ServerValue.TIMESTAMP,
             },
             comment: data.comment ? data.comment : ''
           };
           if (userSnapshot.empty) {
-            console.log('no user found');
+            console.log('creating new member');
             memberData.id = db.collection(memberPath).doc().id;
             memberData.creation = {
               from: 'system',
-              // at: admin.database.ServerValue.TIMESTAMP
+              at: admin.database.ServerValue.TIMESTAMP
             };
-            return db.collection(memberPath).doc(data.lastName + '-' + data.firstName + '-' + birthDate).set(memberData);
+            return db.collection(memberPath).doc(memberData.id).set(memberData);
           }
           else {
-            console.log('member is already here');
+            console.log('member already exists');
             console.log(userSnapshot.docs[0].id);
             const doc = userSnapshot.docs[0];
             return doc.ref.set(memberData, { merge: true });

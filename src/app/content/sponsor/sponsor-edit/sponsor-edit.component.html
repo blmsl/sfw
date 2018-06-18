@@ -49,8 +49,7 @@
 
           <div fxFlex.gt-sm="40"
                fxFlex="100">
-
-            <media-uploader [currentImage]="currentImage"
+            <media-uploader (uploadCompleted)="uploadCompleted()"
                             [uploaderConfig]="uploaderConfig"
                             [uploaderOptions]="uploaderOptions">
             </media-uploader>

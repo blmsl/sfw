@@ -21,8 +21,8 @@
                       fxFlex="100">
         <input matInput maxlength="{{shortTitleMaxLength}}"
                placeholder="{{'general.teams.edit.subTitle' | translate}}"
-               formControlName="shortTitle">
-        <mat-hint align="end">{{form.get('shortTitle').value.length || 0}}/{{shortTitleMaxLength}}</mat-hint>
+               formControlName="subTitle">
+        <mat-hint align="end">{{form.get('subTitle').value.length || 0}}/{{shortTitleMaxLength}}</mat-hint>
       </mat-form-field>
     </div>
 
@@ -90,13 +90,12 @@
                     [uploaderConfig]="uploaderConfig"
                     [uploaderOptions]="uploaderOptions">
     </media-uploader>
-
-    <media-uploader (uploadCompleted)="uploadCompleted($event)"
-                    [uploaderConfig]="logoUploaderConfig"
-                    [uploaderOptions]="logoUploaderOptions">
-    </media-uploader>
   </div>
 </div>
+
+<h3>{{'general.tables.colTitles.creation' | translate }}</h3>
+<creation-form [form]="form"></creation-form>
+
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

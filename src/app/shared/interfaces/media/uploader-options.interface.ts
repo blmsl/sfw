@@ -4,10 +4,10 @@ export interface IUploaderOptions {
   allowedMimeType?: Array<string>;
   allowedFileType?: Array<string>;
   filters?: Array<FilterFunction>;
-  id?: string;
+  assignedObjects?: {};
   itemId: string;
   maxFileSize?: number;
-  path?: string;
+  // path?: string;
   queueLimit?: number;
   queueSize?: number;
 }

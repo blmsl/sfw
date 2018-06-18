@@ -47,8 +47,8 @@ export class LocationEditComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
+    assignedObjects: ['locations'],
     itemId: '',
-    path: 'locations',
     queueLimit: 1
   };
 
@@ -72,11 +72,7 @@ export class LocationEditComponent implements OnInit {
     this.route.data.subscribe((data: { location: ILocation }) => {
       this.location = data.location;
       this.savedLocation = Object.freeze(Object.assign({}, this.location));
-
-      this.uploaderOptions = {
-        path: this.uploaderOptions.path + '/' + this.location.title,
-        itemId: this.location.id
-      };
+      this.uploaderOptions.itemId = this.location.id;
     });
 
     this.form = this.fb.group({

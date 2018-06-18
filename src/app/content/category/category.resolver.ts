@@ -16,12 +16,15 @@ export class CategoryResolver implements Resolve<ICategory> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICategory> {
+
+    if (!route.params['categoryId']) {
+      return this.categoryService.setNewCategory();
+    }
+
     return this.categoryService.getCategoryById(route.params['categoryId']).pipe(
       take(1),
       map((category: ICategory) => {
-        if (route.params['categoryId'] === 'new') {
-          return this.categoryService.setNewCategory();
-        } else if (category && category.id) {
+        if (category && category.id) {
           return category;
         } else {
           this.router.navigate(['/categories']).then();

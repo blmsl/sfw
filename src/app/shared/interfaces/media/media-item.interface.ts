@@ -2,9 +2,10 @@ import { ICreation } from '../creation.interface';
 
 export class IMediaItem {
 
-  id?: string;
+  // id?: string;
 
   itemId?: string; // id from parent object
+  assignedObjects?: {};
   downloadURL: string;
 
   file?: {
@@ -19,6 +20,7 @@ export class IMediaItem {
   fileCredits?: string;
   isExternal?: boolean;
   creation?: ICreation;
+
   assignedItemGallery?: string;
   // publication?: IPublication;
 }

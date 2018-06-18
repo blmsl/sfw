@@ -77,7 +77,7 @@
        fxFlex.gt-xs="100"
        fxFlex="100"
        *ngIf="member">
-    <media-uploader [currentImage]="memberService.getProfileImage(member) | async"
+    <media-uploader (uploadCompleted)="uploadCompleted()"
                     [uploaderConfig]="uploaderConfig"
                     [uploaderOptions]="uploaderOptions">
     </media-uploader>

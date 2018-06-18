@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ICategory } from '../../interfaces/category.interface';
 import {
   AngularFirestore,
@@ -46,14 +46,14 @@ export class CategoryService {
     return this.afs.doc<ICategory>(this.path + '/' + categoryId).valueChanges();
   }
 
-  setNewCategory(): ICategory {
-    return {
+  setNewCategory(): Observable<ICategory> {
+    return of({
       isImported: false,
       title: '',
       description: ' ',
       assignedCategoryType: '',
       creation: this.authService.getCreation()
-    };
+    });
   }
 
   getCategoriesByCategoryType(linkType: string): Observable<ICategory[]> {

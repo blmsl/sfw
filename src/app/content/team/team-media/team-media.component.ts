@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MediaItemService } from '../../../shared/services/media/media-item.service';
 
 @Component({
   selector: 'team-media',
@@ -6,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeamMediaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private mediaItemService: MediaItemService) { }
 
   ngOnInit() {
+    // this.mediaItemService.getMediaItemsList('', '');
   }
 
 }

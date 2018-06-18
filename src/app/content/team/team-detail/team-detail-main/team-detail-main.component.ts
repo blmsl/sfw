@@ -27,8 +27,8 @@ export class TeamDetailMainComponent implements OnInit {
 
   ngOnInit() {
     if (this.team) {
-      this.teamLogo = this.mediaItemService.getCurrentImage('teams', 'logo', this.team.id);
-      this.teamImage = this.mediaItemService.getCurrentImage('teams', 'teamImage', this.team.id);
+      this.teamLogo = this.mediaItemService.getCurrentImage(['teams','logo'], this.team.id);
+      this.teamImage = this.mediaItemService.getCurrentImage(['teams','profile'], this.team.id);
     }
   }
 

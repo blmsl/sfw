@@ -21,7 +21,7 @@ export interface ICalendarEvent {
   sequence?: number;
   start: {
     dateTime: string;
-  };
+  } | string;
   status?: string;
   summary?: string;
   title: string;

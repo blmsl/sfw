@@ -83,12 +83,11 @@ export class TeamEditComponent implements OnInit {
 
     this.form = this.fb.group({
       title: [this.team.title, [Validators.required, Validators.minLength(5), Validators.maxLength(this.titleMaxLength)]],
-      shortTitle: this.team.subTitle,
+      subTitle: this.team.subTitle,
       externalLink: this.team.externalTeamLink,
       isOfficialTeam: this.team.isOfficialTeam,
       assignedTeamCategories: [this.team.assignedTeamCategories, [Validators.required]],
       assignedClub: [this.team.assignedClub, [Validators.required]],
-      //photoDescription: this.team.photoDescription,
       assignedSeason: this.team.assignedSeason,
       creation: this.initCreation(),
       assignedTrainings: this.initAssignedTrainings(),
@@ -152,7 +151,7 @@ export class TeamEditComponent implements OnInit {
   }
 
   removeEvent($event: number): void {
-    const control = <FormArray>this.form.controls['timeLine'];
+    const control = <FormArray>this.form.controls['assignedEvents'];
     control.removeAt($event);
     this.selectedEvent = -1;
   }

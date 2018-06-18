@@ -13,6 +13,13 @@ export const categoryRoutes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'create',
+    component: CategoryEditComponent,
+    resolve: {
+      category: CategoryResolver
+    }
+  },
+  {
     path: 'edit/:categoryId',
     component: CategoryEditComponent,
     resolve: {

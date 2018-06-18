@@ -6,7 +6,6 @@ import { ICreation } from '../../interfaces/creation.interface';
 import { AuthService } from '../auth/auth.service';
 import { FileType } from '../../interfaces/media/file-type.interface';
 import { map } from 'rxjs/internal/operators';
-import { of } from 'rxjs/index';
 
 @Injectable()
 export class MediaItemService {
@@ -24,48 +23,66 @@ export class MediaItemService {
   createMediaItem(mediaItem: IMediaItem): Promise<void> {
     const creation: ICreation = this.authService.getCreation();
     mediaItem.creation = creation;
-    return this.afs.collection(this.path).doc(this.afs.createId()).set(mediaItem, { merge: true });
+    return this.afs.collection(this.path).doc(mediaItem.itemId).set(mediaItem, { merge: true });
   }
 
   removeMediaItem(itemId): Promise<void> {
     return this.afs.collection(this.path).doc(itemId).delete();
   }
 
-  getMediaItemByIdAndItemId(id: string, itemId?: string): AngularFirestoreCollection<IMediaItem> {
+  getMediaItems(assignedObjects: any, itemId: string) {
     return this.afs.collection('files', ref => {
-      return !itemId ?
-        ref.where('id', '==', id)
-        :
-        ref.where('itemId', '==', itemId).where('id', '==', id);
+      if (!assignedObjects) {
+        return ref
+          .where('itemId', '==', itemId);
+      }
+      if (assignedObjects.length === 1) {
+        return ref
+          .where('itemId', '==', itemId)
+          .where('assignedObjects.' + assignedObjects[0], '==', true);
+      } else if (assignedObjects.length === 2) {
+        return ref
+          .where('itemId', '==', itemId)
+          .where('assignedObjects.' + assignedObjects[0], '==', true)
+          .where('assignedObjects.' + assignedObjects[1], '==', true);
+      } else if (assignedObjects.length === 3) {
+        return ref
+          .where('itemId', '==', itemId)
+          .where('assignedObjects.' + assignedObjects[0], '==', true)
+          .where('assignedObjects.' + assignedObjects[1], '==', true)
+          .where('assignedObjects.' + assignedObjects[2], '==', true);
+      }
     });
   }
 
-  getCurrentImage(type: string, id: string, itemId: string): Observable<IMediaItem> {
-    let foundFile: IMediaItem;
-    return this.getMediaItemByIdAndItemId(id, itemId).valueChanges().pipe(
+  getAssignedMedia(assignedObjects: any, itemId: string): Observable<IMediaItem[]>{
+    return this.getMediaItems(assignedObjects, itemId).valueChanges().pipe(
       map((mediaItems: IMediaItem[]) => {
+        return mediaItems;
+      })
+    );
+  }
+
+  getCurrentImage(assignedObjects: any, itemId: string): Observable<IMediaItem> {
+    return this.getMediaItems(assignedObjects, itemId).valueChanges().pipe(
+      map((mediaItems: IMediaItem[]) => {
+        console.log(mediaItems);
+        let foundFile: IMediaItem;
         mediaItems.forEach((mediaItem: IMediaItem) => {
           if (FileType.getMimeClass(mediaItem.file) === 'image') {
             foundFile = mediaItem;
           }
         });
         // set default-Image
-        return foundFile ? foundFile :this.getImagePlaceHolder(type);
+        return foundFile ? foundFile : this.getImagePlaceHolder();
       })
     );
   }
 
-  getImagePlaceHolder(type: string): IMediaItem {
-    const placeholder: string = '/assets/sfw/placeholder/';
-    let mediaItem: IMediaItem;
-    switch (type) {
-      case 'teams':
-      case 'sponsor':
-        mediaItem = {
-          downloadURL : placeholder.concat('no-image-found.jpg')
-        };
-    }
-    console.log(mediaItem);
+  getImagePlaceHolder(): IMediaItem {
+    const mediaItem = {
+      downloadURL: '/assets/sfw/placeholder/no-image-found.jpg'
+    };
     return mediaItem;
   }
 

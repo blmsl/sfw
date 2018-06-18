@@ -8,6 +8,8 @@ import { MediaItemService } from '../../../services/media/media-item.service';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 import { AlertService } from '../../../services/alert/alert.service';
 import { AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import { Observable } from 'rxjs/Rx';
+import { of } from 'rxjs/index';
 
 @Component({
   selector: 'media-uploader',
@@ -19,7 +21,7 @@ export class MediaUploaderComponent implements OnInit {
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
 
-  @Output() uploadCompleted: EventEmitter<any> = new EventEmitter<any>(false);
+  // @Output() uploadCompleted: EventEmitter<any> = new EventEmitter<any>(false);
   // @Output() unsplashSidebar: EventEmitter<void> = new EventEmitter<void>(false);
 
   @ViewChild('fileInput') fileInput: ElementRef;
@@ -28,7 +30,7 @@ export class MediaUploaderComponent implements OnInit {
   public isHovering: boolean;
   public canUpload: boolean = true;
   public env;
-  public currentMediaItem: IMediaItem;
+  public currentMediaItem: Observable<IMediaItem>;
 
   constructor(private alertService: AlertService,
               private afs: AngularFirestore,
@@ -39,10 +41,10 @@ export class MediaUploaderComponent implements OnInit {
 
   ngOnInit() {
     if (this.uploaderOptions.queueLimit === 1) {
-      this.mediaItemService.getCurrentImage(this.uploaderOptions.path, this.uploaderOptions.id, this.uploaderOptions.itemId)
-        .subscribe((mediaItem: IMediaItem) => {
-          this.currentMediaItem = mediaItem;
-        });
+      this.currentMediaItem = this.mediaItemService.getCurrentImage(
+        this.uploaderOptions.assignedObjects,
+        this.uploaderOptions.itemId
+      );
     }
   }
 
@@ -99,8 +101,8 @@ export class MediaUploaderComponent implements OnInit {
   upload(fileUpload: Upload, id: string): Promise<void> {
 
     // create Id, if not exists
-    if (!this.uploaderOptions.id) {
-      this.uploaderOptions.id = this.afs.createId();
+    if (!this.uploaderOptions.itemId) {
+      this.uploaderOptions.itemId = this.afs.createId();
     }
 
     const upload: {
@@ -110,21 +112,20 @@ export class MediaUploaderComponent implements OnInit {
 
     fileUpload.percentage = upload.task.percentageChanges();
 
-    /*
-        .catch((error: any) => {
-          this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
-          // this.alertService.showSnackBar('error', 'general.uploader.errors.' + error.message);
-        });
-    }); */
-
-
     return upload.task.then((snapshot) => {
       fileUpload.status = snapshot.state;
       fileUpload.isActive = snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
 
       upload.fileRef.getDownloadURL().subscribe((downloadURL: string) => {
+
+        let assignedObjects= {};
+        let toArray = Object.values(this.uploaderOptions.assignedObjects);
+        for(let i = 0; i < toArray.length; i++){
+          assignedObjects[<string>toArray[i]] = true;
+        }
+
         const mediaItem: IMediaItem = {
-          id: id,
+          assignedObjects: assignedObjects,
           file: {
             size: fileUpload.file.size,
             name: fileUpload.file.name,
@@ -134,7 +135,7 @@ export class MediaUploaderComponent implements OnInit {
           downloadURL: downloadURL,
         };
         this.mediaItemService.createMediaItem(mediaItem).then(() => {
-          // this.alertService.showSnackBar('success', 'general.uploader.singleFinished');
+          this.alertService.showSnackBar('success', 'general.uploader.singleFinished');
           if (this.uploaderConfig.removeAfterUpload) {
             this.deleteFromQueue(fileUpload);
             if (this.currentUploads.length === 0) {
@@ -143,15 +144,18 @@ export class MediaUploaderComponent implements OnInit {
           }
         });
       });
+    }).catch((error: any) => {
+      this.currentUploads.splice(this.currentUploads.indexOf(fileUpload), 1);
+      this.alertService.showSnackBar('error', 'general.uploader.errors.' + error.message);
     });
   }
 
-  uploadSingleFile(fileUpload: Upload, id?: string) {
-    if (!id) {
-      id = this.uploaderOptions.id;
+  uploadSingleFile(fileUpload: Upload, itemId?: string) {
+    if (!itemId) {
+      itemId = this.uploaderOptions.itemId;
     }
-    this.upload(fileUpload, id).then(() => {
-      this.uploadCompleted.emit();
+    this.upload(fileUpload, itemId).then(() => {
+      // this.uploadCompleted.emit();
     });
   }
 
@@ -159,15 +163,14 @@ export class MediaUploaderComponent implements OnInit {
     const promises: Promise<any>[] = [];
 
     this.currentUploads.forEach((fileUpload: Upload) => {
-      if (this.currentUploads.length >= 1 && !this.uploaderOptions.id) {
-        this.uploaderOptions.id = this.afs.createId();
+      if (this.currentUploads.length >= 1 && !this.uploaderOptions.itemId) {
+        this.uploaderOptions.itemId = this.afs.createId();
       }
-      promises.push(this.upload(fileUpload, this.uploaderOptions.id));
+      promises.push(this.upload(fileUpload, this.uploaderOptions.itemId));
     });
 
-    // after pushed all promises from upload, wait till all are done and then emit the completion
     Promise.all(promises).then(() => {
-      this.uploadCompleted.emit();
+      // this.uploadCompleted.emit();
     });
   }
 

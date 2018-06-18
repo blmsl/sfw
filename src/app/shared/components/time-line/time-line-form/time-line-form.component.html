@@ -1,10 +1,7 @@
 <div fxLayout="row"
-     [formGroup]="form"
-     >
+     [formGroup]="form">
 
-
-  <div fxFlex="100"
-       *ngFor="let control of form.controls; let i = index; let first = first; let last = last">
+  <div fxFlex="100" *ngFor="let control of form.controls; let i = index; let first = first; let last = last">
 
     <mat-card *ngIf="i === selectedTimeLineEvent"
               [formGroupName]="i">
@@ -13,22 +10,23 @@
 
       <mat-card-content>
 
-        <div fxLayout="row"
-             >
+        <div fxLayout.gt-sm="row"
+             fxLayout="column"
+             fxLayoutGap="10px">
 
-          <mat-form-field fxFlex.gt-sm="50"
-                          fxFlex="100">
+          <mat-form-field fxFlex.gt-sm="50">
             <input matInput placeholder="{{ 'general.timeLine.title' | translate}}" formControlName="title"/>
           </mat-form-field>
 
-          <mat-form-field fxFlexOffset="1"
-                          fxFlex.gt-sm="49"
-                          fxFlex="100">
+          <mat-form-field fxFlex.gt-sm="50">
             <input matInput placeholder="{{ 'general.timeLine.subTitle' | translate}}" formControlName="subTitle"/>
           </mat-form-field>
+        </div>
 
-          <mat-form-field fxFlex.gt-sm="50"
-                          fxFlex="100">
+        <div fxLayout.gt-sm="row"
+             fxLayout="column"
+             fxLayoutGap="10px">
+          <mat-form-field fxFlex.gt-sm="50">
             <input matInput
                    readonly="readonly"
                    [matDatepicker]="dp3"
@@ -38,9 +36,7 @@
             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
           </mat-form-field>
 
-          <mat-form-field fxFlexOffset="1"
-                          fxFlex.gt-sm="49"
-                          fxFlex="100">
+          <mat-form-field fxFlex.gt-sm="50">
             <input matInput
                    readonly
                    [matDatepicker]="dp4"
@@ -49,15 +45,16 @@
             <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
             <mat-datepicker #dp4 disabled="false"></mat-datepicker>
           </mat-form-field>
+        </div>
 
-          <mat-form-field fxFlex.gt-sm="50"
-                          fxFlex="100">
+        <div fxLayout.gt-sm="row"
+             fxLayout="column"
+             fxLayoutGap="10px">
+          <mat-form-field fxFlex.gt-sm="50">
             <input matInput placeholder="{{ 'general.timeLine.icon' | translate}}" formControlName="icon"/>
           </mat-form-field>
 
-          <mat-form-field fxFlexOffset="1"
-                          fxFlex.gt-sm="49"
-                          fxFlex="100">
+          <mat-form-field fxFlex.gt-sm="50">
             <mat-select placeholder="{{ 'general.timeLine.color' | translate}}" formControlName="color">
               <mat-option *ngFor="let color of colors"
                           [value]="color">
@@ -65,18 +62,20 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+        </div>
 
-          <mat-form-field fxFlex="100">
-            <mat-select placeholder="{{ 'general.timeLine.assignedArticle' | translate}}"
-                        formControlName="assignedArticle">
-              <mat-option *ngFor="let article of articles$ | async | orderBy: ['title']"
-                          [value]="article.id">
-                {{article.title}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-
+        <div fxLayout.gt-sm="row"
+             fxLayout="column"
+             fxLayoutGap="10px">
+        <mat-form-field fxFlex="50">
+          <mat-select placeholder="{{ 'general.timeLine.assignedArticle' | translate}}"
+                      formControlName="assignedArticle">
+            <mat-option *ngFor="let article of articles$ | async | orderBy: ['title']"
+                        [value]="article.id">
+              {{article.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         </div>
 
       </mat-card-content>

@@ -33,6 +33,10 @@
       </mat-tab>
 
       <mat-tab label="{{'general.teams.edit.matches.title' | translate}}">
+        <ul>
+          <li>höchster Sieg, höchste Niederlage</li>
+          <li>Serie</li>
+        </ul>
         <team-detail-matches [categories]="categories$ | async"
                              [matches]="matches$ | async"
                              [events]="matchService.getOtherEventList() | orderBy: ['title']"
@@ -42,6 +46,11 @@
 
       <mat-tab
         label="{{'general.teams.edit.competitions.title' | translate}} &amp; {{'general.teams.edit.standings.title' | translate}}">
+        <ul>
+          <li>Torjäger</li>
+          <li>Vorbereiter</li>
+          <li>Karten</li>
+        </ul>
         <team-detail-standings [team]="team"></team-detail-standings>
       </mat-tab>
 
@@ -49,11 +58,14 @@
         <team-detail-media [team]="team"></team-detail-media>
       </mat-tab>
 
+
     </mat-tab-group>
   </mat-card-content>
 
   <mat-card-actions class="px-1 pt-0">
-    <div fxLayout="row">
+    <div style="margin-top: 25px"
+         fxLayout.gt-sm="row"
+         fxLayout="column">
       <span></span>
       <span fxFlex></span>
       <button type="button"

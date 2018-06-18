@@ -4,7 +4,6 @@ import { FileType } from '../../interfaces/media/file-type.interface';
 import { IUploaderOptions } from '../../interfaces/media/uploader-options.interface';
 import { Upload } from './upload.class';
 import { AuthService } from '../auth/auth.service';
-import { finalize } from 'rxjs/internal/operators';
 
 
 export type FilterFunction = {
@@ -32,7 +31,15 @@ export class MediaUploaderService {
     const arrayOfFilters = this._getFilters(this.options.filters ? this.options.filters : []);
 
     if (this._isValidFile(upload, arrayOfFilters, this.options)) {
-      const path = options.path + '/' + options.itemId + '/' + options.id;
+
+      const assignedObjects = <any>options.assignedObjects;
+
+      let subDir = '';
+      for(let i = 0; i < assignedObjects.length; i++){
+        subDir += options.assignedObjects[i] + '/';
+      }
+
+      const path = subDir + '/' + options.itemId;
       /* const metaData: any = {
         itemId: options.itemId,
         name: upload.file.name,

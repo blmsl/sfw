@@ -36,25 +36,8 @@ export class TeamEditMainComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    id: 'teamImage',
+    assignedObjects: ['teams', 'profile'],
     itemId: '',
-    path: 'teams',
-    queueLimit: 1,
-    allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
-  };
-
-  public logoUploaderConfig: IUploaderConfig = {
-    autoUpload: true,
-    showDropZone: true,
-    removeAfterUpload: true,
-    showQueue: false,
-    headerTitle: 'general.teams.edit.logo.title'
-  };
-
-  public logoUploaderOptions: IUploaderOptions = {
-    id: 'logo',
-    itemId: '',
-    path: 'teams',
     queueLimit: 1,
     allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
@@ -63,7 +46,7 @@ export class TeamEditMainComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.uploaderOptions.itemId = this.logoUploaderOptions.itemId = this.team.id;
+    this.uploaderOptions.itemId = this.team.id;
   }
 
   uploadCompleted(){

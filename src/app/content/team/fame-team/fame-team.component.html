@@ -1,9 +1,8 @@
-<div fxLayout="row"
-     >
+<div fxLayout="row">
 
-  <div fxFlex="100"
-       *ngIf="teams$ | async as teams; else loadingTemplate">
-    <mat-card
+  <div fxFlex="100" *ngIf="dataIsLoaded; else loadingTemplate">
+    123
+    <!--<mat-card
       *ngFor="let teamOfTheMonth of teamsOfTheMonth$ | async | filterBy: ['month']: currentMonth">
       <mat-card-content
         *ngFor="let team of teams | filterBy: ['id'] : teamOfTheMonth.assignedTeamId">
@@ -89,7 +88,6 @@
       </mat-card-content>
       <hr>
       <mat-card-content>
-        <!-- ToDo: Statistiken -->
         <div fxLayout="row" class="text-xs-center">
           <div fxFlex="33" style="color: green">
             <h1 class="ma-0"><b>23,8K</b></h1>
@@ -109,8 +107,8 @@
       <mat-card-content>
         <h4 class="mt-0">About</h4>
         <p>Infotext</p>
-      </mat-card-content>-->
-    </mat-card>
+      </mat-card-content
+    </mat-card>-->
   </div>
 
 </div>

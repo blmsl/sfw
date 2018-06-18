@@ -20,12 +20,6 @@ export class ClubEditMainComponent implements OnInit {
 
   @ViewChild('description') description: QuillEditorComponent;
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,
     showDropZone: true,
@@ -34,10 +28,17 @@ export class ClubEditMainComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    itemId: '123',
+    assignedObjects: ['clubs'],
+    itemId: '',
     allowedMimeType: ['image.*'],
     allowedFileType: ['jpeg', 'jpg', 'gif', 'bmp', 'png'],
     queueLimit: 1
   };
+
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
 
 }
