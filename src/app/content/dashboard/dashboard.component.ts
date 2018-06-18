@@ -1,25 +1,13 @@
-import {
-  Component,
-  OnInit,
-  VERSION,
-  ViewChild
-} from '@angular/core';
+import { Component, VERSION, ViewChild } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MemberService } from '../../shared/services/member/member.service';
 import { Observable } from 'rxjs';
 import { IMember } from '../../shared/interfaces/member/member.interface';
 import * as moment from 'moment';
 import { IMatch } from '../../shared/interfaces/match.interface';
 import { MatchService } from '../../shared/services/match/match.service';
-import {
-  PerfectScrollbarConfigInterface,
-  PerfectScrollbarDirective
-} from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { CategoryService } from '../../shared/services/category/category.service';
 import { ICategory } from '../../shared/interfaces/category.interface';
 import { ArticleService } from '../../shared/services/article/article.service';
@@ -52,10 +40,10 @@ export class DashboardComponent /* implements OnInit */ {
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
 
   constructor(private fb: FormBuilder,
-    private articleService: ArticleService,
-    private categoryService: CategoryService,
-    public memberService: MemberService,
-    public matchService: MatchService) {
+              private articleService: ArticleService,
+              private categoryService: CategoryService,
+              public memberService: MemberService,
+              public matchService: MatchService) {
 
     this.angularVersion = VERSION.full;
     this.env = environment;

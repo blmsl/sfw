@@ -288,6 +288,7 @@
         },
         "chooseLocation": "Bitte wähle die Heimspielstätte",
         "clubId": "Fussball.de ID",
+        "clubLink": "Fussball.de",
         "clubUrl": "Vereinsseite",
         "clubTitle": "Name des Vereins",
         "calendarImport": "In Kalender importieren?",

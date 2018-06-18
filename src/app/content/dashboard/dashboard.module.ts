@@ -12,24 +12,23 @@ import { CategoryTypeService } from '../../shared/services/category-type/categor
 import { BirthdayModule } from '../../shared/components/birthday/birthday.module';
 import { SharedMatchModule } from '../../shared/components/match/shared-match.module';
 import { ArticleService } from '../../shared/services/article/article.service';
+import { BirthdayListComponent } from './birthday-list/birthday-list.component';
 
 @NgModule({
   imports: [
     BirthdayModule,
-    // ChartsModule,
     MatButtonModule,
     MatListModule,
     MatMenuModule,
-    // MatProgressBarModule,
     MatTabsModule,
     SharedMatchModule,
-    // NgxDatatableModule,
     PerfectScrollbarModule,
     RouterModule.forChild(dashboardRoutes),
     SharedModule
   ],
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    BirthdayListComponent
   ],
   providers: [
     ArticleService,
