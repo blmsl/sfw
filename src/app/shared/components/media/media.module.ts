@@ -36,6 +36,7 @@ import { MediaGalleriesComponent } from './media-galleries/media-galleries.compo
 import { NgPipesModule } from 'ngx-pipes';
 import { MediaGalleryService } from '../../services/media/media-gallery.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MediaAvatarComponent } from './media-avatar/media-avatar.component';
 
 @NgModule({
   imports: [
@@ -65,6 +66,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     TranslateModule
   ],
   declarations: [
+    MediaAvatarComponent,
     MediaCenterComponent,
     MediaGalleryFormComponent,
     MediaGalleryListComponent,
@@ -77,6 +79,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MediaGalleriesComponent
   ],
   exports: [
+    MediaAvatarComponent,
     MediaCenterComponent,
     MediaGalleryComponent,
     MediaGalleryFormComponent,

@@ -12,6 +12,9 @@ import { CategoryService } from '../../shared/services/category/category.service
 import { ICategory } from '../../shared/interfaces/category.interface';
 import { ArticleService } from '../../shared/services/article/article.service';
 import { IArticle } from '../../shared/interfaces/article.interface';
+import { IClub } from '../../shared/interfaces/club/club.interface';
+import { IMediaItem } from '../../shared/interfaces/media/media-item.interface';
+import { MediaItemService } from '../../shared/services/media/media-item.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -59,5 +62,17 @@ export class DashboardComponent /* implements OnInit */ {
       comment: ['', [Validators.required, Validators.minLength(5)]]
     });
   }
+  /*
+  public clubLogo: Observable<IMediaItem>;
+
+  constructor(private mediaItemService: MediaItemService) {
+  }
+
+  getClubLogo(club: IClub): Observable<IMediaItem> {
+    if (!this.clubLogo) {
+      this.clubLogo = this.mediaItemService.getCurrentImage(['clubs', 'profile'], club.id);
+    }
+    return this.clubLogo;
+  } */
 
 }

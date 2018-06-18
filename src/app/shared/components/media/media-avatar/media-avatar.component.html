@@ -1,0 +1,7 @@
+<img *ngIf="mediaItem$ | async as mediaItem; else loadingTemplate"
+     matCardAvatar
+     [src]="mediaItem.downloadURL" />
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

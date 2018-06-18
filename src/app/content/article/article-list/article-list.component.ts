@@ -21,9 +21,9 @@ export class ArticleListComponent {
   @Output() remove: EventEmitter<IArticle> = new EventEmitter<IArticle>(false);
   @Output() update: EventEmitter<IArticle> = new EventEmitter<IArticle>(false);
 
-  @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
+  // @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
 
-  public config: PerfectScrollbarConfigInterface = {};
+  // public config: PerfectScrollbarConfigInterface = {};
   public form: FormGroup;
   public itemsPerPageOptions = [5, 10, 25, 50, 100];
 
@@ -37,7 +37,7 @@ export class ArticleListComponent {
       categoryTypeControl: ''
     });
 
-    this.paginationService.init(
+    /* this.paginationService.init(
       'categories',
       'title',
       {
@@ -45,7 +45,7 @@ export class ArticleListComponent {
         reverse: true,
         prepend: false
       }
-    );
+    ); */
   }
 
   removeArticle(article: IArticle) {
@@ -53,7 +53,7 @@ export class ArticleListComponent {
     this.form.controls['searchFor'].reset();
   }
 
-  scrollHandler(event: ScrollEvent) {
+  /*scrollHandler(event: ScrollEvent) {
     console.log('scroll occurred', event.originalEvent);
     if (event.isReachingBottom) {
       this.paginationService.more();
@@ -64,7 +64,6 @@ export class ArticleListComponent {
     if (event.isWindowEvent) {
       console.log(`This event is fired on Window not on an element.`);
     }
-
-  }
+  } */
 
 }

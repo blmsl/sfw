@@ -59,23 +59,7 @@
       </mat-card>
 
       <div fxFlex="35">
-        <mat-card>
-          <mat-card-title class="mat-blue">
-            <h2 mat-card-widget-title>{{'general.dashboard.lastArticles' | translate}}</h2>
-            <hr>
-          </mat-card-title>
-          <mat-card-content>
-            <mat-list *ngIf="articles$ | async as articles; else loadingTemplate">
-              <mat-list-item *ngIf="articles.length === 0">{{'general.articles.list.noResult' | translate}}
-              </mat-list-item>
-              <mat-list-item *ngFor="let article of articles | orderBy: ['-creation.at'] | slice: 0:5">
-                <img mat-list-avatar [src]="article.imageURL" alt="{{article.title}}">
-                <h3 matLine> {{article.title}} </h3>
-                <p matLine> {{article.publication.date}} - {{article.publication.text}} </p>
-              </mat-list-item>
-            </mat-list>
-          </mat-card-content>
-        </mat-card>
+        <dashboard-article-list [articles$]="articles$"></dashboard-article-list>
 
         <mat-card>
           <mat-card-title class="mat-amber">
