@@ -238,6 +238,9 @@ export class ClubEditComponent implements OnInit {
     this.selectedClubManagementPosition = this.form.controls['management']['controls']['positions']['controls'].length - 1;
   }
 
+  cancelClubManagementPosition(): void{
+    console.log('cancel');
+  }
   /* editClubManagementPosition($event:any): void {
     console.log($event);
     const control = <FormArray>this.form.controls['management']['controls']['positions'];

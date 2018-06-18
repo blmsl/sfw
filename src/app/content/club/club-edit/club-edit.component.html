@@ -51,6 +51,7 @@
             <club-management (add)="addClubManagementPosition()"
                              (delete)="removeClubManagementPosition($event)"
                              (save)="saveClubManagementPosition($event)"
+                             (cancel)="cancelClubManagementPosition()"
                              [selectedClubManagementPosition]="selectedClubManagementPosition"
                              [members]="members"
                              [showLinks]="true"

@@ -12,6 +12,7 @@ export class ClubTimelineComponent implements OnInit {
   @Input() selectedTimeLineEvent: number;
 
   @Output() add: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() cancel: EventEmitter<void> = new EventEmitter<void>(false);
   @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
   @Output() edit: EventEmitter<boolean> = new EventEmitter<boolean>(false);
   @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>(false);

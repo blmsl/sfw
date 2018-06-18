@@ -2,7 +2,7 @@
   <h3>{{'general.clubs.edit.timeLineTitle' | translate}}</h3>
 
   <time-line (add)="add.emit($event)"
-             (cancel)="cancel($event)"
+             (cancel)="cancel.emit()"
              (delete)="delete.emit($event)"
              (edit)="edit.emit($event)"
              (save)="save.emit($event)"
