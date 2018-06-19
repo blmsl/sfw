@@ -6,123 +6,60 @@
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
 
-    <div fxLayout.gt-sm="row"
-         fxLayout="column">
+    <div fxLayout="column" fxLayoutAlign="space-around stretch"
+         fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="center start">
 
-      <div fxFlex="35">
-        <mat-card class="profile-post">
-          <form fxLayout="row"
-                [formGroup]="mindForm">
+
+      <mat-card class="profile-post"
+                fxFlex.gt-sm="35">
+        <form fxLayout="row"
+              [formGroup]="mindForm">
            <textarea formControlName="comment"
                      placeholder="{{'general.dashboard.mindText' | translate}}"
                      rows="6">
            </textarea>
-          </form>
+        </form>
+        <hr>
+        <mat-card-actions>
+          <div fxLayout="row">
+            <button mat-icon-button>
+              <mat-icon>insert_photo</mat-icon>
+            </button>
+            <button mat-icon-button>
+              <mat-icon>insert_link</mat-icon>
+            </button>
+            <button mat-icon-button>
+              <mat-icon>location_on</mat-icon>
+            </button>
+            <span fxFlex></span>
+            <button mat-raised-button color="primary">Post</button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card fxFlex.gt-sm="20">
+        <mat-card-title class="mat-red">
+          <h2 mat-card-widget-title>{{'general.dashboard.birthdays' | translate}}</h2>
           <hr>
-          <mat-card-actions>
-            <div fxLayout="row">
-              <button mat-icon-button>
-                <mat-icon>insert_photo</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>insert_link</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>location_on</mat-icon>
-              </button>
-              <span fxFlex></span>
-              <button mat-raised-button color="primary">Post</button>
-            </div>
-          </mat-card-actions>
-        </mat-card>
-      </div>
+        </mat-card-title>
+        <mat-card-content>
+          <mat-list *ngIf="members$ | async as members; else loadingTemplate">
+            <h3 mat-subheader>{{'general.dashboard.today' | translate}}, {{today.format('DD.MM.YY')}}</h3>
+            <birthday-list [members]="members | birthdayFilter: today"></birthday-list>
+            <mat-divider></mat-divider>
 
-      <div fxFlex="20">
-        <mat-card>
-          <mat-card-title class="mat-red">
-            <h2 mat-card-widget-title>{{'general.dashboard.birthdays' | translate}}</h2>
-            <hr>
-          </mat-card-title>
-          <mat-card-content>
-            <mat-list *ngIf="members$ | async as members; else loadingTemplate">
+            <h3 mat-subheader>{{'general.dashboard.tomorrow' | translate}}, {{tomorrow.format('DD.MM.YY')}}</h3>
+            <birthday-list [members]="members | birthdayFilter: tomorrow"></birthday-list>
+            <mat-divider></mat-divider>
 
-              <h3 mat-subheader>{{'general.dashboard.today' | translate}}, {{today.format('DD.MM.YY')}}</h3>
-
-              <mat-list-item *ngFor="let member of members | birthdayFilter: today; let last = last">
-                <img mat-list-avatar
-                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
-                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
-                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
-                <p mat-line>
-              <span class="demo-secondary-text">
-                {{'general.dashboard.isGetting' | translate}}
-                {{memberService.calculateAge(member.mainData.birthday)}}
-                {{'general.dashboard.yearsOld' | translate}}
-              </span>
-                </p>
-                <mat-divider inset="true" *ngIf="!last"></mat-divider>
-              </mat-list-item>
-
-              <mat-divider></mat-divider>
-
-              <h3 mat-subheader>{{'general.dashboard.tomorrow' | translate}}, {{tomorrow.format('DD.MM.YY')}}</h3>
-
-              <mat-list-item *ngFor="let member of members | birthdayFilter: tomorrow; let last = last">
-                <img mat-list-avatar
-                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
-                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
-                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
-                <p mat-line>
-              <span class="demo-secondary-text">
-                {{'general.dashboard.willGet' | translate}}
-                {{memberService.calculateAge(member.mainData.birthday)}}
-                {{'general.dashboard.yearsOld' | translate}}
-              </span>
-                </p>
-                <mat-divider inset="true" *ngIf="!last"></mat-divider>
-              </mat-list-item>
-
-              <mat-divider></mat-divider>
-
-              <h3 mat-subheader>{{'general.dashboard.yesterday' | translate}}, {{yesterday.format('DD.MM.YY')}}</h3>
-
-              <mat-list-item *ngFor="let member of members | birthdayFilter: yesterday; let last = last">
-                <img mat-list-avatar
-                     [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
-                     alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
-                <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
-                <p mat-line>
-              <span class="demo-secondary-text">
-                {{'general.dashboard.got' | translate}}
-                {{memberService.calculateAge(member.mainData.birthday)}}
-                {{'general.dashboard.yearsOld' | translate}}
-              </span>
-                </p>
-                <mat-divider inset="true" *ngIf="!last"></mat-divider>
-              </mat-list-item>
-
-            </mat-list>
-          </mat-card-content>
-        </mat-card>
-      </div>
+            <h3 mat-subheader>{{'general.dashboard.yesterday' | translate}}, {{yesterday.format('DD.MM.YY')}}</h3>
+            <birthday-list [members]="members | birthdayFilter: yesterday"></birthday-list>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
 
       <div fxFlex="35">
-        <mat-card>
-          <mat-card-title class="mat-blue">
-            <h2 mat-card-widget-title>{{'general.dashboard.lastArticles' | translate}}</h2>
-            <hr>
-          </mat-card-title>
-          <mat-card-content>
-            <mat-list *ngIf="articles$ | async as articles; else loadingTemplate">
-              <mat-list-item *ngIf="articles.length === 0">Keine Artikel gefunden.</mat-list-item>
-              <mat-list-item *ngFor="let article of articles | orderBy: ['-publication.at'] | slice: 0:10">
-                <img mat-list-avatar [src]="article.imageURL" alt="{{article.title}}">
-                <h3 matLine> {{article.title}} </h3>
-                <p matLine> {{article.publication.date}} - {{article.publication.text}} </p>
-              </mat-list-item>
-            </mat-list>
-          </mat-card-content>
-        </mat-card>
+        <dashboard-article-list [articles$]="articles$"></dashboard-article-list>
 
         <mat-card>
           <mat-card-title class="mat-amber">

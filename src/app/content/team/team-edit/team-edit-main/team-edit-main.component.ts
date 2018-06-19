@@ -49,7 +49,4 @@ export class TeamEditMainComponent implements OnInit {
     this.uploaderOptions.itemId = this.team.id;
   }
 
-  uploadCompleted(){
-  }
-
 }

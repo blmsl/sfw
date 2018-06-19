@@ -108,7 +108,9 @@ export class ArticleEditComponent implements OnInit {
 
       this.article = Object.assign({}, this.article, changes);
 
-      // if (!this.form.invalid) {
+      console.log(this.article.id);
+
+      /* if (!this.form.invalid) {
       this.articleService.createArticle(changes)
         .then(() => {
           this.articleStatus = 'success';
@@ -117,7 +119,7 @@ export class ArticleEditComponent implements OnInit {
           this.alertService.showSnackBar('error', error.message);
           this.articleStatus = 'error';
         });
-      // }
+      // } */
     });
 
   }

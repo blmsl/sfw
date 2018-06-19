@@ -1,0 +1,19 @@
+<div fxLayout="column"
+     [formGroup]="form">
+
+  <div fxFlex="100">
+    <media-uploader [uploaderConfig]="uploaderConfig"
+                    [uploaderOptions]="uploaderOptions">
+    </media-uploader>
+  </div>
+
+  <div fxFlex="100"
+       formGroupName="management"
+       style="margin-top: 50px;">
+    <label>{{'general.clubs.edit.management.current.description' | translate}}</label>
+    <quill-editor [style]="{height: '200px'}"
+                  formControlName="photoDescription">
+    </quill-editor>
+  </div>
+
+</div>

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { IMediaItem } from '../../interfaces/media/media-item.interface';
-import { ICreation } from '../../interfaces/creation.interface';
 import { AuthService } from '../auth/auth.service';
 import { FileType } from '../../interfaces/media/file-type.interface';
 import { map } from 'rxjs/internal/operators';
@@ -21,9 +20,8 @@ export class MediaItemService {
   }
 
   createMediaItem(mediaItem: IMediaItem): Promise<void> {
-    const creation: ICreation = this.authService.getCreation();
-    mediaItem.creation = creation;
-    return this.afs.collection(this.path).doc(mediaItem.itemId).set(mediaItem, { merge: true });
+    mediaItem.creation = this.authService.getCreation();
+    return this.afs.collection(this.path).doc(this.afs.createId()).set(mediaItem, { merge: true });
   }
 
   removeMediaItem(itemId): Promise<void> {
@@ -55,7 +53,7 @@ export class MediaItemService {
     });
   }
 
-  getAssignedMedia(assignedObjects: any, itemId: string): Observable<IMediaItem[]>{
+  getAssignedMedia(assignedObjects: any, itemId: string): Observable<IMediaItem[]> {
     return this.getMediaItems(assignedObjects, itemId).valueChanges().pipe(
       map((mediaItems: IMediaItem[]) => {
         return mediaItems;
@@ -66,7 +64,6 @@ export class MediaItemService {
   getCurrentImage(assignedObjects: any, itemId: string): Observable<IMediaItem> {
     return this.getMediaItems(assignedObjects, itemId).valueChanges().pipe(
       map((mediaItems: IMediaItem[]) => {
-        console.log(mediaItems);
         let foundFile: IMediaItem;
         mediaItems.forEach((mediaItem: IMediaItem) => {
           if (FileType.getMimeClass(mediaItem.file) === 'image') {
@@ -80,10 +77,9 @@ export class MediaItemService {
   }
 
   getImagePlaceHolder(): IMediaItem {
-    const mediaItem = {
+    return {
       downloadURL: '/assets/sfw/placeholder/no-image-found.jpg'
     };
-    return mediaItem;
   }
 
 }

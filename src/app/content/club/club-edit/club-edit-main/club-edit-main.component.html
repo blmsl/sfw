@@ -1,25 +1,23 @@
-<div fxLayout="row"
-
+<div fxLayout="column"
+     fxLayout.gt-sm="row"
+     fxLayoutGap="10px"
      *ngIf="locations; else loadingTemplate"
      [formGroup]="form">
 
-  <div fxFlex.gt-sm="65"
-       fxFlex.gt-xs="100">
+  <div fxFlex.gt-sm="65">
 
-    <div fxLayout="row"
-         >
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
 
-      <mat-form-field fxFlex.gt-sm="33"
-                      fxFlex.gt-xs="100">
+      <mat-form-field fxFlex.gt-sm="33">
         <input matInput
                placeholder="{{'general.clubs.edit.title' | translate}}"
                formControlName="title"/>
       </mat-form-field>
 
 
-      <mat-form-field fxFlexOffset="1"
-                      fxFlex.gt-sm="32"
-                      fxFlex.gt-xs="100">
+      <mat-form-field fxFlex.gt-sm="32">
         <mat-select placeholder="{{'general.clubs.edit.location' | translate}}"
                     formControlName="assignedLocation">
           <mat-option *ngFor="let location of locations | orderBy: ['title']"
@@ -32,28 +30,25 @@
       </mat-form-field>
     </div>
 
-    <div fxLayout="row"
-
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px"
          formGroupName="info">
-      <mat-form-field fxFlex.gt-sm="16"
-                      fxFlex.gt-xs="100">
+
+      <mat-form-field fxFlex.gt-sm="33">
         <input matInput
                placeholder="{{'general.clubs.edit.foundedIn' | translate}}"
                formControlName="founding"/>
       </mat-form-field>
 
 
-      <mat-form-field fxFlexOffset="1"
-                      fxFlex.gt-sm="16"
-                      fxFlex.gt-xs="100">
+      <mat-form-field fxFlex.gt-sm="33">
         <input matInput
                placeholder="{{'general.clubs.edit.clubColours' | translate}}"
                formControlName="clubColours"/>
       </mat-form-field>
 
-      <mat-form-field fxFlexOffset="1"
-                      fxFlex.gt-sm="32"
-                      fxFlex.gt-xs="100">
+      <mat-form-field fxFlex.gt-sm="33">
         <input matInput
                placeholder="{{'general.clubs.edit.homepage' | translate}}"
                formControlName="website"/>
@@ -64,9 +59,7 @@
         </mat-hint>
       </mat-form-field>
 
-      <mat-form-field fxFlexOffset="1"
-                      fxFlex.gt-sm="32"
-                      fxFlex.gt-xs="100">
+      <mat-form-field fxFlex.gt-sm="33">
         <mat-select placeholder="{{'general.clubs.edit.contact' | translate}}"
                     formControlName="assignedContact">
           <mat-option
@@ -79,27 +72,26 @@
       </mat-form-field>
     </div>
 
-    <div fxLayout="row"
-
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px"
          formGroupName="fussballde">
-      <mat-form-field fxFlex.gt-sm="33"
-                      fxFlex.gt-xs="100">
+      <mat-form-field fxFlex.gt-sm="33">
         <input matInput
                placeholder="{{'general.clubs.edit.fussballDeId' | translate}}"
                formControlName="clubId"/>
       </mat-form-field>
 
-      <mat-form-field fxFlexOffset="1"
-                      fxFlex.gt-sm="65"
-                      fxFlex.gt-xs="100">
+      <mat-form-field fxFlex.gt-sm="65">
         <input matInput
                placeholder="{{'general.clubs.edit.fussballDeUrl' | translate}}"
                formControlName="clubUrl"/>
       </mat-form-field>
     </div>
 
-    <div fxLayout="row"
-
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px"
          style="margin-top: 25px">
       <div fxFlex="100">
         <label>{{'general.clubs.edit.description' | translate}}</label>
@@ -108,18 +100,18 @@
         </quill-editor>
       </div>
     </div>
+    <div fxLayout="column"
+         style="margin-top: 60px;">
+      <creation-form [form]="form"></creation-form>
+    </div>
+
   </div>
 
-  <div fxFlexOffset.gt-sm="5"
-       fxFlex.gt-sm="30"
-       fxFlex.gt-xs="100">
-    <h3>Wappen</h3>
-    <media-uploader (uploadCompleted)="logoUploadCompleted.emit($event)"
-                    [uploaderConfig]="uploaderConfig"
+  <div fxFlex.gt-sm="35">
+    <media-uploader [uploaderConfig]="uploaderConfig"
                     [uploaderOptions]="uploaderOptions">
     </media-uploader>
   </div>
-
 </div>
 
 <ng-template #loadingTemplate>

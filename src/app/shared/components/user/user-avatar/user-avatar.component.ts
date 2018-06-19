@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user/user.service';
-import { Observable } from 'rxjs';
 import { IUser } from '../../../interfaces/user/user.interface';
 
 @Component({
@@ -11,10 +9,9 @@ import { IUser } from '../../../interfaces/user/user.interface';
 export class UserAvatarComponent implements OnInit {
 
   @Input() userId: string;
-  public users$: Observable<IUser[]>;
+  @Input() users: IUser[];
 
-  constructor(private userService: UserService) {
-    this.users$ = userService.users$;
+  constructor() {
   }
 
   ngOnInit() {

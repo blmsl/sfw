@@ -4,8 +4,8 @@
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
- */
 
+*/
 import { Component, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/index';
 
@@ -21,7 +21,7 @@ type State = {
   encapsulation: ViewEncapsulation.None,
 })
 export class VirtualScrollComponent {
-  fixedSizeData = Array(10000).fill(50);
+  /* fixedSizeData = Array(10000).fill(50);
   increasingSizeData = Array(10000).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20);
   decreasingSizeData = Array(10000).fill(0)
     .map((_, i) => (1 + Math.floor((10000 - i) / 1000)) * 20);
@@ -102,5 +102,5 @@ export class VirtualScrollComponent {
       }
       return 0;
     }));
-  }
+  } */
 }

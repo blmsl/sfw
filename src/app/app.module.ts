@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import * as firebase from 'firebase';
 import enableLogging = firebase.database.enableLogging;
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { TimeagoModule } from 'ngx-timeago';
 
 enableLogging(environment.enableLogging);
 
@@ -23,7 +24,8 @@ enableLogging(environment.enableLogging);
     /* ServiceWorkerModule.register("/ngsw-worker.js", {
       enabled: environment.production
     }),*/
-    RouterModule.forRoot(appRoutes, { enableTracing: environment.routerTracing })
+    RouterModule.forRoot(appRoutes, { enableTracing: environment.routerTracing }),
+    TimeagoModule.forRoot()
     // GtagModule.forRoot({ trackingId: 'UA-YOUR_TRACKING_ID', trackPageviews: true })
   ],
   bootstrap: [

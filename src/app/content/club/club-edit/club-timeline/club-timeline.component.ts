@@ -2,15 +2,14 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'time-line',
-  templateUrl: './time-line.component.html',
-  styleUrls: ['./time-line.component.scss']
+  selector: 'club-timeline',
+  templateUrl: './club-timeline.component.html',
+  styleUrls: ['./club-timeline.component.scss']
 })
-export class TimeLineComponent implements OnInit {
+export class ClubTimelineComponent implements OnInit {
 
   @Input() form: FormGroup;
   @Input() selectedTimeLineEvent: number;
-  @Input() showLinks: boolean;
 
   @Output() add: EventEmitter<boolean> = new EventEmitter<boolean>(false);
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>(false);
@@ -18,8 +17,7 @@ export class TimeLineComponent implements OnInit {
   @Output() edit: EventEmitter<boolean> = new EventEmitter<boolean>(false);
   @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit() {
   }

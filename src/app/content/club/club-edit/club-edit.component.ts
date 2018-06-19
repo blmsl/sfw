@@ -27,11 +27,6 @@ import {
 })
 export class ClubEditComponent implements OnInit {
 
-  /*@HostListener('window:beforeunload')
-  canDeactivate(): Observable<boolean> | boolean {
-    return true; // JSON.stringify(this.club).toLowerCase() === JSON.stringify(this.savedClub).toLowerCase();
-  } */
-
   public club: IClub;
   private savedClub: IClub;
   public form: FormGroup;
@@ -243,6 +238,9 @@ export class ClubEditComponent implements OnInit {
     this.selectedClubManagementPosition = this.form.controls['management']['controls']['positions']['controls'].length - 1;
   }
 
+  cancelClubManagementPosition(): void{
+    console.log('cancel');
+  }
   /* editClubManagementPosition($event:any): void {
     console.log($event);
     const control = <FormArray>this.form.controls['management']['controls']['positions'];

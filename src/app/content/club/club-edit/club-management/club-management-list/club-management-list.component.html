@@ -31,8 +31,8 @@
           <mat-list-item
             *ngFor="let position of club.management.positions | filterBy: ['assignedPosition'] : category.id | orderBy: '-startDate'">
                 <span fxFlex="35">
-                  {{position.startDate | date: 'dd.MM.yy' }}
-                  <span *ngIf="position.endDate">&ndash; {{position.endDate | date: 'dd.MM.yy' }}</span>
+                  {{position.startDate }}<!-- | date: 'dd.MM.yy' -->
+                  <span *ngIf="position.endDate">&ndash; {{position.endDate }}</span><!-- | date: 'dd.MM.yy' -->
                 </span>
             <a fxFlex="50"
                fxFlexOffset="5"

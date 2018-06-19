@@ -12,31 +12,38 @@ import { CategoryTypeService } from '../../shared/services/category-type/categor
 import { BirthdayModule } from '../../shared/components/birthday/birthday.module';
 import { SharedMatchModule } from '../../shared/components/match/shared-match.module';
 import { ArticleService } from '../../shared/services/article/article.service';
+import { BirthdayListComponent } from './birthday-list/birthday-list.component';
+import { UserService } from '../../shared/services/user/user.service';
+import { SharedUserModule } from '../../shared/components/user/shared-user.module';
+import { DashboardArticleListComponent } from './dashboard-article-list/dashboard-article-list.component';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   imports: [
     BirthdayModule,
-    // ChartsModule,
     MatButtonModule,
     MatListModule,
     MatMenuModule,
-    // MatProgressBarModule,
     MatTabsModule,
     SharedMatchModule,
-    // NgxDatatableModule,
     PerfectScrollbarModule,
     RouterModule.forChild(dashboardRoutes),
-    SharedModule
+    SharedModule,
+    SharedUserModule,
+    TimeagoModule
   ],
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    BirthdayListComponent,
+    DashboardArticleListComponent
   ],
   providers: [
     ArticleService,
     CategoryService,
     CategoryTypeService,
     MatchService,
-    MemberService
+    MemberService,
+    UserService
   ]
 })
 

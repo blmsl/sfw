@@ -40,6 +40,8 @@ import { MemberStateService } from '../../shared/services/member/member-state.se
 import { SeasonService } from '../../shared/services/season/season.service';
 import { TeamService } from '../../shared/services/team/team.service';
 import { CreationModule } from '../../shared/components/creation/creation.module';
+import { ClubManagementPhotoComponent } from './club-edit/club-management/club-management-photo/club-management-photo.component';
+import { ClubTimelineComponent } from './club-edit/club-timeline/club-timeline.component';
 
 @NgModule({
   imports: [
@@ -79,6 +81,8 @@ import { CreationModule } from '../../shared/components/creation/creation.module
     ClubManagementFormComponent,
     ClubManagementListComponent,
     ClubsComponent,
+    ClubManagementPhotoComponent,
+    ClubTimelineComponent,
   ],
   exports: [],
   providers: [
