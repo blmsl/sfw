@@ -21,7 +21,8 @@ export class MediaUploaderComponent implements OnInit {
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
 
-  // @Output() uploadCompleted: EventEmitter<any> = new EventEmitter<any>(false);
+  // return created ID
+  @Output() uploadCompleted: EventEmitter<string> = new EventEmitter<string>(false);
   // @Output() unsplashSidebar: EventEmitter<void> = new EventEmitter<void>(false);
 
   @ViewChild('fileInput') fileInput: ElementRef;
@@ -80,7 +81,7 @@ export class MediaUploaderComponent implements OnInit {
     // Start Auto Upload?
     if (this.canUpload && this.uploaderConfig.autoUpload) {
       this.uploadMultipleFiles()
-        .then(() => this.alertService.showSnackBar('success', 'general.uploader.finishedAll'))
+        // .then(() => this.alertService.showSnackBar('success', 'general.uploader.finishedAll'))
         .catch((error: any) => {
           this.alertService.showSnackBar('error', 'general.uploader.errors.' + error.message);
         });
@@ -136,6 +137,15 @@ export class MediaUploaderComponent implements OnInit {
         };
         this.mediaItemService.createMediaItem(mediaItem).then(() => {
           this.alertService.showSnackBar('success', 'general.uploader.singleFinished');
+
+          if(this.uploaderOptions.queueLimit === 1){
+            this.currentMediaItem = this.mediaItemService.getCurrentImage(
+              this.uploaderOptions.assignedObjects,
+              mediaItem.itemId
+            );
+          }
+
+          this.uploadCompleted.emit(mediaItem.itemId);
           if (this.uploaderConfig.removeAfterUpload) {
             this.deleteFromQueue(fileUpload);
             if (this.currentUploads.length === 0) {

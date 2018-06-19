@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ISponsor } from '../../../shared/interfaces/sponsor.interface';
 import { SponsorService } from '../../../shared/services/sponsor/sponsor.service';
@@ -12,7 +12,6 @@ import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-confi
 import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
 import { MediaItemService } from '../../../shared/services/media/media-item.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
-import { IMediaItem } from '../../../shared/interfaces/media/media-item.interface';
 
 
 @Component({
@@ -21,6 +20,12 @@ import { IMediaItem } from '../../../shared/interfaces/media/media-item.interfac
 })
 export class SponsorEditComponent implements OnInit {
 
+  /* @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    return JSON.stringify(this.sponsor).toLowerCase() === JSON.stringify(this.savedSponsor).toLowerCase();
+  } */
+
+  // public savedSponsor : ISponsor;
   public sponsor: ISponsor;
   public form: FormGroup;
   public categories$: Observable<ICategory[]>;
@@ -46,19 +51,20 @@ export class SponsorEditComponent implements OnInit {
   };
 
   constructor(private route: ActivatedRoute,
-    private alertService: AlertService,
-    private fb: FormBuilder,
-    private router: Router,
-    private mediaItemService: MediaItemService,
-    private sponsorService: SponsorService,
-    public categoryService: CategoryService) {
+              private alertService: AlertService,
+              private fb: FormBuilder,
+              private router: Router,
+              private mediaItemService: MediaItemService,
+              private sponsorService: SponsorService,
+              public categoryService: CategoryService) {
     this.categories$ = categoryService.getCategoriesByCategoryType('sponsor.types');
   }
 
   ngOnInit() {
     this.route.data.subscribe((data: { sponsor: ISponsor }) => {
       this.sponsor = data.sponsor;
-      this.uploaderOptions.itemId = this.sponsor.id;
+      // this.savedSponsor = Object.freeze(Object.assign({}, this.sponsor));
+      this.uploaderOptions.itemId = this.sponsor.id ? this.sponsor.id : '';
     });
 
     this.form = this.fb.group({
@@ -77,29 +83,28 @@ export class SponsorEditComponent implements OnInit {
       distinctUntilChanged()
     ).subscribe((changes: ISponsor) => {
       this.sponsor = Object.assign({}, this.sponsor, changes);
-      if (!this.form.invalid) {
-        this.saveSponsor();
-      }
+      this.saveSponsor();
     });
   }
 
   saveSponsor(redirect: boolean = false): void {
     let action;
-
-    //if (this.sponsor.id) {
-    //  action = this.sponsorService.updateSponsor(this.sponsor.id, this.sponsor);
-    //} else {
-    action = this.sponsorService.createSponsor(this.sponsor);
-    //}
-    action.then(
-      () => {
-        if (redirect) {
-          this.redirectToList();
-        }
-        this.alertService.showSnackBar('success', 'general.applications.updateMessage');
-      },
-      (error: any) => this.alertService.showSnackBar('error', error.message)
-    );
+    if (!this.form.invalid) {
+      if (this.sponsor.id) {
+        action = this.sponsorService.updateSponsor(this.sponsor.id, this.sponsor);
+      } else {
+        action = this.sponsorService.createSponsor(this.sponsor);
+      }
+      action.then(
+        () => {
+          if (redirect) {
+            this.redirectToList();
+          }
+          this.alertService.showSnackBar('success', 'general.applications.updateMessage');
+        },
+        (error: any) => this.alertService.showSnackBar('error', error.message)
+      );
+    }
   }
 
   cancel() {
@@ -110,10 +115,8 @@ export class SponsorEditComponent implements OnInit {
     this.router.navigate(['/sponsors']).then();
   }
 
-  removeSponsor() {
-    this.sponsorService.removeSponsor(this.sponsor).then(
-      () => this.redirectToList()
-    );
+  uploadCompleted(mediaItemId: string){
+    this.uploaderOptions.itemId = this.sponsor.id = mediaItemId;
   }
 
 }

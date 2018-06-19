@@ -41,7 +41,6 @@ export class SponsorService {
 
   setNewSponsor(): Observable<ISponsor> {
     return of({
-      id: this.afs.createId(),
       title: '',
       internalInfo: '',
       description: '',

@@ -26,6 +26,10 @@ export class SponsorsComponent implements OnDestroy {
   public mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
+  products: any[] = [];
+  num = 1;
+  stars: number[] = [1, 2, 3, 4, 5];
+
   constructor(private changeDetectorRef: ChangeDetectorRef,
     private alertService: AlertService,
     private media: MediaMatcher,
@@ -54,6 +58,18 @@ export class SponsorsComponent implements OnDestroy {
 
   setFilters(categoryIds: string[]) {
     this.currentFilter = categoryIds;
+  }
+
+  isOver(): boolean {
+    return window.matchMedia(`(max-width: 960px)`).matches;
+  }
+
+  isMac(): boolean {
+    let bool = false;
+    if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
+      bool = true;
+    }
+    return bool;
   }
 
 }
