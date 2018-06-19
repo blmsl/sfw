@@ -37,6 +37,7 @@
        <!--style="text-align: center">{{'general.articles.list.noResult' | translate}}</p>-->
   </div>
 </div>
-<ng-template *ngIf="!finished" #loadingTemplate>
+
+<ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>
 </ng-template>
