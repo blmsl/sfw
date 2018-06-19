@@ -1,4 +1,7 @@
 export interface ICreation {
-  at: any;
+  at: {
+    seconds: number,
+    nanoseconds: number
+  };
   from: string;
 }

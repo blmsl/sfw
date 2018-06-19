@@ -1,21 +1,16 @@
-<div *ngIf="form">
-  <form (ngSubmit)="submitFilter()"
-        [formGroup]="form"
-        novalidate>
-    <h3>{{'general.sponsors.list.filterTitle' | translate}}</h3>
+<div style="padding: 25px 0">
 
-    <div *ngFor="let control of form.controls | keys; let i=index"
-         style="margin-bottom: 25px;">
-      <mat-checkbox [formControlName]="categories[i].id">
-        {{ categories[i].title }}
-      </mat-checkbox>
-    </div>
+  <mat-selection-list #filteredCategories>
+    <mat-list-option *ngFor="let category of categories | orderBy: 'title'"
+                     [value]="category.id">
+      {{category.title}}
+    </mat-list-option>
+  </mat-selection-list>
 
-    <button mat-raised-button
-            color="primary"
-            type="submit">
-      {{'general.sponsors.list.filter' | translate}}
-    </button>
-  </form>
+  <button mat-raised-button
+          color="primary"
+          (click)="setFilters.emit(filteredCategories.selectedOptions.selected)"
+          type="button">
+    {{'general.sponsors.list.filter' | translate}}
+  </button>
 </div>
-

@@ -101,23 +101,15 @@
         </div>
 
         <div fxFlex="40">
-
           <media-uploader (uploadCompleted)="uploadCompleted($event)"
                           [uploaderConfig]="uploaderConfig"
                           [uploaderOptions]="uploaderOptions">
           </media-uploader>
         </div>
+
       </div>
-
     </div>
-
   </mat-card-content>
-
-  <mat-card-actions>
-    <button mat-raised-button class="primary">Fertig</button>
-    <button mat-raised-button color="warn" (click)="cancel()">Cancel</button>
-  </mat-card-actions>
-
 </mat-card>
 
 <ng-template #loadingTemplate>

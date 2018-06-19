@@ -16,7 +16,7 @@ export class CategoryFilterPipe implements PipeTransform {
 
     let retItems = items.filter((item: any) => {
       return values.some((cat) => {
-        return item[searchField] === cat;
+        return item[searchField].indexOf(cat) > -1;
       });
     });
 

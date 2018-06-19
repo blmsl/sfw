@@ -1,74 +1,83 @@
-<mat-card>
-  <mat-card-title>
+<mat-sidenav-container fxFlexFill>
 
-    <div fxLayout="row">
+  <mat-sidenav #settings
+               position="end"
+               class="chat-panel"
+               [mode]="'side'"
+               [opened]="sidePanelOpened"
+               (open)="sidePanelOpened = true"
+               (close)="sidePanelOpened = false">
 
-      <div fxFlex.gt-sm="49"
-           fxFlex="50">
-        <mat-icon>euro_symbol</mat-icon>
-        {{'general.menu.sponsor.main' | translate }}
-      </div>
-
-      <div fxflex.gt-xs="50"
-           fxFlex="50"
-           class="text-md-right">
-        <!--<button type="button"
-                mat-raised-button
-                color="warn"
-                (click)="sideNav.toggle()">
-          <mat-icon>filter_list</mat-icon>
-          {{'general.sponsors.list.filterTitle' | translate}}
-        </button>-->
-        <button type="button"
-                mat-raised-button
-                color="accent"
-                [routerLink]="['/sponsors/create']">
-          <mat-icon>note_add</mat-icon>
-          {{'general.sponsors.list.createSponsor' | translate}}
-        </button>
-      </div>
+    <div fxLayout.gt-sm="row"
+         fxLayout="column"
+         fxLayoutAlign="space-between center">
+      <span style="font-weight: bold; font-size: larger">{{'general.sponsors.list.filterTitle' | translate}}</span>
+      <span class="space"></span>
+      <button mat-icon-button (click)="sidePanelOpened = false">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
-  </mat-card-title>
-  <mat-card-content>
 
-    <div fxLayout="row">
+    <sponsor-filter *ngIf="categories$ | async as categories; else loadingTemplate"
+                    (setFilters)="setFilters($event);"
+                    [categories]="categories">
+    </sponsor-filter>
 
-      <div fxFlex="100" [class.is-mobile]="mobileQuery.matches">
-        <!--<mat-sidenav-container class="sideNav-container"
-                               [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-          <mat-sidenav #sideNav
-                       class="sideNav"
-                       [mode]="mobileQuery.matches ? 'over' : 'side'"
-                       [fixedInViewport]="mobileQuery.matches"
-                       fixedTopGap="56">
-            <sponsor-filter
-              (setFilters)="setFilters($event); sideNav.toggle();"
-              [categories]="categories$ | async">
-            </sponsor-filter>
-          </mat-sidenav>
+  </mat-sidenav>
 
-          <mat-sidenav-content class="mat-sideNav-content">
-          <div *ngIf="!(sponsors$ | async)">
-          <loading-indicator></loading-indicator>
+  <mat-sidenav-content>
+
+    <mat-card>
+      <mat-card-header fxLayout.gt-sm="row"
+                       fxLayout="column"
+                       fxLayoutAlign="space-between center">
+        <mat-card-title>
+          <mat-icon>euro_symbol</mat-icon>
+          {{'general.menu.sponsor.main' | translate }}
+        </mat-card-title>
+        <span class="space"></span>
+        <div>
+          <button type="button"
+                  mat-raised-button
+                  color="accent"
+                  [routerLink]="['/sponsors/create']">
+            <mat-icon>note_add</mat-icon>
+            {{'general.sponsors.list.createSponsor' | translate}}
+          </button>
+          <button mat-icon-button (click)="sidePanelOpened = !sidePanelOpened">
+            <mat-icon *ngIf="sidePanelOpened">arrow_forward_ios</mat-icon>
+            <mat-icon *ngIf="!sidePanelOpened">arrow_back_ios</mat-icon>
+          </button>
         </div>
-        <p *ngIf="(sponsors$ | async)?.length === 0">
-          {{'general.sponsors.list.noSponsorsFound' | translate}}
-        </p>
-        <div fxLayout="row">-->
-        <div *ngFor="let sponsor of sponsors$ | async | categoryFilter: 'assignedCategories' : currentFilter"
-             fxFlex.gt-sm="33.3333"
-             fxFlex.gt-xs="100"
-             fxFlex="100">
-          <sponsor-item
-            (removeSponsor)="removeSponsor($event)"
-            [sponsor]="sponsor">
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="30px"
+             *ngIf="sponsors$ | async as sponsors; else loadingTemplate">
+
+          <sponsor-item fxFlex.gt-sm="25"
+                        *ngFor="let sponsor of sponsors | categoryFilter: 'assignedCategories' : categoryFilter"
+                        (removeSponsor)="removeSponsor($event)"
+                        [sponsor]="sponsor">
           </sponsor-item>
-        </div>
-        <!--</div>
-      </mat-sidenav-content>
-    </mat-sidenav-container>-->
-      </div>
-    </div>
 
-  </mat-card-content>
-</mat-card>
+          <p *ngIf="!sponsors">{{'general.sponsors.list.noSponsorsFound' | translate}}</p>
+
+          <p *ngIf="sponsors.length > 0 && !(sponsors | categoryFilter: 'assignedCategories' : categoryFilter).length">
+            {{'general.sponsors.list.noResult' | translate}}
+          </p>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

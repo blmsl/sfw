@@ -1107,8 +1107,9 @@
         "mainTitle": "Sponsoren",
         "newSponsorTitle": "Neuer Sponsor",
         "noSponsorsFound": "Es wurden noch keine Sponsoren erstellt.",
-        "noResult": "Es wurden keine Sponsoren gefunden.",
+        "noResult": "Es wurden keine Sponsoren mit diesen Filtereinstellungen gefunden.",
         "randomSponsorTitle": "Zufälliger Sponsor",
+        "removeFilter": "Filter löschen",
         "view": "Details ansehen"
       }
     },

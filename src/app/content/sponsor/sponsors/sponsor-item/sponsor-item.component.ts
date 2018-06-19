@@ -1,17 +1,9 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ISponsor } from '../../../../shared/interfaces/sponsor.interface';
-import {
-  PerfectScrollbarConfigInterface,
-  PerfectScrollbarDirective
-} from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { MediaItemService } from '../../../../shared/services/media/media-item.service';
+import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
+import { Observable } from 'rxjs/Rx';
 
 const SMALL_WIDTH_BREAKPOINT = 960;
 
@@ -29,17 +21,17 @@ export class SponsorItemComponent implements OnInit {
   public mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
 
   public config: PerfectScrollbarConfigInterface = {};
-  public currentImage: string;
+  public sponsorLogo: Observable<IMediaItem>;
 
   constructor(private mediaItemService: MediaItemService) {
   }
 
   ngOnInit() {
-    /* if (!this.currentImage) {
-      this.mediaItemService
-        .getCurrentImage('sponsor', this.sponsor.id, this.sponsor.id)
-        .subscribe((imageUrl: string) => this.currentImage = imageUrl);
-    } */
+    if (this.sponsor) {
+      if (!this.sponsorLogo) {
+        this.sponsorLogo = this.mediaItemService.getCurrentImage(['sponsors', 'profile'], this.sponsor.id);
+      }
+    }
   }
 
 }

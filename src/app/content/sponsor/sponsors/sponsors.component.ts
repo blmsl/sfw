@@ -1,51 +1,47 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnDestroy
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ISponsor } from '../../../shared/interfaces/sponsor.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { SponsorService } from '../../../shared/services/sponsor/sponsor.service';
 import { ICategory } from '../../../shared/interfaces/category.interface';
-import { MediaMatcher } from '@angular/cdk/layout';
+import { BreakpointObserver, BreakpointState, MediaMatcher } from '@angular/cdk/layout';
 import { MediaItemService } from '../../../shared/services/media/media-item.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
+import { MatOption, MatOptionSelectionChange } from '@angular/material';
+
+const SMALL_WIDTH_BREAKPOINT = 960;
 
 @Component({
   selector: 'sponsors',
   templateUrl: './sponsors.component.html',
   styleUrls: ['sponsors.component.scss']
 })
-export class SponsorsComponent implements OnDestroy {
+export class SponsorsComponent implements OnInit {
 
   public sponsors$: Observable<ISponsor[]>;
   public categories$: Observable<ICategory[]>;
-  public currentFilter: string[];
+  public categoryFilter: string[];
 
-  public mobileQuery: MediaQueryList;
-  private _mobileQueryListener: () => void;
+  public sidePanelOpened: boolean = false;
+  public isSmallDevice: boolean = false;
 
-  products: any[] = [];
-  num = 1;
-  stars: number[] = [1, 2, 3, 4, 5];
-
-  constructor(private changeDetectorRef: ChangeDetectorRef,
-    private alertService: AlertService,
-    private media: MediaMatcher,
-    private categoryService: CategoryService,
-    private mediaItemService: MediaItemService,
-    private sponsorService: SponsorService) {
+  constructor(private alertService: AlertService,
+              private media: MediaMatcher,
+              private categoryService: CategoryService,
+              public breakpointObserver: BreakpointObserver,
+              private mediaItemService: MediaItemService,
+              private sponsorService: SponsorService) {
     this.categories$ = categoryService.getCategoriesByCategoryType('sponsor.types');
     this.sponsors$ = sponsorService.sponsors$;
-
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+  ngOnInit() {
+    this.breakpointObserver
+      .observe(['(min-width: ' + SMALL_WIDTH_BREAKPOINT + 'px)'])
+      .subscribe((state: BreakpointState) => {
+        this.sidePanelOpened = false;
+        this.isSmallDevice = !state.matches;
+      });
   }
 
   removeSponsor(sponsor: ISponsor) {
@@ -56,20 +52,13 @@ export class SponsorsComponent implements OnDestroy {
       .catch((error: any) => this.alertService.showSnackBar('error', error.message));
   }
 
-  setFilters(categoryIds: string[]) {
-    this.currentFilter = categoryIds;
+  setFilters(categoryIds: MatOption[]) {
+    this.sidePanelOpened = false;
+    this.categoryFilter = [];
+    categoryIds.forEach((option: MatOption) => {
+      this.categoryFilter.push(option.value);
+    });
   }
 
-  isOver(): boolean {
-    return window.matchMedia(`(max-width: 960px)`).matches;
-  }
-
-  isMac(): boolean {
-    let bool = false;
-    if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
-      bool = true;
-    }
-    return bool;
-  }
 
 }

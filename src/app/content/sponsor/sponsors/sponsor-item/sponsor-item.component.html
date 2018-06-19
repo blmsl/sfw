@@ -1,12 +1,12 @@
 <mat-card *ngIf="sponsor">
   <div class="media-grid">
     <figure>
-      <div class="sponsor-badge">
-        <h3>{{ sponsor.title }}</h3>
-      </div>
-      <img [src]="currentImage"
+      <div class="sponsor-badge"><h3>{{ sponsor.title }}</h3></div>
+
+      <img *ngIf="sponsorLogo | async as image; else loadingTemplate"
            mat-card-image
-           *ngIf="currentImage; else loadingTemplate"/>
+           [src]="image.downloadURL">
+
       <figcaption>
         <p>
           <a [routerLink]="['/sponsors/details', sponsor.id]"
@@ -29,12 +29,11 @@
     </figure>
   </div>
   <mat-card-content [perfectScrollbar]="config"
-                    [disabled]="mediaMatcher.matches"
                     style="max-height: 250px">
     <div>
       <span [innerHtml]="sponsor.description"></span>
       <span class="mat-text-muted text-sm"
-            [innerHtml]="sponsor.internalInfo">}
+            [innerHtml]="sponsor.internalInfo">
       </span>
     </div>
   </mat-card-content>

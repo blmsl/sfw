@@ -1,30 +1,77 @@
-:host {
-  margin-left: -5px;
-  margin-right: -5px;
-  margin-top: -5px;
-  display: block;
+@charset "UTF-8";
+
+.header {
+  border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 15px;
 }
-:host {
-  .mat-sidenav {
-    width: 200px;
+
+.title {
+  color: #a0aabf;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: 1rem;
+  margin-bottom: 0.77999rem;
+  margin-top: 1rem;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 0.22001rem;
+  text-transform: uppercase;
+}
+
+.title-document {
+  border: none;
+  color: #373d49;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 2.8rem;
+  margin-bottom: 0.29999rem;
+  outline: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 0.10001rem;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.chat-panel {
+  box-shadow: 0 0 0 0 #cecece, -12px 0 8px -4px #cecece;
+  padding: 10px;
+}
+
+@media (min-width:768px) {
+  .chat-panel {
+    min-width: 300px;
   }
-  .mat-drawer-container {
-    overflow: visible;
-    .mat-sidenav {
-      overflow: visible;
-    }
+}
+
+@media (min-width:960px) {
+  .chat-panel {
+    min-width: 400px;
   }
-  .mat-drawer-content {
-    padding: 0;
+}
+
+@media (min-width:1280px) {
+  .chat-panel {
+    min-width: 500px;
   }
-  @media (min-width: 959px) {
-    .mat-drawer-side {
-      background-color: transparent;
-      box-shadow: none!important;
-    }
-  }
-  .mat-slider-horizontal {
-    width: 100%;
-    min-width: 1px;
-  }
+}
+
+app-ngx-editor, #ngxEditor {
+  height: 500px;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+.saving {
+  color: orange;
+  text-decoration: blink;
 }

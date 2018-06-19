@@ -8,13 +8,16 @@ export interface ISponsor {
   internalInfo: string;
   description: string;
 
-  imageUrl?: string;
-  assignedMediaItem?: string;
-
   externalLink?: string;
 
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: {
+    seconds: number,
+    nanoseconds: number
+  };
+  endDate?: {
+    seconds: number,
+    nanoseconds: number
+  };
 
   assignedCategories: string[];
   creation?: ICreation;
