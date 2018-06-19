@@ -89,7 +89,7 @@ export class AuthService implements OnDestroy {
 
   public getCreation(): ICreation {
     return {
-      at: firebase.firestore.FieldValue.serverTimestamp(),
+      at: <any>firebase.firestore.FieldValue.serverTimestamp(),
       from: this.userId
     };
   }

@@ -74,8 +74,7 @@ export class SponsorEditComponent implements OnInit {
       assignedCategories: [this.sponsor.assignedCategories, [Validators.required]],
       startDate: this.sponsor.startDate,
       endDate: this.sponsor.endDate,
-      internalInfo: this.sponsor.internalInfo,
-      imageUrl: this.sponsor.imageUrl
+      internalInfo: this.sponsor.internalInfo
     });
 
     this.form.valueChanges.pipe(
