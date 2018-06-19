@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentSnapshot } from 'angularfire2/firestore';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -26,6 +26,8 @@ export class PaginationService {
   private _data = new BehaviorSubject([]);
 
   private query: QueryConfig;
+  private cursor: any;
+  private tempValues: any[] = [];
 
   // Observable data
   data: Observable<any>;
@@ -34,7 +36,11 @@ export class PaginationService {
 
 
   constructor(private afs: AngularFirestore) {
+    this.loading.subscribe( (isLoading) => {
+      console.log("isLoading: " + isLoading);
+    })
   }
+
 
   // Initial query sets options and defines the Observable
   init(path, field, opts?) {
@@ -53,6 +59,7 @@ export class PaginationService {
         .limit(this.query.limit);
     });
 
+
     this.mapAndUpdate(first);
 
     // Create the observable array for consumption in components
@@ -69,7 +76,7 @@ export class PaginationService {
     const more = this.afs.collection(this.query.path, ref => ref
       .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
       .limit(this.query.limit)
-      .startAfter(cursor)
+      .startAfter(this.cursor)
     );
     this.mapAndUpdate(more);
   }
@@ -78,12 +85,12 @@ export class PaginationService {
   // Determines the doc snapshot to paginate query
   private getCursor() {
     const current = this._data.value;
+
     if (current.length) {
       return this.query.prepend ? current[0].id : current[current.length - 1].id;
     }
     return null;
   }
-
 
   // Maps the snapshot to usable format the updates source
   private mapAndUpdate(col: AngularFirestoreCollection<any>) {
@@ -100,15 +107,21 @@ export class PaginationService {
       map( arr => {
         // If prepending, reverse array
         let values = this.query.prepend ? arr.reverse() : arr;
-        console.log(values)
         // update source with new values, done loading
         this._data.next(values);
-        this._loading.next(false);
+        this.tempValues = this.tempValues.concat(values);
+        col.ref.get().then( (snapshot) => {
+          this.cursor = snapshot.docs[this.tempValues.length - 1];
+          this._loading.next(false);
+        });
+
 
         // no more values, mark done
         if (!values.length) {
           this._done.next(true);
         }
+
+
       }),
       take(1)
     ).subscribe();
