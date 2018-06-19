@@ -49,6 +49,7 @@ import { SidebarLinksDataComponent } from './article-edit/article-edit-sidebar/s
 import { NgxEditorModule } from 'ngx-editor';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { VirtualScrollModule } from '../../shared/components/virtual-scroll/virtual.scroll.module';
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
 
 @NgModule({
   imports: [
@@ -74,7 +75,8 @@ import { VirtualScrollModule } from '../../shared/components/virtual-scroll/virt
     SfwEditorModule,
     SharedModule,
     SharedCategoryModule,
-    TagInputModule
+    TagInputModule,
+    InfiniteScrollModule
   ],
   declarations: [
     ArticleDashboardComponent,

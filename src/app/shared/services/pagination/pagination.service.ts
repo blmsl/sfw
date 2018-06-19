@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/take';
+import { map, take } from "rxjs/internal/operators";
 
 // Options to reproduce firestore queries consistently
 interface QueryConfig {
@@ -65,13 +66,11 @@ export class PaginationService {
   // Retrieves additional data from firestore
   more() {
     const cursor = this.getCursor();
-
-    const more = this.afs.collection(this.query.path, ref => {
-      return ref
-        .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
-        .limit(this.query.limit)
-        .startAfter(cursor);
-    });
+    const more = this.afs.collection(this.query.path, ref => ref
+      .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
+      .limit(this.query.limit)
+      .startAfter(cursor)
+    );
     this.mapAndUpdate(more);
   }
 
@@ -80,7 +79,7 @@ export class PaginationService {
   private getCursor() {
     const current = this._data.value;
     if (current.length) {
-      return this.query.prepend ? current[0].doc : current[current.length - 1].doc;
+      return this.query.prepend ? current[0].id : current[current.length - 1].id;
     }
     return null;
   }
@@ -97,12 +96,11 @@ export class PaginationService {
     this._loading.next(true);
 
     // Map snapshot with doc ref (needed for cursor)
-    return col.valueChanges()
-      .do(arr => {
-
+    return col.valueChanges().pipe(
+      map( arr => {
         // If prepending, reverse array
         let values = this.query.prepend ? arr.reverse() : arr;
-
+        console.log(values)
         // update source with new values, done loading
         this._data.next(values);
         this._loading.next(false);
@@ -111,9 +109,9 @@ export class PaginationService {
         if (!values.length) {
           this._done.next(true);
         }
-      })
-      .take(1)
-      .subscribe();
+      }),
+      take(1)
+    ).subscribe();
 
   }
 

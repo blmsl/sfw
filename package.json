@@ -86,6 +86,7 @@
     "ngx-bootstrap": "^3.0.0",
     "ngx-chips": "^1.8.2",
     "ngx-editor": "^3.3.0",
+    "ngx-infinite-scroll": "^6.0.1",
     "ngx-perfect-scrollbar": "^5.3.5",
     "ngx-pipes": "^2.1.2",
     "ngx-quill": "^3.1.0",

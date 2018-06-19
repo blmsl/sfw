@@ -201,6 +201,7 @@
         "filterByTags": "Mit den Schlagwort",
         "noFilteredResult": "Es wurden noch keine Artikel mit diesen Suchkriterien erstellt",
         "noResult": "Es wurden noch keine Artikel erstellt",
+        "loading": "Artikel werden geladen",
         "sortDateAsc": "Älteste zuerst",
         "sortDateDesc": "Neueste zuerst",
         "statuses": {

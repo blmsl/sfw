@@ -4,22 +4,13 @@
   <div fxFlex.gt-sm="80"
        fxFlex="100"
        class="container"
-       (onScroll)="scrollHandler($event)"
-       [bottomOffset]="200"
-       [topOffset]="200"
-       scrollable>
-
-    <p class="tag is-warning" *ngIf="paginationService.done | async">I ran out of boats!</p>
-    <loading-indicator *ngIf="paginationService.loading | async"></loading-indicator>
-
-    <div *ngIf="paginationService.data | async as data">
-      <pre>{{data | json}}</pre>
-    </div>
-
-
-    <!--
+       infiniteScroll
+       [scrollWindow]="false"
+       [infiniteScrollDistance]="2"
+       [infiniteScrollThrottle]="1000"
+       (scrolled)="onScroll()">
     <mat-list>
-      <mat-list-item *ngFor="let article of articles">
+      <mat-list-item *ngFor="let article of paginationService.data | async">
         <span matLine>
           <h1>{{article.title}}</h1>
         </span>
@@ -39,12 +30,13 @@
       </mat-list-item>
     </mat-list>
 
-    <p *ngIf="articles.length === 0"
-       style="text-align: center">{{'general.articles.list.noResult' | translate}}</p>
-    -->
+    <p *ngIf="paginationService.loading | async"
+       style="text-align: center">{{'general.articles.list.loading' | translate}}</p>
+
+    <!--<p *ngIf="articles.length === 0"-->
+       <!--style="text-align: center">{{'general.articles.list.noResult' | translate}}</p>-->
   </div>
 </div>
-
-<ng-template #loadingTemplate>
+<ng-template *ngIf="!finished" #loadingTemplate>
   <loading-indicator></loading-indicator>
 </ng-template>
