@@ -40,7 +40,7 @@ export class ArticleListComponent {
       'articles',
       'title',
       {
-        limit: 4,
+        limit: 10,
         reverse: true,
         prepend: false
       }
