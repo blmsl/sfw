@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
-import { ILocation } from '../../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../../shared/interfaces/location/location.interface';
 
 @Component({
   selector: 'team-detail-training',

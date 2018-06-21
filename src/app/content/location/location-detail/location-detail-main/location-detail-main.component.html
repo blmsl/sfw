@@ -30,8 +30,27 @@
     </mat-card-title>
   </mat-card-header>
 
-</mat-card>
+  <mat-card-header>
+    <mat-card-subtitle>{{'general.locations.list.colTitles.address' | translate}}</mat-card-subtitle>
+    <mat-card-title>
+      <a *ngIf="location.prices" [href]="location.prices" target="_blank">
+        {{ 'general.locations.edit.priceList' | translate}}
+      </a>
+      <p style="color: red" *ngIf="!location.prices">
+        {{'general.locations.detail.noPriceList' | translate}}
+      </p>
+    </mat-card-title>
+  </mat-card-header>
 
+  <mat-card-header>
+    <mat-card-subtitle>{{ 'general.locations.edit.opening' | translate }}</mat-card-subtitle>
+    <mat-card-title>
+      <div *ngIf="location.opening" [innerHtml]="location.opening"></div>
+      <p style="color: red" *ngIf="!location.opening">{{'general.locations.detail.noOpening' | translate}}</p>
+    </mat-card-title>
+  </mat-card-header>
+
+</mat-card>
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

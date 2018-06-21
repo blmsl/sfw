@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IClub } from '../../../shared/interfaces/club/club.interface';
-import { ILocation } from '../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { IMember } from '../../../shared/interfaces/member/member.interface';
 import { ITimeLineEvent } from '../../../shared/interfaces/time-line-event.interface';
 import { ClubService } from '../../../shared/services/club/club.service';

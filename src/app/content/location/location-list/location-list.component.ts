@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ILocation } from '../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
 import { LocationService } from '../../../shared/services/location/location.service';

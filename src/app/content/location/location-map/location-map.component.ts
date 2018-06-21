@@ -6,7 +6,7 @@ import {
 import { MapsService } from '../../../shared/services/maps/maps.service';
 import { Observable } from 'rxjs';
 import { IMarker } from '../../../shared/interfaces/marker.interface';
-import { ILocation } from '../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { LocationService } from '../../../shared/services/location/location.service';
 import {

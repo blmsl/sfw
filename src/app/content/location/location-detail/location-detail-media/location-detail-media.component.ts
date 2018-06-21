@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ILocation } from '../../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../../shared/interfaces/location/location.interface';
 
 @Component({
   selector: 'location-detail-media',

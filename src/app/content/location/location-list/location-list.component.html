@@ -1,8 +1,9 @@
-<div fxLayout="row"
+<div fxLayout="column"
+     fxLayout.gt-sm="row"
+     fxLayoutGap="10px"
      [formGroup]="form">
 
-  <mat-form-field fxFlex.gt-xs="33"
-                  fxFlex="100">
+  <mat-form-field fxFlex.gt-sm="33">
     <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}" formControlName="limit">
       <mat-option [value]="locations.length" *ngIf="locations">
         {{ 'general.pagination.allItems' | translate}}
@@ -13,18 +14,13 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlexOffset="1"
-                  fxFlex.gt-xs="33"
-                  fxFlex="100">
+  <mat-form-field fxFlex.gt-sm="33">
     <input matInput
            placeholder="{{ 'general.typeToFilter' | translate}}"
            formControlName="searchFor"/>
   </mat-form-field>
 
-  <div fxFlexOffset="1"
-       fxFlex.gt-xs="33"
-       fxFlex="100"
-       style="margin-bottom: 15px">
+  <div fxFlex.gt-sm="100">
     <a mat-raised-button color="primary" [routerLink]="['./edit/new']">
       {{ 'general.locations.list.createLocation' | translate}}
     </a>
@@ -32,6 +28,7 @@
 </div>
 
 <div fxLayout="row"
+     style="margin-top: 25px"
      [formGroup]="form">
 
   <div fxFlex="100"

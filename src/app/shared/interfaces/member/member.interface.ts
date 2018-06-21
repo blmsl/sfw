@@ -1,4 +1,4 @@
-import { IAddress } from '../address.interface';
+import { IAddress } from '../location/address.interface';
 import { IContact } from '../contact.interface';
 import { IProfile } from './profile.interface';
 import { ICreation } from '../creation.interface';
@@ -22,8 +22,6 @@ export interface IMember {
   dfbData?: IClubDFBData;
   profile?: IProfile[];
   otherData?: IMemberOtherData;
-
-  profileImageUrl?: string;
 
   creation?: ICreation;
 

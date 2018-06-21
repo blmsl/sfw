@@ -1,26 +1,49 @@
-<div fxLayout="column" [formGroup]="form">
+<div fxLayout.gt-sm="row"
+     fxLayout="column"
+     fxLayoutGap="10px"
+     [formGroup]="form">
+
   <h3>{{'general.locations.edit.contactTitle' | translate}}</h3>
+  <span fxFlex=""></span>
+  <div>
+    <button mat-raised-button
+            type="button"
+            color="primary"
+            (click)="addLocationContact.emit()">
+      {{ 'general.locations.edit.contact.createContact' | translate}}
+    </button>
+  </div>
+</div>
 
-  <div formArrayName="assignedContacts">
-    <div fxLayout="column"
-         *ngFor="let contact of form.controls['assignedContacts']['controls']; let i=index">
+<div fxLayout="column"
+     fxLayoutGap="10px"
+     [formGroup]="form">
 
-      <div fxFlex.gt-sm="50"
-           fxFlex="100">
-        <h3>{{'general.locations.edit.contactTitle' | translate}} {{i + 1}}</h3>
-      </div>
+  <div formArrayName="assignedContacts"
+       fxFlex="100"
+       *ngFor="let contact of form.controls['assignedContacts']['controls']; let i=index"
+       style="margin-bottom: 40px;">
 
-      <div fxFlex.gt-sm="50"
-           fxFlex="100">
-        <button style="float: right"
-                mat-raised-button
+    <div fxLayout.gt-sm="row"
+         fxLayout="column"
+         fxLayoutGap="10px"
+         [formGroup]="form">
+
+      <h3 fxFlex.gt-sm="100">{{'general.locations.edit.contactTitle' | translate}} {{i + 1}}</h3>
+      <span fxFlex=""></span>
+      <div>
+
+        <button mat-raised-button
                 type="button"
                 color="warn"
                 (click)="removeLocationContact.emit(i)">
           {{ 'general.locations.edit.contact.deleteContact' | translate}}
         </button>
       </div>
+    </div>
 
+
+    <div fxLayout="column">
       <div fxFlex="100"
            [formGroupName]="i">
         <location-contact-form
@@ -29,5 +52,7 @@
         </location-contact-form>
       </div>
     </div>
+
+    <hr style="margin: 50px 0"/>
   </div>
 </div>

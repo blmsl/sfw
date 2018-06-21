@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LocationService } from '../../../shared/services/location/location.service';
 import { Observable } from 'rxjs';
-import { ILocation } from '../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
 

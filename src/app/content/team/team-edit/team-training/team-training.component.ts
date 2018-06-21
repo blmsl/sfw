@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ILocation } from '../../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../../shared/interfaces/location/location.interface';
 import { ApplicationService } from '../../../../shared/services/application/application.service';
 
 @Component({

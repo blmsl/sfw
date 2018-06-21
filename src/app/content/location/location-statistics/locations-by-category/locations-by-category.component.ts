@@ -4,7 +4,7 @@ import {
   OnChanges
 } from '@angular/core';
 import { ICategory } from '../../../../shared/interfaces/category.interface';
-import { ILocation } from '../../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../../shared/interfaces/location/location.interface';
 
 @Component({
   selector: 'locations-by-category',

@@ -10,7 +10,8 @@ export class LocationEditContactComponent implements OnInit {
 
   @Input() form: FormGroup;
   @Input() members: IMember[];
-  @Output() removeLocationContact: EventEmitter<boolean> = new EventEmitter(false);
+  @Output() removeLocationContact: EventEmitter<number> = new EventEmitter<number>(false);
+  @Output() addLocationContact: EventEmitter<void> = new EventEmitter<void>(false);
 
   constructor() {
   }

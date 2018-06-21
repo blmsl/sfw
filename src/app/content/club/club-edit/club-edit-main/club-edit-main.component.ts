@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ILocation } from '../../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../../shared/interfaces/location/location.interface';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';

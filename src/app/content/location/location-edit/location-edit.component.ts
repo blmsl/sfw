@@ -2,23 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '../../../shared/services/location/location.service';
 import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
-import { ILocation } from '../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
-import { ILocationContact } from '../../../shared/interfaces/location-contact.interface';
+import { ILocationContact } from '../../../shared/interfaces/location/location-contact.interface';
 import { MemberService } from '../../../shared/services/member/member.service';
 import { IMember } from '../../../shared/interfaces/member/member.interface';
-import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { IUploaderOptions } from 'src/app/shared/interfaces/media/uploader-options.interface';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { MediaItemService } from 'src/app/shared/services/media/media-item.service';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'location-edit',
@@ -43,26 +43,29 @@ export class LocationEditComponent implements OnInit {
     autoUpload: true,
     showDropZone: true,
     removeAfterUpload: true,
-    showQueue: true
+    showQueue: false,
+    headerTitle: 'general.locations.edit.photoTitle'
   };
 
   public uploaderOptions: IUploaderOptions = {
-    assignedObjects: ['locations'],
+    assignedObjects: ['locations', 'profile'],
     itemId: '',
-    queueLimit: 1
+    queueLimit: 1,
+    allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
   constructor(private router: Router,
-    private fb: FormBuilder,
-    private storage: AngularFireStorage,
-    private fireStore: AngularFirestore,
-    private snackBar: MatSnackBar,
-    private route: ActivatedRoute,
-    public categoryService: CategoryService,
-    public categoryTypeService: CategoryTypeService,
-    public locationService: LocationService,
-    private mediaItemService: MediaItemService,
-    private memberService: MemberService) {
+              private alertService: AlertService,
+              private fb: FormBuilder,
+              private storage: AngularFireStorage,
+              private fireStore: AngularFirestore,
+              private snackBar: MatSnackBar,
+              private route: ActivatedRoute,
+              public categoryService: CategoryService,
+              public categoryTypeService: CategoryTypeService,
+              public locationService: LocationService,
+              private mediaItemService: MediaItemService,
+              private memberService: MemberService) {
     this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
     this.members$ = memberService.members$;
@@ -80,7 +83,6 @@ export class LocationEditComponent implements OnInit {
       fupaLink: this.location.fupaLink,
       assignedCategory: [this.location.assignedCategory, [Validators.required]],
       prices: this.location.prices,
-      imageUrl: this.location.imageUrl,
       opening: this.location.opening,
       text: this.location.text,
       address: this.initAddress(),
@@ -118,7 +120,7 @@ export class LocationEditComponent implements OnInit {
 
   initLocationContact(contact: ILocationContact): FormGroup {
     return this.fb.group({
-      isMember: [contact ? contact.isMember : false,],
+      isMember: [contact ? contact.isMember : false],
       description: [contact ? contact.description : '',],
       assignedMember: [contact ? contact.assignedMember : ''],
       firstName: [contact ? contact.firstName : ''],
@@ -179,17 +181,9 @@ export class LocationEditComponent implements OnInit {
         if (redirect) {
           this.redirectToList();
         }
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            status: 'success',
-            message: 'general.applications.updateMessage'
-          },
-          duration: 2500,
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
+        this.alertService.showSnackBar('success', 'general.applications.updateMessage');
       },
-      (error: any) => console.log(error)
+      (error: any) => this.alertService.showSnackBar('error', error)
     );
   }
 
@@ -198,9 +192,6 @@ export class LocationEditComponent implements OnInit {
   }
 
   uploadCompleted() {
-    const collection: AngularFirestoreCollection<any> = this.fireStore.collection('files', ref => ref.where('itemId', '==', this.location.id));
-    collection.valueChanges().subscribe((result) => {
-      console.log(result);
-    })
+    console.log('Upload completed');
   }
 }

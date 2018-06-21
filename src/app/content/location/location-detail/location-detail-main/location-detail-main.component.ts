@@ -3,7 +3,7 @@ import {
   Input,
   OnInit
 } from '@angular/core';
-import { ILocation } from '../../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../../shared/interfaces/location/location.interface';
 import { ICategory } from '../../../../shared/interfaces/category.interface';
 
 @Component({

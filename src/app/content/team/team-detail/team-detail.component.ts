@@ -11,7 +11,7 @@ import { SeasonService } from '../../../shared/services/season/season.service';
 import { ISeason } from '../../../shared/interfaces/season.interface';
 import { IClub } from '../../../shared/interfaces/club/club.interface';
 import { ClubService } from '../../../shared/services/club/club.service';
-import { ILocation } from '../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { LocationService } from '../../../shared/services/location/location.service';
 import { IMatch } from '../../../shared/interfaces/match.interface';
 import { MatchService } from '../../../shared/services/match/match.service';

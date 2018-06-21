@@ -1,5 +1,5 @@
 import { IMatch } from './match.interface';
-import { ILocation } from './location.interface';
+import { ILocation } from './location/location.interface';
 import { ITeam } from './team/team.interface';
 import { ICategory } from './category.interface';
 import { ITag } from './tag.interface';
@@ -19,7 +19,10 @@ export interface IArticle {
 
   text?: string;
 
-  articleDate?: string;
+  articleDate?: {
+    seconds: number,
+    nanoseconds: number
+  };
 
   creation: ICreation;
   publication?: IPublication;
@@ -39,7 +42,6 @@ export interface IArticle {
     provider: {
       type: string; // local, facebook, twitter etc.
       description: string;
-      imageURL: string;
       title: string;
     }[];
   }[];

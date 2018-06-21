@@ -3,7 +3,7 @@ import {
   Observable,
   of
 } from 'rxjs';
-import { ILocation } from '../../interfaces/location.interface';
+import { ILocation } from '../../interfaces/location/location.interface';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AuthService } from '../auth/auth.service';
 

@@ -19,7 +19,7 @@ import { ISeason } from '../../../shared/interfaces/season.interface';
 import { SeasonService } from '../../../shared/services/season/season.service';
 import { ITraining } from '../../../shared/interfaces/training.interface';
 import { LocationService } from '../../../shared/services/location/location.service';
-import { ILocation } from '../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { ITeamManagement } from '../../../shared/interfaces/team/team-management.interface';
 import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material';

@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot
 } from '@angular/router';
 import { LocationService } from '../../shared/services/location/location.service';
-import { ILocation } from '../../shared/interfaces/location.interface';
+import { ILocation } from '../../shared/interfaces/location/location.interface';
 import { Observable } from 'rxjs';
 import {
   map,

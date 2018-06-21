@@ -1,150 +1,123 @@
-<div fxLayout="row"
+<mat-card [formGroup]="form">
+  <mat-card-title>
+    <mat-icon>mode_edit</mat-icon>
+    {{ location.id ? ('general.menu.location.edit' | translate) : 'general.menu.location.create' | translate }}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
 
-     [formGroup]="form">
+  <mat-card-content>
 
-  <div fxFlex="100">
-    <div class="mat-card-top"
-         *ngIf="categories$ && categoryTypes$ && location && members$; else loadingTemplate">
+    <div *ngIf="categories$ && categoryTypes$ && location && members$; else loadingTemplate">
+      <!--  -->
+      <mat-tab-group [dynamicHeight]="true">
 
-      <mat-card>
-        <mat-card-title>
-          <mat-icon>mode_edit</mat-icon>
-          {{ location.id ? ('general.menu.location.edit' | translate) : 'general.menu.location.create' | translate }}
-        </mat-card-title>
-        <mat-card-subtitle></mat-card-subtitle>
+        <mat-tab label="{{'general.locations.edit.mainTitle' | translate}}">
 
-        <mat-card-content>
+          <div fxLayout="column"
+               *ngIf="categories$ | async as categories; else loadingTemplate"
+               fxLayout.gt-sm="row"
+               fxLayoutGap="10px">
 
-          <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
-                         [dynamicHeight]="true">
+            <div fxFlex.gt-sm="65">
 
-            <mat-tab label="{{'general.locations.edit.mainTitle' | translate}}">
+              <div fxLayout="column"
+                   fxLayout.gt-sm="row"
+                   fxLayoutGap="10px">
+                <mat-form-field fxFlex.gt-sm="100">
+                  <input matInput
+                         placeholder="{{'general.locations.edit.namePlaceholder' | translate}}"
+                         formControlName="title"/>
+                </mat-form-field>
+              </div>
 
-              <div fxLayout="row">
+              <div fxLayout="column"
+                   fxLayout.gt-sm="row"
+                   fxLayoutGap="10px">
+                <mat-form-field fxFlex.gt-sm="70">
+                  <input matInput
+                         placeholder="{{'general.locations.edit.fupaPlaceholder' | translate}}"
+                         formControlName="fupaLink"/>
+                </mat-form-field>
 
-                <div fxFlex.gt-sm="49"
-                     fxFlex="100">
-                  <div fxLayout="column">
-                    <mat-form-field fxFlex="100">
-                      <input matInput
-                             placeholder="{{'general.locations.edit.namePlaceholder' | translate}}"
-                             formControlName="title"/>
-                    </mat-form-field>
+                <mat-form-field fxFlex.gt-sm="30">
+                  <mat-select placeholder="{{'general.category' | translate}}"
+                              formControlName="assignedCategory">
+                    <mat-option *ngFor="let category of categories | orderBy: ['title']"
+                                [value]="category.id">
+                      {{category.title}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
 
-                    <mat-form-field fxFlex="100">
-                      <input matInput
-                             placeholder="{{'general.locations.edit.fupaPlaceholder' | translate}}"
-                             formControlName="fupaLink"/>
-                    </mat-form-field>
+              <div fxLayout="column"
+                   fxLayout.gt-sm="row"
+                   fxLayoutGap="10px">
+                <mat-form-field fxFlex.gt-sm="100">
+                  <input matInput
+                         placeholder="{{'general.locations.edit.priceList' | translate}}"
+                         formControlName="prices"/>
+                </mat-form-field>
+              </div>
 
-                    <mat-form-field fxFlex="100">
-                      <mat-select placeholder="{{'general.category' | translate}}"
-                                  formControlName="assignedCategory">
-                        <mat-option *ngFor="let category of categories | orderBy: ['title']"
-                                    [value]="category.id">
-                          {{category.title}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field fxFlex="100">
-                      <input matInput
-                             placeholder="{{'general.locations.edit.priceList' | translate}}"
-                             formControlName="prices"/>
-                    </mat-form-field>
-
-
-                    <div fxFlex="100" style="margin-top: 25px">
-                      <label>{{'general.locations.edit.opening' | translate}}</label><br/>
-                      <quill-editor [style]="{height: '150px'}"
-                                    formControlName="opening">
-                      </quill-editor>
-                    </div>
-
-                    <div fxFlex="100" style="margin-top: 25px">
-                      <label>{{'general.description' | translate}}</label><br/>
-                      <quill-editor [style]="{height: '150px'}"
-                                    formControlName="text">
-                      </quill-editor>
-                    </div>
-
-                  </div>
+              <div fxLayout="column"
+                   fxLayout.gt-sm="row"
+                   fxLayoutGap="10px" style="margin-bottom: 25px">
+                <div fxFlex.gt-sm="50">
+                  <label>{{'general.locations.edit.opening' | translate}}</label><br/>
+                  <quill-editor [style]="{height: '150px'}"
+                                formControlName="opening">
+                  </quill-editor>
                 </div>
 
-                <div fxFlex.gt-sm="49"
-                     fxFlexOffset.gt-sm="2"
-                     fxFlex="100">
-                  <mat-card>
-                    <mat-card-title>{{'general.locations.edit.photoTitle' | translate}}</mat-card-title>
-                    <mat-card-content>
-                      <img [src]="location.imageUrl | async" class="md-card-image" *ngIf="location.imageUrl"/>
-
-                      <media-uploader (uploadCompleted)="uploadCompleted($event)"
-                                      [uploaderConfig]="uploaderConfig"
-                                      [uploaderOptions]="uploaderOptions">
-                      </media-uploader>
-                    </mat-card-content>
-                  </mat-card>
+                <div fxFlex.gt-sm="50">
+                  <label>{{'general.description' | translate}}</label><br/>
+                  <quill-editor [style]="{height: '150px'}"
+                                formControlName="text">
+                  </quill-editor>
                 </div>
               </div>
-            </mat-tab>
-
-            <mat-tab
-              label="{{'general.locations.edit.addressTitle' | translate}} {{'general.and' | translate }} {{'general.locations.edit.contactTitle' | translate}}">
-              <div fxLayout="row"
-                   >
-                <div fxFlex.gt-sm="49"
-                     fxFlex="100">
-                  <location-edit-address
-                    [form]="form">
-                  </location-edit-address>
-                </div>
-                <div fxFlexOffset="1"
-                     fxFlex.gt-sm="50"
-                     fxFlex="100">
-                  <location-edit-contact
-                    [members]="members$ | async"
-                    (removeLocationContact)="removeLocationContact($event)"
-                    [form]="form">
-                  </location-edit-contact>
-
-                  <button mat-raised-button
-                          type="button"
-                          color="primary"
-                          (click)="addLocationContact()">
-                    {{ 'general.locations.edit.contact.createContact' | translate}}
-                  </button>
-
-                </div>
-              </div>
-            </mat-tab>
-
-            <mat-tab label="{{ 'general.locations.edit.mediaTitle' | translate }}">
-              <!--<media-center></media-center>-->
-            </mat-tab>
-
-            <mat-tab label="{{'general.tables.colTitles.creation' | translate }}">
-              <!--  & {{'general.tables.colTitles.publication' | translate }} -->
-              <!--<div fxLayout="row"
-                   >
-                <div fxFlex.gt-sm="30"
-                     fxFlex="100">-->
               <creation-form [form]="form"></creation-form>
-              <!--</div>
-              <div fxFlexOffset="5"
-                   fxFlex.gt-sm="30"
-                   fxFlex="100">
-                <publication-form [form]="form"></publication-form>
-              </div>
-            </div>-->
-            </mat-tab>
-          </mat-tab-group>
-        </mat-card-content>
+            </div>
 
-      </mat-card>
+            <div fxFlex.gt-sm="40">
+              <media-uploader (uploadCompleted)="uploadCompleted($event)"
+                              [uploaderConfig]="uploaderConfig"
+                              [uploaderOptions]="uploaderOptions">
+              </media-uploader>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab
+          label="{{'general.locations.edit.addressTitle' | translate}}  {{'general.and' | translate }} {{'general.locations.edit.contactTitle' | translate}}">
+          <div fxLayout="column"
+               fxLayout.gt-sm="row"
+               fxLayoutGap="30px">
+            <div fxFlex.gt-sm="50">
+              <location-edit-address [form]="form"></location-edit-address>
+            </div>
+            <div fxFlex="50">
+              <location-edit-contact [members]="members$ | async"
+                                     (addLocationContact)="addLocationContact()"
+                                     (removeLocationContact)="removeLocationContact($event)"
+                                     [form]="form">
+              </location-edit-contact>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="{{ 'general.locations.edit.mediaTitle' | translate }}">
+          <!--<media-center [uploaderConfig]="uploaderConfig"
+                        [uploaderOptions]="uploaderOptions">
+          </media-center>-->
+        </mat-tab>
+
+      </mat-tab-group>
     </div>
-  </div>
-</div>
+  </mat-card-content>
+
+</mat-card>
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

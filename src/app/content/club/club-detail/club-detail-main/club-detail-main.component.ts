@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IClub } from '../../../../shared/interfaces/club/club.interface';
-import { ILocation } from '../../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../../shared/interfaces/location/location.interface';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 
 @Component({

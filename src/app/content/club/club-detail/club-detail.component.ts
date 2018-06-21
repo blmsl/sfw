@@ -6,7 +6,7 @@ import { MemberService } from '../../../shared/services/member/member.service';
 import { LocationService } from '../../../shared/services/location/location.service';
 import { Observable } from 'rxjs';
 import { IMember } from '../../../shared/interfaces/member/member.interface';
-import { ILocation } from '../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { IArticle } from '../../../shared/interfaces/article.interface';

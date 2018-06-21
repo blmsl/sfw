@@ -1,5 +1,5 @@
 <div fxLayout="row"
-     >
+>
 
   <div fxFlex="100">
     <mat-card class="mat-card-top">
@@ -15,131 +15,83 @@
                        [dynamicHeight]="true">
 
           <mat-tab label="{{'general.locations.edit.mainTitle' | translate}}">
-            <div fxLayout="row"
-                 >
+            <div fxLayout="column"
+                 fxLayout.gt-sm="row"
+                 fxLayoutGap="30px">
 
-              <div fxFlex.gt-sm="30"
-                   fxFlex="100">
-                <location-detail-main
-                  [location]="location"
-                  [categories]="categories">
+              <div fxFlex.gt-sm="30">
+                <location-detail-main [location]="location"
+                                      [categories]="categories">
                 </location-detail-main>
               </div>
 
-              <div fxFlexOffset="2"
-                   fxFlex.gt-sm="68"
-                   fxFlex="100">
+              <div fxFlex.gt-sm="35">
                 <mat-card>
                   <mat-card-title>{{'general.locations.edit.photoTitle' | translate}}</mat-card-title>
                   <mat-card-content>
-                    <img [src]="location.imageUrl" *ngIf="location.imageUrl; else noImageTemplate"/>
+                    <img *ngIf="locationImage | async as image; else loadingTemplate"
+                         mat-card-image
+                         [src]="image.downloadURL">
                   </mat-card-content>
                 </mat-card>
 
+                <location-detail-contact [showLinks]="false"
+                                         [members]="members$ | async"
+                                         [location]="location">
+                </location-detail-contact>
+              </div>
+
+              <div fxFlex.gt-sm="35">
                 <mat-card>
                   <mat-card-title>{{'general.locations.edit.mapTitle' | translate}}</mat-card-title>
                   <mat-card-content>
                     <location-detail-map [location]="location"></location-detail-map>
                   </mat-card-content>
                 </mat-card>
-
               </div>
 
             </div>
           </mat-tab>
 
           <mat-tab label="{{'general.locations.detail.assignedArticlesTitle' | translate}}">
-            <div fxLayout="row"
-                 >
+            <div fxLayout="column"
+                 fxLayout.gt-sm="row"
+                 fxLayoutGap="10px">
 
-              <div fxFlex.gt-sm="49"
-                   fxFlex="100">
-                <mat-card>
-                  <mat-card-title>{{'general.locations.detail.assignedArticles' | translate}}</mat-card-title>
-                  <mat-card-content>
-                    <mat-list dense
-                              *ngIf="articles$ | async as articles; else loadingTemplate">
-                      <mat-list-item *ngIf="(articles | filterBy: ['assignedLocation'] : location.id).length === 0">
-                        {{ 'general.locations.detail.noAssignedArticles' | translate }}
-                      </mat-list-item>
-                      <mat-list-item
-                        *ngFor="let article of articles | filterBy: ['assignedLocation'] : location.id | orderBy: ['-articleDate']">
-                        <a [routerLink]="['/articles/detail', article.id]">
-                          {{article.title}} {{article.articleDate | date: 'dd.MM.yy'}}
-                        </a>
-                      </mat-list-item>
-                    </mat-list>
-                  </mat-card-content>
-                </mat-card>
-              </div>
+              <div fxFlex.gt-sm="50" *ngIf="articles$ | async as articles; else loadingTemplate">
+                <h3>{{'general.locations.detail.assignedArticles' | translate}}</h3>
 
-              <div fxFlexOffset="2"
-                   fxFlex.gt-sm="49"
-                   fxFlex="100">
-                <mat-card>
-                  <mat-card-title>{{'general.locations.detail.assignedMatches' | translate}}</mat-card-title>
-                  <mat-card-content>
-                    <mat-list dense
-                              *ngIf="matches$ | async as matches; else loadingTemplate">
-                      <mat-list-item *ngIf="(matches | filterBy: ['assignedLocation'] : location.id).length === 0">
-                        {{ 'general.locations.detail.noAssignedMatches' | translate }}
-                      </mat-list-item>
-                      <mat-list-item
-                        *ngFor="let match of matches | filterBy: ['assignedLocation'] : location.id | orderBy: ['-startDate']">
-                        {{match.startDate | date: 'dd.MM.yy'}}: {{match.title}}
-                      </mat-list-item>
-                    </mat-list>
-                  </mat-card-content>
-                </mat-card>
+                <p *ngIf="(articles | filterBy: ['assignedLocation'] : location.id).length === 0">
+                  {{ 'general.locations.detail.noAssignedArticles' | translate }}
+                </p>
 
-              </div>
-            </div>
-
-          </mat-tab>
-
-          <mat-tab label="{{'general.locations.edit.contactTitle' | translate}}">
-            <location-detail-contact
-              [showLinks]="false"
-              [members]="members$ | async"
-              [location]="location">
-            </location-detail-contact>
-          </mat-tab>
-
-          <mat-tab
-            label="{{'general.locations.edit.prices' | translate }} & {{ 'general.locations.edit.opening' | translate }}">
-
-            <div fxLayout="row">
-              <div fxFlex.gt-sm="50"
-                   fxFlex="100">
-                <mat-card>
-                  <mat-card-title>{{'general.locations.edit.prices' | translate }}</mat-card-title>
-                  <mat-card-content>
-                    <a *ngIf="location.prices"
-                       [href]="location.prices"
-                       target="_blank">{{ 'general.locations.edit.priceList' | translate}}
+                <ul>
+                  <li *ngFor="let article of articles | filterBy: ['assignedLocation'] : location.id | orderBy: ['-articleDate']">
+                    <a [routerLink]="['/articles/detail', article.id]">
+                    {{article.title}} {{article.articleDate.seconds *1000 | date: 'dd.MM.yy'}}
                     </a>
-                    <p style="color: red" *ngIf="!location.prices">{{'general.locations.detail.noPriceList' |
-                      translate}}</p>
-                  </mat-card-content>
-                </mat-card>
+                  </li>
+                </ul>
               </div>
 
-              <div fxFlex.gt-sm="50"
-                   fxFlex="100">
-                <mat-card>
-                  <mat-card-title>{{ 'general.locations.edit.opening' | translate }}</mat-card-title>
-                  <mat-card-content>
-                    <div *ngIf="location.opening" [innerHtml]="location.opening"></div>
-                    <p style="color: red" *ngIf="!location.opening">{{'general.locations.detail.noOpening' |
-                      translate}}</p>
-                  </mat-card-content>
-                </mat-card>
+              <div fxFlex.gt-sm="50" *ngIf="matches$ | async as matches; else loadingTemplate">
+                <h3>{{'general.locations.detail.assignedMatches' | translate}}</h3>
+
+                <p *ngIf="(matches | filterBy: ['assignedLocation'] : location.id).length === 0">
+                  {{ 'general.locations.detail.noAssignedMatches' | translate }}
+                </p>
+
+                <ul>
+                  <li *ngFor="let match of matches | filterBy: ['assignedLocation'] : location.id | orderBy: ['-startDate']">
+                    {{match.startDate | date: 'dd.MM.yy'}}: {{match.title}}
+                  </li>
+                </ul>
               </div>
             </div>
           </mat-tab>
 
           <mat-tab label="{{'general.locations.media.list' | translate}}">
-            <div fxLayout="row" >
+            <div fxLayout="row">
               <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
                 ToDo
                 <!-- <location-detail-media [location]="location"></location-detail-media>-->
@@ -150,7 +102,9 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <div class="button-row">
+        <div fxLayout="column"
+             fxLayoutGap="10px"
+             fxLayout.gt-sm="row">
           <a mat-raised-button color="primary" [routerLink]="['/locations']">
             {{'general.menu.location.list' | translate}}
           </a>

@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Marker } from '@agm/core/services/google-maps-types';
-import { ILocation } from '../../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../../shared/interfaces/location/location.interface';
 import { IMarker } from '../../../../shared/interfaces/marker.interface';
 import { MapsService } from '../../../../shared/services/maps/maps.service';
 
@@ -21,9 +20,8 @@ export class LocationDetailMapComponent implements OnInit {
 
   public zoom: number = 13;
 
-  // initial center position for the map
-  public lat: number = 51.673858;
-  public lng: number = 7.815982;
+  public lat: number;
+  public lng: number;
 
   public markers: IMarker[] = [];
 
@@ -34,42 +32,36 @@ export class LocationDetailMapComponent implements OnInit {
     this.getLatLng();
   }
 
-  clickedMarker(label: string, index: number) {
+  clickedMarker(/*label: string, index: number*/) {
     // console.log(`clicked the marker: ${label || index}`);
   }
 
-  mapClicked($event: MouseEvent) {
+  mapClicked(/*$event: MouseEvent*/) {
     // console.log($event);
   }
 
-  markerDragEnd(m: Marker, $event: MouseEvent) {
+  markerDragEnd(/*m: Marker, $event: MouseEvent*/) {
     // console.log('dragEnd', m, $event);
   }
 
   getLatLng() {
-    const _that = this;
     this.mapsService.getLatLngFromAddress(this.location.address).subscribe(
-      (response: any) => _that.setMarker(response),
+      (response: any) => this.setMarker(response.lat(), response.lng()),
       (error: any) => this.errorMessage = <any>error
     );
   }
 
-  setMarker(response: any) {
-    this.response = response.results[0];
-    if (this.response) {
+  setMarker(lat: number, lng: number) {
 
-      this.formattedAddress = response.results[0].formatted_address;
+    this.lat = lat;
+    this.lng = lng;
 
-      this.lat = response.results[0].geometry.location.lat;
-      this.lng = response.results[0].geometry.location.lng;
-
-      this.markers.push({
-        draggable: false,
-        label: this.location.title,
-        lat: response.results[0].geometry.location.lat,
-        lng: response.results[0].geometry.location.lng
-      });
-    }
+    this.markers.push({
+      draggable: false,
+      label: this.location.title,
+      lat: lat,
+      lng: lng
+    });
   }
 
 }

@@ -1,7 +1,7 @@
 <mat-list-item *ngFor="let member of members; let last = last">
-  <img mat-list-avatar
-       [src]="member.profileImageUrl ? member.profileImageUrl : 'assets/sfw/placeholder/avatar_male.jpg'"
-       alt="{{member.mainData.firstName}} {{member.mainData.lastName}}">
+  <img *ngIf="sponsorLogo | async as image; else loadingTemplate"
+       mat-list-avatar
+       [src]="image.downloadURL">
   <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
   <p mat-line>
     <span class="demo-secondary-text">
@@ -12,3 +12,7 @@
   </p>
   <mat-divider inset="true" *ngIf="!last"></mat-divider>
 </mat-list-item>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

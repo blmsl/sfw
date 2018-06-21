@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs/Rx';
-import { ILocation } from '../../../../../shared/interfaces/location.interface';
+import { ILocation } from '../../../../../shared/interfaces/location/location.interface';
 import { ITeam } from '../../../../../shared/interfaces/team/team.interface';
 import { ICategory } from '../../../../../shared/interfaces/category.interface';
 import { ICategoryType } from '../../../../../shared/interfaces/category-type.interface';
