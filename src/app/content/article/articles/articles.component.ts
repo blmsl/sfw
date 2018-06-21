@@ -5,11 +5,11 @@ import { IArticle } from '../../../shared/interfaces/article.interface';
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { UserService } from '../../../shared/services/user/user.service';
-import { IUser } from '../../../shared/interfaces/user/user.interface';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { debounceTime } from 'rxjs/internal/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IUser } from '../../../shared/interfaces/user/user.interface';
 
 @Component({
   selector: 'articles',
@@ -21,30 +21,48 @@ export class ArticlesComponent implements OnInit {
 
   public articles$: Observable<IArticle[]>;
   public categories$: Observable<ICategory[]>;
+  public users$: Observable<IUser[]>;
+
   public form: FormGroup;
+  public filters: {
+    author?: string,
+    sorting?: string,
+    status?: number,
+    tags?: string[]
+  };
 
   constructor(private articleService: ArticleService,
-    private userService: UserService,
-    private alertService: AlertService,
-    private fb: FormBuilder,
-    private categoryService: CategoryService) {
+              private userService: UserService,
+              private alertService: AlertService,
+              private fb: FormBuilder,
+              private categoryService: CategoryService) {
     this.articles$ = articleService.articles$;
+    this.users$ = this.userService.users$;
     this.categories$ = categoryService.categories$;
   }
 
   ngOnInit() {
     this.form = this.fb.group({
-      author: '',
-      status: '',
-      tags: '',
+      assignedTags: undefined,
+      creation: this.fb.group({
+        'by': undefined,
+      }),
+      publication: this.fb.group({
+        status: undefined
+      }),
       sorting: '-'
     });
 
     this.form.valueChanges.pipe(
       debounceTime(1000),
       distinctUntilChanged()
-    ).subscribe((changes: any) => {
-      console.log(changes);
+    ).subscribe((changes: {
+      author: string,
+      sorting: string,
+      status: number,
+      tags: string[]
+    }) => {
+      this.filters = changes;
     });
   }
 

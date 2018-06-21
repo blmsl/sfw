@@ -28,7 +28,6 @@ export class ArticleListFilterComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.form);
   }
 
 }

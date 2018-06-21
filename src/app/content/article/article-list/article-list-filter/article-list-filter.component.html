@@ -4,7 +4,7 @@
      [formGroup]="form"
      *ngIf="users$ | async as users; else loadingTemplate">
 
-  <mat-form-field fxFlex.gt-sm="100">
+  <mat-form-field fxFlex.gt-sm="100" formGroupName="publication">
     <mat-select placeholder="{{ 'general.articles.list.statuses.all' | translate}}"
                 formControlName="status">
       <mat-option *ngFor="let option of publicationStatuses" [value]="option.value">
@@ -13,9 +13,9 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="30">
+  <mat-form-field fxFlex="30" formGroupName="creation">
     <mat-select placeholder="{{ 'general.articles.list.allAuthors' | translate}}"
-                formControlName="author">
+                formControlName="by">
       <mat-option [value]="">{{ 'general.articles.list.allAuthors' | translate}}</mat-option>
       <mat-option *ngFor="let user of users | orderBy: ['lastName', 'firstName']"
                   [value]="user.id">
@@ -26,7 +26,7 @@
 
   <mat-form-field fxFlex="100">
     <mat-select placeholder="{{ 'general.articles.list.allTags' | translate}}"
-                formControlName="tags">
+                formControlName="assignedTags">
       <mat-option [value]="">{{ 'general.articles.list.allTags' | translate}}</mat-option>
       <!--<mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}
         {{ 'general.items' | translate}}

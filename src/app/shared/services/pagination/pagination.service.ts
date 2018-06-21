@@ -72,13 +72,14 @@ export class PaginationService {
 
   // Retrieves additional data from firestore
   more() {
-    const cursor = this.getCursor();
-    const more = this.afs.collection(this.query.path, ref => ref
-      .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
-      .limit(this.query.limit)
-      .startAfter(this.cursor)
-    );
-    this.mapAndUpdate(more);
+    if(this.cursor !== undefined) {
+      const more = this.afs.collection(this.query.path, ref => ref
+        .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
+        .limit(this.query.limit)
+        .startAfter(this.cursor)
+      );
+      this.mapAndUpdate(more);
+    }
   }
 
 

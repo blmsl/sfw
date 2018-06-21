@@ -48,8 +48,11 @@ import { ArticleListFilterComponent } from './article-list/article-list-filter/a
 import { SidebarLinksDataComponent } from './article-edit/article-edit-sidebar/sidebar-links-data/sidebar-links-data.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { VirtualScrollModule } from '../../shared/components/virtual-scroll/virtual.scroll.module';
-import { InfiniteScrollModule } from "ngx-infinite-scroll";
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ArticleFilterPipe } from '../../shared/pipes/article-filter.pipe';
+import { TimeagoModule } from 'ngx-timeago';
+import { SharedUserModule } from '../../shared/components/user/shared-user.module';
+
 
 @NgModule({
   imports: [
@@ -75,10 +78,13 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
     SfwEditorModule,
     SharedModule,
     SharedCategoryModule,
+    SharedUserModule,
     TagInputModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    TimeagoModule
   ],
   declarations: [
+    ArticleFilterPipe,
     ArticleDashboardComponent,
     ArticleDetailComponent,
     ArticleEditComponent,

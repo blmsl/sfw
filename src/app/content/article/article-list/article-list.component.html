@@ -9,32 +9,28 @@
        [infiniteScrollDistance]="2"
        [infiniteScrollThrottle]="1000"
        (scrolled)="onScroll()">
-    <mat-list>
-      <mat-list-item *ngFor="let article of paginationService.data | async">
-        <span matLine>
-          <h1>{{article.title}}</h1>
-        </span>
-        <p matLine [innerHTML]="article.text"></p>
-        <div matLine
-             style="margin-top: 10px;">
+    <mat-list *ngIf="paginationService.data | async as articles; else loadingTemplate">
+      <mat-list-item *ngFor="let article of articles | articleFilter: filters">
+        <h1 matLine>{{article.title}}</h1>
+        <p matLine [innerHTML]="article.excerpt ? article.excerpt : article.text"></p>
+        <div matLine>
           <button mat-raised-button
                   color="warn"
                   type="button">{{article.publication.status}}
           </button>
-          {{'general.from' | translate}} author — {{'general.articles.list.lastEdited'}} timeAgo
+          {{'general.from' | translate}}
+          <user-avatar [userId]="article.creation.by"
+                       [users]="users">
+        </user-avatar>
+          — {{article.creation.at.seconds *1000 | timeago:live}}
         </div>
-        <hr style="margin: 25px 0"
-            matLine/>
-        <div style="height: 100px;"
-             matLine></div>
+        <hr style="margin: 25px 0" matLine/>
       </mat-list-item>
     </mat-list>
 
     <p *ngIf="paginationService.loading | async"
-       style="text-align: center">{{'general.articles.list.loading' | translate}}</p>
-
-    <!--<p *ngIf="articles.length === 0"-->
-       <!--style="text-align: center">{{'general.articles.list.noResult' | translate}}</p>-->
+       style="text-align: center">{{'general.articles.list.loading' | translate}}
+    </p>
   </div>
 </div>
 

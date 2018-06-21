@@ -22,8 +22,10 @@
                            [form]="form">
       </article-list-filter>
     </div>
-<!-- [articles]="articles$ | async" -->
+
     <article-list [categories]="categories$ | async"
+                  [filters]="filters"
+                  [users]="users$ | async"
                   (remove)="removeArticle($event)"
                   (update)="updateArticle($event)">
     </article-list>
