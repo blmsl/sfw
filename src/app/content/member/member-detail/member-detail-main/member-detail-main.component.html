@@ -1,89 +1,153 @@
-<div fxLayout="row"
-
+<div fxLayout.gt-sm="row"
+     fxLayoutGap="10px"
+     fxLayout="column"
+     fxLayoutAlign="center start"
      *ngIf="member">
 
-  <div fxFlex.gt-sm="32"
-       fxFlex.gt-xs="100">
+  <div fxFlex="25">
     <h3>{{'general.members.detail.main.person' | translate}}</h3>
-    <mat-list dense>
-      <mat-list-item>
-        <span>{{'general.members.detail.main.salutation' | translate}}</span>
-        {{ 'general.members.detail.main.' + member.mainData.gender | translate}}
-      </mat-list-item>
-      <mat-list-item *ngIf="member.mainData.title">
-        <span>{{'general.members.detail.main.salutation' | translate}}</span>
-        {{member.mainData.title}}
-      </mat-list-item>
-      <mat-list-item>
-        <span>{{'general.members.detail.main.name' | translate}}</span>
-        {{member.mainData.firstName}} {{member.mainData.lastName}}
-      </mat-list-item>
-      <mat-list-item>
-        <span>{{'general.members.detail.main.birthday' | translate}}</span>
-        <span style="font-weight: normal"
-              *ngIf="member.mainData.birthday; else noBirthdayTemplate">
+
+    <div fxLayout="column" layout-align="center">
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           class="py-1">
+        <span class="mat-text-muted">{{'general.members.detail.main.salutation' | translate}}&nbsp;</span>
+        <span>{{ 'general.members.detail.main.' + member.mainData.gender | translate}}</span>
+      </div>
+
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           class="py-1"
+           *ngIf="member.mainData.title">
+        <span class="mat-text-muted">{{'general.members.detail.main.salutation' | translate}}&nbsp;</span>
+        <span>{{member.mainData.title}}</span>
+      </div>
+
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           class="py-1">
+        <span class="mat-text-muted">{{'general.members.detail.main.name' | translate}}&nbsp;</span>
+        <span>{{member.mainData.firstName}} {{member.mainData.lastName}}</span>
+      </div>
+
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           class="py-1">
+        <span class="mat-text-muted">{{'general.members.detail.main.birthday' | translate}}&nbsp;</span>
+        <span *ngIf="member.mainData.birthday; else noBirthdayTemplate">
           {{member.mainData.birthday | date: 'dd.MM.yy' }}
-        {{ memberService.calculateAge(member.mainData.birthday) }} {{'general.members.detail.main.years' | translate}}
+        ({{ memberService.calculateAge(member.mainData.birthday) }} {{'general.members.detail.main.years' | translate}})
         </span>
-      </mat-list-item>
-      <mat-list-item *ngIf="member.mainData.birthday">
-        <span>{{'general.members.detail.main.zodiac' | translate}}</span>
-        {{ 'general.members.detail.zodiacList.' + memberService.getZodiac(member.mainData.birthday) | translate }}
-      </mat-list-item>
-      <mat-list-item>
-        <span>{{'general.members.detail.main.isImported' | translate}}</span>
-        {{ member.isImported ? ('general.yes' | translate) : ('general.no' | translate) }}
-      </mat-list-item>
-    </mat-list>
+      </div>
+
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           class="py-1"
+           *ngIf="member.mainData.birthday">
+        <span class="mat-text-muted">{{'general.members.detail.main.zodiac' | translate}}&nbsp;</span>
+        <span>{{ 'general.members.detail.zodiacList.' + memberService.getZodiac(member.mainData.birthday) | translate }}</span>
+      </div>
+
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           class="py-1">
+        <span class="mat-text-muted">{{'general.members.detail.main.isImported' | translate}}&nbsp;</span>
+        <span>{{ member.driveImport || member.dfbImport ? ('general.yes' | translate) : ('general.no' | translate) }}</span>
+      </div>
+    </div>
   </div>
 
-  <div fxFlexOffset="2"
-       fxFlex.gt-sm="32"
-       fxFlex.gt-xs="100">
+  <div fxFlex="25">
     <h3>{{'general.members.detail.main.contact' | translate}}</h3>
-    <mat-list dense
-              *ngIf="member.contact && (member.contact.email !== '' || member.contact.phoneHome !== '' || member.contact.phoneMobile !== '' || member.contact.phoneWork || member.contact.fax); else noContactTemplate">
-      <mat-list-item *ngIf="member.contact.email">
-        <span>{{'general.members.detail.main.email' | translate}}</span>
+
+    <div fxLayout="column"
+         *ngIf="member.contact && (member.contact.email !== '' || member.contact.phoneHome !== '' || member.contact.phoneMobile !== '' || member.contact.phoneWork || member.contact.fax); else noContactTemplate"
+         layout-align="center">
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           *ngIf="member.contact.email">
+        <span class="mat-text-muted">{{'general.members.detail.main.email' | translate}}&nbsp;</span>
         <a href="mailto: {{member.contact.email}}">{{member.contact.email}}</a>
-      </mat-list-item>
-      <mat-list-item *ngIf="member.contact.phoneHome">
-        <span>{{'general.members.detail.main.phoneHome' | translate}}</span>
-        {{member.contact.phoneHome}}
-      </mat-list-item>
-      <mat-list-item *ngIf="member.contact.phoneWork">
-        <span>{{'general.members.detail.main.phoneWork' | translate}}</span>
-        {{member.contact.phoneWork}}
-      </mat-list-item>
-      <mat-list-item *ngIf="member.contact.phoneMobile">
-        <span>{{'general.members.detail.main.phoneMobile' | translate}}</span>
-        {{member.contact.phoneMobile}}
-      </mat-list-item>
-      <mat-list-item *ngIf="member.contact.fax">
-        <span>{{'general.members.detail.main.fax' | translate}}</span>
-        {{member.contact.fax}}
-      </mat-list-item>
-    </mat-list>
+      </div>
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           *ngIf="member.contact.phoneHome">
+        <span class="mat-text-muted">{{'general.members.detail.main.phoneHome' | translate}}&nbsp;</span>
+        <span>{{member.contact.phoneHome}}</span>
+      </div>
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           *ngIf="member.contact.phoneWork">
+        <span class="mat-text-muted">{{'general.members.detail.main.phoneWork' | translate}}&nbsp;</span>
+        <span>{{member.contact.phoneWork}}</span>
+      </div>
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           *ngIf="member.contact.phoneMobile">
+        <span class="mat-text-muted">{{'general.members.detail.main.phoneMobile' | translate}}&nbsp;</span>
+        <span>{{member.contact.phoneMobile}}</span>
+      </div>
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           *ngIf="member.contact.fax">
+        <span class="mat-text-muted">{{'general.members.detail.main.fax' | translate}}&nbsp;</span>
+        <span>{{member.contact.fax}}</span>
+      </div>
+    </div>
+
   </div>
 
-  <div fxFlexOffset="2"
-       fxFlex.gt-sm="32"
-       fxFlex.gt-xs="100">
+  <div fxFlex="25">
     <h3>{{'general.members.detail.main.address' | translate}}</h3>
-    <mat-list dense
-              *ngIf="member.address; else noAddressTemplate">
-      <mat-list-item>
-        <p matLine>
-          {{member.address.streetName}} {{member.address.houseNumber}}<br/>
-          {{member.address.zip}} {{member.address.city}}<br/>
-          {{member.address.county}}
-        </p>
-      </mat-list-item>
-    </mat-list>
+
+    <div fxLayout="column"
+         *ngIf="member.address; else noAddressTemplate"
+         layout-align="center">
+
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1">
+        <span class="mat-text-muted">{{'general.street' | translate}}&nbsp;</span>
+        <span>{{member.address.streetName}} {{member.address.houseNumber}}</span>
+      </div>
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1">
+        <span class="mat-text-muted">{{'general.city' | translate}}&nbsp;</span>
+        <span>{{member.address.zip}} {{member.address.city}}</span>
+      </div>
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           class="py-1"
+           *ngIf="member.address.county">
+        <span class="mat-text-muted">{{'general.county' | translate}}&nbsp;</span>
+        <span>{{member.address.county}}</span>
+      </div>
+
+    </div>
 
     <h3 *ngIf="member.comment">{{'general.members.detail.main.comment' | translate}}</h3>
     <div [innerHtml]="member.comment"></div>
+
   </div>
+
+  <div fxFlex="25">
+    <img *ngIf="memberImage | async as image; else loadingTemplate"
+         mat-card-image
+         [src]="image.downloadURL">
+  </div>
+
 </div>
 
 <ng-template #noAddressTemplate>
@@ -96,4 +160,8 @@
 
 <ng-template #noBirthdayTemplate>
   <p>{{'general.members.detail.drive.noBirthday' | translate}}</p>
+</ng-template>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
 </ng-template>

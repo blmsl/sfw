@@ -1,12 +1,4 @@
-<div fxLayout.gt-sm="row"
-     fxLayout="column"
-     [formGroup]="form">
-
-  <div fxFlex.gt-sm="73"
-       fxFlex.gt-xs="100"
-       fxFlex="100">
-
-    <mat-card>
+    <mat-card [formGroup]="form">
       <mat-card-title>
         <mat-icon>mode_edit</mat-icon>
         {{'general.menu.member.edit' | translate}}
@@ -70,7 +62,7 @@
         </mat-tab-group>
       </mat-card-content>
     </mat-card>
-  </div>
+  <!--</div>
 
   <div fxFlexOffset.gt-sm="2"
        fxFlex.gt-sm="25"
@@ -83,7 +75,7 @@
     </media-uploader>
     <pre>{{member | json}}</pre>
   </div>
-</div>
+</div>-->
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

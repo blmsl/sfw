@@ -1,9 +1,9 @@
 <div fxLayout.gt-sm="row"
      fxLayout="column"
-     [formGroup]="form">
+     fxLayoutGap="10px"
+     [formGroup]="form" *ngIf="clubs$ | async as clubs; else loadingTemplate">
 
-  <div fxFlex.gt-sm="32"
-       fxFlex="100"
+  <div fxFlex.gt-sm="33,3333"
        formGroupName="clubData">
 
     <div fxLayout="column">
@@ -52,18 +52,16 @@
       <mat-form-field>
         <mat-select placeholder="{{'general.teams.edit.assignedClub' | translate}}"
                     formControlName="assignedClub">
-          <!--<mat-option *ngFor="let status of memberStateService.getMemberStates()"
-                      [value]="status">{{('general.members.clubMemberStates.' + status | translate)}}
-          </mat-option>-->
+          <mat-option *ngFor="let club of clubs"
+                      [value]="club.id">{{club.title}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
 
     </div>
   </div>
 
-  <div fxFlexOffset="2"
-       fxFlex.gt-sm="32"
-       fxFlex.gt-xs="100"
+  <div fxFlex.gt-sm="33,3333"
        formGroupName="ahData">
 
     <div fxLayout="column">
@@ -113,9 +111,7 @@
     </div>
   </div>
 
-  <div fxFlexOffset="2"
-       fxFlex.gt-sm="32"
-       fxFlex.gt-xs="100"
+  <div fxFlex.gt-sm="33,3333"
        formGroupName="dfbData">
 
     <div fxLayout="column">
@@ -200,3 +196,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>
