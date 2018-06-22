@@ -1,8 +1,9 @@
-<div fxLayout="row"
-     >
+<div fxLayout.gt-sm="row"
+     fxLayout="column"
+     fxLayoutGap="10px"
+     *ngIf="locations$ | async as locations; else loadingTemplate">
 
-  <div fxFlex.gt-sm="75"
-       fxFlex="100">
+  <div fxFlex.gt-sm="70">
     <mat-card class="mat-card-top">
       <mat-card-title>
         <mat-icon>map</mat-icon>
@@ -10,92 +11,63 @@
       </mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
 
-      <!--<mat-card-content class="map-wrapper">
-        <agm-map
-          [latitude]="lat"
-          [longitude]="lng"
-          [zoom]="zoom"
-          [disableDefaultUI]="true"
-          [zoomControl]="true">
-
-          <agm-marker
-            *ngFor="let m of markers; let i = index"
-            [latitude]="m.lat"
-            [longitude]="m.lng"
-            [label]="m.label">
-          </agm-marker>
-        </agm-map>
-      </mat-card-content>-->
-    </mat-card>
-  </div>
-
-  <div fxFlex.gt-sm="25"
-       fxFlex="100">
-    <mat-card [formGroup]="form">
-
-
-      <!-- [perfectScrollbar]="config"
-                        [disabled]="mediaMatcher.matches"
-                        style="max-height: calc(100vh - 353px)" -->
-
       <mat-card-content>
 
-        <div fxLayout="column"
-             *ngIf="categories$ | async as categories; else loadingTemplate">
+        <agm-map [latitude]="latitude"
+                 [longitude]="longitude"
+                 [zoom]="zoom"
+                 [disableDefaultUI]="false"
+                 [zoomControl]="true"
+                 (mapClick)="mapClicked($event)">
 
-          <mat-form-field fxFlex="100">
-            <mat-select formControlName="categoryFilter"
-                        multiple
-                        placeholder="{{'general.locations.map.filterByType' | translate}}">
-              <mat-option *ngFor="let category of categories | orderBy: ['title']"
-                          [value]="category.id">
-                {{category.title}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <agm-marker *ngFor="let m of markers; let i = index"
+                      [latitude]="m.lat"
+                      [longitude]="m.lng">
 
-          <mat-form-field fxFlex="100">
-            <input matInput
-                   placeholder="{{'general.locations.map.filterByTitle' | translate}}"
-                   formControlName="title">
-          </mat-form-field>
+            <agm-info-window>
+              <h3 style="color: black;">{{m.label}}</h3>
+              <address style="color: black;" *ngFor="let location of locations |filterBy: ['title'] : m.label">
+                {{location.address.streetName}} {{location.address.houseNumber}}<br/>
+                {{location.address.zip}} {{location.address.city}}
+              </address>
+            </agm-info-window>
 
-          <div fxFlex="100">
-            <button mat-raised-button
-                    type="button"
-                    [disabled]="!form.controls['categoryFilter'].value  && !form.controls['title'].value"
-                    color="primary"
-                    type="button"
-                    (click)="resetFilters()">
-              {{'general.locations.map.resetFilters' | translate}}
-            </button>
-
-            <button mat-raised-button
-                    color="warn"
-                    type="button"
-                    [disabled]="markers.length === 0"
-                    (click)="resetMarkers(true)">
-              {{'general.locations.map.resetMarkers' | translate}}
-            </button>
-          </div>
-
-        </div>
-
-        <mat-selection-list dense
-                            *ngIf="locations$; else loadingTemplate"
-                            formControlName="selectedOptions">
-          <mat-list-option
-            *ngFor="let location of locations$ | async
-            | categoryFilter: 'assignedCategory' : form.controls['categoryFilter'].value
-            | filterBy: ['title']: form.controls['title'].value
-            | orderBy: ['title']"
-            [value]="location">
-            {{location.title}}
-          </mat-list-option>
-        </mat-selection-list>
+          </agm-marker>
+        </agm-map>
 
       </mat-card-content>
     </mat-card>
+  </div>
+
+  <div fxFlex.gt-sm="30">
+    <mat-card>
+      <mat-card-content *ngIf="categories$ | async as categories; else loadingTemplate">
+        <location-map-filter [categories]="categories"
+                             [markers]="markers"
+                             (resetMarkers)="resetMarkers()"
+                             (changeFilters)="changeFilters($event)">
+        </location-map-filter>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-title>{{'general.menu.location.main' | translate}}</mat-card-title>
+      <mat-card-content [perfectScrollbar]="config"
+                        style="max-height: calc(100vh - 353px)">
+        <mat-selection-list dense
+                            (selectionChange)="toggleLocationsMarker()"
+                            #selectedLocations>
+          <mat-list-option *ngFor="let location of locations
+                                | categoryFilter: 'assignedCategory' : categoriesFilter
+                                | filterBy: ['title']: titleFilter
+                                | orderBy: ['title']"
+                           [value]="location">
+            {{location.title}}
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-card-content>
+    </mat-card>
+
   </div>
 </div>
 

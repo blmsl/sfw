@@ -1,0 +1,37 @@
+<div fxLayout="column"
+     [formGroup]="form">
+
+  <mat-selection-list fxFlex="100"
+                      formControlName="categoriesFilter"
+                      #categorySelect
+                      multiple="true">
+    <mat-list-option *ngFor="let category of categories" [value]="category.id">
+      {{category.title}}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <mat-form-field fxFlex="100">
+    <input matInput
+           placeholder="{{'general.locations.map.filterByTitle' | translate}}"
+           formControlName="titleFilter">
+  </mat-form-field>
+</div>
+
+<div fxLayout="column"
+     fxLayoutGap="10px">
+  <button mat-raised-button
+          type="button"
+          [disabled]="!form.get('titleFilter').value && categorySelect.selectedOptions.selected.length === categories.length"
+          color="primary"
+          (click)="resetFilters()">
+    {{'general.locations.map.resetFilters' | translate}}
+  </button>
+
+  <button mat-raised-button
+          color="warn"
+          type="button"
+          [disabled]="markers.length === 0"
+          (click)="resetMarkers.emit()">
+    {{'general.locations.map.resetMarkers' | translate}}
+  </button>
+</div>

@@ -2,28 +2,47 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MapsAPILoader } from '@agm/core';
 import { IAddress } from '../../interfaces/location/address.interface';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 declare var google: any;
 
 @Injectable()
 export class MapsService {
 
-  google: any;
+  public google: any;
+
+  public center: {
+    latitude: number;
+    longitude: number;
+  } = {
+    latitude: 49.480584,
+    longitude: 7.097050
+  };
 
   constructor(private http: HttpClient,
               private mapsAPILoader: MapsAPILoader) {
   }
 
-  streetName?: string;        //
-  houseNumber?: number | '';  //
-  city?: string;              //
-  zip?: number | '';          //
-  county?: string;
+  async getMapCenter(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position: Position) => {
+          return resolve(position);
+        });
+      } else {
+        const position = {
+          coords: this.center,
+          timestamp: +new Date()
+        };
+        return resolve(position);
+      }
+    });
+  }
+
 
   getLatLngFromAddress(address: IAddress): Observable<any> {
 
-    const locationString = address.streetName + '' + address.houseNumber + ' ' + address.zip  + ' ' + address.city + ' ' + address.county;
+    const locationString = address.streetName + '' + address.houseNumber + ' ' + address.zip + ' ' + address.city + ' ' + address.county;
 
     return Observable.create(observer => {
       this.mapsAPILoader.load().then(() => {
@@ -33,38 +52,13 @@ export class MapsService {
             observer.next(results[0].geometry.location);
             observer.complete();
           } else {
-            console.log('Error - ', results, ' & Status - ', status);
-            observer.next({});
-            observer.complete();
+            observer.error(status);
           }
         });
-      })
-        .catch((err:any) => {
-          console.log('Error -  & Status - ', err);
-          observer.next({});
-          observer.complete();
-        });
+      }).catch((err: any) => {
+        observer.error(err);
+      });
     })
   }
 
-  /*
-if (navigator.geolocation) {
-
-          navigator.geolocation.getCurrentPosition(function (position) {
-
-            const center = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            console.log('center: ', center)
-
-          }, function () {
-
-            console.log('Error in the geolocation service.');
-          });
-        } else {
-
-          console.log('Browser does not support geolocation.');
-}
- */
 }
