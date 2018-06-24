@@ -159,7 +159,7 @@ export class TeamEditComponent implements OnInit {
   initCreation(): FormGroup {
     return this.fb.group({
       at: this.team.creation.at,
-      from: this.team.creation.from
+      from: this.team.creation.by
     });
   }
 

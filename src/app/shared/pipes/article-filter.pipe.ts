@@ -13,7 +13,7 @@ export class ArticleFilterPipe implements PipeTransform {
     tags: string[]
   }): IArticle[] {
 
-    let retItems: IArticle[] = [];
+    let retItems: IArticle[];
 
     if (!articles) {
       return;
@@ -22,21 +22,22 @@ export class ArticleFilterPipe implements PipeTransform {
     if (!filters) {
       return articles;
     }
+    retItems = articles.filter(item => {
+      let notMatchingField = Object.keys(filters).find(key => {
 
-    for(let option in filters){
-      if(filters[option]){
+        let value = "";
+        if (key == "creation" && filters[key].from) {
+          value = item[key].from;
+          return value !== filters[key].by
+        }
+        if (key == "publication" && filters[key].status) {
+          value = item[key].status;
+          return value !== filters[key].status
+        }
+      });
 
-        console.log(typeof filters[option]);
-
-        articles.filter((article: IArticle) => {
-          console.log(article['creation']['by']);
-          if(article['creation.by'] === filters[option]){
-            console.log(option);
-            retItems.push(article);
-          }
-        });
-      }
-    }
+      return !notMatchingField; // true if matches all fields
+    });
 
     return retItems;
   }

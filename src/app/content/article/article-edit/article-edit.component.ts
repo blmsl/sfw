@@ -155,7 +155,7 @@ export class ArticleEditComponent implements OnInit {
 
   initCreation(): FormGroup {
     return this.fb.group({
-      by: this.article.creation.from,
+      by: this.article.creation.by,
       at: this.article.creation.at
     });
   }

@@ -163,7 +163,7 @@ export class MemberEditComponent implements OnInit {
   initCreation(): FormGroup {
     return this.fb.group({
       at: this.member.creation.at,
-      from: this.member.creation.from
+      from: this.member.creation.by
     });
   }
 
