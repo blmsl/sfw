@@ -25,7 +25,7 @@ export class ArticleFilterPipe implements PipeTransform {
     retItems = articles.filter(item => {
       let notMatchingField = Object.keys(filters).find(key => {
 
-        let value = "";
+        let value: any;
         if (key == "creation" && filters[key].by) {
           value = item[key].by;
           return value !== filters[key].by
@@ -39,6 +39,19 @@ export class ArticleFilterPipe implements PipeTransform {
       return !notMatchingField; // true if matches all fields
     });
 
+
+    if (filters["sorting"]) {
+      const sorting = filters["sorting"];
+      if (sorting == "asc") {
+        retItems = retItems.sort( (a,b) => {
+          return b.creation.at.seconds - a.creation.at.seconds;
+        });
+      } else if (sorting == "desc") {
+        retItems = retItems.sort( (a,b) => {
+          return a.creation.at.seconds - b.creation.at.seconds;
+        });
+      }
+    }
     return retItems;
   }
 
