@@ -26,8 +26,8 @@ export class ArticleFilterPipe implements PipeTransform {
       let notMatchingField = Object.keys(filters).find(key => {
 
         let value = "";
-        if (key == "creation" && filters[key].from) {
-          value = item[key].from;
+        if (key == "creation" && filters[key].by) {
+          value = item[key].by;
           return value !== filters[key].by
         }
         if (key == "publication" && filters[key].status) {
