@@ -21,10 +21,11 @@ export class MemberDetailMainComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.member)
+    if (this.member) {
       if (!this.memberImage) {
         this.memberImage = this.mediaItemService.getCurrentImage(['members', 'profile'], this.member.id);
       }
+    }
   }
 
 }

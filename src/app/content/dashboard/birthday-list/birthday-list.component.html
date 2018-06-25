@@ -1,13 +1,13 @@
 <mat-list-item *ngFor="let member of members; let last = last">
-  <img *ngIf="sponsorLogo | async as image; else loadingTemplate"
+  <img
        mat-list-avatar
-       [src]="image.downloadURL">
+       [src]="(getMemberImage(member) | async)?.downloadURL">
   <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
   <p mat-line>
     <span class="demo-secondary-text">
       <!--{{'general.dashboard.isGetting' | translate}}-->
       {{ !birthdays[member.id] ? setAge(member) : birthdays[member.id]}}
-      {{'general.dashboard.yearsOld' | translate}}
+      {{'general.dashboard.yearsOld' | translate}}<!---->
     </span>
   </p>
   <mat-divider inset="true" *ngIf="!last"></mat-divider>
