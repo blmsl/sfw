@@ -3,5 +3,5 @@ export interface ICreation {
     seconds: number,
     nanoseconds: number
   };
-  from: string;
+  by: string;
 }

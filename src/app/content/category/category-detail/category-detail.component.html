@@ -24,7 +24,7 @@
 
       <mat-card-header>
         <mat-card-title>
-              <span *ngIf="category.creation.from === 'system'" translate>
+              <span *ngIf="category.creation.by === 'system'" translate>
                   {{'general.tables.importedViaScript'}}
                 </span>
           <creation-date [creation]="category.creation.at"></creation-date>

@@ -50,7 +50,7 @@ export class ArticlesComponent implements OnInit {
       publication: this.fb.group({
         status: undefined
       }),
-      sorting: '-'
+      sorting: 'desc'
     });
 
     this.form.valueChanges.pipe(
