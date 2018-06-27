@@ -1,5 +1,5 @@
-<div [formGroup]="form"
-     *ngIf="locations && seasons && categories && categoryTypes && teams; else loadingTemplate"
+<div *ngIf="locations && seasons && categories && categoryTypes && teams; else loadingTemplate"
+     [formGroup]="form"
      fxLayout="column">
 
   <mat-form-field fxFlex.gt-sm="49">
@@ -18,9 +18,8 @@
                 multiple>
       <mat-optgroup *ngFor="let season of seasons | orderBy: ['-title']"
                     [label]="season.title">
-        <mat-option
-          *ngFor="let team of teams | filterBy: ['assignedSeason'] : season.id | orderBy: ['title', 'subTitle']"
-          [value]="team.id">
+        <mat-option *ngFor="let team of teams | filterBy: ['assignedSeason'] : season.id | orderBy: ['title', 'subTitle']"
+                    [value]="team.id">
           {{team.title}} {{team.subTitle}}
         </mat-option>
       </mat-optgroup>
@@ -29,7 +28,8 @@
 
   <mat-form-field fxFlex.gt-sm="49">
     <mat-select placeholder="{{'general.articles.edit.sidebar.links.assignedArticleCategories' | translate}}"
-                formControlName="assignedCategories" multiple>
+                formControlName="assignedCategories"
+                multiple>
       <mat-optgroup *ngFor="let categoryType of categoryTypes"
                     [label]="'general.menu.' + categoryType.link + '.main' | translate">
         <mat-option
@@ -57,7 +57,6 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-
 </div>
 
 <ng-template #matchLoadingTemplate>

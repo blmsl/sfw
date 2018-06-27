@@ -106,6 +106,7 @@
           "saving": "Speichere ...",
           "success": "Gespeichert"
         },
+        "deleted": "Der Artikel wurde unwiderruflich gelöscht.",
         "deleteArticle": "Artikel löschen",
         "options": {
           "title": "Optionen"

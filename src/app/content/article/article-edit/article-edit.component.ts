@@ -10,6 +10,7 @@ import { ApplicationService } from '../../../shared/services/application/applica
 import { AlertService } from '../../../shared/services/alert/alert.service';
 import { CustomValidators } from 'ng2-validation';
 import * as moment from 'moment';
+import * as firebase from 'firebase';
 
 const SMALL_WIDTH_BREAKPOINT = 960;
 
@@ -28,7 +29,6 @@ export class ArticleEditComponent implements OnInit {
   public article: IArticle;
   public articleStatus: string = 'new';
   public form: FormGroup;
-  public socialProviders: any[] = [];
   public showPreview: boolean = false;
 
   public items: any = [];
@@ -47,19 +47,20 @@ export class ArticleEditComponent implements OnInit {
   ];
 
   constructor(private route: ActivatedRoute,
-    public breakpointObserver: BreakpointObserver,
-    public authService: AuthService,
-    private router: Router,
-    private zone: NgZone,
-    private alertService: AlertService,
-    private articleService: ArticleService,
-    private applicationService: ApplicationService,
-    private fb: FormBuilder) {
+              public breakpointObserver: BreakpointObserver,
+              public authService: AuthService,
+              private router: Router,
+              private zone: NgZone,
+              private alertService: AlertService,
+              private articleService: ArticleService,
+              private applicationService: ApplicationService,
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {
     this.route.data.subscribe((data: { article: IArticle }) => {
       this.article = data.article;
+      this.articleStatus = 'edit';
     });
 
     this.breakpointObserver
@@ -69,33 +70,44 @@ export class ArticleEditComponent implements OnInit {
         this.isSmallDevice = !this.sidePanelOpened;
       });
 
+    let articleDate: any;
+    if(this.article.articleDate){
+      const timestamp = <firebase.firestore.Timestamp>this.article.articleDate;
+      articleDate = timestamp.toDate();
+    }
+
     this.form = this.fb.group({
-      title: this.article.title,
-      subTitle: this.article.subTitle,
-      excerpt: this.article.excerpt,
-      text: this.article.text,
+      title: [this.article.title, [Validators.required, Validators.minLength(10)]],
+      text: [this.article.text, [Validators.required, Validators.minLength(10)]],
       publication: this.initPublication(),
-      creation: this.initCreation(),
-      meta: this.initMetaData(),
-      articleDate: this.article.articleDate,
-      // postImage: string;*/
+
+      // Main-Data
+      excerpt: this.article.excerpt,
+      subTitle: this.article.subTitle,
       postURL: this.article.postURL,
-      assignedTags: this.article.assignedTags,
-      assignedCategories: this.article.assignedCategories,
-      assignedTeams: this.article.assignedTeams,
-      assignedLocation: this.article.assignedLocation,
-      // assignedSeason: this.article.assignedSeason,
-      assignedMatch: this.article.assignedMatch,
+      articleDate: articleDate ? articleDate : '',
       isFeaturedPost: this.article.isFeaturedPost,
-      isMatch: !!this.article.assignedMatch
+      creation: this.initCreation(),
+      assignedTags: this.article.assignedTags,
+
+      // Links
+      assignedLocation: this.article.assignedLocation,
+      assignedTeams: [ this.article.assignedTeams ],
+      assignedMatch: this.article.assignedMatch,
+      assignedCategories: [ this.article.assignedCategories ],
+      isMatch: !!this.article.assignedMatch,
+
+      // Meta
+      meta: this.initMetaData()
     });
 
     this.form.valueChanges.pipe(
       debounceTime(1500),
       distinctUntilChanged()
     ).subscribe((changes: any) => {
+
       this.articleStatus = 'saving';
-      // reset assignedMatch if checkbox is not active
+
       if (!changes.isMatch) {
         changes.assignedMatch = null;
       }
@@ -108,18 +120,9 @@ export class ArticleEditComponent implements OnInit {
 
       this.article = Object.assign({}, this.article, changes);
 
-      console.log(this.article.id);
-
-      /* if (!this.form.invalid) {
-      this.articleService.createArticle(changes)
-        .then(() => {
-          this.articleStatus = 'success';
-        })
-        .catch((error: any) => {
-          this.alertService.showSnackBar('error', error.message);
-          this.articleStatus = 'error';
-        });
-      // } */
+      if (this.form.valid) {
+        this.saveArticle(this.article);
+      }
     });
 
   }
@@ -139,7 +142,7 @@ export class ArticleEditComponent implements OnInit {
         description: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.description : ''
       }),
       twitter: this.fb.group({
-        title: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter : '',
+        title: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.title : '',
         description: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.description : ''
       })
     });
@@ -167,16 +170,40 @@ export class ArticleEditComponent implements OnInit {
 
   removeArticle(): void {
     if (this.article.id) {
-      console.log(this.article.id);
-      // this.articleService.removeArticle(this.article).then(() => this.redirectToList());
+      this.articleService.removeArticle(this.article).then(() => {
+        this.alertService.showSnackBar('success', 'general.articles.edit.deleted');
+        this.redirectToList();
+      });
     } else {
-      console.log('unsaved article');
+      this.redirectToList();
     }
-    this.redirectToList();
   }
 
   redirectToList(): void {
     this.router.navigate(['/articles']).then();
+  }
+
+  uploadCompleted(articleId: string): void {
+    if (!this.article.id) {
+      this.article.id = articleId;
+    }
+  }
+
+  saveArticle(article: IArticle) {
+    let action;
+    if (this.article.id) {
+      action = this.articleService.updateArticle(article.id, article);
+    } else {
+      action = this.articleService.createArticle(article);
+    }
+    action
+      .then(() => {
+        this.articleStatus = 'success';
+      })
+      .catch((error: any) => {
+        this.alertService.showSnackBar('error', error.message);
+        this.articleStatus = 'error';
+      });
   }
 
 }

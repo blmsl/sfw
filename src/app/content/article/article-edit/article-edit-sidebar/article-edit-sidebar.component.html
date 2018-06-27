@@ -4,6 +4,7 @@
 
   <mat-tab label="{{ 'general.articles.edit.sidebar.main.title' | translate }}">
     <sidebar-main-data [form]="form"
+                       [article]="article"
                        [users]="users$ | async">
     </sidebar-main-data>
 
@@ -30,6 +31,8 @@
 
   <mat-tab label="{{ 'general.articles.edit.sidebar.meta.title' | translate }}">
     <sidebar-meta-data *ngIf="selectedTab === 2"
+                       (uploadCompleted)="uploadCompleted.emit($event)"
+                       [article]="article"
                        [form]="form">
     </sidebar-meta-data>
   </mat-tab>

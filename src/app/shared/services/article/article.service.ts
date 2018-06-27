@@ -5,6 +5,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { AuthService } from '../auth/auth.service';
 import { IPublication } from '../../interfaces/publication.interface';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as moment from 'moment';
 
 @Injectable()
 export class ArticleService {
@@ -34,6 +35,9 @@ export class ArticleService {
 
   createArticle(article: IArticle): Promise<void> {
     article.id = this.afs.createId();
+    if(article.publication.dateTime){
+      article.publication.dateTime= article.publication.dateTime.toString();
+    }
     return this.afs.collection(this.path).doc(article.id).set(article);
   }
 
@@ -42,6 +46,9 @@ export class ArticleService {
   }
 
   updateArticle(articleId: string, article: IArticle): Promise<any> {
+    if(article.publication.dateTime){
+      article.publication.dateTime= article.publication.dateTime.toString();
+    }
     return this.afs.collection(this.path).doc(articleId).update(article);
   }
 

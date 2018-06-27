@@ -4,4 +4,5 @@ export interface IUploaderConfig {
   removeAfterUpload?: boolean;
   showQueue?: boolean;
   headerTitle?: string;
+  showHeader?: boolean;
 }

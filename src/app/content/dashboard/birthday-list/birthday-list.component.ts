@@ -16,6 +16,7 @@ export class BirthdayListComponent implements OnInit, AfterViewChecked {
   @Input() members: IMember[];
 
   public birthdays: number[] = [];
+  public assignedObjects: string[] = ['members', 'profile'];
 
   constructor(private cdRef: ChangeDetectorRef,
               private mediaItemService: MediaItemService,
@@ -31,12 +32,6 @@ export class BirthdayListComponent implements OnInit, AfterViewChecked {
 
   setAge(member: IMember) {
     this.birthdays[member.id] = this.memberService.calculateAge(member.mainData.birthday);
-  }
-
-  getMemberImage(member: IMember): Observable<IMediaItem> {
-    if (member) {
-      return this.mediaItemService.getCurrentImage(['members', 'profile'], member.id);
-    }
   }
 
 }

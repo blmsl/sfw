@@ -15,6 +15,7 @@ import { SeasonService } from '../../../../shared/services/season/season.service
 import { TeamService } from '../../../../shared/services/team/team.service';
 import { ApplicationService } from '../../../../shared/services/application/application.service';
 import { IApplication } from '../../../../shared/interfaces/application.interface';
+import { IArticle } from '../../../../shared/interfaces/article.interface';
 
 @Component({
   selector: 'article-edit-sidebar',
@@ -24,6 +25,7 @@ import { IApplication } from '../../../../shared/interfaces/application.interfac
 export class ArticleEditSidebarComponent {
 
   @Input() form: FormGroup;
+  @Input() article: IArticle;
 
   public applications$: Observable<IApplication[]>;
   public categories$: Observable<ICategory[]>;
@@ -34,6 +36,7 @@ export class ArticleEditSidebarComponent {
   public users$: Observable<IUser[]>;
 
   @Output() removeArticle: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() uploadCompleted: EventEmitter<string> = new EventEmitter<string>(false);
 
   public selectedTab: number;
 

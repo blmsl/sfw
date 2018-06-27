@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, DocumentSnapshot } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/take';
-import { map, take } from "rxjs/internal/operators";
+import { map, take } from 'rxjs/internal/operators';
 
 // Options to reproduce firestore queries consistently
 interface QueryConfig {
@@ -34,11 +34,10 @@ export class PaginationService {
   done: Observable<boolean> = this._done.asObservable();
   loading: Observable<boolean> = this._loading.asObservable();
 
-
   constructor(private afs: AngularFirestore) {
-    this.loading.subscribe( (isLoading) => {
-      console.log("isLoading: " + isLoading);
-    })
+    this.loading.subscribe((isLoading) => {
+      console.log('isLoading: ' + isLoading);
+    });
   }
 
 
@@ -72,7 +71,7 @@ export class PaginationService {
 
   // Retrieves additional data from firestore
   more() {
-    if(this.cursor !== undefined) {
+    if (this.cursor !== undefined) {
       const more = this.afs.collection(this.query.path, ref => ref
         .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
         .limit(this.query.limit)
@@ -83,7 +82,7 @@ export class PaginationService {
   }
 
 
-  // Determines the doc snapshot to paginate query
+  /* Determines the doc snapshot to paginate query
   private getCursor() {
     const current = this._data.value;
 
@@ -91,7 +90,7 @@ export class PaginationService {
       return this.query.prepend ? current[0].id : current[current.length - 1].id;
     }
     return null;
-  }
+  } */
 
   // Maps the snapshot to usable format the updates source
   private mapAndUpdate(col: AngularFirestoreCollection<any>) {
@@ -105,13 +104,13 @@ export class PaginationService {
 
     // Map snapshot with doc ref (needed for cursor)
     return col.valueChanges().pipe(
-      map( arr => {
+      map(arr => {
         // If prepending, reverse array
         let values = this.query.prepend ? arr.reverse() : arr;
         // update source with new values, done loading
         this._data.next(values);
         this.tempValues = this.tempValues.concat(values);
-        col.ref.get().then( (snapshot) => {
+        col.ref.get().then((snapshot) => {
           this.cursor = snapshot.docs[this.tempValues.length - 1];
           this._loading.next(false);
         });

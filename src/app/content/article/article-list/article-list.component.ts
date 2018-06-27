@@ -31,6 +31,7 @@ export class ArticleListComponent implements OnInit {
   public config: PerfectScrollbarConfigInterface = {};
   public form: FormGroup;
   public itemsPerPageOptions = [5, 10, 25, 50, 100];
+  public isLoading: boolean = false;
 
   constructor(public paginationService: PaginationService) {
   }
@@ -45,6 +46,10 @@ export class ArticleListComponent implements OnInit {
         prepend: false
       }
     );
+
+    this.paginationService.loading.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
   }
 
   onScroll() {

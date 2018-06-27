@@ -1,27 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { IArticle } from '../../shared/interfaces/article.interface';
 import { ArticleService } from '../../shared/services/article/article.service';
 import { Observable } from 'rxjs';
-import {
-  startWith,
-  map,
-  take
-} from 'rxjs/operators';
-import { tap } from 'rxjs/internal/operators';
+import { map, take } from 'rxjs/operators';
 import { SeoService } from '../../shared/services/seo/seo.service';
-import { TransferState, makeStateKey, StateKey } from '@angular/platform-browser';
-
-const ARTICLE_ID = makeStateKey<any>('articleId');
 
 @Injectable()
 export class ArticleResolver implements Resolve<IArticle> {
 
   constructor(private articleService: ArticleService,
-    private seoService: SeoService,
-    private state: TransferState,
-    private router: Router,
-    private route: ActivatedRoute) {
+              private seoService: SeoService,
+              private router: Router) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IArticle> {
@@ -30,7 +20,27 @@ export class ArticleResolver implements Resolve<IArticle> {
       return this.articleService.setNewArticle();
     }
 
-    return this.ssrFirestoreDoc(this.route.snapshot.paramMap.get('articleId'));
+    return this.articleService.getArticleById(route.params['articleId']).pipe(
+      take(1),
+      map((article: IArticle) => {
+        if (article && article.id) {
+          return article;
+        } else {
+          this.router.navigate(['/articles']).then();
+        }
+      })
+    );
+  }
+
+  /*
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IArticle> {
+    if (Object.keys(route.params).length === 0) {
+        return this.articleService.setNewArticle();
+      }
+
+      return this.ssrFirestoreDoc(this.route.snapshot.paramMap.get('articleId'));
+    }
   }
 
   ssrFirestoreDoc(articleId: string) {
@@ -46,6 +56,7 @@ export class ArticleResolver implements Resolve<IArticle> {
       }),
       startWith(exists)
     );
-  }
+  } */
 
 }
+

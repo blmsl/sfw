@@ -10,8 +10,13 @@
        [infiniteScrollThrottle]="1000"
        (scrolled)="onScroll()">
     <mat-list *ngIf="paginationService.data | async as articles; else loadingTemplate">
+
+      <mat-list-item *ngIf="!isLoading && articles.length === 0">
+        <p matLine style="color: red; text-align: center"> {{'general.articles.list.noResult' | translate}}
+      </mat-list-item>
+
       <mat-list-item *ngFor="let article of articles | articleFilter: filters">
-        <h1 matLine>{{article.title}}</h1>
+        <h1 matLine><a [routerLink]="['./edit', article.id]">{{article.title}}</a></h1>
         <p matLine [innerHTML]="article.excerpt ? article.excerpt : article.text"></p>
         <div matLine>
           <button mat-raised-button
@@ -21,7 +26,7 @@
           {{'general.from' | translate}}
           <user-avatar [userId]="article.creation.by"
                        [users]="users">
-        </user-avatar>
+          </user-avatar>
           — {{article.creation.at.seconds *1000 | timeago:live}}
         </div>
         <hr style="margin: 25px 0" matLine/>

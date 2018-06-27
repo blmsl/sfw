@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-header fxLayout="row">
 
-    <mat-card-title>
+    <mat-card-title *ngIf="uploaderConfig.showHeader">
       <span *ngIf="uploaderConfig.headerTitle">{{uploaderConfig.headerTitle | translate}}</span>
       <span *ngIf="!uploaderConfig.headerTitle">
         {{uploaderOptions.queueLimit > 1 ? 'Multiple Upload' : 'Single Upload' }}
@@ -32,7 +32,8 @@
   <mat-card-content>
 
     <div class="dropZone"
-         [style.backgroundImage]="'url('+ (currentMediaItem | async)?.downloadURL +')'"
+         *ngIf="currentMediaItem | async as bgImage; else loadingTemplate"
+         [style.backgroundImage]="'url('+ bgImage.downloadURL +')'"
          dropZone
          (hovered)="toggleHover($event)"
          (dropped)="handleDrop($event)"

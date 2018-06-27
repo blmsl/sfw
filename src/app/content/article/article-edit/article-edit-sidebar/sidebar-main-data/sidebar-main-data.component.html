@@ -3,9 +3,10 @@
      *ngIf="users; else loadingTemplate"
      fxLayoutAlign="space-between stretch">
 
-  <div class="post-image">
-    Post Image
-  </div>
+  <media-uploader (uploadCompleted)="uploadCompleted.emit($event)"
+                  [uploaderConfig]="uploaderConfig"
+                  [uploaderOptions]="uploaderOptions">
+  </media-uploader>
 
   <mat-form-field input fxFlex="100">
       <textarea matInput

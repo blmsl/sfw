@@ -1,4 +1,6 @@
 <mat-sidenav-container fxFlexFill
+                       *ngIf="article"
+                       [formGroup]="form"
                        style="padding: 0 25px;">
 
   <mat-sidenav #settings
@@ -20,12 +22,14 @@
     </div>
 
     <article-edit-sidebar [form]="form"
+                          [article]="article"
+                          (uploadCompleted)="uploadCompleted($event)"
                           (removeArticle)="removeArticle()">
     </article-edit-sidebar>
 
   </mat-sidenav>
 
-  <mat-sidenav-content [formGroup]="form">
+  <mat-sidenav-content>
 
     <div class="header">
       <h2 class="title">{{'general.articles.edit.title' | translate}}
@@ -57,7 +61,8 @@
                   [disabled]="!form.get('text').value"
                   [color]="showPreview ? 'warn' : ''"
                   title="{{'general.articles.edit.show.text' | translate}}">
-            {{ showPreview ? ('general.articles.edit.show.text' | translate) :  'general.articles.edit.show.preview' | translate}}
+            {{ showPreview ? ('general.articles.edit.show.text' | translate) : 'general.articles.edit.show.preview' |
+            translate}}
           </button>
           <button *ngIf="isSmallDevice"
                   [title]="sidePanelOpened ? ('general.articles.edit.options.close' | translate) : ('general.articles.edit.options.show' | translate)"
@@ -130,10 +135,12 @@
                     [spellcheck]="true">
     </app-ngx-editor>
 
-    <pre>{{article | json}}</pre>
+    <!--<pre>{{article | json}}</pre>-->
 
     <div *ngIf="showPreview">
-      <h1>{{form.get('title').value ? form.get('title').value : 'general.articles.edit.titlePlaceholder' | translate}}</h1>
+      <h1>
+        {{form.get('title').value ? form.get('title').value : 'general.articles.edit.titlePlaceholder' | translate}}
+      </h1>
       <div [innerHtml]="form.get('text').value | sanitizeHtml"></div>
     </div>
 

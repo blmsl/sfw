@@ -1,7 +1,11 @@
 <mat-list-item *ngFor="let member of members; let last = last">
-  <img
+  <media-avatar [assignedObjects]="assignedObjects"
+                [itemId]="member.id">
+  </media-avatar>
+
+  <!--<img *ngIf="(getMemberImage(member) | async) as image; else loadingTemplate"
        mat-list-avatar
-       [src]="(getMemberImage(member) | async)?.downloadURL">
+       [src]="image.downloadURL">-->
   <h4 mat-line>{{member.mainData.firstName}} {{member.mainData.lastName}}</h4>
   <p mat-line>
     <span class="demo-secondary-text">

@@ -32,6 +32,10 @@
   padding-top: 0.10001rem;
 }
 
+.title-document.ng-dirty.ng-invalid, .title-document.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
 .spacer {
   flex: 1 1 auto;
 }

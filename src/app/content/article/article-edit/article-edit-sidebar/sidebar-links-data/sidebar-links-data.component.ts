@@ -8,6 +8,7 @@ import { ICategoryType } from '../../../../../shared/interfaces/category-type.in
 import { ISeason } from '../../../../../shared/interfaces/season.interface';
 import { MatchService } from '../../../../../shared/services/match/match.service';
 import { IMatch } from '../../../../../shared/interfaces/match.interface';
+import { IArticle } from '../../../../../shared/interfaces/article.interface';
 
 @Component({
   selector: 'sidebar-links-data',

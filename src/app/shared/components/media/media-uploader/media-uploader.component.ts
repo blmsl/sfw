@@ -44,7 +44,7 @@ export class MediaUploaderComponent implements OnInit {
     if (this.uploaderOptions.queueLimit === 1) {
       this.currentMediaItem = this.mediaItemService.getCurrentImage(
         this.uploaderOptions.assignedObjects,
-        this.uploaderOptions.itemId
+        this.uploaderOptions.itemId ? this.uploaderOptions.itemId : ''
       );
     }
   }
@@ -103,6 +103,7 @@ export class MediaUploaderComponent implements OnInit {
 
     // create Id, if not exists
     if (!this.uploaderOptions.itemId) {
+      console.log(this.uploaderOptions.itemId);
       this.uploaderOptions.itemId = this.afs.createId();
     }
 
