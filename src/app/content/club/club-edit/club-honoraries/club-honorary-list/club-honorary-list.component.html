@@ -1,7 +1,6 @@
-<p *ngIf="form.controls.length === 0">
+<p *ngIf="!form.controls">
   {{'general.clubs.edit.honoraries.noHonoraries' | translate}}
 </p>
-
 
 <mat-accordion fxLayout="column"
                dense>
