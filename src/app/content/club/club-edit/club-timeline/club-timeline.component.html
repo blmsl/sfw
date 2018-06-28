@@ -1,14 +1,31 @@
-<div fxLayout="column">
+<div fxLayout="column"
+     *ngIf="articles$ | async as articles; else loadingTemplate">
+
   <h3>{{'general.clubs.edit.timeLineTitle' | translate}}</h3>
 
-  <time-line (add)="add.emit($event)"
+  <div>
+    <button mat-raised-button
+            style="margin-bottom: 25px;"
+            type="button"
+            color="accent"
+            (click)="add.emit()">
+      {{'general.timeLine.addEvent' | translate}}
+    </button>
+  </div>
+
+  <time-line (add)="add.emit()"
              (cancel)="cancel.emit()"
              (delete)="delete.emit($event)"
              (edit)="edit.emit($event)"
-             (save)="save.emit($event)"
+             (save)="save.emit()"
              [showLinks]="true"
              [selectedTimeLineEvent]="selectedTimeLineEvent"
+             [articles]="articles"
              [form]="form.controls['timeLine']">
   </time-line>
 
 </div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

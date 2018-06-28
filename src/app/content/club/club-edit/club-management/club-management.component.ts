@@ -19,11 +19,11 @@ export class ClubManagementComponent implements OnInit {
   @Input() positions: ICategory[];
   @Input() showLinks: boolean;
 
-  @Output() add: EventEmitter<boolean> = new EventEmitter<boolean>(false);
-  @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() add: EventEmitter<void> = new EventEmitter<void>(false);
+  @Output() save: EventEmitter<void> = new EventEmitter<void>(false);
 
-  @Output() delete: EventEmitter<IClubManagement> = new EventEmitter<IClubManagement>(false);
-  @Output() edit: EventEmitter<IClubManagement> = new EventEmitter<IClubManagement>(false);
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
+  @Output() edit: EventEmitter<number> = new EventEmitter<number>(false);
 
   constructor() {
   }

@@ -60,7 +60,9 @@ export class ArticleEditComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: { article: IArticle }) => {
       this.article = data.article;
-      this.articleStatus = 'edit';
+      if(data.article.id) {
+        this.articleStatus = 'edit';
+      }
     });
 
     this.breakpointObserver
@@ -120,8 +122,11 @@ export class ArticleEditComponent implements OnInit {
 
       this.article = Object.assign({}, this.article, changes);
 
+      console.log(this.form);
       if (this.form.valid) {
         this.saveArticle(this.article);
+      } else {
+        this.articleStatus = 'error';
       }
     });
 
@@ -150,8 +155,8 @@ export class ArticleEditComponent implements OnInit {
 
   initPublication(): FormGroup {
     return this.fb.group({
-      by: this.article.publication ? this.article.publication.from : null,
-      dateTime: [this.article.publication && this.article.publication.dateTime ? this.article.publication.dateTime : new Date(), Validators.compose([Validators.required, CustomValidators.date])],
+      by: this.article.publication && this.article.publication.from ? this.article.publication.from : this.authService.userId,
+      dateTime: [this.article.publication && this.article.publication.dateTime ? new Date(this.article.publication.dateTime) : new Date(), Validators.compose([Validators.required, CustomValidators.date])],
       status: this.article.publication ? this.article.publication.status : 0
     });
   }

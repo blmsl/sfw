@@ -101,6 +101,7 @@
       },
       "edit": {
         "articleStatus": {
+          "edit": "Editieren",
           "error": "NICHT gespeichert",
           "new": "Neu",
           "saving": "Speichere ...",
@@ -319,6 +320,7 @@
           "delete": "Löschen",
           "description": "Neue Ehrenmitglieder müssen in der Mitgliederliste im Google Drive mit dem Mitgliederstatus 2 gespeichert werden. Nach ca. 5 Minuten erscheinen diese dann hier in der Liste.",
           "listTitle": "Ehrenmitglieder mit Artikel verknüpfen",
+          "noHonoraries": "Es wurden noch keine Ehrenmitglieder mit Artikeln verknüpft.",
           "save": "Speichern",
           "startDate": "Datum der Ernennung",
           "subTitle": "Ehre, wem Ehre gebührt",

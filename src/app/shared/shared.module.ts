@@ -19,7 +19,6 @@ import { SubmitIfValidDirective } from './directives/submit/submit-if-valid.dire
 import { MediaModule } from './components/media/media.module';
 import { LoadingIndicatorModule } from './components/loading-indicator/loading-indicator.module';
 import { AlertService } from './services/alert/alert.service';
-import { MediaAvatarComponent } from './components/media/media-avatar/media-avatar.component';
 
 @NgModule({
   declarations: [

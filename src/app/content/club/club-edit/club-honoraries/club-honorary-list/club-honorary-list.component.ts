@@ -1,18 +1,26 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IMember } from '../../../../../shared/interfaces/member/member.interface';
-import { IClub } from '../../../../../shared/interfaces/club/club.interface';
+import { IArticle } from '../../../../../shared/interfaces/article.interface';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'club-honorary-list',
   templateUrl: './club-honorary-list.component.html',
   styleUrls: ['./club-honorary-list.component.scss']
 })
-export class ClubHonoraryListComponent {
+export class ClubHonoraryListComponent implements OnInit {
 
   @Input() members: IMember[];
-  @Input() club: IClub;
+  @Input() form: FormGroup;
+  @Input() articles: IArticle[];
+
+  @Output() edit: EventEmitter<number> = new EventEmitter<number>(false);
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
 
   constructor() {
+  }
+
+  ngOnInit() {
   }
 
 }

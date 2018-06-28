@@ -17,11 +17,11 @@ export class ClubHonorariesComponent implements OnInit {
   @Input() selectedHonorary: number;
   @Input() members: IMember[];
 
-  @Output() add: EventEmitter<boolean> = new EventEmitter(false);
-  @Output() delete: EventEmitter<boolean> = new EventEmitter<boolean>(false);
-  @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() add: EventEmitter<void> = new EventEmitter<void>(false);
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
+  @Output() edit: EventEmitter<number> = new EventEmitter<number>(false);
+  @Output() save: EventEmitter<void> = new EventEmitter<void>(false);
 
-  public step = -1;
   public articles$: Observable<IArticle[]>;
 
   constructor(private articleService: ArticleService) {
@@ -29,10 +29,6 @@ export class ClubHonorariesComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  setStep(i: number) {
-    this.step = i;
   }
 
 }

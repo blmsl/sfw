@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -16,10 +16,8 @@ import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.
 import { MatSnackBar } from '@angular/material';
 import { IClubHonorary } from '../../../shared/interfaces/club/club-honorary.interface';
 
-import {
-  debounceTime,
-  distinctUntilChanged
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'club-edit',
@@ -40,13 +38,14 @@ export class ClubEditComponent implements OnInit {
   public selectedHonorary: number = -1;
 
   constructor(public clubService: ClubService,
-    private locationService: LocationService,
-    private memberService: MemberService,
-    private categoryService: CategoryService,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    public snackBar: MatSnackBar,
-    private router: Router) {
+              private locationService: LocationService,
+              private memberService: MemberService,
+              private categoryService: CategoryService,
+              private fb: FormBuilder,
+              private cd: ChangeDetectorRef,
+              private route: ActivatedRoute,
+              public snackBar: MatSnackBar,
+              private router: Router) {
     this.locations$ = locationService.locations$;
     this.members$ = memberService.members$;
     this.positions$ = categoryService.getCategoriesByCategoryType('club.position.types');
@@ -129,14 +128,17 @@ export class ClubEditComponent implements OnInit {
     return this.fb.group({
       assignedMember: [honorary ? honorary.assignedMember : null, [Validators.required]],
       assignedArticle: [honorary ? honorary.assignedArticle : null, [Validators.required]],
-      startDate: [honorary ? honorary.startDate : new Date(), [Validators.required]],
+      startDate: [honorary.startDate ? new Date(honorary.startDate.seconds * 1000) : new Date(), [Validators.required]]
     });
   }
 
   addHonorary(): void {
     const control = <FormArray>this.form.controls['honoraries'];
     const honorary: IClubHonorary = {
-      startDate: new Date()
+      startDate: {
+        nanoseconds: 0,
+        seconds: moment().unix()
+      }
     };
     const addCtrl = this.initHonorary(honorary);
     control.push(addCtrl);
@@ -147,7 +149,7 @@ export class ClubEditComponent implements OnInit {
     this.selectedHonorary = $event;
   }
 
-  saveHonorary($event: boolean): void {
+  saveHonorary(): void {
     this.selectedHonorary = -1;
   }
 
@@ -170,14 +172,14 @@ export class ClubEditComponent implements OnInit {
 
   initTimeLineEvent(event: ITimeLineEvent): FormGroup {
     return this.fb.group({
-      title: [event ? event.title : '', [Validators.required, Validators.maxLength(100)]],
-      subTitle: [event ? event.subTitle : ''],
-      icon: [event ? event.icon : ''],
-      color: [event ? event.color : ''],
-      assignedMediaItem: [event ? event.assignedMediaItem : ''],
-      assignedArticle: [event ? event.assignedArticle : ''],
-      startDate: [event ? event.startDate : new Date()],
-      endDate: [event ? event.endDate : new Date()]
+      title: [event.title, [Validators.required, Validators.maxLength(100)]],
+      subTitle: event.subTitle,
+      icon: event.icon,
+      color: event.color,
+      assignedMediaItem: event.assignedMediaItem,
+      assignedArticle: event.assignedArticle,
+      startDate: [event.startDate ? new Date(event.startDate.seconds * 1000) : new Date()],
+      endDate: [event.endDate ? new Date(event.endDate.seconds * 1000) : null]
     });
   }
 
@@ -185,7 +187,10 @@ export class ClubEditComponent implements OnInit {
     const control = <FormArray>this.form.controls['timeLine'];
     const event: ITimeLineEvent = {
       title: '',
-      startDate: ''
+      startDate: {
+        nanoseconds: 0,
+        seconds: moment().unix()
+      }
     };
     const addCtrl = this.initTimeLineEvent(event);
     control.push(addCtrl);
@@ -194,9 +199,10 @@ export class ClubEditComponent implements OnInit {
 
   editTimeLineEvent($event: number): void {
     this.selectedClubTimeLineEvent = $event;
+    this.cd.detectChanges();
   }
 
-  saveTimeLineEvent($event: boolean): void {
+  saveTimeLineEvent(): void {
     this.selectedClubTimeLineEvent = -1;
   }
 
@@ -238,18 +244,19 @@ export class ClubEditComponent implements OnInit {
     this.selectedClubManagementPosition = this.form.controls['management']['controls']['positions']['controls'].length - 1;
   }
 
-  cancelClubManagementPosition(): void{
+  cancelClubManagementPosition(): void {
     console.log('cancel');
   }
-  /* editClubManagementPosition($event:any): void {
-    console.log($event);
-    const control = <FormArray>this.form.controls['management']['controls']['positions'];
-    console.log(control.controls.indexOf($event));
-    // this.selectedClubManagementPosition = $event;
-    // this.selectedClubManagementPosition = $event;
-  } */
 
-  saveClubManagementPosition($event: boolean): void {
+  editClubManagementPosition($event: number): void {
+    console.log($event);
+    // const control = <FormArray>this.form.controls['management']['controls']['positions'];
+    // console.log(control.controls.indexOf($event));
+    // this.selectedClubManagementPosition = $event;
+    // this.selectedClubManagementPosition = $event;
+  }
+
+  saveClubManagementPosition(): void {
     this.selectedClubManagementPosition = -1;
   }
 
@@ -257,10 +264,6 @@ export class ClubEditComponent implements OnInit {
     const control = <FormArray>this.form.controls['management']['controls']['positions'];
     control.removeAt($event);
     this.selectedClubManagementPosition = -1;
-  }
-
-  logoUploadCompleted($event: any) {
-    console.log($event);
   }
 
   saveClub(redirect: boolean = false): void {

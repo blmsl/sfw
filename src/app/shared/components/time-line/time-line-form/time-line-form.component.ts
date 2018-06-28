@@ -13,17 +13,17 @@ export class TimeLineFormComponent implements OnInit {
 
   @Input() form: FormGroup;
   @Input() selectedTimeLineEvent: number;
+  @Input() articles: IArticle[];
 
+  @Output() save: EventEmitter<void> = new EventEmitter<void>(false);
   @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
-  @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
   @ViewChild('text') text: QuillEditorComponent;
 
   public articles$: Observable<IArticle[]>;
   public colors = ['primary', 'warning', 'danger', 'success', 'info', 'none'];
 
-  constructor(public articleService: ArticleService) {
-    this.articles$ = articleService.articles$;
+  constructor() {
   }
 
   ngOnInit() {

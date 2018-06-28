@@ -26,10 +26,10 @@
             <club-history [form]="form"></club-history>
           </div>
           <div fxFlex.gt-sm="50">
-            <club-timeline (add)="addTimeLineEvent($event)"
+            <club-timeline (add)="addTimeLineEvent()"
                            (delete)="removeTimeLineEvent($event)"
                            (edit)="editTimeLineEvent($event)"
-                           (save)="saveTimeLineEvent($event)"
+                           (save)="saveTimeLineEvent()"
                            [selectedTimeLineEvent]="selectedClubTimeLineEvent"
                            [form]="form">
             </club-timeline>
@@ -50,7 +50,8 @@
           <div fxFlex.gt-sm="50">
             <club-management (add)="addClubManagementPosition()"
                              (delete)="removeClubManagementPosition($event)"
-                             (save)="saveClubManagementPosition($event)"
+                             (edit)="editClubManagementPosition($event)"
+                             (save)="saveClubManagementPosition()"
                              (cancel)="cancelClubManagementPosition()"
                              [selectedClubManagementPosition]="selectedClubManagementPosition"
                              [members]="members"
@@ -68,12 +69,14 @@
       </mat-tab>
 
       <mat-tab label="{{ 'general.clubs.edit.honoraries.title' | translate}}">
-        <club-honoraries (add)="addHonorary($event)"
+        <club-honoraries (add)="addHonorary()"
                          (delete)="removeHonorary($event)"
-                         (save)="saveHonorary($event)"
+                         (edit)="editHonorary($event)"
+                         (save)="saveHonorary()"
                          [members]="members | filterBy: ['clubData.status'] : '2'"
                          [selectedHonorary]="selectedHonorary"
-                         [form]="form">
+                         [club]="club"
+                         [form]="form.get('honoraries')">
         </club-honoraries>
       </mat-tab>
 

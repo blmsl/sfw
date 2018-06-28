@@ -14,8 +14,14 @@ export interface ITimeLineEvent {
   assignedMediaItem?: IMediaItem;
   assignedArticle?: IArticle;
 
-  startDate: any;
-  endDate?: any;
+  startDate?: {
+    nanoseconds: number;
+    seconds: number;
+  };
+  endDate?: {
+    nanoseconds: number;
+    seconds: number;
+  };
 
   creation?: ICreation;
 }

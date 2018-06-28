@@ -1,37 +1,47 @@
-<div fxLayout="row"
+<div *ngIf="articles$ | async as articles; else loadingTemplate">
 
-     [formGroup]="form">
+  <div fxLayout="row"
+       fxLayout.gt-sm="row"
+       fxLayoutGap="10px"
+       [formGroup]="form"
+       *ngIf="selectedHonorary === -1">
 
-  <div fxFlex.gt-sm="49"
-       fxFlex="100">
     <h3>{{'general.clubs.edit.honoraries.title' | translate}}</h3>
-    <p>{{'general.clubs.edit.honoraries.description' | translate}}</p>
-    <club-honorary-list [club]="club"
+    <span fxFlex></span>
+    <div>
+      <button mat-raised-button
+              style="margin-bottom: 25px"
+              type="button"
+              color="primary"
+              (click)="add.emit()">
+        {{'general.clubs.edit.honoraries.addHonorary' | translate}}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="selectedHonorary === -1">
+    <club-honorary-list (delete)="delete.emit($event)"
+                        (edit)="edit.emit($event)"
+                        [form]="form"
+                        [articles]="articles"
                         [members]="members">
     </club-honorary-list>
   </div>
 
-  <div fxFlex.gt-sm="49"
-       fxFlexOffset.gt-sm="2"
-       fxFlex="100">
-    <button mat-raised-button
-            style="margin-bottom: 25px"
-            *ngIf="selectedHonorary === -1"
-            type="button"
-            color="primary"
-            (click)="add.emit(true)">
-      {{'general.clubs.edit.honoraries.addHonorary' | translate}}
-    </button>
-
+  <div *ngIf="selectedHonorary !== -1">
     <club-honorary-form [form]="form"
                         [members]="members"
+                        [articles]="articles"
                         [selectedHonorary]="selectedHonorary"
                         (delete)="delete.emit($event)"
-                        (save)="save.emit($event)">
+                        (save)="save.emit()">
     </club-honorary-form>
   </div>
 </div>
 
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>
 
 
 

@@ -1,78 +1,42 @@
-<div fxLayout="row">
-  <div fxFlex="100">
+<p *ngIf="!form['controls'][0]">
+  {{'general.timeLine.noEvents' | translate}}
+</p>
 
-    <p *ngIf="!form['controls'][0]">
-      {{'general.timeLine.noEvents' | translate}}
-    </p>
+<mat-accordion dense>
+  <mat-expansion-panel *ngFor="let control of form.controls; let i = index; let first = first; let last = last"
+                       [expanded]="false"
+                       [hideToggle]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title fxLayout.gt-sm="row"
+                       fxLayout="column"
+                       fxLayoutAlign="start center">
+        <mat-icon *ngIf="control.get('icon').value">{{control.get('icon').value}}</mat-icon>
+        <span>{{control.get('title').value}}</span>
+        <span fxFlex></span>
+        <span *ngIf="control.get('startDate').value">{{control.get('startDate').value | date: 'dd.MM.yy'}}</span>
+        <span *ngIf="control.get('endDate').value">&ndash; {{control.get('endDate').value | date: 'dd.MM.yy'}}</span>
+        <span fxFlex></span>
+        <a (click)="edit.emit(i)" title="{{'general.edit' | translate}}" *ngIf="showLinks">
+          <mat-icon color="accent">edit</mat-icon>
+        </a>
 
-    <mat-accordion [hideToggle]="true"
-                   dense
-                   class="example-headers-align">
+        <a (click)="delete.emit(i)" title="{{'general.delete' | translate}}" *ngIf="showLinks">
+          <mat-icon color="warn">delete</mat-icon>
+        </a>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
 
-      <mat-expansion-panel *ngFor="let control of form.controls; let i = index; let first = first; let last = last"
-                           [expanded]="step === i"
-                           (opened)="setStep(i)"
-                           hideToggle="true">
-        <mat-expansion-panel-header fxLayout="row">
+    <ng-template matExpansionPanelContent>
+      <div *ngFor="let article of articles | filterBy: ['id']: control.get('assignedArticle').value">
+        <h3>{{article.title}}</h3>
+        <strong *ngIf="article.subTitle">{{article.subTitle}}</strong><br/>
+        <p [innerHTML]="article.text"></p>
+      </div>
+    </ng-template>
 
-          <mat-panel-title fxFlex.gt-sm="40"
-                           fxFlex="100">
-            {{control.get('title').value}}
-          </mat-panel-title>
+  </mat-expansion-panel>
+</mat-accordion>
 
-          <mat-panel-description fxLayout="row"
-                                 fxFlex.gt-sm="60"
-                                 fxFlex="100"
-                                 fxHide.xs="true">
-
-            <span fxFlex="70">
-              {{control.get('startDate').value.seconds *1000 | date: 'dd.MM.yy'}}
-              <span *ngIf="control.get('endDate').value">&ndash; {{control.get('endDate').value.seconds *1000 | date: 'dd.MM.yy'}}</span>
-            </span>
-
-            <mat-icon fxFlex="10"
-                      *ngIf="control.get('icon').value">
-              {{control.get('icon').value}}
-            </mat-icon>
-
-            <a fxFlex="10" (click)="edit.emit(i)"
-               *ngIf="showLinks">
-              <mat-icon color="accent">edit</mat-icon>
-            </a>
-
-            <a fxFlex="10" (click)="delete.emit(i)"
-               *ngIf="showLinks">
-              <mat-icon color="warn">delete</mat-icon>
-            </a>
-
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <div *ngIf="step === i">Verknüpften Artikel anzeigen</div>
-
-        <mat-action-row *ngIf="step === i">
-          <button
-            mat-button
-            color="warn"
-            (click)="prevStep()"
-            [disabled]="first">
-            &laquo;
-          </button>
-
-          <button mat-button
-                  color="primary"
-                  (click)="nextStep()"
-                  [disabled]="last">
-            &raquo;
-          </button>
-        </mat-action-row>
-
-      </mat-expansion-panel>
-
-    </mat-accordion>
-
-  </div>
-</div>
 
 <ng-template #noEventsTemplate>
   <p style="color: red">{{ 'general.timeLine.noEvents' | translate}}</p>

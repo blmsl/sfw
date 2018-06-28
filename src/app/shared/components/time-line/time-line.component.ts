@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { IArticle } from '../../interfaces/article.interface';
 
 @Component({
   selector: 'time-line',
@@ -11,12 +12,14 @@ export class TimeLineComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() selectedTimeLineEvent: number;
   @Input() showLinks: boolean;
+  @Input() articles: IArticle[];
 
-  @Output() add: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() add: EventEmitter<void> = new EventEmitter<void>(false);
+  @Output() save: EventEmitter<void> = new EventEmitter<void>(false);
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>(false);
+
   @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
-  @Output() edit: EventEmitter<boolean> = new EventEmitter<boolean>(false);
-  @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() edit: EventEmitter<number> = new EventEmitter<number>(false);
 
   constructor() {
   }

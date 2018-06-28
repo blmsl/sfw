@@ -24,7 +24,7 @@
                         [categories]="categories$ | async"
                         [categoryTypes]="categoryTypes$ | async | filterBy: ['link']: 'team.position.types'"
                         [members]="members$ | async"
-                        (addPosition)="addPosition($event)"
+                        (addPosition)="addPosition()"
                         (removePosition)="removePosition($event)">
         </team-positions>
       </mat-tab>
@@ -32,7 +32,7 @@
       <mat-tab label="{{'general.teams.edit.training.title' | translate}}">
         <team-training [form]="form"
                        [locations]="locations$ | async"
-                       (addTraining)="addTraining($event)"
+                       (addTraining)="addTraining()"
                        (removeTraining)="removeTraining($event)">
         </team-training>
       </mat-tab>
@@ -41,9 +41,9 @@
         <h3>{{'general.teams.edit.timeLineTitle' | translate}}</h3>
         <time-line [showLinks]="true"
                    (delete)="removeEvent($event)"
-                   (add)="addEvent($event)"
+                   (add)="addEvent()"
                    (edit)="editEvent($event)"
-                   (save)="saveEvent($event)"
+                   (save)="saveEvent()"
                    [selectedTimeLineEvent]="selectedEvent"
                    [form]="form.controls['assignedEvents']">
         </time-line>

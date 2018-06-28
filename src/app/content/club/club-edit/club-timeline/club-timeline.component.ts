@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ArticleService } from '../../../../shared/services/article/article.service';
+import { Observable } from 'rxjs/Rx';
+import { IArticle } from '../../../../shared/interfaces/article.interface';
 
 @Component({
   selector: 'club-timeline',
@@ -14,10 +17,14 @@ export class ClubTimelineComponent implements OnInit {
   @Output() add: EventEmitter<boolean> = new EventEmitter<boolean>(false);
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>(false);
   @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
-  @Output() edit: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() edit: EventEmitter<number> = new EventEmitter<number>(false);
   @Output() save: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
-  constructor() { }
+  public articles$: Observable<IArticle[]>;
+
+  constructor(private articleService: ArticleService) {
+    this.articles$ = articleService.articles$;
+  }
 
   ngOnInit() {
   }

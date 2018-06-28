@@ -10,14 +10,14 @@
          fxLayout.gt-sm="row"
          fxLayoutGap="10px">
 
-      <mat-form-field fxFlex.gt-sm="33">
+      <mat-form-field fxFlex.gt-sm="35">
         <input matInput
                placeholder="{{'general.clubs.edit.title' | translate}}"
                formControlName="title"/>
       </mat-form-field>
 
 
-      <mat-form-field fxFlex.gt-sm="32">
+      <mat-form-field fxFlex.gt-sm="65">
         <mat-select placeholder="{{'general.clubs.edit.location' | translate}}"
                     formControlName="assignedLocation">
           <mat-option *ngFor="let location of locations | orderBy: ['title']"

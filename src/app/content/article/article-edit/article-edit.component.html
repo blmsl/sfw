@@ -100,8 +100,7 @@
 
             <div style="padding-left: 30px" *ngIf="form.get('publication').get('status').value === 2">
               <p>{{ 'general.articles.edit.publish.chooseDateTime' | translate}}</p>
-              <input [value]="form.get('publication').get('dateTime').value"
-                     formControlName="dateTime"
+              <input formControlName="dateTime"
                      [owlDateTime]="dt3"
                      [owlDateTimeTrigger]="dt3">
               <owl-date-time [pickerMode]="'dialog'" #dt3></owl-date-time>

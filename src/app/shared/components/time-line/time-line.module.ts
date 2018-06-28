@@ -17,6 +17,7 @@ import { QuillModule } from 'ngx-quill';
 import { ArticleService } from '../../services/article/article.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TimeLineComponent } from './time-line.component';
+import { SharedModule } from '../../shared.module';
 
 @NgModule({
   imports: [

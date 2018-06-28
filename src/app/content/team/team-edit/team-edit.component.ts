@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -63,6 +63,7 @@ export class TeamEditComponent implements OnInit {
     private categoryService: CategoryService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private cd: ChangeDetectorRef,
     private router: Router,
     private locationService: LocationService,
     private userService: UserService) {
@@ -134,8 +135,7 @@ export class TeamEditComponent implements OnInit {
   addEvent(): void {
     const control = <FormArray>this.form.controls['assignedEvents'];
     const event: ITimeLineEvent = {
-      title: '',
-      startDate: ''
+      title: ''
     };
     const addCtrl = this.initAssignedEvent(event);
     control.push(addCtrl);
@@ -144,9 +144,10 @@ export class TeamEditComponent implements OnInit {
 
   editEvent($event: number): void {
     this.selectedEvent = $event;
+    this.cd.detectChanges();
   }
 
-  saveEvent($event: boolean): void {
+  saveEvent(): void {
     this.selectedEvent = -1;
   }
 

@@ -1,18 +1,41 @@
-<div fxLayout="row"
+<p *ngIf="form.controls.length === 0">
+  {{'general.clubs.edit.honoraries.noHonoraries' | translate}}
+</p>
 
-     *ngIf="club">
 
-  <div fxFlex="100">
+<mat-accordion fxLayout="column"
+               dense>
+  <mat-expansion-panel *ngFor="let control of form.controls; let i = index"
+                       [expanded]="false"
+                       [hideToggle]="true">
 
-    <p *ngIf="!club.honoraries.length">Keine Mitglieder verknüpft.</p>
+    <mat-expansion-panel-header>
+      <mat-panel-title fxLayout.gt-sm="row"
+                       fxLayout="column"
+                       fxLayoutAlign="start center">
+        <span *ngFor="let member of members |filterBy: ['id'] : control.get('assignedMember').value">
+          {{member.mainData.firstName}} {{member.mainData.lastName}}
+        </span>
+        <span fxFlex></span>
+        <span>{{control.get('startDate').value | date: 'dd.MM.yy'}}</span>
+        <span fxFlex></span>
+        <a (click)="edit.emit(i)" title="{{'general.edit' | translate}}">
+          <mat-icon color="accent">edit</mat-icon>
+        </a>
 
-    <div fxLayout="row"
+        <a (click)="delete.emit(i)" title="{{'general.delete' | translate}}">
+          <mat-icon color="warn">delete</mat-icon>
+        </a>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
 
-         *ngFor="let honorary of club.honoraries; let i = index">
+    <ng-template matExpansionPanelContent>
+      <div *ngFor="let article of articles | filterBy: ['id']: control.get('assignedArticle').value">
+        <h3>{{article.title}}</h3>
+        <strong *ngIf="article.subTitle">{{article.subTitle}}</strong><br/>
+        <p [innerHTML]="article.text"></p>
+      </div>
+    </ng-template>
 
-      <div fxFlex="40">{{honorary.assignedMember}}</div>
-      <div fxFlex="40">{{honorary.assignedArticle}}</div>
-      <div fxFlex="20">{{honorary.startDate | date : 'dd.MM.yy'}}</div>
-    </div>
-  </div>
-</div>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -2,35 +2,25 @@
      fxLayout="column"
      fxLayoutGap="10px">
 
-  <div fxFlex="100"
-       *ngIf="selectedTimeLineEvent === -1">
-    <button mat-raised-button
-            style="margin-bottom: 25px;"
-            type="button"
-            color="accent"
-            (click)="add.emit(true)">
-      {{'general.timeLine.addEvent' | translate}}
-    </button>
+  <time-line-list fxFlex="100"
+                  [articles]="articles"
+                  *ngIf="selectedTimeLineEvent === -1"
+                  [form]="form"
+                  [showLinks]="showLinks"
+                  (delete)="delete.emit($event)"
+                  (edit)="edit.emit($event)">
+  </time-line-list>
 
-    <time-line-list [form]="form"
-                    [showLinks]="showLinks"
-                    (add)="add.emit($event)"
-                    (delete)="delete.emit($event)"
-                    (edit)="edit.emit($event)">
-    </time-line-list>
-  </div>
-
-  <div fxFlex="100" *ngIf="selectedTimeLineEvent !== -1">
-    <time-line-form [selectedTimeLineEvent]="selectedTimeLineEvent"
-                    (save)="save.emit($event)"
-                    (delete)="delete.emit($event)"
-                    [form]="form">
-    </time-line-form>
-  </div>
-
+  <time-line-form fxFlex="100"
+                  [articles]="articles"
+                  *ngIf="selectedTimeLineEvent !== -1"
+                  [selectedTimeLineEvent]="selectedTimeLineEvent"
+                  (save)="save.emit()"
+                  (delete)="delete.emit($event)"
+                  [form]="form">
+  </time-line-form>
 </div>
 
 <ng-template #noEventsTemplate>
   <p style="color: red">{{ 'general.timeLine.noEvents' | translate}}</p>
 </ng-template>
-
