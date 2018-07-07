@@ -4,8 +4,10 @@ import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-
 import { AuthService } from '../../shared/services/auth/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-
 import { tap } from 'rxjs/operators';
+import 'moment/min/locales';
+import * as moment from 'moment';
+
 
 const SMALL_WIDTH_BREAKPOINT = 960;
 
@@ -46,6 +48,10 @@ export class AdminComponent implements OnInit, OnDestroy {
     const browserLang: string = translate.getBrowserLang();
     this.currentLang = browserLang.match(/en|fr/) ? browserLang : 'de';
     translate.use(this.currentLang);
+
+    if(this.currentLang === 'de') {
+      moment.updateLocale('de-de', {});
+    }
 
     this.mediaMatcher.addListener(mql => zone.run(() => {
       this.mediaMatcher = mql;
