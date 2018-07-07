@@ -42,7 +42,7 @@
 
           <mat-list-item *ngIf="club.info && club.info.website">
             <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.homepage' | translate}}</h3>
-            <a target="_blank" [href]="club.info.website">{{club.info.website}}</a>
+            <a target="_blank" [href]="'http://' + club.info.website">{{club.info.website}}</a>
           </mat-list-item>
 
           <mat-list-item *ngIf="club.assignedLocation; else noAssignedLocationTemplate">
