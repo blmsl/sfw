@@ -1,5 +1,5 @@
 import { RouterModule } from '@angular/router';
-import { enableProdMode, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { appRoutes } from './app.routing';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -8,9 +8,6 @@ import { AngularFireModule } from 'angularfire2';
 import { CommonModule } from '@angular/common';
 import { TimeagoModule } from 'ngx-timeago';
 
-if (environment.production) {
-  enableProdMode();
-}
 
 @NgModule({
   declarations: [AppComponent],
