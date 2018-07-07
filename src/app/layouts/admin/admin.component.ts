@@ -50,7 +50,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     translate.use(this.currentLang);
 
     if(this.currentLang === 'de') {
-      moment.updateLocale('de-de', {});
+      moment.locale('de-de');
     }
 
     this.mediaMatcher.addListener(mql => zone.run(() => {
