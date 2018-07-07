@@ -1,69 +1,82 @@
-<div fxLayout="row"
-     >
+<div fxLayout="column"
+     fxLayout.gt-sm="row"
+     fxLayoutGap="10px">
 
-  <div fxFlex.gt-sm="75"
-       fxFlex.gt-xs="100">
+  <div fxFlex.gt-sm="75">
+    <mat-card>
+      <mat-card-title>{{'general.menu.club.detail' | translate}}</mat-card-title>
+      <mat-card-content>
+        <mat-list fxLayout="column">
 
-    <mat-list fxLayout="column"
-              *ngIf="club && locations && members; else loadingTemplate">
+          <mat-list-item>
+            <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.title' | translate}}</h3>
+            {{club.title}}
+          </mat-list-item>
 
-      <mat-list-item>
-        <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.title' | translate}}</h3>
-        {{club.title}}
-      </mat-list-item>
+          <mat-list-item>
+            <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.fussballDeId' | translate}}</h3>
+            {{club.fussballde.clubId}}
+          </mat-list-item>
 
-      <mat-list-item>
-        <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.fussballDeId' | translate}}</h3>
-        {{club.fussballde.clubId}}
-      </mat-list-item>
+          <mat-list-item>
+            <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.fussballDeUrl' | translate}}</h3>
+            <a target="_blank" [href]="club.fussballde.clubUrl">{{club.fussballde.clubUrl}}</a>
+          </mat-list-item>
 
-      <mat-list-item>
-        <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.fussballDeUrl' | translate}}</h3>
-        <a target="_blank" [href]="club.fussballde.clubUrl">{{club.fussballde.clubUrl}}</a>
-      </mat-list-item>
+          <mat-list-item *ngIf="club.info">
+            <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.foundedIn' | translate}}</h3>
+            {{club.info.founding}}
+          </mat-list-item>
 
-      <mat-list-item *ngIf="club.info">
-        <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.foundedIn' | translate}}</h3>
-        {{club.info.founding}}
-      </mat-list-item>
+          <mat-list-item *ngIf="club.info">
+            <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.clubColours' | translate}}</h3>
+            {{club.info.clubColours}}
+          </mat-list-item>
 
-      <mat-list-item *ngIf="club.info">
-        <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.clubColours' | translate}}</h3>
-        {{club.info.clubColours}}
-      </mat-list-item>
-
-      <mat-list-item *ngIf="club.info && club.info.assignedContact; else noAssignedContactTemplate">
-        <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.contact' | translate}}</h3>
-        <span *ngFor="let member of members | filterBy: ['id'] : club.info.assignedContact">
-            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday }} | date: 'dd.MM.yy'
+          <mat-list-item *ngIf="club.info && club.info.assignedContact; else noAssignedContactTemplate">
+            <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.contact' | translate}}</h3>
+            <span *ngFor="let member of members | filterBy: ['id'] : club.info.assignedContact">
+            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy' }}
         </span>
-      </mat-list-item>
+          </mat-list-item>
 
-      <mat-list-item *ngIf="club.info && club.info.website">
-        <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.homepage' | translate}}</h3>
-        <a target="_blank" [href]="club.info.website">{{club.info.website}}</a>
-      </mat-list-item>
+          <mat-list-item *ngIf="club.info && club.info.website">
+            <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.homepage' | translate}}</h3>
+            <a target="_blank" [href]="club.info.website">{{club.info.website}}</a>
+          </mat-list-item>
 
-      <mat-list-item *ngIf="club.assignedLocation; else noAssignedLocationTemplate">
-        <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.location' | translate}}</h3>
-        <a [routerLink]="['/locations/detail', club.assignedLocation]" *ngFor="let location of locations | filterBy: ['id'] : club.assignedLocation">
-            {{location.title}}
-        </a>
-      </mat-list-item>
+          <mat-list-item *ngIf="club.assignedLocation; else noAssignedLocationTemplate">
+            <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.location' | translate}}</h3>
+            <a [routerLink]="['/locations/detail', club.assignedLocation]"
+               *ngFor="let location of locations | filterBy: ['id'] : club.assignedLocation">
+              {{location.title}}
+            </a>
+          </mat-list-item>
 
-    </mat-list>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
 
-    <div *ngIf="club && locations && members" style="margin-top: 25px">
-      <h3>{{'general.clubs.edit.description' | translate}}</h3>
-      <div [innerHTML]="club.description"></div>
-    </div>
-
+    <mat-card>
+      <mat-card-title>{{'general.clubs.edit.description' | translate}}</mat-card-title>
+      <mat-card-content>
+        <div [innerHTML]="club.description"></div>
+      </mat-card-content>
+    </mat-card>
   </div>
 
-  <div fxFlex.gt-sm="25"
-       fxFlex.gt-xs="100">
-    <h3>{{'general.clubs.edit.logoTitle' | translate}}</h3>
-    <img [src]="club.logoURL" *ngIf="club.logoURL; else noLogoTemplate"/>
+
+  <div fxFlex.gt-sm="25">
+    <mat-card>
+      <mat-card-title>
+        {{'general.clubs.edit.logoTitle' | translate}}
+      </mat-card-title>
+      <mat-card-content>
+        <img *ngIf="clubLogo | async as image; else loadingTemplate"
+             mat-card-image
+             [src]="image.downloadURL">
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>
 

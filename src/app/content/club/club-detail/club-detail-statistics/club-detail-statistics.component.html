@@ -1,44 +1,48 @@
-<div fxLayout="row">
+<div fxLayout="column"
+     fxLayout.gt-sm="row"
+     fxLayoutGap="10px">
+  <div fxFlex.gt-sm="50">
+    <mat-card>
+      <mat-card-title>{{'general.clubs.edit.statistics.title' | translate}}</mat-card-title>
+      <mat-card-content *ngIf="members; else loadingTemplate">
+        <p *ngIf="members.length === 0">Es sind noch keine Mitglieder vorhanden.</p>
+        <mat-list dense *ngIf="members.length > 0">
+          <mat-list-item *ngFor="let memberState of memberStateService.getMemberStates()">
+            <div matLine
+                 fxLayout="row">
+              <span fxFlex="80">{{'general.members.clubMemberStates.' + memberState.title | translate}}</span>
+              <span fxFlex="20">{{(members | filterBy: ['clubData.assignedClub'] : club.id | filterBy: ['clubData.status'] : memberState.value).length}}</span>
+            </div>
+          </mat-list-item>
 
-  <div fxFlex.gt-sm="25"
-       fxFlex="100">
-    <h3>{{'general.clubs.edit.mainTitle' | translate}}</h3>
-    <mat-list dense
-              *ngIf="members && club; else loadingTemplate">
-      <mat-list-item *ngFor="let memberState of memberStateService.getMemberStates()">
-        <div matLine
-             fxLayout="row"
-        >
-          <span fxFlex="60">{{'general.members.clubMemberStates.' + memberState.title | translate}}</span>
-          <span fxFlex="40">{{(members | filterBy: ['clubData.assignedClub'] : club.id | filterBy: ['clubData.status'] : memberState.value).length}}</span>
-        </div>
-      </mat-list-item>
-    </mat-list>
+          <mat-list-item>
+            <div matLine
+                 fxLayout="row">
+              <span fxFlex="80">undefiniert</span>
+              <span fxFlex="20">{{(members | filterBy: ['clubData.assignedClub'] : club.id | filterBy: ['clubData.status'] : '?').length}}</span>
+            </div>
+          </mat-list-item>
+
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
   </div>
 
-  <div fxFlexOffset.gt-sm="1"
-       fxFlex.gt-sm="74"
-       fxFlex="100">
-    <h3>
-      {{'general.clubs.edit.assignedTeams.teams' | translate}} /
-      {{'general.clubs.edit.assignedTeams.season' | translate}}
-    </h3>
-
-    <div *ngIf="seasons && teams; else loadingTemplate">
-
-      <mat-card *ngFor="let season of seasons | orderBy: ['-title']">
-        <mat-card-title>{{season.title}}</mat-card-title>
-        <mat-card-content>
-          <mat-list dense>
-            <mat-list-item *ngFor="let team of teams | filterBy: ['assignedSeason']: season.id | orderBy: ['title']; let last = last">
-              <a [routerLink]="['/teams/detail', team.id]">{{team.title}} {{team.subTitle}}</a>
-            </mat-list-item>
-            <mat-list-item *ngIf="(teams | filterBy: ['assignedSeason']: season.id).length && !last">,</mat-list-item>
-            <mat-list-item *ngIf="!(teams | filterBy: ['assignedSeason']: season.id).length">Für diese Saison wurden keine Mannschaften angemeldet.</mat-list-item>
-          </mat-list>
-        </mat-card-content>
-      </mat-card>
-    </div>
+  <div fxFlex.gt-sm="50">
+    <mat-card *ngFor="let season of seasons | orderBy: ['-title']">
+      <mat-card-title>{{'general.clubs.edit.assignedTeams.teams' | translate}} {{season.title}}</mat-card-title>
+      <mat-card-content *ngIf="teams && members; else loadingTemplate">
+        <p *ngIf="!(teams | filterBy: ['isMainTeam']: true | filterBy: ['assignedSeason']: season.id).length">
+          Für diese Saison wurden keine Mannschaften angemeldet.
+        </p>
+        <mat-list dense>
+          <mat-list-item
+            *ngFor="let team of teams | filterBy: ['isMainTeam']: true | filterBy: ['assignedSeason']: season.id | orderBy: ['title']; let last = last">
+            <a [routerLink]="['/teams/detail', team.id]">{{team.title}} {{team.subTitle}}</a>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
   </div>
 
 </div>

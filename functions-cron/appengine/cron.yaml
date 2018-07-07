@@ -1,22 +1,26 @@
 cron:
 # Python
-#- description: Push a "tick" onto pubsub every day
-#  url: /python/main #daily-tick
-#  schedule: every 24 hours
+- description: Push a "tick" onto pubsub every day
+  url: /python/daily-tick
+  schedule: every day 05:00
 
-#- description: Push a "tick" onto pubsub every week
-#  url: /python/main #weekly-tick
-#  schedule: every monday 00:01
+- description: Push a "tick" onto pubsub every week
+  url: /python/weekly-tick
+  schedule: every monday 00:01
+
+- description: Push a "tick" onto pubsub every monthly
+  url: /python/monthly-tick
+  schedule: 1 of month 00:01
 
 # PHP
-#- description: Push a "tick" onto competitions every 24 hours
-#  url: /team/competitions
-#  schedule: every 24 hours
-
 - description: Push a "tick" onto matchplan every 24 hours
-  url: /php/team/matchplan
-  schedule: every 24 hours
+  url: /php/team/matchplan.php
+  schedule: every day 00:00
 
-#- description: Push a "tick" onto competitions every 24 hours
-#  url: /php/teams/standings
-#  schedule: every 24 hours
+- description: Push a "tick" onto standings every 24 hours
+  url: /php/team/standings.php
+  schedule: every day 00:15
+
+- description: Push a "tick" onto competitions every 24 hours
+  url: /php/team/competitions.php
+  schedule: every day 00:30

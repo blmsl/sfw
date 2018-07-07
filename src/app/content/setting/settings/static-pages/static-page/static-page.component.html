@@ -1,9 +1,0 @@
-<div fxLayout="column"
-     [formGroup]="form">
-  <div formArrayName="staticPages"
-       fxFlex="100">
-    <static-page-form [categories]="categories"
-                      [form]="form.controls['staticPages']['controls'][selectedStaticPage]">
-    </static-page-form>
-  </div>
-</div>

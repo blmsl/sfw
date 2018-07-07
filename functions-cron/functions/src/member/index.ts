@@ -13,4 +13,3 @@ export const dfbMemberUpdate = dfb.dfbMemberUpdateCron;
 export const driveMemberWrite = drive.driveMemberWriteCron;
 export const driveMemberDelete = drive.driveMemberDeleteCron;
 export const driveMemberUpdate = drive.driveMemberUpdateCron;
-export const driveDeleteDb = drive.driveDeleteDbCron;

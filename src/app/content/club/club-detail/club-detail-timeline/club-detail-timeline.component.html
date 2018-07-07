@@ -1,0 +1,14 @@
+<mat-card [formGroup]="form">
+  <mat-card-title>{{'general.clubs.edit.timeLineTitle' | translate}}</mat-card-title>
+  <mat-card-content>
+    <time-line-list [showLinks]="false"
+                    *ngIf="articles$ | async as articles; else loadingTemplate"
+                    [articles]="articles"
+                    [form]="form.controls['timeLine']">
+    </time-line-list>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ICategory } from '../../../../../shared/interfaces/category.interface';
 
@@ -7,7 +7,7 @@ import { ICategory } from '../../../../../shared/interfaces/category.interface';
   templateUrl: './static-page-form.component.html',
   styleUrls: ['./static-page-form.component.scss']
 })
-export class StaticPageFormComponent {
+export class StaticPageFormComponent implements OnInit {
 
   @Input() form: FormGroup;
   @Input() selectedStaticPage: number;
@@ -16,6 +16,9 @@ export class StaticPageFormComponent {
   public titleMaxLength: number = 100;
 
   constructor() {
+  }
+
+  ngOnInit(){
   }
 
 }

@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { ICategory } from '../../../../shared/interfaces/category.interface';
+import { MediaItemService } from '../../../../shared/services/media/media-item.service';
+import { Observable } from 'rxjs/Rx';
+import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
 
 @Component({
   selector: 'club-detail-management',
@@ -16,10 +19,8 @@ export class ClubDetailManagementComponent implements OnInit {
 
   public step = -1;
 
-  constructor() {
-  }
+  ngOnInit(){
 
-  ngOnInit() {
   }
 
   setStep(index: number) {

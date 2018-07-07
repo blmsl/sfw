@@ -1,77 +1,95 @@
-<div fxLayout="row"
-     >
+<mat-card *ngIf="club; else loadingTemplate">
+  <mat-card-title>
+    <mat-icon>mode_edit</mat-icon>
+    {{'general.menu.club.detail' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
 
-  <div fxFlex="100">
-    <div class="mat-card-top"
-         *ngIf="club; else loadingTemplate">
+  <mat-card-content>
 
-      <mat-card>
-        <mat-card-title>
-          <mat-icon>mode_edit</mat-icon>
-          {{'general.menu.club.detail' | translate}}
-        </mat-card-title>
-        <mat-card-subtitle></mat-card-subtitle>
+    <mat-tab-group *ngIf="members$ | async as members"
+                   [dynamicHeight]="true">
+      <mat-tab label="{{'general.clubs.edit.mainTitle' | translate}}">
+        <club-detail-main [locations]="locations$ | async"
+                          [members]="members"
+                          [club]="club">
+        </club-detail-main>
+      </mat-tab>
 
-        <mat-card-content>
-
-          <mat-tab-group [dynamicHeight]="true">
-            <mat-tab label="{{'general.clubs.edit.mainTitle' | translate}}">
-              <club-detail-main [locations]="locations$ | async"
-                                [members]="members$ | async"
-                                [club]="club">
-              </club-detail-main>
-            </mat-tab>
-
-            <mat-tab label="{{ 'general.clubs.edit.historyTitle' | translate }}">
-              <club-detail-history [club]="club"></club-detail-history>
-            </mat-tab>
-
-            <mat-tab label="{{ 'general.clubs.edit.managementTitle' | translate }}">
-              <club-detail-management [members]="members$ | async"
-                                      [positions]="positions$ | async"
-                                      [club]="club"></club-detail-management>
-            </mat-tab>
-
-            <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
-              <span style="color: red">Dateien</span>
-            </mat-tab>
-
-            <mat-tab label="{{ 'general.clubs.edit.honoraries.title' | translate}}">
-              <club-detail-honoraries [club]="club"
-                                      [members]="members$ | async"
-                                      [articles]="articles$ | async">
-              </club-detail-honoraries>
-            </mat-tab>
-
-            <mat-tab label="{{ 'general.clubs.edit.statistics.title' | translate}}">
-              <club-detail-statistics [teams]="teams$ | async"
-                                      [seasons]="seasons$ | async"
-                                      [members]="members$ | async"
-                                      [club]="club">
-              </club-detail-statistics>
-            </mat-tab>
-
-          </mat-tab-group>
-        </mat-card-content>
-
-        <mat-card-actions>
-          <div class="button-row">
-            <a mat-raised-button color="primary" [routerLink]="['/clubs']">
-              {{'general.menu.club.list' | translate}}
-            </a>
-            <a mat-raised-button color="accent" [routerLink]="['/clubs/edit', club.id]">
-              {{'general.edit' | translate }}
-            </a>
-            <a mat-raised-button color="warn" (click)="removeClub(club)">
-              {{'general.delete' | translate }}
-            </a>
+      <mat-tab label="{{ 'general.clubs.edit.historyTitle' | translate }}">
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px">
+          <div fxFlex.gt-sm="50">
+            <club-detail-history [club]="club"></club-detail-history>
           </div>
-        </mat-card-actions>
 
-      </mat-card>
-    </div>
-  </div>
-</div>
+          <div fxFlex.gt-sm="50">
+            <club-detail-timeline [club]="club"></club-detail-timeline>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="{{ 'general.clubs.edit.managementTitle' | translate }}">
+        <club-detail-management *ngIf="positions$ | async as positions; else loadingTemplate"
+                                [members]="members"
+                                [positions]="positions"
+                                [club]="club">
+        </club-detail-management>
+      </mat-tab>
+
+      <mat-tab label="{{ 'general.clubs.edit.honoraries.title' | translate}}">
+        <club-detail-honoraries *ngIf="articles$ | async as articles; else loadingTemplate"
+                                [club]="club"
+                                [members]="members"
+                                [articles]="articles">
+        </club-detail-honoraries>
+      </mat-tab>
+
+      <mat-tab label="{{ 'general.clubs.edit.statistics.title' | translate}}">
+        <club-detail-statistics [teams]="teams$ | async"
+                                [seasons]="seasons$ | async"
+                                [members]="members"
+                                [club]="club">
+        </club-detail-statistics>
+      </mat-tab>
+
+      <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
+        <h3 style="color: red">Dateien</h3>
+        <ul>
+          <li>Mitgliedsanträge Erwachsene</li>
+          <li>Mitgliedsantrag Kinder / Jugendliche</li>
+          <li>Datenschutzerklärung</li>
+          <li>Kündigung der Mitgliedschaft</li>
+          <li>Antrag Mitgliedschaft Kunstrasenplatzförderverein</li>
+          <li>Vereinssatzung</li>
+        </ul>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-card-content>
+
+  <mat-card-actions fxLayout="column"
+                    fxLayout.gt-sm="row"
+                    fxLayoutGap="10px">
+    <button mat-raised-button
+            color="primary"
+            [routerLink]="['/clubs']">
+      {{'general.menu.club.list' | translate}}
+    </button>
+    <button mat-raised-button
+            color="accent"
+            [routerLink]="['/clubs/edit', club.id]">
+      {{'general.edit' | translate }}
+    </button>
+    <button mat-raised-button
+            color="warn"
+            (click)="removeClub(club)">
+      {{'general.delete' | translate }}
+    </button>
+  </mat-card-actions>
+
+</mat-card>
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

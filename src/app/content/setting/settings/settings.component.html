@@ -1,149 +1,137 @@
-<div fxLayout="row"
+<mat-card [formGroup]="form">
+  <mat-card-title>
+    <mat-icon>list</mat-icon>
+    {{'general.menu.application.main' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
+    <mat-tab-group [dynamicHeight]="true" *ngIf="application; else loadingTemplate">
+      <mat-tab label="{{'general.applications.mainTitle' | translate}}">
 
-     [formGroup]="form">
-  <div fxFlex="100">
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px">
+          <div fxFlex.gt-sm="50"
+               formGroupName="page">
 
-    <mat-card>
-      <mat-card-title>
-        <mat-icon>list</mat-icon>
-        {{'general.menu.application.main' | translate}}
-      </mat-card-title>
-      <mat-card-subtitle></mat-card-subtitle>
-      <mat-card-content>
-        <mat-tab-group [dynamicHeight]="true" *ngIf="application; else loadingTemplate">
-          <mat-tab label="{{'general.applications.mainTitle' | translate}}">
+            <div fxLayout="column"
+                 fxLayout.gt-sm="row"
+                 fxLayoutGap="10px">
+              <mat-form-field fxFlex="33,3333">
+                <input matInput
+                       placeholder="{{'general.applications.page.name' | translate}}"
+                       formControlName="name"/>
+                <mat-hint>{{'general.applications.page.nameDescription' | translate}}</mat-hint>
+              </mat-form-field>
 
-            <div fxLayout="row"
-                 >
+              <mat-form-field fxFlex="33,3333">
+                <input matInput
+                       placeholder="{{'general.applications.page.emailTitle' | translate}}"
+                       formControlName="email"/>
+                <mat-hint>{{'general.applications.page.emailDescription' | translate}}</mat-hint>
+              </mat-form-field>
 
-              <div fxFlex.gt-sm="49"
-                   fxFlex="100">
+              <mat-form-field fxFlex="33,3333">
+                <input matInput
+                       placeholder="{{'general.applications.page.title' | translate}}"
+                       formControlName="title"/>
+                <mat-hint>{{'general.applications.page.titleDescription' | translate}}</mat-hint>
+              </mat-form-field>
+            </div>
 
-                <div fxLayout="column"
-                     formGroupName="page">
+            <div style="margin-top: 40px"
+                 fxFlex="100">
+              <label>{{'general.applications.page.descriptionDescription' | translate}}</label><br/>
+              <quill-editor [style]="{height: '150px'}"
+                            formControlName="description">
+              </quill-editor>
+            </div>
+          </div>
 
-                  <mat-form-field fxFlex="100">
-                    <input matInput
-                           placeholder="{{'general.applications.page.name' | translate}}"
-                           formControlName="name"/>
-                    <mat-hint>{{'general.applications.page.nameDescription' | translate}}</mat-hint>
-                  </mat-form-field>
+          <div fxFlex.gt-sm="50">
 
-                  <mat-form-field fxFlex="100">
-                    <input matInput
-                           placeholder="{{'general.applications.page.emailTitle' | translate}}"
-                           formControlName="email"/>
-                    <mat-hint>{{'general.applications.page.emailDescription' | translate}}</mat-hint>
-                  </mat-form-field>
+            <div fxLayout="column"
+                 fxLayoutGap="10px">
+              <h3>{{'general.applications.urlShorteningTitle' | translate}}</h3>
+              <mat-form-field fxflex="100"
+                              style="margin-top: 25px;">
+                <mat-select placeholder="{{'general.applications.urlShorteningService' | translate}}"
+                            formControlName="urlShortening">
+                  <mat-option [value]="0">
+                    {{'general.applications.noUrlShorteningService' | translate}}
+                  </mat-option>
+                  <mat-option *ngFor="let shorteningProvider of shorteningProviders | orderBy: ['title']"
+                              [value]="shorteningProvider">
+                    {{shorteningProvider.title}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
-                  <mat-form-field fxFlex="100">
-                    <input matInput
-                           placeholder="{{'general.applications.page.title' | translate}}"
-                           formControlName="title"/>
-                    <mat-hint>{{'general.applications.page.titleDescription' | translate}}</mat-hint>
-                  </mat-form-field>
+              <h3 style="margin-top: 40px">{{'general.applications.registration.title' | translate}}</h3>
 
-                  <div style="margin-top: 40px"
-                       fxFlex="100">
-                    <label>{{'general.applications.page.descriptionDescription' | translate}}</label><br/>
-                    <quill-editor [style]="{height: '150px'}"
-                                  formControlName="description">
-                    </quill-editor>
-                  </div>
-                </div>
-              </div>
-
-              <div fxFlex.gt-sm="49"
-                   fxFlexOffset.gt-sm="2"
-                   fxFlex="100">
-                <div fxLayout="column">
-
-
-                  <h3>{{'general.applications.urlShorteningTitle' | translate}}</h3>
-                  <mat-form-field fxflex="100"
-                                  style="margin-top: 25px;">
-                    <mat-select placeholder="{{'general.applications.urlShorteningService' | translate}}"
-                                formControlName="urlShortening">
-                      <mat-option [value]="0">
-                        {{'general.applications.noUrlShorteningService' | translate}}
-                      </mat-option>
-                      <mat-option *ngFor="let shorteningProvider of shorteningProviders | orderBy: ['title']"
-                                  [value]="shorteningProvider">
-                        {{shorteningProvider.title}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-
-                  <h3 style="margin-top: 40px">{{'general.applications.registration.title' | translate}}</h3>
-
-                  <mat-form-field fxflex="100" style="margin-top: 25px;">
-                    <mat-select placeholder="{{'general.applications.registration.newUserLabel' | translate}}"
-                                formControlName="registration">
-                      <mat-option [value]="0">
-                        {{'general.applications.disableRegistration' | translate}}
-                      </mat-option>
-                      <!--<mat-option *ngFor="let role of rolesService.getRoles() | keys" [value]="role">
-                        {{'general.users.edit.roles.' + role | translate}}
-                      </mat-option>-->
-                    </mat-select>
-                  </mat-form-field>
-
-                </div>
-              </div>
-
+              <mat-form-field fxflex="100" style="margin-top: 25px;">
+                <mat-select placeholder="{{'general.applications.registration.newUserLabel' | translate}}"
+                            formControlName="registration">
+                  <mat-option [value]="0">
+                    {{'general.applications.registration.disableRegistration' | translate}}
+                  </mat-option>
+                  <mat-option *ngFor="let role of roles"
+                              [value]="role">
+                    {{'general.users.edit.roles.' + role | translate}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
             </div>
 
+          </div>
+        </div>
 
-          </mat-tab>
-          <mat-tab label="{{'general.applications.downtime.title' | translate}}">
-            <div fxLayout="row" >
-              <div fxFlex.gt-sm="50"
-                   fxFlex.gt-xs="100"
-                   fxFlex="100"
-                   formGroupName="downtime">
-                <div fxLayout="column">
-                  <mat-checkbox fxflex="100"
-                                formControlName="isEnabled">
-                    {{'general.applications.downtime.isActive' | translate}}
-                  </mat-checkbox>
+      </mat-tab>
 
-                  <br/>
+      <mat-tab label="{{'general.applications.downtime.title' | translate}}">
+        <div fxLayout="row">
+          <div fxFlex.gt-sm="50"
+               fxFlex.gt-xs="100"
+               fxFlex="100"
+               formGroupName="downtime">
+            <div fxLayout="column">
+              <mat-checkbox fxflex="100"
+                            formControlName="isEnabled">
+                {{'general.applications.downtime.isActive' | translate}}
+              </mat-checkbox>
 
-                  <div fxFlex="100" style="margin-top: 25px">
-                    <label>{{'general.applications.downtime.message' | translate}}</label><br/>
-                    <quill-editor [style]="{height: '150px'}"
-                                  formControlName="message">
-                    </quill-editor>
-                    <p>{{'general.applications.downtime.messageDescription' | translate}}</p>
-                  </div>
-                </div>
+              <br/>
+
+              <div fxFlex="100" style="margin-top: 25px">
+                <label>{{'general.applications.downtime.message' | translate}}</label><br/>
+                <quill-editor [style]="{height: '150px'}"
+                              formControlName="message">
+                </quill-editor>
+                <p>{{'general.applications.downtime.messageDescription' | translate}}</p>
               </div>
             </div>
-          </mat-tab>
-          <mat-tab label="{{'general.applications.socialTitle' | translate}}">
-            <settings-social-data [form]="form"
-                                  (removeSocialProvider)="removeSocialProvider($event)"
-                                  (addSocialProvider)="addSocialProvider()">
-            </settings-social-data>
-          </mat-tab>
-          <mat-tab label="{{'general.applications.staticTitle' | translate}}">
-            <static-pages
-              [application]="application"
-              [form]="form"
-              [selectedStaticPage]="selectedStaticPage"
-              (setSelectedStaticPage)="setSelectedStaticPage($event)"
-              (addStaticPage)="addStaticPage()"
-              (removeStaticPage)="removeStaticPage($event)">
-            </static-pages>
-          </mat-tab>
-        </mat-tab-group>
-      </mat-card-content>
-
-    </mat-card>
-  </div>
-
-</div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="{{'general.applications.socialTitle' | translate}}">
+        <settings-social-data [form]="form"
+                              (removeSocialProvider)="removeSocialProvider($event)"
+                              (addSocialProvider)="addSocialProvider()">
+        </settings-social-data>
+      </mat-tab>
+      <mat-tab label="{{'general.applications.staticTitle' | translate}}">
+        <static-pages [application]="application"
+                      [form]="form.get('staticPages').controls"
+                      [selectedStaticPage]="selectedStaticPage"
+                      (setSelectedStaticPage)="setSelectedStaticPage($event)"
+                      (addStaticPage)="addStaticPage()"
+                      (removeStaticPage)="removeStaticPage($event)">
+        </static-pages>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

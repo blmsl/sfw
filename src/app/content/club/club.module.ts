@@ -42,6 +42,9 @@ import { TeamService } from '../../shared/services/team/team.service';
 import { CreationModule } from '../../shared/components/creation/creation.module';
 import { ClubManagementPhotoComponent } from './club-edit/club-management/club-management-photo/club-management-photo.component';
 import { ClubTimelineComponent } from './club-edit/club-timeline/club-timeline.component';
+import { ClubDetailTimelineComponent } from './club-detail/club-detail-timeline/club-detail-timeline.component';
+import { ClubDetailManagementFotoComponent } from './club-detail/club-detail-management/club-detail-management-foto/club-detail-management-foto.component';
+import { ClubDetailManagementPositionsComponent } from './club-detail/club-detail-management/club-detail-management-positions/club-detail-management-positions.component';
 
 @NgModule({
   imports: [
@@ -83,6 +86,9 @@ import { ClubTimelineComponent } from './club-edit/club-timeline/club-timeline.c
     ClubsComponent,
     ClubManagementPhotoComponent,
     ClubTimelineComponent,
+    ClubDetailTimelineComponent,
+    ClubDetailManagementFotoComponent,
+    ClubDetailManagementPositionsComponent,
   ],
   exports: [],
   providers: [

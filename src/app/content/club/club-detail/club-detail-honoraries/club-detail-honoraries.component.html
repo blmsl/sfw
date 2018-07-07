@@ -1,29 +1,35 @@
-<div fxFlex="100"
-     *ngIf="members; else loadingTemplate">
+<p *ngIf="!club.honoraries">{{'general.clubs.edit.honoraries.noHonoraries' | translate}}</p>
+<p *ngIf="members.length === 0">{{'general.clubs.edit.noMembers' | translate}}</p>
 
-  <h3>{{ 'general.clubs.edit.honoraries.title' | translate}}
-    <small>{{ 'general.clubs.edit.honoraries.subTitle' | translate}}</small>
-  </h3>
+<mat-accordion fxLayout="column"
+               dense>
+  <mat-expansion-panel *ngFor="let honorary of club.honoraries"
+                       [expanded]="false"
+                       [hideToggle]="true">
 
-  <p *ngIf="(members | filterBy: ['clubData.assignedClub']: club.id | filterBy: ['clubData.status'] : 2).length === 0">
-    {{ 'general.clubs.edit.honoraries.noHonoraries' | translate}}
-  </p>
+    <mat-expansion-panel-header>
+      <mat-panel-title fxLayout.gt-sm="row"
+                       fxLayout="column"
+                       fxLayoutAlign="space-around center">
+        <span *ngFor="let member of members |filterBy: ['id'] : honorary.assignedMember">
+          {{member.mainData.firstName}} {{member.mainData.lastName}}
+        </span>
+        <span fxFlex></span>
+        <span *ngFor="let article of articles | filterBy: ['id']: honorary.assignedArticle">
+          {{article.title}}
+        </span>
+        <span fxFlex></span>
+        <span>{{honorary.startDate.seconds *1000 | date: 'dd.MM.yy'}}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
 
-  <mat-list>
-    <mat-list-item
-      *ngFor="let honorary of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday'] | filterBy: ['clubData.assignedClub']: club.id | filterBy: ['clubData.status'] : 2">
-      <mat-list-item>
-        <!--<img mat-list-avatar src="{{item.photo}}" alt="">-->
-        <h3 matLine> <!--{{(articles | filterBy: ['id'] : honorary.assignedArticle)[0].title}} -->
-          {{honorary.mainData.lastName}} {{honorary.mainData.firstName}} {{honorary.mainData.birthday}} | date: 'dd.MM.yy'
-        </h3>
-        <p matLine> since {{honorary.startDate}} </p>
-      </mat-list-item>
-    </mat-list-item>
-  </mat-list>
+    <ng-template matExpansionPanelContent>
+      <div *ngFor="let article of articles | filterBy: ['id']: honorary.assignedArticle">
+        <h3>{{article.title}}</h3>
+        <strong *ngIf="article.subTitle">{{article.subTitle}}</strong><br/>
+        <p [innerHTML]="article.text"></p>
+      </div>
+    </ng-template>
 
-</div>
-
-<ng-template #loadingTemplate>#
-  <loading-indicator></loading-indicator>
-</ng-template>
+  </mat-expansion-panel>
+</mat-accordion>

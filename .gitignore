@@ -38,16 +38,16 @@ testem.log
 src/app/config
 /php
 package-lock.json
-functions/package-lock.json
-functions/node_modules
 /api-client-python
-functions/*.js
-functions/firebase-debug.log
-functions/**/*.js
-functions/**/*.js.map
-functions-cron/appengine/vendor/
+
+functions-cron/appengine/vendor
 functions-cron/appengine/composer.lock
-functions-cron/appengine/lib/
+functions-cron/appengine/lib
+
+functions-cron/functions/build
+functions-cron/functions/node_modules
+functions-cron/functions/package-lock.json
+venv
 
 # e2e
 /e2e/*.js

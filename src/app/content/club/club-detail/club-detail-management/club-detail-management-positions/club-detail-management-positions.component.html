@@ -1,0 +1,49 @@
+<mat-card>
+  <mat-card-title>{{'general.clubs.edit.management.positions.title' | translate}}</mat-card-title>
+  <mat-card-content>
+
+    <p *ngIf="!positions || positions.length === 0">Es wurden noch keine Vorstandspositionen angelegt.</p>
+    <p *ngIf="!members">Es sind keine Mitglieder vorhanden.</p>
+
+    <mat-accordion [displayMode]="'flat'">
+      <mat-expansion-panel
+        *ngFor="let category of positions | orderBy: ['title']; let i = index; let first = first; let last = last"
+        [expanded]="step === i"
+        (opened)="setStep(i)"
+        hideToggle="false">
+
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{category.title}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-tab-group *ngIf="step === i"
+                       [dynamicHeight]="true">
+          <mat-tab label="{{'general.clubs.edit.management.positions.todoTitle' | translate}}">
+            <div [innerHtml]="category.description | sanitizeHtml"></div>
+          </mat-tab>
+          <mat-tab label="{{'general.clubs.edit.management.positions.timeLineTitle' | translate}}">
+            <p *ngIf="( club.management.positions | filterBy: ['assignedPosition'] : category.id).length === 0">
+              {{'general.clubs.edit.management.positions.noPersons' | translate}}
+            </p>
+            <mat-list>
+              <mat-list-item *ngFor="let position of club.management.positions | filterBy: ['assignedPosition'] : category.id | orderBy: 'startDate'">
+                <span style="display: block; width: 50%">
+                  {{position.startDate.seconds *1000 | date: 'dd.MM.yy' }}
+                  <span *ngIf="position.endDate">&ndash; {{position.endDate.seconds *1000 | date: 'dd.MM.yy' }}</span>
+                </span>
+                <a [routerLink]="['/members/edit', position.assignedMember]">
+                  {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.lastName}}
+                  {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.firstName}}
+                  {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.birthday | date: 'dd.MM.yy'}}
+                </a>
+              </mat-list-item>
+            </mat-list>
+          </mat-tab>
+        </mat-tab-group>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+</mat-card>

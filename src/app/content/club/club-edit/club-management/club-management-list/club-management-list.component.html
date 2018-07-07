@@ -1,5 +1,4 @@
-<mat-accordion class="example-headers-align"
-               [displayMode]="'flat'">
+<mat-accordion [displayMode]="'flat'">
   <mat-expansion-panel
     *ngFor="let category of positions | orderBy: ['title']; let i = index; let first = first; let last = last"
     [expanded]="step === i"
@@ -12,8 +11,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-tab-group class="mat-tab-group"
-                   *ngIf="step === i"
+    <mat-tab-group *ngIf="step === i"
                    [dynamicHeight]="true">
       <mat-tab label="{{'general.clubs.edit.management.positions.todoTitle' | translate}}">
         <div [innerHtml]="category.description | sanitizeHtml"></div>
@@ -31,8 +29,8 @@
           <mat-list-item
             *ngFor="let position of club.management.positions | filterBy: ['assignedPosition'] : category.id | orderBy: '-startDate'">
                 <span fxFlex="35">
-                  {{position.startDate }}<!-- | date: 'dd.MM.yy' -->
-                  <span *ngIf="position.endDate">&ndash; {{position.endDate }}</span><!-- | date: 'dd.MM.yy' -->
+                  {{position.startDate.seconds *1000 | date: 'dd.MM.yy' }}
+                  <span *ngIf="position.endDate">&ndash; {{position.endDate *1000 | date: 'dd.MM.yy' }}</span>
                 </span>
             <a fxFlex="50"
                fxFlexOffset="5"

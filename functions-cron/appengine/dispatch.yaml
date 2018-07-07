@@ -1,7 +1,6 @@
 dispatch:
-- url: "*/python/*"
-  module: pymodule
-
 - url: "*/php/*"
   module: default
 
+- url: "*/python/*"
+  module: pymodule

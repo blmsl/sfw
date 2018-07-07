@@ -11,11 +11,11 @@ export interface ITeam {
   id?: string;
   title: string;
   subTitle?: string;
+
   externalTeamLink?: string;
   isOfficialTeam: boolean;
-  logoURL?: string;
+  isMainTeam?: boolean;
 
-  photoURL?: string;
   photoDescription?: string;
 
   assignedClub?: IClub;

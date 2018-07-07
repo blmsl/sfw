@@ -6,12 +6,37 @@ service: default
 threadsafe: yes
 
 runtime_config:
-  document_root: php
+  document_root: .
 
-manual_scaling:
-  instances: 1
+#manual_scaling:
+#  instances: 1
+
+handlers:
+- url: /php/club/matchplan
+  script: /php/club/matchplan.php
+
+- url: /php/team/matchplan
+  script: /php/team/matchplan.php
+  #secure: always
+  #login: admin
+
+- url: /php/team/competitions
+  script: /php/team/competitions.php
+  #secure: always
+  #login: admin
+
+- url: /php/team/standings
+  script: /php/team/standings.php
+  #secure: always
+  #login: admin
+
+- url: /php/.*
+  script: /php/index.php
+
+- url: /.*
+  script: /index.php
 
 resources:
-  cpu: 2
+  cpu: 4
   memory_gb: 8
   disk_size_gb: 10

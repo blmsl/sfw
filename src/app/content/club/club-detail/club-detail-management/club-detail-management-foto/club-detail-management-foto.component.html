@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-card-title>{{'general.clubs.edit.management.current.title' | translate}}</mat-card-title>
+  <mat-card-content>
+    <img *ngIf="clubManagementImage | async as image; else loadingTemplate"
+         mat-card-image
+         [src]="image.downloadURL">
+    <p [innerHTML]="club.management.photoDescription"></p>
+  </mat-card-content>
+</mat-card>

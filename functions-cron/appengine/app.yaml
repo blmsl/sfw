@@ -1,27 +1,27 @@
 runtime: python27
 #env: flex
-api_version: 1
-threadsafe: true
-service: pymodule
 
-runtime_config:
-  document_root: python
+api_version: 1
+service: pymodule
+threadsafe: true
+
+#runtime_config:
+#  document_root: .
+
+#manual_scaling:
+#  instances: 1
+
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
 
 handlers:
-- url: /hello.*
-  script: hello.app
+  - url: /python/.*
+    script: main.app
+    #login: admin
+    #secure: always
 
-- url: /.*
-  script: main.app
-  #login: admin
-  #secure: always
-
-#handlers:
-#- url: /hello.*
-#  script: hello.app
-
-#- url: /.*
-#  script: main.app
-#login: admin
-#secure: always
-
+libraries:
+- name: webapp2
+  version: "2.5.2"

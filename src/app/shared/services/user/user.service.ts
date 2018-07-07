@@ -12,6 +12,10 @@ export class UserService {
   private collectionRef: AngularFirestoreCollection<IUser>;
   private path = `users`;
 
+  private userRoles: string[] = [
+    'admin','editor', 'subscriber'
+  ];
+
   users$: Observable<IUser[]>;
 
   constructor(private afs: AngularFirestore) {
@@ -48,6 +52,10 @@ export class UserService {
         admin: false
       }
     };
+  }
+
+  getUserRoles(): string[] {
+    return this.userRoles;
   }
 
 }

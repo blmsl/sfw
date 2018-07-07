@@ -1,17 +1,16 @@
-<div fxLayout="row"
-     >
+<div fxLayout="column"
+     fxLayout.gt-sm="row"
+     fxLayoutGap="10px">
 
-  <div fxFlex.gt-sm="20"
-       fxFlex.gt-xs="100"
-       fxFlex="100">
+  <div fxFlex.gt-sm="20">
     <h3>{{'general.applications.static.currentStaticPages' | translate}}</h3>
-    <p *ngIf="!application.staticPages || application.staticPages.length === 0">
+    <p *ngIf="form.length === 0">
       {{'general.applications.static.noStaticPagesFound' | translate}}
     </p>
 
     <mat-list>
-      <mat-list-item *ngFor="let staticPage of application.staticPages; let i = index">
-        <a (click)="setSelectedStaticPage.emit(i)" mat-line>{{staticPage.title}}</a>
+      <mat-list-item *ngFor="let staticPage of form; let i = index">
+        <a (click)="setSelectedStaticPage.emit(form[i])" mat-line>{{form[i].controls.title.value}}</a>
 
         <button mat-icon-button (click)="removeStaticPage.emit(i)">
           <mat-icon>delete</mat-icon>
@@ -22,21 +21,17 @@
     <button mat-raised-button
             type="button"
             color="primary"
-            (click)="addStaticPage.emit(true)">
+            (click)="addStaticPage.emit()">
       {{ 'general.applications.static.addStaticPage' | translate}}
     </button>
   </div>
 
-  <div fxFlexOffset="2"
-       fxFlex.gt-sm="78"
-       fxFlex.gt-xs="100"
-       fxFlex="100">
-    <static-page [form]="form"
-                 *ngIf="selectedStaticPage !== -1"
-                 [selectedStaticPage]="selectedStaticPage"
-                 (setSelectedStaticPage)="setSelectedStaticPage.emit($event)"
-                 [categories]="categories$ | async"
-                 (removeStaticPage)="removeStaticPage.emit($event)">
-    </static-page>
+  <div fxFlex.gt-sm="80">
+    <static-page-form *ngIf="selectedStaticPage"
+                      [categories]="categories$ | async"
+                      [form]="selectedStaticPage"
+                      (removeStaticPage)="removeStaticPage.emit($event)"
+                      (setSelectedStaticPage)="setSelectedStaticPage.emit($event)">
+    </static-page-form>
   </div>
 </div>

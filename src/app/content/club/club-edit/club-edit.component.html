@@ -64,10 +64,6 @@
         </div>
       </mat-tab>
 
-      <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
-        Dateien
-      </mat-tab>
-
       <mat-tab label="{{ 'general.clubs.edit.honoraries.title' | translate}}">
         <club-honoraries (add)="addHonorary()"
                          (delete)="removeHonorary($event)"
@@ -80,8 +76,44 @@
         </club-honoraries>
       </mat-tab>
 
+      <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
+        <h3 style="color: red">Dateien</h3>
+        <ul>
+          <li>Mitgliedsanträge Erwachsene</li>
+          <li>Mitgliedsantrag Kinder / Jugendliche</li>
+          <li>Datenschutzerklärung</li>
+          <li>Kündigung der Mitgliedschaft</li>
+          <li>Antrag Mitgliedschaft Kunstrasenplatzförderverein</li>
+          <li>Vereinssatzung</li>
+        </ul>
+      </mat-tab>
+
     </mat-tab-group>
   </mat-card-content>
+  <mat-card-actions fxLayout.xs="column"
+                    fxLayoutGap="10px">
+    <span fxFlex></span>
+    <div>
+      <button type="button"
+              mat-raised-button
+              color="primary"
+              [routerLink]="['/clubs']">
+        {{'general.menu.club.list' | translate}}
+      </button>
+      <button type="button"
+              mat-raised-button
+              color="accent"
+              [routerLink]="['/clubs/detail', club.id]">
+        {{'general.detail' | translate }}
+      </button>
+      <button type="button"
+              mat-raised-button
+              color="warn"
+              (click)="removeClub(club)">
+        {{'general.delete' | translate }}
+      </button>
+    </div>
+  </mat-card-actions>
 
 </mat-card>
 

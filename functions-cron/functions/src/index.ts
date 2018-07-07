@@ -1,7 +1,7 @@
 'use strict';
 
 // add sendgrid to env: firebase functions:config:set sendgrid.key=KEY
-// firebase deploy only-functions
+// npm run deploy (update functions)
 // firebase login:ci
 // add cronJobs via gcloud console:
 // gcloud app deploy app.yaml cron.yaml php.yaml --version=2
@@ -38,10 +38,9 @@ export const dfbMemberUpdateCron = member.dfbMemberUpdate;
 export const driveMemberWriteCron = member.driveMemberWrite;
 export const driveMemberDeleteCron = member.driveMemberDelete;
 export const driveMemberUpdateCron = member.driveMemberUpdate;
-export const driveDeleteDbCron = member.driveDeleteDb;
 
-// import * as team from './team/index';
+import * as team from './team/index';
 // export const spielplanCron = team.spielplanCron;
-// export const teamCron = team.teamOfTheMonthCron;
+export const teamCron = team.teamOfTheMonthCron;
 // export const wettbewerbeCron = team.wettbewerbeCron;
 // export const deleteMatchCron = team.deleteMatchCron;

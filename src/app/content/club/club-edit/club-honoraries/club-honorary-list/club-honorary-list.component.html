@@ -11,9 +11,13 @@
     <mat-expansion-panel-header>
       <mat-panel-title fxLayout.gt-sm="row"
                        fxLayout="column"
-                       fxLayoutAlign="start center">
+                       fxLayoutAlign="space-around center">
         <span *ngFor="let member of members |filterBy: ['id'] : control.get('assignedMember').value">
           {{member.mainData.firstName}} {{member.mainData.lastName}}
+        </span>
+        <span fxFlex></span>
+        <span *ngFor="let article of articles | filterBy: ['id']: control.get('assignedArticle').value">
+          {{article.title}}
         </span>
         <span fxFlex></span>
         <span>{{control.get('startDate').value | date: 'dd.MM.yy'}}</span>
@@ -21,7 +25,6 @@
         <a (click)="edit.emit(i)" title="{{'general.edit' | translate}}">
           <mat-icon color="accent">edit</mat-icon>
         </a>
-
         <a (click)="delete.emit(i)" title="{{'general.delete' | translate}}">
           <mat-icon color="warn">delete</mat-icon>
         </a>

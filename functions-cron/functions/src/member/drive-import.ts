@@ -1,26 +1,21 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import * as firebase from 'firebase';
 
 const db = admin.firestore();
 const memberPath = 'members';
 const clubPath = 'clubs';
 
 let data;
-
-export const driveDeleteDbCron = functions.database.ref('/drive-members').onDelete((change, context) => {
-  console.log('delete database driveMembers');
-  return true;
-});
+let fireBaseUserId;
 
 export const driveMemberWriteCron = functions.database.ref('/drive-members/{userId}').onWrite((change, context) => {
 
   data = change.after.val();
 
   if (!data) {
-    console.log('No Data sent');
     return true;
   }
+  fireBaseUserId = context.params.userId;
 
   let birthDate = '';
   if (data.birthday && data.birthday.length >= 10 && data.birthday !== '') {
@@ -32,8 +27,7 @@ export const driveMemberWriteCron = functions.database.ref('/drive-members/{user
     .get()
     .then((clubSnapshot: FirebaseFirestore.QuerySnapshot) => {
       if (clubSnapshot.empty) {
-        console.log('Club not found');
-        let clubData = {
+        const clubData = {
           id: db.collection(clubPath).doc().id,
           title: data.assignedClub,
           creation: {
@@ -47,16 +41,15 @@ export const driveMemberWriteCron = functions.database.ref('/drive-members/{user
           }
         )
       } else {
-        console.log('Club already exists');
         return clubSnapshot.docs[0].id;
       }
     })
     .then((club) => {
-
       return db.collection(memberPath)
-        .where('mainData.firstName', '==', data.firstName)
-        .where('mainData.lastName', '==', data.lastName)
-        .where('mainData.birthday', '==', birthDate)
+        .where('id', '==', fireBaseUserId)
+        //.where('mainData.firstName', '==', data.firstName)
+        //.where('mainData.lastName', '==', data.lastName)
+        //.where('mainData.birthday', '==', birthDate)
         .get()
         .then((userSnapshot: FirebaseFirestore.QuerySnapshot) => {
 
@@ -112,40 +105,32 @@ export const driveMemberWriteCron = functions.database.ref('/drive-members/{user
           };
           if (userSnapshot.empty) {
             console.log('creating new member');
-            memberData.id = db.collection(memberPath).doc().id;
+            memberData.id = fireBaseUserId; // db.collection(memberPath).doc().id;
             memberData.creation = {
               from: 'system',
               at: admin.database.ServerValue.TIMESTAMP
             };
-            return db.collection(memberPath).doc(memberData.id).set(memberData);
+            return db.collection(memberPath).doc(fireBaseUserId /*memberData.id*/).set(memberData);
           }
           else {
-            console.log('member already exists');
-            console.log(userSnapshot.docs[0].id);
+            console.log('member already exists' + userSnapshot.docs[0].id);
             const doc = userSnapshot.docs[0];
             return doc.ref.set(memberData, { merge: true });
           }
-        })
-
-    })
-    .catch((error: any) => console.error(error));
+        });
+    });
 });
 
 export const driveMemberDeleteCron = functions.database.ref('/drive-members/{userId}').onDelete((snap, context) => {
-  data = snap.val();
-  return db.collection(memberPath).doc(data.lastName + '-' + data.firstName + '-' + data.birthday)
-    .delete()
-    .catch((error: any) => console.error(error));
+  fireBaseUserId = context.params.userId;
+  return db.collection(memberPath).doc(fireBaseUserId).delete().catch((error: any) => console.error(error));
 });
 
 export const driveMemberUpdateCron = functions.database.ref('/drive-members/{userId}').onUpdate((change, context) => {
-
   data = change.after.val();
-
   if (!data) return true;
-
   console.log(data);
+  console.log(context.params);
   console.log('updated dfb-member');
-
   return true;
 });

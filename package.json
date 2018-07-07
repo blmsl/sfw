@@ -33,6 +33,7 @@
     "e2e": "ng e2e",
     "clean:dist": "npm run rimraf -- dist",
     "clean:coverage": "npm run rimraf -- coverage",
+    "deploy": "firebase deploy --only functions",
     "docs:deploy": "wintersmith build -C docs && gh-pages -d docs/build",
     "docs:serve": "wintersmith preview -C docs",
     "postinstall": "npm run tsformat",

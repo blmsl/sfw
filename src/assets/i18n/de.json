@@ -363,6 +363,7 @@
         "noAssignedContact": "Es wurde noch kein Ansprechpartner für diesen Verein ernannt",
         "noHistory": "Es wurde noch kein Artikel über die Geschichte des Vereins verfasst!",
         "noLogo": "Kein Vereinswappen vorhanden",
+        "noMembers": "Es sind noch keine Mitglieder vorhanden.",
         "noManagementPhoto": "Es wurde noch kein Foto des Vorstandes hochgeladen.",
         "positions": {
           "firstNameAndLastName": "Vorname und Nachname"
@@ -1036,6 +1037,7 @@
         "titleDescription": "Titel der Seite"
       },
       "registration": {
+        "disableRegistration": "Benutzeranmeldung sperren",
         "isEnabled": "Anmeldungen erlauben",
         "newUserLabel": "Rolle für neuer Benutzer",
         "statusLabel": "Registrieren neuer Benutzer",
@@ -1379,9 +1381,9 @@
         "pictureUpload": "Profilfoto",
         "profile": "Benutzerprofil",
         "roles": {
-          "ADMINISTRATORS": "Administratoren",
-          "EDITORS": "Redakteuere",
-          "GUESTS": "Gäste",
+          "admin": "Administratoren",
+          "editor": "Redakteure",
+          "subscriber": "Gäste",
           "noAssignedRole": "Keiner Rolle zugewiesen"
         },
         "saveUser": "Benutzer speichern",

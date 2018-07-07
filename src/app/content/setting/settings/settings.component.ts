@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { IApplication } from '../../../shared/interfaces/application.interface';
 import { ApplicationService } from '../../../shared/services/application/application.service';
@@ -15,6 +15,7 @@ import {
   debounceTime,
   distinctUntilChanged
 } from 'rxjs/operators';
+import { UserService } from '../../../shared/services/user/user.service';
 
 @Component({
   templateUrl: './settings.component.html'
@@ -28,20 +29,23 @@ export class SettingsComponent implements OnInit {
 
   public application: IApplication;
   public form: FormGroup;
-  public selectedStaticPage: number = -1;
+  public selectedStaticPage: AbstractControl = null;
   public shorteningProviders: {
     title: string,
     key: string
   }[] = [];
   public link: string = 'http://www.google.de';
   public savedApplication: IApplication;
+  public roles: string[];
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar,
     private title: Title,
     private translateService: TranslateService,
+    private userService: UserService,
     private applicationService: ApplicationService) {
+    this.roles = userService.getUserRoles();
   }
 
   ngOnInit() {
@@ -69,21 +73,6 @@ export class SettingsComponent implements OnInit {
           this.saveSettings();
         }
       });
-
-      /*
-      this.form.valueChanges.debounceTime(1000).distinctUntilChanged().subscribe((changes: IApplication) => {
-        this.application.page = changes.page;
-        this.application.urlShortening = changes.urlShortening;
-        this.application.registration = changes.registration;
-        this.application.downtime = changes.downtime;
-        this.application.social = changes.social;
-        this.application.staticPages = changes.staticPages;
-
-        if (!this.form.invalid) {
-          this.application = Object.assign({}, this.application, changes);
-          this.saveSettings();
-        }
-      }); */
     }
 
     for (let i = 0; i < urlShortener.length; i++) {
@@ -131,11 +120,11 @@ export class SettingsComponent implements OnInit {
 
   addStaticPage(): void {
     this.getNewStaticPageTitle().subscribe((staticPageTitle: string) => {
-      const control = <FormArray>this.form.controls['staticPages'];
+      const control = <FormArray>this.form.get('staticPages');
 
-      const pageTitle = this.form.controls['staticPages']['controls'].length === 0
+      const pageTitle = control.length === 0
         ? staticPageTitle
-        : staticPageTitle + ' (' + this.form.controls['staticPages']['controls'].length + ')';
+        : staticPageTitle + ' (' + control.length + ')';
 
       const staticPage: IStaticPage = {
         isEnabled: true,
@@ -145,17 +134,16 @@ export class SettingsComponent implements OnInit {
       };
       const addCtrl = this.initStaticPage(staticPage);
       control.push(addCtrl);
-      this.setSelectedStaticPage(this.form.controls['staticPages']['controls'].length - 1);
+      this.setSelectedStaticPage(control.controls[control.length - 1]);
     });
   }
 
   removeStaticPage(i: number): void {
-    const control = <FormArray>this.form.controls['staticPages'];
+    const control = <FormArray>this.form.get('staticPages');
     control.removeAt(i);
-    this.setSelectedStaticPage(-1);
   }
 
-  setSelectedStaticPage(staticPage: number): void {
+  setSelectedStaticPage(staticPage: AbstractControl): void {
     this.selectedStaticPage = staticPage;
   }
 
@@ -222,9 +210,7 @@ export class SettingsComponent implements OnInit {
   }
 
   resetApplicationData() {
-    this.selectedStaticPage = -1;
-    // this.form.controls['staticPages']['controls'] = this.initStaticPages();
-    // this.application.staticPages = this.savedApplication.staticPages;
+    this.selectedStaticPage = null;
   }
 
   cancel() {

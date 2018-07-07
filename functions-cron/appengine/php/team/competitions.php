@@ -1,36 +1,69 @@
 <?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', true);
+    ini_set('memory_limit', '-1');
 
-require_once '../simple_html_dom.php';
-require_once '../functions.php';
-require '../../vendor/autoload.php';
+    header("Content-Type: text/html; charset=utf-8");
 
-use Google\Cloud\Firestore\FirestoreClient;
+    require "../simple_html_dom.php";
+    require "../functions.php";
+    require "../../vendor/autoload.php";
 
-$db = new FirestoreClient();
-$collection = $db->collection('users');
-var_dump($collection);
+    use Google\Cloud\Firestore\FirestoreClient;
 
-/*
-echo "<h1>Competitions</h1>";
-
-$urls = array(
-    'Frauen' => 'http://www.fussball.de/mannschaft/sf-winterbach-sf-winterbach-saarland/-/saison/1718/team-id/01DIPRBFPS000000VV0AG811VTMPFBM2#!/',
-    'Herren' => 'http://www.fussball.de/mannschaft/sf-winterbach-sf-winterbach-saarland/-/saison/1718/team-id/011MIBO43O000000VTVG0001VTR8C1K7#!/',
-    'Altherren' => 'http://www.fussball.de/mannschaft/sf-winterbach-sf-winterbach-saarland/-/saison/1718/team-id/01AJSD0AVO000000VV0AG811VTUDOO2M#!/'
-);
-
-foreach ($urls AS $key => $url) {
-    $output = array();
-    $curlRequest = curlRequest($url);
-    scrap_competitions($curlRequest);
-    echo "<h2>" . $key . "</h2>";
-    echo "<pre>";
-    if($output) {
-        print_r($output);
+    try {
+        $db = new FirestoreClient([
+            'projectId' => 'sfw-dev'
+        ]);
+    } catch (\Google\Cloud\Core\Exception\GoogleException $e) {
+        var_dump($e);
+        exit();
     }
-    else{
-        echo "Keine Tabelle vorhanden";
+
+
+    // Seasons
+    $dbSeasons = $db->collection('seasons');
+    $seasons = array();
+    foreach ($dbSeasons->documents() as $season) {
+        $seasons[$season["title"]] = $season["id"];
+        if (isset($_GET["season"]) && $season["id"] === $_GET["season"]) {
+            $parts = explode('/', $season["title"]);
+            $startYear = substr($parts[0], -4);
+            $date = DateTime::createFromFormat('d.m.Y', '15.07.' . $startYear);
+            $currentSeason = getCurrentSeason($seasons, $dbSeasons, $date->format('Y-m-d'));
+        }
     }
-    echo "</pre>";
-}
-*/
+
+    if (!isset($_GET["season"])) {
+        $currentSeason = getCurrentSeason($seasons, $dbSeasons);
+    }
+
+    // Teams
+    $dbTeams = $db->collection('teams');
+    $teams = array();
+    foreach ($dbTeams->documents() as $team) {
+        if ($team["assignedSeason"] === $currentSeason["id"]) {
+            $teams[$team["id"]] = $team;
+        }
+    }
+
+    echo "<h1>Wettbewerbe";
+
+    $startDate = DateTime::createFromFormat('Y-m-d', $currentSeason["StartDate"]);
+    $endDate = DateTime::createFromFormat('Y-m-d', $currentSeason["EndDate"]);
+    echo " <small>".$startDate->format('d.m.Y')." &ndash; ".$endDate->format('d.m.Y')."</small></h1>";
+
+    foreach ($teams AS $teamId => $team) {
+        $curlRequest = curlRequest($team["externalTeamLink"]);
+        $output = scrap_competitions($curlRequest);
+        echo "<h2>" . $team["title"] . " &ndash; " . $team["subTitle"] . " ( <a target='new' href='" . $team["externalTeamLink"] . "'>Link</a> )</h2>";
+        echo "<pre>";
+        if ($output) {
+            $docRef = $dbTeams->document($team["id"]);
+            $docRef->update([['path' => 'assignedCompetitions', 'value' => $output]]);
+            var_dump($output);
+        } else {
+            echo "Keine Wettbewerbe vorhanden";
+        }
+        echo "</pre>";
+    }

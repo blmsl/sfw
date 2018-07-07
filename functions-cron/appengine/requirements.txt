@@ -1,1 +1,3 @@
 google-api-python-client
+webapp2
+oauth2client

@@ -1,48 +1,39 @@
-<div fxLayout="row"
+<div [formGroup]="form">
 
-     [formGroup]="form">
+  <div fxLayout.gt-sm="row"
+       fxLayout="column"
+       fxLayoutGap="10px">
 
-  <mat-form-field fxFlex.gt-sm="40"
-                  fxFlex.gt-xs="100"
-                  fxFlex="100"
-                  hintLabel="Max {{titleMaxLength}} characters">
-    <input matInput
-           placeholder="{{'general.applications.static.title' | translate}}"
-           formControlName="title"/>
-  </mat-form-field>
+    <mat-form-field fxFlex.gt-sm="40"
+                    hintLabel="Max {{titleMaxLength}} characters">
+      <input matInput
+             placeholder="{{'general.applications.static.title' | translate}}"
+             formControlName="title"/>
+    </mat-form-field>
 
-  <mat-form-field fxFlexOffset="1"
-                  fxFlex.gt-sm="35"
-                  fxFlex.gt-xs="100"
-                  fxFlex="100">
-    <mat-select placeholder="{{'general.applications.static.sectionTitle' | translate}}"
-                formControlName="assignedCategories" multiple>
-      <mat-option *ngFor="let category of categories | orderBy: 'title'"
-                  [value]="category.id">
-        {{category.title}}
-      </mat-option>
-    </mat-select>
-    <mat-hint align="end">{{'general.applications.static.chooseSectionTitle' | translate}}</mat-hint>
-  </mat-form-field>
+    <mat-form-field fxFlex.gt-sm="35">
+      <mat-select placeholder="{{'general.applications.static.sectionTitle' | translate}}"
+                  formControlName="assignedCategories" multiple>
+        <mat-option *ngFor="let category of categories | orderBy: 'title'"
+                    [value]="category.id">
+          {{category.title}}
+        </mat-option>
+      </mat-select>
+      <mat-hint align="end">{{'general.applications.static.chooseSectionTitle' | translate}}</mat-hint>
+    </mat-form-field>
 
-  <div fxFlexOffset="1"
-       fxFlex.gt-sm="23"
-       fxFlex.gt-xs="100"
-       fxFlex="100">
-    <mat-checkbox formControlName="isEnabled" fxFlex="95">
-      {{'general.applications.static.isEnabled' | translate}}
-    </mat-checkbox>
+    <div>
+      <mat-checkbox formControlName="isEnabled">
+        {{'general.applications.static.isEnabled' | translate}}
+      </mat-checkbox>
+    </div>
   </div>
-</div>
 
-<div fxLayout="row"
-
-     [formGroup]="form"
-     style="margin-top: 25px;">
-  <div fxFlex="100">
-    <quill-editor
-      formControlName="text"
-      [style]="{height: '60vh'}">
-    </quill-editor>
+  <div style="margin-top: 25px;">
+    <div fxFlex="100">
+      <quill-editor formControlName="text"
+                    [style]="{height: '60vh'}">
+      </quill-editor>
+    </div>
   </div>
 </div>
