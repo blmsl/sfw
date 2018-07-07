@@ -7,10 +7,6 @@ import { IMemberState } from '../../../shared/interfaces/member/member-state.int
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import * as moment from 'moment';
 
-import 'moment/min/locales';
-
-moment.locale('de-de');
-
 @Component({
   selector: 'member-statistics',
   templateUrl: './member-statistics.component.html',

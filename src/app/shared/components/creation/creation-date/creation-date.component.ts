@@ -1,8 +1,5 @@
 import { Component, Input } from '@angular/core';
 import * as moment from 'moment';
-import 'moment/min/locales';
-
-moment.locale('de-de');
 
 @Component({
   selector: 'creation-date',
