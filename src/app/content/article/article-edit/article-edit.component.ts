@@ -10,7 +10,6 @@ import { ApplicationService } from '../../../shared/services/application/applica
 import { AlertService } from '../../../shared/services/alert/alert.service';
 import { CustomValidators } from 'ng2-validation';
 import * as moment from 'moment';
-import * as firebase from 'firebase';
 
 const SMALL_WIDTH_BREAKPOINT = 960;
 
@@ -60,7 +59,7 @@ export class ArticleEditComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: { article: IArticle }) => {
       this.article = data.article;
-      if(data.article.id) {
+      if (data.article.id) {
         this.articleStatus = 'edit';
       }
     });
@@ -73,8 +72,8 @@ export class ArticleEditComponent implements OnInit {
       });
 
     let articleDate: any;
-    if(this.article.articleDate){
-      const timestamp = <firebase.firestore.Timestamp>this.article.articleDate;
+    if (this.article.articleDate) {
+      const timestamp = <any>this.article.articleDate;
       articleDate = timestamp.toDate();
     }
 
@@ -94,9 +93,9 @@ export class ArticleEditComponent implements OnInit {
 
       // Links
       assignedLocation: this.article.assignedLocation,
-      assignedTeams: [ this.article.assignedTeams ],
+      assignedTeams: [this.article.assignedTeams],
       assignedMatch: this.article.assignedMatch,
-      assignedCategories: [ this.article.assignedCategories ],
+      assignedCategories: [this.article.assignedCategories],
       isMatch: !!this.article.assignedMatch,
 
       // Meta
