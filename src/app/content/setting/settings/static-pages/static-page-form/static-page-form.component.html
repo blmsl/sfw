@@ -31,7 +31,7 @@
 
   <div style="margin-top: 25px;">
     <div fxFlex="100">
-      <quill-editor formControlName="text"
+      <quill-editor [formControl]="form.get('text')"
                     [style]="{height: '60vh'}">
       </quill-editor>
     </div>
