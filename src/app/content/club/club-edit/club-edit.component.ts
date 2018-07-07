@@ -266,6 +266,32 @@ export class ClubEditComponent implements OnInit {
     this.selectedClubManagementPosition = -1;
   }
 
+  removeClub(club: IClub){
+    this.clubService.removeClub(club).then(() => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          data: {
+            status: 'success',
+            message: 'general.clubs.edit.removedClub'
+          },
+          duration: 2500,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      },
+      (error: any) => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          data: {
+            status: 'error',
+            message: error
+          },
+          duration: 2500,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
+    );
+  }
+
   saveClub(redirect: boolean = false): void {
     let action;
 
@@ -289,7 +315,17 @@ export class ClubEditComponent implements OnInit {
           verticalPosition: 'top'
         });
       },
-      (error: any) => console.log(error)
+      (error: any) => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          data: {
+            status: 'error',
+            message: error
+          },
+          duration: 2500,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
     );
   }
 
