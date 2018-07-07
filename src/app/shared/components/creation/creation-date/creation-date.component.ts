@@ -10,7 +10,10 @@ moment.locale('de-de');
 })
 export class CreationDateComponent {
 
-  @Input() creation: string;
+  @Input() creation: {
+    seconds: number,
+    nanoseconds: number
+  };
   public moment: any;
 
   public constructor() {

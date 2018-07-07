@@ -9,32 +9,32 @@
     <mat-card class="shadow-none"
               *ngIf="categoryTypes$ | async as categoryTypes; else loadingTemplate">
       <mat-card-header>
-        <mat-card-title>{{category.title}}</mat-card-title>
         <mat-card-subtitle> {{'general.categories.list.colTitles.title' | translate}}</mat-card-subtitle>
+        <mat-card-title>{{category.title}}</mat-card-title>
       </mat-card-header>
 
       <mat-card-header>
+        <mat-card-subtitle>{{'general.categories.list.colTitles.category' | translate}}</mat-card-subtitle>
         <mat-card-title>
               <span *ngFor="let categoryType of categoryTypes | filterBy: ['id'] : category.assignedCategoryType">
                     {{ 'general.menu.' + categoryType.link + '.main' | translate}}
                 </span>
         </mat-card-title>
-        <mat-card-subtitle>{{'general.categories.list.colTitles.category' | translate}}</mat-card-subtitle>
       </mat-card-header>
 
       <mat-card-header>
+        <mat-card-subtitle>{{'general.tables.colTitles.creation' | translate}}</mat-card-subtitle>
         <mat-card-title>
               <span *ngIf="category.creation.by === 'system'" translate>
                   {{'general.tables.importedViaScript'}}
                 </span>
           <creation-date [creation]="category.creation.at"></creation-date>
         </mat-card-title>
-        <mat-card-subtitle>{{'general.tables.colTitles.creation' | translate}}</mat-card-subtitle>
       </mat-card-header>
 
       <mat-card-header>
-        <mat-card-title [innerHtml]="category.description"></mat-card-title>
         <mat-card-subtitle>{{'general.tables.colTitles.description' | translate}}</mat-card-subtitle>
+        <mat-card-title [innerHtml]="category.description"></mat-card-title>
       </mat-card-header>
 
     </mat-card>
