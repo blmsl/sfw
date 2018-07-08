@@ -97,6 +97,7 @@ export class ArticleEditComponent implements OnInit {
       assignedMatch: this.article.assignedMatch,
       assignedCategories: [this.article.assignedCategories],
       isMatch: !!this.article.assignedMatch,
+      soccerWatchLink: this.article.soccerWatchLink,
 
       // Meta
       meta: this.initMetaData()

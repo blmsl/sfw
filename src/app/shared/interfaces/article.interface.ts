@@ -3,7 +3,6 @@ import { ILocation } from './location/location.interface';
 import { ITeam } from './team/team.interface';
 import { ICategory } from './category.interface';
 import { ITag } from './tag.interface';
-import { ISeason } from './season.interface';
 import { ICreation } from './creation.interface';
 import { IPublication } from './publication.interface';
 
@@ -33,7 +32,7 @@ export interface IArticle {
   assignedLocation?: ILocation;
   assignedTeams?: ITeam[];
 
-  // assignedSeason?: ISeason;
+  soccerWatchLink?: string;
   assignedMatch?: IMatch;
 
   isFeaturedPost?: boolean;

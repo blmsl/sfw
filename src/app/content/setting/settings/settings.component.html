@@ -121,8 +121,7 @@
         </settings-social-data>
       </mat-tab>
       <mat-tab label="{{'general.applications.staticTitle' | translate}}">
-        <static-pages [application]="application"
-                      [form]="form.get('staticPages').controls"
+        <static-pages [form]="form.get('staticPages').controls"
                       [selectedStaticPage]="selectedStaticPage"
                       (setSelectedStaticPage)="setSelectedStaticPage($event)"
                       (addStaticPage)="addStaticPage()"

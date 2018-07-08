@@ -13,7 +13,6 @@ import { CategoryService } from '../../../../shared/services/category/category.s
 export class StaticPagesComponent implements OnInit {
 
   @Input() form: FormArray;
-  @Input() application: IApplication;
   @Input() selectedStaticPage: number;
 
   @Output() removeStaticPage: EventEmitter<number> = new EventEmitter<number>(false);
