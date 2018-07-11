@@ -1,3 +1,18 @@
-<p>
-  team-detail-standings works!
-</p>
+<ul>
+  <li>Torjäger</li>
+  <li>Vorbereiter</li>
+  <li>Karten</li>
+</ul>
+
+<div fxLayout="column"
+     fxLayout.gt-sm="row"
+     fxLayoutGap="10px">
+  <div fxFlex.gt-sm="50">
+    <team-detail-competitions [team]="team"></team-detail-competitions>
+  </div>
+
+  <div fxFlex.gt-sm="50">
+    <h3>{{'general.teams.detail.standingsTitle' | translate}}</h3>
+    <span style="color: red">ToDo!!!</span>
+  </div>
+</div>

@@ -49,8 +49,25 @@ export const MENUITEMS = [
   {
     state: 'matches',
     name: 'matches',
-    type: 'link',
-    icon: 'event'
+    type: 'sub',
+    icon: 'event',
+    children: [
+      {
+        state: '',
+        name: 'dashboard',
+        icon: 'trending_up'
+      },
+      {
+        state: 'list',
+        name: 'list',
+        icon: 'event_note'
+      },
+      {
+        state: 'edit/new',
+        name: 'create',
+        icon: 'create'
+      }
+    ]
   },
   {
     state: 'categories',

@@ -423,6 +423,7 @@
       }
     },
     "dashboard": {
+      "allMatches": "Alle Spiele",
       "birthdays": "Geburtstage",
       "buildStatus": "Build Status",
       "dependencyStatus": "Dependency Status",
@@ -564,9 +565,21 @@
       }
     },
     "matches": {
+      "detail": {
+        "assignedArticle": "Artikel",
+        "matchEventsTitle": "Spielverlauf",
+        "noAssignedArticles": "Es wurden noch keine Artikel mit diesem Spiel verknüpft.",
+        "startingElevenTitle": "Aufstellung",
+        "title": "Spieldetails"
+      },
       "list": {
         "noMatches": "Es wurden keine Spiele gefunden."
-      }
+      },
+      "matchesTitle": "Spielpläne",
+      "nextMatchTitle": "Nächstes Spiel: ",
+      "pastMatchesTitle": "Spiele der letzten 14 Tage",
+      "pastMatchesWithoutResultTitle": "Fehlende Ergebnisse",
+      "upcomingMatchesTitle": "Spiele der nächsten 14 Tage"
     },
     "media": {
       "centerTitle": "Mediencenter",
@@ -705,7 +718,8 @@
           "firstName": "Vorname",
           "gender": "Geschlecht",
           "guestPlayerData": "Gastspieler",
-          "isImported": "Autoimport?",
+          "dfbImported": "DFB.net?",
+          "driveImported": "Google Drive?",
           "lastName": "Nachname",
           "male": "Herr",
           "name": "Name",
@@ -852,6 +866,9 @@
         }
       },
       "matches": {
+        "create": "Spiel erstellen",
+        "dashboard": "Übersicht",
+        "list": "Alle Spiele",
         "main": "Spiele"
       },
       "member": {
@@ -1167,6 +1184,7 @@
     },
     "teams": {
       "detail": {
+        "competitionsTitle": "Wettbewerbe",
         "matchPlan": {
           "matchPlan": "Spielplan",
           "allMatches": "Alle Spiele",
@@ -1175,7 +1193,8 @@
         },
         "mediaTitle": "Verknüpfte Dateien",
         "noMatch": "Es wurden keine Spiele für diese Mannschaft gefunden.",
-        "noTeamLogo": "Es wurde noch kein Foto für diese Mannschaft hochgeladen."
+        "noTeamLogo": "Es wurde noch kein Foto für diese Mannschaft hochgeladen.",
+        "standingsTitle": "Tabellenstand"
       },
       "edit": {
         "assignedCategories": "Verknüpfte Kategorien",

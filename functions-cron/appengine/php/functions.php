@@ -29,6 +29,8 @@
 
                 # echo $i . "<br />";
 
+                $mainCategoryName = '';
+
                 if ($i > 0) {
 
                     if ($item->getAttribute('class') === "row-headline visible-small") {
@@ -86,15 +88,15 @@
                         foreach ($item->find('td') AS $cell) {
                             if ($cell->getAttribute('class') === 'column-club') {
                                 # echo "Heim:" . $cell->plaintext . "<br />";
-                                $matchData["homeTeam"]["name"] = trim($cell->plaintext);
+                                $matchData["homeTeam"]["title"] = str_replace("&#8203;", "", trim($cell->plaintext));
                                 $matchData["homeTeam"]["externalTeamLink"] = ($cell->find('.club-wrapper', 0) && $cell->find('.club-wrapper', 0) !== null) ? $cell->find('.club-wrapper', 0)->getAttribute('href') : '';
-                                $matchData["homeTeam"]["logo"] = ($cell->find('.table-image span', 0) && $cell->find('.table-image span', 0) !== null) ?
+                                $matchData["homeTeam"]["logoURL"] = ($cell->find('.table-image span', 0) && $cell->find('.table-image span', 0) !== null) ?
                                     str_replace('format/3', 'format/2', $cell->find('.table-image span', 0)->getAttribute('data-responsive-image')) : '';
 
                             } elseif ($cell->getAttribute('class') === 'column-club no-border') {
-                                $matchData["guestTeam"]["name"] = trim($cell->plaintext);
+                                $matchData["guestTeam"]["title"] = str_replace("&#8203;", "", trim($cell->plaintext));
                                 $matchData["guestTeam"]["externalTeamLink"] = ($cell->find('.club-wrapper', 0) && $cell->find('.club-wrapper', 0) !== null) ? $cell->find('.club-wrapper', 0)->getAttribute('href') : '';
-                                $matchData["guestTeam"]["logo"] = ($cell->find('.table-image span', 0) && $cell->find('.table-image span', 0) !== null) ?
+                                $matchData["guestTeam"]["logoURL"] = ($cell->find('.table-image span', 0) && $cell->find('.table-image span', 0) !== null) ?
                                     str_replace('format/3', 'format/2', $cell->find('.table-image span', 0)->getAttribute('data-responsive-image')) : '';
 
                             } elseif ($cell->getAttribute('class') === 'column-score') {
@@ -112,17 +114,17 @@
                             && key_exists('homeTeam', $matchData)
                             && key_exists('guestTeam', $matchData)
                         ) {
-                            $matchData["isHomeTeam"] = isTeamFromClub($matchData["homeTeam"], $matchData["guestTeam"], $club["title"], $matchData);
-                            $matchData["isGuestTeam"] = isTeamFromClub($matchData["guestTeam"], $matchData["homeTeam"], $club["title"], $matchData);
+                            $matchData["isHomeTeam"] = isTeamFromClub($matchData["homeTeam"], $matchData["guestTeam"], $club["title"], $matchData, $mainCategoryName);
+                            // $matchData["isGuestTeam"] = isTeamFromClub($matchData["guestTeam"], $matchData["homeTeam"], $club["title"], $matchData);
 
                             $teamData = null;
                             if ($matchData["isHomeTeam"]) {
                                 $teamData = $matchData["homeTeam"];
-                            } elseif ($matchData["isGuestTeam"]) {
+                            } else {
                                 $teamData = $matchData["guestTeam"];
                             }
 
-                            $subTitle = $teamData["name"] ? $teamData["name"] : $club["title"];
+                            $subTitle = $teamData["title"] ? $teamData["title"] : $club["title"];
 
                             if (key_exists($assignedCategory . "-" . $subTitle . "-" . $season["id"], $teams)) {
                                 $matchData["assignedTeam"] = $teams[$assignedCategory . "-" . $subTitle . "-" . $season["id"]];
@@ -154,11 +156,11 @@
                         key_exists('assignedLocation', $matchData) &&
                         key_exists('isHomeTeam', $matchData)
                     ) {
-                        $matchData["title"] = $assignedCategory . ': ' . $matchData["homeTeam"]["name"] . ' - ' . $matchData["guestTeam"]["name"];
+                        $matchData["title"] = $assignedCategory . ': ' . $matchData["homeTeam"]["title"] . ' - ' . $matchData["guestTeam"]["title"];
                         $output[] = $matchData;
 
-                        if(!array_key_exists($matchData["title"] . '-' . $matchData['matchLink'], $matches)) {
-                            saveNewMatch($matchData, $matches, $dbMatches);
+                        if (!array_key_exists($matchData["title"] . '-' . $matchData['matchLink'], $matches)) {
+                            // saveNewMatch($matchData, $matches, $dbMatches);
                         }
 
                         $matchData = [];
@@ -175,25 +177,8 @@
     {
         $output = array();
         if ($html && is_object($html) && isset($html->nodes)) {
-            $items = $html->find("#team-competitions .factfile-data .column-left");
+            $items = $html->find("#team-competitions .factfile-data .column-left, #team-competitions .factfile-data .column-right");
             foreach ($items as $item) {
-
-                echo $item->find('a', 0)->plaintext;
-                echo $item->find('a', 0)->href;
-                echo $item->find('.label', 0)->plaintext;
-
-                $output[] = array(
-                    'title' => $item->find('a', 0)->plaintext,
-                    'competitionType' => $item->find('.label', 0)->plaintext,
-                    'link' => $item->find('a', 0)->href
-                );
-            }
-            $items = $html->find("#team-competitions .factfile-data .column-right");
-            foreach ($items as $item) {
-                echo $item->find('a', 0)->plaintext;
-                echo $item->find('a', 0)->href;
-                echo $item->find('.label', 0)->plaintext;
-
                 $output[] = array(
                     'title' => $item->find('a', 0)->plaintext,
                     'competitionType' => $item->find('.label', 0)->plaintext,
@@ -209,6 +194,7 @@
     {
         $output = array();
         if ($html && is_object($html) && isset($html->nodes)) {
+
             $items = $html->find("#team-fixture-league-tables tr");
             // loop through items on current page
             foreach ($items as $item) {
@@ -231,32 +217,15 @@
         return $output;
     }
 
-    /*
-    function get_value($element, $selector_string, $index, $type = "text")
-    {
-        $value = "";
-        $cont = $element->find($selector_string, $index);
-        if ($cont) {
-            if ($type == "href") {
-                $value = $cont->href;
-            } elseif ($type == "src") {
-                $value = $cont->src;
-            } elseif ($type == "text") {
-                $value = trim($cont->plaintext);
-            } elseif ($type == "content") {
-                $value = trim($cont->content);
-            } elseif ($type == "outertext") {
-                $value = trim($cont->outertext);
-            } else {
-                $value = $cont->innertext;
-            }
-        }
-
-        return trim($value);
-    } */
-
     function saveNewMatch($matchData, $matches, $dbMatches){
-
+        $addedDocRef = $dbMatches->newDocument();
+        $matchData["id"] = $addedDocRef->id();
+        $matchData["isImported"] = true;
+        $matchData["isOfficialMatch"] = true;
+        $matchData["creation"] = generateCreation();
+        printf('New Match ' . $matchData["title"] .' with ID ' . $addedDocRef->id() . "<br />" . PHP_EOL);
+        $addedDocRef->set($matchData);
+        return $addedDocRef->id();
     }
 
     function saveNewTeam($title, $subTitle, $teamData, $mainCategory, $assignedCategory, $club, $season, $teams, $dbTeams)
@@ -272,7 +241,7 @@
             "isImported" => true,
             "isOfficialTeam" => true,
             "externalTeamLink" => $teamData["externalTeamLink"],
-            "logoURL" => $teamData["logo"],
+            "logoURL" => $teamData["logoURL"],
             "assignedTeamCategories" => array($mainCategory, $assignedCategory),
             "assignedPlayers" => array(),
             "assignedPositions" => array(),
@@ -489,14 +458,16 @@
         return $returnString;
     }
 
-    function isTeamFromClub($team1, $team2, $clubTitle, $matchData)
+    function isTeamFromClub($team1, $team2, $clubTitle, $matchData, $mainCategoryName)
     {
-        if (strpos($team1["name"], $clubTitle) !== false)
+        if($team1 === $clubTitle)
             return true;
-        elseif (strpos($team2["name"], $clubTitle) !== false)
+        elseif (strpos($team1["title"], $clubTitle) !== false)
+            return true;
+        elseif (strpos($team2["title"], $clubTitle) !== false)
             return false;
-        elseif (strpos($team1["name"], 'Bliesen') !== false
-            && strpos($matchData["assignedCategories"]["assignedCategory"], 'Junioren') !== false)
+        elseif (strpos($team1["title"], 'Bliesen') !== false
+            && (strpos($mainCategoryName, 'Junioren') !== false) || $mainCategoryName === 'Junioren')
             return true;
         else {
             return false;
@@ -518,6 +489,40 @@
             'at' => '',
             'status' => 0
         );
+    }
+
+    function generateCompetitionTable($competitions){
+        $returnString = '';
+        $returnString .= '<table class="table table-striped table-bordered table-hover table-sm">';
+        $returnString .= '<thead class="thead-light">';
+        $returnString .= '<tr>';
+        $returnString .= '<th>Nr.</th>';
+        $returnString .= '<th>Title</th>';
+        $returnString .= '<th>Type</th>';
+        $returnString .= '<th>Link</th>';
+        $returnString .= '</tr>';
+        $returnString .= '</thead>';
+        $returnString .= '<tbody>';
+
+        $i = 1;
+        foreach ($competitions AS $competition) {
+            $returnString .= generateCompetitionRow($competition, $i);
+            $i++;
+        }
+
+        $returnString .= '</tbody>';
+        $returnString .= '</table>';
+
+        return $returnString;
+    }
+
+    function generateCompetitionRow($competition, $i){
+        $returnString = '<tr>';
+        $returnString .= '<td scope="row">' . $i . '</td>';
+        $returnString .= '<td>' . $competition["title"] . '</td>';
+        $returnString .= '<td>' . $competition["competitionType"] . '</td>';
+        $returnString .= '<td><a target="_blank" href="' . $competition["link"] . '">Link</a></td>';
+        return $returnString;
     }
 
     function generateMatchPlanTable($matches, $categories, $locations, $teams)
@@ -553,6 +558,28 @@
         return $returnString;
     }
 
+    function generateCalendarEvent($match, $locations)
+    {
+
+        $assignedLocation = '';
+        foreach ($locations as $title => $id) {
+            if ($id === $match["assignedLocation"]) {
+                $assignedLocation = $title;
+            }
+        }
+
+        #var_dump($match["matchStartDate"]->format(DATE_ATOM));
+        #var_dump($match["matchEndDate"]->format(DATE_ATOM));
+        $event = new Google_Service_Calendar_Event(array(
+            'summary' => $match["title"],
+            'location' => $assignedLocation,
+            'description' => $match["matchLink"],
+            'start' => $match["matchStartDate"]->format(DATE_ATOM),
+            'end' => $match["matchEndDate"]->format(DATE_ATOM)
+        ));
+        return $event;
+    }
+
     function generateMatchPlanRow($match, $i, $categories, $locations, $teams)
     {
 
@@ -578,11 +605,11 @@
 
         $returnString .= '<td>' . $match["matchStartDate"]->format('d.m.Y H:i') . '</td>';
         $returnString .= '<td>' . $match["matchEndDate"]->format('H:i') . '</td>';
-        $returnString .= '<td><img src="' . $match["homeTeam"]["logo"] . '" alt="' . $match["homeTeam"]["name"] . '"/><br />';
-        $returnString .= $match["isHomeTeam"] ? '<b>' . $match["homeTeam"]["name"] . '</b>' : $match["homeTeam"]["name"];
+        $returnString .= '<td><img src="' . $match["homeTeam"]["logoURL"] . '" alt="' . $match["homeTeam"]["title"] . '"/><br />';
+        $returnString .= $match["isHomeTeam"] ? '<b>' . $match["homeTeam"]["title"] . '</b>' : $match["homeTeam"]["title"];
         $returnString .= '</td>';
-        $returnString .= '<td><img src="' . $match["guestTeam"]["logo"] . '" alt="' . $match["guestTeam"]["name"] . '"/><br />';
-        $returnString .= !$match["isHomeTeam"] ? '<b>' . $match["guestTeam"]["name"] . '</b>' : $match["guestTeam"]["name"];
+        $returnString .= '<td><img src="' . $match["guestTeam"]["logoURL"] . '" alt="' . $match["guestTeam"]["title"] . '"/><br />';
+        $returnString .= !$match["isHomeTeam"] ? '<b>' . $match["guestTeam"]["title"] . '</b>' : $match["guestTeam"]["title"];
         $returnString .= '</td>';
 
         #foreach($teams as $title => $id) {
@@ -599,7 +626,7 @@
     function generateHeader()
     {
         return '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></head><body><div class="container-fluid"><h1>Spielplan</h1>';
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></head><body><div class="container-fluid">';
     }
 
     function generateFooter()

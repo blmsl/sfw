@@ -11,7 +11,7 @@
         <match-list *ngIf="categories && matches && events && team; else loadingTemplate"
                     [categories]="categories"
                     [events]="events"
-                    [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<=' | matchFilter: 'assignedTeam' : '===' : team.id">
+                    [matches]="matches | orderBy: ['-matchStartDate.seconds'] | matchFilter : 'matchStartDate' : '<=' | matchFilter: 'assignedTeam' : '===' : team.id">
         </match-list>
       </mat-card-content>
     </mat-card>
@@ -25,7 +25,7 @@
       <mat-card-content>
         <match-list *ngIf="categories && matches && team; else loadingTemplate"
                     [categories]="categories"
-                    [matches]="matches | orderBy: ['startDate'] | matchFilter : 'startDate' : '>=' | matchFilter: 'assignedTeam' : '===' : team.id">
+                    [matches]="matches | orderBy: ['matchStartDate.seconds'] | matchFilter : 'matchStartDate' : '>=' | matchFilter: 'assignedTeam' : '===' : team.id">
         </match-list>
       </mat-card-content>
     </mat-card>

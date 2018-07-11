@@ -1,0 +1,94 @@
+<mat-card>
+  <mat-card-title>{{ 'general.matches.matchesTitle' | translate }}</mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
+    <div *ngIf="categories$ | async as categories; else loadingTemplate ">
+      <div fxLayout="column"
+           fxLayout.gt-sm="row"
+           fxLayoutGap="10px"
+           *ngIf="matches$ | async as matches; else loadingTemplate">
+        <div fxFlex.gt-sm="40">
+          <mat-card>
+            <mat-card-title>{{ 'general.matches.upcomingMatchesTitle' | translate }}</mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+            <mat-card-content style="max-height: 300px"
+                              [perfectScrollbar]="config">
+              <match-list [categories]="categories"
+                          [matches]="matches | orderBy: ['matchStartDate.seconds']
+                                        | matchFilter: 'matchStartDate' : '>='
+                                        | matchFilter: 'matchEndDate' : '<=' : inTwoWeeks">
+              </match-list>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div fxFlex.gt-sm="40">
+          <mat-card>
+            <mat-card-title>{{ 'general.matches.pastMatchesTitle' | translate }}</mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+            <mat-card-content style="max-height: 300px"
+                              [perfectScrollbar]="config">
+              <match-list [categories]="categories"
+                          [events]="matchService.getOtherEventList() | orderBy: ['title']"
+                          [matches]="matches | orderBy: ['-matchEndDate.seconds']
+                                      | matchFilter: 'matchEndDate' : '<='
+                                      | matchFilter: 'matchEndDate' : '>=' : inLastTwoWeeks">
+              </match-list>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div>
+          <ul>
+            <li>Liste der Spiele</li>
+            <li>Suche nach Datum</li>
+            <li>Suche nach Mannschaft</li>
+            <li>Link zum Editieren:
+              <ul>
+                <li>Ergebnis oder eintragen</li>
+                <li>Besondere Vorkomnisse</li>
+                <li>Spielverlauf: Tore, Karten, Auswechselungen etc.</li>
+                <li>Aufstellung festlegen (Spielerkader aus der Mannschaft laden)</li>
+                <li>Link zu verknüpften Artikeln (Vorberichte, Interviews etc.) festlegen</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div fxLayout="column"
+           fxLayout.gt-sm="row"
+           fxLayoutGap="10px" *ngIf="matches$ | async as matches">
+        <div fxFlex.gt-sm="50">
+          <mat-card>
+            <mat-card-title>{{ 'general.matches.pastMatchesWithoutResultTitle' | translate }}</mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+            <mat-card-content style="max-height: 300px"
+                              [perfectScrollbar]="config">
+              <match-list [categories]="categories"
+                          [events]="matchService.getOtherEventList() | orderBy: ['title']"
+                          [matches]="matches | orderBy: ['-matchEndDate.seconds']
+                                      | matchFilter: 'matchEndDate' : '<='
+                                      | matchNoResultFilter">
+              </match-list>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div fxFlex.gt-sm="50">
+          <match-preview [categories]="categories"
+                         [title]="'general.matches.nextMatchTitle'"
+                         [match]="(matches | orderBy: ['matchStartDate.seconds']| matchFilter: 'matchStartDate' : '>=').length > 0 ?
+                                        (matches | orderBy: ['matchStartDate.seconds'] | matchFilter: 'matchStartDate' : '>=')[0] : null">
+          </match-preview>
+        </div>
+      </div>
+
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

@@ -1,6 +1,108 @@
-<ul>
-  <li>Ergebnis oder Sonderereignis (Nichtantritt, Spielabbruch etc.) eintragen</li>
-  <li>Spielverlauf (Tore, Chancen, Karten, Auswechselungen, Sonstiges)</li>
-  <li>Aufstellung inklusive Taktik (Drag & Drop): Spielerliste aus der Mannschaft laden</li>
-  <li>Artikel verknüpfen</li>
-</ul>
+<mat-card *ngIf="match">
+  <mat-card-title>
+    {{ 'general.matches.detail.title' | translate }}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
+
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <div fxFlex.gt-sm="30">
+        <match-preview *ngIf="categories$ | async as categories; else loadingTemplate"
+                       [categories]="categories"
+                       [match]="match">
+        </match-preview>
+      </div>
+
+      <div fxFlex.gt-sm="70">
+        <mat-card>
+          <mat-card-content>
+            <mat-tab-group [dynamicHeight]="true">
+              <mat-tab [label]="'general.matches.detail.startingElevenTitle' | translate">
+                <ul style="color: red">
+                  <li>Aufstellung</li>
+                </ul>
+              </mat-tab>
+              <mat-tab [label]="'general.matches.detail.matchEventsTitle' | translate">
+                <ul style="color: red">
+                  <li>Ergebnis oder Sonderereignis (Nichtantritt, Spielabbruch etc.) eintragen</li>
+                  <li>Spielverlauf (Tore, Chancen, Karten, Auswechselungen, Sonstiges)</li>
+                </ul>
+              </mat-tab>
+              <mat-tab [label]="'general.matches.detail.assignedArticle' | translate">
+
+                <div *ngIf="articles$ | async as articles; else loadingTemplate">
+                  <span style="color: red">ToDo</span>
+                  <p *ngIf="(articles | filterBy: ['assignedMatch'] : match.id).length === 0">
+                    {{'general.matches.detail.noAssignedArticles' | translate}}
+                  </p>
+
+                  <mat-accordion fxLayout="column"
+                                 *ngIf="(articles | filterBy: ['assignedMatch'] : match.id).length > 0"
+                                 dense>
+                    <mat-expansion-panel *ngFor="let article of articles | filterBy: ['assignedMatch'] : match.id"
+                                         [expanded]="false"
+                                         [hideToggle]="true">
+
+                      <mat-expansion-panel-header>
+                        <mat-panel-title fxLayout.gt-sm="row"
+                                         fxLayout="column"
+                                         fxLayoutAlign="space-around center">
+                          {{article | json}}
+                          <!--<span *ngFor="let member of members |filterBy: ['id'] : honorary.assignedMember">
+                            {{member.mainData.firstName}} {{member.mainData.lastName}}
+                          </span>
+                          <span fxFlex></span>
+                          <span *ngFor="let article of articles | filterBy: ['id']: honorary.assignedArticle">
+                            {{article.title}}
+                            </span>
+                          <span fxFlex></span>
+                          <span>{{honorary.startDate.seconds *1000 | date: 'dd.MM.yy'}}</span>-->
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+
+                      <ng-template matExpansionPanelContent>
+                        <!--<div *ngFor="let article of articles | filterBy: ['id']: honorary.assignedArticle">
+                          <h3>{{article.title}}</h3>
+                          <strong *ngIf="article.subTitle">{{article.subTitle}}</strong><br/>
+                          <p [innerHTML]="article.text"></p>
+                        </div>-->
+                      </ng-template>
+
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+
+          <mat-card-actions fxLayout="column"
+                            fxLayout.gt-sm="row"
+                            fxLayoutGap="10px">
+            <button mat-raised-button
+                    color="primary"
+                    [routerLink]="['/matches']">
+              {{'general.menu.matches.list' | translate}}
+            </button>
+            <button mat-raised-button
+                    color="accent"
+                    [routerLink]="['/matches/edit', match.id]">
+              {{'general.edit' | translate }}
+            </button>
+            <button mat-raised-button
+                    color="warn"
+                    (click)="removeMatch(match)">
+              {{'general.delete' | translate }}
+            </button>
+          </mat-card-actions>
+
+        </mat-card>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

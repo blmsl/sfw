@@ -15,11 +15,16 @@ export class MatchFilterPipe implements PipeTransform {
     }
 
     return matches.filter((match: IMatch) => {
+
+      if(!match[searchField]){
+        return match;
+      }
+
       if (searchOption === '>=') {
-        return !searchValue ? match[searchField] >= moment().toISOString() : match[searchField] >= searchValue.toISOString();
+        return !searchValue ? match[searchField].seconds >= moment().unix() : match[searchField].seconds >= moment(searchValue).unix();
       }
       if (searchOption === '<=') {
-        return !searchValue ? match[searchField] <= moment().toISOString() : match[searchField] <= searchValue.toISOString();
+        return !searchValue ? match[searchField].seconds <= moment().unix() : match[searchField].seconds <= moment(searchValue).unix();
       }
       if (searchOption === '===') {
         return match[searchField] === searchValue;

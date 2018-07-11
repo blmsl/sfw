@@ -62,13 +62,13 @@
 
       <ngx-datatable-column name="{{'general.members.detail.main.driveImported' | translate}}">
         <ng-template let-row="row" let-value="driveImported" ngx-datatable-cell-template>
-          {{ row.isImported ? ('general.yes' | translate) : ('general.no' | translate) }}
+          {{ row.driveImport ? ('general.yes' | translate) : ('general.no' | translate) }}
         </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column name="{{'general.members.detail.main.dfbImported' | translate}}">
         <ng-template let-row="row" let-value="dfbImported" ngx-datatable-cell-template>
-          {{ row.isImported ? ('general.yes' | translate) : ('general.no' | translate) }}
+          {{ row.dfbImport ? ('general.yes' | translate) : ('general.no' | translate) }}
         </ng-template>
       </ngx-datatable-column>
 
@@ -83,7 +83,7 @@
           <span *ngIf="row.dfbData">
             {{ row.dfbData.ageGroup }} <span *ngIf="row.dfbData.playerStatus">({{row.dfbData.playerStatus}})</span><br />
             {{ row.dfbData.passNumber}}
-            <span *ngIf="row.dfbData.passPrint">({{row.dfbData.passPrint  | date: 'dd.MM.yy'}})</span>
+            <span *ngIf="row.dfbData.passPrint">({{row.dfbData.passPrint.seconds *1000  | date: 'dd.MM.yy'}})</span>
           </span>
         </ng-template>
       </ngx-datatable-column>
@@ -91,7 +91,7 @@
       <ngx-datatable-column name="{{'general.members.detail.main.guestPlayerData' | translate}}">
         <ng-template let-row="row" let-value="row.dfbData.guestPlayer" ngx-datatable-cell-template>
           <span *ngIf="row.dfbData && row.dfbData.guestPlayer.guestRight">
-            {{row.dfbData.guestPlayer.guestRight  | date: 'dd.MM.yy'}} <br />
+            {{row.dfbData.guestPlayer.guestRight.seconds *1000  | date: 'dd.MM.yy'}} <br />
             ({{row.dfbData.guestPlayer.type}} {{row.dfbData.guestPlayer.season}})
           </span>
         </ng-template>
@@ -109,8 +109,8 @@
       <ngx-datatable-column name="{{'general.members.detail.drive.club' | translate}}">
         <ng-template let-row="row" let-value="clubData" ngx-datatable-cell-template>
           <span *ngIf="row.clubData">
-            <span *ngIf="row.clubData.joined" style="color: green">{{ row.clubData.joined | date : 'dd.MM.yy' }}<br /></span>
-            <span *ngIf="row.clubData.left" style="color: red">{{ row.clubData.left | date : 'dd.MM.yy' }}<br /></span>
+            <span *ngIf="row.clubData.joined" style="color: green">{{ row.clubData.joined.seconds *1000 | date : 'dd.MM.yy' }}<br /></span>
+            <span *ngIf="row.clubData.left" style="color: red">{{ row.clubData.left.seconds *1000 | date : 'dd.MM.yy' }}<br /></span>
             <span *ngIf="row.clubData.payment">{{ row.clubData.payment }} &euro;<br /></span>
             <span *ngIf="row.clubData.status && row.clubData.status !== '?'">
               {{(clubMemberStates | filterBy: ['value'] : row.clubData.status)
@@ -123,8 +123,8 @@
       <ngx-datatable-column name="{{'general.members.detail.drive.ah' | translate}}">
         <ng-template let-row="row" let-value="clubData" ngx-datatable-cell-template>
           <span *ngIf="row.ahData">
-            <span *ngIf="row.ahData.joined" style="color: green">{{ row.ahData.joined | date : 'dd.MM.yy' }}<br /></span>
-            <span *ngIf="row.ahData.left" style="color: red">{{ row.ahData.left | date : 'dd.MM.yy' }}<br /></span>
+            <span *ngIf="row.ahData.joined" style="color: green">{{ row.ahData.joined.seconds *1000 | date : 'dd.MM.yy' }}<br /></span>
+            <span *ngIf="row.ahData.left" style="color: red">{{ row.ahData.left.seconds *1000 | date : 'dd.MM.yy' }}<br /></span>
             <span *ngIf="row.ahData.payment">{{ row.ahData.payment }} &euro;<br /></span>
             <span *ngIf="row.ahData.status">
              {{(ahMemberStates | filterBy: ['value'] : row.ahData.status)

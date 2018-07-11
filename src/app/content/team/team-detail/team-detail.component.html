@@ -46,19 +46,12 @@
 
       <mat-tab
         label="{{'general.teams.edit.competitions.title' | translate}} &amp; {{'general.teams.edit.standings.title' | translate}}">
-        <ul>
-          <li>Torjäger</li>
-          <li>Vorbereiter</li>
-          <li>Karten</li>
-        </ul>
         <team-detail-standings [team]="team"></team-detail-standings>
       </mat-tab>
 
       <mat-tab label="{{'general.teams.edit.media.title' | translate}}">
         <team-detail-media [team]="team"></team-detail-media>
       </mat-tab>
-
-
     </mat-tab-group>
   </mat-card-content>
 

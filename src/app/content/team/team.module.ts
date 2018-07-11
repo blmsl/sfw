@@ -49,6 +49,7 @@ import { TeamDetailStandingsComponent } from './team-detail/team-detail-standing
 import { TeamDetailMediaComponent } from './team-detail/team-detail-media/team-detail-media.component';
 import { TeamStatisticsComponent } from './team-statistics/team-statistics.component';
 import { ChartsModule } from 'ng2-charts';
+import { TeamDetailCompetitionsComponent } from './team-detail/team-detail-standings/team-detail-competitions/team-detail-competitions.component';
 
 @NgModule({
   imports: [
@@ -88,7 +89,8 @@ import { ChartsModule } from 'ng2-charts';
     TeamDetailMatchesComponent,
     TeamDetailStandingsComponent,
     TeamDetailMediaComponent,
-    TeamStatisticsComponent
+    TeamStatisticsComponent,
+    TeamDetailCompetitionsComponent
   ],
   providers: [
     ApplicationService,

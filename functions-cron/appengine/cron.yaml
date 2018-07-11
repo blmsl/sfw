@@ -1,6 +1,10 @@
 cron:
 # Python
-- description: Push a "tick" onto pubsub every day
+#- description: Push a "tick" onto pubsub every day at 12 o´clock
+#  url: /python/daily-noon-tick
+#  schedule: every day 12:00
+
+- description: Push a "tick" onto pubsub every day at 5 o´clock
   url: /python/daily-tick
   schedule: every day 05:00
 
@@ -14,12 +18,12 @@ cron:
 
 # PHP
 - description: Push a "tick" onto matchplan every 24 hours
-  url: /php/team/matchplan.php
+  url: /php/club/matchplan.php
   schedule: every day 00:00
 
-- description: Push a "tick" onto standings every 24 hours
-  url: /php/team/standings.php
-  schedule: every day 00:15
+#- description: Push a "tick" onto standings every 24 hours
+#  url: /php/team/standings.php
+#  schedule: every day 00:15
 
 - description: Push a "tick" onto competitions every 24 hours
   url: /php/team/competitions.php

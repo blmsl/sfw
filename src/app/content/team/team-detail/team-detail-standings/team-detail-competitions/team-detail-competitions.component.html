@@ -1,0 +1,15 @@
+<h3>{{'general.teams.detail.competitionsTitle' | translate}}</h3>
+<mat-list>
+  <mat-list-item *ngFor="let competition of team.assignedCompetitions">
+    <div matLine
+         fxLayout.gt-sm="row"
+         fxLayout="column"
+         fxLayoutAlign="space-around center">
+      <a [href]="competition.link" target="_blank">{{competition.title}}</a>
+      <span fxFlex=""></span>
+      <span>{{competition.competitionType}}</span>
+    </div>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
+

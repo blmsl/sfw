@@ -13,10 +13,10 @@ runtime_config:
 
 handlers:
 - url: /php/club/matchplan
-  script: /php/club/matchplan.php
+  script: /php/club/matchplan.phpOLD
 
 - url: /php/team/matchplan
-  script: /php/team/matchplan.php
+  script: /php/team/matchplan.phpOLD
   #secure: always
   #login: admin
 

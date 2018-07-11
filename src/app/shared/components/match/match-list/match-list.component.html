@@ -17,16 +17,17 @@
              title="{{match.guestTeam.title}}"/>
 
         <h3 matLine>
-          <detail-link [objectId]="match.id"
-                       [title]="match.homeTeam.title + '&ndash;' + match.guestTeam.title"></detail-link>
+          <a [routerLink]="['/matches/detail', match.id]">
+            {{match.homeTeam.title}} &ndash; {{match.guestTeam.title}}
+          </a>
         </h3>
 
         <p matLine>
-          <span *ngFor="let category of categories | filterBy: ['id'] : match.assignedTeamCategory">
+          <span *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedCategory">
             {{category.title}}
           </span>
           - {{match.matchType}}
-          - {{match.startDate | date: 'dd.MM.yy HH:mm'}}
+          - {{match.matchStartDate.seconds *1000 | date: 'dd.MM.yy HH:mm'}}
         </p>
       </mat-list-item>
     </mat-list>

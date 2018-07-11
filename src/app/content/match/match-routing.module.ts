@@ -1,24 +1,36 @@
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MatchListComponent } from './match-list/match-list.component';
 import { MatchResolver } from './match.resolver';
 import { MatchDetailComponent } from './match-detail/match-detail.component';
+import { MatchesComponent } from './matches/matches.component';
+import { MatchEditComponent } from './match-edit/match-edit.component';
 
 const routes: Routes = [
   {
+    path: '',
+    component: MatchesComponent,
+  },
+  {
     path: 'list',
-    component: MatchListComponent,
+    component: MatchesComponent,
+  },
+  {
+    path: 'edit/:matchId',
+    component: MatchEditComponent,
+    resolve: {
+      match: MatchResolver
+    }
   },
   {
     path: 'detail/:matchId',
     component: MatchDetailComponent,
     resolve: {
-      location: MatchResolver
+      match: MatchResolver
     },
   },
   {
     path: '**',
-    redirectTo: 'list'
+    redirectTo: ''
   }
 ];
 

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "sfw-dev",
+  "private_key_id": "17f1e94389780f771ef558427af9a49556a31e5b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCeEMlgGzd/upQy\nVGks+fLzvHIMZoX+kvPGWelCa5zKN/50wwBV5obOBUUdXXSuNlF7PA6z8CG9uoGq\najK3UcWJ9fO3ehPBZiEDd2jYtj7X6L9rxWAiJjdfc0YkAt0bd/EJA/Jw+euhx4hn\nf8dRNTJR7+gQunHOqMGp/CifHlzCSWN/FHm8qmIP0mclHmu7v9x1MjPzX1xxedEK\nzyb3wk1eJEXnZ9OBNkRHADgxEDtSYfQdTz3eTkuekCJi8xKC2gQ2GteUrKn5onAL\nnc91BXG/Xki5hTOAWw3AZeAI9TM42Gj3+pyMSHSZLyf5VHqb3V11QgVGkzBdcoO1\nV1vdozijAgMBAAECggEAAmPgl6pxsWXB3ez21i5FZTghRVy7g/j25LXxWAbGjSxB\nlcRpGeNtgGoF/IawP/4kR0fGNSRZbkQGt+v5Llp3MTnd4JVg/RitQR8qH7TJyHwF\ngPywEnQffDsDAYJlk4fBxlAf92NgE8cvodkFy42RYDnPeYlINUbJ/ucIOje8UVfC\nqpgpGBrhFFD/Y1NzVUjVsqJ0Br3hnJIglnog+PNUEkmtPV2Z6IyhLFnLanHlgfYm\nof22dbgUYFPxCljyjyhrKcSDf3qT3z9v1sQjHFAZoyY693ERh259xRcpMrxylgu2\nisTfgk2vuwR7zngdqaZT7YCiBDkO+5oOPmeNITT+6QKBgQDNwTjlphC4QeF3ldoR\nFnvd921d5mRwk8dS2uHQY8NPsVNLJ8pWN5flGiG0DoyJPArb5pzQtS3bbKOskpNQ\n2C+sIELoeaHTcuMJlZ5L4n+tYxDUsX/oNy5rlPXm/Ein2DSa3owvH/QwSxF6hJOR\nOfkHwxdXf+X3IFFXs+ksrqOaBQKBgQDEqkUONRbnPDncGgd6OsrYI1DvkxMc1Lkr\nG9nZAv+AfJMagvMut8jPCPhosMVSizD3oMd+GTrDRTdHf8egkue+E1f+m2kJNAD+\nC5MMoGrqAvTRXxEvQe+d4t2vtjoF9FMOTDbQ1SiZ4x001Jy2S2uMPxE6mbVv1UXk\n2O0kZXkAhwKBgQDJGhz5YImg/ktX7bA42Wfx+F790yzCV74O/n6NhqSkJKZLo7WA\n9U9SDmt4qGu1ymi2q70DxMHwYEvNZWn1L4fQzat3u0JvADBl8sXIV7YBCv2tVVu1\n5RFK90otHNIKsygfYntTqACsnwKTZDczT51Wd9k9nXVwSDcY6HB0SrD+3QKBgQCE\nTnCqwDiqVDAwzSoepxL0Gb5HjtCa4tm4EMKcZpHxpN1qRpLH6UilUEmeVN5LS+0j\nivzq7ppD6HrqFSL9+hcCHw1h8rfVQzEvuCWzpvCGgnqlqKls+5TyyT+PCK88dkSy\nJ7/w+paYAN0TP742PcMa1QsIO4R+uiKNdQsFI2cmXQKBgQCCIeMdRgj9/eWjk1Bx\nXJmngDid6xRDu4cw6rfkjFqTVaPFdEwhewE5KFdLgS94LnRCZuAi7vv1op3EkF44\nJ9ohMFzpn1XOJL0Hk6qUyLUNE9EIWrN0ASwaXbdAwTfzj+erGnOiCR0R8vus+BUt\navS44JwzETyTYOeD74P3vMF1Vw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "php-import-app-engine@sfw-dev.iam.gserviceaccount.com",
+  "client_id": "103259065003181669894",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/php-import-app-engine%40sfw-dev.iam.gserviceaccount.com"
+}

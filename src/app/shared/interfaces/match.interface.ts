@@ -2,26 +2,42 @@ export interface IMatch {
 
   id?: string;
 
-  homeTeam: {
-    logoURL: string;
-    externalTeamLink: string;
-    title: string;
+  assignedCategories: {
+    assignedCategory: string;
+    assignedLocationCategory: string;
+    assignedMainCategory: string;
   };
+
+  assignedLocation: string;
+  assignedTeam: string;
+
   guestTeam: {
     logoURL: string;
     externalTeamLink: string;
     title: string;
   };
 
+  homeTeam: {
+    logoURL: string;
+    externalTeamLink: string;
+    title: string;
+  };
+
+  isHomeTeam: boolean;
   isImported: boolean;
   isOfficialMatch: boolean;
-  isHomeTeam: boolean;
-  assignedTeamCategory: string;
 
   matchType?: string;
-  endDate: Date;
   matchLink: string;
-  startDate: Date;
+
+  matchEndDate: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  matchStartDate: {
+    seconds: number;
+    nanoseconds: number;
+  };
 
   result?: {
     otherEvent: string;
@@ -29,5 +45,5 @@ export interface IMatch {
     guestTeamGoals: number | '';
   };
 
-  fadeOutAnimation?: boolean;
+  title: string;
 }

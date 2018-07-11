@@ -4,10 +4,11 @@ import { MatchNoResultFilterPipe } from '../../pipes/match-no-result-filter.pipe
 import { MatchListComponent } from './match-list/match-list.component';
 import { SharedModule } from '../../shared.module';
 import { MatFormFieldModule, MatInputModule, MatListModule } from '@angular/material';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
+    RouterModule,
     MatFormFieldModule,
     MatInputModule,
     MatListModule,

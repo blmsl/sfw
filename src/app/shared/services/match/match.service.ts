@@ -10,7 +10,7 @@ import { of } from 'rxjs/index';
 export class MatchService {
 
   private collectionRef: AngularFirestoreCollection<IMatch>;
-  private path = `match-fixtures`;
+  private path = `matches`;
 
   matches$: Observable<IMatch[]>;
 
@@ -57,6 +57,13 @@ export class MatchService {
 
   setNewMatch(): Observable<IMatch> {
     return of({
+      assignedCategories: {
+        assignedCategory: '',
+        assignedMainCategory: '',
+        assignedLocationCategory: ''
+      },
+      assignedLocation: '',
+      assignedTeam: '',
       homeTeam: {
         externalTeamLink: '',
         logoURL: '',
@@ -70,11 +77,14 @@ export class MatchService {
       isImported: true,
       isHomeTeam: true,
       isOfficialMatch: true,
-      assignedTeamCategory: '',
-      startDate: new Date(),
-      endDate: null,
+      matchStartDate: {
+        seconds: 0,
+        nanoseconds: 0
+      },
+      matchEndDate: null,
       matchLink: '',
-      matchType: ''
+      matchType: '',
+      title: ''
     });
   }
 }
