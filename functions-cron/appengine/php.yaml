@@ -37,6 +37,6 @@ handlers:
   script: /index.php
 
 resources:
-  cpu: 4
-  memory_gb: 8
+  cpu: 1
+  memory_gb: 2
   disk_size_gb: 10

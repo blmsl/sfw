@@ -43,7 +43,7 @@ package-lock.json
 functions-cron/appengine/vendor
 functions-cron/appengine/composer.lock
 functions-cron/appengine/lib
-functions-cron/appengine/php/club/client.json
+functions-cron/appengine/php/club/sfw-dev-17f1e9438978.json
 
 functions-cron/functions/build
 functions-cron/functions/node_modules
