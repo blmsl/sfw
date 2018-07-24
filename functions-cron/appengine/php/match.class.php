@@ -116,16 +116,15 @@ trait sfwMatch
 
           } elseif ($item->getAttribute('class') === "odd row-competition hidden-small" || $item->getAttribute('class') === "row-competition hidden-small") {
 
-            echo preg_replace('/\s+/', ' ', trim($item->plaintext)) . "<br />";
-            if(preg_replace('/\s+/', ' ', trim($item->plaintext))  === '19:10 Herren | Vereinsturnier TU | 990132006'){
-              echo $item->plaintext . "<br />";
-              var_dump($savedMatchDate);
-              var_dump($this->setMatchDate($item->plaintext, $savedMatchDate));
-            }
             $matchDate = $this->setMatchDate($item->plaintext, $savedMatchDate);
             if ($matchDate && key_exists("assignedMainCategory", $matchData["assignedCategories"])) {
               $matchData["matchStartDate"] = $savedMatchDate = $matchDate;
               $matchData["matchEndDate"] = new DateTime(); #$this->getMatchDuration($mainCategoryName, $matchData["matchStartDate"]);
+            }
+
+            if(preg_replace('/\s+/', ' ',trim($item->plaintext)) === '19:10 Herren | Vereinsturnier TU | 990132006'){
+              var_dump($this->setMatchDate($item->plaintext, $savedMatchDate));
+              var_dump($matchData["matchStartDate"]);
             }
 
           } // Treffpunkt und Platzartz
