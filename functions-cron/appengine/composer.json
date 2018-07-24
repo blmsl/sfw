@@ -1,13 +1,6 @@
 {
   "require": {
-    "google/cloud-firestore": "^0.10.1",
-    "php": "7.2.*",
-    "ext-curl": "*",
-    "ext-grpc": "*",
-    "grpc/grpc": "^1.12",
-    "google/apiclient": "^2.2"
-  },
-  "require-dev": {
-    "google/cloud-tools": "^0.6.9"
+    "google/apiclient": "^2.2",
+    "google/cloud-firestore": "^0.12.0"
   }
 }

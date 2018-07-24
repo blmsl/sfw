@@ -6,7 +6,7 @@
     header("Content-Type: text/html; charset=utf-8");
 
     require "../simple_html_dom.php";
-    require "../functions.php";
+    require "../base.class.php";
     require "../../vendor/autoload.php";
 
     use Google\Cloud\Firestore\FirestoreClient;

@@ -2,7 +2,7 @@ import {
   Component,
   ComponentFactoryResolver,
   EventEmitter,
-  Input,
+  Input, OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -13,13 +13,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 import { AlertComponent } from '../../../shared/directives/alert/alert.component';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
   selector: 'sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit, OnDestroy {
 
   @Input() passwordMinLength: number;
   @Input() passwordMaxLength: number;
@@ -36,6 +37,8 @@ export class SignInComponent implements OnInit {
   public returnUrl: string = '';
   public isLoading: boolean = false;
   public error: string;
+
+  private sub: Subscription;
 
   constructor(private alertService: AlertService,
     public authService: AuthService,
@@ -61,6 +64,20 @@ export class SignInComponent implements OnInit {
         ]
       ]
     });
+
+    this.sub = this.route
+      .queryParams
+      .subscribe((params:any) => {
+        // Defaults to 0 if no query param provided.
+        if(params.message){
+          this.showAlert('signInAlertContainer');
+          this.alertService.error(params.message);
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   onSubmit() {

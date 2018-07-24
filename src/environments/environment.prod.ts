@@ -6,12 +6,12 @@ export const environment = {
   gaTrackingCode: 'UA-109145893-2',
   googleAnalytics: true,
   firebaseConfig: {
-    apiKey: 'AIzaSyDn8wfxEjBylgNnqCvRMcK0uR8gSpE3GFs',
-    authDomain: 'sfw-dev.firebaseapp.com',
-    databaseURL: 'https://sfw-dev.firebaseio.com',
-    projectId: 'sfw-dev',
-    storageBucket: 'sfw-dev.appspot.com',
-    messagingSenderId: '241078219173',
+    apiKey: "AIzaSyDm8L0UYiJ42K2mrIwF4Mraq7KxsTTF9l8",
+    authDomain: "sf-winterbach.firebaseapp.com",
+    databaseURL: "https://sf-winterbach.firebaseio.com",
+    projectId: "sf-winterbach",
+    storageBucket: "",
+    messagingSenderId: "85800088059",
     timestampsInSnapshots: true
   },
   googleCalendar: {

@@ -20,12 +20,12 @@ export const loginRoutes: Routes = [
   /*{
     path: 'signup',
     component: SignupComponent
-  },
+  },*/
   {
     path: '',
     component: LoginComponent,
     canActivate: [UnAuthGuard]
-  },*/
+  },
   {
     path: '**',
     redirectTo: '',

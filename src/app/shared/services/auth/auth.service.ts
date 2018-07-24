@@ -21,7 +21,7 @@ export class AuthService implements OnDestroy {
   public userId: string;
 
   constructor(private afAuth: AngularFireAuth,
-    private afs: AngularFirestore) {
+              private afs: AngularFirestore) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
         if (user) {
@@ -30,27 +30,38 @@ export class AuthService implements OnDestroy {
         } else {
           return observableOf(null);
         }
-      }));
+      })
+    );
   }
 
   ngOnDestroy() {
   }
 
-  signIn(credentials) {
-    return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password)/*.then(
-     (authUser: firebase.User) => {
-     if (authUser.emailVerified) {
-     return this.updateUser({
-     emailVerified: authUser.emailVerified,
-     email: authUser.email
-     });
-     }
-     }
-     )*/;
+  signIn(credentials): Promise<void> {
+    return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password).then(() => {
+        return this.updateUser({
+          id: firebase.auth().currentUser.uid,
+          emailVerified: firebase.auth().currentUser.emailVerified,
+          email: firebase.auth().currentUser.email
+        });
+      }
+    );
   }
 
-  register(values: IUser): Promise<any> {
-    return this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password);
+  register(values: IUser): Promise<void> {
+    return this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password)
+      .then(() => {
+        return this.updateUser({
+          id: firebase.auth().currentUser.uid,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          emailVerified: firebase.auth().currentUser.emailVerified,
+          email: firebase.auth().currentUser.email
+        });
+      }).then(() => {
+        let user: any = firebase.auth().currentUser;
+        return user.sendEmailVerification();
+      });
   }
 
   private oAuthLogin(provider) {
@@ -82,8 +93,10 @@ export class AuthService implements OnDestroy {
   }
 
   private updateUser(data: IUser): Promise<void> {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${this.userId}`);
-    data['assignedRoles']['subscriber'] = true;  // set minimal role here
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${data.id}`);
+    data.assignedRoles = {
+      subscriber: true
+    };
     return userRef.set(data, { merge: true });
   }
 

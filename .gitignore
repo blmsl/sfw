@@ -43,11 +43,11 @@ package-lock.json
 functions-cron/appengine/vendor
 functions-cron/appengine/composer.lock
 functions-cron/appengine/lib
-functions-cron/appengine/php/club/sfw-dev-17f1e9438978.json
+functions-cron/appengine/sf-winterbach-6c45b5d78ed6.json
 
-functions-cron/functions/build
-functions-cron/functions/node_modules
-functions-cron/functions/package-lock.json
+functions-cron/build
+functions-cron/node_modules
+functions-cron/package-lock.json
 venv
 
 # e2e
