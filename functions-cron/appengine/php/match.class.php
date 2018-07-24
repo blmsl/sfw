@@ -55,10 +55,13 @@ trait sfwMatch
     /**
      * @var $matchData array
      */
+    #$startDate = new DateTime($matchData["matchStartDate"]->format(DATE_ATOM), new DateTimeZone(date_default_timezone_get()));
+    #$startDate->setTimezone(new DateTimeZone('UTC'));
+    #$endDate = new DateTime($matchData["matchEndDate"]->format(DATE_ATOM), new DateTimeZone(date_default_timezone_get()));
+    #$endDate->setTimezone(new DateTimeZone('UTC'));
     $title = $matchData["title"] . '-' . $matchData["assignedLocation"] . '-' . $matchData["matchStartDate"]->format('d.m.Y H:i:s');
-
     if (!key_exists($title, $this->getMatches())) {
-      #$this->matches[$title] = $this->saveFireStoreObject($this->matchCollection, $matchData);
+      $this->matches[$title] = $this->saveFireStoreObject($this->matchCollection, $matchData);
     }
   }
 
@@ -120,11 +123,6 @@ trait sfwMatch
             if ($matchDate && key_exists("assignedMainCategory", $matchData["assignedCategories"])) {
               $matchData["matchStartDate"] = $savedMatchDate = $matchDate;
               $matchData["matchEndDate"] = new DateTime(); #$this->getMatchDuration($mainCategoryName, $matchData["matchStartDate"]);
-            }
-
-            if(preg_replace('/\s+/', ' ',trim($item->plaintext)) === '19:10 Herren | Vereinsturnier TU | 990132006'){
-              var_dump($this->setMatchDate($item->plaintext, $savedMatchDate));
-              var_dump($matchData["matchStartDate"]);
             }
 
           } // Treffpunkt und Platzartz

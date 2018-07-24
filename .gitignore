@@ -40,6 +40,8 @@ src/app/config
 package-lock.json
 /api-client-python
 
+functions/node_modules
+
 functions-cron/appengine/vendor
 functions-cron/appengine/composer.lock
 functions-cron/appengine/lib
