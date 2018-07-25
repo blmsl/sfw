@@ -10,13 +10,21 @@ import { take } from 'rxjs/internal/operators';
 export class AuthGuard implements CanActivate {
 
   constructor(private router: Router,
-    private authService: AuthService) {
+              private authService: AuthService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.user$.pipe(
       take(1),
-      map((user: IUser) => !!user),
+      map((user: IUser) => {
+        if (user && !user.emailVerified) {
+          this.authService.signOut().then(() => {
+            return this.router.navigate(['/login'], { queryParams: { message: 'Global.Login.notVerified' } });
+            }
+          );
+        }
+        return !!user;
+      }),
       tap((user: boolean) => {
         if (!user) {
           return this.router.navigate(['/login']);

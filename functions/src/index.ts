@@ -12,34 +12,36 @@
 // dev_appserver.py D:\sfw\functions-cron\appengine\app.yaml D:\sfw\functions-cron\appengine\php.yaml D:\sfw\functions-cron\appengine\dispatch.yaml --port=9090
 
 import * as admin from 'firebase-admin';
-// import * as functions from 'firebase-functions';
 
 admin.initializeApp();
 
-import * as user from './user/index';
-export const newUserCreation = user.userCreated;
+// import * as functions from 'firebase-functions';
+// import * as media from './media/index';
+import * as member from './member/index';
+// import * as shortener from './url-shortener/index';
+import * as team from './team/index';
+// import * as user from './user/index';
+
+// export const newUserCreation = user.userCreated;
 // export const onUserDelete = user.userDeleted;
 // export const userPresence = user.userPresence;
 
-// import * as shortener from './url-shortener/index';
 // export const urlShortener = shortener.shortener;
 
-import * as media from './media';
-export const removeMediaItemCron = media.deleteMediaCron;
 
-import * as member from './member/index';
+// export const removeMediaItemCron = media.deleteMediaCron;
+
 export const birthdayReminder = member.birthdayReminderCron;
 export const memberOfTheWeekCron = member.memberOfTheWeekCron;
 
-export const dfbMemberWriteCron = member.dfbMemberWrite;
-export const dfbMemberDeleteCron = member.dfbMemberDelete;
-export const dfbMemberUpdateCron = member.dfbMemberUpdate;
+// export const dfbMemberWriteCron = member.dfbMemberWrite;
+// export const dfbMemberDeleteCron = member.dfbMemberDelete;
+// export const dfbMemberUpdateCron = member.dfbMemberUpdate;
 
-export const driveMemberWriteCron = member.driveMemberWrite;
-export const driveMemberDeleteCron = member.driveMemberDelete;
-export const driveMemberUpdateCron = member.driveMemberUpdate;
+// export const driveMemberWriteCron = member.driveMemberWrite;
+// export const driveMemberDeleteCron = member.driveMemberDelete;
+// export const driveMemberUpdateCron = member.driveMemberUpdate;
 
-import * as team from './team/index';
 // export const spielplanCron = team.spielplanCron;
 export const teamCron = team.teamOfTheMonthCron;
 // export const wettbewerbeCron = team.wettbewerbeCron;

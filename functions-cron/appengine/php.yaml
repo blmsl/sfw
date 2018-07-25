@@ -1,34 +1,36 @@
-runtime: php
-env: flex
+runtime: php55
+# env: flex
 
 api_version: 1
 service: default
 threadsafe: yes
 
 runtime_config:
-  document_root: .
+  document_root: /
 
-#manual_scaling:
-#  instances: 1
+manual_scaling:
+  instances: 1
 
 handlers:
-- url: /php/club/matchplan
-  script: /php/club/matchplan.phpOLD
+- url: /php/club/matchplan.php
+  script: /php/club/matchplan.php
 
-- url: /php/team/matchplan
-  script: /php/team/matchplan.phpOLD
-  #secure: always
-  #login: admin
+- url: /php/member/dfb-import.php
+  script: /php/club/dfb-import.php
 
-- url: /php/team/competitions
+- url: /php/member/drive-import.php
+  script: /php/club/drive-import.php
+
+- url: /php/team/competitions.php
   script: /php/team/competitions.php
   #secure: always
   #login: admin
 
-- url: /php/team/standings
+- url: /php/team/standings.php
   script: /php/team/standings.php
-  #secure: always
-  #login: admin
+
+- url: /_ah/.*
+  script: /php/index.php
 
 - url: /php/.*
   script: /php/index.php
@@ -37,6 +39,6 @@ handlers:
   script: /index.php
 
 resources:
-  cpu: 4
-  memory_gb: 8
+  cpu: 1
+  memory_gb: 2
   disk_size_gb: 10

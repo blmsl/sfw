@@ -75,6 +75,7 @@ export class SignUpComponent implements OnInit {
       this.isLoading = false;
       this.form.reset();
       this.toggleSignUpForm();
+      this.alertService.success('global.registration.successful');
     }).catch((error: any) => {
       this.showAlert('signUpAlertContainer');
       this.alertService.error(error);

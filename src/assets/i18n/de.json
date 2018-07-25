@@ -15,6 +15,7 @@
   "Required": "Hier wird eine Eingabe benötigt",
   "Global": {
     "Login": {
+      "notVerified": "Deine E-Mail Adresse wurde noch nicht bestätigt.",
       "facebookLogin": "Facebook",
       "twitterLogin": "Twitter",
       "googleLogin": "Google",

@@ -1,6 +1,5 @@
 {
   "name": "functions",
-  "description": "SFW-Cloud Functions",
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "build": "tsc",
