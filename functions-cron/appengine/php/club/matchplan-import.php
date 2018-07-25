@@ -11,12 +11,6 @@ require "../../vendor/autoload.php";
 
 require "../base.class.php";
 
-  // private $locations = array();
-  // private $matches = array();
-  // private $teams = array();
-
-
-
 $projectId = 'sf-winterbach';
 $project = new sfwApp($projectId);
 
@@ -26,29 +20,52 @@ $project->getLocations();
 
 echo $project->generateHeader();
 
+$locations = $project->getLocations();
+
 foreach ($project->getSeasons() as $season) {
 
-  echo $project->generateSeasonHeading($season);
+    $seasonStart = $project->getSeasonStartDate($season);
+    $seasonEnd = $project->getSeasonEndDate($season);
 
-  foreach ($project->getClubs() as $club){
+    echo $project->generateSeasonHeading($season);
 
-    // Liste der gespeicherten Spiele für den Zeitraum und den Verein laden
-    # $savedMatchList = $project->getMatchesForClubAndDateInterval($club, $project->getSeasonStartDate($season), $project->getSeasonEndDate($season));
+    foreach ($project->getClubs() as $club) {
 
-    // Spielplan lesen, Spielplan in der DB erstellen und ausgeben
-    $request = $project->getMatchPlan($club, $project->getSeasonStartDate($season), $project->getSeasonEndDate($season));
-    $output = $project->scrap_matchPlan($request, $club, $season);
-    echo $project->generateMatchPlanTable($output);
+        $savedMatches = array();
 
-    // Spiele, die nicht im neuen $this->matches Array enthalten sind löschen
-    #foreach ($savedMatchList AS $savedMatch){
-    #  echo $savedMatch["title"] . "<br />";
-    #}
+        // Spielplan lesen, Spielplan in der DB erstellen und ausgeben
+        $request = $project->getMatchPlan($club, $seasonStart, $seasonEnd);
+        $output = $project->scrap_matchPlan($request, $club, $season);
+        echo $project->generateMatchPlanTable($output);
 
-    // Termine aus dem Google-Calendar laden und die Termine löschen, die nicht als match in der DB vorhanden sind
-    // $eventList = $project->getEvents($club, $project->getSeasonStartDate($season), $project->getSeasonEndDate($season);
-    // $project->deleteEventsBetweenDates($eventList,  $project->getSeasonStartDate($season), $project->getSeasonEndDate($season));
-  }
+        $matches = $project->getMatches();
+        foreach ($matches as $key => $match) {
+            echo '<b>' . $match['title'] . '-' . $match['assignedLocation'] . $match['matchStartDate']->get()->format('d.m.Y H:i:s') . '</b>' . $match["id"] . '<br />';
+            $savedMatches[] = $match['title'] . '-' . $match['assignedLocation'] . $match['matchStartDate']->get()->format('d.m.Y H:i:s');
+        }
+        $googleCalendarEvents = $project->getEvents($club["assignedCalendars"]["matches"], $seasonStart, $seasonEnd);
+        foreach ($googleCalendarEvents as $event) {
+            $startDate = new DateTime($event->getStart()->dateTime);
+
+            //echo "<span style='color: red'>" . $locations[$event["location"]] . "</span><br />";
+            //$assignedLocation = '';
+            $title = $event["summary"] . " " . $assignedLocation . " - " . $startDate->format('d.m.Y H:i:s');
+            /*if (array_key_exists($title, $savedMatches)) {
+                echo "Match still there <br />";
+            } else {
+                echo $event["summary"] . " " . $assignedLocation . " - " . $startDate->format('d.m.Y H:i:s') . "<br />";
+            }*/
+        }
+        // $project->generateCalendarEvents($output, $club["calendarId"]);
+        // Spiele, die nicht im neuen $this->matches Array enthalten sind löschen
+        #foreach ($savedMatchList AS $savedMatch){
+        #  echo $savedMatch["title"] . "<br />";
+        #}
+
+        // Termine aus dem Google-Calendar laden und die Termine löschen, die nicht als match in der DB vorhanden sind
+        // $eventList = $project->getEvents($club, $project->getSeasonStartDate($season), $project->getSeasonEndDate($season);
+        // $project->deleteEventsBetweenDates($eventList,  $project->getSeasonStartDate($season), $project->getSeasonEndDate($season));
+    }
 
 }
 

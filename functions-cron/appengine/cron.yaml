@@ -18,7 +18,7 @@ cron:
 
 # PHP
 #- description: Push a "tick" onto matchplan every 24 hours
-#  url: /php/club/matchplan.php
+#  url: /php/club/matchplan-import.php
 #  schedule: every day 00:00
 
 #- description: Push a "tick" onto standings every 24 hours

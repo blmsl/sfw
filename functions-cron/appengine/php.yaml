@@ -12,19 +12,22 @@ manual_scaling:
   instances: 1
 
 handlers:
-- url: /php/club/matchplan.php
-  script: /php/club/matchplan.php
+- url: /php/club/matchplan-import.php
+  script: /php/club/matchplan-import.php
+  #secure: always
+  #login: admin
+
+- url: /php/club/matchplan-calendar.php
+  script: /php/club/matchplan-calendar.php
 
 - url: /php/member/dfb-import.php
-  script: /php/club/dfb-import.php
+  script: /php/member/dfb-import.php
 
 - url: /php/member/drive-import.php
-  script: /php/club/drive-import.php
+  script: /php/member/drive-import.php
 
 - url: /php/team/competitions.php
   script: /php/team/competitions.php
-  #secure: always
-  #login: admin
 
 - url: /php/team/standings.php
   script: /php/team/standings.php
@@ -37,6 +40,8 @@ handlers:
 
 - url: /.*
   script: /index.php
+  secure: always
+  login: admin
 
 resources:
   cpu: 1

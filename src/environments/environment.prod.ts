@@ -14,8 +14,5 @@ export const environment = {
     messagingSenderId: "85800088059",
     timestampsInSnapshots: true
   },
-  googleCalendar: {
-    id: '41q3u1q8pfh26dm1lpkuh7lsrs@group.calendar.google.com'
-  },
   routerTracing: false
 };
