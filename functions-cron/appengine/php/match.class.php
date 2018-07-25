@@ -34,13 +34,15 @@ trait sfwMatch
          */
         $startDate = new DateTime($matchData["matchStartDate"]->format(DATE_ATOM), new DateTimeZone(date_default_timezone_get()));
         $startDate->setTimezone(new DateTimeZone('UTC'));
-        #$endDate = new DateTime($matchData["matchEndDate"]->format(DATE_ATOM), new DateTimeZone(date_default_timezone_get()));
-        #$endDate->setTimezone(new DateTimeZone('UTC'));
+        $endDate = new DateTime($matchData["matchEndDate"]->format(DATE_ATOM), new DateTimeZone(date_default_timezone_get()));
+        $endDate->setTimezone(new DateTimeZone('UTC'));
         $title = $matchData["title"] . '-' . $matchData["assignedLocation"] . '-' . $startDate->format('d.m.Y H:i:s');
         if (!key_exists($title, $this->getMatches())) {
             $matchData["matchStartDate"] = $startDate;
+            $matchData["matchEndDate"] = $endDate;
             $this->matches[$title] = $this->saveFireStoreObject($this->matchCollection, $matchData);
         }
+        exit();
     }
 
     /**
