@@ -38,19 +38,24 @@ foreach ($project->getSeasons() as $season) {
     $googleCalendarEvents = $project->getEvents($calendarId, $seasonStart, $seasonEnd);
 
     // Spielplan lesen, Spielplan in der DB erstellen und ausgeben
-    $request = $project->getMatchPlan($club, $seasonStart, $seasonEnd);
-    $output = $project->scrap_matchPlan($request, $club, $season);
-    echo $project->generateMatchPlanTable($output);
+    #$request = $project->getMatchPlan($club, $seasonStart, $seasonEnd);
+    #$output = $project->scrap_matchPlan($request, $club, $season);
+    #echo $project->generateMatchPlanTable($output);
 
     $matches = $project->getMatches();
     foreach ($matches as $match) {
-      $startDate = new DateTime($match["matchStartDate"]->get()->format(DATE_ATOM));
-      $startDate->setTimezone(new DateTimeZone(date_default_timezone_get()));
-      $title = $match['title'] . '-' . $locations[$match['assignedLocation']] . '-' . $startDate->format('d.m.Y H:i:s');
+      try {
+        $startDate = new DateTime($match["matchStartDate"]->get());
+        echo $title = $match['title'] . '-' . $locations[$match['assignedLocation']] . '-' . $startDate->format('d.m.Y H:i:s');
+      } catch (Exception $e) {
+        var_dump($match);
+        var_dump($e);
+      }
+
       $savedMatches[$title] = $match;
     }
 
-    $i = 1;
+    /* $i = 1;
     $j = 1;
     $calendarEvents = array();
     foreach ($googleCalendarEvents as $event) {
@@ -73,8 +78,8 @@ foreach ($project->getSeasons() as $season) {
     }
 
 
-    foreach($savedMatches as $key => $match){
-      if(!array_key_exists($key, $calendarEvents)){
+    foreach ($savedMatches as $key => $match) {
+      if (!array_key_exists($key, $calendarEvents)) {
 
         $startDate = new DateTime($match["matchStartDate"]->get());
         # $startDate->setTimezone(new DateTimeZone(date_default_timezone_get()));
@@ -83,7 +88,7 @@ foreach ($project->getSeasons() as $season) {
         echo "Create Event " . $title;
         var_dump($startDate);
         exit();
-        /*
+
         $eventData = array(
           'summary' =>  '<a target="_blank" href="'. $match["id"] . '">' . $match['title'] . '</a>',
           'location' => $locations[$match['assignedLocation']],
@@ -91,11 +96,11 @@ foreach ($project->getSeasons() as $season) {
           'startDate' => new DateTime($match["matchStartDate"]->get()->setTimezone(new DateTimeZone(date_default_timezone_get()))->format(DATE_ATOM)),
           #$startDate->setTimezone(new DateTimeZone("UTC"))->format(DATE_ATOM),
           'endDate' => new DateTime($match["matchEndDate"]->get()->format(DATE_ATOM))
-        ); */
+        );
 
         #$project->saveCalendarEvent($eventData, $club["assignedCalendars"]["matches"]);
       }
-    }
+    }*/
     // Termine aus dem Google-Calendar laden und die Termine löschen, die nicht als match in der DB vorhanden sind
     // $eventList = $project->getEvents($club, $project->getSeasonStartDate($season), $project->getSeasonEndDate($season);
     // $project->deleteEventsBetweenDates($eventList,  $project->getSeasonStartDate($season), $project->getSeasonEndDate($season));
