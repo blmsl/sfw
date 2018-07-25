@@ -22,9 +22,13 @@ handlers:
 
 - url: /php/member/dfb-import.php
   script: /php/member/dfb-import.php
+  secure: always
+  #login: admin
 
 - url: /php/member/drive-import.php
   script: /php/member/drive-import.php
+  secure: always
+  #login: admin
 
 - url: /php/team/competitions.php
   script: /php/team/competitions.php

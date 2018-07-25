@@ -34,13 +34,13 @@ foreach ($project->getSeasons() as $season) {
 
     $savedMatches = array();
 
+    $locations = $project->getLocationsById();
+    $googleCalendarEvents = $project->getEvents($calendarId, $seasonStart, $seasonEnd);
+
     // Spielplan lesen, Spielplan in der DB erstellen und ausgeben
     $request = $project->getMatchPlan($club, $seasonStart, $seasonEnd);
     $output = $project->scrap_matchPlan($request, $club, $season);
     echo $project->generateMatchPlanTable($output);
-
-    $locations = $project->getLocationsById();
-    $googleCalendarEvents = $project->getEvents($calendarId, $seasonStart, $seasonEnd);
 
     $matches = $project->getMatches();
     foreach ($matches as $match) {
@@ -59,25 +59,31 @@ foreach ($project->getSeasons() as $season) {
       $title = $event["summary"] . "-" . $event["location"] . "-" . $startDate->format('d.m.Y H:i:s');
 
       if (array_key_exists($title, $savedMatches)) {
-        # echo $i + 1 . " <span style='color: red'> Match still there </span><br />";
+        echo $event["summary"] . ' <strong>exisiterte bereits</strong><br />';
+        #echo $i + 1 . " <span style='color: red'> Match still there </span><br />";
         $calendarEvents[$event["summary"] . "-" . $event["location"] . "-" . $startDate->format('d.m.Y H:i:s')] = true;
         $i++;
       } else {
         // delete the Match
+        echo $event["summary"] . ' <span style="color: red">gelöscht</span><br />';
         $project->calendarService->events->delete($calendarId, $event->getId());
         # echo $j + 1 . " deleting Match " . $title . "<br />";
         $j++;
       }
     }
 
+
     foreach($savedMatches as $key => $match){
       if(!array_key_exists($key, $calendarEvents)){
 
-        $startDate = new DateTime($match["matchStartDate"]->get()->format(DATE_ATOM));
-        $startDate->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $startDate = new DateTime($match["matchStartDate"]->get());
+        # $startDate->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
-        echo $title = $match['title'] . '-' . $locations[$match['assignedLocation']] . '-' . $startDate->format('d.m.Y H:i:s');
-
+        $title = $match['title'] . '-' . $locations[$match['assignedLocation']] . '-' . $startDate->format('d.m.Y H:i:s');
+        echo "Create Event " . $title;
+        var_dump($startDate);
+        exit();
+        /*
         $eventData = array(
           'summary' =>  '<a target="_blank" href="'. $match["id"] . '">' . $match['title'] . '</a>',
           'location' => $locations[$match['assignedLocation']],
@@ -85,7 +91,7 @@ foreach ($project->getSeasons() as $season) {
           'startDate' => new DateTime($match["matchStartDate"]->get()->setTimezone(new DateTimeZone(date_default_timezone_get()))->format(DATE_ATOM)),
           #$startDate->setTimezone(new DateTimeZone("UTC"))->format(DATE_ATOM),
           'endDate' => new DateTime($match["matchEndDate"]->get()->format(DATE_ATOM))
-        );
+        ); */
 
         #$project->saveCalendarEvent($eventData, $club["assignedCalendars"]["matches"]);
       }
