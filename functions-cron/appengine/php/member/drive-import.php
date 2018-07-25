@@ -29,7 +29,7 @@ foreach ($project->getClubs() as $club) {
 
         echo $project->generateDriveMemberTableHeader();
         foreach ($members AS $member) {
-            if ($member[1] !== '' && $member[2] !== '' && $member[19] !== '' && $member[19] !== 'Geburtsdatum') {
+            if (isset($member[1]) && $member[1] !== '' && isset($member[2]) && $member[2] !== '' && $member[19] !== '' && $member[19] !== 'Geburtsdatum') {
                 $project->saveDriveMember($member, $club);
                 echo $project->generateDriveMemberRow($member, true);
             }

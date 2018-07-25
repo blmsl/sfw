@@ -32,7 +32,7 @@ foreach ($project->getClubs() as $club) {
         echo $project->generateDFBMemberTableHeader();
         foreach ($members AS $member) {
             $saveStatus = $project->saveDFBMember($member, $club, $memberList);
-            echo $project->generateDFBMemberRow($member, $saveStatus);
+            echo $project->generateDFBMemberRow($member, $club, $saveStatus);
         }
         echo $project->generateMemberTableFooter();
     }

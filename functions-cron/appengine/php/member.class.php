@@ -82,7 +82,7 @@ trait sfwMember
         return $returnString;
     }
 
-    public function generateDFBMemberRow($member, $saveStatus)
+    public function generateDFBMemberRow($member, $club, $saveStatus)
     {
         $returnString = '';
         $returnString .= '<tr>';
@@ -100,7 +100,11 @@ trait sfwMember
         $returnString .= '<td>' . $member[11] . '</td>';
         $returnString .= '<td>' . $this->getGermanDate($member[12]) . '</td>';
         $returnString .= '<td>' . $member[13] . '</td>';
-        $returnString .= '<td>' . $member[14] . '</td>';
+        if(isset($member[14]) && count($member) > 13){
+            $returnString .= '<td>' . $member[14] . '</td>';
+        } else{
+            $returnString .= '<td>'.$club["id"].'</td>';
+        }
         $returnString .= '<td>';
         $returnString .= $this->generateExistingFlag($saveStatus["newEntry"]);
         $returnString .= '</td>';
@@ -131,11 +135,15 @@ trait sfwMember
         $returnString .= '<td>' . $member[16] . '</td>';
         $returnString .= '<td>' . $member[17] . '</td>';
         $returnString .= '<td>' . $member[18] . '</td>';
-        $returnString .= '<td>' . $member[19] . '</td>';
-        if (count($member) > 19) {
+        if (isset($member[19]) && count($member) > 18) {
+            $returnString .= '<td>' . $member[19] . '</td>';
+        } else {
+            $returnString .= '<td><span style="color: red">KEIN GEBURTSTAG</span></td>';
+        }
+        if (isset($member[20]) && count($member) > 19) {
             $returnString .= '<td>' . $member[20] . '</td>';
         } else {
-            $returnString .= '<td>&nbsp;</td>';
+            $returnString .= '<td>-</td>';
         }
         $returnString .= '<td>';
         if ($existing) {
@@ -265,19 +273,19 @@ trait sfwMember
             )
         );
 
-        if (!key_exists($id, $memberList)) {
+        /*if (!key_exists($id, $memberList)) {
             return array(
                 'id' => $id,
                 'data' => $this->saveFireStoreObject($this->memberCollection, $data),
                 'newEntry' => true
             );
-        } else {
+        } else { */
             return array(
                 'id' => $id,
                 'data' => $data,
                 'newEntry' => false
             );
-        }
+        // }
 
     }
 

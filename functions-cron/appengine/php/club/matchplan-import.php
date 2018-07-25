@@ -20,7 +20,8 @@ $project->getLocations();
 
 echo $project->generateHeader();
 
-$locations = $project->getLocations();
+$locations = $project->getLocationsById();
+var_dump($locations);
 
 foreach ($project->getSeasons() as $season) {
 
@@ -40,8 +41,8 @@ foreach ($project->getSeasons() as $season) {
 
         $matches = $project->getMatches();
         foreach ($matches as $key => $match) {
-            echo '<b>' . $match['title'] . '-' . $match['assignedLocation'] . $match['matchStartDate']->get()->format('d.m.Y H:i:s') . '</b>' . $match["id"] . '<br />';
-            $savedMatches[] = $match['title'] . '-' . $match['assignedLocation'] . $match['matchStartDate']->get()->format('d.m.Y H:i:s');
+            echo '<b>' . $match['title'] . '-' . $locations[$match['assignedLocation']] . '-' . $match['matchStartDate']->get()->format('d.m.Y H:i:s') . '</b>' . $match["id"] . '<br />';
+            $savedMatches[] = $match['title'] . '-' . $locations[$match['assignedLocation']] . '-' . $match['matchStartDate']->get()->format('d.m.Y H:i:s');
         }
         $googleCalendarEvents = $project->getEvents($club["assignedCalendars"]["matches"], $seasonStart, $seasonEnd);
         foreach ($googleCalendarEvents as $event) {
@@ -49,7 +50,8 @@ foreach ($project->getSeasons() as $season) {
 
             //echo "<span style='color: red'>" . $locations[$event["location"]] . "</span><br />";
             //$assignedLocation = '';
-            $title = $event["summary"] . " " . $assignedLocation . " - " . $startDate->format('d.m.Y H:i:s');
+            $title = $event["summary"] . " " . $event["location"] . " - " . $startDate->format('d.m.Y H:i:s');
+            echo $title . "<br />";
             /*if (array_key_exists($title, $savedMatches)) {
                 echo "Match still there <br />";
             } else {

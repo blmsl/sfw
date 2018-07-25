@@ -20,6 +20,15 @@ trait sfwLocation
     return $this->locations;
   }
 
+  public function getLocationsById(){
+      $locationList = array();
+      $dbLocations = $this->locationCollection;
+      foreach ($dbLocations->documents() as $location) {
+          $locationList[$location["id"]] = $location["title"];
+      }
+      return $locationList;
+  }
+
   public function saveLocation($title, $address, $assignedCategory)
   {
     if (!key_exists($title, $this->getLocations())) {
