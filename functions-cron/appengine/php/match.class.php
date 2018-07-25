@@ -42,7 +42,6 @@ trait sfwMatch
             $matchData["matchEndDate"] = $endDate;
             $this->matches[$title] = $this->saveFireStoreObject($this->matchCollection, $matchData);
         }
-        exit();
     }
 
     /**
