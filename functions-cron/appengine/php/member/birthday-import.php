@@ -21,6 +21,8 @@ $projectId = 'sf-winterbach';
 $project = new sfwApp($projectId);
 
 $eventList = array();
+$currentSeason = isset($_GET['current-season']) && $_GET['current-season'] === true ?  new DateTime() : null;
+$currentClub = isset($_GET['club']) ?  $_GET['club'] : null;
 
 foreach ($project->getSeasons($currentSeason) as $season) {
 
@@ -35,9 +37,12 @@ foreach ($project->getSeasons($currentSeason) as $season) {
 
             $memberList = array();
             foreach ($project->getMembers($club) as $member) {
-                if ($member['mainData']['birthday']) {
-                    $date = DateTime::createFromFormat('Y-m-d', $member['mainData']['birthday']);
-                    $memberList[$date->format(DATE_RFC3339)] = $member['mainData']['firstName'] . ' ' . $member['mainData']['lastName'];
+                /**
+                 * @var $member Google_Service_Firestore_Document
+                 */
+                if ($member->get('mainData.birthday')) {
+                    $date = DateTime::createFromFormat('Y-m-d', $member->get('mainData.birthday'));
+                    $memberList[$date->format(DATE_RFC3339)] = $member->get('mainData.firstName') . ' ' . $member->get('mainData.lastName');
                     # echo $member['mainData']['birthday'] . "<br />";
                     /*$event = new Google_Service_Calendar_Event();
                     $event->setSummary($this->getAge($member['mainData']['birthday']) . ' Geburtstag von ' . $member['mainData']['firstName'] . ' ' . $member['mainData']['lastName']);
