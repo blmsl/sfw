@@ -9,21 +9,33 @@ trait sfwMatch
     private $matches = array();
 
     /**
+     * @param null $seasonStart
+     * @param null $seasonEnd
      * @return array
      */
-    public function getMatches()
+    public function getMatches($seasonStart = null)
     {
-        if (count($this->matches) === 0) {
-            $dbMatches = $this->matchCollection;
-            foreach ($dbMatches->documents() as $doc) {
+        $matchList = array();
+        if($seasonStart) {
+            foreach ($this->matchCollection
+                         ->where('matchStartDate', '>=', $seasonStart)
+                         ->orderBy('matchStartDate', 'ASC')->documents() as $doc) {
                 /**
                  * @var $doc array
                  */
                 $title = $doc["title"] . '-' . $doc["assignedLocation"] . '-' . $doc["matchStartDate"]->get()->format('d.m.Y H:i:s');
-                $this->matches[$title] = $doc;
+                $matchList[$title] = $doc;
+            }
+        }   else {
+            foreach ($this->matchCollection->orderBy('matchStartDate', 'ASC')->documents() as $doc) {
+                /**
+                 * @var $doc array
+                 */
+                $title = $doc["title"] . '-' . $doc["assignedLocation"] . '-' . $doc["matchStartDate"]->get()->format('d.m.Y H:i:s');
+                $matchList[$title] = $doc;
             }
         }
-        return $this->matches;
+        return $matchList;
     }
 
 
@@ -352,5 +364,4 @@ trait sfwMatch
         $returnString .= '</tr>';
         return $returnString;
     }
-
 }

@@ -1,6 +1,5 @@
 {
   "require": {
-    "ext-grpc": "*",
     "google/apiclient": "^2.2",
     "google/cloud-firestore": "^0.12.0",
     "paragonie/random_compat": "2.0.17"

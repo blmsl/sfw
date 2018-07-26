@@ -12,30 +12,43 @@ manual_scaling:
   instances: 1
 
 handlers:
-- url: /php/club/matchplan-import.php
-  script: /php/club/matchplan-import.php
+# Club
   #secure: always
   #login: admin
 
 - url: /php/club/matchplan-calendar.php
   script: /php/club/matchplan-calendar.php
 
+- url: /php/club/matchplan-export.php
+  script: /php/club/matchplan-export.php
+
+- url: /php/club/matchplan-import.php
+  script: /php/club/matchplan-import.php
+
+- url: /php/club/sfw-calendar.php
+  script: /php/club/sfw-calendar.php
+
+- url: /php/club/update-club.php
+  script: /php/club/update-club.php
+
+# Member
+- url: /php/member/birthday-import.php
+  script: /php/member/birthday-import.php
+
 - url: /php/member/dfb-import.php
   script: /php/member/dfb-import.php
-  secure: always
-  #login: admin
+
+- url: /php/member/drive-export.php
+  script: /php/member/drive-export.php
 
 - url: /php/member/drive-import.php
   script: /php/member/drive-import.php
-  secure: always
-  #login: admin
 
-- url: /php/team/competitions.php
-  script: /php/team/competitions.php
-
+# Team
 - url: /php/team/standings.php
   script: /php/team/standings.php
 
+# Other
 - url: /_ah/.*
   script: /php/index.php
 

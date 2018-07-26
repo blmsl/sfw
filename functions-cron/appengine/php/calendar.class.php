@@ -13,6 +13,7 @@ trait sfwCalendar
     public function getEvents($calendarId, $startDate, $endDate)
     {
         $optParams = array(
+            'maxResults' => 2500,
             'timeMin' => $startDate->format('c'),
             'timeMax' => $endDate->format('c')
         );
@@ -57,25 +58,34 @@ trait sfwCalendar
         ));
     }
 
-    public function generateJSONEventList($events){
-        $eventList = array();
-        foreach ($events AS $event){
-            /**
-             * @var $event object
-             */
-            $startDate = new DateTime($event->getStart()->dateTime);
-
-            $eventList[] = array(
-                'description' => $event["description"],
-                'start' => $startDate->format('Y-m-d H:i:s'),
-                'location' => $event["location"],
-                'title' => $event["summary"]
-            );
-        }
-        return $eventList;
+    public function generateEventItem($match, $locations)
+    {
+        /**
+         * @var $match array
+         */
+        return array(
+            'description' => $match["matchType"] . ' <a target="_blank" href="'.$match["matchLink"].'">Link</a>',
+            'end' => $match["matchEndDate"]->get()->format(DATE_RFC3339),
+            'start' => $match["matchStartDate"]->get()->format(DATE_RFC3339),
+            'location' => $locations[$match['assignedLocation']],
+            'title' => $match['title']
+        );
     }
 
-    public function saveCalendarEvent($eventData, $calendarId){
+    public function saveCalendarEvent($calendarId, $matchEvent)
+    {
+        $start = new Google_Service_Calendar_EventDateTime();
+        $start->setDateTime($matchEvent["start"]);
+
+        $end = new Google_Service_Calendar_EventDateTime();
+        $end->setDateTime($matchEvent["end"]);
+
+        $eventData = new Google_Service_Calendar_Event();
+        $eventData->setSummary($matchEvent['title']);
+        $eventData->setLocation($matchEvent['location']);
+        $eventData->setDescription($matchEvent["description"]);
+        $eventData->setStart($start);
+        $eventData->setEnd($end);
         return $this->calendarService->events->insert($calendarId, $eventData);
     }
 

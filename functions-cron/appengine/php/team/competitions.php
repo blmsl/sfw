@@ -1,31 +1,33 @@
 <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', true);
-    ini_set('memory_limit', '-1');
 
-    header("Content-Type: text/html; charset=utf-8");
+error_reporting(E_ALL);
+ini_set('display_errors', true);
+ini_set('memory_limit', '-1');
 
-    require "../simple_html_dom.php";
-    require "../base.class.php";
-    require "../../vendor/autoload.php";
+header("Content-Type: text/html; charset=utf-8");
 
-    use Google\Cloud\Firestore\FirestoreClient;
+require "../simple_html_dom.php";
+require "../../vendor/autoload.php";
 
-    try {
-        $db = new FirestoreClient([
-            'projectId' => 'sfw-dev'
-        ]);
-    } catch (\Google\Cloud\Core\Exception\GoogleException $e) {
-        var_dump($e);
-        exit();
-    }
+require "../base.class.php";
 
+$projectId = 'sf-winterbach';
+$project = new sfwApp($projectId);
 
-    // Seasons
-    // Get all seasons and the current Season
-    $dbSeasons = $db->collection('seasons');
-    foreach ($dbSeasons->documents() as $season) {
+$categoryTypes = $project->getCategoryTypes();
 
+$project->getLocations();
+
+echo $project->generateHeader();
+
+$currentSeasonDates = $project->getCurrentSeason(new DateTime());
+var_dump($currentSeasonDates);
+
+foreach ($project->getSeasons($currentSeasonDates) as $season) {
+
+    echo $season["title"];
+
+    /*
         $dbTeams = $db->collection('teams');
         foreach ($dbTeams->documents() as $team) {
 
@@ -74,4 +76,5 @@
             unset($output);
             unset($output2);
         }
-    }
+    */
+}

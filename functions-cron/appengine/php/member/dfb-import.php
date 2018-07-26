@@ -17,8 +17,6 @@ echo $project->generateHeader();
 
 echo "<h1>Importiere Mitglieder des DFB.net</h1>";
 
-$memberList = $project->getMembers();
-
 foreach ($project->getClubs() as $club) {
 
     $driveFileList = $project->getDriveFile('Export-DFBnet ' . $club["title"]);
@@ -27,6 +25,8 @@ foreach ($project->getClubs() as $club) {
         $foundFile = $driveFileList[0];
         $range = 'Liste!A10:O';
         $params = array();
+
+        $memberList = $project->getMembers($club);
         $members = $project->sheetService->spreadsheets_values->get($foundFile->id, $range, $params)->getValues();
 
         echo $project->generateDFBMemberTableHeader();
@@ -35,6 +35,8 @@ foreach ($project->getClubs() as $club) {
             echo $project->generateDFBMemberRow($member, $club, $saveStatus);
         }
         echo $project->generateMemberTableFooter();
+    } else {
+        echo "<p>Die Datei Export-DFBnet " . $club["title"]. " wurde nicht im GoogleDrive gefunden oder wurde nicht für den Service Account freigegeben.</p>";
     }
 }
 

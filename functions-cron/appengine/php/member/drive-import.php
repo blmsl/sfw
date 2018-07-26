@@ -25,14 +25,16 @@ foreach ($project->getClubs() as $club) {
     $foundFile = $driveFileList[0];
     $range = 'Mitgliederliste!A3:V';
     $params = array();
+
+    $memberList = $project->getMembers($club);
     $members = $project->sheetService->spreadsheets_values->get($foundFile->id, $range, $params)->getValues();
 
     #$noBirthdayList = array();
     echo $project->generateDriveMemberTableHeader();
     foreach ($members AS $member) {
       if (isset($member[1]) && $member[1] !== '' && isset($member[2]) && $member[2] !== '') { // && isset($member[19]) && $member[19] !== '' && $member[19] !== 'Geburtsdatum'
-        $project->saveDriveMember($member, $club);
-        echo $project->generateDriveMemberRow($member, $club, true);
+        $saveStatus = $project->saveDriveMember($member, $club, $memberList);
+        echo $project->generateDriveMemberRow($member, $saveStatus);
       }
       #elseif (isset($member[1]) && $member[1] !== '' && isset($member[2]) && $member[2] !== '' && !isset($member[19])) {
       #  $noBirthdayList[] = $member[1] . ' ' . $member[2];
@@ -42,6 +44,7 @@ foreach ($project->getClubs() as $club) {
 
     #var_dump($noBirthdayList);
   }
+    echo "<p>Die Datei Mitgliederliste " . $club["title"]. " wurde nicht im GoogleDrive gefunden oder wurde nicht für den Service Account freigegeben.</p>";
 }
 
 echo "<p>Import durchgeführt!</p>";
