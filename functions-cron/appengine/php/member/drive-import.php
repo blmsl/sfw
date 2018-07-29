@@ -37,7 +37,7 @@ foreach ($project->getClubs() as $club) {
     echo $project->generateDriveMemberTableHeader();
     $i = 1;
     foreach ($members AS $member) {
-      if (isset($member[1]) && $member[1] !== '' && isset($member[2]) && $member[2] !== '' && isset($member[19]) && $member[19] !== '' && $member[19] !== 'Geburtsdatum'){
+      if (isset($member[1]) && $member[1] !== '' && isset($member[2]) && $member[2] !== '' && isset($member[19]) && $member[19] !== '' && $member[19] !== 'Geburtsdatum') {
         $saveStatus = $project->saveDriveMember($member, $club, $memberList, $batch);
         echo $project->generateDriveMemberRow($member, $saveStatus);
       } elseif (isset($member[1]) && $member[1] !== '' && isset($member[2]) && $member[2] !== '' && !isset($member[19])) {
@@ -54,10 +54,21 @@ foreach ($project->getClubs() as $club) {
 
     echo $project->generateMemberTableFooter();
 
-    var_dump($noBirthdayList);
+    if (count($noBirthdayList) > 0) {
+      echo "<p>Kein Geburtstag eingetragen für:</p>";
+      echo "<ul>";
+      foreach ($noBirthdayList as $key => $member) {
+        echo "<li>" . $member . "</li>";
+      }
+      echo "</ul>";
+    }
+
+    echo "<p>Import durchgeführt!</p>";
+
+  } else {
+    echo "<p>Die Datei Mitgliederliste " . $club["title"] . " wurde nicht im GoogleDrive gefunden oder wurde nicht für den Service Account freigegeben.</p>";
   }
-  echo "<p>Die Datei Mitgliederliste " . $club["title"] . " wurde nicht im GoogleDrive gefunden oder wurde nicht für den Service Account freigegeben.</p>";
 }
 
-echo "<p>Import durchgeführt!</p>";
+echo '<p><b>Ausführungsdauer :</b> ' . (microtime(true) - $time_start) . '</p>';
 echo $project->generateFooter();

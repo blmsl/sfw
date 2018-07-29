@@ -205,7 +205,8 @@ trait sfwMember
     return $returnString;
   }
 
-  public function generateUpdateFlag($update){
+  public function generateUpdateFlag($update)
+  {
     if ($update) {
       return '<span style="color: green">&#10004;</span>';
     }
@@ -257,7 +258,7 @@ trait sfwMember
         "joined" => $member[9],
         "left" => $member[10],
         "payment" => $member[11],
-        "positionsInClub" => $member[20] ? $member[20] : '',
+        "positionsInClub" => isset($member[20]) && $member[20] && count($member) > 19 ? $member[20] : '',
       ),
       "mainData" => array(
         "gender" => $member[0] === 'Frau' ? 'female' : 'male',
@@ -293,7 +294,13 @@ trait sfwMember
       );
     } else {
 
-      if ($memberList[$id]['doc']['driveImport'] !== $data['driveImport']
+      if (!isset($memberList[$id]['doc']['driveImport']) && isset($data['driveImport'])
+        || isset($memberList[$id]['doc']['driveImport']) && !isset($data['driveImport'])
+        || $memberList[$id]['doc']['driveImport'] !== $data['driveImport']
+
+        || !isset($memberList[$id]['doc']['clubData']) && isset($data['clubData'])
+        || isset($memberList[$id]['doc']['clubData']) && !isset($data['clubData'])
+
         || $memberList[$id]['doc']['clubData']['assignedClub'] !== $data['clubData']['assignedClub']
         || $memberList[$id]['doc']['clubData']['status'] !== $data['clubData']['status']
         || $memberList[$id]['doc']['clubData']['joined'] !== $data['clubData']['joined']
@@ -307,15 +314,24 @@ trait sfwMember
         || $memberList[$id]['doc']['mainData']['birthday'] !== $data['mainData']['birthday']
         || $memberList[$id]['doc']['mainData']['title'] !== $data['mainData']['title']
 
+        || !isset($memberList[$id]['doc']['address']) && isset($data['address'])
+        || isset($memberList[$id]['doc']['address']) && !isset($data['address'])
+
         || $memberList[$id]['doc']['address']['streetName'] !== $data['address']['streetName']
         || $memberList[$id]['doc']['address']['houseNumber'] !== $data['address']['houseNumber']
         || $memberList[$id]['doc']['address']['zip'] !== $data['address']['zip']
         || $memberList[$id]['doc']['address']['city'] !== $data['address']['city']
 
+        || !isset($memberList[$id]['doc']['ahData']) && isset($data['ahData'])
+        || isset($memberList[$id]['doc']['ahData']) && !isset($data['ahData'])
+
         || $memberList[$id]['doc']['ahData']['status'] !== $data['ahData']['status']
         || $memberList[$id]['doc']['ahData']['joined'] !== $data['ahData']['joined']
         || $memberList[$id]['doc']['ahData']['left'] !== $data['ahData']['left']
         || $memberList[$id]['doc']['ahData']['payment'] !== $data['ahData']['payment']
+
+        || !isset($memberList[$id]['doc']['contact']) && isset($data['contact'])
+        || isset($memberList[$id]['doc']['contact']) && !isset($data['contact'])
 
         || $memberList[$id]['doc']['contact']['phoneHome'] !== $data['ahData']['contact']['phoneHome']
         || $memberList[$id]['doc']['contact']['phoneMobile'] !== $data['ahData']['contact']['phoneMobile']
@@ -384,12 +400,22 @@ trait sfwMember
       );
     } else {
 
-      if ($memberList[$id]['doc']['dfbImport'] !== $data['dfbImport']
+      if (!isset($memberList[$id]['doc']['dfbImport']) && isset($data['dfbImport'])
+        || isset($memberList[$id]['doc']['dfbImport']) && !isset($data['dfbImport'])
+
+        || $memberList[$id]['doc']['dfbImport'] !== $data['dfbImport']
+
+        || !isset($memberList[$id]['doc']['clubData']) && isset($data['clubData'])
+        || isset($memberList[$id]['doc']['clubData']) && !isset($data['clubData'])
         || $memberList[$id]['doc']['clubData']['assignedClub'] !== $data['clubData']['assignedClub']
+
         || $memberList[$id]['doc']['mainData']['gender'] !== $data['mainData']['gender']
         || $memberList[$id]['doc']['mainData']['firstName'] !== $data['mainData']['firstName']
         || $memberList[$id]['doc']['mainData']['lastName'] !== $data['mainData']['lastName']
         || $memberList[$id]['doc']['mainData']['birthday'] !== $data['mainData']['birthday']
+
+        || !isset($memberList[$id]['doc']['dfbData']) && isset($data['dfbData'])
+        || isset($memberList[$id]['doc']['dfbData']) && !isset($data['dfbData'])
 
         || $memberList[$id]['doc']['dfbData']['passNumber'] !== $data['dfbData']['passNumber']
         || $memberList[$id]['doc']['dfbData']['ageGroup'] !== $data['dfbData']['ageGroup']
@@ -397,14 +423,15 @@ trait sfwMember
         || $memberList[$id]['doc']['dfbData']['eligibleForFriendlyMatches'] !== $data['dfbData']['eligibleForFriendlyMatches']
         || $memberList[$id]['doc']['dfbData']['signOut'] !== $data['dfbData']['signOut']
         || $memberList[$id]['doc']['dfbData']['playerStatus'] !== $data['dfbData']['playerStatus']
+        || $memberList[$id]['doc']['dfbData']['passPrint'] !== $data['dfbData']['passPrint']
+        || $memberList[$id]['doc']['dfbData']['allowedToPlay'] !== $data['dfbData']['allowedToPlay']
+
+        || !isset($memberList[$id]['doc']['dfbData']['guestPlayer']) && isset($data['dfbData']['guestPlayer'])
+        || isset($memberList[$id]['doc']['dfbData']['guestPlayer']) && !isset($data['dfbData']['guestPlayer'])
 
         || $memberList[$id]['doc']['dfbData']['guestPlayer']['guestRight'] !== $data['dfbData']['guestPlayer']['guestRight']
         || $memberList[$id]['doc']['dfbData']['guestPlayer']['season'] !== $data['dfbData']['guestPlayer']['season']
         || $memberList[$id]['doc']['dfbData']['guestPlayer']['type'] !== $data['dfbData']['guestPlayer']['type']
-
-        || $memberList[$id]['doc']['dfbData']['passPrint'] !== $data['dfbData']['passPrint']
-        || $memberList[$id]['doc']['dfbData']['allowedToPlay'] !== $data['dfbData']['allowedToPlay']
-
       ) {
         return array(
           'data' => $this->updateFireStoreDFBMember('members', $memberList[$id]["id"], $data, $batch),
