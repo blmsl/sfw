@@ -29,22 +29,34 @@ foreach ($project->getClubs() as $club) {
     $memberList = $project->getMembers($club);
     $members = $project->sheetService->spreadsheets_values->get($foundFile->id, $range, $params)->getValues();
 
-    #$noBirthdayList = array();
+    $noBirthdayList = array();
+
+    // Batch to create and delete matches in the calendar
+    $batch = $project->db->batch();
+
     echo $project->generateDriveMemberTableHeader();
+    $i = 1;
     foreach ($members AS $member) {
-      if (isset($member[1]) && $member[1] !== '' && isset($member[2]) && $member[2] !== '') { // && isset($member[19]) && $member[19] !== '' && $member[19] !== 'Geburtsdatum'
-        $saveStatus = $project->saveDriveMember($member, $club, $memberList);
+      if (isset($member[1]) && $member[1] !== '' && isset($member[2]) && $member[2] !== '' && isset($member[19]) && $member[19] !== '' && $member[19] !== 'Geburtsdatum'){
+        $saveStatus = $project->saveDriveMember($member, $club, $memberList, $batch);
         echo $project->generateDriveMemberRow($member, $saveStatus);
+      } elseif (isset($member[1]) && $member[1] !== '' && isset($member[2]) && $member[2] !== '' && !isset($member[19])) {
+        $noBirthdayList[] = $member[1] . ' ' . $member[2];
       }
-      #elseif (isset($member[1]) && $member[1] !== '' && isset($member[2]) && $member[2] !== '' && !isset($member[19])) {
-      #  $noBirthdayList[] = $member[1] . ' ' . $member[2];
-      #}
+      if ($i >= 499) {
+        $batch->commit();
+        $batch = $project->db->batch();
+        $i = 1;
+      }
+      $i++;
     }
+    $batch->commit();
+
     echo $project->generateMemberTableFooter();
 
-    #var_dump($noBirthdayList);
+    var_dump($noBirthdayList);
   }
-    echo "<p>Die Datei Mitgliederliste " . $club["title"]. " wurde nicht im GoogleDrive gefunden oder wurde nicht für den Service Account freigegeben.</p>";
+  echo "<p>Die Datei Mitgliederliste " . $club["title"] . " wurde nicht im GoogleDrive gefunden oder wurde nicht für den Service Account freigegeben.</p>";
 }
 
 echo "<p>Import durchgeführt!</p>";

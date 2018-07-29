@@ -16,124 +16,138 @@ require "team.class.php";
 
 class sfwApp
 {
-    use sfwBase;
-    use sfwCalendar;
-    use sfwCategory;
-    use sfwCategoryType;
-    use sfwClub;
-    use sfwDrive;
-    use sfwLocation;
-    use sfwMatch;
-    use sfwMember;
-    use sfwSeason;
-    use sfwTeam;
+  use sfwBase;
+  use sfwCalendar;
+  use sfwCategory;
+  use sfwCategoryType;
+  use sfwClub;
+  use sfwDrive;
+  use sfwLocation;
+  use sfwMatch;
+  use sfwMember;
+  use sfwSeason;
+  use sfwTeam;
 }
 
 trait sfwBase
 {
 
-    public $db;
-    public $client;
+  /**
+   * @var $db Google\Cloud\Firestore\FirestoreClient
+   */
+  public $db;
+  /**
+   * @var $client Google_Client
+   */
+  public $client;
 
-    public $sheetService = null;
-    public $driveService = null;
-    public $calendarService = null;
+  public $sheetService = null;
+  public $driveService = null;
+  public $calendarService = null;
 
-    public function __construct($projectId)
-    {
+  public function __construct($projectId)
+  {
 
-        $this->client = $this->getGoogleClient($projectId);
-        $this->sheetService = new Google_Service_Sheets($this->client);
-        $this->driveService = new Google_Service_Drive($this->client);
-        $this->calendarService = new Google_Service_Calendar($this->client);
+    $this->client = $this->getGoogleClient($projectId);
+    $this->sheetService = new Google_Service_Sheets($this->client);
+    $this->driveService = new Google_Service_Drive($this->client);
+    $this->calendarService = new Google_Service_Calendar($this->client);
 
-        $this->db = $this->getFireStoreConnection($projectId);
-        $this->client = $this->getGoogleClient($projectId);
+    $this->db = $this->getFireStoreConnection($projectId);
+    $this->client = $this->getGoogleClient($projectId);
 
-        $this->categoryCollection = $this->db->collection('categories');
-        $this->categoryTypeCollection = $this->db->collection('category-types');
-        $this->clubCollection = $this->db->collection('clubs');
-        $this->locationCollection = $this->db->collection('locations');
-        $this->matchCollection = $this->db->collection('matches');
-        $this->memberCollection = $this->db->collection('members');
+    $this->categoryCollection = $this->db->collection('categories');
+    $this->categoryTypeCollection = $this->db->collection('category-types');
+    $this->clubCollection = $this->db->collection('clubs');
+    $this->locationCollection = $this->db->collection('locations');
+    $this->matchCollection = $this->db->collection('matches');
+    $this->memberCollection = $this->db->collection('members');
 
-        $this->seasonCollection = $this->db->collection('seasons');
-        $this->teamCollection = $this->db->collection('teams');
+    $this->seasonCollection = $this->db->collection('seasons');
+    $this->teamCollection = $this->db->collection('teams');
+  }
+
+  public function getGoogleClient($projectId)
+  {
+    $client = new Google_Client([
+      'projectId' => $projectId
+    ]);
+    $client->useApplicationDefaultCredentials();
+
+    $client->setApplicationName("SFW via FlexEngine");
+    $client->setScopes([
+        Google_Service_Drive::DRIVE,
+        Google_Service_Drive::DRIVE_FILE,
+        Google_Service_Sheets::DRIVE,
+        Google_Service_Sheets::DRIVE_FILE,
+        Google_Service_Sheets::SPREADSHEETS,
+        Google_Service_Calendar::CALENDAR
+      ]
+    );
+    return $client;
+  }
+
+  public function getFireStoreConnection($projectId)
+  {
+    try {
+      $db = new FirestoreClient([
+        'projectId' => $projectId
+      ]);
+    } catch (\Google\Cloud\Core\Exception\GoogleException $e) {
+      var_dump($e);
+      exit();
     }
+    return $db;
+  }
 
-    public function getGoogleClient($projectId)
-    {
-        $client = new Google_Client([
-            'projectId' => $projectId
-        ]);
-        $client->useApplicationDefaultCredentials();
+  public function curlRequest($url)
+  {
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
+    $str = curl_exec($curl);
+    curl_close($curl);
+    return str_get_html($str);
+  }
 
-        $client->setApplicationName("SFW via FlexEngine");
-        $client->setScopes([
-                Google_Service_Drive::DRIVE,
-                Google_Service_Drive::DRIVE_FILE,
-                Google_Service_Sheets::DRIVE,
-                Google_Service_Sheets::DRIVE_FILE,
-                Google_Service_Sheets::SPREADSHEETS,
-                Google_Service_Calendar::CALENDAR
-            ]
-        );
-        return $client;
+  /**
+   * @param $collection Google\Cloud\Firestore\CollectionReference
+   * @param $data
+   * @param $batch Google\Cloud\Firestore\WriteBatch
+   * @return mixed
+   */
+  public function saveFireStoreObject($collection, $data, $batch)
+  {
+    $addedDocRef = $collection->newDocument();
+    $data["id"] = $addedDocRef->id();
+    $data["creation"] = $this->generateCreation();
+    $data["publication"] = $this->generatePublication();
+
+    if ($batch) {
+      $batch->create($addedDocRef, $data);
+      return $data;
+    } else {
+      $addedDocRef = $collection->newDocument();
+      $addedDocRef->set($data);
+      return $data;
     }
+  }
 
-    public function getFireStoreConnection($projectId)
-    {
-        try {
-            $db = new FirestoreClient([
-                'projectId' => $projectId
-            ]);
-        } catch (\Google\Cloud\Core\Exception\GoogleException $e) {
-            var_dump($e);
-            exit();
-        }
-        return $db;
-    }
-
-    public function curlRequest($url)
-    {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
-        $str = curl_exec($curl);
-        curl_close($curl);
-        return str_get_html($str);
-    }
-
-    /**
-     * @param $collection Google\Cloud\Firestore\CollectionReference
-     * @param $data
-     * @return mixed
-     */
-    public function saveFireStoreObject($collection, $data)
-    {
-        $addedDocRef = $collection->newDocument();
-        $data["id"] = $addedDocRef->id();
-        $data["creation"] = $this->generateCreation();
-        $data["publication"] = $this->generatePublication();
-        $addedDocRef->set($data);
-        return $data;
-    }
-
-    public function generateCreation()
-    {
-        return array('from' => 'system', 'at' => FieldValue::serverTimestamp());
-    }
+  public function generateCreation()
+  {
+    return array('from' => 'system', 'at' => FieldValue::serverTimestamp());
+  }
 
 
-    public function generatePublication()
-    {
-        return array('from' => '', 'at' => '', 'status' => 0);
-    }
+  public function generatePublication()
+  {
+    return array('from' => '', 'at' => '', 'status' => 0);
+  }
 
-    public function generateHeader()
-    {
-        return '<!DOCTYPE html><html lang="de">
+  public function generateHeader()
+  {
+    return '<!DOCTYPE html><html lang="de">
               <head>
                 <meta charset="utf-8" />
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -156,14 +170,14 @@ trait sfwBase
               </head>
               <body>
                 <div class="container-fluid">';
-    }
+  }
 
-    public function generateFooter()
-    {
-        return '</div>
+  public function generateFooter()
+  {
+    return '</div>
           </body>
         </html>';
-    }
+  }
 
 }
 

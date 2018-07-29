@@ -14,65 +14,79 @@ header("Content-Type: text/html; charset=utf-8");
 
 require "../simple_html_dom.php";
 require "../../vendor/autoload.php";
-
 require "../base.class.php";
 
-$projectId = 'sf-winterbach';
-$project = new sfwApp($projectId);
+$project = new sfwApp('sf-winterbach');
+$time_start = microtime(true);
+
+echo $project->generateHeader();
+
+echo "<h1>Importiere Geburtstage in den Google-Kalender</h1>";
 
 $eventList = array();
-$currentSeason = isset($_GET['current-season']) && $_GET['current-season'] === true ?  new DateTime() : null;
-$currentClub = isset($_GET['club']) ?  $_GET['club'] : null;
+$currentSeason = isset($_GET['current-season']) && $_GET['current-season'] === true ? new DateTime() : null;
+$currentClub = isset($_GET['club']) ? $_GET['club'] : null;
 
 foreach ($project->getSeasons($currentSeason) as $season) {
 
-    $seasonStart = $project->getSeasonStartDate($season);
-    $seasonEnd = $project->getSeasonEndDate($season);
-    foreach ($project->getClubs() as $club) {
+  $seasonStart = $project->getSeasonStartDate($season);
+  $seasonEnd = $project->getSeasonEndDate($season);
+  foreach ($project->getClubs() as $club) {
 
-        if (key_exists('birthdays', $club["assignedCalendars"])) {
+    if (key_exists('birthdays', $club["assignedCalendars"])) {
 
-            $calendarId = $club["assignedCalendars"]["birthdays"];
-            $googleCalendarEvents = $project->getEvents($calendarId, $seasonStart, $seasonEnd);
+      $calendarId = $club["assignedCalendars"]["birthdays"];
+      $googleCalendarEvents = $project->getEvents($calendarId, $seasonStart, $seasonEnd);
 
-            $memberList = array();
-            foreach ($project->getMembers($club) as $member) {
-                /**
-                 * @var $member Google_Service_Firestore_Document
-                 */
-                if ($member->get('mainData.birthday')) {
-                    $date = DateTime::createFromFormat('Y-m-d', $member->get('mainData.birthday'));
-                    $memberList[$date->format(DATE_RFC3339)] = $member->get('mainData.firstName') . ' ' . $member->get('mainData.lastName');
-                    # echo $member['mainData']['birthday'] . "<br />";
-                    /*$event = new Google_Service_Calendar_Event();
-                    $event->setSummary($this->getAge($member['mainData']['birthday']) . ' Geburtstag von ' . $member['mainData']['firstName'] . ' ' . $member['mainData']['lastName']);
-                    $start = new Google_Service_Calendar_EventDateTime();
-                    $start->setDate($member['mainData']['birthday']);
-                    $event->setRecurrence(array('RRULE:FREQ=YEARLY'));
-                    var_dump($event);
-                    exit(); */
-                }
-            }
-            var_dump($memberList);
+      // Speichern aller Termine in einem Array
+      $calendarEvents = array();
+      foreach ($googleCalendarEvents AS $event){
+        /**
+         * @var $event Google_Service_Calendar_Event
+         */
+        $calendarEvents[$event->getSummary()] = $event->getId();
+      }
 
-            /*$calendarEvents = array();
-            // Alle Calender-Termine laden; wenn ein Termin zu einem gelöschten Spiel gefunden wurde wird der Termin gelöscht
-            foreach ($googleCalendarEvents as $event) {
-                $startDate = new DateTime($event->getStart()->dateTime);
-                $title = $event["summary"] . $startDate->format('d.m.Y H:i:s');
+      // Erstellen neuer Termine, falls ein Termin mit diesem Titel nicht vorhanden ist
+      $memberList = array();
+      $eventsToCreate = array();
 
-                if (!array_key_exists($title, $savedMatches)) {
-                    // delete the Match
-                    # echo $event["summary"] . ' <span style="color: red">gelöscht</span><br />';
-                    $project->calendarService->events->delete($calendarId, $event->getId());
-                } else {
-                    $calendarEvents[$event["summary"] . "-" . $event["location"] . "-" . $startDate->format('d.m.Y H:i:s')] = true;
-                }
-            }*/
-
-        } else {
-            echo "<p>Kein Geburtstagskalender für den Verein " . $club["title"] . " hinterlegt.</p>";
+      foreach ($project->getMembers($club) as $key => $member) {
+        /**
+         * @var $member Google_Service_Firestore_Document
+         */
+        $date = DateTime::createFromFormat('Y-m-d', $member['birthday']);
+        if($date){
+          $title = 'Geburtstag von ' . $member['firstName'] . ' ' . $member['lastName'];
+          if (!key_exists($title, $calendarEvents)) {
+            $eventsToCreate[] = $project->createBirthdayEvent($member);
+          }
+          // Löschen des Eintrags -> später werden alle übrig gebliebenen Termine gelöscht!
+          unset($calendarEvents[$title]);
         }
+      }
 
+      // Starting Batch to create the birthday events in calendar
+      $project->client->setUseBatch(true);
+      $batch = new Google_Http_Batch($project->client);
+      foreach ($eventsToCreate as $event){
+        $project->calendarService->events->insert($calendarId, $event);
+      }
+
+      // Birthday events to delete (members don´t exist any longer)
+      foreach($calendarEvents as $key => $value){
+        $project->calendarService->events->delete($calendarId, $value);
+      }
+      $batch->execute();
+
+      echo '<p>Geburtstage aktualisiert</p>';
+
+    } else {
+      echo "<p>Kein Geburtstagskalender für den Verein " . $club["title"] . " hinterlegt.</p>";
     }
+
+  }
 }
+
+echo '<p><b>Ausführungsdauer :</b> '. (microtime(true) - $time_start) . '</p>';
+echo $project->generateFooter();
