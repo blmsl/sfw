@@ -35,7 +35,7 @@ export class MediaUploaderService {
       const assignedObjects = <any>options.assignedObjects;
 
       let subDir = '';
-      for(let i = 0; i < assignedObjects.length; i++){
+      for (let i = 0; i < assignedObjects.length; i++) {
         subDir += options.assignedObjects[i] + '/';
       }
 

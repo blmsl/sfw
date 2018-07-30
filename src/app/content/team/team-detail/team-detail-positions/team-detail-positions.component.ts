@@ -19,8 +19,8 @@ export class TeamDetailPositionsComponent {
   constructor() {
   }
 
-  isSavedPosition(position: string){
-    if(position !== this.savedPosition) {
+  isSavedPosition(position: string) {
+    if (position !== this.savedPosition) {
       this.savedPosition = position;
       return false;
     }

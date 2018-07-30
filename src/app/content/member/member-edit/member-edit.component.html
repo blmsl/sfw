@@ -19,12 +19,13 @@
                            [member]="member">
         </member-edit-drive>
       </mat-tab>
+
       <mat-tab label="{{'general.members.tabs.interview' | translate}}">
         <div fxLayout.gt-sm="row"
              fxLayout="column">
           <div fxFlex.gt-sm="49"
                fxFlex="100">
-            <member-edit-interviews (add)="addInterview($event)"
+            <member-edit-interviews (add)="addInterview()"
                                     (delete)="removeInterview($event)"
                                     [form]="form">
             </member-edit-interviews>
@@ -39,27 +40,34 @@
           </div>
         </div>
       </mat-tab>
+
       <mat-tab label="{{'general.members.tabs.otherOpinions' | translate}}">
         <member-edit-other-opinions (add)="addOpinion()"
                                     (delete)="removeOpinion($event)"
-                                    (toggleMemberLookup)="toggleMemberLookup($event)"
+                                    (setOpinionValidators)="setOpinionValidators($event)"
                                     [members]="members$ | async"
                                     [form]="form">
         </member-edit-other-opinions>
       </mat-tab>
-      <mat-tab label="{{'general.members.tabs.media' | translate}}">
-        <p>Mit dem Mitglied verknüpfte Fotos, Videos etc.</p>
-      </mat-tab>
+
       <mat-tab label="{{'general.members.tabs.teams' | translate}}">
-        <p>Liste aller Mannschaften, in denen das Mitglied als Spieler tätig war.</p>
+        <member-edit-teams (deleteMemberFromTeam)="deleteMemberFromTeam($event)"
+                           [member]="member"
+                           [teams]="teams$ | async">
+        </member-edit-teams>
       </mat-tab>
+
       <mat-tab label="{{'general.members.tabs.functions' | translate}}">
-        Funktionen
         <!--<member-functions [teams]="teams$ | async"
                           [clubs]="clubs$ | async"
                           [showLinks]="true">
         </member-functions>-->
       </mat-tab>
+
+      <mat-tab label="{{'general.members.tabs.media' | translate}}">
+        <p>Mit dem Mitglied verknüpfte Fotos, Videos etc.</p>
+      </mat-tab>
+
     </mat-tab-group>
   </mat-card-content>
 

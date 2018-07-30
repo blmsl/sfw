@@ -1,13 +1,11 @@
-<h3><p>{{'general.members.edit.opinions.title' | translate}}</h3>
-<p>{{'general.members.edit.opinions.text' | translate}}</p>
+<mat-card *ngIf="members; else loadingTemplate"
+          [formGroup]="form">
+  <mat-card-title>
+    {{'general.members.edit.opinions.title' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle>{{'general.members.edit.opinions.text' | translate}}</mat-card-subtitle>
 
-<div fxLayout.gt-sm="row"
-     fxLayout="column"
-     *ngIf="members; else loadingTemplate"
-     [formGroup]="form">
-
-  <div fxFlex="100"
-       formArrayName="opinions">
+  <mat-card-content formArrayName="opinions">
 
     <button mat-raised-button
             style="margin-bottom: 25px"
@@ -30,26 +28,25 @@
           <div fxFlex="100"
                style="margin-bottom: 40px;">
             <button mat-raised-button
-                    [disabled]="form.get('opinions')['controls'][i]['controls']['type'].value === 'text'"
-                    (click)="toggleMemberLookup.emit({'id': i, 'type': 'text' })"
+                    [disabled]="form.get('opinions')['controls'][i]['controls']['type'].value === 'insert'"
+                    (click)="setOpinionValidators.emit({'i': i, 'type': 'insert' })"
                     color="primary">
               {{'general.members.edit.opinions.perTextField' | translate}}
             </button>
 
             <button mat-raised-button
-                    [disabled]="form.get('opinions')['controls'][i]['controls']['type'].value === 'select'"
-                    (click)="toggleMemberLookup.emit({'id': i, 'type': 'select' })"
+                    [disabled]="form.get('opinions')['controls'][i]['controls']['type'].value === 'list'"
+                    (click)="setOpinionValidators.emit({'i': i, 'type': 'list' })"
                     color="primary">
               {{'general.members.edit.opinions.perSelectField' | translate}}
             </button>
           </div>
 
-          <div *ngIf="form.get('opinions')['controls'][i]['controls']['type'].value === 'text'"
+          <div *ngIf="form.get('opinions')['controls'][i]['controls']['type'].value === 'insert'"
                fxFlex.gt-sm="90"
                fxFlex="100"
                formGroupName="name">
-            <div fxLayout="row"
-                 >
+            <div fxLayout="row">
               <mat-form-field fxFlex.gt-sm="49"
                               fxFlex="100">
                 <input matInput
@@ -66,15 +63,14 @@
             </div>
           </div>
 
-          <div *ngIf="form.get('opinions')['controls'][i]['controls']['type'].value === 'select'"
+          <div *ngIf="form.get('opinions')['controls'][i]['controls']['type'].value === 'list'"
                fxFlex.gt-sm="90"
-               fxFlex="100"
-               formGroupName="assignedMember">
-            <div fxLayout="row"
-                 >
+               fxFlex="100">
+            <div fxLayout="row">
               <mat-form-field fxFlex="100">
                 <mat-select placeholder="{{'general.members.edit.opinions.userTitle' | translate}}"
                             formControlName="assignedMember">
+                  <mat-option value="">----</mat-option>
                   <mat-option
                     *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
                     [value]="member.id">
@@ -98,8 +94,7 @@
 
         </div>
 
-        <div fxLayout="row"
-             >
+        <div fxLayout="row">
           <div fxFlex="100">
             <h3>{{'general.members.edit.opinions.comment' | translate}}</h3>
             <quill-editor [style]="{height: '150px'}"
@@ -113,9 +108,8 @@
       </div>
 
     </div>
-  </div>
-
-</div>
+  </mat-card-content>
+</mat-card>
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

@@ -45,7 +45,7 @@ export class TeamEditMainComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.uploaderOptions.itemId = this.team.id;
   }
 

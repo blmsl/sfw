@@ -38,14 +38,14 @@ export class ClubEditComponent implements OnInit {
   public selectedHonorary: number = -1;
 
   constructor(public clubService: ClubService,
-              private locationService: LocationService,
-              private memberService: MemberService,
-              private categoryService: CategoryService,
-              private fb: FormBuilder,
-              private cd: ChangeDetectorRef,
-              private route: ActivatedRoute,
-              public snackBar: MatSnackBar,
-              private router: Router) {
+    private locationService: LocationService,
+    private memberService: MemberService,
+    private categoryService: CategoryService,
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    public snackBar: MatSnackBar,
+    private router: Router) {
     this.locations$ = locationService.locations$;
     this.members$ = memberService.members$;
     this.positions$ = categoryService.getCategoriesByCategoryType('club.position.types');
@@ -266,18 +266,18 @@ export class ClubEditComponent implements OnInit {
     this.selectedClubManagementPosition = -1;
   }
 
-  removeClub(club: IClub){
+  removeClub(club: IClub) {
     this.clubService.removeClub(club).then(() => {
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            status: 'success',
-            message: 'general.clubs.edit.removedClub'
-          },
-          duration: 2500,
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
-      },
+      this.snackBar.openFromComponent(SnackbarComponent, {
+        data: {
+          status: 'success',
+          message: 'general.clubs.edit.removedClub'
+        },
+        duration: 2500,
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
+    },
       (error: any) => {
         this.snackBar.openFromComponent(SnackbarComponent, {
           data: {

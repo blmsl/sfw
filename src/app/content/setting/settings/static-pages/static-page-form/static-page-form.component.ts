@@ -25,14 +25,14 @@ export class StaticPageFormComponent implements OnInit, OnChanges {
 
   public titleMaxLength: number = 100;
 
-  constructor(private cdRef:ChangeDetectorRef) {
+  constructor(private cdRef: ChangeDetectorRef) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     console.log(this.form);
   }
 
-  ngOnChanges(changes: SimpleChanges){
+  ngOnChanges(changes: SimpleChanges) {
     this.cdRef.detectChanges();
   }
 

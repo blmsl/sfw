@@ -32,10 +32,10 @@ export class ArticlesComponent implements OnInit {
   };
 
   constructor(private articleService: ArticleService,
-              private userService: UserService,
-              private alertService: AlertService,
-              private fb: FormBuilder,
-              private categoryService: CategoryService) {
+    private userService: UserService,
+    private alertService: AlertService,
+    private fb: FormBuilder,
+    private categoryService: CategoryService) {
     this.articles$ = articleService.articles$;
     this.users$ = this.userService.users$;
     this.categories$ = categoryService.categories$;

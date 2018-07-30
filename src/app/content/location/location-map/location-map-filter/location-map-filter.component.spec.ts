@@ -8,9 +8,9 @@ describe('LocationMapFilterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocationMapFilterComponent ]
+      declarations: [LocationMapFilterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

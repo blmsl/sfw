@@ -13,7 +13,7 @@ export class UserService {
   private path = `users`;
 
   private userRoles: string[] = [
-    'admin','editor', 'subscriber'
+    'admin', 'editor', 'subscriber'
   ];
 
   users$: Observable<IUser[]>;

@@ -128,7 +128,6 @@ trait sfwBase
       $batch->create($addedDocRef, $data);
       return $data;
     } else {
-      $addedDocRef = $collection->newDocument();
       $addedDocRef->set($data);
       return $data;
     }

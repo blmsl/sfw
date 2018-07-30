@@ -38,6 +38,10 @@ import { BirthdayModule } from '../../shared/components/birthday/birthday.module
 import { MemberOfTheWeekService } from '../../shared/services/member/member-of-the-week.service';
 import { MediaModule } from '../../shared/components/media/media.module';
 import { MediaItemService } from '../../shared/services/media/media-item.service';
+import { MemberEditTeamsComponent } from './member-edit/member-edit-teams/member-edit-teams.component';
+import { SeasonService } from '../../shared/services/season/season.service';
+import { IsTeamMemberFilterPipe } from '../../shared/pipes/is-team-member-filter.pipe';
+import { SeasonsWithTeamsFilterPipe } from '../../shared/pipes/seasons-with-teams-filter.pipe';
 
 @NgModule({
   imports: [
@@ -60,6 +64,7 @@ import { MediaItemService } from '../../shared/services/media/media-item.service
   declarations: [
     FameMemberComponent,
     IsEmptyPipe,
+    IsTeamMemberFilterPipe,
     MemberDetailComponent,
     MemberDetailMainComponent,
     MemberDetailDriveComponent,
@@ -75,7 +80,9 @@ import { MediaItemService } from '../../shared/services/media/media-item.service
     MemberEditProfileComponent,
     MemberEditInterviewsComponent,
     MemberEditOtherOpinionsComponent,
-    MemberFunctionsComponent
+    MemberFunctionsComponent,
+    MemberEditTeamsComponent,
+    SeasonsWithTeamsFilterPipe
   ],
   providers: [
     ArticleService,
@@ -88,6 +95,7 @@ import { MediaItemService } from '../../shared/services/media/media-item.service
     MemberService,
     MemberStateService,
     PendingChangesGuard,
+    SeasonService,
     TeamService
   ]
 })

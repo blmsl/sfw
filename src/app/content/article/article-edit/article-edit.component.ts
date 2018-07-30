@@ -46,14 +46,14 @@ export class ArticleEditComponent implements OnInit {
   ];
 
   constructor(private route: ActivatedRoute,
-              public breakpointObserver: BreakpointObserver,
-              public authService: AuthService,
-              private router: Router,
-              private zone: NgZone,
-              private alertService: AlertService,
-              private articleService: ArticleService,
-              private applicationService: ApplicationService,
-              private fb: FormBuilder) {
+    public breakpointObserver: BreakpointObserver,
+    public authService: AuthService,
+    private router: Router,
+    private zone: NgZone,
+    private alertService: AlertService,
+    private articleService: ArticleService,
+    private applicationService: ApplicationService,
+    private fb: FormBuilder) {
   }
 
   ngOnInit() {

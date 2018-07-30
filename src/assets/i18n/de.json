@@ -721,6 +721,7 @@
           "guestPlayerData": "Gastspieler",
           "dfbImport": "Aus dem Google Drive importiert?",
           "driveImport": "Aus dem DFB.net importiert?",
+          "photo": "Foto",
           "lastName": "Nachname",
           "male": "Herr",
           "name": "Name",
@@ -738,6 +739,7 @@
           "noEntries": "Es wurden noch keine Kommentare von anderen Personen erfasst.",
           "title": "Das sagen andere über ihn / sie ..."
         },
+        "opinionDate": " vom",
         "zodiacList": {
           "Capricorn": "Steinbock",
           "Aquarius": "Wassermann",
@@ -761,6 +763,8 @@
           "text": "Interviews sind längere Fragen und dazugehörige Antworten, die zu einem aktuellen Geschehnis Bezug nehmen. So zum Beispiel das Grußwort des Trainers zu Beginn der Saison",
           "title": "Interviews"
         },
+        "assignedAsPlayer": "Als Spieler in einer Mannschaft ...",
+        "notAssignedToAnyTeams": "Das Mitglied wurde noch nicht mit einer Mannschaft verknüpft.",
         "opinions": {
           "addEntry": "Neuer Kommentar",
           "comment": "Der Kommentar",

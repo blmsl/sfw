@@ -34,10 +34,10 @@ export class MediaUploaderComponent implements OnInit {
   public currentMediaItem: Observable<IMediaItem>;
 
   constructor(private alertService: AlertService,
-              private afs: AngularFirestore,
-              private el: ElementRef,
-              private mediaItemService: MediaItemService,
-              private mediaUploaderService: MediaUploaderService) {
+    private afs: AngularFirestore,
+    private el: ElementRef,
+    private mediaItemService: MediaItemService,
+    private mediaUploaderService: MediaUploaderService) {
   }
 
   ngOnInit() {
@@ -120,9 +120,9 @@ export class MediaUploaderComponent implements OnInit {
 
       upload.fileRef.getDownloadURL().subscribe((downloadURL: string) => {
 
-        let assignedObjects= {};
+        let assignedObjects = {};
         let toArray = Object.values(this.uploaderOptions.assignedObjects);
-        for(let i = 0; i < toArray.length; i++){
+        for (let i = 0; i < toArray.length; i++) {
           assignedObjects[<string>toArray[i]] = true;
         }
 
@@ -139,7 +139,7 @@ export class MediaUploaderComponent implements OnInit {
         this.mediaItemService.createMediaItem(mediaItem).then(() => {
           this.alertService.showSnackBar('success', 'general.uploader.singleFinished');
 
-          if(this.uploaderOptions.queueLimit === 1){
+          if (this.uploaderOptions.queueLimit === 1) {
             this.currentMediaItem = this.mediaItemService.getCurrentImage(
               this.uploaderOptions.assignedObjects,
               mediaItem.itemId

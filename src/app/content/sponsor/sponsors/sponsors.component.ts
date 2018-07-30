@@ -26,11 +26,11 @@ export class SponsorsComponent implements OnInit {
   public isSmallDevice: boolean = false;
 
   constructor(private alertService: AlertService,
-              private media: MediaMatcher,
-              private categoryService: CategoryService,
-              public breakpointObserver: BreakpointObserver,
-              private mediaItemService: MediaItemService,
-              private sponsorService: SponsorService) {
+    private media: MediaMatcher,
+    private categoryService: CategoryService,
+    public breakpointObserver: BreakpointObserver,
+    private mediaItemService: MediaItemService,
+    private sponsorService: SponsorService) {
     this.categories$ = categoryService.getCategoriesByCategoryType('sponsor.types');
     this.sponsors$ = sponsorService.sponsors$;
   }

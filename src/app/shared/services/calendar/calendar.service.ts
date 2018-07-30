@@ -15,7 +15,7 @@ export class CalendarService {
   private url: string;
 
   constructor(private http: HttpClient,
-              private memberService: MemberService) {
+    private memberService: MemberService) {
     const timeMin = moment().subtract('6', 'months').toISOString();
     const timeMax = moment().add('1', 'years').endOf('year').toISOString();
     // this.url = 'https://www.googleapis.com/calendar/v3/calendars/' + environment.googleCalendar.id +
@@ -24,19 +24,19 @@ export class CalendarService {
 
   getCalendarEvents(): any {
     return this.http.get(this.url).map((calEvents: any) => {
-        console.log(calEvents);
-        return calEvents;
+      console.log(calEvents);
+      return calEvents;
 
-        /* calEvents.items.forEach((event: ICalendarEvent) => {
-          const startDate = event.start.dateTime.substr(0, 10);
-          const calendarEvent: any = {
-            title: event.summary,
-            start: startDate
-          };
-          this.events$.push(calendarEvent);
-        });
-        return this.events$; */
+      /* calEvents.items.forEach((event: ICalendarEvent) => {
+        const startDate = event.start.dateTime.substr(0, 10);
+        const calendarEvent: any = {
+          title: event.summary,
+          start: startDate
+        };
+        this.events$.push(calendarEvent);
       });
+      return this.events$; */
+    });
   }
 
   getMemberBirthdays(): Observable<ICalendarEvent[]> {

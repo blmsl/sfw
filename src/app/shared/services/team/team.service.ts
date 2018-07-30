@@ -13,7 +13,7 @@ export class TeamService {
   teams$: Observable<ITeam[]>;
 
   constructor(private afs: AngularFirestore,
-              private authService: AuthService) {
+    private authService: AuthService) {
     this.collectionRef = this.afs.collection<ITeam>(this.path);
     this.teams$ = this.collectionRef.valueChanges();
   }
@@ -28,6 +28,7 @@ export class TeamService {
   }
 
   updateTeam(teamId: string, team: ITeam): Promise<any> {
+    console.log(this.afs.collection(this.path).doc(teamId).update(team));
     return this.afs.collection(this.path).doc(teamId).update(team);
   }
 

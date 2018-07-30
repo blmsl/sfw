@@ -21,7 +21,7 @@ export class AuthService implements OnDestroy {
   public userId: string;
 
   constructor(private afAuth: AngularFireAuth,
-              private afs: AngularFirestore) {
+    private afs: AngularFirestore) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
         if (user) {
@@ -39,12 +39,12 @@ export class AuthService implements OnDestroy {
 
   signIn(credentials): Promise<void> {
     return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password).then(() => {
-        return this.updateUser({
-          id: firebase.auth().currentUser.uid,
-          emailVerified: firebase.auth().currentUser.emailVerified,
-          email: firebase.auth().currentUser.email
-        });
-      }
+      return this.updateUser({
+        id: firebase.auth().currentUser.uid,
+        emailVerified: firebase.auth().currentUser.emailVerified,
+        email: firebase.auth().currentUser.email
+      });
+    }
     );
   }
 

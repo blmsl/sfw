@@ -29,10 +29,10 @@ export class FameTeamComponent implements OnInit {
   public dataIsLoaded: boolean = false;
 
   constructor(private teamOfTheMonthService: TeamOfTheMonthService,
-              private categoryService: CategoryService,
-              private memberService: MemberService,
-              private seasonService: SeasonService,
-              private teamService: TeamService) {
+    private categoryService: CategoryService,
+    private memberService: MemberService,
+    private seasonService: SeasonService,
+    private teamService: TeamService) {
   }
 
   ngOnInit() {

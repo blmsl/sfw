@@ -30,7 +30,7 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   public latitude: number;
   public longitude: number;
   public markers: IMarker[] = [];
-  public markerSubscriptions: Subscription[] =[];
+  public markerSubscriptions: Subscription[] = [];
 
   public config: PerfectScrollbarConfigInterface = {};
 
@@ -41,9 +41,9 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   @ViewChild(MatSelectionList) selectedLocations: MatSelectionList;
 
   constructor(public categoryService: CategoryService,
-              private locationService: LocationService,
-              private alertService: AlertService,
-              private mapsService: MapsService) {
+    private locationService: LocationService,
+    private alertService: AlertService,
+    private mapsService: MapsService) {
     this.categories$ = categoryService.getCategoriesByCategoryType('location.types');
     this.locations$ = locationService.locations$;
   }

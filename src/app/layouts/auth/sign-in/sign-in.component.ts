@@ -67,9 +67,9 @@ export class SignInComponent implements OnInit, OnDestroy {
 
     this.sub = this.route
       .queryParams
-      .subscribe((params:any) => {
+      .subscribe((params: any) => {
         // Defaults to 0 if no query param provided.
-        if(params.message){
+        if (params.message) {
           this.showAlert('signInAlertContainer');
           this.alertService.error(params.message);
         }

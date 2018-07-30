@@ -19,8 +19,8 @@ export class SponsorDetailComponent implements OnInit {
   public sponsorLogo: Observable<IMediaItem>;
 
   constructor(private route: ActivatedRoute,
-              private mediaItemService: MediaItemService,
-              private categoryService: CategoryService) {
+    private mediaItemService: MediaItemService,
+    private categoryService: CategoryService) {
     this.categories$ = categoryService.categories$;
   }
 

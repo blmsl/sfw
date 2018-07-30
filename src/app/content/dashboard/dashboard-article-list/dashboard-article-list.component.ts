@@ -24,7 +24,7 @@ export class DashboardArticleListComponent implements OnInit {
   ngOnInit() {
   }
 
-  show(date:any){
+  show(date: any) {
     console.log(date);
   }
 

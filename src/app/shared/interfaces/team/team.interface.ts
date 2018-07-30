@@ -22,7 +22,7 @@ export interface ITeam {
   assignedTeamCategories: string[];
   assignedSeason: string;
 
-  assignedPlayers: IMember[];
+  assignedPlayers: string[];
   assignedPositions: ITeamManagement[];
   assignedTrainings: ITraining[];
   assignedCompetitions: ICompetition[];

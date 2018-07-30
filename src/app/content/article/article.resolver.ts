@@ -10,8 +10,8 @@ import { SeoService } from '../../shared/services/seo/seo.service';
 export class ArticleResolver implements Resolve<IArticle> {
 
   constructor(private articleService: ArticleService,
-              private seoService: SeoService,
-              private router: Router) {
+    private seoService: SeoService,
+    private router: Router) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IArticle> {

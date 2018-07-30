@@ -17,7 +17,7 @@ export class MemberDetailMainComponent implements OnInit {
   public memberImage: Observable<IMediaItem>;
 
   constructor(private mediaItemService: MediaItemService,
-              public memberService: MemberService) {
+    public memberService: MemberService) {
   }
 
   ngOnInit() {

@@ -19,7 +19,7 @@ export class ClubDetailManagementComponent implements OnInit {
 
   public step = -1;
 
-  ngOnInit(){
+  ngOnInit() {
 
   }
 

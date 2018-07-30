@@ -30,12 +30,12 @@ export class MemberFunctionsComponent implements OnInit {
 
     let positionList = [];
     for (let i = 0; i < clubs.length; i++) {
-      if(clubs[i].management && clubs[i].management.positions) {
-          clubs[i].management.positions.filter((position: IClubManagement) => {
-              return position.assignedMember === this.member.id;
-          }).map((position: IClubManagement) => {
-              positionList.push(position);
-          });
+      if (clubs[i].management && clubs[i].management.positions) {
+        clubs[i].management.positions.filter((position: IClubManagement) => {
+          return position.assignedMember === this.member.id;
+        }).map((position: IClubManagement) => {
+          positionList.push(position);
+        });
       }
     }
     this.positionList = positionList;

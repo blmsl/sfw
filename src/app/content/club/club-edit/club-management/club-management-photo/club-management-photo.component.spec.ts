@@ -8,9 +8,9 @@ describe('ClubManagementPhotoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClubManagementPhotoComponent ]
+      declarations: [ClubManagementPhotoComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

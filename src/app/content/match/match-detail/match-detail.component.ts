@@ -24,12 +24,12 @@ export class MatchDetailComponent implements OnInit {
   public articles$: Observable<IArticle[]>;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private alertService: AlertService,
-              private articleService: ArticleService,
-              private categoryService: CategoryService,
-              private locationService: LocationService,
-              private matchService: MatchService) {
+    private router: Router,
+    private alertService: AlertService,
+    private articleService: ArticleService,
+    private categoryService: CategoryService,
+    private locationService: LocationService,
+    private matchService: MatchService) {
     this.articles$ = articleService.articles$;
     this.categories$ = categoryService.categories$;
     this.locations$ = locationService.locations$;

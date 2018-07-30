@@ -55,17 +55,17 @@ export class LocationEditComponent implements OnInit {
   };
 
   constructor(private router: Router,
-              private alertService: AlertService,
-              private fb: FormBuilder,
-              private storage: AngularFireStorage,
-              private fireStore: AngularFirestore,
-              private snackBar: MatSnackBar,
-              private route: ActivatedRoute,
-              public categoryService: CategoryService,
-              public categoryTypeService: CategoryTypeService,
-              public locationService: LocationService,
-              private mediaItemService: MediaItemService,
-              private memberService: MemberService) {
+    private alertService: AlertService,
+    private fb: FormBuilder,
+    private storage: AngularFireStorage,
+    private fireStore: AngularFirestore,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    public categoryService: CategoryService,
+    public categoryTypeService: CategoryTypeService,
+    public locationService: LocationService,
+    private mediaItemService: MediaItemService,
+    private memberService: MemberService) {
     this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
     this.members$ = memberService.members$;

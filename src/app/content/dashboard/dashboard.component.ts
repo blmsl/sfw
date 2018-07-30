@@ -43,10 +43,10 @@ export class DashboardComponent /* implements OnInit */ {
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
 
   constructor(private fb: FormBuilder,
-              private articleService: ArticleService,
-              private categoryService: CategoryService,
-              public memberService: MemberService,
-              public matchService: MatchService) {
+    private articleService: ArticleService,
+    private categoryService: CategoryService,
+    public memberService: MemberService,
+    public matchService: MatchService) {
 
     this.angularVersion = VERSION.full;
     this.env = environment;

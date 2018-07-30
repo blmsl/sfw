@@ -15,12 +15,12 @@ export class MapsService {
     latitude: number;
     longitude: number;
   } = {
-    latitude: 49.480584,
-    longitude: 7.097050
-  };
+      latitude: 49.480584,
+      longitude: 7.097050
+    };
 
   constructor(private http: HttpClient,
-              private mapsAPILoader: MapsAPILoader) {
+    private mapsAPILoader: MapsAPILoader) {
   }
 
   async getMapCenter(): Promise<any> {

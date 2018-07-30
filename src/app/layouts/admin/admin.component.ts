@@ -49,7 +49,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.currentLang = browserLang.match(/en|fr/) ? browserLang : 'de';
     translate.use(this.currentLang);
 
-    if(this.currentLang === 'de') {
+    if (this.currentLang === 'de') {
       moment.locale('de-de');
     }
 

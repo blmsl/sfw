@@ -56,7 +56,7 @@ export class SidebarMetaDataComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.article.currentValue.id){
+    if (changes.article.currentValue.id) {
       this.facebookUploaderOptions.itemId
         = this.metaUploaderOptions.itemId
         = this.twitterUploaderOptions.itemId

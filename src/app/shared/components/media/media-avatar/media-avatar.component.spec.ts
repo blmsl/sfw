@@ -8,9 +8,9 @@ describe('MediaAvatarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MediaAvatarComponent ]
+      declarations: [MediaAvatarComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

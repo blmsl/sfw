@@ -17,8 +17,8 @@ export class CategoriesComponent {
   categoryTypes$: Observable<ICategoryType[]>;
 
   constructor(private categoryService: CategoryService,
-              private alertService: AlertService,
-              private categoryTypeService: CategoryTypeService) {
+    private alertService: AlertService,
+    private categoryTypeService: CategoryTypeService) {
     this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
   }

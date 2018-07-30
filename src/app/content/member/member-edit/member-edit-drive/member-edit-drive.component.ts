@@ -19,7 +19,7 @@ export class MemberEditDriveComponent implements OnInit {
   public clubs$: Observable<IClub[]>;
 
   constructor(private clubService: ClubService,
-              public memberStateService: MemberStateService) {
+    public memberStateService: MemberStateService) {
     this.clubs$ = clubService.clubs$;
   }
 

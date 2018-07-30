@@ -17,7 +17,7 @@ export const teamOfTheWeekCron = functions.pubsub.topic('monthly-tick').onPublis
     .get()
     .then((values: any) => {
       const teamList: any = [];
-      values.forEach(function (doc: any) {
+      values.forEach(function(doc: any) {
         const teamData = doc.data();
         if ('profileImageUrl' in teamData && teamData.profileImageUrl !== '') {
           teamList.push(teamData);
@@ -37,22 +37,22 @@ export const teamOfTheWeekCron = functions.pubsub.topic('monthly-tick').onPublis
             assignedTeamId: sample.id,
             month: now.format('YY') + '-' + now.format('MM')
           }).then(
-          () => {
-            msg = {
-              to: ['thomas.handle@gmail.com'],
-              from: 'mitglieder@sfwinterbach.com',
-              subject: 'Mannschaft des Monats ' + now.month() + '.' + now.format('YYYY'),
-              templateId: 'cd68a992-a76c-4b47-8dda-a7d9c68fd1b3',
-              substitutionWrappers: ['{{', '}}'],
-              substitutions: {
-                adminName: 'Thomas',
-                teamName: sample.title,
-                monthString: now.month() + '.' + now.format('YYYY')
-              }
-            };
-            return sgMail.send(msg);
-          }
-        );
+            () => {
+              msg = {
+                to: ['thomas.handle@gmail.com'],
+                from: 'mitglieder@sfwinterbach.com',
+                subject: 'Mannschaft des Monats ' + now.month() + '.' + now.format('YYYY'),
+                templateId: 'cd68a992-a76c-4b47-8dda-a7d9c68fd1b3',
+                substitutionWrappers: ['{{', '}}'],
+                substitutions: {
+                  adminName: 'Thomas',
+                  teamName: sample.title,
+                  monthString: now.month() + '.' + now.format('YYYY')
+                }
+              };
+              return sgMail.send(msg);
+            }
+          );
       }
       else {
         msg = {

@@ -26,8 +26,8 @@ export class MatchesComponent implements OnInit {
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
 
   constructor(private categoryService: CategoryService,
-              private locationService: LocationService,
-              private matchService: MatchService) {
+    private locationService: LocationService,
+    private matchService: MatchService) {
     this.matches$ = matchService.matches$;
     this.categories$ = categoryService.categories$;
     this.locations$ = locationService.locations$;

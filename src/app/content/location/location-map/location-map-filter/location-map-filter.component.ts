@@ -32,7 +32,7 @@ export class LocationMapFilterComponent implements OnInit, AfterViewInit {
   public form: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private cdRef: ChangeDetectorRef) {
+    private cdRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {

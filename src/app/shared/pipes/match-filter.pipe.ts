@@ -16,7 +16,7 @@ export class MatchFilterPipe implements PipeTransform {
 
     return matches.filter((match: IMatch) => {
 
-      if(!match[searchField]){
+      if (!match[searchField]) {
         return match;
       }
 

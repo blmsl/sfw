@@ -24,16 +24,16 @@ export class MemberEditOtherOpinionsComponent implements OnInit {
   @Output() add: EventEmitter<boolean> = new EventEmitter<boolean>(false);
   @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
 
-  @Output() toggleMemberLookup: EventEmitter<{ id: number, type: string }> = new EventEmitter<{ id: number, type: string }>(false);
+  @Output() setOpinionValidators: EventEmitter<{ i: number, type: string }> = new EventEmitter<{ i: number, type: string }>(false);
 
   constructor() {
   }
 
   ngOnInit() {
-    this.subscribeToMemberLookupChanges();
+    // this.subscribeToMemberLookupChanges();
   }
 
-  subscribeToMemberLookupChanges() {
+  /* subscribeToMemberLookupChanges() {
 
     const formControl = (<any>this.form).controls['opinions'];
 
@@ -72,5 +72,6 @@ export class MemberEditOtherOpinionsComponent implements OnInit {
 
     });
   }
+  */
 
 }

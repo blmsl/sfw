@@ -1,14 +1,14 @@
-import { Injectable }      from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Observable,
   of
-}                          from 'rxjs';
-import { IArticle }        from '../../interfaces/article.interface';
+} from 'rxjs';
+import { IArticle } from '../../interfaces/article.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                          from 'angularfire2/firestore';
-import { AuthService }     from '../auth/auth.service';
+} from 'angularfire2/firestore';
+import { AuthService } from '../auth/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
@@ -23,16 +23,16 @@ export class ArticleService {
     value: number,
     title: string
   }[] = [
-    { value: 0, title: 'all' },
-    { value: 1, title: 'published' },
-    { value: 2, title: 'scheduled' },
-    { value: 3, title: 'draft' },
-    { value: 4, title: 'featured' }
-  ];
+      { value: 0, title: 'all' },
+      { value: 1, title: 'published' },
+      { value: 2, title: 'scheduled' },
+      { value: 3, title: 'draft' },
+      { value: 4, title: 'featured' }
+    ];
 
   constructor(private afs: AngularFirestore,
-              private afAuth: AngularFireAuth,
-              private authService: AuthService) {
+    private afAuth: AngularFireAuth,
+    private authService: AuthService) {
     this.collectionRef = this.afs.collection<IArticle>(this.path);
     this.articles$ = this.collectionRef.valueChanges();
   }

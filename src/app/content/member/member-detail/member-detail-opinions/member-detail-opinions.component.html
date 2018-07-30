@@ -13,12 +13,22 @@
     <mat-list dense *ngIf="members; else loadingTemplate">
       <mat-list-item *ngFor="let opinion of member.opinions">
 
-        <h3 *ngIf="opinion.type === 'select'">
-          {{(members | filterBy: ["id"] : opinion.assignedMember).firstName}}
-          {{(members | filterBy: ["id"] : opinion.assignedMember).lastName}}
+        <h3 matLine *ngIf="opinion.type === 'list'">
+          <a [routerLink]="['/members/detail', opinion.assignedMember]">
+            {{(members | filterBy: ["id"] : opinion.assignedMember)[0].mainData.firstName}}
+            {{(members | filterBy: ["id"] : opinion.assignedMember)[0].mainData.lastName}}
+          </a>
+          <span fxFlex=""></span>
+          <span>{{'general.members.detail.opinionDate' | translate}} Datum</span>
         </h3>
 
-        <p [innerHTML]="opinion.comment"></p>
+        <h3 matLine *ngIf="opinion.type === 'insert'">
+          {{opinion.name.firstName}} {{opinion.name.lastName}}´s
+          <span fxFlex=""></span>
+          <span>{{'general.members.detail.opinionDate' | translate}} Datum</span>
+        </h3>
+
+        <p matLine [innerHTML]="opinion.comment"></p>
       </mat-list-item>
     </mat-list>
 

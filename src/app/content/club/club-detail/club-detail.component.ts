@@ -32,14 +32,14 @@ export class ClubDetailComponent {
   public teams$: Observable<ITeam[]>;
 
   constructor(public route: ActivatedRoute,
-              private articleService: ArticleService,
-              private categoryService: CategoryService,
-              private clubService: ClubService,
-              private memberService: MemberService,
-              private seasonService: SeasonService,
-              private locationService: LocationService,
-              private teamService: TeamService,
-              private router: Router) {
+    private articleService: ArticleService,
+    private categoryService: CategoryService,
+    private clubService: ClubService,
+    private memberService: MemberService,
+    private seasonService: SeasonService,
+    private locationService: LocationService,
+    private teamService: TeamService,
+    private router: Router) {
     this.teams$ = teamService.teams$;
     this.seasons$ = seasonService.seasons$;
     this.locations$ = locationService.locations$;

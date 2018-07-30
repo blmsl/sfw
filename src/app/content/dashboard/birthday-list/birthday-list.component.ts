@@ -19,8 +19,8 @@ export class BirthdayListComponent implements OnInit, AfterViewChecked {
   public assignedObjects: string[] = ['members', 'profile'];
 
   constructor(private cdRef: ChangeDetectorRef,
-              private mediaItemService: MediaItemService,
-              private memberService: MemberService) {
+    private mediaItemService: MediaItemService,
+    private memberService: MemberService) {
   }
 
   ngOnInit() {

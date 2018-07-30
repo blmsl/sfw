@@ -8,9 +8,9 @@ describe('ClubDetailTimelineComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClubDetailTimelineComponent ]
+      declarations: [ClubDetailTimelineComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

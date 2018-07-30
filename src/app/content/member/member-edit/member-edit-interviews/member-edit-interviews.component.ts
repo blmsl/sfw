@@ -15,7 +15,7 @@ export class MemberEditInterviewsComponent implements OnInit {
   @Input() form: FormGroup;
 
   @Output() add: EventEmitter<boolean> = new EventEmitter<boolean>(false);
-  @Output() delete: EventEmitter<IInterview> = new EventEmitter<IInterview>(false);
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
 
   public articles$: Observable<IArticle[]>;
   public showForm: boolean = false;

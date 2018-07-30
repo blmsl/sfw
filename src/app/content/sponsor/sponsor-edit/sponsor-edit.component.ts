@@ -51,12 +51,12 @@ export class SponsorEditComponent implements OnInit {
   };
 
   constructor(private route: ActivatedRoute,
-              private alertService: AlertService,
-              private fb: FormBuilder,
-              private router: Router,
-              private mediaItemService: MediaItemService,
-              private sponsorService: SponsorService,
-              public categoryService: CategoryService) {
+    private alertService: AlertService,
+    private fb: FormBuilder,
+    private router: Router,
+    private mediaItemService: MediaItemService,
+    private sponsorService: SponsorService,
+    public categoryService: CategoryService) {
     this.categories$ = categoryService.getCategoriesByCategoryType('sponsor.types');
   }
 
@@ -114,7 +114,7 @@ export class SponsorEditComponent implements OnInit {
     this.router.navigate(['/sponsors']).then();
   }
 
-  uploadCompleted(mediaItemId: string){
+  uploadCompleted(mediaItemId: string) {
     this.uploaderOptions.itemId = this.sponsor.id = mediaItemId;
   }
 
