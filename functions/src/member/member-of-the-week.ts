@@ -16,8 +16,7 @@ const now = moment();
 const docId: string = now.week() + '-' + now.format('YY');
 
 export const memberOfTheWeekCron = functions.pubsub.topic('weekly-tick').onPublish(() => {
-    return admin.firestore()
-      .collection('members')
+  return admin.firestore().collection('members')
       .get()
       .then((values) => {
         const memberList: any = [];
@@ -43,7 +42,7 @@ export const memberOfTheWeekCron = functions.pubsub.topic('weekly-tick').onPubli
           });
 
           const honoraryList = memberList.filter((member: any) => {
-            return member.clubData && member.clubData.status && member.clubData.status === 2;
+            return member.clubData && member.clubData.status && member.clubData.status === '2';
           });
 
           data[docId] = [{
@@ -91,10 +90,10 @@ export const memberOfTheWeekCron = functions.pubsub.topic('weekly-tick').onPubli
           substitutionWrappers: ['{{', '}}'],
           substitutions: {
             adminName: 'Thomas',
-            clubMember: 'Verein: ' + data.club.assignedMemberId,
-            ahMember: 'AH: ' + data.ah.assignedMemberId,
-            player: 'Spieler: ' + data.player.assignedMemberId,
-            honorary: 'Ehrenmitglied: ' + data.honorary.assignedMemberId,
+            clubMember: 'Verein: ' + data[docId].club.assignedMemberId,
+            ahMember: 'AH: ' + data[docId].ah.assignedMemberId,
+            player: 'Spieler: ' + data[docId].player.assignedMemberId,
+            honorary: 'Ehrenmitglied: ' + data[docId].honorary.assignedMemberId,
             weekString: now.week(),
             dateString: now.format('LL') + ' bis ' + now.add(6, 'days').format('LL')
           }

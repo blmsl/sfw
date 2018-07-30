@@ -34,11 +34,15 @@ foreach ($project->getSeasons($currentSeason) as $season) {
 
     echo $project->generateSeasonHeading($season);
 
+    // Batch to create and delete matches in the calendar
+    $batch = $project->db->batch();
+
     foreach ($project->getClubs($currentClub) as $club) {
         $request = $project->getMatchPlan($club, $seasonStart, $seasonEnd);
-        $output = $project->scrap_matchPlan($request, $club, $season);
+        $output = $project->scrap_matchPlan($request, $club, $season, $batch);
         echo $project->generateMatchPlanTable($output);
     }
+    $batch->commit();
 }
 
 echo "<p>Import erfolgreich</p>";

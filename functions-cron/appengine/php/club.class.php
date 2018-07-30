@@ -123,7 +123,7 @@ trait sfwClub
 
     public function saveClub($data)
     {
-        return $this->saveFireStoreObject($this->clubCollection, $data);
+        return $this->saveFireStoreObject($this->clubCollection, $data, null);
     }
 
 }

@@ -25,7 +25,7 @@ trait sfwCategory
       $this->categories[$title . '-' . $assignedCategoryType] = $this->saveFireStoreObject($this->categoryCollection, array(
         'title' => $title,
         'assignedCategoryType' => $assignedCategoryType
-      ));
+      ), null);
     }
     return $this->categories[$title . '-' . $assignedCategoryType];
   }

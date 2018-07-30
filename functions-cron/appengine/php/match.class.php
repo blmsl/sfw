@@ -10,7 +10,6 @@ trait sfwMatch
 
     /**
      * @param null $seasonStart
-     * @param null $seasonEnd
      * @return array
      */
     public function getMatches($seasonStart = null)
@@ -39,7 +38,7 @@ trait sfwMatch
     }
 
 
-    public function saveMatch($matchData)
+    public function saveMatch($matchData, $batch)
     {
         /**
          * @var $matchData array
@@ -52,7 +51,7 @@ trait sfwMatch
         if (!key_exists($title, $this->getMatches())) {
             $matchData["matchStartDate"] = $startDate;
             $matchData["matchEndDate"] = $endDate;
-            $this->matches[$title] = $this->saveFireStoreObject($this->matchCollection, $matchData);
+            $this->matches[$title] = $this->saveFireStoreObject($this->matchCollection, $matchData, $batch);
         }
     }
 
@@ -68,7 +67,7 @@ trait sfwMatch
         return $this->curlRequest($url);
     }
 
-    public function scrap_matchPlan($html, $club, $season)
+    public function scrap_matchPlan($html, $club, $season, $batch)
     {
         $savedMatchDate = NULL;
         $i = 0;
@@ -101,7 +100,7 @@ trait sfwMatch
 
                         // setze die Saison
                         $assignedCategory = trim($parts[1]);
-                        $mainCategoryName = $this->getMainTeamCategoryName(trim($parts[1]));
+                        $mainCategoryName = $this->getMainTeamCategoryName($assignedCategory);
 
                         $matchData["assignedCategories"] = array(
                             "assignedCategory" => $this->saveCategory(trim($parts[1]), $this->categoryTypes['team.types']["id"])["id"],
@@ -164,11 +163,14 @@ trait sfwMatch
                             }
                         }
 
-                        if (key_exists('assignedCategories', $matchData) && count($matchData['assignedCategories']) > 1
+                        if ($matchData["homeTeam"]["title"] !== 'spielfrei'
+                            && $matchData["guestTeam"]["title"] !== 'spielfrei'
+                            && key_exists('assignedLocation', $matchData)
+                            && key_exists('assignedCategories', $matchData) && count($matchData['assignedCategories']) > 1
                             && key_exists('homeTeam', $matchData)
                             && key_exists('guestTeam', $matchData)
                         ) {
-                            $matchData["isHomeTeam"] = $this->isTeamFromClub($matchData["homeTeam"], $club["title"], $mainCategoryName);
+                            $matchData["isHomeTeam"] = $this->isTeamFromClub($matchData["homeTeam"], $club["title"], $this->getMainTeamCategoryName($assignedCategory));
 
                             $teamData = null;
                             if ($matchData["isHomeTeam"]) {
@@ -211,7 +213,7 @@ trait sfwMatch
                         $matchData["isOfficialMatch"] = true;
                         $matchData["title"] = $assignedCategory . ': ' . $matchData["homeTeam"]["title"] . ' - ' . $matchData["guestTeam"]["title"];
                         $output[] = $matchData;
-                        $this->saveMatch($matchData);
+                        $this->saveMatch($matchData, $batch);
                         $matchData = [];
                     }
                 }
@@ -360,7 +362,11 @@ trait sfwMatch
         #    }
         #}
 
-        $returnString .= '<td><a target="_blank" href="' . $match["matchLink"] . '">Link</a></td>';
+        $returnString .= $match["matchLink"] ?
+            '<td><a target="_blank" href="' . $match["matchLink"] . '">Link</a></td>'
+            :
+            '<td>&nbsp;</td>';
+
         $returnString .= '</tr>';
         return $returnString;
     }

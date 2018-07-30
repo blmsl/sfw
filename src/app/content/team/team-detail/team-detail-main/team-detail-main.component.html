@@ -81,6 +81,21 @@
         </mat-checkbox>
       </div>
     </div>
+
+    <div style="margin-top: 25px"
+         fxLayout.gt-sm="row"
+         fxLayout="column">
+      <div>
+        {{'general.teams.edit.isMainTeam' | translate}}
+      </div>
+      <span fxFlex></span>
+      <div>
+        <mat-checkbox class="right"
+                      [disabled]="true"
+                      [checked]="team.isMainTeam">
+        </mat-checkbox>
+      </div>
+    </div>
   </mat-card-content>
 
 </mat-card>

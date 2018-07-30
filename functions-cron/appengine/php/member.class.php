@@ -333,9 +333,9 @@ trait sfwMember
         || !isset($memberList[$id]['doc']['contact']) && isset($data['contact'])
         || isset($memberList[$id]['doc']['contact']) && !isset($data['contact'])
 
-        || $memberList[$id]['doc']['contact']['phoneHome'] !== $data['ahData']['contact']['phoneHome']
-        || $memberList[$id]['doc']['contact']['phoneMobile'] !== $data['ahData']['contact']['phoneMobile']
-        || $memberList[$id]['doc']['contact']['email'] !== $data['ahData']['contact']['email']
+        || $memberList[$id]['doc']['contact']['phoneHome'] !== $data['contact']['phoneHome']
+        || $memberList[$id]['doc']['contact']['phoneMobile'] !== $data['contact']['phoneMobile']
+        || $memberList[$id]['doc']['contact']['email'] !== $data['contact']['email']
       ) {
         return array(
           'data' => $this->updateFireStoreDriveMember('members', $memberList[$id]["id"], $data, $batch),

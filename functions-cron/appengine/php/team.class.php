@@ -23,7 +23,7 @@ trait sfwTeam
   {
     $title = $team["title"] . "-" . $team["subTitle"] . "-" . $team["assignedSeason"];
     if (!key_exists($title, $this->getTeams())) {
-      $this->teams[$title] = $this->saveFireStoreObject($this->teamCollection, $team);
+      $this->teams[$title] = $this->saveFireStoreObject($this->teamCollection, $team, null);
     }
     return $this->teams[$title];
   }
@@ -47,7 +47,7 @@ trait sfwTeam
   {
     if ($team1 === $clubTitle
       || strpos($team1["title"], $clubTitle) !== false
-      || strpos($team1["title"], 'Bliesen') !== false && (strpos($mainCategoryName, 'Junioren') !== false) || $mainCategoryName === 'Junioren')
+      || (strpos($team1["title"], 'Bliesen') !== false && ($mainCategoryName === 'Junioren')))
       return true;
     else {
       return false;

@@ -48,6 +48,9 @@ handlers:
 - url: /php/team/standings.php
   script: /php/team/standings.php
 
+- url: /php/team/competitions.php
+  script: /php/team/competitions.php
+
 # Other
 - url: /_ah/.*
   script: /php/index.php
@@ -61,6 +64,6 @@ handlers:
   login: admin
 
 resources:
-  cpu: 1
-  memory_gb: 2
+  cpu: 2
+  memory_gb: 8
   disk_size_gb: 10

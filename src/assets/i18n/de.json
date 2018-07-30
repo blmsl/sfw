@@ -1208,6 +1208,7 @@
         },
         "editTeam": "Mannschaft editieren",
         "externalLink": "Externer Link",
+        "isMainTeam": "Mannschaft ist Hauptmannschaft",
         "isOfficialTeam": "Mannschaft im Spielbetrieb?",
         "logo": {
           "noLogo": "Es wurde noch kein Wappen hochgeladen",

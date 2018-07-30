@@ -39,7 +39,7 @@ trait sfwSeason
     private function saveSeason($data, $seasonList)
     {
         if (!key_exists($data["title"], $seasonList)) {
-            return $this->saveFireStoreObject($this->seasonCollection, $data);
+            return $this->saveFireStoreObject($this->seasonCollection, $data, null);
         } else {
             return $seasonList[$data["title"]];
         }
@@ -96,7 +96,7 @@ trait sfwSeason
          */
         $startDate = $this->getSeasonStartDate($season);
         $endDate = $this->getSeasonEndDate($season);
-        return "<h1>Spielplan&nbsp; <small>" . $startDate->format('d.m.Y') . " &ndash; " . $endDate->format('d.m.Y') . "</small></h1>";
+        return "<h4>Spielplan&nbsp; <small>" . $startDate->format('d.m.Y') . " &ndash; " . $endDate->format('d.m.Y') . "</small></h4>";
     }
 
     public function getSeasonStartDate($season)

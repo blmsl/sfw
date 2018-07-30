@@ -10,7 +10,7 @@ trait sfwCategoryType
 
   public function saveCategoryType($link)
   {
-    return $this->saveFireStoreObject($this->categoryTypeCollection, array("link" => $link));
+    return $this->saveFireStoreObject($this->categoryTypeCollection, array("link" => $link), null);
   }
 
   public function getCategoryTypes()

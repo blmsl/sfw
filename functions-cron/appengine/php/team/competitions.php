@@ -1,5 +1,4 @@
 <?php
-
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 ini_set('memory_limit', '-1');
@@ -14,14 +13,13 @@ require "../base.class.php";
 $projectId = 'sf-winterbach';
 $project = new sfwApp($projectId);
 
-$categoryTypes = $project->getCategoryTypes();
+echo $project->generateHeader();
 
-$project->getLocations();
+echo "<h1>Importiere Tabellenstände von fussball.de</h1>";
 
 echo $project->generateHeader();
 
 $currentSeasonDates = $project->getCurrentSeason(new DateTime());
-var_dump($currentSeasonDates);
 
 foreach ($project->getSeasons($currentSeasonDates) as $season) {
 

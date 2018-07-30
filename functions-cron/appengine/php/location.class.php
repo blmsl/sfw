@@ -37,7 +37,7 @@ trait sfwLocation
         "isImported" => true,
         "address" => $address,
         'assignedCategory' => $assignedCategory["id"]
-      ));
+      ), null);
     }
     return $this->locations[$title];
   }
