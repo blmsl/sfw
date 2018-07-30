@@ -1,22 +1,29 @@
-<div fxLayout="row"
-     >
-  <div fxFlex="100">
+<mat-card>
+  <mat-card-title>
+    {{'general.members.tabs.otherOpinions' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
 
-    <h2>{{'general.members.detail.opinions.title' | translate}}</h2>
+  <mat-card-content>
 
     <p *ngIf="!member.opinions || member.opinions.length === 0">
       {{'general.members.detail.opinions.noEntries' | translate}}
     </p>
 
-    <mat-list dense
-              *ngIf="members; else loadingTemplate">
+    <mat-list dense *ngIf="members; else loadingTemplate">
       <mat-list-item *ngFor="let opinion of member.opinions">
-        {{opinion | json}}
+
+        <h3 *ngIf="opinion.type === 'select'">
+          {{(members | filterBy: ["id"] : opinion.assignedMember).firstName}}
+          {{(members | filterBy: ["id"] : opinion.assignedMember).lastName}}
+        </h3>
+
+        <p [innerHTML]="opinion.comment"></p>
       </mat-list-item>
     </mat-list>
 
-  </div>
-</div>
+  </mat-card-content>
+</mat-card>
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

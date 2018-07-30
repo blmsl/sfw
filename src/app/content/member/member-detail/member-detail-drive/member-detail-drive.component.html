@@ -5,146 +5,171 @@
      *ngIf="member">
 
   <div fxFlex="33,3333">
-    <h3>{{'general.members.detail.drive.club' | translate}}</h3>
 
-    <div *ngIf="member.clubData; else noClubTemplate"
-         fxLayout="column"
-         layout-align="center">
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.clubData.status' | translate}}&nbsp;</span>
-        <span>{{('general.members.clubMemberStates.' +memberStateService.getMemberStateByValue(member.clubData.status) |
+    <mat-card>
+      <mat-card-title>{{'general.members.detail.drive.club' | translate}}
+      </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+
+      <mat-card-content>
+
+        <div *ngIf="member.clubData; else noClubTemplate"
+             fxLayout="column"
+             layout-align="center">
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.clubData.status' | translate}}&nbsp;</span>
+            <span>{{('general.members.clubMemberStates.' +memberStateService.getMemberStateByValue(member.clubData.status) |
           translate)}}
         </span>
-      </div>
+          </div>
 
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.clubData.joined' | translate}}&nbsp;</span>
-        <span>{{ member.clubData.joined ? (member.clubData.joined | date: 'dd.MM.yy') : '-' }}</span>
-      </div>
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.clubData.joined' | translate}}&nbsp;</span>
+            <span>{{ member.clubData.joined ? (member.clubData.joined | date: 'dd.MM.yy') : '-' }}</span>
+          </div>
 
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.clubData.left' | translate}}&nbsp;</span>
-        <span>{{ member.clubData.left ? (member.clubData.left | date: 'dd.MM.yy') : '-' }}</span>
-      </div>
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.clubData.left' | translate}}&nbsp;</span>
+            <span>{{ member.clubData.left ? (member.clubData.left | date: 'dd.MM.yy') : '-' }}</span>
+          </div>
 
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.clubData.payment' | translate}}&nbsp;</span>
-        <span>{{ member.clubData.payment ? member.clubData.payment + '&euro;' : '-' }}</span>
-      </div>
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.clubData.payment' | translate}}&nbsp;</span>
+            <span>{{ member.clubData.payment ? member.clubData.payment + '&euro;' : '-' }}</span>
+          </div>
 
-    </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <div fxFlex="33,3333">
-    <h3>{{'general.members.detail.drive.ah' | translate}}</h3>
 
-    <div *ngIf="member.ahData; else noAHTemplate"
-         fxLayout="column"
-         layout-align="center">
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.ahData.status' | translate}}&nbsp;</span>
-        <span>{{('general.members.ahMemberStates.' +memberStateService.getAHMemberStateByValue(member.ahData.status) |
+    <mat-card>
+      <mat-card-title>
+        {{'general.members.detail.drive.ah' | translate}}
+      </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+
+      <mat-card-content>
+
+        <div *ngIf="member.ahData; else noAHTemplate"
+             fxLayout="column"
+             layout-align="center">
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.ahData.status' | translate}}&nbsp;</span>
+            <span>{{('general.members.ahMemberStates.' +memberStateService.getAHMemberStateByValue(member.ahData.status) |
           translate)}}
         </span>
-      </div>
+          </div>
 
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.ahData.joined' | translate}}&nbsp;</span>
-        <span>{{ member.ahData.joined ? (member.ahData.joined | date: 'dd.MM.yy') : '-' }}</span>
-      </div>
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.ahData.joined' | translate}}&nbsp;</span>
+            <span>{{ member.ahData.joined ? (member.ahData.joined | date: 'dd.MM.yy') : '-' }}</span>
+          </div>
 
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.ahData.left' | translate}}&nbsp;</span>
-        <span>{{ member.ahData.left ? (member.ahData.left | date: 'dd.MM.yy') : '-' }}</span>
-      </div>
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.ahData.left' | translate}}&nbsp;</span>
+            <span>{{ member.ahData.left ? (member.ahData.left | date: 'dd.MM.yy') : '-' }}</span>
+          </div>
 
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.ahData.payment' | translate}}&nbsp;</span>
-        <span>{{ member.ahData.payment ? member.ahData.payment + '&euro;' : '.'}}</span>
-      </div>
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.ahData.payment' | translate}}&nbsp;</span>
+            <span>{{ member.ahData.payment ? member.ahData.payment + '&euro;' : '.'}}</span>
+          </div>
 
-    </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <div fxFlex="33,3333">
-    <h3>{{'general.members.detail.drive.dfb.title' | translate}}</h3>
 
-    <div *ngIf="member.dfbData; else noDFBTemplate"
-         fxLayout="column"
-         layout-align="center">
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.dfb.status' | translate}}&nbsp;</span>
-        <span>{{ member.dfbData.ageGroup }}
+    <mat-card>
+      <mat-card-title>
+        {{'general.members.detail.drive.dfb.title' | translate}}
+      </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+
+      <mat-card-content>
+
+        <div *ngIf="member.dfbData; else noDFBTemplate"
+             fxLayout="column"
+             layout-align="center">
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.dfb.status' | translate}}&nbsp;</span>
+            <span>{{ member.dfbData.ageGroup }}
             {{ member.dfbData.playerStatus ? '(' + member.dfbData.playerStatus +')' : '' }}<br/>
             {{ member.dfbData.allowedToPlay }}
           </span>
-      </div>
+          </div>
 
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.dfb.pass' | translate}}&nbsp;</span>
-        <span>
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.dfb.pass' | translate}}&nbsp;</span>
+            <span>
             {{ member.dfbData.passNumber }} <br/>
             {{ member.dfbData.passPrint ? (member.dfbData.passPrint | date: 'dd.MM.yy') : ''}}
           </span>
-      </div>
+          </div>
 
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.dfb.eligible' | translate}}&nbsp;</span>
-        <span>
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.dfb.eligible' | translate}}&nbsp;</span>
+            <span>
             {{ member.dfbData.eligibleForOfficialMatches ? ((member.dfbData.eligibleForOfficialMatches | date: 'dd.MM.yy') + ' ' + ('general.members.detail.drive.dfb.official' | translate)) : '' }}
             <br/>
             {{ member.dfbData.eligibleForFriendlyMatches ? ((member.dfbData.eligibleForFriendlyMatches | date: 'dd.MM.yy') + ' ' + ('general.members.detail.drive.dfb.friendly' | translate)) : '' }}
           </span>
-      </div>
+          </div>
 
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1"
-           class="py-1"
-           *ngIf="member.dfbData.guestPlayer && member.dfbData.guestPlayer.guestRight !== ''">
-        <span class="mat-text-muted">{{'general.members.detail.drive.dfb.guest' | translate}}&nbsp;</span>
-        <span>
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1"
+               class="py-1"
+               *ngIf="member.dfbData.guestPlayer && member.dfbData.guestPlayer.guestRight !== ''">
+            <span class="mat-text-muted">{{'general.members.detail.drive.dfb.guest' | translate}}&nbsp;</span>
+            <span>
             {{ member.dfbData.guestPlayer.guestRight }} <br/>
             {{ member.dfbData.guestPlayer.season }} <br/>
             {{ member.dfbData.guestPlayer.type }}
           </span>
-      </div>
+          </div>
 
-      <div fxLayout.gt-sm="row"
-           fxLayout="column"
-           class="py-1"
-           class="py-1">
-        <span class="mat-text-muted">{{'general.members.detail.drive.dfb.signOut' | translate}}&nbsp;</span>
-        <span>{{ member.dfbData.signOut }}</span>
-      </div>
+          <div fxLayout.gt-sm="row"
+               fxLayout="column"
+               class="py-1"
+               class="py-1">
+            <span class="mat-text-muted">{{'general.members.detail.drive.dfb.signOut' | translate}}&nbsp;</span>
+            <span>{{ member.dfbData.signOut }}</span>
+          </div>
 
-    </div>
-
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>
 

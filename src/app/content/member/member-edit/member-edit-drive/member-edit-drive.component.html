@@ -8,13 +8,14 @@
 
     <div fxLayout="column">
 
-      <h3>{{'general.members.detail.drive.club' | translate}}</h3>
+      <h3>{{'general.members.detail.drive.club' | translate}} {{status | json}}</h3>
 
       <mat-form-field>
         <mat-select placeholder="{{'general.members.detail.drive.clubData.status' | translate}}"
                     formControlName="status">
-          <mat-option *ngFor="let status of memberStateService.getMemberStates()"
-                      [value]="status">{{('general.members.clubMemberStates.' + status | translate)}}
+          <mat-option *ngFor="let memberStatus of memberStateService.getMemberStates()"
+                      [value]="memberStatus.value">
+            {{('general.members.clubMemberStates.' + memberStatus.title | translate)}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -68,12 +69,12 @@
 
       <h3>{{'general.members.detail.drive.ah' | translate}}</h3>
 
-
       <mat-form-field>
         <mat-select placeholder="{{'general.members.detail.drive.clubData.status' | translate}}"
                     formControlName="status">
-          <mat-option *ngFor="let status of memberStateService.getAHStates()"
-                      [value]="status">{{('general.members.ahMemberStates.' + status | translate)}}
+          <mat-option *ngFor="let ahStatus of memberStateService.getAHStates()"
+                      [value]="ahStatus.value">
+            {{('general.members.ahMemberStates.' + ahStatus.title | translate)}}
           </mat-option>
         </mat-select>
       </mat-form-field>

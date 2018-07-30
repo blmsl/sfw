@@ -719,8 +719,8 @@
           "firstName": "Vorname",
           "gender": "Geschlecht",
           "guestPlayerData": "Gastspieler",
-          "dfbImported": "DFB.net?",
-          "driveImported": "Google Drive?",
+          "dfbImport": "Aus dem Google Drive importiert?",
+          "driveImport": "Aus dem DFB.net importiert?",
           "lastName": "Nachname",
           "male": "Herr",
           "name": "Name",
@@ -779,7 +779,8 @@
           "text": "Die Profileinträge erfolgen wie früher in einem Album mit Frage und dazugehöriger Antwort (z.B. Lieblingsessen: Pizza)",
           "title": "Steckbrief",
           "value": "Eintrag / Antwort"
-        }
+        },
+        "saved": "Die Änderungen am Mitglied wurden gespeichert"
       },
       "fame": {
         "club": "Vereinsmitglied",

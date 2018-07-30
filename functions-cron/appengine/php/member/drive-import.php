@@ -54,7 +54,7 @@ foreach ($project->getClubs() as $club) {
                 $noBirthdayList[] = $member[1] . ' ' . $member[2];
             }
         }
-        
+
         $batch->commit();
         $batch2->commit();
 

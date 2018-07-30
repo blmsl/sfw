@@ -18,7 +18,8 @@ export class CalendarService {
               private memberService: MemberService) {
     const timeMin = moment().subtract('6', 'months').toISOString();
     const timeMax = moment().add('1', 'years').endOf('year').toISOString();
-    this.url = 'https://www.googleapis.com/calendar/v3/calendars/' + environment.googleCalendar.id + '/events?timeMin=' + timeMin + '&timeMax=' + timeMax; // + ' &key=' + environment;
+    // this.url = 'https://www.googleapis.com/calendar/v3/calendars/' + environment.googleCalendar.id +
+    // '/events?timeMin=' + timeMin + '&timeMax=' + timeMax; // + ' &key=' + environment;
   }
 
   getCalendarEvents(): any {

@@ -1,9 +1,10 @@
-<h3>{{'general.members.edit.profile.title' | translate}}</h3>
+<mat-card>
+  <mat-card-title>
+    {{'general.members.edit.profile.title' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
 
-<div fxLayout="row"
-     >
-
-  <div fxFlex="100">
+  <mat-card-content>
 
     <p *ngIf="!member.profile || member.profile.length === 0">
       {{'general.members.edit.profile.noEntries' | translate}}
@@ -20,5 +21,5 @@
       </mat-list-item>
 
     </mat-list>
-  </div>
-</div>
+  </mat-card-content>
+</mat-card>

@@ -139,7 +139,10 @@
           <div class="button-row">
             <detail-link [objectId]="row.id"></detail-link>
             <edit-link [objectId]="row.id"></edit-link>
-            <a mat-icon-button color="warn" (click)="removeMember(row)">
+            <a mat-icon-button
+               title="{{'general.delete' | translate}}"
+               color="warn"
+               (click)="removeMember(row)">
               <mat-icon>delete</mat-icon>
             </a>
           </div>

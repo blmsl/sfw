@@ -32,16 +32,8 @@ export class MemberService {
     return this.afs.collection(this.path).doc(member.id).delete();
   }
 
-  updateMember(memberId: string, member: IMember)/*: Promise<any>*/ {
-    console.log('update');
-    console.log(memberId);
-    console.log(member);
-    this.afs.collection(this.path).doc(memberId)
-      .update(member)
-      .then(
-        (data) => console.log(data),
-        (error) => console.log(error))
-      .catch((error) => console.log(error));
+  updateMember(memberId: string, member: IMember): Promise<void> {
+    return this.afs.collection(this.path).doc(memberId).update(member);
   }
 
   getMemberById(memberId: string): Observable<IMember | null> {

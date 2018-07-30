@@ -15,22 +15,22 @@
       <mat-tab label="{{'general.members.tabs.driveAndDFB' | translate}}">
         <member-detail-drive [member]="member"></member-detail-drive>
       </mat-tab>
-      <mat-tab label="{{'general.members.tabs.interview' | translate}}">
+      <mat-tab label="{{'general.members.tabs.interview' | translate}} / {{'general.members.tabs.otherOpinions' | translate}}">
         <div fxLayout="column"
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
-          <div fxFlex.gt-sm="50">
+          <div fxFlex.gt-sm="33,3333">
             <member-detail-interviews [member]="member"></member-detail-interviews>
           </div>
-          <div fxFlex.gt-sm="50">
+          <div fxFlex.gt-sm="33,3333">
             <member-detail-profile [member]="member"></member-detail-profile>
           </div>
+          <div fxFlex.gt-sm="33,3333">
+            <member-detail-opinions [member]="member"
+                                    [members]="members$ | async">
+            </member-detail-opinions>
+          </div>
         </div>
-      </mat-tab>
-      <mat-tab label="{{'general.members.tabs.otherOpinions' | translate}}">
-        <member-detail-opinions [member]="member"
-                                [members]="members$ | async">
-        </member-detail-opinions>
       </mat-tab>
       <mat-tab label="{{'general.members.tabs.media' | translate}}">
         <p>Mit dem Mitglied verknüpfte Fotos, Videos etc.</p>
