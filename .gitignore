@@ -41,7 +41,7 @@ package-lock.json
 /api-client-python
 
 functions/node_modules
-functions/built
+functions/build
 functions/firebase-debug.log
 
 functions-cron/appengine/vendor
@@ -49,7 +49,6 @@ functions-cron/appengine/composer.lock
 functions-cron/appengine/lib
 functions-cron/appengine/sf-winterbach-6c45b5d78ed6.json
 
-functions-cron/build
 functions-cron/node_modules
 functions-cron/package-lock.json
 venv
