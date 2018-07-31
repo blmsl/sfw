@@ -702,6 +702,7 @@
           "asPlayer": "Als Spieler",
           "inClubManagement": "Im Vorstand",
           "inTeamManagement": "In der Mannschaftsbetreuung",
+          "noClubManagementPositions": "Das Mitglied hat noch keine Vorstandspositionen bekleidet.",
           "others": "Sonstige",
           "othersComment": "(Kommentarfeld aus dem Drive)",
           "title": "Bekleidete Positionen im Verein"
@@ -760,6 +761,7 @@
         "interviews": {
           "addEntry": "Interview verknüpfen",
           "articleTitle": "Wähle bitte den Artikel aus der Liste",
+          "noArticles": "Es wurden noch keine Artikel erstellt.",
           "noEntries": "Es wurde noch keine Interviews mit dem Mitglied verlinkt.",
           "text": "Interviews sind längere Fragen und dazugehörige Antworten, die zu einem aktuellen Geschehnis Bezug nehmen. So zum Beispiel das Grußwort des Trainers zu Beginn der Saison",
           "title": "Interviews"

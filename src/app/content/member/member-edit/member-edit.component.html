@@ -20,32 +20,31 @@
                 </member-edit-drive>
             </mat-tab>
 
-            <mat-tab label="{{'general.members.tabs.interview' | translate}}">
+            <mat-tab label="{{'general.members.tabs.interview' | translate}} / {{'general.members.tabs.otherOpinions' | translate}}">
                 <div fxLayout="column"
                      fxLayout.gt-sm="row"
                      fxLayoutGap="10px">
-                    <div fxFlex.gt-sm="50">
+                    <div fxFlex.gt-sm="33,3333">
                         <member-edit-interviews (add)="addInterview()"
                                                 (delete)="removeInterview($event)"
                                                 [form]="form">
                         </member-edit-interviews>
                     </div>
-                    <div fxFlex.gt-sm="50">
+                    <div fxFlex.gt-sm="33,3333">
                         <member-edit-profile (add)="addProfileEntry()"
                                              (delete)="removeProfileEntry()"
                                              [form]="form">
                         </member-edit-profile>
                     </div>
+                    <div fxFlex.gt-sm="33,3333">
+                        <member-edit-other-opinions (add)="addOpinion()"
+                                                    (delete)="removeOpinion($event)"
+                                                    (setOpinionValidators)="setOpinionValidators($event)"
+                                                    [members]="members$ | async"
+                                                    [form]="form">
+                        </member-edit-other-opinions>
+                    </div>
                 </div>
-            </mat-tab>
-
-            <mat-tab label="{{'general.members.tabs.otherOpinions' | translate}}">
-                <member-edit-other-opinions (add)="addOpinion()"
-                                            (delete)="removeOpinion($event)"
-                                            (setOpinionValidators)="setOpinionValidators($event)"
-                                            [members]="members$ | async"
-                                            [form]="form">
-                </member-edit-other-opinions>
             </mat-tab>
 
             <mat-tab
@@ -54,12 +53,16 @@
                                        (deleteMemberFromTeam)="deleteMemberFromTeam($event)"
                                        (deleteMemberFromTeamManagement)="deleteMemberFromTeamManagement($event)"
                                        [member]="member"
+                                       [clubs]="clubs$ | async"
                                        [teams]="teams">
                 </member-edit-functions>
             </mat-tab>
 
             <mat-tab label="{{'general.members.tabs.media' | translate}}">
                 <p>Mit dem Mitglied verknüpfte Fotos, Videos etc.</p>
+            </mat-tab>
+            <mat-tab label="{{'general.members.tabs.statistics' | translate}}">
+                <member-match-statistics [member]="member"></member-match-statistics>
             </mat-tab>
 
         </mat-tab-group>

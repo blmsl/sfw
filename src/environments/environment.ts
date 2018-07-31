@@ -15,7 +15,7 @@ export const environment = {
     authDomain: "sf-winterbach.firebaseapp.com",
     databaseURL: "https://sf-winterbach.firebaseio.com",
     projectId: "sf-winterbach",
-    storageBucket: "",
+    storageBucket: "sf-winterbach.appspot.com",
     messagingSenderId: "85800088059"
   },
   routerTracing: false

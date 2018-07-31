@@ -1,0 +1,17 @@
+<div *ngIf="members && membersOfTheWeek; else loadingTemplate">
+
+  <div *ngFor="let memberOfTheWeek of membersOfTheWeek"
+       fxLayout="column"
+       fxLayout.gt-sm="row"
+       fxLayoutGap="10px">
+
+    <pre>{{memberOfTheWeek | json}}</pre>
+    <!--
+    <fame-member-entry *ngFor="let entry of memberOfTheWeek | keyvalue"></fame-member-entry>
+    -->
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

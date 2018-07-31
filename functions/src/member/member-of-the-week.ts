@@ -10,10 +10,9 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 
 const collectionString = 'member-of-the-week';
 
-const data: any = {};
-
 const now = moment();
 const docId: string = now.week() + '-' + now.format('YY');
+let data = {};
 
 export const memberOfTheWeekCron = functions.pubsub.topic('weekly-tick').onPublish(() => {
   return admin.firestore().collection('members')
@@ -45,7 +44,7 @@ export const memberOfTheWeekCron = functions.pubsub.topic('weekly-tick').onPubli
           return member.clubData && member.clubData.status && member.clubData.status === '2';
         });
 
-        data[docId] = [{
+        data = {
           ah: {
             id: docId,
             type: 'ah',
@@ -74,14 +73,12 @@ export const memberOfTheWeekCron = functions.pubsub.topic('weekly-tick').onPubli
             week: now.week(),
             assignedMemberId: playerList.length ? playerList[Math.floor(Math.random() * playerList.length)].id : ''
           }
-        }];
-        return data;
+        };
       }
     }).then(() => {
-      return admin.firestore().collection(collectionString)
-        .doc(docId)
-        .create(data);
+      return admin.firestore().collection(collectionString).doc(docId).create(data);
     }).then(() => {
+
       const msg = {
         to: ['thomas.handle@gmail.com'],
         from: 'mitglieder@sfwinterbach.com',
@@ -90,10 +87,10 @@ export const memberOfTheWeekCron = functions.pubsub.topic('weekly-tick').onPubli
         substitutionWrappers: ['{{', '}}'],
         substitutions: {
           adminName: 'Thomas',
-          clubMember: 'Verein: ' + data[docId].club.assignedMemberId,
-          ahMember: 'AH: ' + data[docId].ah.assignedMemberId,
-          player: 'Spieler: ' + data[docId].player.assignedMemberId,
-          honorary: 'Ehrenmitglied: ' + data[docId].honorary.assignedMemberId,
+          clubMember: 'Verein: ' + data['club'].assignedMemberId,
+          ahMember: 'AH: ' + data['ah'].assignedMemberId,
+          player: 'Spieler: ' + data['player'].assignedMemberId,
+          honorary: 'Ehrenmitglied: ' + data['honorary'].assignedMemberId,
           weekString: now.week(),
           dateString: now.format('LL') + ' bis ' + now.add(6, 'days').format('LL')
         }

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IInterview } from '../../../../shared/interfaces/member/interview.interface';
 import { ArticleService } from '../../../../shared/services/article/article.service';
 import { Observable } from 'rxjs';
 import { IArticle } from '../../../../shared/interfaces/article.interface';
