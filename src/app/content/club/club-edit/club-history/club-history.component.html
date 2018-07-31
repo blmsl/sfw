@@ -1,7 +1,11 @@
-<div fxLayout="column"
-     [formGroup]="form">
-    <h3>{{'general.clubs.edit.history' | translate}}</h3>
-    <quill-editor [style]="{height: '600px'}"
-                  formControlName="history">
-    </quill-editor>
-</div>
+<mat-card [formGroup]="form">
+    <mat-card-title>
+        {{'general.clubs.edit.history' | translate}}
+    </mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+    <mat-card-content>
+        <quill-editor [style]="{height: '600px'}"
+                      formControlName="history">
+        </quill-editor>
+    </mat-card-content>
+</mat-card>

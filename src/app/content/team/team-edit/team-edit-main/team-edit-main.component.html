@@ -4,104 +4,115 @@
      [formGroup]="form"
      *ngIf="clubs && seasons && categories && categoryTypes; else loadingTemplate">
 
-  <div fxFlex="75">
+    <mat-card fxFlex="75">
+        <mat-card-title>
+            {{'general.members.edit.assignedAsPlayer' | translate}}
+        </mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+        <mat-card-content>
+            <div fxLayout="column"
+                 fxLayout.gt-sm="row">
+                <mat-form-field fxFlex.gt-sm="49"
+                                fxFlex="100">
+                    <input matInput maxlength="{{titleMaxLength}}"
+                           placeholder="{{'general.teams.list.colTitles.name' | translate}}"
+                           formControlName="title">
+                    <mat-hint align="end">{{form.get('title').value.length || 0}}/{{titleMaxLength}}</mat-hint>
+                </mat-form-field>
 
-    <div fxLayout="column"
-         fxLayout.gt-sm="row">
-      <mat-form-field fxFlex.gt-sm="49"
-                      fxFlex="100">
-        <input matInput maxlength="{{titleMaxLength}}"
-               placeholder="{{'general.teams.list.colTitles.name' | translate}}"
-               formControlName="title">
-        <mat-hint align="end">{{form.get('title').value.length || 0}}/{{titleMaxLength}}</mat-hint>
-      </mat-form-field>
+                <mat-form-field fxFlexOffset.gt-sm="2"
+                                fxFlex.gt-sm="49"
+                                fxFlex="100">
+                    <input matInput maxlength="{{shortTitleMaxLength}}"
+                           placeholder="{{'general.teams.edit.subTitle' | translate}}"
+                           formControlName="subTitle">
+                    <mat-hint align="end">{{form.get('subTitle').value.length || 0}}/{{shortTitleMaxLength}}</mat-hint>
+                </mat-form-field>
+            </div>
 
-      <mat-form-field fxFlexOffset.gt-sm="2"
-                      fxFlex.gt-sm="49"
-                      fxFlex="100">
-        <input matInput maxlength="{{shortTitleMaxLength}}"
-               placeholder="{{'general.teams.edit.subTitle' | translate}}"
-               formControlName="subTitle">
-        <mat-hint align="end">{{form.get('subTitle').value.length || 0}}/{{shortTitleMaxLength}}</mat-hint>
-      </mat-form-field>
-    </div>
+            <div fxLayout.gt-sm="row">
+                <mat-form-field fxFlex="100">
+                    <mat-select placeholder="{{'general.teams.edit.assignedCategories' | translate}}"
+                                formControlName="assignedTeamCategories"
+                                multiple>
+                        <mat-option *ngFor="let category of categories | orderBy: ['title']"
+                                    [value]="category.id">
+                            {{category.title}}
 
-    <div fxLayout.gt-sm="row">
-      <mat-form-field fxFlex="100">
-        <mat-select placeholder="{{'general.teams.edit.assignedCategories' | translate}}"
-                    formControlName="assignedTeamCategories"
-                    multiple>
-          <mat-option *ngFor="let category of categories | orderBy: ['title']"
-                      [value]="category.id">
-            {{category.title}}
-
-            <span *ngFor="let categoryType of categoryTypes | filterBy: ['id'] : category.assignedCategoryType">
+                            <span *ngFor="let categoryType of categoryTypes | filterBy: ['id'] : category.assignedCategoryType">
                 ({{ 'general.menu.' + categoryType.link + '.main' | translate}})
               </span>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="column"
+                 fxLayout.gt-sm="row">
+                <mat-form-field fxFlex.gt-sm="49"
+                                fxFlex="100">
+                    <mat-select placeholder="{{'general.teams.edit.assignedClub' | translate}}"
+                                formControlName="assignedClub">
+                        <mat-option *ngFor="let club of clubs | orderBy: ['title']"
+                                    [value]="club.id">
+                            {{club.title}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field fxFlexOffset.gt-sm="2"
+                                fxFlex.gt-sm="49"
+                                fxFlex="100">
+                    <mat-select placeholder="{{'general.teams.edit.assignedSeason' | translate}}"
+                                formControlName="assignedSeason">
+                        <mat-option *ngFor="let season of seasons | orderBy: ['title']"
+                                    [value]="season.id">
+                            {{season.title}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout.gt-sm="row">
+                <mat-form-field fxFlex="100">
+                    <input matInput
+                           placeholder="{{'general.teams.edit.externalLink' | translate}}"
+                           formControlName="externalLink">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="column"
+                 fxLayout.gt-sm="row">
+                <mat-checkbox formControlName="isOfficialTeam"
+                              fxFlex="50">
+                    {{'general.teams.edit.isOfficialTeam' | translate}}
+                </mat-checkbox>
+
+
+                <mat-checkbox formControlName="isMainTeam" fxFlex="50">
+                    {{'general.teams.edit.isMainTeam' | translate}}
+                </mat-checkbox>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <div fxFlex="25">
+        <media-uploader [uploaderConfig]="uploaderConfig"
+                        [uploaderOptions]="uploaderOptions">
+        </media-uploader>
+
+        <mat-card>
+            <mat-card-title>
+                {{'general.tables.colTitles.creation' | translate }}
+            </mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+            <mat-card-content>
+                <creation-form [form]="form"></creation-form>
+            </mat-card-content>
+        </mat-card>
     </div>
-
-    <div fxLayout="column"
-         fxLayout.gt-sm="row">
-      <mat-form-field fxFlex.gt-sm="49"
-                      fxFlex="100">
-        <mat-select placeholder="{{'general.teams.edit.assignedClub' | translate}}"
-                    formControlName="assignedClub">
-          <mat-option *ngFor="let club of clubs | orderBy: ['title']"
-                      [value]="club.id">
-            {{club.title}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field fxFlexOffset.gt-sm="2"
-                      fxFlex.gt-sm="49"
-                      fxFlex="100">
-        <mat-select placeholder="{{'general.teams.edit.assignedSeason' | translate}}"
-                    formControlName="assignedSeason">
-          <mat-option *ngFor="let season of seasons | orderBy: ['title']"
-                      [value]="season.id">
-            {{season.title}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div fxLayout.gt-sm="row">
-      <mat-form-field fxFlex="100">
-        <input matInput
-               placeholder="{{'general.teams.edit.externalLink' | translate}}"
-               formControlName="externalLink">
-      </mat-form-field>
-    </div>
-
-    <div fxLayout.gt-sm="row">
-      <mat-checkbox formControlName="isOfficialTeam" fxFlex="95">
-        {{'general.teams.edit.isOfficialTeam' | translate}}
-      </mat-checkbox>
-    </div>
-
-    <div fxLayout.gt-sm="row">
-      <mat-checkbox formControlName="isMainTeam" fxFlex="95">
-        {{'general.teams.edit.isMainTeam' | translate}}
-      </mat-checkbox>
-    </div>
-
-  </div>
-
-  <div fxFlex="25">
-    <media-uploader [uploaderConfig]="uploaderConfig"
-                    [uploaderOptions]="uploaderOptions">
-    </media-uploader>
-  </div>
 </div>
 
-<h3>{{'general.tables.colTitles.creation' | translate }}</h3>
-<creation-form [form]="form"></creation-form>
-
-
 <ng-template #loadingTemplate>
-  <loading-indicator></loading-indicator>
+    <loading-indicator></loading-indicator>
 </ng-template>

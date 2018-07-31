@@ -48,7 +48,8 @@
           </div>
 
           <div fxFlex.gt-sm="50">
-            <club-management (add)="addClubManagementPosition()"
+            <club-management *ngIf="positions$ | async as positions; else loadingTemplate"
+                             (add)="addClubManagementPosition()"
                              (delete)="removeClubManagementPosition($event)"
                              (edit)="editClubManagementPosition($event)"
                              (save)="saveClubManagementPosition()"
@@ -57,7 +58,7 @@
                              [members]="members"
                              [showLinks]="true"
                              [club]="club"
-                             [positions]="positions$ | async"
+                             [positions]="positions"
                              [form]="form">
             </club-management>
           </div>

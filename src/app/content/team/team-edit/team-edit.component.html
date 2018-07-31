@@ -55,6 +55,34 @@
 
     </mat-tab-group>
   </mat-card-content>
+
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button mat-raised-button
+              type="button"
+              color="primary"
+              [routerLink]="['/teams']">
+        {{'general.menu.team.list' | translate}}
+      </button>
+      <button mat-raised-button
+              *ngIf="team.id"
+              type="button"
+              color="accent"
+              [routerLink]="['/teams/detail', team.id]">
+        {{'general.detail' | translate }}
+      </button>
+      <button mat-raised-button
+              type="button"
+              color="warn"
+              (click)="removeTeam(team)">
+        {{'general.delete' | translate }}
+      </button>
+    </div>
+  </mat-card-actions>
 </mat-card>
 
 <ng-template #loadingTemplate>

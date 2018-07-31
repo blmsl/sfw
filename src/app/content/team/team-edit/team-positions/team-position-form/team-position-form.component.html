@@ -1,56 +1,55 @@
-<div *ngIf="categories; else loadingTemplate"
-     [formGroup]="form">
-
-  <div fxLayout.gt-sm="row"
-       fxLayout="column"
-       fxLayoutGap="10px">
+<div [formGroup]="form"
+     fxLayout.gt-sm="row"
+     fxLayout="column"
+     fxLayoutGap="10px">
     <mat-form-field fxFlex="50">
-      <mat-select placeholder="{{'general.teams.edit.position.assignedMember' | translate}}"
-                  formControlName="assignedMember">
-        <mat-option
-          *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
-          [value]="member.id">
-          {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
-        </mat-option>
-      </mat-select>
+        <mat-select placeholder="{{'general.teams.edit.position.assignedMember' | translate}}"
+                    formControlName="assignedMember">
+            <mat-option
+                    *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
+                    [value]="member.id">
+                {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date:
+                'dd.MM.yy'}}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
 
     <mat-form-field fxFlex="50">
-      <mat-select placeholder="{{'general.teams.edit.position.type' | translate}}"
-                  formControlName="type">
-        <mat-option
-          *ngFor="let category of categories | orderBy: ['title']"
-          [value]="category.id">
-          {{category.title}}
-        </mat-option>
-      </mat-select>
+        <mat-select placeholder="{{'general.teams.edit.position.type' | translate}}"
+                    formControlName="type">
+            <mat-option
+                    *ngFor="let category of categories | orderBy: ['title']"
+                    [value]="category.id">
+                {{category.title}}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
-  </div>
+</div>
 
-  <div fxLayout.gt-sm="row"
-       fxLayout="column"
-       fxLayoutGap="10px">
+<div [formGroup]="form"
+     fxLayout.gt-sm="row"
+     fxLayout="column"
+     fxLayoutGap="10px">
     <mat-form-field fxFlex="50">
-      <input matInput
-             formControlName="position"
-             placeholder="{{'general.teams.edit.position.title' | translate}}">
+        <input matInput
+               formControlName="position"
+               placeholder="{{'general.teams.edit.position.title' | translate}}">
     </mat-form-field>
 
     <div>
-      <button
-        mat-raised-button
-        type="button"
-        color="warn"
-        (click)="removePosition.emit(i)">
-        {{ 'general.teams.edit.position.delete' | translate}}
-      </button>
+        <button
+                mat-raised-button
+                type="button"
+                color="warn"
+                (click)="removePosition.emit(i)">
+            {{ 'general.teams.edit.position.delete' | translate}}
+        </button>
     </div>
-  </div>
-
-  <hr style="margin: 25px 0; color: #cecece"/>
 </div>
+
+<hr style="margin: 25px 0; color: #cecece"/>
 
 
 <ng-template #loadingTemplate>
-  <loading-indicator></loading-indicator>
+    <loading-indicator></loading-indicator>
 </ng-template>

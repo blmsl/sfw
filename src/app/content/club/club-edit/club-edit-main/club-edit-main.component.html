@@ -4,117 +4,124 @@
      *ngIf="locations; else loadingTemplate"
      [formGroup]="form">
 
-  <div fxFlex.gt-sm="65">
+    <mat-card fxFlex.gt-sm="65">
+        <mat-card-title>
+            {{'general.tables.colTitles.creation' | translate }}
+        </mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+        <mat-card-content>
 
-    <div fxLayout="column"
-         fxLayout.gt-sm="row"
-         fxLayoutGap="10px">
+            <div fxLayout="column"
+                 fxLayout.gt-sm="row"
+                 fxLayoutGap="10px">
 
-      <mat-form-field fxFlex.gt-sm="35">
-        <input matInput
-               placeholder="{{'general.clubs.edit.title' | translate}}"
-               formControlName="title"/>
-      </mat-form-field>
+                <mat-form-field fxFlex.gt-sm="35">
+                    <input matInput
+                           placeholder="{{'general.clubs.edit.title' | translate}}"
+                           formControlName="title"/>
+                </mat-form-field>
 
 
-      <mat-form-field fxFlex.gt-sm="65">
-        <mat-select placeholder="{{'general.clubs.edit.location' | translate}}"
-                    formControlName="assignedLocation">
-          <mat-option *ngFor="let location of locations | orderBy: ['title']"
-                      [value]="location.id">{{location.title}}
-          </mat-option>
-        </mat-select>
-        <mat-hint align="end" *ngIf="!form.controls['assignedLocation']">
-          {{'general.clubs.edit.chooseLocation' | translate}}
-        </mat-hint>
-      </mat-form-field>
+                <mat-form-field fxFlex.gt-sm="65">
+                    <mat-select placeholder="{{'general.clubs.edit.location' | translate}}"
+                                formControlName="assignedLocation">
+                        <mat-option *ngFor="let location of locations | orderBy: ['title']"
+                                    [value]="location.id">{{location.title}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint align="end" *ngIf="!form.controls['assignedLocation']">
+                        {{'general.clubs.edit.chooseLocation' | translate}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="column"
+                 fxLayout.gt-sm="row"
+                 fxLayoutGap="10px"
+                 formGroupName="info">
+
+                <mat-form-field fxFlex.gt-sm="33">
+                    <input matInput
+                           placeholder="{{'general.clubs.edit.foundedIn' | translate}}"
+                           formControlName="founding"/>
+                </mat-form-field>
+
+
+                <mat-form-field fxFlex.gt-sm="33">
+                    <input matInput
+                           placeholder="{{'general.clubs.edit.clubColours' | translate}}"
+                           formControlName="clubColours"/>
+                </mat-form-field>
+
+                <mat-form-field fxFlex.gt-sm="33">
+                    <input matInput
+                           placeholder="{{'general.clubs.edit.homepage' | translate}}"
+                           formControlName="website"/>
+                    <mat-hint align="end"><!-- *ngIf="isUrl(form.get('info.website').value)" -->
+                        <a target="_blank" [href]="'http://' + form.get('info.website').value">
+                            {{'general.clubs.edit.visitHomepage' | translate}}
+                        </a>
+                    </mat-hint>
+                </mat-form-field>
+
+                <mat-form-field fxFlex.gt-sm="33">
+                    <mat-select placeholder="{{'general.clubs.edit.contact' | translate}}"
+                                formControlName="assignedContact">
+                        <mat-option
+                                *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
+                                [value]="member.id">
+                            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday |
+                            date: 'dd.MM.yy'}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint align="end">{{'general.clubs.edit.contact' | translate}}</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="column"
+                 fxLayout.gt-sm="row"
+                 fxLayoutGap="10px"
+                 formGroupName="fussballde">
+                <mat-form-field fxFlex.gt-sm="33">
+                    <input matInput
+                           placeholder="{{'general.clubs.edit.fussballDeId' | translate}}"
+                           formControlName="clubId"/>
+                </mat-form-field>
+
+                <mat-form-field fxFlex.gt-sm="65">
+                    <input matInput
+                           placeholder="{{'general.clubs.edit.fussballDeUrl' | translate}}"
+                           formControlName="clubUrl"/>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="column"
+                 fxLayout.gt-sm="row"
+                 fxLayoutGap="10px"
+                 style="margin-top: 25px">
+                <div fxFlex="100">
+                    <label>{{'general.clubs.edit.description' | translate}}</label>
+                    <quill-editor [style]="{height: '150px'}"
+                                  formControlName="description">
+                    </quill-editor>
+                </div>
+            </div>
+            <div fxLayout="column"
+                 style="margin-top: 60px;">
+                <creation-form [form]="form"></creation-form>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+
+    <div fxFlex.gt-sm="35">
+        <media-uploader [uploaderConfig]="uploaderConfig"
+                        [uploaderOptions]="uploaderOptions">
+        </media-uploader>
     </div>
-
-    <div fxLayout="column"
-         fxLayout.gt-sm="row"
-         fxLayoutGap="10px"
-         formGroupName="info">
-
-      <mat-form-field fxFlex.gt-sm="33">
-        <input matInput
-               placeholder="{{'general.clubs.edit.foundedIn' | translate}}"
-               formControlName="founding"/>
-      </mat-form-field>
-
-
-      <mat-form-field fxFlex.gt-sm="33">
-        <input matInput
-               placeholder="{{'general.clubs.edit.clubColours' | translate}}"
-               formControlName="clubColours"/>
-      </mat-form-field>
-
-      <mat-form-field fxFlex.gt-sm="33">
-        <input matInput
-               placeholder="{{'general.clubs.edit.homepage' | translate}}"
-               formControlName="website"/>
-        <mat-hint align="end"><!-- *ngIf="isUrl(form.get('info.website').value)" -->
-          <a target="_blank" [href]="'http://' + form.get('info.website').value">
-            {{'general.clubs.edit.visitHomepage' | translate}}
-          </a>
-        </mat-hint>
-      </mat-form-field>
-
-      <mat-form-field fxFlex.gt-sm="33">
-        <mat-select placeholder="{{'general.clubs.edit.contact' | translate}}"
-                    formControlName="assignedContact">
-          <mat-option
-            *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
-            [value]="member.id">
-            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
-          </mat-option>
-        </mat-select>
-        <mat-hint align="end">{{'general.clubs.edit.contact' | translate}}</mat-hint>
-      </mat-form-field>
-    </div>
-
-    <div fxLayout="column"
-         fxLayout.gt-sm="row"
-         fxLayoutGap="10px"
-         formGroupName="fussballde">
-      <mat-form-field fxFlex.gt-sm="33">
-        <input matInput
-               placeholder="{{'general.clubs.edit.fussballDeId' | translate}}"
-               formControlName="clubId"/>
-      </mat-form-field>
-
-      <mat-form-field fxFlex.gt-sm="65">
-        <input matInput
-               placeholder="{{'general.clubs.edit.fussballDeUrl' | translate}}"
-               formControlName="clubUrl"/>
-      </mat-form-field>
-    </div>
-
-    <div fxLayout="column"
-         fxLayout.gt-sm="row"
-         fxLayoutGap="10px"
-         style="margin-top: 25px">
-      <div fxFlex="100">
-        <label>{{'general.clubs.edit.description' | translate}}</label>
-        <quill-editor [style]="{height: '150px'}"
-                      formControlName="description">
-        </quill-editor>
-      </div>
-    </div>
-    <div fxLayout="column"
-         style="margin-top: 60px;">
-      <creation-form [form]="form"></creation-form>
-    </div>
-
-  </div>
-
-  <div fxFlex.gt-sm="35">
-    <media-uploader [uploaderConfig]="uploaderConfig"
-                    [uploaderOptions]="uploaderOptions">
-    </media-uploader>
-  </div>
 </div>
 
 <ng-template #loadingTemplate>
-  <loading-indicator></loading-indicator>
+    <loading-indicator></loading-indicator>
 </ng-template>
 

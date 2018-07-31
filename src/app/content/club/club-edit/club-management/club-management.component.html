@@ -4,15 +4,18 @@
     : 'general.clubs.edit.management.list.title' | translate
     }}
   </mat-card-title>
-  <mat-card-content *ngIf="positions && members; else loadingTemplate"
-                    [formGroup]="form">
+  <mat-card-content [formGroup]="form">
 
-    <div *ngIf="selectedClubManagementPosition === -1">
+    <p *ngIf="positions.length === 0">
+      {{'general.clubs.edit.management.positions.noManagementPositions' | translate}}
+    </p>
+
+    <div *ngIf="selectedClubManagementPosition === -1 && positions.length > 0">
       <button mat-raised-button
               style="margin-bottom: 25px"
               type="button"
               color="primary"
-              (click)="add.emit(true)">
+              (click)="add.emit()">
         {{'general.clubs.edit.management.positions.addMember' | translate}}
       </button>
       <club-management-list [form]="form"
@@ -21,7 +24,7 @@
                             [showLinks]="showLinks"
                             [club]="club"
                             [selectedClubManagementPosition]="selectedClubManagementPosition"
-                            (add)="add.emit($event)"
+                            (add)="add.emit()"
                             (delete)="delete.emit($event)"
                             (edit)="edit.emit($event)">
       </club-management-list>

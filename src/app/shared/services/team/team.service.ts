@@ -28,7 +28,6 @@ export class TeamService {
   }
 
   updateTeam(teamId: string, team: ITeam): Promise<any> {
-    console.log(this.afs.collection(this.path).doc(teamId).update(team));
     return this.afs.collection(this.path).doc(teamId).update(team);
   }
 

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MemberEditTeamsComponent } from './member-edit-teams.component';
+import { MemberEditFunctionsComponent } from './member-edit-functions.component';
 
 describe('MemberEditTeamsComponent', () => {
-  let component: MemberEditTeamsComponent;
-  let fixture: ComponentFixture<MemberEditTeamsComponent>;
+  let component: MemberEditFunctionsComponent;
+  let fixture: ComponentFixture<MemberEditFunctionsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MemberEditTeamsComponent ]
+      declarations: [ MemberEditFunctionsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MemberEditTeamsComponent);
+    fixture = TestBed.createComponent(MemberEditFunctionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

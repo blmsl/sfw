@@ -7,17 +7,16 @@ import { ITeam } from '../interfaces/team/team.interface';
 })
 export class IsTeamMemberFilterPipe implements PipeTransform {
 
-  transform(teams: ITeam[], member: IMember): ITeam[] {
+  transform(teams: ITeam[], member: IMember, field: string): ITeam[] {
 
     if (!teams || !member) {
       return teams;
     }
 
     let result = teams.filter((team: ITeam) => {
-      return team.assignedPlayers && team.assignedPlayers.indexOf(member.id) > -1;
+      return team[field] && team[field].indexOf(member.id) > -1;
     });
 
-    console.log(result);
     return result;
   }
 

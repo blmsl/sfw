@@ -1,31 +1,38 @@
-<div fxLayout="column"
-     *ngIf="articles$ | async as articles; else loadingTemplate">
+<mat-card [formGroup]="form">
+    <mat-card-title>
+        {{'general.clubs.edit.timeLineTitle' | translate}}
+    </mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+    <mat-card-content>
 
-  <h3>{{'general.clubs.edit.timeLineTitle' | translate}}</h3>
+        <div fxLayout="column"
+             *ngIf="articles$ | async as articles; else loadingTemplate">
 
-  <div>
-    <button mat-raised-button
-            style="margin-bottom: 25px;"
-            type="button"
-            color="accent"
-            (click)="add.emit()">
-      {{'general.timeLine.addEvent' | translate}}
-    </button>
-  </div>
+            <div>
+                <button mat-raised-button
+                        style="margin-bottom: 25px;"
+                        type="button"
+                        color="accent"
+                        (click)="add.emit()">
+                    {{'general.timeLine.addEvent' | translate}}
+                </button>
+            </div>
 
-  <time-line (add)="add.emit()"
-             (cancel)="cancel.emit()"
-             (delete)="delete.emit($event)"
-             (edit)="edit.emit($event)"
-             (save)="save.emit()"
-             [showLinks]="true"
-             [selectedTimeLineEvent]="selectedTimeLineEvent"
-             [articles]="articles"
-             [form]="form.controls['timeLine']">
-  </time-line>
+            <time-line (add)="add.emit()"
+                       (cancel)="cancel.emit()"
+                       (delete)="delete.emit($event)"
+                       (edit)="edit.emit($event)"
+                       (save)="save.emit()"
+                       [showLinks]="true"
+                       [selectedTimeLineEvent]="selectedTimeLineEvent"
+                       [articles]="articles"
+                       [form]="form.controls['timeLine']">
+            </time-line>
 
-</div>
+        </div>
+    </mat-card-content>
+</mat-card>
 
 <ng-template #loadingTemplate>
-  <loading-indicator></loading-indicator>
+    <loading-indicator></loading-indicator>
 </ng-template>

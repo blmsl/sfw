@@ -351,6 +351,7 @@
             "description": "Tätigkeiten",
             "editToDos": "Aufgabentext editieren",
             "endDate": "Ende",
+            "noManagementPositions": "Es wurden noch keine Vorstandspositionen erstellt.",
             "noPersons": "Diese Position wurde noch von keinem Mitglied geführt.",
             "savePosition": "Amt speichern",
             "startDate": "Datum der Ernennung",
@@ -764,6 +765,7 @@
           "title": "Interviews"
         },
         "assignedAsPlayer": "Als Spieler in einer Mannschaft ...",
+        "notAssignedToAnyTeamManagements": "Das Mitglied hat noch keine Aufgaben in einer Mannschaft übernommen.",
         "notAssignedToAnyTeams": "Das Mitglied wurde noch nicht mit einer Mannschaft verknüpft.",
         "opinions": {
           "addEntry": "Neuer Kommentar",
@@ -784,6 +786,8 @@
           "title": "Steckbrief",
           "value": "Eintrag / Antwort"
         },
+        "removedMemberFromTeam": "Das Mitglied wurde als Spieler aus der Mannschaft gelöscht",
+        "removedMemberFromTeamManagement": "Das Mitglied wurde aus der Mannschaftsbetreuung entfernt.",
         "saved": "Die Änderungen am Mitglied wurden gespeichert"
       },
       "fame": {
@@ -1213,8 +1217,8 @@
         },
         "editTeam": "Mannschaft editieren",
         "externalLink": "Externer Link",
-        "isMainTeam": "Mannschaft ist Hauptmannschaft",
-        "isOfficialTeam": "Mannschaft im Spielbetrieb?",
+        "isMainTeam": "Hauptmannschaft?",
+        "isOfficialTeam": "Aktiver Spielbetrieb?",
         "logo": {
           "noLogo": "Es wurde noch kein Wappen hochgeladen",
           "title": "Wappen"
@@ -1245,7 +1249,10 @@
           "assignedMember": "Verknüpftes Mitglied",
           "delete": "Aufgabe löschen",
           "description": "Hier können die Aufgaben in der Mannschaft aufgelistet werden, z.B. wer ist Trainer, wer ist Spielführer.",
+          "managements": "Mannschaftsverwaltung",
+          "noCategoryTypesDefined": "Es wurde noch kein Kategory-Typ für Mannschaftsaufgaben gespeichert",
           "noPosition": "Es wurden noch keine Aufgaben festgelegt. Füge doch einfach einige hinzu.",
+          "noPositionsDefined": "Es wurden noch keine Positionen in der Mannschaftsbetreuung definiert.",
           "players": "Spieler der Mannschaft",
           "title": "Titel der Aufgabe",
           "type": "Aufgabentyp"
