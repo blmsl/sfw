@@ -13,38 +13,52 @@ import { CategoryTypeService } from '../../shared/services/category-type/categor
 import { MatchResolver } from './match.resolver';
 import { LinkModule } from '../../shared/components/links/link.module';
 import {
-  MatButtonModule,
+  MatButtonModule, MatCheckboxModule,
   MatChipsModule,
   MatExpansionModule,
-  MatFormFieldModule,
-  MatListModule,
+  MatFormFieldModule, MatInputModule,
+  MatListModule, MatSelectModule,
   MatTabsModule
 } from '@angular/material';
 import { MatchesComponent } from './matches/matches.component';
 import { MatchPreviewComponent } from './match-detail/match-preview/match-preview.component';
 import { LocationService } from '../../shared/services/location/location.service';
 import { ArticleService } from '../../shared/services/article/article.service';
+import { MatchEditMainComponent } from './match-edit/match-edit-main/match-edit-main.component';
+import { TeamService } from '../../shared/services/team/team.service';
+import { SeasonService } from '../../shared/services/season/season.service';
+import { MatchEditStartingElevenComponent } from './match-edit/match-edit-starting-eleven/match-edit-starting-eleven.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { ArticleCardComponent } from '../article/article-card/article-card.component';
 
 @NgModule({
   imports: [
     CommonModule,
     LinkModule,
     MatButtonModule,
+    MatCheckboxModule,
     MatChipsModule,
     MatExpansionModule,
     MatFormFieldModule,
+    MatInputModule,
     MatListModule,
+    MatSelectModule,
     MatTabsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     PerfectScrollbarModule,
     SharedModule,
     SharedMatchModule,
     matchRoutingModule
   ],
   declarations: [
+    ArticleCardComponent,
     MatchDetailComponent,
     MatchEditComponent,
     MatchesComponent,
-    MatchPreviewComponent
+    MatchPreviewComponent,
+    MatchEditMainComponent,
+    MatchEditStartingElevenComponent
   ],
   providers: [
     ArticleService,
@@ -52,7 +66,9 @@ import { ArticleService } from '../../shared/services/article/article.service';
     CategoryTypeService,
     LocationService,
     MatchResolver,
-    MatchService
+    MatchService,
+    SeasonService,
+    TeamService
   ]
 })
 export class MatchModule {

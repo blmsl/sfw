@@ -27,11 +27,6 @@ import { AlertService } from '../../../shared/services/alert/alert.service';
 
 export class LocationEditComponent implements OnInit {
 
-  /*@HostListener('window:beforeunload')
-   canDeactivate(): Observable<boolean> | boolean {
-   return JSON.stringify(this.location).toLowerCase() === JSON.stringify(this.savedLocation).toLowerCase();
-   }*/
-
   public savedLocation: ILocation;
   public location: ILocation;
   public form: FormGroup;

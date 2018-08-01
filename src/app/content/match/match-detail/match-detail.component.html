@@ -33,45 +33,20 @@
               <mat-tab [label]="'general.matches.detail.assignedArticle' | translate">
 
                 <div *ngIf="articles$ | async as articles; else loadingTemplate">
-                  <span style="color: red">ToDo</span>
+
                   <p *ngIf="(articles | filterBy: ['assignedMatch'] : match.id).length === 0">
                     {{'general.matches.detail.noAssignedArticles' | translate}}
                   </p>
 
-                  <mat-accordion fxLayout="column"
-                                 *ngIf="(articles | filterBy: ['assignedMatch'] : match.id).length > 0"
-                                 dense>
-                    <mat-expansion-panel *ngFor="let article of articles | filterBy: ['assignedMatch'] : match.id"
-                                         [expanded]="false"
-                                         [hideToggle]="true">
-
-                      <mat-expansion-panel-header>
-                        <mat-panel-title fxLayout.gt-sm="row"
-                                         fxLayout="column"
-                                         fxLayoutAlign="space-around center">
-                          {{article | json}}
-                          <!--<span *ngFor="let member of members |filterBy: ['id'] : honorary.assignedMember">
-                            {{member.mainData.firstName}} {{member.mainData.lastName}}
-                          </span>
-                          <span fxFlex></span>
-                          <span *ngFor="let article of articles | filterBy: ['id']: honorary.assignedArticle">
-                            {{article.title}}
-                            </span>
-                          <span fxFlex></span>
-                          <span>{{honorary.startDate.seconds *1000 | date: 'dd.MM.yy'}}</span>-->
-                        </mat-panel-title>
-                      </mat-expansion-panel-header>
-
-                      <ng-template matExpansionPanelContent>
-                        <!--<div *ngFor="let article of articles | filterBy: ['id']: honorary.assignedArticle">
-                          <h3>{{article.title}}</h3>
-                          <strong *ngIf="article.subTitle">{{article.subTitle}}</strong><br/>
-                          <p [innerHTML]="article.text"></p>
-                        </div>-->
-                      </ng-template>
-
-                    </mat-expansion-panel>
-                  </mat-accordion>
+                  <div fxLayout="column"
+                       fxLayout.gt-sm="row"
+                       fxLayoutGap="10px"
+                       *ngIf="(articles | filterBy: ['assignedMatch'] : match.id).length > 0">
+                    <div fxFlex="25"
+                         *ngFor="let article of articles | filterBy: ['assignedMatch'] : match.id">
+                      <article-card [article]="article"></article-card>
+                    </div>
+                  </div>
                 </div>
               </mat-tab>
             </mat-tab-group>

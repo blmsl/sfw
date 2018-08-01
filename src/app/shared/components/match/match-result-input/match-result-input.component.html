@@ -1,0 +1,15 @@
+<div [formGroup]="form">
+  <span formGroupName="result">
+    <input style="max-width: 60px"
+           formControlName="homeTeamGoals"
+           [ngClass]="changeCssClass()"
+           type="number"
+           matInput/>
+  :
+    <input style="max-width: 60px"
+           formControlName="guestTeamGoals"
+           [ngClass]="changeCssClass()"
+           type="number"
+           matInput/>
+  </span>
+</div>

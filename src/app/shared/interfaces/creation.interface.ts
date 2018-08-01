@@ -1,7 +1,6 @@
+import * as firebase from 'firebase';
+
 export interface ICreation {
-  at: {
-    seconds: number,
-    nanoseconds: number
-  };
+  at: firebase.firestore.Timestamp;
   by: string;
 }

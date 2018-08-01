@@ -5,7 +5,7 @@ import { MatchService } from '../../../shared/services/match/match.service';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { Observable } from 'rxjs/index';
 import * as moment from 'moment';
-import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { LocationService } from '../../../shared/services/location/location.service';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 
@@ -24,10 +24,11 @@ export class MatchesComponent implements OnInit {
   public inLastTwoWeeks = moment().subtract(2, 'weeks');
 
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
+  public config: PerfectScrollbarConfigInterface = {};
 
   constructor(private categoryService: CategoryService,
-    private locationService: LocationService,
-    private matchService: MatchService) {
+              private locationService: LocationService,
+              public matchService: MatchService) {
     this.matches$ = matchService.matches$;
     this.categories$ = categoryService.categories$;
     this.locations$ = locationService.locations$;

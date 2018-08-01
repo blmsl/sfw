@@ -73,30 +73,39 @@
 
               <mat-tab label="{{'general.dashboard.upComingMatches' | translate}}">
                 <div *ngIf="matches$ | async as matches; else loadingTemplate"
+                     style="max-height: 300px"
                      [perfectScrollbar]="config">
-                  <match-list [categories]="categories"
-                              [matches]="matches | orderBy: ['startDate'] | matchFilter : 'endDate' : '>=' | matchFilter: 'endDate' : '<=' : inTwoWeeks">
-                  </match-list>
+                      <match-list [categories]="categories"
+                                  [matches]="matches | orderBy: ['matchStartDate.seconds']
+                                        | matchFilter: 'matchStartDate' : '>='
+                                        | matchFilter: 'matchEndDate' : '<=' : inTwoWeeks">
+                      </match-list>
                 </div>
               </mat-tab>
 
               <mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
                 <div *ngIf="matches$ | async as matches; else loadingTemplate"
-                     style="max-height: 40vh;"
+                     style="max-height: 300px"
                      [perfectScrollbar]="config">
                   <match-list [categories]="categories"
                               [events]="matchService.getOtherEventList() | orderBy: ['title']"
-                              [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<=' | matchFilter: 'endDate' : '>=' : inLastTwoWeeks">
+                              [matches]="matches | orderBy: ['-matchEndDate.seconds']
+                                      | matchFilter: 'matchEndDate' : '<='
+                                      | matchFilter: 'matchEndDate' : '>=' : inLastTwoWeeks">
                   </match-list>
                 </div>
               </mat-tab>
 
               <mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
                 <div *ngIf="matches$ | async as matches; else loadingTemplate"
+                     style="max-height: 300px"
                      [perfectScrollbar]="config">
                   <match-list [categories]="categories"
                               [events]="matchService.getOtherEventList() | orderBy: ['title']"
-                              [matches]="matches | matchFilter : 'endDate' : '<=' | orderBy: ['-endDate'] | matchNoResultFilter | slice: 0:20">
+                              [showResultInputs]="true"
+                              [matches]="matches | orderBy: ['-matchEndDate.seconds']
+                                      | matchFilter: 'matchEndDate' : '<='
+                                      | matchNoResultFilter">
                   </match-list>
                 </div>
               </mat-tab>

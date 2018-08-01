@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-
+import * as firebase from 'firebase';
 
 import { IMatch } from '../../interfaces/match.interface';
 import { of } from 'rxjs/index';
+import Timestamp = firebase.firestore.Timestamp;
 
 @Injectable()
 export class MatchService {
@@ -59,28 +60,19 @@ export class MatchService {
     return of({
       assignedCategories: {
         assignedCategory: '',
-        assignedMainCategory: '',
-        assignedLocationCategory: ''
+        assignedMainCategory: ''
       },
       assignedLocation: '',
       assignedTeam: '',
       homeTeam: {
-        externalTeamLink: '',
-        logoURL: '',
         title: ''
       },
       guestTeam: {
-        externalTeamLink: '',
-        logoURL: '',
         title: ''
       },
-      isImported: true,
       isHomeTeam: true,
       isOfficialMatch: true,
-      matchStartDate: {
-        seconds: 0,
-        nanoseconds: 0
-      },
+      matchStartDate: Timestamp.now(),
       matchEndDate: null,
       matchLink: '',
       matchType: '',

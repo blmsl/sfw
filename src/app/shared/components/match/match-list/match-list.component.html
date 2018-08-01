@@ -4,7 +4,8 @@
     <p *ngIf="matches.length === 0">{{'general.matches.list.noMatches' | translate}}</p>
 
     <mat-list dense>
-      <mat-list-item *ngFor="let match of matches">
+      <mat-list-item *ngFor="let match of matches; let i = index"
+                     [ngClass]="cssErrors[i] ? cssErrors[i] : ''">
 
         <img style="border-radius: 0"
              mat-list-avatar
@@ -20,6 +21,14 @@
           <a [routerLink]="['/matches/detail', match.id]">
             {{match.homeTeam.title}} &ndash; {{match.guestTeam.title}}
           </a>
+
+          <span fxFlex></span>
+
+          <match-result-input *ngIf="showResultInputs"
+                              (setCssClass)="setCssClass($event, i)"
+                              [match]="match">
+          </match-result-input>
+
         </h3>
 
         <p matLine>

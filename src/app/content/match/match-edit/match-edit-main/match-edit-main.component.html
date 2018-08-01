@@ -1,0 +1,172 @@
+<mat-card *ngIf="categories && locations && seasons && teams">
+  <mat-card-title>
+    {{'general.matches.edit.main' | translate}}
+  </mat-card-title>
+
+  <mat-card-content [formGroup]="form">
+
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <mat-form-field fxFlex.gt-sm="100">
+        <input matInput
+               placeholder="{{'general.matches.edit.inputs.title' | translate}}"
+               formControlName="title"/>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <mat-form-field fxFlex.gt-sm="70">
+        <input matInput
+               placeholder="{{'general.matches.edit.inputs.matchLink' | translate}}"
+               formControlName="matchLink"/>
+      </mat-form-field>
+
+      <mat-form-field fxFlex.gt-sm="30">
+        <input matInput
+               placeholder="{{'general.matches.edit.inputs.matchType' | translate}}"
+               formControlName="matchType"/>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <mat-form-field fxFlex.gt-sm="50">
+        <mat-select placeholder="{{'general.matches.edit.inputs.location' | translate}}"
+                    formControlName="assignedLocation">
+          <mat-option *ngFor="let location of locations | orderBy: ['title']"
+                      [value]="location.id">
+            {{location.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex.gt-sm="50">
+        <mat-select placeholder="{{'general.matches.edit.inputs.team' | translate}}"
+                    formControlName="assignedTeam">
+
+          <mat-optgroup *ngFor="let season of seasons | orderBy: ['title']" [label]="season.title">
+            <mat-option *ngFor="let team of teams | filterBy: ['assignedSeason'] : season.id | orderBy: ['title']"
+                        [value]="team.id">
+              {{team.title}}
+            </mat-option>
+          </mat-optgroup>
+
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div style="margin-top: 30px;">
+      <mat-checkbox fxFlex.gt-sm="33,3333"
+                    formControlName="isImported">
+        {{'general.matches.edit.inputs.isImported' | translate}}
+      </mat-checkbox>
+
+      <mat-checkbox fxFlex.gt-sm="33,3333"
+                    formControlName="isOfficialMatch">
+        {{'general.matches.edit.inputs.isOfficialMatch' | translate}}
+      </mat-checkbox>
+
+      <mat-checkbox fxFlex.gt-sm="33,3333"
+                    formControlName="isHomeTeam">
+        {{'general.matches.edit.inputs.isHomeTeam' | translate}}
+      </mat-checkbox>
+    </div>
+
+    <h3 style="margin-top: 30px;">{{'general.matches.edit.inputs.timeHeader' | translate}}</h3>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <div fxFlex.gt-sm="50">
+        <label>{{'general.matches.edit.inputs.startTime' | translate}}</label><br/>
+        <owl-date-time-inline formControlName="matchStartDate"></owl-date-time-inline>
+      </div>
+
+      <div fxFlex.gt-sm="50">
+        <label>{{'general.matches.edit.inputs.endTime' | translate}}</label><br/>
+        <owl-date-time-inline formControlName="matchEndDate"></owl-date-time-inline>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 30px;">{{'general.matches.edit.inputs.categoryHeader' | translate}}</h3>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px"
+         formGroupName="assignedCategories">
+      <mat-form-field fxFlex.gt-sm="50">
+        <mat-select placeholder="{{'general.matches.edit.inputs.category' | translate}}"
+                    formControlName="assignedCategory">
+          <mat-option *ngFor="let category of categories | orderBy: ['title']"
+                      [value]="category.id">
+            {{category.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex.gt-sm="50">
+        <mat-select placeholder="{{'general.matches.edit.inputs.mainCategory' | translate}}"
+                    formControlName="assignedMainCategory">
+          <mat-option *ngFor="let category of categories | orderBy: ['title']"
+                      [value]="category.id">
+            {{category.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <h3 style="margin-top: 30px;">{{'general.matches.edit.inputs.homeHeader' | translate}}</h3>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px"
+         formGroupName="homeTeam">
+      <mat-form-field fxFlex.gt-sm="24">
+        <input matInput
+               placeholder="{{'general.matches.edit.inputs.teamInputs.title' | translate}}"
+               formControlName="title"/>
+      </mat-form-field>
+
+      <mat-form-field fxFlex.gt-sm="38">
+        <input matInput
+               placeholder="{{'general.matches.edit.inputs.teamInputs.link' | translate}}"
+               formControlName="externalTeamLink"/>
+      </mat-form-field>
+
+      <mat-form-field fxFlex.gt-sm="38">
+        <input matInput
+               placeholder="{{'general.matches.edit.inputs.teamInputs.logo' | translate}}"
+               formControlName="logoURL"/>
+      </mat-form-field>
+    </div>
+
+
+    <h3 style="margin-top: 30px;">{{'general.matches.edit.inputs.guestHeader' | translate}}</h3>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px"
+         formGroupName="guestTeam">
+      <mat-form-field fxFlex.gt-sm="24">
+        <input matInput
+               placeholder="{{'general.matches.edit.inputs.teamInputs.title' | translate}}"
+               formControlName="title"/>
+      </mat-form-field>
+
+      <mat-form-field fxFlex.gt-sm="38">
+        <input matInput
+               placeholder="{{'general.matches.edit.inputs.teamInputs.link' | translate}}"
+               formControlName="externalTeamLink"/>
+      </mat-form-field>
+
+      <mat-form-field fxFlex.gt-sm="38">
+        <input matInput
+               placeholder="{{'general.matches.edit.inputs.teamInputs.logo' | translate}}"
+               formControlName="logoURL"/>
+      </mat-form-field>
+    </div>
+
+    <!--<creation-form [form]="form"></creation-form>-->
+
+  </mat-card-content>
+</mat-card>

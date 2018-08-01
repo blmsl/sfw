@@ -5,6 +5,7 @@ import { ICategory } from './category.interface';
 import { ITag } from './tag.interface';
 import { ICreation } from './creation.interface';
 import { IPublication } from './publication.interface';
+import * as firebase from 'firebase';
 
 export interface IArticle {
 
@@ -18,10 +19,7 @@ export interface IArticle {
 
   text?: string;
 
-  articleDate?: {
-    seconds: number,
-    nanoseconds: number
-  };
+  articleDate?: firebase.firestore.Timestamp;
 
   creation: ICreation;
   publication?: IPublication;

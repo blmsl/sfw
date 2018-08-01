@@ -25,24 +25,17 @@
       </div>
     </div>
 
-    <p style="text-align: center">
+    <p style="text-align: center; margin-top:15px;">
       {{match.matchType}} | <a *ngIf="match.isOfficialMatch" [href]="match.matchLink" target="_blank">Link</a>
     </p>
 
     <mat-chip-list>
-      <mat-chip *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedCategory"
-                [routerLink]="['/categories/detail', category.id]">
-        {{category.title}}
+      <mat-chip *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedCategory">
+        <a [routerLink]="['/categories/detail', category.id]">{{category.title}}</a>
       </mat-chip>&nbsp;
-      <mat-chip *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedMainCategory"
-                [routerLink]="['/categories/detail', category.id]">
-        {{category.title}}
+      <mat-chip *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedMainCategory">
+        <a [routerLink]="['/categories/detail', category.id]">{{category.title}}</a>
       </mat-chip>&nbsp;
-      <mat-chip
-        *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedLocationCategory"
-        [routerLink]="['/categories/detail', category.id]">
-        {{category.title}}
-      </mat-chip>
     </mat-chip-list>
   </mat-card-content>
 </mat-card>

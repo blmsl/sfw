@@ -53,7 +53,6 @@ import { ArticleFilterPipe } from '../../shared/pipes/article-filter.pipe';
 import { TimeagoModule } from 'ngx-timeago';
 import { SharedUserModule } from '../../shared/components/user/shared-user.module';
 
-
 @NgModule({
   imports: [
     MatButtonModule,

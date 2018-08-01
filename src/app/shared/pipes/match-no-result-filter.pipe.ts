@@ -13,7 +13,7 @@ export class MatchNoResultFilterPipe implements PipeTransform {
     }
 
     return matches.filter((match: IMatch) => {
-      return match.result.homeTeamGoals === '' && match.result.guestTeamGoals === '' && match.result.otherEvent === '';
+      return !(match.result.homeTeamGoals && match.result.guestTeamGoals) || !match.result.otherEvent;
     });
   }
 

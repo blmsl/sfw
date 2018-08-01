@@ -5,6 +5,7 @@ import { MatchListComponent } from './match-list/match-list.component';
 import { SharedModule } from '../../shared.module';
 import { MatFormFieldModule, MatInputModule, MatListModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
+import { MatchResultInputComponent } from './match-result-input/match-result-input.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { RouterModule } from '@angular/router';
   declarations: [
     MatchFilterPipe,
     MatchNoResultFilterPipe,
-    MatchListComponent
+    MatchListComponent,
+    MatchResultInputComponent
   ],
   exports: [
     MatchFilterPipe,

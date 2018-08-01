@@ -574,6 +574,39 @@
         "startingElevenTitle": "Aufstellung",
         "title": "Spieldetails"
       },
+      "edit": {
+        "articles": "Artikel",
+        "inputs": {
+          "category": "Kategorie",
+          "categoryHeader": "Verknüpfte Kategorien",
+          "endTime": "Ende",
+          "guestHeader": "Gastmannschaft",
+          "homeHeader": "Heimmannschaft",
+          "isHomeTeam": "Ist es ein Heimspiel?",
+          "isImported": "Durch Script importiert?",
+          "isOfficialMatch": "Offizielles Spiel?",
+          "location": "Spielort",
+          "mainCategory": "Hauptkategorie",
+          "matchLink": "Externer Link zum Spiel",
+          "matchType": "Art des Spiels",
+          "startTime": "Startzeit",
+          "team": "Verknüpfte Mannschaft",
+          "teamInputs": {
+            "link": "Externer Link",
+            "logo": "URL des Logos",
+            "title": "Mannschaftsname"
+          },
+          "timeHeader": "Datum und Uhrzeit",
+          "title": "Spieltitel"
+        },
+        "main": "Spieldaten",
+        "match": "Spielverlauf",
+        "media": "Verknüpfte Dateien",
+        "startingEleven": {
+          "title": "Aufstellung"
+        },
+        "title": "Spiel editieren"
+      },
       "list": {
         "noMatches": "Es wurden keine Spiele gefunden."
       },
