@@ -130,9 +130,9 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
   }
 
   initResult(result: {
-    guestTeamGoals: number,
-    homeTeamGoals: number,
-    otherEvent: number
+    guestTeamGoals?: number | string,
+    homeTeamGoals?: number | string,
+    otherEvent?: number | string
   }){
     return this.fb.group({
       guestTeamGoals: result.guestTeamGoals,
