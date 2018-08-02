@@ -70,6 +70,7 @@
                             <team-position-form (removePosition)="removePosition.emit($event)"
                                                 [categories]="categories | filterBy: ['assignedCategoryType']: categoryTypes[0].id"
                                                 [members]="members"
+                                                [i]="i"
                                                 [form]="form.controls['assignedPositions']['controls'][i]">
                             </team-position-form>
                         </div>

@@ -12,6 +12,7 @@ export class TeamPositionFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() members: IMember[];
   @Input() categories: ICategory[];
+  @Input() i: number;
 
   @Output() removePosition: EventEmitter<number> = new EventEmitter<number>(false);
 

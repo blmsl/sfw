@@ -260,4 +260,11 @@ export class TeamEditComponent implements OnInit {
     this.router.navigate(['/teams']).then();
   }
 
+  removeTeam(team: ITeam){
+    this.teamService.removeTeam(team).then(
+      () => this.redirectToList(),
+      (error: any) => console.log(error)
+    );
+  }
+
 }

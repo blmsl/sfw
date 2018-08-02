@@ -112,4 +112,11 @@ export class CategoryEditComponent implements OnInit {
     this.router.navigate(['/categories']).then();
   }
 
+  removeCategory(category: ICategory){
+    this.categoryService.removeCategory(category).then(
+      () => this.redirectToList(),
+      (error: any) => console.log(error)
+    );
+  }
+
 }
