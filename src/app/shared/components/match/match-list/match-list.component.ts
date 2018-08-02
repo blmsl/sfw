@@ -13,18 +13,12 @@ export class MatchListComponent implements OnInit, AfterViewChecked {
   @Input() events: { id: number; title: string }[];
   @Input() categories: ICategory[];
   @Input() showResultInputs: boolean = false;
-
-  public cssErrors: string[] = [];
+  @Input() showResult: boolean = false;
 
   constructor(private cdRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-  }
-
-  setCssClass($event, i: number) {
-    console.log($event);
-    this.cssErrors[i] = 'alert-' + $event;
   }
 
   ngAfterViewChecked() {

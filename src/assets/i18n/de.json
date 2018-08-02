@@ -608,7 +608,8 @@
         "title": "Spiel editieren"
       },
       "list": {
-        "noMatches": "Es wurden keine Spiele gefunden."
+        "noMatches": "Es wurden keine Spiele gefunden.",
+        "noResult": "Kein Ergebnis"
       },
       "matchesTitle": "Spielpläne",
       "nextMatchTitle": "Nächstes Spiel: ",

@@ -1,0 +1,46 @@
+<mat-list-item [ngClass]="cssClass">
+  <img style="border-radius: 0"
+       mat-list-avatar
+       src="{{match.homeTeam.logoURL}}"
+       title="{{match.homeTeam.title}}"/>
+
+  <img style="border-radius: 0"
+       mat-list-avatar
+       src="{{match.guestTeam.logoURL}}"
+       title="{{match.guestTeam.title}}"/>
+
+  <h3 matLine>
+    <a [routerLink]="['/matches/detail', match.id]">
+      {{match.homeTeam.title}} &ndash; {{match.guestTeam.title}}
+    </a>
+
+    <span fxFlex></span>
+
+    <match-result-input *ngIf="showResultInputs"
+                        (setCssClass)="setCssClass($event, i)"
+                        [match]="match">
+    </match-result-input>
+
+    <div *ngIf="showResult">
+      <span *ngIf="match.result.homeTeamGoals !== '' && match.result.guestTeamGoals !== ''">
+        {{match.result.homeTeamGoals}} : {{match.result.guestTeamGoals}}
+      </span>
+      <span *ngIf="(match.result.homeTeamGoals === '' && match.result.guestTeamGoals === '')
+                      && (!match.result.otherEvent || match.result.otherEvent === '')">
+        {{'general.matches.list.noResult' | translate}}
+      </span>
+      <span *ngIf="match.result.otherEvent">
+        <span style="color: red">ToDo: {{match.result.otherEvent}}</span>
+      </span>
+    </div>
+
+  </h3>
+
+  <p matLine>
+          <span *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedCategory">
+            {{category.title}}
+          </span>
+    - {{match.matchType}}
+    - {{match.matchStartDate.seconds *1000 | date: 'dd.MM.yy HH:mm'}}
+  </p>
+</mat-list-item>

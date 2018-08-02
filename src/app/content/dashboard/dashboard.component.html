@@ -11,8 +11,102 @@
          fxLayout.gt-sm="row"
          fxLayoutAlign.gt-sm="center start">
 
-      <mat-card class="profile-post"
-                fxFlex.gt-sm="35">
+      <mat-card class="card-widget mat-teal" fxFlex="16,6666">
+        <div mat-card-widget>
+          <div mat-card-float-icon>
+            <mat-icon>grade</mat-icon>
+          </div>
+          <div class="pl-0">
+            <h2 mat-card-widget-title>{{angularVersion}}</h2>
+            <p>Angular</p>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="card-widget mat-purple" fxFlex="16,6666">
+        <div mat-card-widget>
+          <div mat-card-float-icon>
+            <mat-icon>code</mat-icon>
+          </div>
+          <div class="pl-0">
+            <h2 mat-card-widget-title>{{env.production ? 'Production' : 'Development'}}</h2>
+            <p>Environment</p>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="card-widget mat-teal" fxFlex="16,6666">
+        <div mat-card-widget>
+          <div mat-card-float-icon>
+            <mat-icon>grade</mat-icon>
+          </div>
+          <div class="pl-0">
+            <h2 mat-card-widget-title>
+              <a class="pull-right" href="https://travis-ci.org/Meistercoach83/sfw" target="_blank">
+                <img src="https://travis-ci.org/Meistercoach83/sfw.svg?branch=master"/>
+              </a>
+            </h2>
+            <p>{{'general.dashboard.buildStatus' | translate}}</p>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="card-widget mat-purple" fxFlex="16,6666">
+        <div mat-card-widget>
+          <div mat-card-float-icon>
+            <mat-icon>grade</mat-icon>
+          </div>
+          <div class="pl-0">
+            <h2 mat-card-widget-title>
+              <a class="pull-right" href="https://david-dm.org/Meistercoach83/sfw" target="_blank">
+                <img src="https://david-dm.org/Meistercoach83/sfw/status.svg"/>
+              </a>
+            </h2>
+            <p>{{'general.dashboard.dependencyStatus' | translate}}</p>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="card-widget mat-teal" fxFlex="16,6666">
+        <div mat-card-widget>
+          <div mat-card-float-icon>
+            <mat-icon>grade</mat-icon>
+          </div>
+          <div class="pl-0">
+            <h2 mat-card-widget-title>
+              <a class="pull-right" href="https://david-dm.org/Meistercoach83/sfw" target="_blank">
+                <img src="https://david-dm.org/Meistercoach83/sfw/dev-status.svg"/>
+              </a>
+            </h2>
+            <p>{{'general.dashboard.devDependencyStatus' | translate}}</p>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="card-widget mat-purple" fxFlex="16,6666">
+        <div mat-card-widget>
+          <div mat-card-float-icon>
+            <mat-icon>grade</mat-icon>
+          </div>
+          <div class="pl-0">
+            <h2 mat-card-widget-title>
+              <a class="pull-right" href="https://badge.fury.io/gh/Meistercoach83%2F-sfw" target="_blank">
+                <img src="https://badge.fury.io/gh/Meistercoach83%2Fsfw.svg"/>
+              </a>
+            </h2>
+            <p>{{'general.dashboard.gitVersion' | translate}}</p>
+          </div>
+        </div>
+      </mat-card>
+
+    </div>
+
+    <div fxLayout="column"
+         fxLayoutAlign="space-around stretch"
+         fxLayout.gt-sm="row"
+         fxLayoutAlign.gt-sm="center start">
+
+      <mat-card class="profile-post" fxFlex>
         <form fxLayout="row"
               [formGroup]="mindForm">
            <textarea formControlName="comment"
@@ -59,7 +153,7 @@
         </mat-card-content>
       </mat-card>
 
-      <div fxFlex="35">
+      <div fxFlex="50">
         <dashboard-article-list [articles$]="articles$"></dashboard-article-list>
 
         <mat-card>
@@ -68,142 +162,56 @@
             <hr>
           </mat-card-title>
           <mat-card-content>
-            <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
-                           [dynamicHeight]="true">
+            <div *ngIf="matches$ | async as matches; else loadingTemplate">
+              <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
+                             [dynamicHeight]="true">
 
-              <mat-tab label="{{'general.dashboard.upComingMatches' | translate}}">
-                <div *ngIf="matches$ | async as matches; else loadingTemplate"
-                     style="max-height: 300px"
-                     [perfectScrollbar]="config">
-                      <match-list [categories]="categories"
-                                  [matches]="matches | orderBy: ['matchStartDate.seconds']
+                <mat-tab label="{{'general.dashboard.upComingMatches' | translate}}">
+                  <div style="max-height: 300px"
+                       [perfectScrollbar]="config">
+                    <match-list [categories]="categories"
+                                [matches]="matches | orderBy: ['matchStartDate.seconds']
                                         | matchFilter: 'matchStartDate' : '>='
                                         | matchFilter: 'matchEndDate' : '<=' : inTwoWeeks">
-                      </match-list>
-                </div>
-              </mat-tab>
+                    </match-list>
+                  </div>
+                </mat-tab>
 
-              <mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
-                <div *ngIf="matches$ | async as matches; else loadingTemplate"
-                     style="max-height: 300px"
-                     [perfectScrollbar]="config">
-                  <match-list [categories]="categories"
-                              [events]="matchService.getOtherEventList() | orderBy: ['title']"
-                              [matches]="matches | orderBy: ['-matchEndDate.seconds']
+                <mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
+                  <div style="max-height: 300px"
+                       [perfectScrollbar]="config">
+                    <match-list [categories]="categories"
+                                [events]="matchService.getOtherEventList() | orderBy: ['title']"
+                                [showResult]="true"
+                                [matches]="matches | orderBy: ['-matchEndDate.seconds']
                                       | matchFilter: 'matchEndDate' : '<='
                                       | matchFilter: 'matchEndDate' : '>=' : inLastTwoWeeks">
-                  </match-list>
-                </div>
-              </mat-tab>
+                    </match-list>
+                  </div>
+                </mat-tab>
 
-              <mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
-                <div *ngIf="matches$ | async as matches; else loadingTemplate"
-                     style="max-height: 300px"
-                     [perfectScrollbar]="config">
-                  <match-list [categories]="categories"
-                              [events]="matchService.getOtherEventList() | orderBy: ['title']"
-                              [showResultInputs]="true"
-                              [matches]="matches | orderBy: ['-matchEndDate.seconds']
+                <mat-tab [label]="('general.dashboard.matchesWithoutResult' | translate)
+                + ' ('
+                + (matches | orderBy: ['-matchEndDate.seconds'] | matchFilter: 'matchEndDate' : '<=' | matchNoResultFilter).length
+                + ')'">
+                  <div style="max-height: 300px"
+                       [perfectScrollbar]="config">
+                    <match-list [categories]="categories"
+                                [events]="matchService.getOtherEventList() | orderBy: ['title']"
+                                [showResultInputs]="true"
+                                [matches]="matches | orderBy: ['-matchEndDate.seconds']
                                       | matchFilter: 'matchEndDate' : '<='
                                       | matchNoResultFilter">
-                  </match-list>
-                </div>
-              </mat-tab>
+                    </match-list>
+                  </div>
+                </mat-tab>
 
-            </mat-tab-group>
+              </mat-tab-group>
+            </div>
           </mat-card-content>
         </mat-card>
       </div>
 
-      <div fxLayout="column">
-        <mat-card class="card-widget mat-teal" fxFlex="50">
-          <div mat-card-widget>
-            <div mat-card-float-icon>
-              <mat-icon>grade</mat-icon>
-            </div>
-            <div class="pl-0">
-              <h2 mat-card-widget-title>{{angularVersion}}</h2>
-              <p>Angular</p>
-            </div>
-          </div>
-        </mat-card>
-
-        <mat-card class="card-widget mat-purple" fxFlex="50">
-          <div mat-card-widget>
-            <div mat-card-float-icon>
-              <mat-icon>code</mat-icon>
-            </div>
-            <div class="pl-0">
-              <h2 mat-card-widget-title>{{env.production ? 'Production' : 'Development'}}</h2>
-              <p>Environment</p>
-            </div>
-          </div>
-        </mat-card>
-
-        <mat-card class="card-widget mat-teal">
-          <div mat-card-widget>
-            <div mat-card-float-icon>
-              <mat-icon>grade</mat-icon>
-            </div>
-            <div class="pl-0">
-              <h2 mat-card-widget-title>
-                <a class="pull-right" href="https://travis-ci.org/Meistercoach83/sfw" target="_blank">
-                  <img src="https://travis-ci.org/Meistercoach83/sfw.svg?branch=master"/>
-                </a>
-              </h2>
-              <p>{{'general.dashboard.buildStatus' | translate}}</p>
-            </div>
-          </div>
-        </mat-card>
-
-        <mat-card class="card-widget mat-purple">
-          <div mat-card-widget>
-            <div mat-card-float-icon>
-              <mat-icon>grade</mat-icon>
-            </div>
-            <div class="pl-0">
-              <h2 mat-card-widget-title>
-                <a class="pull-right" href="https://david-dm.org/Meistercoach83/sfw" target="_blank">
-                  <img src="https://david-dm.org/Meistercoach83/sfw/status.svg"/>
-                </a>
-              </h2>
-              <p>{{'general.dashboard.dependencyStatus' | translate}}</p>
-            </div>
-          </div>
-        </mat-card>
-
-        <mat-card class="card-widget mat-teal">
-          <div mat-card-widget>
-            <div mat-card-float-icon>
-              <mat-icon>grade</mat-icon>
-            </div>
-            <div class="pl-0">
-              <h2 mat-card-widget-title>
-                <a class="pull-right" href="https://david-dm.org/Meistercoach83/sfw" target="_blank">
-                  <img src="https://david-dm.org/Meistercoach83/sfw/dev-status.svg"/>
-                </a>
-              </h2>
-              <p>{{'general.dashboard.devDependencyStatus' | translate}}</p>
-            </div>
-          </div>
-        </mat-card>
-
-        <mat-card class="card-widget mat-purple">
-          <div mat-card-widget>
-            <div mat-card-float-icon>
-              <mat-icon>grade</mat-icon>
-            </div>
-            <div class="pl-0">
-              <h2 mat-card-widget-title>
-                <a class="pull-right" href="https://badge.fury.io/gh/Meistercoach83%2F-sfw" target="_blank">
-                  <img src="https://badge.fury.io/gh/Meistercoach83%2Fsfw.svg"/>
-                </a>
-              </h2>
-              <p>{{'general.dashboard.gitVersion' | translate}}</p>
-            </div>
-          </div>
-        </mat-card>
-      </div>
     </div>
 
   </mat-card-content>

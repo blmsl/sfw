@@ -16,7 +16,7 @@ import * as admin from 'firebase-admin';
 admin.initializeApp();
 
 // import * as functions from 'firebase-functions';
-// import * as media from './media/index';
+import * as media from './media/index';
 import * as member from './member/index';
 // import * as shortener from './url-shortener/index';
 import * as team from './team/index';
@@ -28,7 +28,7 @@ import * as team from './team/index';
 
 // export const urlShortener = shortener.shortener;
 
-
+export const generateThumbnailCron = media.generateThumbnailCron;
 // export const removeMediaItemCron = media.deleteMediaCron;
 
 export const birthdayReminder = member.birthdayReminderCron;

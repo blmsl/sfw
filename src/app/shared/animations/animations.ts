@@ -1,4 +1,11 @@
-import { trigger, state, query, transition, style, animate, stagger } from '@angular/animations';
+import {
+  animate,
+  query,
+  state,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 
 // https://stackblitz.com/edit/zen-feedback?embed=1&file=app/app.component.ts&view=preview
 

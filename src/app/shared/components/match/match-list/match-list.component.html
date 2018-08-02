@@ -4,41 +4,12 @@
     <p *ngIf="matches.length === 0">{{'general.matches.list.noMatches' | translate}}</p>
 
     <mat-list dense>
-      <mat-list-item *ngFor="let match of matches; let i = index"
-                     [ngClass]="cssErrors[i] ? cssErrors[i] : ''">
-
-        <img style="border-radius: 0"
-             mat-list-avatar
-             src="{{match.homeTeam.logoURL}}"
-             title="{{match.homeTeam.title}}"/>
-
-        <img style="border-radius: 0"
-             mat-list-avatar
-             src="{{match.guestTeam.logoURL}}"
-             title="{{match.guestTeam.title}}"/>
-
-        <h3 matLine>
-          <a [routerLink]="['/matches/detail', match.id]">
-            {{match.homeTeam.title}} &ndash; {{match.guestTeam.title}}
-          </a>
-
-          <span fxFlex></span>
-
-          <match-result-input *ngIf="showResultInputs"
-                              (setCssClass)="setCssClass($event, i)"
-                              [match]="match">
-          </match-result-input>
-
-        </h3>
-
-        <p matLine>
-          <span *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedCategory">
-            {{category.title}}
-          </span>
-          - {{match.matchType}}
-          - {{match.matchStartDate.seconds *1000 | date: 'dd.MM.yy HH:mm'}}
-        </p>
-      </mat-list-item>
+      <match-list-item *ngFor="let match of matches"
+                       [match]="match"
+                       [categories]="categories"
+                       [showResult]="showResult"
+                       [showResultInputs]="showResultInputs">
+      </match-list-item>
     </mat-list>
 
   </div>

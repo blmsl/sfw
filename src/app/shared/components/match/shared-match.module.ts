@@ -6,6 +6,7 @@ import { SharedModule } from '../../shared.module';
 import { MatFormFieldModule, MatInputModule, MatListModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { MatchResultInputComponent } from './match-result-input/match-result-input.component';
+import { MatchListItemComponent } from './match-list/match-list-item/match-list-item.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { MatchResultInputComponent } from './match-result-input/match-result-inp
     MatchFilterPipe,
     MatchNoResultFilterPipe,
     MatchListComponent,
-    MatchResultInputComponent
+    MatchResultInputComponent,
+    MatchListItemComponent
   ],
   exports: [
     MatchFilterPipe,

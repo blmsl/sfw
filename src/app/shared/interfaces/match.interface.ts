@@ -41,9 +41,9 @@ export interface IMatch {
   publication?: IPublication;
 
   result?: {
-    otherEvent: number;
-    homeTeamGoals: number;
-    guestTeamGoals: number;
+    otherEvent?: number | string;
+    homeTeamGoals?: number | string;
+    guestTeamGoals?: number | string;
   };
 
   title: string;

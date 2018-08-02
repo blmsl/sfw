@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IMatch } from '../../../interfaces/match.interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { IMatch }                                         from '../../../interfaces/match.interface';
+import { FormBuilder, FormGroup, Validators }             from '@angular/forms';
+import { debounceTime, distinctUntilChanged }             from 'rxjs/operators';
+import { MatchService }                                   from '../../../services/match/match.service';
 
 @Component({
   selector: 'match-result-input',
@@ -18,7 +19,8 @@ export class MatchResultInputComponent implements OnInit {
   public cssClass: string = '';
   public isSaving: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private matchService: MatchService) {
   }
 
   ngOnInit() {
@@ -32,13 +34,20 @@ export class MatchResultInputComponent implements OnInit {
     this.form.valueChanges.pipe(
       debounceTime(2000),
       distinctUntilChanged()
-    ).subscribe((changes: any) => {
+    ).subscribe((changes: {
+      result: {
+        guestTeamGoals: number,
+        homeTeamGoals: number
+      }
+    }) => {
 
       if (this.form.valid) {
         this.isSaving = true;
-        console.log(this.form);
-        console.log(changes);
-        this.setCssClass.emit('success');
+        this.match.result = changes.result;
+        this.matchService.updateMatch(this.match.id, this.match).then(
+          () => this.setCssClass.emit('success'),
+          (error: any) => console.log(error)
+        );
       }
     });
   }

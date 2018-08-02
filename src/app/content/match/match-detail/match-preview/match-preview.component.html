@@ -5,7 +5,7 @@
     </a>
   </mat-card-title>
   <mat-card-subtitle>
-    {{match.matchStartDate.seconds * 1000 | date : 'dd.MM.yy H:m'}} {{'general.oClock' | translate}}
+    {{match.matchStartDate.toDate() | date : 'dd.MM.yy H:mm'}} {{'general.oClock' | translate}}
     <a *ngFor="let location of locations$ | async | filterBy: ['id'] : match.assignedLocation"
        [routerLink]="['/locations/detail', location.id]">{{location.title}}
     </a>
@@ -14,15 +14,37 @@
     <div fxLayout="column"
          fxLayout.gt-sm="row"
          fxLayoutGap="10px"
-         fxLayoutAlign="space-evenly start">
-      <div>
-        <h3><a target="_blank" [href]="match.homeTeam.externalTeamLink">{{match.homeTeam.title}}</a></h3>
-        <img [src]="match.homeTeam.logoURL"/>
-      </div>
-      <div>
-        <h3><a target="_blank" [href]="match.guestTeam.externalTeamLink">{{match.guestTeam.title}}</a></h3>
-        <img [src]="match.guestTeam.logoURL"/>
-      </div>
+         fxLayoutAlign="space-around center">
+
+      <mat-card fxFlex="">
+        <mat-card-header fxLayout fxLayoutAlign="center center">
+          <mat-card-title>
+            <img [src]="match.homeTeam.logoURL"/>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <a target="_blank" [href]="match.homeTeam.externalTeamLink">{{match.homeTeam.title}}</a>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <h1 style="text-align: center">{{match.result.homeTeamGoals}}</h1>
+        </mat-card-content>
+      </mat-card>
+
+      <div fxFlex="3"><h3 style="text-align: center">:</h3></div>
+
+      <mat-card fxFlex="">
+        <mat-card-header>
+          <mat-card-title fxLayout fxLayoutAlign="center center">
+            <img [src]="match.guestTeam.logoURL"/>
+          </mat-card-title>
+          <mat-card-subtitle fxLayout fxLayoutAlign="center center">
+            <a target="_blank" [href]="match.guestTeam.externalTeamLink">{{match.guestTeam.title}}</a>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <h1 style="text-align: center">{{match.result.guestTeamGoals}}</h1>
+        </mat-card-content>
+      </mat-card>
     </div>
 
     <p style="text-align: center; margin-top:15px;">

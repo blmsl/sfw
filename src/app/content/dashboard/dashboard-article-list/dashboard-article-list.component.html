@@ -3,30 +3,31 @@
     <h2 mat-card-widget-title>{{'general.dashboard.lastArticles' | translate}}</h2>
     <hr>
   </mat-card-title>
-  <mat-card-content>
+  <mat-card-content style="padding: 0 1rem">
 
     <div *ngIf="articles$ | async as articles; else loadingTemplate">
 
       <p *ngIf="!articles.length">{{'general.articles.list.noResult' | translate}}</p>
 
-      <mat-list *ngIf="users$ | async as users; else loadingTemplate">
-
-        <mat-list-item *ngFor="let article of articles | orderBy: ['-creation.at'] | slice: 0:5; let last = last">
+      <div *ngIf="users$ | async as users; else loadingTemplate">
+        <mat-card *ngFor="let article of articles | orderBy: ['-creation.at'] | slice: 0:5; let last = last">
+          <mat-card-header>
+            <mat-card-title><a [routerLink]="['/articles/edit', article.id]">{{article.title}}</a></mat-card-title>
+            <mat-card-subtitle>
+              {{article.creation.at.seconds *1000 | timeago:live}} -
+              <user-avatar [userId]="article.creation.by"
+                           [users]="users">
+              </user-avatar>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <hr />
           <media-avatar [assignedObjects]="assignedObjects"
                         [itemId]="article.id">
           </media-avatar>
-          <h3 mat-line><a [routerLink]="['/articles/edit', article.id]">{{article.title}}</a></h3>
-          <p mat-line>
-            {{article.creation.at.seconds *1000 | timeago:live}} -
-            <user-avatar [userId]="article.creation.by"
-                         [users]="users">
-            </user-avatar>
-          </p>
+          <mat-card-content [innerHTML]="article.excerpt ? article.excerpt : article.text"></mat-card-content>
+        </mat-card>
+      </div>
 
-          <mat-divider inset="true" *ngIf="!last"></mat-divider>
-        </mat-list-item>
-
-      </mat-list>
     </div>
   </mat-card-content>
 </mat-card>
