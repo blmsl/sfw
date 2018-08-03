@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IMatch }                                         from '../../../interfaces/match.interface';
+import { IMatch }                                         from '../../../interfaces/match/match.interface';
 import { FormBuilder, FormGroup, Validators }             from '@angular/forms';
 import { debounceTime, distinctUntilChanged }             from 'rxjs/operators';
 import { MatchService }                                   from '../../../services/match/match.service';

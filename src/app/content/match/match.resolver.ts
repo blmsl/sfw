@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable }   from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Resolve,
   Router,
   RouterStateSnapshot
-} from '@angular/router';
+}                       from '@angular/router';
 import { MatchService } from '../../shared/services/match/match.service';
-import { IMatch } from '../../shared/interfaces/match.interface';
-import { Observable } from 'rxjs';
+import { IMatch }       from '../../shared/interfaces/match/match.interface';
+import { Observable }   from 'rxjs';
 import {
   map,
   take
-} from 'rxjs/operators';
+}                       from 'rxjs/operators';
 
 @Injectable()
 export class MatchResolver implements Resolve<IMatch> {

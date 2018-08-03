@@ -602,9 +602,14 @@
         "main": "Spieldaten",
         "match": "Spielverlauf",
         "media": "Verknüpfte Dateien",
+        "noAssignedPlayers": "Der Mannschaft wurden noch keine Spieler zugewiesen.",
+        "noAssignedTeam": "Bitte zuerst die dazugehörige Mannschaft auswählen.",
+        "squad": "Kader",
         "startingEleven": {
           "title": "Aufstellung"
         },
+        "substituteBench": "Ersatzbank",
+        "tacticalFormation": "Spielsystem",
         "title": "Spiel editieren"
       },
       "list": {

@@ -1,6 +1,6 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { IMatch } from '../../../interfaces/match.interface';
-import { ICategory } from '../../../interfaces/category.interface';
+import { IMatch }                                                        from '../../../interfaces/match/match.interface';
+import { ICategory }                                                     from '../../../interfaces/category.interface';
 
 @Component({
   selector: 'match-list',

@@ -1,14 +1,14 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs/Rx';
-import { ILocation } from '../../../../../shared/interfaces/location/location.interface';
-import { ITeam } from '../../../../../shared/interfaces/team/team.interface';
-import { ICategory } from '../../../../../shared/interfaces/category.interface';
+import { ILocation }     from '../../../../../shared/interfaces/location/location.interface';
+import { ITeam }         from '../../../../../shared/interfaces/team/team.interface';
+import { ICategory }     from '../../../../../shared/interfaces/category.interface';
 import { ICategoryType } from '../../../../../shared/interfaces/category-type.interface';
-import { ISeason } from '../../../../../shared/interfaces/season.interface';
-import { MatchService } from '../../../../../shared/services/match/match.service';
-import { IMatch } from '../../../../../shared/interfaces/match.interface';
-import { IArticle } from '../../../../../shared/interfaces/article.interface';
+import { ISeason }       from '../../../../../shared/interfaces/season.interface';
+import { MatchService }  from '../../../../../shared/services/match/match.service';
+import { IMatch }        from '../../../../../shared/interfaces/match/match.interface';
+import { IArticle }      from '../../../../../shared/interfaces/article.interface';
 
 @Component({
   selector: 'sidebar-links-data',

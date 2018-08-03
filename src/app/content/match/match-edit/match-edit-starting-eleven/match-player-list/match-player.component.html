@@ -1,0 +1,10 @@
+<mat-card>
+  <img mat-card-image [src]="'/assets/sfw/placeholder/avatar_male.jpg'">
+  <mat-card-content>
+    <span *ngIf="member">
+      {{member.mainData.firstName}}
+      {{member.mainData.lastName}}
+      {{member.mainData.birthday |date :'dd.MM.yy' }}
+    </span>
+  </mat-card-content>
+</mat-card>

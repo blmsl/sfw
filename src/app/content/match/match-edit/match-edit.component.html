@@ -4,49 +4,55 @@
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content [formGroup]="form">
+    <div *ngIf="teams$ | async as teams; else loadingTemplate">
+      <mat-tab-group [dynamicHeight]="true">
+        <mat-tab [label]="'general.matches.edit.main' | translate">
+          <div fxLayout="column"
+               fxLayout.gt-sm="row"
+               fxLayoutGap="10px">
+            <div fxFlex.gt-sm="40">
+              <match-edit-main [form]="form"
+                               [categories]="categories$ | async"
+                               [teams]="teams"
+                               [seasons]="seasons$ | async"
+                               [locations]="locations$ | async">
+              </match-edit-main>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab [label]="'general.matches.edit.startingEleven.title' | translate">
 
-    <mat-tab-group>
-      <mat-tab [label]="'general.matches.edit.main' | translate">
-        <div fxLayout="column"
-             fxLayout.gt-sm="row"
-             fxLayoutGap="10px">
-          <div fxFlex.gt-sm="40">
-            <match-edit-main [form]="form"
-                             [categories]="categories$ | async"
-                             [teams]="teams$ | async"
-                             [seasons]="seasons$ | async"
-                             [locations]="locations$ | async">
-            </match-edit-main>
-          </div>
-          <div fxFlex.gt-sm="60">
-            <match-edit-starting-eleven></match-edit-starting-eleven>
-          </div>
-        </div>
-      </mat-tab>
-      <mat-tab
-        [label]="('general.matches.edit.articles' | translate) + ' & ' + ('general.matches.edit.match' | translate)">
-        <div fxLayout="column"
-             fxLayout.gt-sm="row"
-             fxLayoutGap="10px">
-          <div fxFlex.gt-sm="50">
-            <ul>
-              <li>Live-Bericht starten (Text und/oder Video)</li>
-            </ul>
-          </div>
-          <div fxFlex.gt-sm="50">
-            Artikel zu diesem Spiel<br/>
-          </div>
-        </div>
-      </mat-tab>
-      <mat-tab [label]="'general.matches.edit.media' | translate">
-        <ul>
-          <li>Verlinkte Video´s (soccerwatch.tv, youtube, facebook etc)</li>
-          <li>Verlinkte Fotos / Galerien (Link zu Facebook</li>
-          <li>Lokal hochgeladene Dateien</li>
-        </ul>
-      </mat-tab>
-    </mat-tab-group>
+          <p *ngIf="!form.get('assignedTeam').value">{{'general.matches.edit.noAssignedTeam' | translate}}</p>
 
+          <match-edit-starting-eleven *ngIf="form.get('assignedTeam').value"
+                                      [form]="form"
+                                      [team]="(teams | filterBy: ['id'] : form.get('assignedTeam').value)[0]">
+          </match-edit-starting-eleven>
+        </mat-tab>
+        <mat-tab
+          [label]="('general.matches.edit.articles' | translate) + ' & ' + ('general.matches.edit.match' | translate)">
+          <div fxLayout="column"
+               fxLayout.gt-sm="row"
+               fxLayoutGap="10px">
+            <div fxFlex.gt-sm="50">
+              <ul>
+                <li>Live-Bericht starten (Text und/oder Video)</li>
+              </ul>
+            </div>
+            <div fxFlex.gt-sm="50">
+              Artikel zu diesem Spiel<br/>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab [label]="'general.matches.edit.media' | translate">
+          <ul>
+            <li>Verlinkte Video´s (soccerwatch.tv, youtube, facebook etc)</li>
+            <li>Verlinkte Fotos / Galerien (Link zu Facebook</li>
+            <li>Lokal hochgeladene Dateien</li>
+          </ul>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
 
   </mat-card-content>
 

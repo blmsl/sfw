@@ -1,12 +1,12 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { IMatch } from '../../../shared/interfaces/match.interface';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatchService } from '../../../shared/services/match/match.service';
-import { AlertService } from '../../../shared/services/alert/alert.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { IPublication } from '../../../shared/interfaces/publication.interface';
-import { LocationService } from '../../../shared/services/location/location.service';
+import { IMatch }                                                 from '../../../shared/interfaces/match/match.interface';
+import { ActivatedRoute, Router }                                 from '@angular/router';
+import { MatchService }                                           from '../../../shared/services/match/match.service';
+import { AlertService }                                           from '../../../shared/services/alert/alert.service';
+import { FormBuilder, FormGroup, Validators }                     from '@angular/forms';
+import { debounceTime, distinctUntilChanged }                     from 'rxjs/operators';
+import { IPublication }                                           from '../../../shared/interfaces/publication.interface';
+import { LocationService }                                        from '../../../shared/services/location/location.service';
 import { Observable } from 'rxjs/Rx';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
@@ -70,6 +70,9 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
       publication: this.initPublication(this.match.publication),
       result: this.initResult(this.match.result),
       title: [this.match.title, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      assignedFormation: this.match.assignedFormation,
+      assignedPlayers: this.match.assignedPlayers,
+      assignedSubstitutes: this.match.assignedSubstitutes
     });
 
     /* if (this.match.isImported) {
@@ -86,16 +89,17 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
       this.form.get('matchType').disable();
       this.form.get('title').disable();
     }
-
+  */
     this.form.valueChanges.pipe(
       debounceTime(1000),
       distinctUntilChanged()
     ).subscribe((changes: IMatch) => {
-      this.match = Object.assign({}, this.match, changes);
+      console.log(changes);
+      /*this.match = Object.assign({}, this.match, changes);
       if (!this.form.invalid) {
         this.saveMatch();
-      }
-    }); */
+      }*/
+    });
   }
 
   ngAfterViewChecked(){

@@ -9,16 +9,16 @@ import {
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { IArticle } from '../../../shared/interfaces/article.interface';
-import { IMember } from '../../../shared/interfaces/member/member.interface';
-import { MemberService } from '../../../shared/services/member/member.service';
-import { LocationService } from '../../../shared/services/location/location.service';
-import { Observable } from 'rxjs';
-import { ICategory } from '../../../shared/interfaces/category.interface';
-import { ArticleService } from '../../../shared/services/article/article.service';
-import { MatchService } from '../../../shared/services/match/match.service';
-import { IMatch } from '../../../shared/interfaces/match.interface';
+import { IMember }          from '../../../shared/interfaces/member/member.interface';
+import { MemberService }    from '../../../shared/services/member/member.service';
+import { LocationService }  from '../../../shared/services/location/location.service';
+import { Observable }       from 'rxjs';
+import { ICategory }        from '../../../shared/interfaces/category.interface';
+import { ArticleService }   from '../../../shared/services/article/article.service';
+import { MatchService }     from '../../../shared/services/match/match.service';
+import { IMatch }           from '../../../shared/interfaces/match/match.interface';
 import { MediaItemService } from '../../../shared/services/media/media-item.service';
-import { IMediaItem } from '../../../shared/interfaces/media/media-item.interface';
+import { IMediaItem }       from '../../../shared/interfaces/media/media-item.interface';
 
 @Component({
   selector: 'location-detail',

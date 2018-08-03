@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IMatch } from '../../../../shared/interfaces/match.interface';
-import { ICategory } from '../../../../shared/interfaces/category.interface';
-import { ILocation } from '../../../../shared/interfaces/location/location.interface';
-import { LocationService } from '../../../../shared/services/location/location.service';
-import { Observable } from 'rxjs/Rx';
+import { IMatch }                   from '../../../../shared/interfaces/match/match.interface';
+import { ICategory }                from '../../../../shared/interfaces/category.interface';
+import { ILocation }                from '../../../../shared/interfaces/location/location.interface';
+import { LocationService }          from '../../../../shared/services/location/location.service';
+import { Observable }               from 'rxjs/Rx';
 
 @Component({
   selector: 'match-preview',

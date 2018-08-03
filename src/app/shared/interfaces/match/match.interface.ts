@@ -1,6 +1,6 @@
-import { ICreation } from './creation.interface';
-import { IPublication } from './publication.interface';
-import * as firebase from 'firebase';
+import { ICreation }    from '../creation.interface';
+import { IPublication } from '../publication.interface';
+import * as firebase    from 'firebase';
 
 export interface IMatch {
 
@@ -10,6 +10,11 @@ export interface IMatch {
     assignedCategory: string;
     assignedMainCategory: string;
   };
+
+  assignedFormation?: string;
+
+  assignedPlayers?: string[];
+  assignedSubstitutes?: string[];
 
   assignedLocation: string;
   assignedTeam: string;

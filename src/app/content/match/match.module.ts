@@ -25,11 +25,13 @@ import { MatchPreviewComponent } from './match-detail/match-preview/match-previe
 import { LocationService } from '../../shared/services/location/location.service';
 import { ArticleService } from '../../shared/services/article/article.service';
 import { MatchEditMainComponent } from './match-edit/match-edit-main/match-edit-main.component';
-import { TeamService } from '../../shared/services/team/team.service';
-import { SeasonService } from '../../shared/services/season/season.service';
-import { MatchEditStartingElevenComponent } from './match-edit/match-edit-starting-eleven/match-edit-starting-eleven.component';
+import { TeamService }                                from '../../shared/services/team/team.service';
+import { SeasonService }                              from '../../shared/services/season/season.service';
+import { MatchEditStartingElevenComponent }           from './match-edit/match-edit-starting-eleven/match-edit-starting-eleven.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { ArticleCardComponent } from '../article/article-card/article-card.component';
+import { ArticleCardComponent }                       from '../article/article-card/article-card.component';
+import { MatchPlayerComponent }                       from './match-edit/match-edit-starting-eleven/match-player-list/match-player.component';
+import { MemberService }                              from '../../shared/services/member/member.service';
 
 @NgModule({
   imports: [
@@ -58,7 +60,8 @@ import { ArticleCardComponent } from '../article/article-card/article-card.compo
     MatchesComponent,
     MatchPreviewComponent,
     MatchEditMainComponent,
-    MatchEditStartingElevenComponent
+    MatchEditStartingElevenComponent,
+    MatchPlayerComponent
   ],
   providers: [
     ArticleService,
@@ -67,6 +70,7 @@ import { ArticleCardComponent } from '../article/article-card/article-card.compo
     LocationService,
     MatchResolver,
     MatchService,
+    MemberService,
     SeasonService,
     TeamService
   ]

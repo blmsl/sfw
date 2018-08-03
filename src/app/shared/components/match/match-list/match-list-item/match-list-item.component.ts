@@ -4,7 +4,7 @@ import {
   Input,
   OnInit
 }                           from '@angular/core';
-import { IMatch }           from '../../../../interfaces/match.interface';
+import { IMatch }           from '../../../../interfaces/match/match.interface';
 import { ICategory }        from '../../../../interfaces/category.interface';
 import { fadeOutAnimation } from '../../../../animations/fade-out.animations';
 

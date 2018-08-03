@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit }      from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IMatch } from '../../../shared/interfaces/match.interface';
-import { CategoryService } from '../../../shared/services/category/category.service';
-import { Observable } from 'rxjs/Rx';
-import { ICategory } from '../../../shared/interfaces/category.interface';
-import { ILocation } from '../../../shared/interfaces/location/location.interface';
-import { LocationService } from '../../../shared/services/location/location.service';
-import { IArticle } from '../../../shared/interfaces/article.interface';
-import { ArticleService } from '../../../shared/services/article/article.service';
+import { IMatch }                 from '../../../shared/interfaces/match/match.interface';
+import { CategoryService }        from '../../../shared/services/category/category.service';
+import { Observable }             from 'rxjs/Rx';
+import { ICategory }              from '../../../shared/interfaces/category.interface';
+import { ILocation }              from '../../../shared/interfaces/location/location.interface';
+import { LocationService }        from '../../../shared/services/location/location.service';
+import { IArticle }               from '../../../shared/interfaces/article.interface';
+import { ArticleService }         from '../../../shared/services/article/article.service';
 import { MatchService } from '../../../shared/services/match/match.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 

@@ -6,7 +6,7 @@
   <mat-card-subtitle></mat-card-subtitle>
 
   <mat-card-content *ngIf="team; else loadingTemplate">
-    <mat-tab-group class="demo-tab-group" [dynamicHeight]="true">
+    <mat-tab-group [dynamicHeight]="true">
       <mat-tab label="{{'general.teams.edit.mainTitle' | translate}}">
         <team-detail-main [seasons]="seasons$ | async"
                           [clubs]="clubs$ | async"

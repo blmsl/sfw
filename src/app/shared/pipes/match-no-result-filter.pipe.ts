@@ -2,7 +2,7 @@ import {
   Pipe,
   PipeTransform
 }                 from '@angular/core';
-import { IMatch } from '../interfaces/match.interface';
+import { IMatch } from '../interfaces/match/match.interface';
 
 @Pipe({
   name: 'matchNoResultFilter'

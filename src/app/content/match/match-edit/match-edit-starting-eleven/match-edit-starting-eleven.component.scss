@@ -1,0 +1,78 @@
+mat-card-content {
+  margin: 0;
+  padding: 0 !important;
+}
+
+.players {
+  background: transparent url('/assets/sfw/match/soccer-field.jpg') center center / cover no-repeat;
+  height: 888px;
+  display: flex;
+  flex-direction: row;
+  // -ms-flex-align:center;
+  // justify-content: space-around;
+  // z-index: 999;
+  //position: absolute;
+}
+
+.substitutions {
+}
+
+.player {
+  position: absolute;
+  width: 8%;
+}
+
+/**
+Horizontal alignment
+ */
+.keeper {
+  left: 3%;
+}
+
+.defense {
+  left: 15%;
+}
+
+.d-mdf {
+  left: 25%;
+}
+
+.mdf {
+  left: 35%;
+}
+
+.o-mdf {
+  left: 45%;
+}
+
+.offense {
+  left: 55%;
+}
+
+/**
+Vertical Alignment
+ */
+.centered {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.left-centered {
+  top: 26.5%;
+  transform: translateY(-26.5%);
+}
+
+.left {
+  top: 3%;
+  transform: translateY(-3%);
+}
+
+.right-centered {
+  top: 73.5%;
+  transform: translateY(-73.5%);
+}
+
+.right {
+  top: 97%;
+  transform: translateY(-97%);
+}
