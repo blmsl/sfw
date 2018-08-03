@@ -45,7 +45,7 @@ export class MatchService {
     {
       'title': '4-2-4',
       'mainFormation': 11,
-      'maxPlayers': 18,
+      'maxSubstitutes': 7,
       'positionList':
         [
           'keeper centered',
@@ -57,7 +57,7 @@ export class MatchService {
     {
       'title': '3-4-3',
       'mainFormation': 11,
-      'maxPlayers': 18,
+      'maxSubstitutes': 7,
       'positionList':
         [
           'keeper centered',
@@ -67,27 +67,27 @@ export class MatchService {
         ]
     },
     { 'title': '4-3-3', 'mainFormation': 11,
-      'maxPlayers': 18, 'positionList': [''] },
+      'maxSubstitutes': 7, 'positionList': [''] },
     { 'title': '5-3-2', 'mainFormation': 11,
-      'maxPlayers': 18, 'positionList': [''] },
+      'maxSubstitutes': 7, 'positionList': [''] },
     { 'title': '3-5-2', 'mainFormation': 11,
-      'maxPlayers': 18, 'positionList': [''] },
+      'maxSubstitutes': 7, 'positionList': [''] },
     { 'title': '5-4-1', 'mainFormation': 11,
-      'maxPlayers': 18, 'positionList': [''] },
+      'maxSubstitutes': 7, 'positionList': [''] },
     { 'title': '4-5-1', 'mainFormation': 11,
-      'maxPlayers': 18, 'positionList': [''] },
+      'maxSubstitutes': 7, 'positionList': [''] },
     { 'title': '4-2-3-1', 'mainFormation': 11,
-      'maxPlayers': 18, 'positionList': [''] },
+      'maxSubstitutes': 7, 'positionList': [''] },
     { 'title': '4-3-2-1', 'mainFormation': 11,
-      'maxPlayers': 18, 'positionList': [''] },
+      'maxSubstitutes': 7, 'positionList': [''] },
     { 'title': '4-1-4-1', 'mainFormation': 11,
-      'maxPlayers': 18, 'positionList': [''] },
+      'maxSubstitutes': 7, 'positionList': [''] },
     { 'title': '3-3-4', 'mainFormation': 11,
-      'maxPlayers': 18, 'positionList': [''] },
+      'maxSubstitutes': 7, 'positionList': [''] },
     { 'title': '3-3-1-3', 'mainFormation': 11,
-      'maxPlayers': 18, 'positionList': [''] },
+      'maxSubstitutes': 7, 'positionList': [''] },
     { 'title': '4-2-2-2', 'mainFormation': 11,
-      'maxPlayers': 18, 'positionList': [''] }
+      'maxSubstitutes': 7, 'positionList': [''] }
   ];
 
   matches$: Observable<IMatch[]>;
