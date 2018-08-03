@@ -5,13 +5,10 @@ mat-card-content {
 
 .players {
   background: transparent url('/assets/sfw/match/soccer-field.jpg') center center / cover no-repeat;
-  height: 888px;
+  min-height: 888px;
+  height: 80vh;
   display: flex;
   flex-direction: row;
-  // -ms-flex-align:center;
-  // justify-content: space-around;
-  // z-index: 999;
-  //position: absolute;
 }
 
 .substitutions {

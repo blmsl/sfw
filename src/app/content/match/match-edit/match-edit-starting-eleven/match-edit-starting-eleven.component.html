@@ -16,10 +16,6 @@
     </mat-form-field>
   </mat-card-title>
 
-  <pre *ngIf="form.get('assignedFormation').value">
-        {{tacticalFormations | filterBy: ['title'] : form.get('assignedFormation').value | json}}
-      </pre>
-
   <mat-card-content fxLayout="column"
                     fxLayout.gt-sm="row"
                     *ngIf="team.assignedPlayers && team.assignedPlayers.length > 0">
@@ -36,6 +32,13 @@
       <mat-card-subtitle>{{'general.matches.edit.substituteBench' | translate}}</mat-card-subtitle>
 
       <div fxLayout="row wrap">
+        <match-player [member]="null"></match-player>
+        <match-player [member]="null"></match-player>
+        <match-player [member]="null"></match-player>
+        <match-player [member]="null"></match-player>
+        <match-player [member]="null"></match-player>
+        <match-player [member]="null"></match-player>
+        <match-player [member]="null"></match-player>
         <!--<match-player
           *ngFor="let i = 0; i < (tacticalFormations | filterBy: ['title'] : form.get('assignedFormation').value)[0].maxSubstitutes; i++" fxFlex="100%"
                       [member]="null">
