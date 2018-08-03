@@ -30,7 +30,7 @@ import { SeasonService }                              from '../../shared/service
 import { MatchEditStartingElevenComponent }           from './match-edit/match-edit-starting-eleven/match-edit-starting-eleven.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ArticleCardComponent }                       from '../article/article-card/article-card.component';
-import { MatchPlayerComponent }                       from './match-edit/match-edit-starting-eleven/match-player-list/match-player.component';
+import { MatchPlayerComponent }                       from './match-edit/match-edit-starting-eleven/match-player/match-player.component';
 import { MemberService }                              from '../../shared/services/member/member.service';
 
 @NgModule({
