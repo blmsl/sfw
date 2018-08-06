@@ -7,6 +7,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
 import { CommonModule } from '@angular/common';
 import { TimeagoModule } from 'ngx-timeago';
+import { DragulaModule } from 'ng2-dragula';
 
 
 @NgModule({
@@ -14,12 +15,14 @@ import { TimeagoModule } from 'ngx-timeago';
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
-    // AngularFireDatabaseModule,
     CommonModule,
+    DragulaModule.forRoot(),
     /* ServiceWorkerModule.register("/ngsw-worker.js", {
       enabled: environment.production
     }),*/
-    RouterModule.forRoot(appRoutes, { enableTracing: environment.routerTracing }),
+    RouterModule.forRoot(appRoutes, {
+      enableTracing: environment.routerTracing
+    }),
     TimeagoModule.forRoot()
     // GtagModule.forRoot({ trackingId: 'UA-YOUR_TRACKING_ID', trackPageviews: true })
   ],

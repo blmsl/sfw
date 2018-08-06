@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IMatch }                                         from '../../../interfaces/match/match.interface';
-import { FormBuilder, FormGroup, Validators }             from '@angular/forms';
-import { debounceTime, distinctUntilChanged }             from 'rxjs/operators';
-import { MatchService }                                   from '../../../services/match/match.service';
+import { IMatch } from '../../../interfaces/match/match.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { MatchService } from '../../../services/match/match.service';
 
 @Component({
   selector: 'match-result-input',
@@ -20,7 +20,7 @@ export class MatchResultInputComponent implements OnInit {
   public isSaving: boolean = false;
 
   constructor(private fb: FormBuilder,
-              private matchService: MatchService) {
+    private matchService: MatchService) {
   }
 
   ngOnInit() {
@@ -53,14 +53,14 @@ export class MatchResultInputComponent implements OnInit {
   }
 
   changeCssClass() {
-    if(this.form.get('result.guestTeamGoals').invalid &&
+    if (this.form.get('result.guestTeamGoals').invalid &&
       (this.form.get('result.guestTeamGoals').touched || this.form.get('result.guestTeamGoals').dirty)
       || this.form.get('result.homeTeamGoals').invalid &&
-      (this.form.get('result.homeTeamGoals').touched || this.form.get('result.homeTeamGoals').dirty)){
+      (this.form.get('result.homeTeamGoals').touched || this.form.get('result.homeTeamGoals').dirty)) {
       this.cssClass = 'has-error';
       this.setCssClass.emit('danger');
     }
-    if(this.form.valid && !this.isSaving){
+    if (this.form.valid && !this.isSaving) {
       this.cssClass = '';
       this.setCssClass.emit('primary');
     }

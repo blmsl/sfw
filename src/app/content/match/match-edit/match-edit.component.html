@@ -18,6 +18,9 @@
                                [locations]="locations$ | async">
               </match-edit-main>
             </div>
+            <div>
+              <pre>{{match | json}}</pre>
+            </div>
           </div>
         </mat-tab>
         <mat-tab [label]="'general.matches.edit.startingEleven.title' | translate">
@@ -26,21 +29,29 @@
 
           <match-edit-starting-eleven *ngIf="form.get('assignedTeam').value"
                                       [form]="form"
+                                      (addPlayerToStartingEleven)="addPlayerToStartingEleven($event)"
                                       [team]="(teams | filterBy: ['id'] : form.get('assignedTeam').value)[0]">
           </match-edit-starting-eleven>
         </mat-tab>
         <mat-tab
           [label]="('general.matches.edit.articles' | translate) + ' & ' + ('general.matches.edit.match' | translate)">
           <div fxLayout="column"
+               *ngIf="articles$ |async as articles; else loadingTemplate"
                fxLayout.gt-sm="row"
                fxLayoutGap="10px">
             <div fxFlex.gt-sm="50">
-              <ul>
-                <li>Live-Bericht starten (Text und/oder Video)</li>
-              </ul>
+              <match-edit-events></match-edit-events>
             </div>
+
             <div fxFlex.gt-sm="50">
-              Artikel zu diesem Spiel<br/>
+              <div fxLayout="column"
+                   fxLayout.gt-sm="row"
+                   fxLayoutGap="10px">
+                <div fxFlex="50">
+                  <article-card *ngFor="let article of articles | filterBy: ['assignedMatch'] : match.id"
+                                [article]="article"></article-card>
+                </div>
+              </div>
             </div>
           </div>
         </mat-tab>

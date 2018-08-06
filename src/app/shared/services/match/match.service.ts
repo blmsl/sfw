@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-}                     from 'angularfire2/firestore';
-import { IMatch }     from '../../interfaces/match/match.interface';
-import { of }         from 'rxjs/index';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { IMatch } from '../../interfaces/match/match.interface';
+import { of } from 'rxjs/index';
 import { IFormation } from '../../interfaces/match/formation.interface';
-import * as firebase  from 'firebase';
 import Timestamp = firebase.firestore.Timestamp;
+import * as firebase from 'firebase';
 
 @Injectable()
 export class MatchService {
@@ -66,28 +63,59 @@ export class MatchService {
           'offense left', 'offense centered', 'offense right'
         ]
     },
-    { 'title': '4-3-3', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': [''] },
-    { 'title': '5-3-2', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': [''] },
-    { 'title': '3-5-2', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': [''] },
-    { 'title': '5-4-1', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': [''] },
-    { 'title': '4-5-1', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': [''] },
-    { 'title': '4-2-3-1', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': [''] },
-    { 'title': '4-3-2-1', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': [''] },
-    { 'title': '4-1-4-1', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': [''] },
-    { 'title': '3-3-4', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': [''] },
-    { 'title': '3-3-1-3', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': [''] },
-    { 'title': '4-2-2-2', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': [''] }
+    {
+      'title': '4-3-3', 'mainFormation': 11,
+      'maxSubstitutes': 7, 'positionList': ['']
+    },
+    {
+      'title': '5-3-2', 'mainFormation': 11,
+      'maxSubstitutes': 7, 'positionList': ['']
+    },
+    {
+      'title': '3-5-2',
+      'mainFormation': 11,
+      'maxSubstitutes': 7,
+      'positionList': [
+        'keeper centered',
+        'defense left', 'defense centered', 'defense right',
+        'd-mdf left-centered', 'd-mdf right-centered',
+        'mdf right', 'mdf left',
+        'o-mdf centered',
+        'offense left-centered', 'offense right-centered'
+      ]
+    },
+    {
+      'title': '5-4-1', 'mainFormation': 11,
+      'maxSubstitutes': 7, 'positionList': ['']
+    },
+    {
+      'title': '4-5-1', 'mainFormation': 11,
+      'maxSubstitutes': 7, 'positionList': ['']
+    },
+    {
+      'title': '4-2-3-1', 'mainFormation': 11,
+      'maxSubstitutes': 7, 'positionList': ['']
+    },
+    {
+      'title': '4-3-2-1', 'mainFormation': 11,
+      'maxSubstitutes': 7, 'positionList': ['']
+    },
+    {
+      'title': '4-1-4-1', 'mainFormation': 11,
+      'maxSubstitutes': 7, 'positionList': ['']
+    },
+    {
+      'title': '3-3-4', 'mainFormation': 11,
+      'maxSubstitutes': 7, 'positionList': ['']
+    },
+    {
+      'title': '3-3-1-3', 'mainFormation': 11,
+      'maxSubstitutes': 7, 'positionList': ['']
+    },
+    {
+      'title': '4-2-2-2', 'mainFormation': 11,
+      'maxSubstitutes': 7, 'positionList': ['']
+    }
   ];
 
   matches$: Observable<IMatch[]>;

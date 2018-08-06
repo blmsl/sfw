@@ -13,7 +13,7 @@ export class SeasonsWithTeamsFilterPipe implements PipeTransform {
       return seasons;
     }
 
-    let result = seasons.filter((season: ISeason) => {
+    const result = seasons.filter((season: ISeason) => {
       return teams.filter((team: ITeam) => {
         return team.assignedSeason && team.assignedSeason === season.id;
       });

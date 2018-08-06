@@ -1,7 +1,16 @@
 <mat-card>
   <img mat-card-image [src]="'/assets/sfw/placeholder/avatar_male.jpg'">
   <mat-card-content>
-    <span *ngIf="member">
+
+    <span *ngIf="assignedPosition && assignedPosition.length > 0 && members">
+      <span *ngIf="(members | filterBy: ['id'] : assignedPosition[0].memberId)[0] as member">
+      {{member.mainData.firstName}}
+      {{member.mainData.lastName}}
+      {{member.mainData.birthday |date :'dd.MM.yy' }}
+      </span>
+
+    </span>
+    <span *ngIf="member && member.mainData">
       {{member.mainData.firstName}}
       {{member.mainData.lastName}}
       {{member.mainData.birthday |date :'dd.MM.yy' }}

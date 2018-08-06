@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Moment }              from 'moment';
-import { IMatch }              from '../interfaces/match/match.interface';
-import * as moment             from 'moment';
+import { Moment } from 'moment';
+import { IMatch } from '../interfaces/match/match.interface';
+import * as moment from 'moment';
 
 @Pipe({
   name: 'matchFilter'

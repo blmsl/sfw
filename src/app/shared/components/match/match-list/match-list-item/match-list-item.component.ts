@@ -3,16 +3,16 @@ import {
   HostBinding,
   Input,
   OnInit
-}                           from '@angular/core';
-import { IMatch }           from '../../../../interfaces/match/match.interface';
-import { ICategory }        from '../../../../interfaces/category.interface';
+} from '@angular/core';
+import { IMatch } from '../../../../interfaces/match/match.interface';
+import { ICategory } from '../../../../interfaces/category.interface';
 import { fadeOutAnimation } from '../../../../animations/fade-out.animations';
 
 @Component({
   selector: 'match-list-item',
   templateUrl: './match-list-item.component.html',
-  styleUrls: [ './match-list-item.component.scss' ],
-  animations: [ fadeOutAnimation ]
+  styleUrls: ['./match-list-item.component.scss'],
+  animations: [fadeOutAnimation]
 })
 export class MatchListItemComponent implements OnInit {
 
@@ -33,7 +33,7 @@ export class MatchListItemComponent implements OnInit {
 
   setCssClass($event) {
     this.cssClass = 'alert-' + $event;
-    if($event === 'success'){
+    if ($event === 'success') {
       this.visibilityChanged = true;
     }
   }

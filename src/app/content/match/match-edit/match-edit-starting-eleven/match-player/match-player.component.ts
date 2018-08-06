@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit
-}                  from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IMember } from '../../../../../shared/interfaces/member/member.interface';
 
 @Component({
@@ -12,11 +8,15 @@ import { IMember } from '../../../../../shared/interfaces/member/member.interfac
 })
 export class MatchPlayerComponent implements OnInit {
 
+  @Input() members: IMember[];
   @Input() member: IMember;
+  @Input() assignedPosition: any;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    // console.log(this.assignedPosition);
   }
 
 }

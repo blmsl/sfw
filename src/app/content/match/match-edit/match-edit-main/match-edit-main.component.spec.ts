@@ -8,9 +8,9 @@ describe('MatchEditMainComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchEditMainComponent ]
+      declarations: [MatchEditMainComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

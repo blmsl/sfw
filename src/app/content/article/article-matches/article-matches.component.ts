@@ -1,13 +1,13 @@
 import {
   Component,
   OnInit
-}                          from '@angular/core';
-import { MatchService }    from '../../../shared/services/match/match.service';
-import { IMatch }          from '../../../shared/interfaces/match/match.interface';
-import { Observable }      from 'rxjs';
-import * as moment         from 'moment';
+} from '@angular/core';
+import { MatchService } from '../../../shared/services/match/match.service';
+import { IMatch } from '../../../shared/interfaces/match/match.interface';
+import { Observable } from 'rxjs';
+import * as moment from 'moment';
 import { CategoryService } from '../../../shared/services/category/category.service';
-import { ICategory }       from '../../../shared/interfaces/category.interface';
+import { ICategory } from '../../../shared/interfaces/category.interface';
 
 @Component({
   selector: 'article-matches',

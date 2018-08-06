@@ -1,11 +1,11 @@
-import { IMatch }       from './match/match.interface';
-import { ILocation }    from './location/location.interface';
-import { ITeam }        from './team/team.interface';
-import { ICategory }    from './category.interface';
-import { ITag }         from './tag.interface';
-import { ICreation }    from './creation.interface';
+import { IMatch } from './match/match.interface';
+import { ILocation } from './location/location.interface';
+import { ITeam } from './team/team.interface';
+import { ICategory } from './category.interface';
+import { ITag } from './tag.interface';
+import { ICreation } from './creation.interface';
 import { IPublication } from './publication.interface';
-import * as firebase    from 'firebase';
+import * as firebase from 'firebase';
 
 export interface IArticle {
 

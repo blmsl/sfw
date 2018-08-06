@@ -2,10 +2,10 @@ import {
   Component,
   Input,
   OnInit
-}                    from '@angular/core';
-import { ITeam }     from '../../../../shared/interfaces/team/team.interface';
+} from '@angular/core';
+import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import { ICategory } from '../../../../shared/interfaces/category.interface';
-import { IMatch }    from '../../../../shared/interfaces/match/match.interface';
+import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 
 @Component({
   selector: 'team-detail-matches',

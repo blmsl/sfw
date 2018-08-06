@@ -6,15 +6,15 @@ import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { IMember } from '../../../shared/interfaces/member/member.interface';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
-import { TeamService }     from '../../../shared/services/team/team.service';
-import { SeasonService }   from '../../../shared/services/season/season.service';
-import { ISeason }         from '../../../shared/interfaces/season.interface';
-import { IClub }           from '../../../shared/interfaces/club/club.interface';
-import { ClubService }     from '../../../shared/services/club/club.service';
-import { ILocation }       from '../../../shared/interfaces/location/location.interface';
+import { TeamService } from '../../../shared/services/team/team.service';
+import { SeasonService } from '../../../shared/services/season/season.service';
+import { ISeason } from '../../../shared/interfaces/season.interface';
+import { IClub } from '../../../shared/interfaces/club/club.interface';
+import { ClubService } from '../../../shared/services/club/club.service';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { LocationService } from '../../../shared/services/location/location.service';
-import { IMatch }          from '../../../shared/interfaces/match/match.interface';
-import { MatchService }    from '../../../shared/services/match/match.service';
+import { IMatch } from '../../../shared/interfaces/match/match.interface';
+import { MatchService } from '../../../shared/services/match/match.service';
 
 @Component({
   selector: 'team-detail',

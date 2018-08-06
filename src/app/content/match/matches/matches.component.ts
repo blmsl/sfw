@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild }                               from '@angular/core';
-import { IMatch }                                                     from '../../../shared/interfaces/match/match.interface';
-import { CategoryService }                                            from '../../../shared/services/category/category.service';
-import { MatchService }                                               from '../../../shared/services/match/match.service';
-import { ICategory }                                                  from '../../../shared/interfaces/category.interface';
-import { Observable }                                                 from 'rxjs/index';
-import * as moment                                                    from 'moment';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IMatch } from '../../../shared/interfaces/match/match.interface';
+import { CategoryService } from '../../../shared/services/category/category.service';
+import { MatchService } from '../../../shared/services/match/match.service';
+import { ICategory } from '../../../shared/interfaces/category.interface';
+import { Observable } from 'rxjs/index';
+import * as moment from 'moment';
 import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
-import { LocationService }                                            from '../../../shared/services/location/location.service';
+import { LocationService } from '../../../shared/services/location/location.service';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 
 @Component({
@@ -27,8 +27,8 @@ export class MatchesComponent implements OnInit {
   public config: PerfectScrollbarConfigInterface = {};
 
   constructor(private categoryService: CategoryService,
-              private locationService: LocationService,
-              public matchService: MatchService) {
+    private locationService: LocationService,
+    public matchService: MatchService) {
     this.matches$ = matchService.matches$;
     this.categories$ = categoryService.categories$;
     this.locations$ = locationService.locations$;

@@ -1,12 +1,12 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { IMatch }                                                 from '../../../shared/interfaces/match/match.interface';
-import { ActivatedRoute, Router }                                 from '@angular/router';
-import { MatchService }                                           from '../../../shared/services/match/match.service';
-import { AlertService }                                           from '../../../shared/services/alert/alert.service';
-import { FormBuilder, FormGroup, Validators }                     from '@angular/forms';
-import { debounceTime, distinctUntilChanged }                     from 'rxjs/operators';
-import { IPublication }                                           from '../../../shared/interfaces/publication.interface';
-import { LocationService }                                        from '../../../shared/services/location/location.service';
+import { IMatch } from '../../../shared/interfaces/match/match.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatchService } from '../../../shared/services/match/match.service';
+import { AlertService } from '../../../shared/services/alert/alert.service';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { IPublication } from '../../../shared/interfaces/publication.interface';
+import { LocationService } from '../../../shared/services/location/location.service';
 import { Observable } from 'rxjs/Rx';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
@@ -15,6 +15,8 @@ import { CategoryService } from '../../../shared/services/category/category.serv
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { ISeason } from '../../../shared/interfaces/season.interface';
 import { SeasonService } from '../../../shared/services/season/season.service';
+import { IArticle } from '../../../shared/interfaces/article.interface';
+import { ArticleService } from '../../../shared/services/article/article.service';
 
 @Component({
   selector: 'app-match-edit',
@@ -30,6 +32,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
   public teams$: Observable<ITeam[]>;
   public categories$: Observable<ICategory[]>;
   public seasons$: Observable<ISeason[]>;
+  public articles$: Observable<IArticle[]>;
 
   constructor(private route: ActivatedRoute,
               private cdRef: ChangeDetectorRef,
@@ -40,7 +43,9 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
               private teamService: TeamService,
               private categoryService: CategoryService,
               private seasonService: SeasonService,
+              private articleService: ArticleService,
               private router: Router) {
+    this.articles$ = articleService.articles$;
     this.locations$ = locationService.locations$;
     this.teams$ = teamService.teams$;
     this.categories$ = categoryService.categories$;
@@ -52,11 +57,11 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
 
     this.form = this.fb.group({
       assignedCategories: this.fb.group({
-        assignedCategory: [ this.match.assignedCategories.assignedCategory, [Validators.required]],
-        assignedMainCategory: [ this.match.assignedCategories.assignedMainCategory, [Validators.required]]
+        assignedCategory: [this.match.assignedCategories.assignedCategory, [Validators.required]],
+        assignedMainCategory: [this.match.assignedCategories.assignedMainCategory, [Validators.required]]
       }),
-      assignedLocation: [ this.match.assignedLocation, [Validators.required]],
-      assignedTeam: [ this.match.assignedTeam, [Validators.required]],
+      assignedLocation: [this.match.assignedLocation, [Validators.required]],
+      assignedTeam: [this.match.assignedTeam, [Validators.required]],
       creation: this.initCreation(),
       guestTeam: this.initTeam(this.match.guestTeam),
       homeTeam: this.initTeam(this.match.homeTeam),
@@ -71,11 +76,11 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
       result: this.initResult(this.match.result),
       title: [this.match.title, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       assignedFormation: this.match.assignedFormation,
-      assignedPlayers: this.match.assignedPlayers,
-      assignedSubstitutes: this.match.assignedSubstitutes
+      assignedPlayers: this.match.assignedPlayers ? this.initAssignedPlayers(this.match.assignedPlayers) : [],
+      assignedSubstitutes: this.match.assignedSubstitutes ? this.initAssignedSubstitutes(this.match.assignedSubstitutes) : []
     });
 
-    /* if (this.match.isImported) {
+    if (this.match.isImported) {
       this.form.get('assignedCategories').disable();
       this.form.get('assignedLocation').disable();
       this.form.get('assignedTeam').disable();
@@ -89,28 +94,66 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
       this.form.get('matchType').disable();
       this.form.get('title').disable();
     }
-  */
+
     this.form.valueChanges.pipe(
       debounceTime(1000),
       distinctUntilChanged()
     ).subscribe((changes: IMatch) => {
       console.log(changes);
-      /*this.match = Object.assign({}, this.match, changes);
-      if (!this.form.invalid) {
+      this.match = Object.assign({}, this.match, changes);
+      /* if (!this.form.invalid) {
         this.saveMatch();
       }*/
     });
   }
 
-  ngAfterViewChecked(){
+  ngAfterViewChecked() {
     this.cdRef.detectChanges();
+  }
+
+  initAssignedSubstitutes(assignedSubstitutes: string[]): FormArray {
+    const formArray = this.fb.array([]);
+    for (let i = 0; i < assignedSubstitutes.length; i++) {
+      let formControl = this.fb.group({
+        memberId: assignedSubstitutes[i],
+      });
+      formArray.push(formControl);
+    }
+    return formArray;
+  }
+
+  createAssignedPlayer(assignedPosition: {
+    memberId: string;
+    position: string;
+  }){
+    return this.fb.group({
+      memberId: assignedPosition['memberId'],
+      position: assignedPosition['position']
+    });
+  }
+
+  initAssignedPlayers(assignedPositions: {
+    memberId: string;
+    position: string;
+  }[]): FormArray {
+    const formArray = this.fb.array([]);
+    for (let i = 0; i < assignedPositions.length; i++) {
+      let formControl = this.createAssignedPlayer(assignedPositions[i]);
+      formArray.push(formControl);
+    }
+    return formArray;
+  }
+
+  addPlayerToStartingEleven($event: { memberId: string, position: string }): void {
+    const control = <FormArray>this.form.get('assignedPlayers');
+    control.push(this.createAssignedPlayer($event));
   }
 
   initTeam(data: {
     externalTeamLink?: string,
     logoURL?: string,
     title: string
-  }){
+  }): FormGroup {
     return this.fb.group({
       externalTeamLink: data.externalTeamLink ? data.externalTeamLink : '',
       logoURL: data.logoURL ? data.logoURL : '',
@@ -125,7 +168,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  initPublication(publication: IPublication){
+  initPublication(publication: IPublication): FormGroup {
     return this.fb.group({
       dateTime: publication.dateTime,
       from: publication.from,
@@ -137,7 +180,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     guestTeamGoals?: number | string,
     homeTeamGoals?: number | string,
     otherEvent?: number | string
-  }){
+  }): FormGroup {
     return this.fb.group({
       guestTeamGoals: result.guestTeamGoals,
       homeTeamGoals: result.homeTeamGoals,
@@ -145,14 +188,14 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  removeMatch(match: IMatch) {
+  removeMatch(match: IMatch): void {
     this.matchService.removeMatch(match).then(
       () => this.router.navigate(['/matches']).then(),
       (error: any) => this.alertService.showSnackBar('error', error)
     );
   }
 
-  saveMatch(redirect: boolean = false) {
+  saveMatch(redirect: boolean = false): void {
     let action;
     if (this.match.id) {
       action = this.matchService.updateMatch(this.match.id, this.match);
@@ -170,7 +213,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     );
   }
 
-  redirectToList() {
+  redirectToList(): void {
     this.router.navigate(['/matches']).then();
   }
 

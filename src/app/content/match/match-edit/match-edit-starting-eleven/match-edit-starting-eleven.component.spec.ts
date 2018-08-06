@@ -8,9 +8,9 @@ describe('MatchEditStartingElevenComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchEditStartingElevenComponent ]
+      declarations: [MatchEditStartingElevenComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

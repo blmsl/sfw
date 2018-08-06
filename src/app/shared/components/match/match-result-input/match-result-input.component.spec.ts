@@ -8,9 +8,9 @@ describe('MatchResultInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchResultInputComponent ]
+      declarations: [MatchResultInputComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -25,17 +25,22 @@ import { MatchPreviewComponent } from './match-detail/match-preview/match-previe
 import { LocationService } from '../../shared/services/location/location.service';
 import { ArticleService } from '../../shared/services/article/article.service';
 import { MatchEditMainComponent } from './match-edit/match-edit-main/match-edit-main.component';
-import { TeamService }                                from '../../shared/services/team/team.service';
-import { SeasonService }                              from '../../shared/services/season/season.service';
-import { MatchEditStartingElevenComponent }           from './match-edit/match-edit-starting-eleven/match-edit-starting-eleven.component';
+import { TeamService } from '../../shared/services/team/team.service';
+import { SeasonService } from '../../shared/services/season/season.service';
+import { MatchEditStartingElevenComponent } from './match-edit/match-edit-starting-eleven/match-edit-starting-eleven.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { ArticleCardComponent }                       from '../article/article-card/article-card.component';
-import { MatchPlayerComponent }                       from './match-edit/match-edit-starting-eleven/match-player/match-player.component';
-import { MemberService }                              from '../../shared/services/member/member.service';
+import { ArticleCardComponent } from '../article/article-card/article-card.component';
+import { MatchPlayerComponent } from './match-edit/match-edit-starting-eleven/match-player/match-player.component';
+import { MemberService } from '../../shared/services/member/member.service';
+import { IsMemberInStartingElevenFilterPipe } from '../../shared/pipes/is-member-in-starting-eleven-filter.pipe';
+import { IsMemberInSubstitutesListFilterPipe } from '../../shared/pipes/is-member-in-substitutes-list-filter.pipe';
+import { DragulaModule, DragulaService } from 'ng2-dragula';
+import { MatchEditEventsComponent } from './match-edit/match-edit-events/match-edit-events.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    DragulaModule,
     LinkModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -55,18 +60,22 @@ import { MemberService }                              from '../../shared/service
   ],
   declarations: [
     ArticleCardComponent,
+    IsMemberInSubstitutesListFilterPipe,
+    IsMemberInStartingElevenFilterPipe,
     MatchDetailComponent,
     MatchEditComponent,
     MatchesComponent,
     MatchPreviewComponent,
     MatchEditMainComponent,
     MatchEditStartingElevenComponent,
-    MatchPlayerComponent
+    MatchPlayerComponent,
+    MatchEditEventsComponent
   ],
   providers: [
     ArticleService,
     CategoryService,
     CategoryTypeService,
+    DragulaService,
     LocationService,
     MatchResolver,
     MatchService,
