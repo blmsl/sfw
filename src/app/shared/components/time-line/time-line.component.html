@@ -7,6 +7,7 @@
                   *ngIf="selectedTimeLineEvent === -1"
                   [form]="form"
                   [showLinks]="showLinks"
+                  (add)="add.emit()"
                   (delete)="delete.emit($event)"
                   (edit)="edit.emit($event)">
   </time-line-list>

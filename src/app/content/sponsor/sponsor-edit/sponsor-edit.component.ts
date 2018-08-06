@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ISponsor } from '../../../shared/interfaces/sponsor.interface';
 import { SponsorService } from '../../../shared/services/sponsor/sponsor.service';
@@ -20,12 +20,6 @@ import { AlertService } from '../../../shared/services/alert/alert.service';
 })
 export class SponsorEditComponent implements OnInit {
 
-  /* @HostListener('window:beforeunload')
-  canDeactivate(): Observable<boolean> | boolean {
-    return JSON.stringify(this.sponsor).toLowerCase() === JSON.stringify(this.savedSponsor).toLowerCase();
-  } */
-
-  // public savedSponsor : ISponsor;
   public sponsor: ISponsor;
   public form: FormGroup;
   public categories$: Observable<ICategory[]>;

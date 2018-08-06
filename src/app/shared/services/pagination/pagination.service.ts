@@ -1,11 +1,21 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+}                     from 'angularfire2/firestore';
+
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/take';
-import { map, take } from 'rxjs/internal/operators';
+import {
+  map,
+  scan,
+  take
+}                     from 'rxjs/internal/operators';
+import {
+  BehaviorSubject,
+  Observable
+}                     from 'rxjs/index';
 
 // Options to reproduce firestore queries consistently
 interface QueryConfig {
@@ -63,9 +73,11 @@ export class PaginationService {
 
     // Create the observable array for consumption in components
     this.data = this._data.asObservable()
-      .scan((acc, val) => {
-        return this.query.prepend ? val.concat(acc) : acc.concat(val);
-      });
+      .pipe(
+        scan((acc, val) => {
+          return this.query.prepend ? val.concat(acc) : acc.concat(val);
+        })
+      );
   }
 
 
@@ -83,14 +95,14 @@ export class PaginationService {
 
 
   /* Determines the doc snapshot to paginate query
-  private getCursor() {
-    const current = this._data.value;
+   private getCursor() {
+   const current = this._data.value;
 
-    if (current.length) {
-      return this.query.prepend ? current[0].id : current[current.length - 1].id;
-    }
-    return null;
-  } */
+   if (current.length) {
+   return this.query.prepend ? current[0].id : current[current.length - 1].id;
+   }
+   return null;
+   } */
 
   // Maps the snapshot to usable format the updates source
   private mapAndUpdate(col: AngularFirestoreCollection<any>) {
@@ -111,7 +123,7 @@ export class PaginationService {
         this._data.next(values);
         this.tempValues = this.tempValues.concat(values);
         col.ref.get().then((snapshot) => {
-          this.cursor = snapshot.docs[this.tempValues.length - 1];
+          this.cursor = snapshot.docs[ this.tempValues.length - 1 ];
           this._loading.next(false);
         });
 

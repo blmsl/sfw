@@ -61,7 +61,7 @@ export class MediaItemService {
     );
   }
 
-  getCurrentImage(assignedObjects: any, itemId: string): Observable<IMediaItem> {
+  getCurrentImage(assignedObjects: any, itemId: string, placeholderImage: string = ''): Observable<IMediaItem> {
     return this.getMediaItems(assignedObjects, itemId).valueChanges().pipe(
       map((mediaItems: IMediaItem[]) => {
         let foundFile: IMediaItem;
@@ -71,14 +71,21 @@ export class MediaItemService {
           }
         });
         // set default-Image
-        return foundFile ? foundFile : this.getImagePlaceHolder();
+        return foundFile ? foundFile : this.getImagePlaceHolder(placeholderImage);
       })
     );
   }
 
-  getImagePlaceHolder(): IMediaItem {
+  getImagePlaceHolder(placeholderImage: string): IMediaItem {
+    let returnString = '';
+
+    if(placeholderImage === ''){
+      returnString += '/assets/sfw/placeholder/no-image-found.jpg';
+    } else {
+      returnString += placeholderImage;
+    }
     return {
-      downloadURL: '/assets/sfw/placeholder/no-image-found.jpg'
+      downloadURL: returnString
     };
   }
 

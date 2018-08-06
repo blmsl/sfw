@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IArticle } from '../../../shared/interfaces/article.interface';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { IUser } from '../../../shared/interfaces/user/user.interface';
 import { UserService } from '../../../shared/services/user/user.service';
 

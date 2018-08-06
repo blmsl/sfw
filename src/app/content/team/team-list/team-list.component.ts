@@ -30,7 +30,9 @@ export class TeamListComponent {
   ngOnInit() {
     this.form = this.fb.group({
       searchFor: '',
-      limit: 10
+      limit: 10,
+      assignedCategory: '',
+      assignedSeason: ''
     });
   }
 

@@ -7,7 +7,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { IPublication } from '../../../shared/interfaces/publication.interface';
 import { LocationService } from '../../../shared/services/location/location.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
 import { TeamService } from '../../../shared/services/team/team.service';
@@ -35,16 +35,16 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
   public articles$: Observable<IArticle[]>;
 
   constructor(private route: ActivatedRoute,
-              private cdRef: ChangeDetectorRef,
-              private fb: FormBuilder,
-              private matchService: MatchService,
-              private alertService: AlertService,
-              private locationService: LocationService,
-              private teamService: TeamService,
-              private categoryService: CategoryService,
-              private seasonService: SeasonService,
-              private articleService: ArticleService,
-              private router: Router) {
+    private cdRef: ChangeDetectorRef,
+    private fb: FormBuilder,
+    private matchService: MatchService,
+    private alertService: AlertService,
+    private locationService: LocationService,
+    private teamService: TeamService,
+    private categoryService: CategoryService,
+    private seasonService: SeasonService,
+    private articleService: ArticleService,
+    private router: Router) {
     this.articles$ = articleService.articles$;
     this.locations$ = locationService.locations$;
     this.teams$ = teamService.teams$;
@@ -87,6 +87,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
       this.form.get('guestTeam').disable();
       this.form.get('homeTeam').disable();
       this.form.get('isHomeTeam').disable();
+      this.form.get('isImported').disable();
       this.form.get('isOfficialMatch').disable();
       this.form.get('matchEndDate').disable();
       this.form.get('matchLink').disable();
@@ -99,11 +100,10 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
       debounceTime(1000),
       distinctUntilChanged()
     ).subscribe((changes: IMatch) => {
-      console.log(changes);
       this.match = Object.assign({}, this.match, changes);
-      /* if (!this.form.invalid) {
+      if (!this.form.invalid) {
         this.saveMatch();
-      }*/
+      }
     });
   }
 
@@ -125,7 +125,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
   createAssignedPlayer(assignedPosition: {
     memberId: string;
     position: string;
-  }){
+  }) {
     return this.fb.group({
       memberId: assignedPosition['memberId'],
       position: assignedPosition['position']

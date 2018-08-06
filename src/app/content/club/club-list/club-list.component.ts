@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IClub } from '../../../shared/interfaces/club/club.interface';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { IMediaItem } from '../../../shared/interfaces/media/media-item.interface';
 import { MediaItemService } from '../../../shared/services/media/media-item.service';
 

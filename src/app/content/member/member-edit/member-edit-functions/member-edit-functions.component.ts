@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import { SeasonService } from '../../../../shared/services/season/season.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { ISeason } from '../../../../shared/interfaces/season.interface';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { TeamService } from '../../../../shared/services/team/team.service';

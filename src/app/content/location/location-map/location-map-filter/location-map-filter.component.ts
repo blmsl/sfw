@@ -7,12 +7,13 @@ import {
   OnInit,
   Output,
   ViewChild
-} from '@angular/core';
+}                                             from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ICategory } from '../../../../shared/interfaces/category.interface';
-import { MatSelectionList } from '@angular/material';
-import { ILocationFilter } from '../../../../shared/interfaces/location/location-filter.interface';
-import { IMarker } from '../../../../shared/interfaces/marker.interface';
+import { ICategory }                          from '../../../../shared/interfaces/category.interface';
+import { MatSelectionList }                   from '@angular/material';
+import { ILocationFilter }                    from '../../../../shared/interfaces/location/location-filter.interface';
+import { IMarker }                            from '../../../../shared/interfaces/marker.interface';
+import { debounceTime }                       from 'rxjs/internal/operators';
 
 @Component({
   selector: 'location-map-filter',
@@ -41,7 +42,9 @@ export class LocationMapFilterComponent implements OnInit, AfterViewInit {
       titleFilter: ''
     });
 
-    this.form.valueChanges.debounceTime(500).subscribe((changes: {
+    this.form.valueChanges.pipe(
+      debounceTime(500)
+    ).subscribe((changes: {
       titleFilter: string,
       categoriesFilter: string[]
     }) => {

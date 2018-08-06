@@ -13,8 +13,16 @@
         <mat-icon *ngIf="control.get('icon').value">{{control.get('icon').value}}</mat-icon>
         <span>{{control.get('title').value}}</span>
         <span fxFlex></span>
-        <span *ngIf="control.get('startDate').value">{{control.get('startDate').value | date: 'dd.MM.yy'}}</span>
-        <span *ngIf="control.get('endDate').value">&ndash; {{control.get('endDate').value | date: 'dd.MM.yy'}}</span>
+        <span *ngIf="control.get('startDate').value">
+          {{isFunction(control.get('startDate').value.toDate) ?
+           (control.get('startDate').value.toDate() | date: 'dd.MM.yy')
+          :(control.get('startDate').value | date: 'dd.MM.yy')}}
+        </span>
+        <span *ngIf="control.get('endDate').value">&ndash;
+          {{isFunction(control.get('endDate').value.toDate) ?
+           (control.get('endDate').value.toDate() | date: 'dd.MM.yy')
+          :(control.get('endDate').value | date: 'dd.MM.yy')}}
+        </span>
         <span fxFlex></span>
         <a (click)="edit.emit(i)" title="{{'general.edit' | translate}}" *ngIf="showLinks">
           <mat-icon color="accent">edit</mat-icon>
@@ -32,10 +40,20 @@
         <strong *ngIf="article.subTitle">{{article.subTitle}}</strong><br/>
         <p [innerHTML]="article.text"></p>
       </div>
+      <p *ngIf="!control.get('assignedArticle').value">
+        {{'general.timeLine.noAssignedArticle' | translate}}
+      </p>
     </ng-template>
 
   </mat-expansion-panel>
 </mat-accordion>
+
+<button style="margin-top: 25px"
+        mat-raised-button
+        color="primary"
+        (click)="add.emit()">
+  {{ 'general.timeLine.addEvent' | translate}}
+</button>
 
 
 <ng-template #noEventsTemplate>

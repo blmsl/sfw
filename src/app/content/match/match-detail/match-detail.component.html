@@ -42,7 +42,7 @@
                        fxLayout.gt-sm="row"
                        fxLayoutGap="10px"
                        *ngIf="(articles | filterBy: ['assignedMatch'] : match.id).length > 0">
-                    <div fxFlex="25"
+                    <div fxFlex="50"
                          *ngFor="let article of articles | filterBy: ['assignedMatch'] : match.id">
                       <article-card [article]="article"></article-card>
                     </div>

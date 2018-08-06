@@ -24,4 +24,8 @@ export class TimeLineListComponent implements OnInit {
   ngOnInit() {
   }
 
+  isFunction(val) {
+    return typeof val === 'function';
+  }
+
 }

@@ -3,7 +3,7 @@ import { ISponsor } from '../../../../shared/interfaces/sponsor.interface';
 import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { MediaItemService } from '../../../../shared/services/media/media-item.service';
 import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 
 const SMALL_WIDTH_BREAKPOINT = 960;
 

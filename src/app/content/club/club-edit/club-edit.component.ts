@@ -93,7 +93,7 @@ export class ClubEditComponent implements OnInit {
 
   initCreation(): FormGroup {
     return this.fb.group({
-      at: this.club.creation.at,
+      at: this.club.creation.at.toDate(),
       from: this.club.creation.by
     });
   }

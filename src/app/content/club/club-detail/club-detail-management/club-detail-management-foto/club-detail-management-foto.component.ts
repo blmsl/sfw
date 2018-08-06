@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IClub } from '../../../../../shared/interfaces/club/club.interface';
 import { MediaItemService } from '../../../../../shared/services/media/media-item.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { IMediaItem } from '../../../../../shared/interfaces/media/media-item.interface';
 
 @Component({

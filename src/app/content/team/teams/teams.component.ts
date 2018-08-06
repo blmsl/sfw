@@ -27,7 +27,7 @@ export class TeamsComponent {
     private locationService: LocationService,
     private seasonService: SeasonService,
     private teamService: TeamService) {
-    this.categories$ = categoryService.categories$;
+    this.categories$ = categoryService.getCategoriesByCategoryType('team.types');
     this.seasons$ = seasonService.seasons$;
     this.clubs$ = clubService.clubs$;
     this.teams$ = teamService.teams$;

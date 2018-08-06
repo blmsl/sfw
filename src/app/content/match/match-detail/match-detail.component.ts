@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IMatch } from '../../../shared/interfaces/match/match.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { LocationService } from '../../../shared/services/location/location.service';

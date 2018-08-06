@@ -134,6 +134,7 @@ export class TeamEditComponent implements OnInit {
   }
 
   addEvent(): void {
+    console.log('HIER');
     const control = <FormArray>this.form.controls['assignedEvents'];
     const event: ITimeLineEvent = {
       title: ''
@@ -160,7 +161,7 @@ export class TeamEditComponent implements OnInit {
 
   initCreation(): FormGroup {
     return this.fb.group({
-      at: this.team.creation.at,
+      at: this.team.creation.at.toDate(),
       from: this.team.creation.by
     });
   }

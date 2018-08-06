@@ -36,6 +36,8 @@ import { IsMemberInStartingElevenFilterPipe } from '../../shared/pipes/is-member
 import { IsMemberInSubstitutesListFilterPipe } from '../../shared/pipes/is-member-in-substitutes-list-filter.pipe';
 import { DragulaModule, DragulaService } from 'ng2-dragula';
 import { MatchEditEventsComponent } from './match-edit/match-edit-events/match-edit-events.component';
+import { MatchEditEventFormComponent } from './match-edit/match-edit-events/match-edit-event-form/match-edit-event-form.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   imports: [
@@ -54,6 +56,7 @@ import { MatchEditEventsComponent } from './match-edit/match-edit-events/match-e
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     PerfectScrollbarModule,
+    QuillModule,
     SharedModule,
     SharedMatchModule,
     matchRoutingModule
@@ -69,7 +72,8 @@ import { MatchEditEventsComponent } from './match-edit/match-edit-events/match-e
     MatchEditMainComponent,
     MatchEditStartingElevenComponent,
     MatchPlayerComponent,
-    MatchEditEventsComponent
+    MatchEditEventsComponent,
+    MatchEditEventFormComponent
   ],
   providers: [
     ArticleService,

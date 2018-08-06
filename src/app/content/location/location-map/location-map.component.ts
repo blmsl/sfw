@@ -11,7 +11,7 @@ import { FormGroup } from '@angular/forms';
 import { MatListOption, MatSelectionList } from '@angular/material';
 import { ILocationFilter } from '../../../shared/interfaces/location/location-filter.interface';
 import { AlertService } from '../../../shared/services/alert/alert.service';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/index';
 
 @Component({
   selector: 'location-map',

@@ -4,7 +4,7 @@ import { IFormation } from '../../../../shared/interfaces/match/formation.interf
 import { MatchService } from '../../../../shared/services/match/match.service';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import { MemberService } from '../../../../shared/services/member/member.service';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable, Subscription } from 'rxjs/index';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { DragulaService } from 'ng2-dragula';
 
@@ -28,9 +28,9 @@ export class MatchEditStartingElevenComponent implements OnInit, OnDestroy {
   public playerList: string = 'playerList';
 
   constructor(private fb: FormBuilder,
-              private dragulaService: DragulaService,
-              private matchService: MatchService,
-              private memberService: MemberService) {
+    private dragulaService: DragulaService,
+    private matchService: MatchService,
+    private memberService: MemberService) {
     this.members$ = memberService.members$;
     this.tacticalFormations = matchService.getFormations();
   }
@@ -47,10 +47,10 @@ export class MatchEditStartingElevenComponent implements OnInit, OnDestroy {
         console.log(el.id);
         console.log(target);
         console.log(source);
-        if(sibling && sibling.className.indexOf('player') > -1) {
+        if (sibling && sibling.className.indexOf('player') > -1) {
           console.log(sibling.className); // "ng-star inserted" "player"
-          let newString = sibling.className.replace("ng-star-inserted","");
-          let className = newString.replace("player","").trim();
+          let newString = sibling.className.replace("ng-star-inserted", "");
+          let className = newString.replace("player", "").trim();
           console.log(className);
           this.addPlayerToStartingEleven.emit({
             memberId: el.id,

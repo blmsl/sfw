@@ -40,11 +40,11 @@
 
       <div fxLayout="row wrap"
            [dragula]="playerList">
-        <match-player
+        <!--<match-player
           *ngFor="let member of getSubstitutesList((tacticalFormations | filterBy: ['title'] : form.get('assignedFormation').value)[0].maxSubstitutes, form.get('assignedSubstitutes').value, members)"
           [id]="member.id"
           [member]="member">
-        </match-player>
+        </match-player>-->
       </div>
 
     </div>

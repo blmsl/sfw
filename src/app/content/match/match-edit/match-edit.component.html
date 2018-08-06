@@ -10,7 +10,7 @@
           <div fxLayout="column"
                fxLayout.gt-sm="row"
                fxLayoutGap="10px">
-            <div fxFlex.gt-sm="40">
+            <div fxFlex.gt-sm="70">
               <match-edit-main [form]="form"
                                [categories]="categories$ | async"
                                [teams]="teams"
@@ -18,7 +18,7 @@
                                [locations]="locations$ | async">
               </match-edit-main>
             </div>
-            <div>
+            <div fxFlex.gt-sm="30">
               <pre>{{match | json}}</pre>
             </div>
           </div>
@@ -27,7 +27,7 @@
 
           <p *ngIf="!form.get('assignedTeam').value">{{'general.matches.edit.noAssignedTeam' | translate}}</p>
 
-          <match-edit-starting-eleven *ngIf="form.get('assignedTeam').value"
+          <match-edit-starting-eleven *ngIf="form.get('assignedTeam').value && teams"
                                       [form]="form"
                                       (addPlayerToStartingEleven)="addPlayerToStartingEleven($event)"
                                       [team]="(teams | filterBy: ['id'] : form.get('assignedTeam').value)[0]">

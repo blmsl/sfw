@@ -3,7 +3,7 @@ import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { ICategory } from '../../../../shared/interfaces/category.interface';
 import { MediaItemService } from '../../../../shared/services/media/media-item.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
 
 @Component({

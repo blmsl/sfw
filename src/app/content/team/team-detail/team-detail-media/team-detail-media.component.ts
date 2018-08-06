@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import { MediaItemService } from '../../../../shared/services/media/media-item.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
 
 @Component({

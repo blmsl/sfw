@@ -20,7 +20,10 @@
 
   <div fxFlex.gt-sm="50">
     <h3>{{'general.teams.edit.management.title' | translate}}</h3>
-    <p *ngIf="!team.assignedPositions">{{'general.teams.edit.position.noPosition' | translate}}</p>
+
+    <p *ngIf="!team.assignedPositions || !team.assignedPositions.length">
+      {{'general.teams.edit.position.noPosition' |
+      translate}}</p>
 
     <div *ngFor="let position of team.assignedPositions | orderBy: 'type'" style="margin-bottom: 25px;">
 

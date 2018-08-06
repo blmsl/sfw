@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IMember } from '../interfaces/member/member.interface';
 import * as moment from 'moment';
-import { after } from 'selenium-webdriver/testing';
 import { Moment } from 'moment';
 
 @Pipe({

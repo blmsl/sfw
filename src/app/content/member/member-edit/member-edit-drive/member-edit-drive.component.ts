@@ -3,7 +3,7 @@ import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { FormGroup } from '@angular/forms';
 import { MemberStateService } from '../../../../shared/services/member/member-state.service';
 import { ClubService } from '../../../../shared/services/club/club.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { IClub } from '../../../../shared/interfaces/club/club.interface';
 
 @Component({

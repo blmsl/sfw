@@ -1,0 +1,68 @@
+<mat-card *ngIf="form">
+  <mat-card-title>
+    {{'general.matches.edit.events.createEvent' | translate}}
+  </mat-card-title>
+
+  <mat-card-content [formGroup]="form">
+
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <mat-form-field fxFlex.gt-sm="50">
+        <input matInput
+               placeholder="{{'general.matches.edit.events.inputs.title' | translate}}"
+               formControlName="title"/>
+      </mat-form-field>
+
+      <mat-form-field fxFlex.gt-sm="30">
+        <mat-select placeholder="{{'general.matches.edit.events.inputs.assignedEventCategory' | translate}}"
+                    formControlName="assignedEventCategory">
+          <mat-option *ngFor="let category of assignedEventCategories"
+                      [value]="category.id">
+            {{category.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex.gt-sm="18">
+        <mat-select placeholder="{{'general.matches.edit.events.inputs.playMinute' | translate}}"
+                    formControlName="playMinute">
+          <mat-option *ngFor="let minute of playMinutes"
+                      [value]="minute">
+            {{minute}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column">
+      <div fxFlex.gt-sm="100">
+        <label style="margin-top: 15px;">
+          {{'general.matches.edit.events.inputs.description' | translate}}
+        </label><br/>
+        <quill-editor [style]="{height: '150px'}"
+                      formControlName="description">
+        </quill-editor>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button mat-raised-button
+              color="primary"
+              [disabled]="form.invalid"
+              (click)="save.emit()">
+        {{ 'general.save' | translate }}
+      </button>
+      <button mat-raised-button
+              color="primary"
+              (click)="cancel.emit()">
+        {{ 'general.cancel' | translate }}
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

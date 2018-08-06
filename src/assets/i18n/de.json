@@ -576,6 +576,17 @@
       },
       "edit": {
         "articles": "Artikel",
+        "events": {
+          "createEvent": "Neues Ereignis erstellen",
+          "inputs": {
+            "assignedEventCategory": "Art des Ereignisses",
+            "description": "Freitext",
+            "playMinute": "Spielminute",
+            "title": "Titel"
+          },
+          "noEventsFound": "Bisher wurden noch keine Ereignisse für dieses Spiel gespeichert.",
+          "title": "Livebericht zum Spiel"
+        },
         "inputs": {
           "category": "Kategorie",
           "categoryHeader": "Verknüpfte Kategorien",
@@ -903,6 +914,8 @@
       "event": {
         "main": "Kalender"
       },
+      "group": "Du gehörst zur Gruppe der ",
+      "hello": "Hallo",
       "location": {
         "create": "Treffpunkt erstellen",
         "detail": "Treffpunktdetails",
@@ -914,6 +927,11 @@
         "statistics": "Statistiken",
         "types": {
           "main": "Platzarten"
+        }
+      },
+      "match": {
+        "event-types": {
+          "main": "Spielereignisse"
         }
       },
       "matches": {
@@ -1360,6 +1378,12 @@
         "createTeam": "Mannschaft hinzufügen",
         "latestMatchPreviews": "Letzte Vorberichte",
         "latestMatchReviews": "Letzte Spielberichte",
+        "pagination": {
+          "allCategories": "Alle Mannschaftsarten",
+          "allSeasons": "Alle Saisons",
+          "byCategory": "Mannschaftsart filtern",
+          "bySeason": "Saison filtern"
+        },
         "noResult": "Es wurden noch keine Mannschaften erstellt.",
         "teamOfTheMonth": "Mannschaft des Monats",
         "teamsPerPage": "Mannschaften pro Seite",
@@ -1377,6 +1401,7 @@
       "endDate": "Enddatum",
       "icon": "Verknüpftes Icon",
       "listEvents": "Liste",
+      "noAssignedArticle": "Mit diesem Ereignis wurde noch kein Artikel verknüpft.",
       "noEvents": "Es wurden noch keine Ereignisse gespeichert",
       "saveEvent": "Ereignis speichern",
       "startDate": "Startdatum",

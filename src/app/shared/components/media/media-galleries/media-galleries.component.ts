@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MediaGalleryService } from '../../../services/media/media-gallery.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { IMediaGallery } from '../../../interfaces/media/media-gallery.interface';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';

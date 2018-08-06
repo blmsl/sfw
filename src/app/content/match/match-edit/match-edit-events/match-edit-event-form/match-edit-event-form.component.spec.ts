@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MatchEditEventsComponent } from './match-edit-events.component';
+import { MatchEditEventFormComponent } from './match-edit-event-form.component';
 
-describe('MatchEditEventsComponent', () => {
-  let component: MatchEditEventsComponent;
-  let fixture: ComponentFixture<MatchEditEventsComponent>;
+describe('MatchEditEventFormComponent', () => {
+  let component: MatchEditEventFormComponent;
+  let fixture: ComponentFixture<MatchEditEventFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MatchEditEventsComponent]
+      declarations: [MatchEditEventFormComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MatchEditEventsComponent);
+    fixture = TestBed.createComponent(MatchEditEventFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

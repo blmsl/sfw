@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 import { AlertComponent } from '../../../shared/directives/alert/alert.component';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/index';
 
 @Component({
   selector: 'sign-in',

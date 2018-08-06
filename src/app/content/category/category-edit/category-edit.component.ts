@@ -60,7 +60,7 @@ export class CategoryEditComponent implements OnInit {
     this.users$ = this.userService.users$;
 
     this.form = this.fb.group({
-      title: [this.category.title, [Validators.required, Validators.minLength(5), Validators.maxLength(this.titleMaxLength)]],
+      title: [this.category.title, [Validators.required, Validators.minLength(3), Validators.maxLength(this.titleMaxLength)]],
       assignedCategoryType: [this.category.assignedCategoryType, [Validators.required]],
       description: this.category.description,
       creation: this.initCreation()
@@ -85,7 +85,7 @@ export class CategoryEditComponent implements OnInit {
 
   initCreation() {
     return this.fb.group({
-      at: this.category.creation.at,
+      at: this.category.creation.at.toDate(),
       from: this.category.creation.by
     });
   }

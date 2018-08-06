@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { MediaItemService } from '../../../services/media/media-item.service';
 
 @Component({

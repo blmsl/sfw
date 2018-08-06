@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IUser } from '../../../../shared/interfaces/user/user.interface';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { UserService } from '../../../../shared/services/user/user.service';
 import { ILocation } from '../../../../shared/interfaces/location/location.interface';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';

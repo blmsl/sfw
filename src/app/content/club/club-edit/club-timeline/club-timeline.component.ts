@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ArticleService } from '../../../../shared/services/article/article.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { IArticle } from '../../../../shared/interfaces/article.interface';
 
 @Component({

@@ -149,7 +149,7 @@ export class LocationEditComponent implements OnInit {
 
   initCreation(): FormGroup {
     return this.fb.group({
-      at: this.location.creation.at,
+      at: this.location.creation.at.toDate(),
       from: this.location.creation.by
     });
   }

@@ -8,8 +8,7 @@ import { MediaItemService } from '../../../services/media/media-item.service';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 import { AlertService } from '../../../services/alert/alert.service';
 import { AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
-import { Observable } from 'rxjs/Rx';
-import { of } from 'rxjs/index';
+import { Observable } from 'rxjs/index';
 
 @Component({
   selector: 'media-uploader',

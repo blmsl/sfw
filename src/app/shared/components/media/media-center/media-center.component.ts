@@ -3,7 +3,7 @@ import { IUploaderConfig } from '../../../interfaces/media/uploader-config.inter
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
 import { MediaItemService } from '../../../services/media/media-item.service';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { AlertService } from '../../../services/alert/alert.service';
 

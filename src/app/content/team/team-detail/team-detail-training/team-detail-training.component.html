@@ -3,6 +3,10 @@
      fxLayoutGap="10px"
      *ngIf="locations; else loadingTemplate">
 
+  <p *ngIf="!team.assignedTrainings || !team.assignedTrainings.length">
+    {{'general.teams.edit.training.noTraining' | translate}}
+  </p>
+
   <div *ngFor="let training of team.assignedTrainings">
     <mat-list dense>
       <mat-list-item>

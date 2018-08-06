@@ -1,7 +1,29 @@
-<div fxLayout="column" style="padding: 10px; height: 90px; border: 1px dashed #cecece" fxHide.xs>
-  <span>UserImage</span>
-  <span>UserName</span>
-  <span>Logged in since</span>
+<div fxLayout="column"
+     style="padding: 10px; border: 1px dashed #cecece"
+     fxHide.xs>
+
+  <mat-card *ngIf="authService.user$ | async as user">
+    <mat-card-header>
+      <mat-card-title>
+        {{'general.menu.hello' | translate}}
+        <span style="font-weight: bolder">{{user.firstName}}!</span>
+      </mat-card-title>
+    </mat-card-header>
+    <img *ngIf="memberImage | async as image; else loadingTemplate" mat-card-image [src]="image.downloadURL">
+    <mat-card-content>
+      {{'general.menu.group' | translate}}
+      <span *ngIf="user.assignedRoles.admin">
+      {{'general.users.edit.roles.admin' | translate}}
+    </span>
+      <span *ngIf="!user.assignedRoles.admin && user.assignedRoles.editor">
+      {{'general.users.edit.roles.editor' | translate}}
+    </span>
+      <span *ngIf="!user.assignedRoles.admin && !user.assignedRoles.editor">
+      {{'general.users.edit.roles.subscriber' | translate}}
+    </span>
+    </mat-card-content>
+  </mat-card>
+
 </div>
 
 <mat-nav-list appAccordion class="navigation">
@@ -43,4 +65,6 @@
   </mat-list-item>
 </mat-nav-list>
 
-<pre *ngIf="authService.user$ | async as user">{{user | json}}</pre>
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

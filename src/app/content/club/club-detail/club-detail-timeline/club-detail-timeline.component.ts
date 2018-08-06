@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ITimeLineEvent } from '../../../../shared/interfaces/time-line-event.interface';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { IArticle } from '../../../../shared/interfaces/article.interface';
 import { ArticleService } from '../../../../shared/services/article/article.service';
 

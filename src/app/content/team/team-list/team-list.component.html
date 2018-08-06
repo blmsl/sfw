@@ -1,9 +1,9 @@
-<div fxLayout.gt-sm="row"
-     fxLayout="column"
+<div fxLayout="column"
+     fxLayout.gt-sm="row wrap"
      fxLayoutGap="10px"
      [formGroup]="form">
 
-  <mat-form-field fxFlex="100">
+  <mat-form-field fxFlex="15">
     <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}" formControlName="limit">
       <mat-option [value]="teams.length" *ngIf="teams">
         {{ 'general.pagination.allItems' | translate}}
@@ -14,15 +14,39 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field fxFlex="15">
+    <mat-select placeholder="{{ 'general.teams.list.pagination.bySeason' | translate}}"
+                formControlName="assignedSeason">
+      <mat-option [value]="">
+        {{ 'general.teams.list.pagination.allSeasons' | translate}}
+      </mat-option>
+      <mat-option *ngFor="let season of seasons | orderBy: ['title']" [value]="season.id">
+        {{ season.title }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-  <div fxFlex="100">
+  <mat-form-field fxFlex="15">
+    <mat-select placeholder="{{ 'general.teams.list.pagination.byCategory' | translate}}"
+                formControlName="assignedCategory">
+      <mat-option [value]="">
+        {{ 'general.teams.list.pagination.allCategories' | translate}}
+      </mat-option>
+      <mat-option *ngFor="let category of categories | orderBy: ['title']" [value]="category.id">
+        {{ category.title }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div fxFlex="25">
     <input style="padding:10px; width: 90%"
            placeholder="{{ 'general.typeToFilter' | translate}}"
            formControlName="searchFor"/>
   </div>
 
+  <span fxFlex=""></span>
 
-  <div fxFlex="100">
+  <div>
     <a mat-raised-button color="primary" [routerLink]="['../create']">
       {{ 'general.teams.list.createTeam' | translate}}
     </a>
@@ -44,7 +68,10 @@
                    [footerHeight]="50"
                    [rowHeight]="'auto'"
                    [limit]="form.controls['limit'].value"
-                   [rows]="teams | orderBy: ['title'] | filterBy: ['title'] : form.controls['searchFor'].value">
+                   [rows]="teams | orderBy: ['title']
+                   | filterBy: ['title', 'subTitle'] : form.get('searchFor').value
+                   | filterBy: ['assignedTeamCategories']: form.get('assignedCategory').value
+                   | filterBy: ['assignedSeason']: form.get('assignedSeason').value">
       <ngx-datatable-column name="Title">
         <ng-template let-column="column" ngx-datatable-header-template>
           {{'general.teams.edit.title' | translate}}

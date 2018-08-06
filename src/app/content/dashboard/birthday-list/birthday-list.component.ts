@@ -2,7 +2,7 @@ import { AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit } from '@
 import { IMember } from '../../../shared/interfaces/member/member.interface';
 import { MemberService } from '../../../shared/services/member/member.service';
 import { MediaItemService } from '../../../shared/services/media/media-item.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/index';
 import { IMediaItem } from '../../../shared/interfaces/media/media-item.interface';
 
 @Component({

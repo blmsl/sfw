@@ -1,6 +1,7 @@
 import { ICreation } from '../creation.interface';
 import { IPublication } from '../publication.interface';
 import * as firebase from 'firebase';
+import { IMatchEvent } from './match-event.interface';
 
 export interface IMatch {
 
@@ -11,6 +12,7 @@ export interface IMatch {
     assignedMainCategory: string;
   };
 
+  assignedEvents?: IMatchEvent[];
   assignedFormation?: string;
 
   assignedPlayers?: {
