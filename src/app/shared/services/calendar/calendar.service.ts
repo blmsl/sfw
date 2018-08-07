@@ -1,15 +1,15 @@
-import { Injectable }     from '@angular/core';
-import { HttpClient }     from '@angular/common/http';
-import * as moment        from 'moment';
-import { Observable }     from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment';
+import { Observable } from 'rxjs';
 import {
   map,
   switchMap,
   take
-}                         from 'rxjs/internal/operators';
-import { IMember }        from '../../interfaces/member/member.interface';
+} from 'rxjs/internal/operators';
+import { IMember } from '../../interfaces/member/member.interface';
 import { ICalendarEvent } from '../../interfaces/calendar-event.interface';
-import { MemberService }  from '../member/member.service';
+import { MemberService } from '../member/member.service';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class CalendarService {
   private url: string;
 
   constructor(private http: HttpClient,
-              private memberService: MemberService) {
+    private memberService: MemberService) {
     // const timeMin = moment().subtract('6', 'months').toISOString();
     // const timeMax = moment().add('1', 'years').endOf('year').toISOString();
     // this.url = 'https://www.googleapis.com/calendar/v3/calendars/' + environment.googleCalendar.id +
@@ -51,15 +51,15 @@ export class CalendarService {
         let events: ICalendarEvent[] = [];
 
         for (let i = 0; i < members.length; i++) {
-          if (members[ i ].mainData.birthday) {
+          if (members[i].mainData.birthday) {
             const event: ICalendarEvent = {
-              title: 'Geburtstag von ' + members[ i ].mainData.firstName + ' ' + members[ i ].mainData.lastName + ' (' + this.memberService.calculateAge(members[ i ].mainData.birthday) + ' Jahre)',
-              start: moment(members[ i ].mainData.birthday).set('year', moment().year()).format('YYYY-MM-DD')
+              title: 'Geburtstag von ' + members[i].mainData.firstName + ' ' + members[i].mainData.lastName + ' (' + this.memberService.calculateAge(members[i].mainData.birthday) + ' Jahre)',
+              start: moment(members[i].mainData.birthday).set('year', moment().year()).format('YYYY-MM-DD')
             };
             events.push(event);
           }
         }
-        return [ events ];
+        return [events];
       }),
       take(1)
     );

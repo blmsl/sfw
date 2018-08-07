@@ -1,8 +1,8 @@
-import { Injectable }    from '@angular/core';
-import { HttpClient }    from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { MapsAPILoader } from '@agm/core';
-import { IAddress }      from '../../interfaces/location/address.interface';
-import { Observable }    from 'rxjs/index';
+import { IAddress } from '../../interfaces/location/address.interface';
+import { Observable } from 'rxjs/index';
 
 declare var google: any;
 

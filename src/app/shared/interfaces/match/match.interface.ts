@@ -12,7 +12,7 @@ export interface IMatch {
     assignedMainCategory: string;
   };
 
-  assignedEvents?: IMatchEvent[];
+  assignedMatchEvents?: IMatchEvent[];
   assignedFormation?: string;
 
   assignedPlayers?: {

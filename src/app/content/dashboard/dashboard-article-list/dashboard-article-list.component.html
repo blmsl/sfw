@@ -14,16 +14,16 @@
           <mat-card-header>
             <mat-card-title><a [routerLink]="['/articles/edit', article.id]">{{article.title}}</a></mat-card-title>
             <mat-card-subtitle>
-              {{article.creation.at.seconds *1000 | timeago:live}} -
+              {{article.creation.at.toDate() | timeago:live}} -
               <user-avatar [userId]="article.creation.by"
                            [users]="users">
               </user-avatar>
             </mat-card-subtitle>
           </mat-card-header>
           <hr />
-          <media-avatar [assignedObjects]="assignedObjects"
+          <!--<media-avatar [assignedObjects]="assignedObjects"
                         [itemId]="article.id">
-          </media-avatar>
+          </media-avatar>-->
           <mat-card-content [innerHTML]="article.excerpt ? article.excerpt : article.text"></mat-card-content>
         </mat-card>
       </div>

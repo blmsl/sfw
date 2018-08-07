@@ -79,7 +79,7 @@ export class MediaItemService {
   getImagePlaceHolder(placeholderImage: string): IMediaItem {
     let returnString = '';
 
-    if(placeholderImage === ''){
+    if (placeholderImage === '') {
       returnString += '/assets/sfw/placeholder/no-image-found.jpg';
     } else {
       returnString += placeholderImage;

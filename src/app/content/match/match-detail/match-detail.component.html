@@ -20,9 +20,10 @@
           <mat-card-content>
             <mat-tab-group [dynamicHeight]="true">
               <mat-tab [label]="'general.matches.detail.startingElevenTitle' | translate">
-                <ul style="color: red">
-                  <li>Aufstellung</li>
-                </ul>
+                <match-detail-starting-eleven *ngIf="match.assignedFormation && match.assignedPlayers"
+                                              [members]="members$ | async"
+                                              [match]="match">
+                </match-detail-starting-eleven>
               </mat-tab>
               <mat-tab [label]="'general.matches.detail.matchEventsTitle' | translate">
                 <ul style="color: red">

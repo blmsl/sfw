@@ -613,10 +613,13 @@
         "main": "Spieldaten",
         "match": "Spielverlauf",
         "media": "Verknüpfte Dateien",
+        "noAssignedArticles": "Mit diesem Spiel wurden noch keine Artikel verknüpft.",
         "noAssignedPlayers": "Der Mannschaft wurden noch keine Spieler zugewiesen.",
         "noAssignedTeam": "Bitte zuerst die dazugehörige Mannschaft auswählen.",
+        "noSubstitutes": "Es wurden keine Ersatzspieler benannt.",
         "squad": "Kader",
         "startingEleven": {
+          "noStartingEleven": "Es wurde keine Aufstellung freigegeben.",
           "title": "Aufstellung"
         },
         "substituteBench": "Ersatzbank",
@@ -1588,6 +1591,7 @@
     "options": "Optionen",
     "pleaseWait": "Bitte warten ...",
     "records": "Einträgen",
+    "save": "Speichern",
     "settings": "Einstellungen",
     "sidebar": {
       "compactSidebar": "Kompaktes Menü",

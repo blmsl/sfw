@@ -1,43 +1,41 @@
-<mat-card *ngIf="match && !selectedEvent">
+<mat-card *ngIf="match && categories">
   <mat-card-title>
     {{ 'general.matches.edit.events.title' | translate }}
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-    <p *ngIf="!match.assignedEvents">
+    <p *ngIf="!match.assignedMatchEvents || match.assignedMatchEvents.length === 0">
       {{ 'general.matches.edit.events.noEventsFound' | translate }}
     </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <div fxLayout="column"
-         fxLayout.gt-sm="row"
-         fxLayoutGap="10px">
-      <span></span>
-      <span fxFlex=""></span>
-      <button mat-raised-button
-              color="primary"
-              (click)="addEvent()">
-        {{ 'general.matches.edit.events.createEvent' | translate }}
-      </button>
+
+    <div class="activity-stream">
+      <mat-card class="shadow-none" *ngFor="let event of match.assignedMatchEvents">
+        <mat-card-header>
+          <img matCardAvatar
+               src="/assets/sfw/sfw.png">
+          <mat-card-title *ngIf="event.title || event.playMinute">
+            <span style="font-weight: bolder" *ngIf="event.playMinute">
+              {{event.playMinute}}.
+              {{ 'general.matches.edit.events.inputs.playMinute' | translate }}
+            </span>
+            {{event.title}}
+          </mat-card-title>
+          <mat-card-subtitle *ngIf="event.assignedCategory">
+            {{ (categories | filterBy: ['id'] : event.assignedCategory)[0].title }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content [innerHTML]="event.description"></mat-card-content>
+        <mat-card-actions fxLayout="column"
+                          fxLayout.gt-sm="row"
+                          fxLayoutGap="10px">
+          <span></span>
+          <span fxFlex=""></span>
+          <button (click)="deleteMatchEvent.emit(event)" mat-icon-button="" color="red">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
     </div>
-  </mat-card-actions>
+
+  </mat-card-content>
 </mat-card>
-
-<pre *ngIf="categories$ | async as categories; else loadingTemplate">
-  {{categories$ | async | json}}
-</pre>
-
-<!--
-<div *ngIf="selectedEvent">
-  <match-edit-event-form *ngIf="assignedEventCategories$ | async as assignedEventCategories; else loadingTemplate"
-                         (cancel)="cancel()"
-                         (save)="saveEvent()"
-                         [assignedEventCategories]="assignedEventCategories"
-                         [playMinutes]="playMinutes"
-                         [form]="selectedEvent">
-  </match-edit-event-form>
-</div>-->
-
-<ng-template #loadingTemplate>
-  <loading-indicator></loading-indicator>
-</ng-template>

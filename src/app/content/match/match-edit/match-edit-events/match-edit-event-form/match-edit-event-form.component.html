@@ -1,13 +1,14 @@
-<mat-card *ngIf="form">
+<mat-card [formGroup]="form">
   <mat-card-title>
     {{'general.matches.edit.events.createEvent' | translate}}
   </mat-card-title>
 
-  <mat-card-content [formGroup]="form">
+  <mat-card-content>
 
     <div fxLayout="column"
          fxLayout.gt-sm="row"
          fxLayoutGap="10px">
+
       <mat-form-field fxFlex.gt-sm="50">
         <input matInput
                placeholder="{{'general.matches.edit.events.inputs.title' | translate}}"
@@ -16,8 +17,8 @@
 
       <mat-form-field fxFlex.gt-sm="30">
         <mat-select placeholder="{{'general.matches.edit.events.inputs.assignedEventCategory' | translate}}"
-                    formControlName="assignedEventCategory">
-          <mat-option *ngFor="let category of assignedEventCategories"
+                    formControlName="assignedCategory">
+          <mat-option *ngFor="let category of categories | orderBy: ['title']"
                       [value]="category.id">
             {{category.title}}
           </mat-option>
@@ -33,6 +34,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+
     </div>
 
     <div fxLayout="column">
@@ -46,23 +48,21 @@
       </div>
     </div>
   </mat-card-content>
+
   <mat-card-actions>
     <div fxLayout="column"
          fxLayout.gt-sm="row"
          fxLayoutGap="10px">
       <span></span>
       <span fxFlex=""></span>
-      <button mat-raised-button
+      <button mat-icon-button
               color="primary"
+              title="{{'general.save' | translate}}"
               [disabled]="form.invalid"
-              (click)="save.emit()">
-        {{ 'general.save' | translate }}
-      </button>
-      <button mat-raised-button
-              color="primary"
-              (click)="cancel.emit()">
-        {{ 'general.cancel' | translate }}
+              (click)="save(form.value)">
+        <mat-icon>save</mat-icon>
       </button>
     </div>
   </mat-card-actions>
+
 </mat-card>

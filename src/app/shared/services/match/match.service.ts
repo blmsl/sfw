@@ -1,11 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { IMatch } from '../../interfaces/match/match.interface';
-import { of } from 'rxjs/index';
-import { IFormation } from '../../interfaces/match/formation.interface';
+import { Injectable }          from '@angular/core';
+import { Observable }          from 'rxjs';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+}                              from 'angularfire2/firestore';
+import { IMatch }              from '../../interfaces/match/match.interface';
+import { of }                  from 'rxjs/index';
+import { IFormation }          from '../../interfaces/match/formation.interface';
+import { IMatchEventCategory } from '../../interfaces/match/match-event-category.interface';
+
 import Timestamp = firebase.firestore.Timestamp;
-import * as firebase from 'firebase';
+import * as firebase           from 'firebase';
 
 @Injectable()
 export class MatchService {
@@ -65,11 +70,11 @@ export class MatchService {
     },
     {
       'title': '4-3-3', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': ['']
+      'maxSubstitutes': 7, 'positionList': [ '' ]
     },
     {
       'title': '5-3-2', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': ['']
+      'maxSubstitutes': 7, 'positionList': [ '' ]
     },
     {
       'title': '3-5-2',
@@ -86,35 +91,35 @@ export class MatchService {
     },
     {
       'title': '5-4-1', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': ['']
+      'maxSubstitutes': 7, 'positionList': [ '' ]
     },
     {
       'title': '4-5-1', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': ['']
+      'maxSubstitutes': 7, 'positionList': [ '' ]
     },
     {
       'title': '4-2-3-1', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': ['']
+      'maxSubstitutes': 7, 'positionList': [ '' ]
     },
     {
       'title': '4-3-2-1', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': ['']
+      'maxSubstitutes': 7, 'positionList': [ '' ]
     },
     {
       'title': '4-1-4-1', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': ['']
+      'maxSubstitutes': 7, 'positionList': [ '' ]
     },
     {
       'title': '3-3-4', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': ['']
+      'maxSubstitutes': 7, 'positionList': [ '' ]
     },
     {
       'title': '3-3-1-3', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': ['']
+      'maxSubstitutes': 7, 'positionList': [ '' ]
     },
     {
       'title': '4-2-2-2', 'mainFormation': 11,
-      'maxSubstitutes': 7, 'positionList': ['']
+      'maxSubstitutes': 7, 'positionList': [ '' ]
     }
   ];
 
@@ -154,6 +159,46 @@ export class MatchService {
       { id: 11, title: 'nach Elfmeterschießen' },
       { id: 12, title: 'nach Verlängerung' },
       { id: 13, title: 'keine Angabe' }
+    ];
+  }
+
+  getMatchEventCategories(): IMatchEventCategory[] {
+    return [
+      { id: 0, parentCategory: 'match', title: 'Spielbeginn' },
+      { id: 1, parentCategory: 'match', title: 'Ende 1. Halbzeit' },
+      { id: 2, parentCategory: 'match', title: 'Abpfiff 2. Halbzeit' },
+      { id: 3, parentCategory: 'match', title: 'Ende 2. Halbzeit' },
+      { id: 4, parentCategory: 'match', title: 'Verlängerung' },
+      { id: 5, parentCategory: 'match', title: 'Halbzeit der Verlängerung' },
+      { id: 6, parentCategory: 'match', title: 'Ende der Verlängerung' },
+      { id: 7, parentCategory: 'match', title: 'Elfmeterschießen' },
+      { id: 8, parentCategory: 'match', title: 'Spielende' },
+      { id: 9, parentCategory: 'match', title: 'Spielabbruch' },
+      { id: 10, parentCategory: 'match', title: 'Halbzeitfazit' },
+      { id: 11, parentCategory: 'match', title: 'Fazit' },
+      { id: 12, parentCategory: 'match', title: 'nachspielTime', showTextInput: true, inputTitle: 'nachspielTime' },
+
+      {
+        id: 13, parentCategory: 'scene', title: 'goal', playerOneTitle: 'from', showPlayerOneInput: true,
+        playerTwoTitle: 'assist', showPlayerTwoInput: true
+      },
+      {
+        id: 14, parentCategory: 'scene', title: 'bigChance', playerOneTitle: 'from', showPlayerOneInput: true,
+        playerTwoTitle: 'assist', showPlayerTwoInput: true
+      },
+      {
+        id: 15, parentCategory: 'scene', title: 'substitution', playerOneTitle: 'for', showPlayerOneInput: true,
+        playerTwoTitle: 'new', showPlayerTwoInput: true
+      },
+
+      { id: 16, parentCategory: 'punishments', title: 'yellowCard', playerOneTitle: 'for', showPlayerOneInput: true },
+      {
+        id: 17, parentCategory: 'punishments', title: 'yellowRedCard', playerOneTitle: 'for', showPlayerOneInput: true
+      },
+      { id: 18, parentCategory: 'punishments', title: 'redCard', playerOneTitle: 'for', showPlayerOneInput: true },
+      {
+        id: 19, parentCategory: 'punishments', title: 'timePunishment', playerOneTitle: 'for', showPlayerOneInput: true
+      }
     ];
   }
 

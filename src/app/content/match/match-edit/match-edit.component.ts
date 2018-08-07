@@ -10,16 +10,19 @@ import { LocationService } from '../../../shared/services/location/location.serv
 import { Observable } from 'rxjs/index';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
-import { TeamService } from '../../../shared/services/team/team.service';
-import { CategoryService } from '../../../shared/services/category/category.service';
-import { ICategory } from '../../../shared/interfaces/category.interface';
-import { ISeason } from '../../../shared/interfaces/season.interface';
-import { SeasonService } from '../../../shared/services/season/season.service';
-import { IArticle } from '../../../shared/interfaces/article.interface';
-import { ArticleService } from '../../../shared/services/article/article.service';
+import { TeamService }         from '../../../shared/services/team/team.service';
+import { CategoryService }     from '../../../shared/services/category/category.service';
+import { ICategory }           from '../../../shared/interfaces/category.interface';
+import { ISeason }             from '../../../shared/interfaces/season.interface';
+import { SeasonService }       from '../../../shared/services/season/season.service';
+import { IArticle }            from '../../../shared/interfaces/article.interface';
+import { ArticleService }      from '../../../shared/services/article/article.service';
+import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
+import { ICategoryType }       from '../../../shared/interfaces/category-type.interface';
+import { IMatchEvent }         from '../../../shared/interfaces/match/match-event.interface';
 
 @Component({
-  selector: 'app-match-edit',
+  selector: 'match-edit',
   templateUrl: './match-edit.component.html',
   styleUrls: ['./match-edit.component.scss']
 })
@@ -31,6 +34,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
   public locations$: Observable<ILocation[]>;
   public teams$: Observable<ITeam[]>;
   public categories$: Observable<ICategory[]>;
+  public categoryTypes$: Observable<ICategoryType[]>;
   public seasons$: Observable<ISeason[]>;
   public articles$: Observable<IArticle[]>;
 
@@ -42,6 +46,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     private locationService: LocationService,
     private teamService: TeamService,
     private categoryService: CategoryService,
+    private categoryTypeService: CategoryTypeService,
     private seasonService: SeasonService,
     private articleService: ArticleService,
     private router: Router) {
@@ -49,6 +54,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     this.locations$ = locationService.locations$;
     this.teams$ = teamService.teams$;
     this.categories$ = categoryService.categories$;
+    this.categoryTypes$ = categoryTypeService.categoryTypes$;
     this.seasons$ = seasonService.seasons$;
   }
 
@@ -76,8 +82,9 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
       result: this.initResult(this.match.result),
       title: [this.match.title, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       assignedFormation: this.match.assignedFormation,
-      assignedPlayers: this.match.assignedPlayers ? this.initAssignedPlayers(this.match.assignedPlayers) : [],
-      assignedSubstitutes: this.match.assignedSubstitutes ? this.initAssignedSubstitutes(this.match.assignedSubstitutes) : []
+      assignedPlayers: this.initAssignedPlayers(this.match.assignedPlayers),
+      assignedSubstitutes: this.initAssignedSubstitutes(this.match.assignedSubstitutes),
+      assignedMatchEvents: this.initMatchEvents(this.match.assignedMatchEvents)
     });
 
     if (this.match.isImported) {
@@ -111,13 +118,49 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     this.cdRef.detectChanges();
   }
 
+  initMatchEvents(assignedEvents: IMatchEvent[]): FormArray {
+    const formArray = this.fb.array([]);
+    if(assignedEvents) {
+      for (let i = 0; i < assignedEvents.length; i++) {
+        formArray.push(this.createMatchEvent(assignedEvents[ i ]));
+      }
+    } else {
+      formArray.push(this.createMatchEvent(null));
+    }
+    return formArray;
+  }
+
+  saveMatchEvent($event: IMatchEvent){
+    this.addMatchEvent($event);
+  }
+
+  addMatchEvent(event: IMatchEvent) {
+    const control = <FormArray>this.form.controls['assignedMatchEvents'];
+    control.push(this.createMatchEvent(event));
+  }
+
+  createMatchEvent(event: IMatchEvent){
+    return this.fb.group({
+      assignedCategory: event ? event.assignedCategory : null,
+      description: [event ? event.description : '', [Validators.required, Validators.minLength(5)]],
+      playMinute: event ? event.playMinute : null,
+      title: event ? event.title : ''
+    });
+  }
+
+  deleteMatchEvent(event: IMatchEvent){
+    this.match.assignedMatchEvents.splice(this.match.assignedMatchEvents.indexOf(event), 1);
+  }
+
   initAssignedSubstitutes(assignedSubstitutes: string[]): FormArray {
     const formArray = this.fb.array([]);
-    for (let i = 0; i < assignedSubstitutes.length; i++) {
-      let formControl = this.fb.group({
-        memberId: assignedSubstitutes[i],
-      });
-      formArray.push(formControl);
+    if(assignedSubstitutes) {
+      for (let i = 0; i < assignedSubstitutes.length; i++) {
+        let formControl = this.fb.group({
+          memberId: assignedSubstitutes[ i ],
+        });
+        formArray.push(formControl);
+      }
     }
     return formArray;
   }
@@ -137,9 +180,11 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     position: string;
   }[]): FormArray {
     const formArray = this.fb.array([]);
-    for (let i = 0; i < assignedPositions.length; i++) {
-      let formControl = this.createAssignedPlayer(assignedPositions[i]);
-      formArray.push(formControl);
+    if(assignedPositions) {
+      for (let i = 0; i < assignedPositions.length; i++) {
+        let formControl = this.createAssignedPlayer(assignedPositions[ i ]);
+        formArray.push(formControl);
+      }
     }
     return formArray;
   }

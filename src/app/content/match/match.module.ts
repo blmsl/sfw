@@ -38,6 +38,8 @@ import { DragulaModule, DragulaService } from 'ng2-dragula';
 import { MatchEditEventsComponent } from './match-edit/match-edit-events/match-edit-events.component';
 import { MatchEditEventFormComponent } from './match-edit/match-edit-events/match-edit-event-form/match-edit-event-form.component';
 import { QuillModule } from 'ngx-quill';
+import { MatchDetailStartingElevenComponent } from './match-detail/match-detail-starting-eleven/match-detail-starting-eleven.component';
+import { MatchEditArticlesComponent } from './match-edit/match-edit-articles/match-edit-articles.component';
 
 @NgModule({
   imports: [
@@ -73,7 +75,9 @@ import { QuillModule } from 'ngx-quill';
     MatchEditStartingElevenComponent,
     MatchPlayerComponent,
     MatchEditEventsComponent,
-    MatchEditEventFormComponent
+    MatchEditEventFormComponent,
+    MatchDetailStartingElevenComponent,
+    MatchEditArticlesComponent
   ],
   providers: [
     ArticleService,

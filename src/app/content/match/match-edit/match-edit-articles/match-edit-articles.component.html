@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-title>{{'general.matches.edit.articles' | translate}}</mat-card-title>
+  <mat-card-content>
+
+    <article-card *ngFor="let article of articles | filterBy: ['assignedMatch'] : match.id"
+                  [article]="article">
+    </article-card>
+
+    <p *ngIf="(articles | filterBy: ['assignedMatch'] : match.id).length === 0">
+      {{'general.matches.edit.noAssignedArticles' | translate}}
+    </p>
+
+  </mat-card-content>
+</mat-card>

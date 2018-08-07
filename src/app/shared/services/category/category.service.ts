@@ -56,20 +56,16 @@ export class CategoryService {
   getCategoriesByCategoryType(linkType: string): Observable<ICategory[]> {
 
     return this.categoryTypeService.categoryTypes$.pipe(
-      tap((categoryTypes) => console.log(categoryTypes)),
       map((categoryTypes: ICategoryType[]) => {
         return categoryTypes.filter((categoryType: ICategoryType) => {
           return categoryType.link === linkType;
         });
       }),
       mergeMap((categoryTypes: ICategoryType[]) => {
-
-        console.log(categoryTypes);
-        /*if (categoryTypes.length === 0) {
+        if (categoryTypes.length === 0) {
           return [];
-        }*/
+        }
         return this.categories$.pipe(
-          tap((categories) => console.log(categories)),
           map((categories: ICategory[]) => {
             console.log(categories);
             return categories.filter((category: ICategory) => {

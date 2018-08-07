@@ -4,9 +4,16 @@ import {
   Input,
   OnInit,
   Output
-} from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ICategory } from '../../../../../shared/interfaces/category.interface';
+}                        from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators
+}                        from '@angular/forms';
+import { ICategory }     from '../../../../../shared/interfaces/category.interface';
+import { IMatchEvent }   from '../../../../../shared/interfaces/match/match-event.interface';
+import { ICategoryType } from '../../../../../shared/interfaces/category-type.interface';
 
 @Component({
   selector: 'match-edit-event-form',
@@ -15,17 +22,42 @@ import { ICategory } from '../../../../../shared/interfaces/category.interface';
 })
 export class MatchEditEventFormComponent implements OnInit {
 
-  @Input() form: FormGroup;
-  @Input() assignedEventCategories: ICategory[];
-  @Input() playMinutes: number[];
+  @Input() categories: ICategory[];
+  @Input() categoryTypes: ICategoryType[];
 
-  @Output() cancel: EventEmitter<void> = new EventEmitter<void>(false);
-  @Output() save: EventEmitter<void> = new EventEmitter<void>(false);
+  @Output() saveMatchEvent: EventEmitter<IMatchEvent> = new EventEmitter<IMatchEvent>(false);
 
-  constructor() {
+  public playMinutes: number[] = [];
+  public form: FormGroup;
+
+  constructor(private fb: FormBuilder) {
   }
 
   ngOnInit() {
+
+    this.form = this.fb.group({
+      assignedCategory: null,
+      description: [ '', [Validators.required, Validators.minLength(5)]],
+      playMinute:  null,
+      title: ''
+    });
+
+    this.initPlayMinutes();
+  }
+
+  initPlayMinutes() {
+    for (let i = 1; i < 120; i++) {
+      this.playMinutes.push(i);
+    }
+  }
+
+  save($event){
+    this.saveMatchEvent.emit($event);
+    this.form.reset();
+  }
+
+  cancel(){
+    this.form.reset();
   }
 
 }

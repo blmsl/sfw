@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                     from 'angularfire2/firestore';
+} from 'angularfire2/firestore';
 
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/scan';
@@ -11,11 +11,11 @@ import {
   map,
   scan,
   take
-}                     from 'rxjs/internal/operators';
+} from 'rxjs/internal/operators';
 import {
   BehaviorSubject,
   Observable
-}                     from 'rxjs/index';
+} from 'rxjs/index';
 
 // Options to reproduce firestore queries consistently
 interface QueryConfig {
@@ -123,7 +123,7 @@ export class PaginationService {
         this._data.next(values);
         this.tempValues = this.tempValues.concat(values);
         col.ref.get().then((snapshot) => {
-          this.cursor = snapshot.docs[ this.tempValues.length - 1 ];
+          this.cursor = snapshot.docs[this.tempValues.length - 1];
           this._loading.next(false);
         });
 
