@@ -10,7 +10,6 @@ trait sfwSeason
 
     public function getSeasons($seasonDates = null)
     {
-        $seasonsList = array();
         if($seasonDates){
             /**
              * @var $seasonStartYear DateTime
@@ -20,20 +19,26 @@ trait sfwSeason
             $seasonEndYear = $seasonDates['endYear'];
             $title = 'Saison ' . $seasonStartYear->format('Y') . '/' . $seasonEndYear->format('Y');
             foreach ($this->seasonCollection->where('title', '=', $title)->documents() as $doc) {
-                $seasonsList[$doc["title"]] = $doc;
+                $this->seasons[$doc["title"]] = array(
+                  'id' => $doc
+                );
             }
         } else {
             foreach ($this->seasonCollection->documents() as $doc) {
-                $seasonsList[$doc["title"]] = $doc;
+              $this->seasons[$doc["title"]] = array(
+                'id' => $doc
+              );
             }
         }
 
-        if (count($seasonsList) === 0) {
-            $currentSeason = $this->setSeason(new DateTime(), $seasonsList);
-            $seasonsList[$currentSeason["title"]] = $currentSeason;
+        if (count($this->seasons) === 0) {
+          echo 'Season not found';
+            exit();
+            // $currentSeason = $this->setSeason(new DateTime(), $seasonsList);
+            // $seasonsList[$currentSeason["title"]] = $currentSeason;
         }
 
-        return $seasonsList;
+        return $this->seasons;
     }
 
     private function saveSeason($data, $seasonList)

@@ -1,18 +1,11 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', true);
-ini_set('memory_limit', '-1');
-
-header("Content-Type: text/html; charset=utf-8");
-
-require "simple_html_dom.php";
 require "../vendor/autoload.php";
-
 require "base.class.php";
 
-$projectId = 'sf-winterbach';
-$project = new sfwApp($projectId);
+$project = new sfwApp('sf-winterbach');
+
+$time_start = microtime(true);
 
 echo $project->generateHeader();
 

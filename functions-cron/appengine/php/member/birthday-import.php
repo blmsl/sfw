@@ -1,28 +1,18 @@
 <?php
 
-/**
- * Laden des Google Geburtstagskalenders und der Mitglieder
- * Durchlaufen der MitgliederListe:
- * speichern des Geburtstages als wiederkehrendes Ereignis, wenn noch kein Event mit diesem Titel vorhanden ist.
- */
-
-error_reporting(E_ALL);
-ini_set('display_errors', true);
-ini_set('memory_limit', '-1');
-
-header("Content-Type: text/html; charset=utf-8");
-
-require "../simple_html_dom.php";
 require "../../vendor/autoload.php";
 require "../base.class.php";
 
 $project = new sfwApp('sf-winterbach');
+
 $time_start = microtime(true);
 
 echo $project->generateHeader();
 
 echo "<h1>Importiere Geburtstage in den Google-Kalender</h1>";
 
+
+/*
 $eventList = array();
 $currentSeason = isset($_GET['current-season']) && $_GET['current-season'] === true ? new DateTime() : null;
 $currentClub = isset($_GET['club']) ? $_GET['club'] : null;
@@ -43,7 +33,7 @@ foreach ($project->getSeasons($currentSeason) as $season) {
       foreach ($googleCalendarEvents AS $event){
         /**
          * @var $event Google_Service_Calendar_Event
-         */
+         *
         $calendarEvents[$event->getSummary()] = $event->getId();
       }
 
@@ -54,7 +44,7 @@ foreach ($project->getSeasons($currentSeason) as $season) {
       foreach ($project->getMembers($club) as $key => $member) {
         /**
          * @var $member Google_Service_Firestore_Document
-         */
+         *
         $date = DateTime::createFromFormat('Y-m-d', $member['birthday']);
         if($date){
           $title = 'Geburtstag von ' . $member['firstName'] . ' ' . $member['lastName'];
@@ -86,7 +76,7 @@ foreach ($project->getSeasons($currentSeason) as $season) {
     }
 
   }
-}
+} */
 
 echo '<p><b>Ausführungsdauer :</b> '. (microtime(true) - $time_start) . '</p>';
 echo $project->generateFooter();

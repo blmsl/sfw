@@ -1,23 +1,18 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', true);
-ini_set('memory_limit', '-1');
 
-header("Content-Type: text/html; charset=utf-8");
-
-require "../simple_html_dom.php";
 require "../../vendor/autoload.php";
-
 require "../base.class.php";
 
-$projectId = 'sf-winterbach';
-$project = new sfwApp($projectId);
+$project = new sfwApp('sf-winterbach');
+
+$time_start = microtime(true);
 
 echo $project->generateHeader();
 
-$startAt = isset($_GET["startAt"]) ? $_GET['startAt'] : null;
-
 echo "<h1>Importiere Mitglieder des Google-Drive</h1>";
+
+/*
+$startAt = isset($_GET["startAt"]) ? $_GET['startAt'] : null;
 
 foreach ($project->getClubs() as $club) {
 
@@ -75,6 +70,6 @@ foreach ($project->getClubs() as $club) {
         echo "<p>Die Datei Mitgliederliste " . $club["title"] . " wurde nicht im GoogleDrive gefunden oder wurde nicht für den Service Account freigegeben.</p>";
     }
 }
-
+*/
 echo '<p><b>Ausführungsdauer :</b> ' . (microtime(true) - $time_start) . '</p>';
 echo $project->generateFooter();

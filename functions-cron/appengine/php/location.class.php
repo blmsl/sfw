@@ -11,22 +11,30 @@ trait sfwLocation
 
   public function getLocations()
   {
-    if (count($this->locations) === 0) {
-      $dbLocations = $this->locationCollection;
-      foreach ($dbLocations->documents() as $location) {
-        $this->locations[$location["title"]] = $location;
-      }
+    foreach ($this->locationCollection->documents() as $doc) {
+      $this->locations[$doc["title"]] = array(
+        'id' => $doc["id"],
+        'assignedCategory' => $doc['assignedCategory'],
+        'address' => array(
+          'city' => $doc['address']['city'],
+          'streetName' => $doc['address']['streetName'],
+          'houseNumber' => $doc['address']['houseNumber'],
+          'county' => $doc['address']['county'],
+          'zip' => $doc['address']['zip']
+        )
+      );
     }
     return $this->locations;
   }
 
-  public function getLocationsById(){
-      $locationList = array();
-      $dbLocations = $this->locationCollection;
-      foreach ($dbLocations->documents() as $location) {
-          $locationList[$location["id"]] = $location["title"];
-      }
-      return $locationList;
+  /* public function getLocationsById()
+  {
+    $locationList = array();
+    $dbLocations = $this->locationCollection;
+    foreach ($dbLocations->documents() as $location) {
+      $locationList[$location["id"]] = $location["title"];
+    }
+    return $locationList;
   }
 
   public function saveLocation($title, $address, $assignedCategory)
@@ -106,5 +114,5 @@ trait sfwLocation
       'county' => $county
     );
   }
-
+  */
 }

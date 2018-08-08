@@ -2,6 +2,7 @@
   "require": {
     "google/apiclient": "^2.2",
     "google/cloud-firestore": "^0.12.0",
-    "paragonie/random_compat": "2.0.17"
+    "paragonie/random_compat": "2.0.17",
+    "duzun/hquery": "^2.1"
   }
 }

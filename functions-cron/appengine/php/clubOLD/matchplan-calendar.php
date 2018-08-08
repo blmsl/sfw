@@ -1,28 +1,17 @@
 <?php
 
-/**
- * Alle Spiele laden und mit dem Google Kalender vergleichen
- * nicht mehr vorhandene Spiele werden aus dem Kalender gelöscht
- * neue Spiele werden im Kalender angelegt
- */
-
-error_reporting(E_ALL);
-ini_set('display_errors', true);
-ini_set('memory_limit', '-1');
-
-header("Content-Type: text/html; charset=utf-8");
-
-require "../simple_html_dom.php";
 require "../../vendor/autoload.php";
 require "../base.class.php";
 
 $project = new sfwApp('sf-winterbach');
+
 $time_start = microtime(true);
 
 echo $project->generateHeader();
 
 echo "<h1>Importiere Spielplan in den Google-Kalender</h1>";
 
+/*
 $eventList = array();
 $savedMatches = array();
 
@@ -49,7 +38,7 @@ foreach ($project->getSeasons($currentSeason) as $season) {
         $matchStartDate = $match["matchStartDate"];
         /**
          * @var $matchStartDate Google\Cloud\Core\Timestamp
-         */
+         *
         $title = $match['title'] . '-' . $locations[$match['assignedLocation']] . '-' . $matchStartDate->get()->format('d.m.Y H:i:s');
 
         $matchEvent = $project->generateEventItem($match, $locations);
@@ -98,7 +87,7 @@ foreach ($project->getSeasons($currentSeason) as $season) {
       echo "<p>Kein Mannschafts-Spielplan-Kalender für den Verein " . $club["title"] . " hinterlegt.</p>";
     }
   }
-}
+}*/
 
 echo '<p><b>Ausführungsdauer :</b> '. (microtime(true) - $time_start) . '</p>';
 echo $project->generateFooter();

@@ -10,15 +10,16 @@ trait sfwCategory
 
   public function getCategories()
   {
-    if (count($this->categories) === 0) {
-      $dbCategories = $this->categoryCollection;
-      foreach ($dbCategories->documents() as $doc) {
-        $this->categories[$doc["title"] . '-' . $doc["assignedCategoryType"]] = $doc;
-      }
+    foreach ($this->categoryCollection->documents() as $doc) {
+      $this->categories[$doc["title"]] = array(
+        'assignedCategoryType' => $doc["assignedCategoryType"],
+        'id' => $doc['id']
+      );
     }
     return $this->categories;
   }
 
+  /*
   public function saveCategory($title, $assignedCategoryType)
   {
     if (!key_exists($title . '-' . $assignedCategoryType, $this->getCategories())) {
@@ -28,6 +29,6 @@ trait sfwCategory
       ), null);
     }
     return $this->categories[$title . '-' . $assignedCategoryType];
-  }
+  } */
 
 }

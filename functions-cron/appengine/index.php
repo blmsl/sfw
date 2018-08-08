@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+/* error_reporting(E_ALL);
 ini_set('display_errors', true);
 
 if ($handle = opendir('.')) {
@@ -9,4 +9,5 @@ if ($handle = opendir('.')) {
     }
   }
   closedir($handle);
-}
+} */
+echo "/";

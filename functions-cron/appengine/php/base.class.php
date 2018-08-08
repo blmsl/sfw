@@ -1,7 +1,14 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', true);
+ini_set('memory_limit', '-1');
+
+header("Content-Type: text/html; charset=utf-8");
+
 use Google\Cloud\Firestore\FieldValue;
 use Google\Cloud\Firestore\FirestoreClient;
+use duzun\hQuery;
 
 require "calendar.class.php";
 require "category.class.php";
@@ -47,7 +54,7 @@ trait sfwBase
 
   public function __construct($projectId)
   {
-
+    hQuery::$cache_expires = 0;
     $this->client = $this->getGoogleClient($projectId);
     $this->sheetService = new Google_Service_Sheets($this->client);
     $this->driveService = new Google_Service_Drive($this->client);

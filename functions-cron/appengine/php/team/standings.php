@@ -1,5 +1,14 @@
 <?php
 
+require "../../vendor/autoload.php";
+require "../base.class.php";
+
+$projectId = 'sf-winterbach';
+$project = new sfwApp($projectId);
+
+echo $project->generateHeader();
+
+echo "<h1>Importiere Wettbewerbe von fussball.de</h1>";
     /*
     error_reporting(E_ALL);
     ini_set('display_errors', true);

@@ -14,7 +14,7 @@ trait sfwMatch
      */
     public function getMatches($seasonStart = null)
     {
-        $matchList = array();
+
         if($seasonStart) {
             foreach ($this->matchCollection
                          ->where('matchStartDate', '>=', $seasonStart)
@@ -22,27 +22,44 @@ trait sfwMatch
                 /**
                  * @var $doc array
                  */
-                $title = $doc["title"] . '-' . $doc["assignedLocation"] . '-' . $doc["matchStartDate"]->get()->format('d.m.Y H:i:s');
-                $matchList[$title] = $doc;
+              $this->matches[$doc['title']] = array(
+                'assignedLocation' => $doc["assignedLocation"],
+                'matchStartDate' => $doc["matchStartDate"]->get()->format('d.m.Y H:i:s'),
+                'id' => $doc['id'],
+                'assignedTeam' => $doc['assignedTeam'],
+                'assignedCategories' => array(
+                  'assignedCategory' => $doc['assignedCategories']["assignedCategory"],
+                  'assignedMainCategory' => $doc['assignedCategories']["assignedMainCategory"]
+                )
+              );
             }
         }   else {
             foreach ($this->matchCollection->orderBy('matchStartDate', 'ASC')->documents() as $doc) {
                 /**
                  * @var $doc array
                  */
-                $title = $doc["title"] . '-' . $doc["assignedLocation"] . '-' . $doc["matchStartDate"]->get()->format('d.m.Y H:i:s');
-                $matchList[$title] = $doc;
+                #$title = $doc["title"] . '-' . $doc["assignedLocation"] . '-' . $doc["matchStartDate"]->get()->format('d.m.Y H:i:s');
+                $this->matches[$doc['title']] = array(
+                  'assignedLocation' => $doc["assignedLocation"],
+                  'matchStartDate' => $doc["matchStartDate"]->get()->format('d.m.Y H:i:s'),
+                  'id' => $doc['id'],
+                  'assignedTeam' => $doc['assignedTeam'],
+                  'assignedCategories' => array(
+                    'assignedCategory' => $doc['assignedCategories']["assignedCategory"],
+                    'assignedMainCategory' => $doc['assignedCategories']["assignedMainCategory"]
+                  )
+                );
             }
         }
-        return $matchList;
+        return $this->matches;
     }
 
-
+    /*
     public function saveMatch($matchData, $batch)
     {
         /**
          * @var $matchData array
-         */
+         *
         $startDate = new DateTime($matchData["matchStartDate"]->format(DATE_ATOM), new DateTimeZone(date_default_timezone_get()));
         $startDate->setTimezone(new DateTimeZone('UTC'));
         $endDate = new DateTime($matchData["matchEndDate"]->format(DATE_ATOM), new DateTimeZone(date_default_timezone_get()));
@@ -60,7 +77,7 @@ trait sfwMatch
      * @param $startDate DateTime
      * @param $endDate DateTime
      * @return mixed
-     */
+     *
     public function getMatchPlan($club, $startDate, $endDate)
     {
         $url = 'http://www.fussball.de/ajax.club.matchplan/-/id/' . $club["fussballde"]["clubId"] . '/mime-type/HTML/mode/PAGE/show-filter/false/max/9999/datum-von/' . $startDate->format('Y-m-d') . '/datum-bis/' . $endDate->format('Y-m-d') . '/show-venues/checked/offset/0';
@@ -77,7 +94,7 @@ trait sfwMatch
 
         /**
          * @var $html simple_html_dom_node
-         */
+         *
         if ($html && is_object($html) && isset($html->nodes)) {
             $items = $html->find("div.fixtures-matches-table > table > tbody > tr");
             // echo count($items);
@@ -91,7 +108,7 @@ trait sfwMatch
                 if ($i > 0) {
                     /**
                      * @var $item simple_html_dom_node
-                     */
+                     *
                     if ($item->getAttribute('class') === "row-headline visible-small") {
 
                         // Spielart (z.B. Kreisfreundschaftsspiele) festlegen // weiter unten werden weitere Details geladen
@@ -138,7 +155,7 @@ trait sfwMatch
                         foreach ($item->find('td') AS $cell) {
                             /**
                              * @var $cell simple_html_dom_node
-                             */
+                             *
                             if ($cell->getAttribute('class') === 'column-club') {
                                 # echo "Heim:" . $cell->plaintext . "<br />";
                                 $matchData["homeTeam"]["title"] = str_replace("&#8203;", "", trim($cell->plaintext));
@@ -228,7 +245,7 @@ trait sfwMatch
      * @param $teamCategoryName
      * @param $startDate DateTime
      * @return mixed
-     */
+     *
     public function getMatchDuration($teamCategoryName, $startDate)
     {
         switch ($teamCategoryName) {
@@ -266,7 +283,7 @@ trait sfwMatch
      * @param $row
      * @param $savedDate DateTime
      * @return bool|DateTime
-     */
+     *
     public function setMatchDate($row, $savedDate)
     {
         // format Mo, 14.07.14 | 19:00 Altherren-D Ü60 | Kreisfreundschaftsspiele FS | 400035002
@@ -346,7 +363,7 @@ trait sfwMatch
 
         /**
          * @var $match array
-         */
+         *
         $returnString .= '<td>' . $match["matchStartDate"]->format('d.m.Y H:i') . '</td>';
         $returnString .= '<td>' . $match["matchEndDate"]->format('H:i') . '</td>';
         $returnString .= '<td><img src="' . $match["homeTeam"]["logoURL"] . '" alt="' . $match["homeTeam"]["title"] . '"/><br />';
@@ -369,5 +386,5 @@ trait sfwMatch
 
         $returnString .= '</tr>';
         return $returnString;
-    }
+    }*/
 }

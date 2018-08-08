@@ -1,31 +1,22 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', true);
-ini_set('memory_limit', '-1');
 
-header("Content-Type: text/html; charset=utf-8");
-
-require "../simple_html_dom.php";
 require "../../vendor/autoload.php";
-
 require "../base.class.php";
 
-$projectId = 'sf-winterbach';
-$project = new sfwApp($projectId);
+$project = new sfwApp('sf-winterbach');
+
+$time_start = microtime(true);
 
 echo $project->generateHeader();
 
 echo "<h1>Importiere Tabellenstände von fussball.de</h1>";
 
-echo $project->generateHeader();
-
-$currentSeasonDates = $project->getCurrentSeason(new DateTime());
+/* $currentSeasonDates = $project->getCurrentSeason(new DateTime());
 
 foreach ($project->getSeasons($currentSeasonDates) as $season) {
 
     echo $season["title"];
 
-    /*
         $dbTeams = $db->collection('teams');
         foreach ($dbTeams->documents() as $team) {
 
@@ -74,5 +65,5 @@ foreach ($project->getSeasons($currentSeasonDates) as $season) {
             unset($output);
             unset($output2);
         }
-    */
-}
+
+} */

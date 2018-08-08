@@ -10,15 +10,18 @@ trait sfwTeam
 
   public function getTeams()
   {
-    if (count($this->teams) === 0) {
-      $dbTeams = $this->teamCollection;
-      foreach ($dbTeams->documents() as $team) {
-        $this->teams[$team["title"] . "-" . $team["subTitle"] . "-" . $team["assignedSeason"]] = $team;
-      }
+    foreach ($this->teamCollection->documents() as $doc) {
+      $this->teams[$doc["title"]] = array(
+        'id' => $doc['id'],
+        'subTitle' => $doc["subTitle"],
+        'assignedClub' => $doc["assignedClub"],
+        'assignedSeason' => $doc["assignedSeason"]
+      );
     }
     return $this->teams;
   }
 
+  /*
   public function saveTeam($team)
   {
     $title = $team["title"] . "-" . $team["subTitle"] . "-" . $team["assignedSeason"];
@@ -52,6 +55,6 @@ trait sfwTeam
     else {
       return false;
     }
-  }
+  } */
 
 }

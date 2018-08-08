@@ -21,21 +21,21 @@ cron:
   url: /php/club/matchplan-import.php
   schedule: every day 00:00
 
-- description: Import Matches to Google Calendar
-  url: /php/club/matchplan-calendar.php
-  schedule: every day 01:00
+#- description: Import Matches to Google Calendar
+#  url: /php/club/matchplan-calendar.php
+#  schedule: every day 01:00
 
-- description: Import Birthdays to Google Calendar
-  url: /php/member/birthday-import.php
-  schedule: every day 01:30
+#- description: Import Birthdays to Google Calendar
+#  url: /php/member/birthday-import.php
+#  schedule: every day 01:30
 
-- description: Import DFB-Members from Google-Drive
-  url: /php/member/dfb-import.php
-  schedule: every day 02:00
+#- description: Import DFB-Members from Google-Drive
+#  url: /php/member/dfb-import.php
+#  schedule: every day 02:00
 
-- description: Import Drive-Members from Google-Drive
-  url: /php/member/drive-import.php
-  schedule: every day 03:00
+#- description: Import Drive-Members from Google-Drive
+#  url: /php/member/drive-import.php
+#  schedule: every day 03:00
 
 #- description: Push a "tick" onto standings every 24 hours
 #  url: /php/team/standings.php
