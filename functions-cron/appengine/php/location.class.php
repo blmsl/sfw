@@ -48,7 +48,7 @@ trait sfwLocation
       ), null);
     }
     return $this->locations[$title];
-  }
+  } */
 
   public function getLocationCategoryName($locationCategoryName)
   {
@@ -114,5 +114,5 @@ trait sfwLocation
       'county' => $county
     );
   }
-  */
+
 }
