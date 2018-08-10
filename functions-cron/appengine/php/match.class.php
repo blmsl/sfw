@@ -53,9 +53,8 @@ trait sfwMatch
                     );
 
                 } elseif ($item->hasClass("odd row-competition hidden-small") || $item->hasClass("row-competition hidden-small")) {
-
-                    /* $matchDate = $this->setMatchDate(trim($item->text()), $savedMatchDate);
-                    if ($matchDate && key_exists("assignedMainCategory", $matchData["assignedCategories"])) {
+                    $matchData["matchStartDate"] = $savedMatchDate = $this->setMatchDate(trim($item->text()), $savedMatchDate);
+                    /* if ($matchDate && key_exists("assignedMainCategory", $matchData["assignedCategories"])) {
                         $matchData["matchStartDate"] = $savedMatchDate = $matchDate;
                         $matchData["matchEndDate"] = $this->getMatchDuration($matchData["assignedCategories"]["assignedMainCategory"], $matchData["matchStartDate"]);
                     } */
@@ -77,35 +76,33 @@ trait sfwMatch
                      * @var $cell \duzun\hQuery\Element
                      */
                     foreach ($item->find('td') AS $cell) {
-
-                        if ($cell->hasClass('column-club')) {
+                        if($cell->attr('class') === 'column-club') {
 
                             $matchData["homeTeam"]["title"] = str_replace("&#8203;", "", trim($cell->text()));
                             $matchData["homeTeam"]["externalTeamLink"] = $cell->find('.club-wrapper') ? $cell->find('.club-wrapper')[0]->attr('href') : '';
                             $matchData["homeTeam"]["logoURL"] = $cell->find('.table-image span') ? str_replace('format/3', 'format/2', $cell->find('.table-image span')[0]->attr('data-responsive-image')) : '';
 
-                            if (key_exists('assignedCategories', $matchData) && key_exists('assignedMainCategory', $matchData["assignedCategories"])) {
-                                $matchData["isHomeTeam"] = $this->isTeamFromClub($matchData["homeTeam"], $matchData["homeTeam"]["title"], $matchData["assignedCategories"]["assignedMainCategory"]);
-                            }
-
-                        } elseif ($cell->hasClass('column-club no-border')) {
+                        } elseif($cell->attr('class') === 'column-club no-border'){
 
                             $matchData["guestTeam"]["title"] = str_replace("&#8203;", "", trim($cell->text()));
                             $matchData["guestTeam"]["externalTeamLink"] = $cell->find('.club-wrapper') ? $cell->find('.club-wrapper')[0]->attr('href') : '';
                             $matchData["guestTeam"]["logoURL"] = $cell->find('.table-image span') ? str_replace('format/3', 'format/2', $cell->find('.table-image span')[0]->attr('data-responsive-image')) : '';
 
-                        } elseif ($cell->hasClass('column-score')) {
+                        } elseif($cell->attr('class') === 'column-score') {
 
-                            // ToDo: Absetzung || Ausfall || 'Nichtantritt BEIDE' || 'Nichtantritt GAST' || 'Nichtantritt HEIM' || 14.08.2018 19:00 || 'T' || 't' || 'U' || 'W' || 'V'
+                            // ToDo: 14.08.2018 19:00 || 'T' || 't' || 'U' || 'W' || 'V'
                             if (in_array(trim($cell->text()), array('Absetzung', 'Ausfall', 'Nichtantritt BEIDE', 'Nichtantritt GAST', 'Nichtantritt HEIM'))) {
                                 $matchData["result"]["otherEvent"] = trim($cell->text());
+                            } elseif($newStartDate = DateTime::createFromFormat('d.m.Y H:i', trim($cell->text()))){
+                                # echo $newStartDate->format('d.m.Y H:i') . "<br />";
                             }
 
-                        } elseif ($cell->hasClass('column-detail')) {
-                            // MatchLink und Wettbewerb (eigene Seite) laden
-                            if ($cell->find('a')) {
-                                $matchData["matchLink"] = $cell->find('a')[0]->attr('href');
-                            }
+                        } elseif($cell->attr('class') === 'column-detail') {
+
+                            $matchData["matchLink"] = $cell->find('a') ?  $cell->find('a')[0]->attr('href') : '';
+
+                        } else {
+                            # echo $cell->attr('class') . "<br />";
                         }
                     }
 
@@ -115,6 +112,11 @@ trait sfwMatch
                         key_exists('isHomeTeam', $matchData) &&
                         key_exists('assignedCategories', $matchData)
                     ) {
+                        var_dump($matchData);
+                        if (key_exists('assignedCategories', $matchData) && key_exists('assignedMainCategory', $matchData["assignedCategories"])) {
+                            $matchData["isHomeTeam"] = $this->isTeamFromClub($matchData["homeTeam"], $matchData["homeTeam"]["title"], $matchData["assignedCategories"]["assignedMainCategory"]);
+                        }
+
                         $teamData = $matchData["isHomeTeam"] ? $matchData["homeTeam"] : $matchData["guestTeam"];
 
                         $matchData["assignedTeam"] = array(
@@ -127,6 +129,7 @@ trait sfwMatch
                                 $matchData["assignedCategories"]['assignedCategory']
                             )
                         );
+                        var_dump($matchData);
                     }
                 }
 
@@ -134,11 +137,11 @@ trait sfwMatch
                 if (key_exists('assignedTeam', $matchData) &&
                     key_exists('assignedCategories', $matchData) &&
                     key_exists('matchStartDate', $matchData) &&
-                    key_exists('matchEndDate', $matchData) &&
+                    # key_exists('matchEndDate', $matchData) &&
                     key_exists('homeTeam', $matchData) &&
                     key_exists('guestTeam', $matchData) &&
-                    key_exists('assignedLocation', $matchData) &&
-                    key_exists('isHomeTeam', $matchData)
+                    key_exists('assignedLocation', $matchData) # &&
+                    #key_exists('isHomeTeam', $matchData)
                 ) {
                     #$matchData["isImported"] = true;
                     #$matchData["isOfficialMatch"] = true;
@@ -222,8 +225,8 @@ trait sfwMatch
                 var_dump($parts);
                 echo "<br />";
                 echo "<br />";
+                echo substr($row, 0,5);
                 var_dump($row);
-                exit();
             }
         }
     }
