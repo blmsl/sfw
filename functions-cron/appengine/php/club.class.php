@@ -29,7 +29,7 @@ trait sfwClub
         $snapshot = $query->documents();
 
         if ($snapshot->isEmpty()) {
-            // create club within batch
+            // create club or exit with error?!
         }
 
         // return first season with that title

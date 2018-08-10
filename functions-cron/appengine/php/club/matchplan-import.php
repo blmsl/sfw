@@ -20,9 +20,13 @@ $time_start = microtime(true);
 echo $project->generateHeader();
 echo "<h1>Importiere den Spielplan von fussball.de</h1>";
 
+// Batch erstellen
+# $batch = $project->db->batch();
 
 $jahr = isset($_GET['jahr']) ? DateTime::createFromFormat('Y', $_GET['jahr']) : new DateTime();
 
+// falls ein Jahr übergeben wurde wird die komplette Saison als Start- und Ende gesetzt,
+// ansonsten die nächsten 4 Monate ab heute
 $loadingLimit = null;
 if (isset($_GET['jahr'])) {
     $seasonStart = $project->getSeasonStartDate($jahr);
@@ -37,57 +41,36 @@ if (isset($_GET['jahr'])) {
     echo "<h3>Lade Daten vom " . $seasonStart->format('d.m.Y') . " bis " . $loadingLimit->format('d.m.Y') . " </h3>";
 }
 
-
+// nur definierte Vereine zulassen
 $clubData = isset($_GET['club']) ? $project->getClubDataByTitle($_GET['club']) : $project->getClubDataByTitle('SF Winterbach');
 if (!$clubData) {
     echo "Kein Verein mit diesen Daten im Skript hinterlegt (vgl. club.class.php).";
     exit();
 }
 
+// Verein aus der DB laden
 $club = $project->getClubByTitle($clubData["title"]);
-if ($club) {
-
-    #$season = $project->getSeasonByDate($seasonStart, $seasonEnd);
-    #var_dump($season);
-
-    $matchPlanUrl = $project->generateMatchPlanUrl($club["fussballde"]["clubId"], $seasonStart, $loadingLimit ? $loadingLimit : $seasonEnd);
-    $doc = $project->loadRemoteHTML($matchPlanUrl);
-
-    $matchPlan = $project->scrapeMatchPlan($doc);
+if (!$club) {
+    echo "Kein Verein mit diesen Daten in der Datenbank vorhanden. Bitte den Verein " . $clubData["title"] . " erst in der Datenbank anlegen";
+    exit();
 }
 
-
-#$categoryTypes = $project->getCategoryTypes();
-#var_dump($categoryTypes);
-
-#$locations = $project->getLocations();
-
-/*
-$categoryTypes = $project->getCategoryTypes();
-$project->getLocations();
-echo $project->generateHeader();
-
-$currentSeason = isset($_GET['current-season']) && $_GET['current-season'] === true ?  new DateTime() : null;
-$currentClub = isset($_GET['club']) ?  $_GET['club'] : null;
-
-foreach ($project->getSeasons($currentSeason) as $season) {
-
-    $seasonStart = $project->getSeasonStartDate($season);
-    $seasonEnd = $project->getSeasonEndDate($season);
-
-    echo $project->generateSeasonHeading($season);
-
-    // Batch to create and delete matches in the calendar
-    $batch = $project->db->batch();
-
-    foreach ($project->getClubs($currentClub) as $club) {
-        $request = $project->getMatchPlan($club, $seasonStart, $seasonEnd);
-        $output = $project->scrap_matchPlan($request, $club, $season, $batch);
-        echo $project->generateMatchPlanTable($output);
-    }
-    $batch->commit();
+if(!$club["fussballde"]["clubId"]){
+    echo "Bei dem Verein " . $clubData["title"] . " fehlt die Fussball.de-Id.";
+    exit();
 }
-*/
+
+// Laden der aktuellen Saison
+#$season = $project->getSeasonByDate($seasonStart, $seasonEnd);
+#var_dump($season);
+
+// die Spielplan-URL anhand des Saison-Startes und -Endes ODER des aktuellen Datums und des Limits laden
+$matchPlanUrl = $project->generateMatchPlanUrl($club["fussballde"]["clubId"], $seasonStart, $loadingLimit ? $loadingLimit : $seasonEnd);
+$doc = $project->loadRemoteHTML($matchPlanUrl);
+
+$matchPlan = $project->scrapeMatchPlan($doc);
+echo $project->generateMatchPlanTable($matchPlan);
+
 
 echo '<p><b>Ausführungsdauer :</b> ' . (microtime(true) - $time_start) . '</p>';
 echo $project->generateFooter();

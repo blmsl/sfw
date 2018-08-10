@@ -84,7 +84,7 @@ trait sfwMatch
                             $matchData["homeTeam"]["externalTeamLink"] = $cell->find('.club-wrapper') ? $cell->find('.club-wrapper')[0]->attr('href') : '';
                             $matchData["homeTeam"]["logoURL"] = $cell->find('.table-image span') ? str_replace('format/3', 'format/2', $cell->find('.table-image span')[0]->attr('data-responsive-image')) : '';
 
-                            if(key_exists('assignedCategories', $matchData) && key_exists('assignedMainCategory', $matchData["assignedCategories"])) {
+                            if (key_exists('assignedCategories', $matchData) && key_exists('assignedMainCategory', $matchData["assignedCategories"])) {
                                 $matchData["isHomeTeam"] = $this->isTeamFromClub($matchData["homeTeam"], $matchData["homeTeam"]["title"], $matchData["assignedCategories"]["assignedMainCategory"]);
                             }
 
@@ -94,11 +94,10 @@ trait sfwMatch
                             $matchData["guestTeam"]["externalTeamLink"] = $cell->find('.club-wrapper') ? $cell->find('.club-wrapper')[0]->attr('href') : '';
                             $matchData["guestTeam"]["logoURL"] = $cell->find('.table-image span') ? str_replace('format/3', 'format/2', $cell->find('.table-image span')[0]->attr('data-responsive-image')) : '';
 
-                        }
-                        elseif ($cell->hasClass('column-score')) {
+                        } elseif ($cell->hasClass('column-score')) {
 
                             // ToDo: Absetzung || Ausfall || 'Nichtantritt BEIDE' || 'Nichtantritt GAST' || 'Nichtantritt HEIM' || 14.08.2018 19:00 || 'T' || 't' || 'U' || 'W' || 'V'
-                            if(in_array( trim($cell->text()), array('Absetzung','Ausfall','Nichtantritt BEIDE','Nichtantritt GAST','Nichtantritt HEIM'))){
+                            if (in_array(trim($cell->text()), array('Absetzung', 'Ausfall', 'Nichtantritt BEIDE', 'Nichtantritt GAST', 'Nichtantritt HEIM'))) {
                                 $matchData["result"]["otherEvent"] = trim($cell->text());
                             }
 
@@ -110,13 +109,13 @@ trait sfwMatch
                         }
                     }
 
-                    if (key_exists('homeTeam', $matchData)  &&
+                    if (key_exists('homeTeam', $matchData) &&
                         key_exists('guestTeam', $matchData) &&
                         key_exists('assignedLocation', $matchData) &&
                         key_exists('isHomeTeam', $matchData) &&
                         key_exists('assignedCategories', $matchData)
                     ) {
-                        $teamData = $matchData["isHomeTeam"] ? $matchData["homeTeam"] :  $matchData["guestTeam"];
+                        $teamData = $matchData["isHomeTeam"] ? $matchData["homeTeam"] : $matchData["guestTeam"];
 
                         $matchData["assignedTeam"] = array(
                             'title' => $matchData['assignedCategories']["assignedCategory"],
@@ -229,87 +228,87 @@ trait sfwMatch
         }
     }
 
-    /*
-     * function generateMatchPlanTable($matches)
-     * {
-     *
-     * $returnString = '';
-     * $returnString .= '<table class="table table-striped table-bordered table-hover table-sm">';
-     * $returnString .= '<thead class="thead-light">';
-     * $returnString .= '<tr>';
-     * $returnString .= '<th>Nr.</th>';
-     * $returnString .= '<th>Match-Type</th>';
-     * $returnString .= '<th>Kategorien</th>';
-     * $returnString .= '<th>Spielort</th>';
-     * $returnString .= '<th>Start</th>';
-     * $returnString .= '<th>Ende</th>';
-     * $returnString .= '<th>Heim</th>';
-     * $returnString .= '<th>Gast</th>';
-     * #$returnString .= '<th>Team</th>';
-     * $returnString .= '<th>Link</th>';
-     * $returnString .= '</tr>';
-     * $returnString .= '</thead>';
-     * $returnString .= '<tbody>';
-     *
-     * $i = 1;
-     * foreach ($matches AS $match) {
-     * $returnString .= $this->generateMatchPlanRow($match, $i);
-     * $i++;
-     * }
-     *
-     * $returnString .= '</tbody>';
-     * $returnString .= '</table>';
-     *
-     * return $returnString;
-     * }
-     *
-     * function generateMatchPlanRow($match, $i)
-     * {
-     * $returnString = '<tr>';
-     * $returnString .= '<td scope="row">' . $i . '</td>';
-     * $returnString .= '<td>' . $match["matchType"] . '</td>';
-     *
-     * $returnString .= '<td>';
-     * foreach ($match["assignedCategories"] AS $singleCategory) {
-     * #$returnString .= $category . '<br />';
-     * foreach ($this->categories as $title => $category) {
-     * if ($category['id'] === $singleCategory) {
-     * $returnString .= $category['title'] . '<br />';
-     * }
-     * }
-     * }
-     * $returnString .= '</td>';
-     *
-     * foreach ($this->locations as $title => $location) {
-     * if ($location["id"] === $match["assignedLocation"]) {
-     * $returnString .= '<td>' . $title . '</td>';
-     * }
-     * }
-     *
-     * /**
-     * @var $match array
-     *
-     * $returnString .= '<td>' . $match["matchStartDate"]->format('d.m.Y H:i') . '</td>';
-     * $returnString .= '<td>' . $match["matchEndDate"]->format('H:i') . '</td>';
-     * $returnString .= '<td><img src="' . $match["homeTeam"]["logoURL"] . '" alt="' . $match["homeTeam"]["title"] . '"/><br />';
-     * $returnString .= $match["isHomeTeam"] ? '<b>' . $match["homeTeam"]["title"] . '</b>' : $match["homeTeam"]["title"];
-     * $returnString .= '</td>';
-     * $returnString .= '<td><img src="' . $match["guestTeam"]["logoURL"] . '" alt="' . $match["guestTeam"]["title"] . '"/><br />';
-     * $returnString .= !$match["isHomeTeam"] ? '<b>' . $match["guestTeam"]["title"] . '</b>' : $match["guestTeam"]["title"];
-     * $returnString .= '</td>';
-     *
-     * #foreach($teams as $title => $id) {
-     * #    if($id === $match["assignedTeam"]) {
-     * #        $returnString .= '<td>' . $title . '</td>';
-     * #    }
-     * #}
-     *
-     * $returnString .= $match["matchLink"] ?
-     * '<td><a target="_blank" href="' . $match["matchLink"] . '">Link</a></td>'
-     * :
-     * '<td>&nbsp;</td>';
-     *
-     * $returnString .= '</tr>';
-     * return $returnString;
-     * }*/
+
+    public function generateMatchPlanTable($matches)
+    {
+
+        $returnString = '';
+        $returnString .= '<table class="table table-striped table-bordered table-hover table-sm">';
+        $returnString .= '<thead class="thead-light">';
+        $returnString .= '<tr>';
+        $returnString .= '<th>Nr.</th>';
+        $returnString .= '<th>Match-Type</th>';
+        $returnString .= '<th>Kategorien</th>';
+        $returnString .= '<th>Spielort</th>';
+        $returnString .= '<th>Start</th>';
+        $returnString .= '<th>Ende</th>';
+        $returnString .= '<th>Heim</th>';
+        $returnString .= '<th>Gast</th>';
+        #$returnString .= '<th>Team</th>';
+        $returnString .= '<th>Link</th>';
+        $returnString .= '</tr>';
+        $returnString .= '</thead>';
+        $returnString .= '<tbody>';
+
+        /* $i = 1;
+        foreach ($matches AS $match) {
+        $returnString .= $this->generateMatchPlanRow($match, $i);
+        $i++;
+        } */
+
+        $returnString .= '</tbody>';
+        $returnString .= '</table>';
+
+        return $returnString;
+    }
+
+    /* function generateMatchPlanRow($match, $i)
+    * {
+    * $returnString = '<tr>';
+    * $returnString .= '<td scope="row">' . $i . '</td>';
+    * $returnString .= '<td>' . $match["matchType"] . '</td>';
+    *
+    * $returnString .= '<td>';
+    * foreach ($match["assignedCategories"] AS $singleCategory) {
+    * #$returnString .= $category . '<br />';
+    * foreach ($this->categories as $title => $category) {
+    * if ($category['id'] === $singleCategory) {
+    * $returnString .= $category['title'] . '<br />';
+    * }
+    * }
+    * }
+    * $returnString .= '</td>';
+    *
+    * foreach ($this->locations as $title => $location) {
+    * if ($location["id"] === $match["assignedLocation"]) {
+    * $returnString .= '<td>' . $title . '</td>';
+    * }
+    * }
+    *
+    * /**
+    * @var $match array
+    *
+    * $returnString .= '<td>' . $match["matchStartDate"]->format('d.m.Y H:i') . '</td>';
+    * $returnString .= '<td>' . $match["matchEndDate"]->format('H:i') . '</td>';
+    * $returnString .= '<td><img src="' . $match["homeTeam"]["logoURL"] . '" alt="' . $match["homeTeam"]["title"] . '"/><br />';
+    * $returnString .= $match["isHomeTeam"] ? '<b>' . $match["homeTeam"]["title"] . '</b>' : $match["homeTeam"]["title"];
+    * $returnString .= '</td>';
+    * $returnString .= '<td><img src="' . $match["guestTeam"]["logoURL"] . '" alt="' . $match["guestTeam"]["title"] . '"/><br />';
+    * $returnString .= !$match["isHomeTeam"] ? '<b>' . $match["guestTeam"]["title"] . '</b>' : $match["guestTeam"]["title"];
+    * $returnString .= '</td>';
+    *
+    * #foreach($teams as $title => $id) {
+    * #    if($id === $match["assignedTeam"]) {
+    * #        $returnString .= '<td>' . $title . '</td>';
+    * #    }
+    * #}
+    *
+    * $returnString .= $match["matchLink"] ?
+    * '<td><a target="_blank" href="' . $match["matchLink"] . '">Link</a></td>'
+    * :
+    * '<td>&nbsp;</td>';
+    *
+    * $returnString .= '</tr>';
+    * return $returnString;
+    * }*/
 }
