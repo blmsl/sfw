@@ -7,15 +7,14 @@
 // gcloud app deploy app.yaml cron.yaml php.yaml --version=2
 // https://console.cloud.google.com/logs
 // gcloud app browse
-// https://console.cloud.google.com/functions/list?project=sfw-dev
-// https://sfw-dev.appspot.com/team/matchplan.php
-// dev_appserver.py D:\sfw\functions-cron\appengine\app.yaml D:\sfw\functions-cron\appengine\php.yaml D:\sfw\functions-cron\appengine\dispatch.yaml --port=9090
+// https://console.cloud.google.com/functions/list?project=sf-winterbach
+// https://sf-winterbach.appspot.com
 
 import * as admin from 'firebase-admin';
 
 admin.initializeApp();
 
-// import * as functions from 'firebase-functions';
+import * as match from './match/index';
 import * as media from './media/index';
 import * as member from './member/index';
 // import * as shortener from './url-shortener/index';
@@ -27,6 +26,8 @@ import * as team from './team/index';
 // export const userPresence = user.userPresence;
 
 // export const urlShortener = shortener.shortener;
+
+// export const sendNotificationNewMatch = match.sendNotificationNewMatch;
 
 export const generateThumbnailCron = media.generateThumbnailCron;
 // export const removeMediaItemCron = media.deleteMediaCron;
