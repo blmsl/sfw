@@ -8,37 +8,31 @@ trait sfwSeason
     public $seasonCollection = null;
     private $seasons = array();
 
-    public function getSeasons($seasonDates = null)
+    /**
+     * @param $seasonStartYear DateTime
+     * @param $seasonEndYear DateTime
+     * @return array
+     */
+    public function getSeasonByDate($seasonStartYear, $seasonEndYear)
     {
-        if($seasonDates){
-            /**
-             * @var $seasonStartYear DateTime
-             * @var $seasonEndYear DateTime
-             */
-            $seasonStartYear = $seasonDates['startYear'];
-            $seasonEndYear = $seasonDates['endYear'];
-            $title = 'Saison ' . $seasonStartYear->format('Y') . '/' . $seasonEndYear->format('Y');
-            foreach ($this->seasonCollection->where('title', '=', $title)->documents() as $doc) {
-                $this->seasons[$doc["title"]] = array(
-                  'id' => $doc
+        $title = 'Saison ' . $seasonStartYear->format('Y') . '/' . $seasonEndYear->format('Y');
+
+        $query= $this->seasonCollection->where('title', '=', $title);
+
+        $snapshot = $query->documents();
+
+        if($snapshot->isEmpty()){
+            // create season within batch
+        }
+
+        // return first season with that title
+        if($snapshot->size() === 1){
+            foreach ($snapshot as $doc) {
+                return $this->seasons[$doc["title"]] = array(
+                    'id' => $doc["id"]
                 );
             }
-        } else {
-            foreach ($this->seasonCollection->documents() as $doc) {
-              $this->seasons[$doc["title"]] = array(
-                'id' => $doc
-              );
-            }
         }
-
-        if (count($this->seasons) === 0) {
-          echo 'Season not found';
-            exit();
-            // $currentSeason = $this->setSeason(new DateTime(), $seasonsList);
-            // $seasonsList[$currentSeason["title"]] = $currentSeason;
-        }
-
-        return $this->seasons;
     }
 
     private function saveSeason($data, $seasonList)
@@ -104,20 +98,22 @@ trait sfwSeason
         return "<h4>Spielplan&nbsp; <small>" . $startDate->format('d.m.Y') . " &ndash; " . $endDate->format('d.m.Y') . "</small></h4>";
     }
 
+    /**
+     * @param $season DateTime
+     * @return DateTime
+     */
     public function getSeasonStartDate($season)
     {
-        $parts = explode('/', $season["title"]);
-        $startYear = substr($parts[0], -4);
-        $startDate = DateTime::createFromFormat('d.m.Y', '01.07.' . $startYear);
-        return $startDate;
+        return DateTime::createFromFormat('d.m.Y H:i:s', '01.07.' . $season->format('Y') . ' 00:00:00');
     }
 
+    /**
+     * @param $season DateTime
+     * @return DateTime
+     */
     public function getSeasonEndDate($season)
     {
-        $parts = explode('/', $season["title"]);
-        $endYear = substr($parts[1], 0);
-        $endDate = DateTime::createFromFormat('d.m.Y', '30.06.' . $endYear);
-        return $endDate;
+        return DateTime::createFromFormat('d.m.Y H:i:s', '30.06.' . $season->format('Y') . ' 23:59:59')->modify('+1 year');
     }
 
 }

@@ -1,11 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', true);
-ini_set('memory_limit', '-1');
-
-header("Content-Type: text/html; charset=utf-8");
-
 use Google\Cloud\Firestore\FieldValue;
 use Google\Cloud\Firestore\FirestoreClient;
 use duzun\hQuery;
@@ -54,7 +48,6 @@ trait sfwBase
 
   public function __construct($projectId)
   {
-    hQuery::$cache_expires = 0;
     $this->client = $this->getGoogleClient($projectId);
     $this->sheetService = new Google_Service_Sheets($this->client);
     $this->driveService = new Google_Service_Drive($this->client);
@@ -107,15 +100,8 @@ trait sfwBase
     return $db;
   }
 
-  public function curlRequest($url)
-  {
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
-    $str = curl_exec($curl);
-    curl_close($curl);
-    return str_get_html($str);
+  public function loadRemoteHTML($link){
+      return hQuery::fromUrl($link); // , ['Accept' => 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8']
   }
 
   /**
