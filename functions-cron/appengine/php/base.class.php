@@ -47,6 +47,7 @@ trait sfwBase
   public $sheetService = null;
   public $driveService = null;
   public $calendarService = null;
+  public $twitterConfig = null;
 
   public function __construct($projectId)
   {
@@ -96,11 +97,11 @@ trait sfwBase
     }
 
     $string = file_get_contents(getenv('TWITTER_APPLICATION_CREDENTIALS'));
-    $jsonConfig = json_decode($string, true);
+    $this->twitterConfig = json_decode($string, true);
 
-    Codebird\Codebird::setConsumerKey($jsonConfig["consumerKey"], $jsonConfig["consumerSecret"]);
+    Codebird\Codebird::setConsumerKey($this->twitterConfig["consumerKey"], $this->twitterConfig["consumerSecret"]);
     $cb = Codebird\Codebird::getInstance();
-    $cb->setToken($jsonConfig["accessToken"], $jsonConfig["accessTokenSecret"]);
+    $cb->setToken($this->twitterConfig["accessToken"], $this->twitterConfig["accessTokenSecret"]);
     return $cb;
   }
 
@@ -178,14 +179,12 @@ trait sfwBase
                 </style>
               </head>
               <body>
-                <div class="container-fluid">';
+                <div class="container-fluid">' . PHP_EOL;
   }
 
   public function generateFooter()
   {
-    return '</div>
-          </body>
-        </html>';
+    return '</div>' . PHP_EOL . '</body>' . PHP_EOL. '</html>';
   }
 
   /**
