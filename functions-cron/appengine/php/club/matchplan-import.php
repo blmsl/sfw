@@ -10,6 +10,8 @@ header("Content-Type: text/html; charset=utf-8");
 require "../../vendor/autoload.php";
 require "../base.class.php";
 
+require_once "../utils.global.php"; # by emre isik
+
 
 putenv('GOOGLE_APPLICATION_CREDENTIALS=../client_secret.json');
 
@@ -71,6 +73,7 @@ $doc = $project->loadRemoteHTML($matchPlanUrl);
 $matchPlan = $project->scrapeMatchPlan($doc);
 echo $project->generateMatchPlanTable($matchPlan);
 
+tk_print_counts();
 
 echo '<p><b>Ausführungsdauer :</b> ' . (microtime(true) - $time_start) . '</p>';
 echo $project->generateFooter();

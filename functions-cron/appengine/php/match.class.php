@@ -27,8 +27,8 @@ trait sfwMatch
     {
         $savedMatchDate = NULL;
         $i = 0;
-        $output = array();
         $matchData = array();
+        $output = array();
 
         $items = $doc->find("div.fixtures-matches-table > table > tbody > tr");
 
@@ -41,23 +41,47 @@ trait sfwMatch
 
             # echo $i . "<br />";
             # $mainCategoryName = '';
-            if ($i > 0) {
+            if ($i >= 0) {
 
-                if ($item->hasClass("row-headline")) {
+                if ($item->hasClass("row-headline visible-small")) {
+
+                    // reset match_data
+                    if (!empty($matchData)) {
+                        $output[] = $matchData;
+                        $matchData = array();
+                    }
+
+                    #tk_print('if has class <u>row-headline</u>', $item->text());
+
+                    if(preg_match("/\d{2}.\d{2}.\d{4}/", $item->text(), $regex_match)) { // if dd.mm.yyyy found
+                        $matchData["_matchStartDate"] = DateTime::createFromFormat('d.m.Y H:i', $regex_match[0] . ' ' . '00:00');
+                    }
+
 
                     $parts = explode('|', $item->text());
-                    $matchData["matchType"] = trim($parts[2]);
                     $matchData["assignedCategories"] = array(
                         "assignedCategory" => trim($parts[1]),
                         "assignedMainCategory" => $this->getTeamMainCategoryName(trim($parts[1]))
                     );
 
+
                 } elseif ($item->hasClass("odd row-competition hidden-small") || $item->hasClass("row-competition hidden-small")) {
-                    $matchData["matchStartDate"] = $savedMatchDate = $this->setMatchDate(trim($item->text()), $savedMatchDate);
-                    /* if ($matchDate && key_exists("assignedMainCategory", $matchData["assignedCategories"])) {
-                        $matchData["matchStartDate"] = $savedMatchDate = $matchDate;
+                    tk_print('if has class <u>hidden-small</u>', $item->text());
+
+                    $matchData["matchStartDate"] = $this->extractMatchDate($item) ?: $matchData["_matchStartDate"];
+                    tk_print('its_date', $matchData["matchStartDate"]);
+
+                    $matchData["matchType"] = $this->extractMatchType($item);
+                    tk_print('its_team', $matchData["matchType"]);
+
+                    $matchData["matchID"] = $this->extractMatchID($item);
+                    tk_print('its_id', $matchData["matchID"]);
+
+
+
+                    if (key_exists("assignedMainCategory", $matchData["assignedCategories"])) {
                         $matchData["matchEndDate"] = $this->getMatchDuration($matchData["assignedCategories"]["assignedMainCategory"], $matchData["matchStartDate"]);
-                    } */
+                    }
 
                 } // Treffpunkt und Platzartz
                 elseif ($item->hasClass("row-venue")) { // || $item->hasClass("row-venue hidden-small")
@@ -157,6 +181,12 @@ trait sfwMatch
             }
             $i++;
         }
+
+        // get last matchData
+        if (!empty($matchData)) {
+            $output[] = $matchData;
+        }
+
         return $output;
     }
 
@@ -222,13 +252,45 @@ trait sfwMatch
             if ($savedDate) {
                 return DateTime::createFromFormat('d.m.y H:i', $savedDate->format('d.m.y') . " " . $time);
             } else {
+                /*
+                echo "<br /> <h5>PARTS: </h5>";
                 var_dump($parts);
-                echo "<br />";
-                echo "<br />";
+                echo "<br /> <h5>SUBSTR & ROW: </h5>";
                 echo substr($row, 0,5);
-                var_dump($row);
+                var_dump($row); */
             }
         }
+    }
+
+    public function extractMatchDate($element) {
+        $matchDate = $element->find('.column-date')->text();
+        $extractedValue = null;
+
+        if (empty($matchDate)) return false;
+
+        if (strlen($matchDate) == 5) {
+            $extractedValue = DateTime::createFromFormat('H:i', $matchDate);
+        } else {
+            $justDate = substr(trim($matchDate), 4, 8);
+            $justTime = substr(trim($matchDate), -5);
+            $extractedValue = DateTime::createFromFormat('d.m.y H:i', "$justDate $justTime");
+        }
+
+        return $extractedValue;
+    }
+
+    public function extractMatchType($element) {
+        $matchType = $element->find('.column-team')->text();
+        return $matchType;
+    }
+
+    public function extractMatchID($element) {
+        $fullText = $element->text();
+        $fullTextArr = explode('|', $fullText);
+        $lastEl = array_values(array_slice($fullTextArr, -1))[0];
+        $lastEl = trim($lastEl);
+
+        return $lastEl;
     }
 
 
@@ -253,16 +315,64 @@ trait sfwMatch
         $returnString .= '</thead>';
         $returnString .= '<tbody>';
 
-        /* $i = 1;
         foreach ($matches AS $match) {
-        $returnString .= $this->generateMatchPlanRow($match, $i);
-        $i++;
-        } */
+            $returnString .= @$this->generateMatchPlanRow($match);
+        }
 
         $returnString .= '</tbody>';
         $returnString .= '</table>';
 
         return $returnString;
+    }
+
+    /**
+     * @param callable|string $innerHTML
+     * @return string
+     */
+    function generateMatchPlanColumn($innerHTML) {
+        if (is_callable($innerHTML)) $innerHTML = $innerHTML();
+        return "<td>$innerHTML</td>";
+    }
+
+    function generateMatchPlanRow($match) {
+        if(empty($match)) return "";
+
+        $html = "<tr>";
+        $html .= $this->generateMatchPlanColumn($match['matchID']);
+        $html .= $this->generateMatchPlanColumn($match['matchType']);
+        $html .= $this->generateMatchPlanColumn(implode(" | ", $match['assignedCategories']));
+        $html .= $this->generateMatchPlanColumn(function () use ($match) {
+            if (!empty($match['assignedLocation'])) {
+                $location = $match['assignedLocation']['address'];
+                $street = $location['streetName'] . (!empty($location['houseNumber']) ? ' '.$location['houseNumber'] : '');
+                return  $street . ', ' . $location['zip'] . ' ' . $location['city'];
+            }
+            return null;
+        });
+        $html .= $this->generateMatchPlanColumn($match['matchStartDate']->format(SFW_DATE_FORMAT));
+        $html .= $this->generateMatchPlanColumn($match['matchEndDate']->format(SFW_DATE_FORMAT));
+        $html .= $this->generateMatchPlanColumn(function () use ($match) {
+            return sprintf(
+                '<img width="60px" src="%2$s" alt="logo" /> <a href="%1$s"> %3$s</a>',
+                $match['homeTeam']['externalTeamLink'],
+                $match['homeTeam']['logoURL'],
+                $match['homeTeam']['title']
+            );
+        });
+        $html .= $this->generateMatchPlanColumn(function () use ($match) {
+            return sprintf(
+                '<img width="60px" src="%2$s" alt="logo" /> <a href="%1$s"> %3$s</a>',
+                $match['guestTeam']['externalTeamLink'],
+                $match['guestTeam']['logoURL'],
+                $match['guestTeam']['title']
+            );
+        });
+        $html .= $this->generateMatchPlanColumn(
+            '<a target="_blank" href="'.$match['matchLink'].'">Spiel</a>'
+        );
+        $html .= "</tr>";
+
+        return $html;
     }
 
     /* function generateMatchPlanRow($match, $i)
