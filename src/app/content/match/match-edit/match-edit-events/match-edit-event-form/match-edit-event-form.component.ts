@@ -4,15 +4,15 @@ import {
   Input,
   OnInit,
   Output
-}                        from '@angular/core';
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   Validators
-}                        from '@angular/forms';
-import { ICategory }     from '../../../../../shared/interfaces/category.interface';
-import { IMatchEvent }   from '../../../../../shared/interfaces/match/match-event.interface';
+} from '@angular/forms';
+import { ICategory } from '../../../../../shared/interfaces/category.interface';
+import { IMatchEvent } from '../../../../../shared/interfaces/match/match-event.interface';
 import { ICategoryType } from '../../../../../shared/interfaces/category-type.interface';
 
 @Component({
@@ -37,8 +37,8 @@ export class MatchEditEventFormComponent implements OnInit {
 
     this.form = this.fb.group({
       assignedCategory: null,
-      description: [ '', [Validators.required, Validators.minLength(5)]],
-      playMinute:  null,
+      description: ['', [Validators.required, Validators.minLength(5)]],
+      playMinute: null,
       title: ''
     });
 
@@ -51,12 +51,12 @@ export class MatchEditEventFormComponent implements OnInit {
     }
   }
 
-  save($event){
+  save($event) {
     this.saveMatchEvent.emit($event);
     this.form.reset();
   }
 
-  cancel(){
+  cancel() {
     this.form.reset();
   }
 

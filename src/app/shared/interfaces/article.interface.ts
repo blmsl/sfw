@@ -35,26 +35,29 @@ export interface IArticle {
 
   isFeaturedPost?: boolean;
 
-  social?: {
+  /* social?: {
     provider: {
       type: string; // local, facebook, twitter etc.
       description: string;
       title: string;
     }[];
-  }[];
+  }[]; */
 
   meta?: {
     main?: {
       description: string;
       title: string;
+      scheduled: boolean;
     },
     facebook?: {
       description: string;
       title: string;
+      scheduled: boolean;
     },
     twitter?: {
       description: string;
       title: string;
+      scheduled: boolean;
     }
   };
 

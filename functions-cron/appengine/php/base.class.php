@@ -4,19 +4,21 @@ use Google\Cloud\Firestore\FieldValue;
 use Google\Cloud\Firestore\FirestoreClient;
 use duzun\hQuery;
 
-require "calendar.class.php";
-require "category.class.php";
-require "category-type.class.php";
-require "club.class.php";
-require "drive.class.php";
-require "location.class.php";
-require "match.class.php";
-require "member.class.php";
-require "season.class.php";
-require "team.class.php";
+require_once "article.class.php";
+require_once "calendar.class.php";
+require_once "category.class.php";
+require_once "category-type.class.php";
+require_once "club.class.php";
+require_once "drive.class.php";
+require_once "location.class.php";
+require_once "match.class.php";
+require_once "member.class.php";
+require_once "season.class.php";
+require_once "team.class.php";
 
 class sfwApp
 {
+  use sfwArticle;
   use sfwBase;
   use sfwCalendar;
   use sfwCategory;
@@ -56,6 +58,7 @@ trait sfwBase
     $this->db = $this->getFireStoreConnection($projectId);
     $this->client = $this->getGoogleClient($projectId);
 
+    $this->articleCollection = $this->db->collection('articles');
     $this->categoryCollection = $this->db->collection('categories');
     $this->categoryTypeCollection = $this->db->collection('category-types');
     $this->clubCollection = $this->db->collection('clubs');
@@ -85,6 +88,20 @@ trait sfwBase
       ]
     );
     return $client;
+  }
+
+  public function setUpTwitter(){
+    if(!getenv('TWITTER_APPLICATION_CREDENTIALS') || !file_get_contents(getenv('TWITTER_APPLICATION_CREDENTIALS'))){
+      exit('Twitter Config not loaded');
+    }
+
+    $string = file_get_contents(getenv('TWITTER_APPLICATION_CREDENTIALS'));
+    $jsonConfig = json_decode($string, true);
+
+    Codebird\Codebird::setConsumerKey($jsonConfig["consumerKey"], $jsonConfig["consumerSecret"]);
+    $cb = Codebird\Codebird::getInstance();
+    $cb->setToken($jsonConfig["accessToken"], $jsonConfig["accessTokenSecret"]);
+    return $cb;
   }
 
   public function getFireStoreConnection($projectId)
@@ -169,6 +186,36 @@ trait sfwBase
     return '</div>
           </body>
         </html>';
+  }
+
+  /**
+   * Round up minutes to the nearest upper interval of a DateTime object.
+   *
+   * @param \DateTime $dateTime
+   * @param int $minuteInterval
+   * @return \DateTime
+   */
+  public function roundUpToMinuteInterval(\DateTime $dateTime, $minuteInterval = 10)
+  {
+    return $dateTime->setTime(
+      $dateTime->format('H'),
+      ceil($dateTime->format('i') / $minuteInterval) * $minuteInterval,
+      0
+    );
+  }
+
+  /**
+   * @param DateTime $dateTime
+   * @param int $minuteInterval
+   * @return DateTime|false
+   */
+  public function roundDownToMinuteInterval(\DateTime $dateTime, $minuteInterval = 10)
+  {
+    return $dateTime->setTime(
+      $dateTime->format('H'),
+      floor($dateTime->format('i') / $minuteInterval) * $minuteInterval,
+      0
+    );
   }
 
 }

@@ -44,13 +44,20 @@
                            (opened)="setStep(1)"
                            hideToggle="true"
                            formGroupName="facebook">
+
         <mat-expansion-panel-header>
           <mat-panel-title>{{ 'general.articles.edit.sidebar.meta.facebook.title' | translate}}</mat-panel-title>
           <mat-panel-description fxHide.xs>
             {{ 'general.articles.edit.sidebar.meta.facebook.description' | translate}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div fxLayout="column">
+
+        <mat-checkbox style="margin-top: 25px"
+                      formControlName="scheduled">
+          {{'general.articles.edit.sidebar.meta.facebook.scheduled' | translate}}
+        </mat-checkbox>
+
+        <div fxLayout="column" *ngIf="form.get('meta').get('facebook').get('scheduled').value">
 
           <media-uploader (uploadCompleted)="uploadCompleted.emit($event)"
                           [uploaderConfig]="uploaderConfig"
@@ -85,7 +92,13 @@
             {{ 'general.articles.edit.sidebar.meta.twitter.description' | translate}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div fxLayout="column">
+
+        <mat-checkbox style="margin-top: 25px"
+                      formControlName="scheduled">
+          {{'general.articles.edit.sidebar.meta.twitter.scheduled' | translate}}
+        </mat-checkbox>
+
+        <div fxLayout="column" *ngIf="form.get('meta').get('twitter').get('scheduled').value">
 
           <media-uploader (uploadCompleted)="uploadCompleted.emit($event)"
                           [uploaderConfig]="uploaderConfig"

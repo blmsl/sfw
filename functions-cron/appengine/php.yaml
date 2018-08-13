@@ -14,6 +14,10 @@ runtime_config:
 #  instances: 3
 
 handlers:
+# Article
+- url: /php/article/publish-article.php
+  script: /php/article/publish-article.php
+
 # Club
   #secure: always
   #login: admin

@@ -47,11 +47,14 @@ import { SfwEditorModule } from '../../shared/components/editor/sfw-editor.modul
 import { ArticleListFilterComponent } from './article-list/article-list-filter/article-list-filter.component';
 import { SidebarLinksDataComponent } from './article-edit/article-edit-sidebar/sidebar-links-data/sidebar-links-data.component';
 import { NgxEditorModule } from 'ngx-editor';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import {OWL_DATE_TIME_LOCALE, OwlDateTimeIntl, OwlDateTimeModule} from 'ng-pick-datetime';
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ArticleFilterPipe } from '../../shared/pipes/article-filter.pipe';
 import { TimeagoModule } from 'ngx-timeago';
 import { SharedUserModule } from '../../shared/components/user/shared-user.module';
+import {DeIntl} from "../../shared/intl/owl-datetime.i18n";
+import * as moment from "moment";
 
 @NgModule({
   imports: [
@@ -71,7 +74,7 @@ import { SharedUserModule } from '../../shared/components/user/shared-user.modul
     NgxEditorModule,
     SharedMatchModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    OwlMomentDateTimeModule,
     PerfectScrollbarModule,
     RouterModule.forChild(articleRoutes),
     SfwEditorModule,
@@ -109,7 +112,9 @@ import { SharedUserModule } from '../../shared/components/user/shared-user.modul
     PaginationService,
     SeasonService,
     TeamService,
-    UserService
+    UserService,
+    {provide: OWL_DATE_TIME_LOCALE, useValue: 'de'},
+    {provide: OwlDateTimeIntl, useClass: DeIntl},
   ]
 })
 

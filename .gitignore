@@ -1,6 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 /functions-cron/appengine/php/client_secret.json
+/functions-cron/appengine/php/twitter_secret.json
 
 # compiled output
 /dist

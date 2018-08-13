@@ -70,6 +70,7 @@
     "moment": "^2.22.2",
     "ng-animate": "^0.3.4",
     "ng-pick-datetime": "^6.0.12",
+    "ng-pick-datetime-moment": "^1.0.6",
     "ng2-charts": "^1.6.0",
     "ng2-dragula": "^2.0.2",
     "ng2-validation": "^4.2.0",

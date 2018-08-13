@@ -122,7 +122,6 @@ export class ArticleEditComponent implements OnInit {
 
       this.article = Object.assign({}, this.article, changes);
 
-      console.log(this.form);
       if (this.form.valid) {
         this.saveArticle(this.article);
       } else {
@@ -140,15 +139,17 @@ export class ArticleEditComponent implements OnInit {
     return this.fb.group({
       main: this.fb.group({
         title: this.article.meta && this.article.meta.main ? this.article.meta.main.title : '',
-        description: this.article.meta && this.article.meta.main ? this.article.meta.main.description : ''
+        description: this.article.meta && this.article.meta.main ? this.article.meta.main.description : '',
       }),
       facebook: this.fb.group({
         title: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.title : '',
-        description: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.description : ''
+        description: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.description : '',
+        scheduled: this.article.meta.facebook ? this.article.meta.facebook.scheduled : false
       }),
       twitter: this.fb.group({
         title: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.title : '',
-        description: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.description : ''
+        description: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.description : '',
+        scheduled: this.article.meta.twitter ? this.article.meta.twitter.scheduled : false
       })
     });
   }
@@ -156,7 +157,7 @@ export class ArticleEditComponent implements OnInit {
   initPublication(): FormGroup {
     return this.fb.group({
       by: this.article.publication && this.article.publication.from ? this.article.publication.from : this.authService.userId,
-      dateTime: [this.article.publication && this.article.publication.dateTime ? new Date(this.article.publication.dateTime) : new Date(), Validators.compose([Validators.required, CustomValidators.date])],
+      dateTime: [this.article.publication && this.article.publication.dateTime ? new Date(this.article.publication.dateTime) : new Date(), Validators.compose([Validators.required])],
       status: this.article.publication ? this.article.publication.status : 0
     });
   }

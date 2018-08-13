@@ -10,16 +10,16 @@ import { LocationService } from '../../../shared/services/location/location.serv
 import { Observable } from 'rxjs/index';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
-import { TeamService }         from '../../../shared/services/team/team.service';
-import { CategoryService }     from '../../../shared/services/category/category.service';
-import { ICategory }           from '../../../shared/interfaces/category.interface';
-import { ISeason }             from '../../../shared/interfaces/season.interface';
-import { SeasonService }       from '../../../shared/services/season/season.service';
-import { IArticle }            from '../../../shared/interfaces/article.interface';
-import { ArticleService }      from '../../../shared/services/article/article.service';
+import { TeamService } from '../../../shared/services/team/team.service';
+import { CategoryService } from '../../../shared/services/category/category.service';
+import { ICategory } from '../../../shared/interfaces/category.interface';
+import { ISeason } from '../../../shared/interfaces/season.interface';
+import { SeasonService } from '../../../shared/services/season/season.service';
+import { IArticle } from '../../../shared/interfaces/article.interface';
+import { ArticleService } from '../../../shared/services/article/article.service';
 import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
-import { ICategoryType }       from '../../../shared/interfaces/category-type.interface';
-import { IMatchEvent }         from '../../../shared/interfaces/match/match-event.interface';
+import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
+import { IMatchEvent } from '../../../shared/interfaces/match/match-event.interface';
 
 @Component({
   selector: 'match-edit',
@@ -120,9 +120,9 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
 
   initMatchEvents(assignedEvents: IMatchEvent[]): FormArray {
     const formArray = this.fb.array([]);
-    if(assignedEvents) {
+    if (assignedEvents) {
       for (let i = 0; i < assignedEvents.length; i++) {
-        formArray.push(this.createMatchEvent(assignedEvents[ i ]));
+        formArray.push(this.createMatchEvent(assignedEvents[i]));
       }
     } else {
       formArray.push(this.createMatchEvent(null));
@@ -130,7 +130,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     return formArray;
   }
 
-  saveMatchEvent($event: IMatchEvent){
+  saveMatchEvent($event: IMatchEvent) {
     this.addMatchEvent($event);
   }
 
@@ -139,7 +139,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     control.push(this.createMatchEvent(event));
   }
 
-  createMatchEvent(event: IMatchEvent){
+  createMatchEvent(event: IMatchEvent) {
     return this.fb.group({
       assignedCategory: event ? event.assignedCategory : null,
       description: [event ? event.description : '', [Validators.required, Validators.minLength(5)]],
@@ -148,16 +148,16 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  deleteMatchEvent(event: IMatchEvent){
+  deleteMatchEvent(event: IMatchEvent) {
     this.match.assignedMatchEvents.splice(this.match.assignedMatchEvents.indexOf(event), 1);
   }
 
   initAssignedSubstitutes(assignedSubstitutes: string[]): FormArray {
     const formArray = this.fb.array([]);
-    if(assignedSubstitutes) {
+    if (assignedSubstitutes) {
       for (let i = 0; i < assignedSubstitutes.length; i++) {
         let formControl = this.fb.group({
-          memberId: assignedSubstitutes[ i ],
+          memberId: assignedSubstitutes[i],
         });
         formArray.push(formControl);
       }
@@ -180,9 +180,9 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     position: string;
   }[]): FormArray {
     const formArray = this.fb.array([]);
-    if(assignedPositions) {
+    if (assignedPositions) {
       for (let i = 0; i < assignedPositions.length; i++) {
-        let formControl = this.createAssignedPlayer(assignedPositions[ i ]);
+        let formControl = this.createAssignedPlayer(assignedPositions[i]);
         formArray.push(formControl);
       }
     }

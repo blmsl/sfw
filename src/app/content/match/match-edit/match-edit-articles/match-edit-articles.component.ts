@@ -2,8 +2,8 @@ import {
   Component,
   Input,
   OnInit
-}                   from '@angular/core';
-import { IMatch }   from '../../../../shared/interfaces/match/match.interface';
+} from '@angular/core';
+import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 import { IArticle } from '../../../../shared/interfaces/article.interface';
 
 @Component({
