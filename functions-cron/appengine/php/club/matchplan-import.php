@@ -70,6 +70,8 @@ if(!$club["fussballde"]["clubId"]){
 $matchPlanUrl = $project->generateMatchPlanUrl($club["fussballde"]["clubId"], $seasonStart, $loadingLimit ? $loadingLimit : $seasonEnd);
 $doc = $project->loadRemoteHTML($matchPlanUrl);
 
+if (TK_PRINT_ENABLED) echo '<br><br>' . $matchPlanUrl . '<br><br>';
+
 $matchPlan = $project->scrapeMatchPlan($doc);
 echo $project->generateMatchPlanTable($matchPlan);
 

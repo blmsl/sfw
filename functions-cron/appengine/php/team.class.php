@@ -46,6 +46,21 @@ trait sfwTeam
         return $returnString;
     }
 
+    public function getTeamMainGenderName($teamCategoryName)
+    {
+        $returnString = '';
+        if (strpos($teamCategoryName, 'Junior') !== false) {
+            $returnString .= 'Junioren';
+        }
+        if (strpos($teamCategoryName, 'Seniorinnen') !== false || strpos($teamCategoryName, 'Frauen') !== false) {
+            $returnString .= 'Damen';
+        }
+        if (strpos($teamCategoryName, 'Senioren') !== false || strpos(strtolower($teamCategoryName), 'herren') !== false) {
+            $returnString .= 'Herren';
+        }
+        return $returnString;
+    }
+
     function isTeamFromClub($team1, $clubTitle, $mainCategoryName)
     {
         if ($team1 === $clubTitle

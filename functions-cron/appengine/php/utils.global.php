@@ -2,7 +2,7 @@
 
 #setlocale(LC_TIME, "de_DE"); //only necessary if the locale isn't already set
 define("SFW_DATE_FORMAT", "d.m.Y H:i");
-define("TK_PRINT_ENABLED", false);
+define("TK_PRINT_ENABLED", false); # enables the tk_print's | use while debugging
 
 /**
  * Returns the global variable "tk_count_printed"
