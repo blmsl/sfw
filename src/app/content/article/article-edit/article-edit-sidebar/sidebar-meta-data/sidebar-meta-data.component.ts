@@ -45,6 +45,13 @@ export class SidebarMetaDataComponent implements OnInit, OnChanges {
     allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
+  public instagramUploaderOptions: IUploaderOptions = {
+    assignedObjects: ['articles', 'instagram'],
+    itemId: '',
+    queueLimit: 1,
+    allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
+  };
+
   constructor() {
   }
 
@@ -59,6 +66,7 @@ export class SidebarMetaDataComponent implements OnInit, OnChanges {
     if (changes.article.currentValue.id) {
       this.facebookUploaderOptions.itemId
         = this.metaUploaderOptions.itemId
+        = this.instagramUploaderOptions.itemId
         = this.twitterUploaderOptions.itemId
         = changes.article.currentValue.id;
     }

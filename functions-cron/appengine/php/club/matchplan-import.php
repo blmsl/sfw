@@ -12,8 +12,9 @@ require "../base.class.php";
 
 require_once "../utils.global.php"; # by emre isik
 
-
-putenv('GOOGLE_APPLICATION_CREDENTIALS=../client_secret.json');
+if(!strpos(gethostname(), 'appspot.com')) {
+  putenv('GOOGLE_APPLICATION_CREDENTIALS=../client_secret.json');
+}
 
 $project = new sfwApp('sf-winterbach');
 

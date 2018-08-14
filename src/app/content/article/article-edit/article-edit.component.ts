@@ -120,6 +120,8 @@ export class ArticleEditComponent implements OnInit {
         changes.publication.dateTime = <any>moment();
       }
 
+      console.log(changes.articleDate);
+
       this.article = Object.assign({}, this.article, changes);
 
       if (this.form.valid) {
@@ -144,12 +146,12 @@ export class ArticleEditComponent implements OnInit {
       facebook: this.fb.group({
         title: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.title : '',
         description: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.description : '',
-        scheduled: this.article.meta.facebook ? this.article.meta.facebook.scheduled : false
+        scheduled: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.scheduled : false
       }),
       twitter: this.fb.group({
         title: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.title : '',
         description: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.description : '',
-        scheduled: this.article.meta.twitter ? this.article.meta.twitter.scheduled : false
+        scheduled: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.scheduled : false
       })
     });
   }

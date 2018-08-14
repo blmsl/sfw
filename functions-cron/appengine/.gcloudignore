@@ -102,3 +102,5 @@ Makefile
 
 !firestore_client_config.json
 !composer.json
+
+!twitter_secret.json

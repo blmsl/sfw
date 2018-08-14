@@ -49,6 +49,8 @@ trait sfwBase
   public $calendarService = null;
   public $twitterConfig = null;
 
+  public $twitter = null;
+
   public function __construct($projectId)
   {
     $this->client = $this->getGoogleClient($projectId);

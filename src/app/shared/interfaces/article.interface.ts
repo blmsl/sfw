@@ -19,7 +19,7 @@ export interface IArticle {
 
   text?: string;
 
-  articleDate?: firebase.firestore.Timestamp;
+  articleDate?: string;
 
   creation: ICreation;
   publication?: IPublication;
@@ -35,14 +35,6 @@ export interface IArticle {
 
   isFeaturedPost?: boolean;
 
-  /* social?: {
-    provider: {
-      type: string; // local, facebook, twitter etc.
-      description: string;
-      title: string;
-    }[];
-  }[]; */
-
   meta?: {
     main?: {
       description: string;
@@ -55,6 +47,16 @@ export interface IArticle {
       scheduled: boolean;
     },
     twitter?: {
+      description: string;
+      title: string;
+      scheduled: boolean;
+    },
+    instagram?: {
+      description: string;
+      title: string;
+      scheduled: boolean;
+    },
+    youtube?: {
       description: string;
       title: string;
       scheduled: boolean;

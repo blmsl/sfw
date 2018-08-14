@@ -19,13 +19,13 @@ trait sfwArticle
     $query = $this->articleCollection
       ->orderBy('publication.dateTime')
       ->where('publication.status', '=', 2)
-      ->where('publication.dateTime', '>=', $startDate->format('D M d Y H:i:s'))
-      ->where('publication.dateTime', '<=', $endDate->format('D M d Y H:i:s'));
+      ->where('publication.dateTime', '>=', $startDate->format('D M d Y H:i'))
+      ->where('publication.dateTime', '<=', $endDate->format('D M d Y H:i'));
 
     $snapshot = $query->documents();
 
     if ($snapshot->isEmpty()) {
-      echo "Keine Artikel zum Veröffentlichen gefunden";
+      echo "<div class='alert alert-info'><p>Keine Artikel zum Veröffentlichen gefunden.</p></div>";
     }
 
     #echo $snapshot->size();
@@ -75,21 +75,63 @@ trait sfwArticle
     return $returnString;
   }
 
-  public function generateArticleRow($article)
+  public function generateArticleRow($i, $article)
   {
-
+    #$zapierToFacebook = false;
     $returnString = '';
     $returnString .= "<tr>" . PHP_EOL;
+    $returnString .= "<td>" . $i . "</td>" . PHP_EOL;
     $returnString .= "<td>" . $article["title"] . "</td>" . PHP_EOL;
-    $returnString .= "<td>ToDo</td>";
-    $returnString .= "<td>ToDo</td>";
-
-    #if(key_exists('scheduled', $article["meta"]["facebook"]) && $article["meta"]["facebook"]["scheduled"] === true){
-    #echo "<li>Publishing to facebook</li>";
-    #}
-
+    $returnString .= "<td>" . $this->getFrontendPublication($article) . "</td>" . PHP_EOL;
+    $returnString .= "<td>" . $this->getFacebookPublication($article) . "</td>" . PHP_EOL;
     $returnString .= "<td>" . $this->getTwitterPublication($article) . "</td>" . PHP_EOL;
     $returnString .= "</tr>" . PHP_EOL;
+    return $returnString;
+  }
+
+  public function getFrontendPublication()
+  {
+    $returnString = '';
+    // $article = $article;
+    $returnString .= "<p>ToDo</p>";
+    #$returnString .= "<p class='text-success'>Erfolgreich veröffentlicht.</p>";
+    return $returnString;
+  }
+
+  public function getFacebookPublication($article)
+  {
+    $returnString = '';
+    if (key_exists('scheduled', $article["meta"]["facebook"]) && $article["meta"]["facebook"]["scheduled"] === true) {
+      $description = $article["meta"]["twitter"]["description"] !== '' ? $article["meta"]["twitter"]["description"] : '';
+      $description === '' && $article["excerpt"] === '' ? $description = $article["text"] : $description = $article["excerpt"];
+
+      $url = 'https://hooks.zapier.com/hooks/catch/2930760/geqmr9/';
+
+      $options = array(
+        'http' => array(
+          'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+          'method' => 'POST',
+          'content' => json_encode(array(
+            'article' => array(
+              'title' => $article["title"],
+              'description' => strip_tags($description),
+              'link' => $article["postURL"] ? 'https://sfwinterbach.com/' . $article["postURL"] : 'https://sfwinterbach.com'
+            )
+          ))
+        )
+      );
+      $context = stream_context_create($options);
+      $result = json_decode(file_get_contents($url, false, $context));
+
+      if ($result->status === 'success') {
+        $returnString .= "<p class='text-success'>Erfolgreich über Zapier gesendet.</p>";
+      } else {
+        var_dump($result);
+        $returnString .= "<p class='text-danger'>ERROR.</p>";
+      }
+    } else {
+      $returnString .= "<p class='text-danger'>Keine Veröffentlichung geplant.</p>";
+    }
     return $returnString;
   }
 
@@ -102,19 +144,21 @@ trait sfwArticle
       $description = $article["meta"]["twitter"]["description"] !== '' ? $article["meta"]["twitter"]["description"] : '';
       $description === '' && $article["excerpt"] === '' ? $description = $article["text"] : $description = $article["excerpt"];
 
-      $params = array('status' => substr($description, 0, 280));
+      $params = array('status' => substr(strip_tags($description), 0, 280));
       /**
        * @var $twitter object
        */
+      $twitter = $this->twitter;
       $reply = (array)$twitter->statuses_update($params);
 
       if ($reply["httpstatus"] === 200) {
         $createdAt = DateTime::createFromFormat('D M d H:i:s P Y', $reply["created_at"]);
-        $returnString .= "Auf Twitter veröffentlicht am " . $createdAt->format('d.m.Y H:i:s') . ": <a target='_blank' href='https://twitter.com/" . $this->twitterConfig["siteName"] . "/status/" . $reply["id"] . "'>Link</a>";
+        $returnString .= "<p class='text-success'>Auf Twitter veröffentlicht am " . $createdAt->format('d.m.Y H:i:s') . ": <a target='_blank' href='https://twitter.com/" . $this->twitterConfig["siteName"] . "/status/" . $reply["id"] . "'>Link</a></p>";
       } else {
-        var_dump($reply);
-        $returnString .= "<div class='alert alert-danger'><p>" . $reply["errors"][0]["message"] . "</p></div>";
+        $returnString .= "<p class='text-danger'>" . $reply["errors"][0]->message . "</p>";
       }
+    } else {
+      $returnString .= "<p class='text-danger'>Keine Veröffentlichung geplant.</p>";
     }
     return $returnString;
   }

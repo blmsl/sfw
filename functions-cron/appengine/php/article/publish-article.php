@@ -12,8 +12,10 @@ require "../base.class.php";
 
 require_once "../utils.global.php";
 
+if(!strpos(gethostname(), 'appspot.com')) {
+  putenv('GOOGLE_APPLICATION_CREDENTIALS=../client_secret.json');
+}
 
-putenv('GOOGLE_APPLICATION_CREDENTIALS=../client_secret.json');
 putenv('TWITTER_APPLICATION_CREDENTIALS=../twitter_secret.json');
 
 $project = new sfwApp('sf-winterbach');
@@ -39,11 +41,12 @@ if (count($scheduledArticles) > 0) {
 
   echo $project->generateArticleTable();
 
-  $twitter = $project->setUpTwitter();
+  $project->twitter = $project->setUpTwitter();
 
+  $i = 1;
   foreach ($scheduledArticles as $article) {
     if ($article["publication"]["status"] === 2) {
-      $project->generateArticleRow($article);
+      echo $project->generateArticleRow($i, $article);
     }
   }
 
