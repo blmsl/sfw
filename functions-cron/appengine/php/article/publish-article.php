@@ -36,53 +36,19 @@ echo "<p>Geladen werden alle Artikel, die zwischen dem " . $startDateTime->forma
 
 $scheduledArticles = $project->getArticlesByPublishDate($startDateTime, $endDateTime);
 if (count($scheduledArticles) > 0) {
+
+  echo $project->generateArticleTable();
+
   $twitter = $project->setUpTwitter();
-}
-foreach ($scheduledArticles as $article) {
 
-  if ($article["publication"]["status"] === 2) {
-
-    echo "<h3>" . $article["title"] . "</h3>" . PHP_EOL;
-
-    echo "<ul>" . PHP_EOL;
-
-    echo "<li>Publishing in Frontend</li>" . PHP_EOL;
-
-    #if(key_exists('scheduled', $article["meta"]["facebook"]) && $article["meta"]["facebook"]["scheduled"] === true){
-    #echo "<li>Publishing to facebook</li>";
-    #}
-
-    if (key_exists('scheduled', $article["meta"]["twitter"]) && $article["meta"]["twitter"]["scheduled"] === true) {
-      echo "<li>";
-
-      $title = $article["meta"]["twitter"]["title"] !== '' ? $article["meta"]["twitter"]["title"] : $article["title"];
-      $description = $article["meta"]["twitter"]["description"] !== '' ? $article["meta"]["twitter"]["description"] : '';
-      $description === '' && $article["excerpt"] === '' ? $description = $article["text"] : $description = $article["excerpt"];
-
-      $params = array('status' => substr($description, 0, 280));
-      /**
-       * @var $twitter object
-       */
-      $reply = (array)$twitter->statuses_update($params);
-
-      if ($reply["httpstatus"] === 200) {
-        $createdAt = DateTime::createFromFormat('D M d H:i:s P Y', $reply["created_at"]);
-
-        echo "Auf Twitter veröffentlicht am " . $createdAt->format('d.m.Y H:i:s') . ": <a target='_blank' href='https://twitter.com/" . $project->twitterConfig["siteName"] . "/status/" . $reply["id"] . "'>Link</a>";
-
-      } else {
-        var_dump($reply);
-        echo "<span style='color:red'>" . $reply["errors"][0]["message"] . "</span>";
-
-      }
-      echo "</li>" . PHP_EOL;
+  foreach ($scheduledArticles as $article) {
+    if ($article["publication"]["status"] === 2) {
+      $project->generateArticleRow($article);
     }
-
-    echo "</ul>" . PHP_EOL;
   }
-  echo "<br />" . PHP_EOL;
-}
 
+  echo $project->generateArticleFooter();
+}
 
 echo '<p><span style="font-weight: bold">Ausführungsdauer :</span> ' . (microtime(true) - $time_start) . '</p>' . PHP_EOL;
 echo $project->generateFooter();
