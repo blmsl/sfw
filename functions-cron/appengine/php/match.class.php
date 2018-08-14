@@ -51,24 +51,30 @@ trait sfwMatch
                         $matchData = array();
                     }
 
-                    #tk_print('if has class <u>row-headline</u>', $item->text());
+                    tk_print('if has class <u>row-headline</u>', $item->text());
 
-                    if(preg_match("/\d{2}.\d{2}.\d{4}/", $item->text(), $regex_match)) { // if dd.mm.yyyy found
-                        $matchData["_matchStartDate"] = DateTime::createFromFormat('d.m.Y H:i', $regex_match[0] . ' ' . '00:00');
+                    $parts = explode('|', $item->text());
+
+                    if(preg_match("/\d{2}.\d{2}.\d{4}/", $parts[0], $regex_match_date)) { // if dd.mm.yyyy found
+                        if(preg_match("/\d{2}:\d{2}/", $parts[0], $regex_match_time)) {
+                            $matchData["_matchStartDate"] = DateTime::createFromFormat('d.m.Y H:i', $regex_match_date[0] . ' ' . $regex_match_time[0]);
+                        }
                     }
 
 
-                    $parts = explode('|', $item->text());
                     $matchData["assignedCategories"] = array(
                         "assignedCategory" => trim($parts[1]),
                         "assignedMainCategory" => $this->getTeamMainCategoryName(trim($parts[1]))
                     );
 
+                    $matchData["assignedGender"] = $this->getTeamMainGenderName(trim($parts[1]));
+
 
                 } elseif ($item->hasClass("odd row-competition hidden-small") || $item->hasClass("row-competition hidden-small")) {
                     tk_print('if has class <u>hidden-small</u>', $item->text());
 
-                    $matchData["matchStartDate"] = $this->extractMatchDate($item) ?: $matchData["_matchStartDate"];
+                    $matchData["matchStartDate"] = @$matchData["_matchStartDate"] ?: $this->extractMatchDate($item);
+                    if ($matchData["matchStartDate"] === false) $matchData["dontShowThis"] = true;
                     tk_print('its_date', $matchData["matchStartDate"]);
 
                     $matchData["matchType"] = $this->extractMatchType($item);
@@ -77,6 +83,7 @@ trait sfwMatch
                     $matchData["matchID"] = $this->extractMatchID($item);
                     tk_print('its_id', $matchData["matchID"]);
 
+                    tk_print('dont_show', @$matchData["dontShowThis"] ?: false);
 
 
                     if (key_exists("assignedMainCategory", $matchData["assignedCategories"])) {
@@ -117,8 +124,10 @@ trait sfwMatch
                             // ToDo: 14.08.2018 19:00 || 'T' || 't' || 'U' || 'W' || 'V'
                             if (in_array(trim($cell->text()), array('Absetzung', 'Ausfall', 'Nichtantritt BEIDE', 'Nichtantritt GAST', 'Nichtantritt HEIM'))) {
                                 $matchData["result"]["otherEvent"] = trim($cell->text());
+                                tk_print('its_otherEvent', $matchData["result"]["otherEvent"]);
                             } elseif($newStartDate = DateTime::createFromFormat('d.m.Y H:i', trim($cell->text()))){
-                                # echo $newStartDate->format('d.m.Y H:i') . "<br />";
+                                $matchData["newStartDate"] = $newStartDate;
+                                tk_print('its_new_startdate', $newStartDate);
                             }
 
                         } elseif($cell->attr('class') === 'column-detail') {
@@ -225,8 +234,15 @@ trait sfwMatch
                 $matchDuration = 105;
                 break;
         }
-        $newDate = clone $startDate;
-        return $newDate->modify('+' . $matchDuration . ' minute');
+
+        $newDate = null;
+
+        if (!is_null($startDate) && is_object($startDate)) {
+            $newDate = clone $startDate;
+            $newDate = $newDate->modify('+' . $matchDuration . ' minute');
+        }
+
+        return $newDate;
     }
 
     /**
@@ -264,9 +280,11 @@ trait sfwMatch
 
     public function extractMatchDate($element) {
         $matchDate = $element->find('.column-date')->text();
-        $extractedValue = null;
+        $extractedValue = false;
 
-        if (empty($matchDate)) return false;
+        tk_print('extract_match_date', "called");
+
+        if (empty($matchDate)) return $extractedValue;
 
         if (strlen($matchDate) == 5) {
             $extractedValue = DateTime::createFromFormat('H:i', $matchDate);
@@ -281,7 +299,11 @@ trait sfwMatch
 
     public function extractMatchType($element) {
         $matchType = $element->find('.column-team')->text();
-        return $matchType;
+
+        if (empty($matchType)) return null;
+
+        $parts = explode('|', $matchType);
+        return trim($parts[1]);
     }
 
     public function extractMatchID($element) {
@@ -302,6 +324,7 @@ trait sfwMatch
         $returnString .= '<thead class="thead-light">';
         $returnString .= '<tr>';
         $returnString .= '<th>Nr.</th>';
+        $returnString .= '<th>Titel</th>';
         $returnString .= '<th>Match-Type</th>';
         $returnString .= '<th>Kategorien</th>';
         $returnString .= '<th>Spielort</th>';
@@ -316,7 +339,9 @@ trait sfwMatch
         $returnString .= '<tbody>';
 
         foreach ($matches AS $match) {
-            $returnString .= @$this->generateMatchPlanRow($match);
+            if (@$match["dontShowThis"] !== true) {
+                $returnString .= @$this->generateMatchPlanRow($match);
+            }
         }
 
         $returnString .= '</tbody>';
@@ -335,10 +360,15 @@ trait sfwMatch
     }
 
     function generateMatchPlanRow($match) {
-        if(empty($match)) return "";
+        if(empty($match)) return '';
 
         $html = "<tr>";
         $html .= $this->generateMatchPlanColumn($match['matchID']);
+        $html .= $this->generateMatchPlanColumn(function () use ($match) {
+            $end = $match['assignedGender'] . ': ' . $match['homeTeam']['title'] . ' – ' . $match['guestTeam']['title'];
+            if(key_exists('newStartDate', $match)) $end .= sprintf(' <u>(verlegt auf %1$s)</u>', $match['newStartDate']->format(SFW_DATE_FORMAT));
+            return $end;
+        });
         $html .= $this->generateMatchPlanColumn($match['matchType']);
         $html .= $this->generateMatchPlanColumn(implode(" | ", $match['assignedCategories']));
         $html .= $this->generateMatchPlanColumn(function () use ($match) {
