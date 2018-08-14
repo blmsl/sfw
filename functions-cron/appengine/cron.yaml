@@ -21,9 +21,9 @@ cron:
 #  url: /php/club/matchplan-import.php
 #  schedule: every day 00:00
 
-- description: Publish Articles to frontend and to social pages
-  url: /php/article/publish-article.php
-  schedule: every 15 minutes
+#- description: Publish Articles to frontend and to social pages
+#  url: /php/article/publish-article.php
+#  schedule: every 15 minutes
 
 #- description: Import Matches to Google Calendar
 #  url: /php/club/matchplan-calendar.php

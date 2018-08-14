@@ -18,11 +18,19 @@ if(!strpos(gethostname(), 'appspot.com')) {
 
 putenv('TWITTER_APPLICATION_CREDENTIALS=../twitter_secret.json');
 
-$project = new sfwApp('sf-winterbach');
+$project = new sfwApp('sf-winterbach', array('storageService'));
 
 $time_start = microtime(true);
 
 echo $project->generateHeader();
+
+/**
+ * @var $storage Google\Cloud\Storage\StorageClient
+ */
+$storage = $project->storage;
+foreach($storage->buckets() as $bucket){
+  printf('Bucket: %s' . PHP_EOL, $bucket->name());
+}
 
 // get all Articles with publication.datetime within next 15 minutes
 $startDateTime = new DateTime();
@@ -46,7 +54,7 @@ if (count($scheduledArticles) > 0) {
   $i = 1;
   foreach ($scheduledArticles as $article) {
     if ($article["publication"]["status"] === 2) {
-      echo $project->generateArticleRow($i, $article);
+      # echo $project->generateArticleRow($i, $article);
     }
   }
 

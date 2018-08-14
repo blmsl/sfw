@@ -2,6 +2,7 @@
 
 use Google\Cloud\Firestore\FieldValue;
 use Google\Cloud\Firestore\FirestoreClient;
+
 use duzun\hQuery;
 
 require_once "article.class.php";
@@ -48,18 +49,27 @@ trait sfwBase
   public $driveService = null;
   public $calendarService = null;
   public $twitterConfig = null;
+  public $storage = null;
 
   public $twitter = null;
 
-  public function __construct($projectId)
+  public function __construct($projectId, $initParts = array())
   {
     $this->client = $this->getGoogleClient($projectId);
-    $this->sheetService = new Google_Service_Sheets($this->client);
-    $this->driveService = new Google_Service_Drive($this->client);
-    $this->calendarService = new Google_Service_Calendar($this->client);
-
     $this->db = $this->getFireStoreConnection($projectId);
-    $this->client = $this->getGoogleClient($projectId);
+
+    if(in_array('sheetService', $initParts)){
+      $this->sheetService = new Google_Service_Sheets($this->client);
+    }
+    if(in_array('driveService', $initParts)){
+      $this->driveService = new Google_Service_Drive($this->client);
+    }
+    if(in_array('calendarService', $initParts)){
+      $this->calendarService = new Google_Service_Calendar($this->client);
+    }
+    if(in_array('storageService', $initParts)){
+      $this->storage = $this->getStorageConnection($projectId);
+    }
 
     $this->articleCollection = $this->db->collection('articles');
     $this->categoryCollection = $this->db->collection('categories');
@@ -105,6 +115,18 @@ trait sfwBase
     $cb = Codebird\Codebird::getInstance();
     $cb->setToken($this->twitterConfig["accessToken"], $this->twitterConfig["accessTokenSecret"]);
     return $cb;
+  }
+
+  public function getStorageConnection($projectId){
+    try {
+      $storage = new StorageClient([
+        'projectId' => $projectId
+      ]);
+    } catch (Exception $e) {
+      var_dump($e);
+      exit();
+    }
+    return $storage;
   }
 
   public function getFireStoreConnection($projectId)

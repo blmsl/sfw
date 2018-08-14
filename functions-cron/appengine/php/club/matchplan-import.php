@@ -76,6 +76,8 @@ if (TK_PRINT_ENABLED) echo '<br><br>' . $matchPlanUrl . '<br><br>';
 $matchPlan = $project->scrapeMatchPlan($doc);
 echo $project->generateMatchPlanTable($matchPlan);
 
+var_dump($matchPlan);
+
 tk_print_counts();
 
 echo '<p><b>Ausführungsdauer :</b> ' . (microtime(true) - $time_start) . '</p>';
