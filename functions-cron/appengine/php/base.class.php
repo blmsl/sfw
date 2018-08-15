@@ -2,6 +2,7 @@
 
 use Google\Cloud\Firestore\FieldValue;
 use Google\Cloud\Firestore\FirestoreClient;
+use Google\Cloud\Storage\StorageClient;
 
 use duzun\hQuery;
 
@@ -35,7 +36,7 @@ class sfwApp
 
 trait sfwBase
 {
-
+  public $projectId = null;
   /**
    * @var $db Google\Cloud\Firestore\FirestoreClient
    */
@@ -55,6 +56,7 @@ trait sfwBase
 
   public function __construct($projectId, $initParts = array())
   {
+    $this->projectId = $projectId;
     $this->client = $this->getGoogleClient($projectId);
     $this->db = $this->getFireStoreConnection($projectId);
 

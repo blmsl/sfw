@@ -28,9 +28,11 @@ echo $project->generateHeader();
  * @var $storage Google\Cloud\Storage\StorageClient
  */
 $storage = $project->storage;
-foreach($storage->buckets() as $bucket){
-  printf('Bucket: %s' . PHP_EOL, $bucket->name());
-}
+$bucket = $storage->bucket($project->projectId . ".appspot.com");
+#foreach ($bucket->objects() as $object) {
+#  printf('Object: %s' . PHP_EOL, $object->name());
+#}
+
 
 // get all Articles with publication.datetime within next 15 minutes
 $startDateTime = new DateTime();
