@@ -159,6 +159,7 @@ trait sfwBase
     $addedDocRef = $collection->newDocument();
     $data["id"] = $addedDocRef->id();
     $data["creation"] = $this->generateCreation();
+    $data["isImported"] = true;
     $data["publication"] = $this->generatePublication();
 
     if ($batch) {

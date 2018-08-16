@@ -11,38 +11,44 @@ trait sfwSeason
     /**
      * @param $seasonStartYear DateTime
      * @param $seasonEndYear DateTime
+     * @param $batch \Google\Cloud\Firestore\WriteBatch
      * @return array
      */
-    public function getSeasonByDate($seasonStartYear, $seasonEndYear)
+    public function getSeasonByDate($seasonStartYear, $seasonEndYear, $batch)
     {
         $title = 'Saison ' . $seasonStartYear->format('Y') . '/' . $seasonEndYear->format('Y');
-
-        $query= $this->seasonCollection->where('title', '=', $title);
-
+        $query = $this->seasonCollection->where('title', '=', $title);
         $snapshot = $query->documents();
 
-        if($snapshot->isEmpty()){
-            // create season within batch
+        if ($snapshot->isEmpty()) {
+            return $this->saveFireStoreObject(
+                $this->seasonCollection,
+                array(
+                    'title' => $title,
+                    'description' => 'Alle Informationen zur ' . $title
+                ),
+                $batch);
         }
 
         // return first season with that title
-        if($snapshot->size() === 1){
+        if ($snapshot->size() === 1) {
             foreach ($snapshot as $doc) {
-                return $this->seasons[$doc["title"]] = array(
-                    'id' => $doc["id"]
+                return array(
+                    'id' => $doc["id"],
+                    'title' => $doc["title"]
                 );
             }
         }
     }
 
-    private function saveSeason($data, $seasonList)
+    /* private function saveSeason($data, $seasonList)
     {
         if (!key_exists($data["title"], $seasonList)) {
             return $this->saveFireStoreObject($this->seasonCollection, $data, null);
         } else {
             return $seasonList[$data["title"]];
         }
-    }
+    } */
 
     public function getCurrentSeason($startDate)
     {
@@ -68,13 +74,14 @@ trait sfwSeason
         }
     }
 
+    /*
     private function setSeason($startDate, $seasonList)
     {
         $seasonDates = $this->getCurrentSeason($startDate);
         /**
          * @var $seasonStartYear DateTime
          * @var $seasonEndYear DateTime
-         */
+         *
         $seasonStartYear = $seasonDates['startYear'];
         $seasonEndYear = $seasonDates['endYear'];
 
@@ -84,8 +91,7 @@ trait sfwSeason
             'isImported' => true,
             'description' => 'Alle Informationen zur Saison ' . $seasonStartYear->format('Y') . '/' . $seasonEndYear->format('Y')
         ), $seasonList);
-
-    }
+    } */
 
     public function generateSeasonHeading($season)
     {

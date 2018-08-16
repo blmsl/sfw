@@ -8,28 +8,67 @@ trait sfwTeam
     public $teamCollection = null;
     private $teams = array();
 
-    public function getTeams()
-    {
-        foreach ($this->teamCollection->documents() as $doc) {
-            $this->teams[$doc["title"]] = array(
-                'id' => $doc['id'],
-                'subTitle' => $doc["subTitle"],
-                'assignedClub' => $doc["assignedClub"],
-                'assignedSeason' => $doc["assignedSeason"]
-            );
+    public function getTeamByTeamData($teamData, $season, $club, $category, $mainCategory, $batch){
+
+        if($teamData["title"] === 'Ü32 Senioren'){
+            $teamData["title"] = 'Altherren-A Ü32';
         }
-        return $this->teams;
+
+        $query = $this->teamCollection
+            ->where('title', '=', $category["title"])
+            ->where('subTitle', '=', $teamData["title"])
+            ->where('assignedClub', '=', $club["id"])
+            ->where('assignedSeason', '=', $season["id"]);
+        $snapshot = $query->documents();
+
+        if ($snapshot->isEmpty()) {
+            return $this->saveFireStoreObject(
+                $this->teamCollection,
+                array(
+                    'title' => $category["title"],
+                    'isOfficialTeam' => true,
+                    'externalTeamLink' => $teamData["externalTeamLink"],
+                    'logoURL' => $teamData["logoURL"],
+                    'subTitle' => $teamData["title"],
+                    'assignedSeason' => $season["id"],
+                    'assignedClub' => $club["id"],
+                    'assignedTeamCategories' => array($category["id"], $mainCategory["id"])
+                ),
+                $batch);
+        }
+
+        // return first season with that title
+        if ($snapshot->size() === 1) {
+            foreach ($snapshot as $doc) {
+                return array(
+                    'id' => $doc["id"],
+                    'title' => $doc["title"],
+                    'subTitle' => $doc["subTitle"],
+                    'assignedTeamCategories' => $doc["assignedTeamCategories"],
+                    'assignedSeason' => $doc["assignedSeason"],
+                    'assignedClub' => $doc["assignedClub"]
+                );
+            }
+        }
     }
 
-    /*
-    public function saveTeam($team)
-    {
-      $title = $team["title"] . "-" . $team["subTitle"] . "-" . $team["assignedSeason"];
-      if (!key_exists($title, $this->getTeams())) {
-        $this->teams[$title] = $this->saveFireStoreObject($this->teamCollection, $team, null);
-      }
-      return $this->teams[$title];
-    } */
+    public function getTeamsByClubAndSeason($club, $season){
+        $teamList = [];
+        $query = $this->teamCollection
+            ->where('assignedClub', '=', $club["id"])
+            ->where('assignedSeason', '=', $season["id"]);
+        foreach ($query->documents() as $doc) {
+            $teamList[$doc["title"] . $doc["subTitle"]] =
+                array(
+                    'id' => $doc['id'],
+                    'assignedClub' => $doc["assignedClub"],
+                    'assignedSeason' => $doc["assignedSeason"],
+                    'title' => $doc['title'],
+                    'subTitle' => $doc['subTitle']
+                );
+        }
+        return $teamList;
+    }
 
     public function getTeamMainCategoryName($teamCategoryName)
     {
@@ -46,28 +85,15 @@ trait sfwTeam
         return $returnString;
     }
 
-    public function getTeamMainGenderName($teamCategoryName)
+    function isTeamFromClub($teamTitle, $clubTitle, $mainCategoryName)
     {
-        $returnString = '';
-        if (strpos($teamCategoryName, 'Junior') !== false) {
-            $returnString .= 'Junioren';
-        }
-        if (strpos($teamCategoryName, 'Seniorinnen') !== false || strpos($teamCategoryName, 'Frauen') !== false) {
-            $returnString .= 'Damen';
-        }
-        if (strpos($teamCategoryName, 'Senioren') !== false || strpos(strtolower($teamCategoryName), 'herren') !== false) {
-            $returnString .= 'Herren';
-        }
-        return $returnString;
-    }
-
-    function isTeamFromClub($team1, $clubTitle, $mainCategoryName)
-    {
-        if ($team1 === $clubTitle
-            || strpos($team1["title"], $clubTitle) !== false
-            || (strpos($team1["title"], 'Bliesen') !== false && ($mainCategoryName === 'Junioren')))
+        if ($teamTitle === $clubTitle
+            || strpos($teamTitle, $clubTitle) !== false
+            || (strpos($teamTitle, 'Bliesen') !== false && ($mainCategoryName === 'Junioren'))) {
+            #echo $teamTitle . " " . $mainCategoryName . " --> HEIM<br />";
             return true;
-        else {
+        } else {
+            #echo $teamTitle . " " . $mainCategoryName . " --> GAST<br />";
             return false;
         }
     }

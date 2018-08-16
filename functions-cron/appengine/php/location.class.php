@@ -9,46 +9,51 @@ trait sfwLocation
   public $locationCollection = null;
   private $locations = array();
 
-  public function getLocations()
-  {
-    foreach ($this->locationCollection->documents() as $doc) {
-      $this->locations[$doc["title"]] = array(
-        'id' => $doc["id"],
-        'assignedCategory' => $doc['assignedCategory'],
-        'address' => array(
-          'city' => $doc['address']['city'],
-          'streetName' => $doc['address']['streetName'],
-          'houseNumber' => $doc['address']['houseNumber'],
-          'county' => $doc['address']['county'],
-          'zip' => $doc['address']['zip']
-        )
-      );
-    }
-    return $this->locations;
+  public function getLocationByLocationDataAndCategory($locationData, $locationCategory, $batch){
+
+      $title = $locationData["type"] . " ". $locationData["address"]["streetName"] .", " . $locationData["address"]["city"];
+
+      $query = $this->locationCollection
+          ->where('title', '=', $title)
+          ->where('assignedCategory', '=', $locationCategory["id"]);
+      $snapshot = $query->documents();
+
+      if ($snapshot->isEmpty()) {
+          return $this->saveFireStoreObject(
+              $this->locationCollection,
+              array(
+                  'title' => $title,
+                  //'address' => $locationData["address"],
+                  'assignedCategory' => $locationCategory["id"]
+              ),
+              $batch);
+      }
+
+      if ($snapshot->size() === 1) {
+          foreach ($snapshot as $doc) {
+              return array(
+                  'id' => $doc["id"],
+                  'title' => $doc["title"],
+                  'address' => $doc["address"],
+                  'assignedCategory' => $doc["assignedCategory"]
+              );
+          }
+      }
   }
 
-  /* public function getLocationsById()
-  {
-    $locationList = array();
-    $dbLocations = $this->locationCollection;
-    foreach ($dbLocations->documents() as $location) {
-      $locationList[$location["id"]] = $location["title"];
+    public function getLocationList()
+    {
+        $locationList = [];
+        foreach ($this->locationCollection->documents() as $doc) {
+            $locationList[$doc["title"]] =
+                array(
+                    'id' => $doc['id'],
+                    'assignedCategory' => $doc["assignedCategory"],
+                    'title' => $doc['title']
+                );
+        }
+        return $locationList;
     }
-    return $locationList;
-  }
-
-  public function saveLocation($title, $address, $assignedCategory)
-  {
-    if (!key_exists($title, $this->getLocations())) {
-      $this->locations[$title] = $this->saveFireStoreObject($this->locationCollection, array(
-        'title' => $title,
-        "isImported" => true,
-        "address" => $address,
-        'assignedCategory' => $assignedCategory["id"]
-      ), null);
-    }
-    return $this->locations[$title];
-  } */
 
   public function getLocationCategoryName($locationCategoryName)
   {
