@@ -35,7 +35,7 @@ trait sfwMatch
             $this->matchCollection,
             array(
                 'title' => $title,
-                'assignedCategories' => array($teamCategory, $teamMainCategory),
+                'assignedCategories' => array($teamCategory["id"], $teamMainCategory["id"]),
                 'assignedLocation' => $location ? $location["id"] : null,
                 'assignedTeam' => $team["id"],
                 'guestTeam' => $match["guestTeam"],

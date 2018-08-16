@@ -39,7 +39,7 @@ export class ArticleService {
 
   createArticle(article: IArticle): Promise<void> {
     article.id = this.afs.createId();
-    if(article.articleDate){
+    if (article.articleDate) {
       article.articleDate = article.articleDate.toString();
     }
     if (article.publication.dateTime) {
@@ -53,7 +53,7 @@ export class ArticleService {
   }
 
   updateArticle(articleId: string, article: IArticle): Promise<any> {
-    if(article.articleDate){
+    if (article.articleDate) {
       article.articleDate = article.articleDate.toString();
     }
     if (article.publication.dateTime) {

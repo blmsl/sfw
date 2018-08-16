@@ -21,7 +21,7 @@
                         [match]="match">
     </match-result-input>
 
-    <div *ngIf="showResult">
+    <div *ngIf="showResult && match.result">
       <span *ngIf="match.result.homeTeamGoals !== '' && match.result.guestTeamGoals !== ''">
         {{match.result.homeTeamGoals}} : {{match.result.guestTeamGoals}}
       </span>
@@ -38,7 +38,7 @@
 
   <p matLine>
           <span *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedCategory">
-            {{category.title}}
+            {{ match.assignedCategories.assignedCategory}} {{category.title}}
           </span>
     - {{match.matchType}}
     - {{match.matchStartDate.seconds *1000 | date: 'dd.MM.yy HH:mm'}}

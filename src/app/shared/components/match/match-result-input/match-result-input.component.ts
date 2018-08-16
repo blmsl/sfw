@@ -26,8 +26,8 @@ export class MatchResultInputComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       result: this.fb.group({
-        guestTeamGoals: [this.match.result.guestTeamGoals, [Validators.required, Validators.min(0), Validators.max(50)]],
-        homeTeamGoals: [this.match.result.homeTeamGoals, [Validators.required, Validators.min(0), Validators.max(50)]]
+        guestTeamGoals: [this.match.result ? this.match.result.guestTeamGoals : '', [Validators.required, Validators.min(0), Validators.max(50)]],
+        homeTeamGoals: [this.match.result ? this.match.result.homeTeamGoals : '', [Validators.required, Validators.min(0), Validators.max(50)]]
       })
     });
 
