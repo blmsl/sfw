@@ -9,7 +9,7 @@
                     fxLayout.gt-sm="row"
                     fxLayoutGap="10px">
     <span>{{'general.articles.detail.writtenAt' | translate}}
-      <span style="font-weight: bold">{{article.articleDate.toDate() | date: 'dd.MM.yy'}}</span>
+      <span style="font-weight: bold">{{article.articleDate | date: 'dd.MM.yy'}}</span>
     </span>
     <span fxFlex></span>
     <button mat-raised-button

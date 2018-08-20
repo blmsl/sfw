@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { ISponsor } from '../../../shared/interfaces/sponsor.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
@@ -18,12 +23,15 @@ const SMALL_WIDTH_BREAKPOINT = 960;
 })
 export class SponsorsComponent implements OnInit {
 
+  @ViewChild('settings') settings;
+
+  public sidePanelOpened: boolean = false;
+  public isSmallDevice: boolean = false;
+
   public sponsors$: Observable<ISponsor[]>;
   public categories$: Observable<ICategory[]>;
   public categoryFilter: string[];
 
-  public sidePanelOpened: boolean = false;
-  public isSmallDevice: boolean = false;
 
   constructor(private alertService: AlertService,
     private media: MediaMatcher,
@@ -39,8 +47,8 @@ export class SponsorsComponent implements OnInit {
     this.breakpointObserver
       .observe(['(min-width: ' + SMALL_WIDTH_BREAKPOINT + 'px)'])
       .subscribe((state: BreakpointState) => {
-        this.sidePanelOpened = false;
-        this.isSmallDevice = !state.matches;
+        this.sidePanelOpened = state.matches;
+        this.isSmallDevice = !this.sidePanelOpened;
       });
   }
 

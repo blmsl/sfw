@@ -54,6 +54,22 @@ trait sfwTeam
     }
   }
 
+  public function getTeamsBySeason($season){
+    $teamList = [];
+    $query = $this->teamCollection->where('assignedSeason', '=', $season["id"]);
+    foreach ($query->documents() as $doc) {
+      $teamList[$doc["title"] . $doc["subTitle"]] =
+        array(
+          'id' => $doc['id'],
+          'assignedClub' => $doc["assignedClub"],
+          'assignedSeason' => $doc["assignedSeason"],
+          'title' => $doc['title'],
+          'subTitle' => $doc['subTitle']
+        );
+      }
+      return $teamList;
+  }
+
   public function getTeamsByClubAndSeason($club, $season)
   {
     $teamList = [];

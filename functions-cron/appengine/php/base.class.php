@@ -5,6 +5,7 @@ use Google\Cloud\Firestore\FirestoreClient;
 use Google\Cloud\Storage\StorageClient;
 
 use duzun\hQuery;
+use stdClass;
 
 require_once "article.class.php";
 require_once "calendar.class.php";
