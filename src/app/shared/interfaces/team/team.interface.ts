@@ -28,9 +28,9 @@ export interface ITeam {
   assignedTrainings: ITraining[];
 
 
-  assignedCompetitions: ICompetition[];
-  assignedEvents: ITimeLineEvent[];
-  currentStandings: IStanding[];
+  assignedCompetitions?: ICompetition[];
+  assignedEvents?: ITimeLineEvent[];
+  currentStandings?: IStanding[];
 
   // teamOfTheMonth?: IHighlightedItem[];
 
