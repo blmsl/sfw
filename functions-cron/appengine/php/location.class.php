@@ -23,7 +23,7 @@ trait sfwLocation
               $this->locationCollection,
               array(
                   'title' => $title,
-                  //'address' => $locationData["address"],
+                  'address' => $locationData["address"],
                   'assignedCategory' => $locationCategory["id"]
               ),
               $batch);

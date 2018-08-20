@@ -26,23 +26,23 @@
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <h1 style="text-align: center">{{match.result.homeTeamGoals}}</h1>
+          <h1 *ngIf="match.result" style="text-align: center">{{match.result.homeTeamGoals}}</h1>
         </mat-card-content>
       </mat-card>
 
       <div fxFlex="3"><h3 style="text-align: center">:</h3></div>
 
       <mat-card fxFlex="">
-        <mat-card-header>
-          <mat-card-title fxLayout fxLayoutAlign="center center">
+        <mat-card-header fxLayoutAlign="center center">
+          <mat-card-title>
             <img [src]="match.guestTeam.logoURL"/>
           </mat-card-title>
-          <mat-card-subtitle fxLayout fxLayoutAlign="center center">
+          <mat-card-subtitle>
             <a target="_blank" [href]="match.guestTeam.externalTeamLink">{{match.guestTeam.title}}</a>
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <h1 style="text-align: center">{{match.result.guestTeamGoals}}</h1>
+          <h1 *ngIf="match.result" style="text-align: center">{{match.result.guestTeamGoals}}</h1>
         </mat-card-content>
       </mat-card>
     </div>
@@ -52,12 +52,11 @@
     </p>
 
     <mat-chip-list>
-      <mat-chip *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedCategory">
-        <a [routerLink]="['/categories/detail', category.id]">{{category.title}}</a>
-      </mat-chip>&nbsp;
-      <mat-chip *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedMainCategory">
-        <a [routerLink]="['/categories/detail', category.id]">{{category.title}}</a>
-      </mat-chip>&nbsp;
+      <mat-chip *ngFor="let categoryId of match.assignedCategories">
+        <a [routerLink]="['/categories/detail', categoryId]">
+          {{(categories | filterBy: ['id'] : categoryId)[0].title}}
+        </a>
+      </mat-chip>
     </mat-chip-list>
   </mat-card-content>
 </mat-card>

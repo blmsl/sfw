@@ -2,11 +2,13 @@
   <mat-card-title>{{'general.matches.edit.articles' | translate}}</mat-card-title>
   <mat-card-content>
 
-    <article-card *ngFor="let article of articles | filterBy: ['assignedMatch'] : match.id"
+    <article-card *ngFor="let article of articles | orderBy: ['articleDate']"
+                  (deleteArticleToMatchAssignment)="deleteArticleToMatchAssignment($event)"
+                  [showDeleteButton]="true"
                   [article]="article">
     </article-card>
 
-    <p *ngIf="(articles | filterBy: ['assignedMatch'] : match.id).length === 0">
+    <p *ngIf="articles.length === 0">
       {{'general.matches.edit.noAssignedArticles' | translate}}
     </p>
 

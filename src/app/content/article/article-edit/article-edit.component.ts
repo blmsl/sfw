@@ -8,8 +8,8 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { ApplicationService } from '../../../shared/services/application/application.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
-import { CustomValidators } from 'ng2-validation';
 import * as moment from 'moment';
+import * as firebase from 'firebase';
 
 const SMALL_WIDTH_BREAKPOINT = 960;
 
@@ -71,12 +71,6 @@ export class ArticleEditComponent implements OnInit {
         this.isSmallDevice = !this.sidePanelOpened;
       });
 
-    let articleDate: any;
-    if (this.article.articleDate) {
-      const timestamp = <any>this.article.articleDate;
-      articleDate = timestamp.toDate();
-    }
-
     this.form = this.fb.group({
       title: [this.article.title, [Validators.required, Validators.minLength(10)]],
       text: [this.article.text, [Validators.required, Validators.minLength(10)]],
@@ -86,17 +80,17 @@ export class ArticleEditComponent implements OnInit {
       excerpt: this.article.excerpt,
       subTitle: this.article.subTitle,
       postURL: this.article.postURL,
-      articleDate: articleDate ? articleDate : '',
+      articleDate: this.article.articleDate ? this.article.articleDate : new Date(),
       isFeaturedPost: this.article.isFeaturedPost,
       creation: this.initCreation(),
-      assignedTags: this.article.assignedTags,
+      assignedTags:  [ this.article.assignedTags],
 
       // Links
       assignedLocation: this.article.assignedLocation,
       assignedTeams: [this.article.assignedTeams],
-      assignedMatch: this.article.assignedMatch,
+      assignedMatches: this.article.assignedMatches,
       assignedCategories: [this.article.assignedCategories],
-      isMatch: !!this.article.assignedMatch,
+      isMatch: !!this.article.assignedMatches,
       soccerWatchLink: this.article.soccerWatchLink,
 
       // Meta

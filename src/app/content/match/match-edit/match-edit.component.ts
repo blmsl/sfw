@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatchService } from '../../../shared/services/match/match.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { IPublication } from '../../../shared/interfaces/publication.interface';
 import { LocationService } from '../../../shared/services/location/location.service';
 import { Observable } from 'rxjs/index';
@@ -20,6 +19,7 @@ import { ArticleService } from '../../../shared/services/article/article.service
 import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
 import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
 import { IMatchEvent } from '../../../shared/interfaces/match/match-event.interface';
+import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'match-edit',
@@ -36,21 +36,20 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
   public categories$: Observable<ICategory[]>;
   public categoryTypes$: Observable<ICategoryType[]>;
   public seasons$: Observable<ISeason[]>;
-  public articles$: Observable<IArticle[]>;
+  public assignedArticles$: Observable<IArticle[]>;
 
   constructor(private route: ActivatedRoute,
-    private cdRef: ChangeDetectorRef,
-    private fb: FormBuilder,
-    private matchService: MatchService,
-    private alertService: AlertService,
-    private locationService: LocationService,
-    private teamService: TeamService,
-    private categoryService: CategoryService,
-    private categoryTypeService: CategoryTypeService,
-    private seasonService: SeasonService,
-    private articleService: ArticleService,
-    private router: Router) {
-    this.articles$ = articleService.articles$;
+              private cdRef: ChangeDetectorRef,
+              private fb: FormBuilder,
+              private matchService: MatchService,
+              private alertService: AlertService,
+              private locationService: LocationService,
+              private teamService: TeamService,
+              private categoryService: CategoryService,
+              private categoryTypeService: CategoryTypeService,
+              private seasonService: SeasonService,
+              private articleService: ArticleService,
+              private router: Router) {
     this.locations$ = locationService.locations$;
     this.teams$ = teamService.teams$;
     this.categories$ = categoryService.categories$;
@@ -59,13 +58,16 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { match: IMatch }) => this.match = data.match);
+    this.route.data.subscribe((data: { match: IMatch }) => {
+      this.match = data.match;
+
+      if(this.match){
+        this.assignedArticles$ = this.articleService.getArticlesForMatch(this.match.id);
+      }
+    });
 
     this.form = this.fb.group({
-      assignedCategories: this.fb.group({
-        assignedCategory: [this.match.assignedCategories.assignedCategory, [Validators.required]],
-        assignedMainCategory: [this.match.assignedCategories.assignedMainCategory, [Validators.required]]
-      }),
+      assignedCategories: [this.match.assignedCategories, [Validators.required]],
       assignedLocation: [this.match.assignedLocation, [Validators.required]],
       assignedTeam: [this.match.assignedTeam, [Validators.required]],
       creation: this.initCreation(),
@@ -87,35 +89,35 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
       assignedMatchEvents: this.initMatchEvents(this.match.assignedMatchEvents)
     });
 
-    if (this.match.isImported) {
-      this.form.get('assignedCategories').disable();
-      this.form.get('assignedLocation').disable();
-      this.form.get('assignedTeam').disable();
-      this.form.get('guestTeam').disable();
-      this.form.get('homeTeam').disable();
-      this.form.get('isHomeTeam').disable();
-      this.form.get('isImported').disable();
-      this.form.get('isOfficialMatch').disable();
-      this.form.get('matchEndDate').disable();
-      this.form.get('matchLink').disable();
-      this.form.get('matchStartDate').disable();
-      this.form.get('matchType').disable();
-      this.form.get('title').disable();
-    }
+     if (this.match.isImported) {
+       this.form.get('assignedCategories').disable();
+       this.form.get('assignedLocation').disable();
+       this.form.get('assignedTeam').disable();
+       this.form.get('guestTeam').disable();
+       this.form.get('homeTeam').disable();
+       this.form.get('isHomeTeam').disable();
+       this.form.get('isImported').disable();
+       this.form.get('isOfficialMatch').disable();
+       this.form.get('matchEndDate').disable();
+       this.form.get('matchLink').disable();
+       this.form.get('matchStartDate').disable();
+       this.form.get('matchType').disable();
+       this.form.get('title').disable();
+     }
 
-    this.form.valueChanges.pipe(
-      debounceTime(1000),
-      distinctUntilChanged()
-    ).subscribe((changes: IMatch) => {
-      this.match = Object.assign({}, this.match, changes);
-      if (!this.form.invalid) {
-        this.saveMatch();
-      }
-    });
+     this.form.valueChanges.pipe(
+       debounceTime(1000),
+       distinctUntilChanged()
+     ).subscribe((changes: IMatch) => {
+       this.match = Object.assign({}, this.match, changes);
+       if (!this.form.invalid) {
+         this.saveMatch();
+       }
+     });
   }
 
   ngAfterViewChecked() {
-    this.cdRef.detectChanges();
+    // this.cdRef.detectChanges();
   }
 
   initMatchEvents(assignedEvents: IMatchEvent[]): FormArray {
@@ -225,12 +227,14 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     guestTeamGoals?: number | string,
     homeTeamGoals?: number | string,
     otherEvent?: number | string
-  }): FormGroup {
-    return this.fb.group({
-      guestTeamGoals: result.guestTeamGoals,
-      homeTeamGoals: result.homeTeamGoals,
-      otherEvent: result.otherEvent
+  }) { // : FormGroup
+    console.log(result);
+    /*return this.fb.group({
+      guestTeamGoals: result ? result.guestTeamGoals : null,
+      homeTeamGoals: result ? result.homeTeamGoals : null,
+      otherEvent: result ? result.otherEvent : null
     });
+    */
   }
 
   removeMatch(match: IMatch): void {

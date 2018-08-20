@@ -30,7 +30,6 @@ trait sfwSeason
                 $batch);
         }
 
-        // return first season with that title
         if ($snapshot->size() === 1) {
             foreach ($snapshot as $doc) {
                 return array(
@@ -40,15 +39,6 @@ trait sfwSeason
             }
         }
     }
-
-    /* private function saveSeason($data, $seasonList)
-    {
-        if (!key_exists($data["title"], $seasonList)) {
-            return $this->saveFireStoreObject($this->seasonCollection, $data, null);
-        } else {
-            return $seasonList[$data["title"]];
-        }
-    } */
 
     public function getCurrentSeason($startDate)
     {
@@ -73,25 +63,6 @@ trait sfwSeason
             exit();
         }
     }
-
-    /*
-    private function setSeason($startDate, $seasonList)
-    {
-        $seasonDates = $this->getCurrentSeason($startDate);
-        /**
-         * @var $seasonStartYear DateTime
-         * @var $seasonEndYear DateTime
-         *
-        $seasonStartYear = $seasonDates['startYear'];
-        $seasonEndYear = $seasonDates['endYear'];
-
-        $title = 'Saison ' . $seasonStartYear->format('Y') . '/' . $seasonEndYear->format('Y');
-        return $this->saveSeason(array(
-            'title' => $title,
-            'isImported' => true,
-            'description' => 'Alle Informationen zur Saison ' . $seasonStartYear->format('Y') . '/' . $seasonEndYear->format('Y')
-        ), $seasonList);
-    } */
 
     public function generateSeasonHeading($season)
     {

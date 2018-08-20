@@ -5,9 +5,14 @@
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-    <location-list [locations]="locations$ | async"
-                   [categories]="categories$ | async"
-                   [categoryTypes]="categoryTypes$ | async | filterBy: ['link'] : 'location.types'">
-    </location-list>
+    <!--<location-list [locations]="locations$ | async"
+                   *ngIf="categoryService.getCategoriesByCategoryType('location.types') | async as categories; else loadingTemplate"
+                   [categories]="categories">
+    </location-list>-->
+    <pre>{{categoryService.getCategoriesByCategoryType('location.types') | async | json}}</pre>
   </mat-card-content>
 </mat-card>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

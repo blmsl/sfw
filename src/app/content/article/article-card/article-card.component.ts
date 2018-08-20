@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IArticle } from '../../../shared/interfaces/article.interface';
 
 @Component({
@@ -9,6 +9,9 @@ import { IArticle } from '../../../shared/interfaces/article.interface';
 export class ArticleCardComponent implements OnInit {
 
   @Input() article: IArticle;
+  @Input() showDeleteButton: boolean;
+
+  @Output() deleteArticleToMatchAssignment: EventEmitter<IArticle> = new EventEmitter<IArticle>(false);
 
   constructor() { }
 

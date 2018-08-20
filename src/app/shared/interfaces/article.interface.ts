@@ -1,11 +1,9 @@
-import { IMatch } from './match/match.interface';
 import { ILocation } from './location/location.interface';
 import { ITeam } from './team/team.interface';
 import { ICategory } from './category.interface';
-import { ITag } from './tag.interface';
+import * as firebase from 'firebase';
 import { ICreation } from './creation.interface';
 import { IPublication } from './publication.interface';
-import * as firebase from 'firebase';
 
 export interface IArticle {
 
@@ -26,12 +24,15 @@ export interface IArticle {
 
   assignedCategories?: ICategory[];
 
-  assignedTags?: ITag[];
+  assignedTags?: {
+    display: string;
+    value: string;
+  }[];
   assignedLocation?: ILocation;
   assignedTeams?: ITeam[];
 
   soccerWatchLink?: string;
-  assignedMatch?: IMatch;
+  assignedMatches?: string[];
 
   isFeaturedPost?: boolean;
 
@@ -47,16 +48,6 @@ export interface IArticle {
       scheduled: boolean;
     },
     twitter?: {
-      description: string;
-      title: string;
-      scheduled: boolean;
-    },
-    instagram?: {
-      description: string;
-      title: string;
-      scheduled: boolean;
-    },
-    youtube?: {
       description: string;
       title: string;
       scheduled: boolean;

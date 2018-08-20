@@ -130,11 +130,10 @@
 
     <app-ngx-editor [placeholder]="'general.articles.edit.textPlaceholder' | translate"
                     formControlName="text"
+                    style="height: 60vh"
                     *ngIf="!showPreview"
                     [spellcheck]="true">
     </app-ngx-editor>
-
-    <!--<pre>{{article | json}}</pre>-->
 
     <div *ngIf="showPreview">
       <h1>

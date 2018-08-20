@@ -34,13 +34,19 @@
       </span>
     </div>
 
+    <div *ngIf="!showResult && !showResultInputs">
+      <span *ngIf="match.result && match.result.otherEvent" [innerHTML]="match.result.otherEvent"></span>
+      <span *ngIf="!match.result || !match.result.otherEvent">
+        {{match.matchStartDate.seconds *1000 | date: 'dd.MM.yy HH:mm'}}
+      </span>
+    </div>
+
   </h3>
 
   <p matLine>
-          <span *ngFor="let category of categories | filterBy: ['id'] : match.assignedCategories.assignedCategory">
-            {{ match.assignedCategories.assignedCategory}} {{category.title}}
-          </span>
+          <a *ngFor="let categoryId of match.assignedCategories" [routerLink]="['/categories/detail', categoryId]">
+            {{(categories | filterBy: ['id'] : categoryId)[0].title}}
+          </a>
     - {{match.matchType}}
-    - {{match.matchStartDate.seconds *1000 | date: 'dd.MM.yy HH:mm'}}
   </p>
 </mat-list-item>

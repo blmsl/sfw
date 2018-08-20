@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ICategory } from '../../interfaces/category.interface';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AuthService } from '../auth/auth.service';
-import { ICategoryType } from '../../interfaces/category-type.interface';
 import { CategoryTypeService } from '../category-type/category-type.service';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/internal/operators';
+import { ICategoryType } from '../../interfaces/category-type.interface';
 
 @Injectable()
 export class CategoryService {
@@ -19,8 +16,8 @@ export class CategoryService {
   categories$: Observable<ICategory[]>;
 
   constructor(private afs: AngularFirestore,
-    private authService: AuthService,
-    private categoryTypeService: CategoryTypeService) {
+              private authService: AuthService,
+              private categoryTypeService: CategoryTypeService) {
     this.collectionRef = this.afs.collection<ICategory>(this.path);
     this.categories$ = this.collectionRef.valueChanges();
   }
@@ -55,26 +52,55 @@ export class CategoryService {
 
   getCategoriesByCategoryType(linkType: string): Observable<ICategory[]> {
 
-    return this.categoryTypeService.categoryTypes$.pipe(
+    this.categoryTypeService.categoryTypes$.subscribe((test) => console.log(test));
+
+    return this.categoryTypeService.categoryTypes$
+      .pipe(
+        tap((test) => console.log(test)),
+        switchMap((categoryTypes: ICategoryType[]) => {
+          console.log(categoryTypes);
+          return this.afs.collection<ICategory>(this.path, ref => ref.where('name', '==', categoryTypes[0].id)).valueChanges();
+        })
+      );
+
+    /*this.categoryTypeService.getCategoryTypeByLink(linkType).pipe(
+      tap((categoryTypes) => console.log(categoryTypes)),
+      map((categoryTypes: ICategoryType[]) => {
+        console.log(categoryTypes)
+      })
+    );
+
+    return of([]);
+
+    // this.categoryTypeService.getCategoryTypeByLink(linkType);
+
+    this.categoryTypeService.getCategoryTypeByLink(linkType).pipe(
+      tap((test) => console.log(test))
+    );
+
+   this.categoryTypeService.categoryTypes$.pipe(
       map((categoryTypes: ICategoryType[]) => {
         return categoryTypes.filter((categoryType: ICategoryType) => {
           return categoryType.link === linkType;
         });
       }),
-      mergeMap((categoryTypes: ICategoryType[]) => {
+      switchMap((categoryTypes: ICategoryType[]) => {
         if (categoryTypes.length === 0) {
           return [];
         }
         return this.categories$.pipe(
           map((categories: ICategory[]) => {
-            console.log(categories);
             return categories.filter((category: ICategory) => {
               return category.assignedCategoryType === categoryTypes[0].id;
             })
           })
         );
-      })
+      }),
+      tap((result) => console.log(result)),
+     _finally(() => {
+       return this.categories$
+     });
     );
-
+    */
   }
 }

@@ -40,6 +40,7 @@ import { MatchEditEventFormComponent } from './match-edit/match-edit-events/matc
 import { QuillModule } from 'ngx-quill';
 import { MatchDetailStartingElevenComponent } from './match-detail/match-detail-starting-eleven/match-detail-starting-eleven.component';
 import { MatchEditArticlesComponent } from './match-edit/match-edit-articles/match-edit-articles.component';
+import { MatchEditArticleFormComponent } from './match-edit/match-edit-articles/match-edit-article-form/match-edit-article-form.component';
 
 @NgModule({
   imports: [
@@ -77,7 +78,8 @@ import { MatchEditArticlesComponent } from './match-edit/match-edit-articles/mat
     MatchEditEventsComponent,
     MatchEditEventFormComponent,
     MatchDetailStartingElevenComponent,
-    MatchEditArticlesComponent
+    MatchEditArticlesComponent,
+    MatchEditArticleFormComponent
   ],
   providers: [
     ArticleService,

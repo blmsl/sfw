@@ -94,21 +94,11 @@
     <h3 style="margin-top: 30px;">{{'general.matches.edit.inputs.categoryHeader' | translate}}</h3>
     <div fxLayout="column"
          fxLayout.gt-sm="row"
-         fxLayoutGap="10px"
-         formGroupName="assignedCategories">
-      <mat-form-field fxFlex.gt-sm="50">
-        <mat-select placeholder="{{'general.matches.edit.inputs.category' | translate}}"
-                    formControlName="assignedCategory">
-          <mat-option *ngFor="let category of categories | orderBy: ['title']"
-                      [value]="category.id">
-            {{category.title}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field fxFlex.gt-sm="50">
-        <mat-select placeholder="{{'general.matches.edit.inputs.mainCategory' | translate}}"
-                    formControlName="assignedMainCategory">
+         fxLayoutGap="10px">
+      <mat-form-field fxFlex.gt-sm="100">
+        <mat-select multiple=""
+                    placeholder="{{'general.matches.edit.inputs.category' | translate}}"
+                    formControlName="assignedCategories">
           <mat-option *ngFor="let category of categories | orderBy: ['title']"
                       [value]="category.id">
             {{category.title}}

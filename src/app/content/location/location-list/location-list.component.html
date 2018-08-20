@@ -14,10 +14,20 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex.gt-sm="33">
+  <mat-form-field fxFlex.gt-sm="100">
     <input matInput
            placeholder="{{ 'general.typeToFilter' | translate}}"
            formControlName="searchFor"/>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="100">
+    <mat-select placeholder="{{ 'general.pagination.filterByCategory' | translate}}"
+                formControlName="assignedCategory">
+      <mat-option [value]="">{{ 'general.pagination.allItems' | translate}}</mat-option>
+      <mat-option *ngFor="let category of categories" [value]="category.id">
+        {{ category.title}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <div fxFlex.gt-sm="100">
@@ -40,7 +50,9 @@
                    [footerHeight]="50"
                    [rowHeight]="'auto'"
                    [limit]="form.controls['limit'].value"
-                   [rows]="locations | orderBy: ['title'] | filterBy: ['title'] : form.controls['searchFor'].value">
+                   [rows]="locations | orderBy: ['title']
+                   | filterBy: ['assignedCategory'] : form.controls['assignedCategory'].value
+                   | filterBy: ['title'] : form.controls['searchFor'].value">
       <ngx-datatable-column name="{{'general.locations.list.colTitles.name' | translate}}">
         <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
           {{row.title}}

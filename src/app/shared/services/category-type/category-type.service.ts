@@ -19,31 +19,8 @@ export class CategoryTypeService {
     this.categoryTypes$ = this.collectionRef.valueChanges();
   }
 
-  /*
-  createCategoryType(categoryType: ICategoryType): void {
-    this.afs.collection(this.path).doc(categoryType.id).set(categoryType);
+  getCategoryTypeByLink(categoryTypeLink: string) {
+    return this.afs.collection<ICategoryType>(this.path, ref => ref.where('link', '==', categoryTypeLink)).valueChanges();
   }
 
-  removeCategoryType(categoryType: ICategoryType): Promise<any> {
-    return this.afs.collection(this.path).doc(categoryType.id).delete();
-  }
-
-  updateCategoryType(categoryTypeId: string, categoryType: ICategoryType): Promise<any> {
-    return this.afs.collection(this.path).doc(categoryTypeId).update(categoryType);
-  }
-
-  getCategoryTypeById(categoryTypeId: string): Observable<ICategoryType> {
-    return this.afs.doc<ICategoryType>(this.path + '/' + categoryTypeId).valueChanges();
-  }
-
-  setNewCategoryType() {
-    const data: ICategoryType = {
-      id: this.afs.createId(),
-      title: '',
-      creation: this.authService.getCreation()
-    };
-    this.createCategoryType(data);
-    return data;
-  }
-  */
 }

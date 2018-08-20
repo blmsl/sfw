@@ -7,7 +7,7 @@
            fxLayout.gt-sm="row"
            fxLayoutGap="10px"
            *ngIf="matches$ | async as matches; else loadingTemplate">
-        <div fxFlex.gt-sm="40">
+        <div fxFlex.gt-sm="50">
           <mat-card>
             <mat-card-title>{{ 'general.matches.upcomingMatchesTitle' | translate }}</mat-card-title>
             <mat-card-subtitle></mat-card-subtitle>
@@ -22,7 +22,7 @@
           </mat-card>
         </div>
 
-        <div fxFlex.gt-sm="40">
+        <div fxFlex.gt-sm="50">
           <mat-card>
             <mat-card-title>{{ 'general.matches.pastMatchesTitle' | translate }}</mat-card-title>
             <mat-card-subtitle></mat-card-subtitle>
@@ -37,39 +37,27 @@
             </mat-card-content>
           </mat-card>
         </div>
-
-        <div>
-          <ul>
-            <li>Suche nach Datum</li>
-            <li>Suche nach Mannschaft</li>
-            <li>Link zum Editieren:
-              <ul>
-                <li>Ergebnis oder eintragen</li>
-                <li>Besondere Vorkomnisse</li>
-                <li>Spielverlauf: Tore, Karten, Auswechselungen etc.</li>
-                <li>Aufstellung festlegen (Spielerkader aus der Mannschaft laden)</li>
-                <li>Link zu verknüpften Artikeln (Vorberichte, Interviews etc.) festlegen</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-
       </div>
+
 
       <div fxLayout="column"
            fxLayout.gt-sm="row"
            fxLayoutGap="10px" *ngIf="matches$ | async as matches">
         <div fxFlex.gt-sm="50">
           <mat-card>
-            <mat-card-title>{{ 'general.matches.pastMatchesWithoutResultTitle' | translate }}</mat-card-title>
+            <mat-card-title>{{ ('general.dashboard.matchesWithoutResult' | translate)
+              + ' ('
+              + (matches | orderBy: ['-matchEndDate.seconds'] | matchFilter: 'matchEndDate' : '<=' | matchNoResultFilter).length
+              + ')' }}</mat-card-title>
             <mat-card-subtitle></mat-card-subtitle>
             <mat-card-content style="max-height: 300px"
                               [perfectScrollbar]="config">
               <match-list [categories]="categories"
                           [events]="matchService.getOtherEventList() | orderBy: ['title']"
-                          [matches]="matches | orderBy: ['-matchEndDate.seconds']
-                                      | matchFilter: 'matchEndDate' : '<='
-                                      | matchNoResultFilter">
+                          [showResultInputs]="true"
+                          [matches]="matches
+                                | matchFilter: 'matchStartDate' : '<='
+                                | matchNoResultFilter  | orderBy: ['-matchEndDate.seconds']">
               </match-list>
             </mat-card-content>
           </mat-card>

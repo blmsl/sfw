@@ -26,14 +26,13 @@
           </div>
         </mat-tab>
         <mat-tab [label]="'general.matches.edit.startingEleven.title' | translate">
-
           <p *ngIf="!form.get('assignedTeam').value">{{'general.matches.edit.noAssignedTeam' | translate}}</p>
 
-          <match-edit-starting-eleven *ngIf="form.get('assignedTeam').value && teams"
+          <!--<match-edit-starting-eleven *ngIf="form.get('assignedTeam').value && teams"
                                       [form]="form"
                                       (addPlayerToStartingEleven)="addPlayerToStartingEleven($event)"
                                       [team]="(teams | filterBy: ['id'] : form.get('assignedTeam').value)[0]">
-          </match-edit-starting-eleven>
+          </match-edit-starting-eleven>-->
         </mat-tab>
         <mat-tab
           [label]="('general.matches.edit.articles' | translate) + ' & ' + ('general.matches.edit.match' | translate)">
@@ -46,18 +45,23 @@
                                  (deleteMatchEvent)="deleteMatchEvent($event)">
               </match-edit-events>
 
-              <match-edit-event-form
-                [categories]="matchService.getMatchEventCategories() | orderBy: ['title']"
+              <match-edit-event-form [eventCategories]="matchService.getMatchEventCategories() | orderBy: ['title']"
                                      (createMatchEvent)="createMatchEvent(null)"
                                      (saveMatchEvent)="saveMatchEvent($event)">
               </match-edit-event-form>
             </div>
 
             <div fxFlex.gt-sm="50">
-              <match-edit-articles *ngIf="articles$ |async as articles; else loadingTemplate"
+              <match-edit-articles *ngIf="assignedArticles$ |async as articles; else loadingTemplate"
                                    [match]="match"
                                    [articles]="articles">
               </match-edit-articles>
+
+              <!--<match-edit-article-form *ngIf="articles$ |async as articles; else loadingTemplate"
+                                       [form]="form"
+                                       [articles]="articles">
+              </match-edit-article-form>-->
+
             </div>
           </div>
         </mat-tab>

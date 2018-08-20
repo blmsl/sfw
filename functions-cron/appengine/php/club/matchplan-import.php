@@ -33,13 +33,17 @@ $jahr = isset($_GET['jahr']) ? DateTime::createFromFormat('Y', $_GET['jahr']) : 
 $loadingLimit = null;
 if (isset($_GET['jahr'])) {
     $seasonStart = $project->getSeasonStartDate($jahr);
-    $loadingLimit = $project->getSeasonEndDate($jahr);
+    $seasonStartClone = clone($seasonStart);
+    $loadingLimit = $seasonStartClone->modify('+1 year')->modify('-1 day');
+    $seasonEndDate = $loadingLimit;
     echo "<h3>Lade Daten vom " . $seasonStart->format('d.m.Y') . " bis " . $loadingLimit->format('d.m.Y') . " </h3>";
 } else {
     // load data for the next 4 months
     $seasonStart = $jahr;
     $seasonStartClone = clone($seasonStart);
     $loadingLimit = $seasonStartClone->modify('+4 month');
+    $seasonEnd = clone($seasonStart);
+    $seasonEndDate = $seasonStartClone->modify('+1 year')->modify('-1 day');
     echo "<h3>Lade Daten vom " . $seasonStart->format('d.m.Y') . " bis " . $loadingLimit->format('d.m.Y') . " </h3>";
 }
 
@@ -63,7 +67,7 @@ if(!$club["fussballde"]["clubId"]){
 }
 
 // Laden der aktuellen Saison
-$assignedSeason = $project->getSeasonByDate($project->getSeasonStartDate($seasonStart), $project->getSeasonEndDate($loadingLimit), $batch);
+$assignedSeason = $project->getSeasonByDate($seasonStart, $seasonEndDate, $batch);
 
 // die Spielplan-URL anhand des Saison-Startes und -Endes ODER des aktuellen Datums und des Limits laden
 $matchPlanUrl = $project->generateMatchPlanUrl($club["fussballde"]["clubId"], $seasonStart, $loadingLimit);
@@ -89,14 +93,14 @@ foreach ($matchPlan as $match){
 
         if(key_exists('assignedLocation', $match)) {
             $locationCategoryName = $match["assignedLocation"]["assignedLocationCategory"];
-            if (!key_exists($locationCategoryName, $categories)) {
+            if (!key_exists($locationCategoryName, $categories) && $locationCategoryName !== '') {
                 $categories[$locationCategoryName] = $project->getCategoryByTitleAndCategoryType($locationCategoryName, $locationCategoryType, $i < 450 ? $batch : $batch2);
                 $i++;
             }
             $locationCategory = $categories[$match["assignedLocation"]["assignedLocationCategory"]];
 
             $locationTitle = $match["assignedLocation"]["type"] . " " . $match["assignedLocation"]["address"]["streetName"] . ", " . $match["assignedLocation"]["address"]["city"];
-            if (!key_exists($locationTitle, $locationList)) {
+            if (!key_exists($locationTitle, $locationList) && $locationTitle !== ' ,') {
                 $locationList[$locationTitle] = $project->getLocationByLocationDataAndCategory($match["assignedLocation"], $locationCategory, $i < 450 ? $batch : $batch2);
                 $i++;
             }
@@ -116,7 +120,7 @@ foreach ($matchPlan as $match){
             $categories[$teamMainCategoryName] = $project->getCategoryByTitleAndCategoryType($match["assignedCategories"]["assignedMainCategory"], $teamCategoryType, $i < 450 ? $batch : $batch2);
             $i++;
         }
-        $teamMainCategory = $categories[$teamCategoryName];
+        $teamMainCategory = $categories[$teamMainCategoryName];
 
         // Dazugehörige Mannschaft
         $assignedTeam = $match["isHomeTeam"] ? $match["homeTeam"] : $match["guestTeam"];

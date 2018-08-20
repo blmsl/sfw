@@ -26,13 +26,9 @@
       </mat-form-field>
 
       <mat-form-field fxFlex.gt-sm="18">
-        <mat-select placeholder="{{'general.matches.edit.events.inputs.playMinute' | translate}}"
-                    formControlName="playMinute">
-          <mat-option *ngFor="let minute of playMinutes"
-                      [value]="minute">
-            {{minute}}
-          </mat-option>
-        </mat-select>
+        <input matInput
+               placeholder="{{'general.matches.edit.events.inputs.playMinute' | translate}}"
+               formControlName="playMinute" />
       </mat-form-field>
 
     </div>

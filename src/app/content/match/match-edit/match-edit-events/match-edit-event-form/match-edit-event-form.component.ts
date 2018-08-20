@@ -22,12 +22,11 @@ import { ICategoryType } from '../../../../../shared/interfaces/category-type.in
 })
 export class MatchEditEventFormComponent implements OnInit {
 
-  @Input() categories: ICategory[];
+  @Input() eventCategories: ICategory[];
   @Input() categoryTypes: ICategoryType[];
 
   @Output() saveMatchEvent: EventEmitter<IMatchEvent> = new EventEmitter<IMatchEvent>(false);
 
-  public playMinutes: number[] = [];
   public form: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -41,15 +40,8 @@ export class MatchEditEventFormComponent implements OnInit {
       playMinute: null,
       title: ''
     });
-
-    this.initPlayMinutes();
   }
 
-  initPlayMinutes() {
-    for (let i = 1; i < 120; i++) {
-      this.playMinutes.push(i);
-    }
-  }
 
   save($event) {
     this.saveMatchEvent.emit($event);

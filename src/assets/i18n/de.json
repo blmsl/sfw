@@ -108,8 +108,10 @@
           "saving": "Speichere ...",
           "success": "Gespeichert"
         },
+        "assignmentDeleted": "Die Verknüpfung wurde gelöscht.",
         "deleted": "Der Artikel wurde unwiderruflich gelöscht.",
         "deleteArticle": "Artikel löschen",
+        "deleteAssignment": "Verknüpfung löschen",
         "options": {
           "title": "Optionen"
         },

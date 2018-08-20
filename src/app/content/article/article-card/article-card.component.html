@@ -9,7 +9,7 @@
                     fxLayout.gt-sm="row"
                     fxLayoutGap="10px">
     <span>{{'general.articles.detail.writtenAt' | translate}}
-      <span style="font-weight: bold">{{article.articleDate | date: 'dd.MM.yy'}}</span>
+      <span style="font-weight: bold">{{article.articleDate.toDate() | date: 'dd.MM.yy'}}</span>
     </span>
     <span fxFlex></span>
     <button mat-raised-button
@@ -19,8 +19,14 @@
     </button>
     <button mat-raised-button
             color="accent"
-            [routerLink]="['/articles/detail', article.id]">
+            [routerLink]="['/articles/edit', article.id]">
       {{'general.edit' | translate }}
+    </button>
+    <button mat-raised-button
+            *ngIf="showDeleteButton"
+            color="warn"
+            (click)="deleteArticleToMatchAssignment.emit(article)">
+      {{'general.articles.edit.deleteAssignment' | translate }}
     </button>
   </mat-card-actions>
 </mat-card>

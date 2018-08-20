@@ -10,6 +10,7 @@ import {
 } from 'angularfire2/firestore';
 import { AuthService } from '../auth/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { map } from 'rxjs/internal/operators';
 
 @Injectable()
 export class ArticleService {
@@ -64,6 +65,10 @@ export class ArticleService {
 
   getArticleById(articleId: string): Observable<IArticle | null> {
     return this.afs.doc<IArticle>(this.path + '/' + articleId).valueChanges();
+  }
+
+  getArticlesForMatch(matchId: string): Observable<IArticle[]> {
+    return this.afs.collection<IArticle>(this.path, ref => ref.where('assignedMatches', 'array-contains', matchId)).valueChanges();
   }
 
   setNewArticle(): Observable<IArticle> {
