@@ -50,13 +50,6 @@ handlers:
 #- url: /php/member/drive-import.php
 #  script: /php/member/drive-import.php
 
-# Team
-#- url: /php/team/standings.php
-#  script: /php/team/standings.php
-
-#- url: /php/team/competitions.php
-#  script: /php/team/competitions.php
-
 # Other
 #- url: /_ah/.*
 #  script: /php/index.php

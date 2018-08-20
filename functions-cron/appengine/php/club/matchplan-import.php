@@ -91,6 +91,8 @@ foreach ($matchPlan as $match){
 
     if(!key_exists('dontShowThis', $match)) {
 
+        $location = null;
+
         if(key_exists('assignedLocation', $match)) {
             $locationCategoryName = $match["assignedLocation"]["assignedLocationCategory"];
             if (!key_exists($locationCategoryName, $categories) && $locationCategoryName !== '') {
@@ -140,8 +142,19 @@ foreach ($matchPlan as $match){
     }
 }
 
+// Scrape Competitions and Standings
+$assignedTeams = $project->getTeamsBySeason($assignedSeason);
+
+foreach ($assignedTeams as $team) {
+  $doc = $project->loadRemoteHTML($team["externalTeamLink"]);
+  $teamPageData = $project->scrapeTeamDetailPage($doc);
+  $project->updateTeam($team["id"], $teamPageData, $i < 450 ? $batch : $batch2);
+  $i++;
+}
+// End Competitions and Standings
+
 $batch->commit();
-if($i > 400){
+if($i >= 450){
     $batch2->commit();
 }
 

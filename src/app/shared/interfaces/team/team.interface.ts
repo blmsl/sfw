@@ -5,6 +5,7 @@ import { ITeamManagement } from './team-management.interface';
 import { ICompetition } from './competition.interface';
 import { ITimeLineEvent } from '../time-line-event.interface';
 import { IClub } from '../club/club.interface';
+import { IStanding } from './standings.interface';
 
 export interface ITeam {
 
@@ -25,8 +26,11 @@ export interface ITeam {
   assignedPlayers: string[];
   assignedPositions: ITeamManagement[];
   assignedTrainings: ITraining[];
+
+
   assignedCompetitions: ICompetition[];
   assignedEvents: ITimeLineEvent[];
+  currentStandings: IStanding[];
 
   // teamOfTheMonth?: IHighlightedItem[];
 

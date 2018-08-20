@@ -60,16 +60,16 @@ trait sfwBase
     $this->client = $this->getGoogleClient($projectId);
     $this->db = $this->getFireStoreConnection($projectId);
 
-    if(in_array('sheetService', $initParts)){
+    if (in_array('sheetService', $initParts)) {
       $this->sheetService = new Google_Service_Sheets($this->client);
     }
-    if(in_array('driveService', $initParts)){
+    if (in_array('driveService', $initParts)) {
       $this->driveService = new Google_Service_Drive($this->client);
     }
-    if(in_array('calendarService', $initParts)){
+    if (in_array('calendarService', $initParts)) {
       $this->calendarService = new Google_Service_Calendar($this->client);
     }
-    if(in_array('storageService', $initParts)){
+    if (in_array('storageService', $initParts)) {
       $this->storage = $this->getStorageConnection($projectId);
     }
 
@@ -105,8 +105,9 @@ trait sfwBase
     return $client;
   }
 
-  public function setUpTwitter(){
-    if(!getenv('TWITTER_APPLICATION_CREDENTIALS') || !file_get_contents(getenv('TWITTER_APPLICATION_CREDENTIALS'))){
+  public function setUpTwitter()
+  {
+    if (!getenv('TWITTER_APPLICATION_CREDENTIALS') || !file_get_contents(getenv('TWITTER_APPLICATION_CREDENTIALS'))) {
       exit('Twitter Config not loaded');
     }
 
@@ -119,7 +120,8 @@ trait sfwBase
     return $cb;
   }
 
-  public function getStorageConnection($projectId){
+  public function getStorageConnection($projectId)
+  {
     try {
       $storage = new StorageClient([
         'projectId' => $projectId
@@ -144,8 +146,9 @@ trait sfwBase
     return $db;
   }
 
-  public function loadRemoteHTML($link){
-      return hQuery::fromUrl($link); // , ['Accept' => 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8']
+  public function loadRemoteHTML($link)
+  {
+    return hQuery::fromUrl($link); // , ['Accept' => 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8']
   }
 
   /**
@@ -162,13 +165,22 @@ trait sfwBase
     $data["isImported"] = true;
     $data["publication"] = $this->generatePublication();
 
-    if ($batch) {
-      $batch->create($addedDocRef, $data);
-      return $data;
-    } else {
-      $addedDocRef->set($data);
-      return $data;
-    }
+    $batch->create($addedDocRef, $data);
+    return $data;
+  }
+
+  /**
+   * @param $collection Google\Cloud\Firestore\CollectionReference
+   * @param $id string
+   * @param $data
+   * @param $batch Google\Cloud\Firestore\WriteBatch
+   * @return mixed
+   */
+  public function updateFireStoreObject($collection, $id, $data, $batch)
+  {
+    $doc =  $collection->name() . '/' . $id;
+    $batch->update($doc, $data);
+    return $data;
   }
 
   public function generateCreation()
@@ -211,7 +223,7 @@ trait sfwBase
 
   public function generateFooter()
   {
-    return '</div>' . PHP_EOL . '</body>' . PHP_EOL. '</html>';
+    return '</div>' . PHP_EOL . '</body>' . PHP_EOL . '</html>';
   }
 
   /**
@@ -247,50 +259,6 @@ trait sfwBase
 }
 
 /*
-function scrap_competitions($html)
-{
-  $output = array();
-  if ($html && is_object($html) && isset($html->nodes)) {
-    $items = $html->find("#team-competitions .factfile-data .column-left, #team-competitions .factfile-data .column-right");
-    foreach ($items as $item) {
-      $output[] = array(
-        'title' => $item->find('a', 0)->plaintext,
-        'competitionType' => $item->find('.label', 0)->plaintext,
-        'link' => $item->find('a', 0)->href
-      );
-    }
-    $html->clear();
-  }
-  return $output;
-}
-
-function scrap_standings($html)
-{
-  $output = array();
-  if ($html && is_object($html) && isset($html->nodes)) {
-
-    $items = $html->find("#team-fixture-league-tables tr");
-    // loop through items on current page
-    foreach ($items as $item) {
-      $output_item = array();
-      $counter = 0;
-      $tds = $item->find("td");
-      foreach ($tds as $td) {
-        if ($counter > 0) {
-          $output_item[] = trim($td->plaintext);
-        }
-        $counter++;
-      }
-
-      if (!empty($output_item)) {
-        $output[] = $output_item;
-      }
-    }
-    $html->clear();
-  }
-  return $output;
-}
-
 function saveDriveMember($id, $data, $dbMembers, $members)
 {
   $docRef = $dbMembers->document($id);

@@ -17,9 +17,9 @@ cron:
   schedule: 1 of month 00:01
 
 # PHP
-#- description: Import Matches from fussball.de
-#  url: /php/club/matchplan-import.php
-#  schedule: every day 00:00
+- description: Import Matches from fussball.de
+  url: /php/club/matchplan-import.php
+  schedule: every 48 hours
 
 #- description: Publish Articles to frontend and to social pages
 #  url: /php/article/publish-article.php

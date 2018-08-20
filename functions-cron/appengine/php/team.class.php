@@ -1,5 +1,7 @@
 <?php
 
+use \Google\Cloud\Firestore\FieldValue;
+
 trait sfwTeam
 {
   /**
@@ -7,6 +9,15 @@ trait sfwTeam
    */
   public $teamCollection = null;
   private $teams = array();
+
+  public function updateTeam($id, $teamPageData, $batch)
+  {
+    return $this->updateFireStoreObject(
+      $this->teamCollection,
+      $id,
+      $teamPageData,
+      $batch);
+  }
 
   public function getTeamByTeamData($teamData, $season, $club, $category, $mainCategory, $batch)
   {
@@ -52,9 +63,11 @@ trait sfwTeam
         );
       }
     }
+    return array();
   }
 
-  public function getTeamsBySeason($season){
+  public function getTeamsBySeason($season)
+  {
     $teamList = [];
     $query = $this->teamCollection->where('assignedSeason', '=', $season["id"]);
     foreach ($query->documents() as $doc) {
@@ -63,11 +76,12 @@ trait sfwTeam
           'id' => $doc['id'],
           'assignedClub' => $doc["assignedClub"],
           'assignedSeason' => $doc["assignedSeason"],
+          'externalTeamLink' => $doc["externalTeamLink"],
           'title' => $doc['title'],
           'subTitle' => $doc['subTitle']
         );
-      }
-      return $teamList;
+    }
+    return $teamList;
   }
 
   public function getTeamsByClubAndSeason($club, $season)
@@ -115,8 +129,115 @@ trait sfwTeam
     }
   }
 
-  public function scrapeTeamDetailPage($doc, $team){
-      var_dump($doc);
+  /**
+   * @var $doc \duzun\hQuery\Node
+   * @return array
+   */
+  public function scrapeTeamDetailPage($doc)
+  {
+
+    $assignedCompetitions = array();
+    $competitions = $doc->find(".team-competitions div.factfile-data div div");
+    /**
+     * @var $competition \duzun\hQuery\Node
+     */
+    foreach ($competitions AS $competition) {
+      if ($competition->find('.value a')) {
+        $assignedCompetitions[] = array(
+          'title' => $competition->find('.value a')->text(),
+          'link' => $competition->find('.value a')->attr('href'),
+          'competitionType' => $competition->find('.label')->text()
+        );
+      }
+    }
+
+    $currentStandings = array();
+    $standings = $doc->find("#team-fixture-league-tables table tbody tr");
+    if ($standings) {
+      foreach ($standings as $row) {
+        $output_item = array();
+        $counter = 0;
+        /**
+         * @var $row \duzun\hQuery\Node
+         */
+        $tds = $row->find("td");
+        foreach ($tds as $td) {
+          if ($counter > 0) {
+            $output_item[$this->getCellName($counter)] = trim($td->text());
+          }
+          $counter++;
+        }
+        if (!empty($output_item)) {
+          $currentStandings[] = $output_item;
+        }
+      }
+    }
+
+    $eventList = array();
+    $timeLine = $doc->find('#team-timeline .timeline-content .section ');
+    if ($timeLine) {
+      /**
+       * @var $season \duzun\hQuery\Node
+       */
+      foreach ($timeLine AS $season) {
+
+        $seasonDates = $this->getSeasonNameFromShortDate($season->find('.season .year'));
+
+        /**
+         * @var $event \duzun\hQuery\Element
+         */
+        foreach ($season->find('.event') as $event) {
+          $eventList[] = array(
+            'title' => $event->find('.title')->text(),
+            'subTitle' => $event->find('.copy')->text(),
+            'startDate' => $seasonDates['startDate']->format(DATE_RFC3339),
+            'endDate' => $seasonDates['endDate']->format(DATE_RFC3339)
+          );
+
+        }
+      }
+    }
+
+    return [
+      ['path' => 'assignedCompetitions', 'value' => $assignedCompetitions],
+      ['path' => 'currentStandings', 'value' => $currentStandings],
+      ['path' => 'assignedEvents', 'value' => $eventList]
+    ];
+  }
+
+  public function getCellName($counter)
+  {
+    $text = '';
+    switch ($counter - 1) {
+      case 0:
+        $text .= "Rank";
+        break;
+      case 1:
+        $text .= "Team";
+        break;
+      case 2:
+        $text .= "Matches";
+        break;
+      case 3:
+        $text .= "Won";
+        break;
+      case 4:
+        $text .= "Draw";
+        break;
+      case 5:
+        $text .= "Lost";
+        break;
+      case 6:
+        $text .= "GoalRel";
+        break;
+      case 7:
+        $text .= "GoalDiff";
+        break;
+      case 8:
+        $text .= "Points";
+        break;
+    }
+    return $text;
   }
 
 }
