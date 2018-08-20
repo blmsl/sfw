@@ -115,4 +115,8 @@ trait sfwTeam
     }
   }
 
+  public function scrapeTeamDetailPage($doc, $team){
+      var_dump($doc);
+  }
+
 }
