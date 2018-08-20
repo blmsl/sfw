@@ -14,7 +14,7 @@ import { ICategory } from '../../../../shared/interfaces/category.interface';
 export class LocationDetailMainComponent implements OnInit {
 
   @Input() location: ILocation;
-  @Input() categories: ICategory[];
+  @Input() category: ICategory;
 
   constructor() {
   }

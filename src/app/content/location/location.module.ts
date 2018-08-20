@@ -43,6 +43,8 @@ import { SharedCategoryModule } from '../../shared/components/category/shared-ca
 import { LocationStatisticsComponent } from './location-statistics/location-statistics.component';
 import { MatchService } from '../../shared/services/match/match.service';
 import { LocationMapFilterComponent } from './location-map/location-map-filter/location-map-filter.component';
+import { LocationDetailArticleComponent } from './location-detail/location-detail-article/location-detail-article.component';
+import { LocationDetailMatchesComponent } from './location-detail/location-detail-matches/location-detail-matches.component';
 
 @NgModule({
   imports: [
@@ -80,7 +82,9 @@ import { LocationMapFilterComponent } from './location-map/location-map-filter/l
     LocationDetailMainComponent,
     LocationsByCategoryComponent,
     LocationStatisticsComponent,
-    LocationMapFilterComponent
+    LocationMapFilterComponent,
+    LocationDetailArticleComponent,
+    LocationDetailMatchesComponent
   ],
   providers: [
     ArticleService,

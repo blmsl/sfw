@@ -10,7 +10,7 @@ export interface ILocation {
   title: string;
   text: string;
 
-  assignedCategory?: string | ICategory;
+  assignedCategory?: string;
   assignedContacts?: ILocationContact[];
 
   fupaLink?: string;

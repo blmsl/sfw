@@ -46,9 +46,8 @@
     <div fxLayout="column">
       <div fxFlex="100"
            [formGroupName]="i">
-        <location-contact-form
-          [members]="members"
-          [form]="form.controls['assignedContacts']['controls'][i]">
+        <location-contact-form [members]="members"
+                               [form]="form.controls['assignedContacts']['controls'][i]">
         </location-contact-form>
       </div>
     </div>

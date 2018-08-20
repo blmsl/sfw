@@ -7,14 +7,12 @@
 
   <mat-card-content>
 
-    <div *ngIf="categories$ && categoryTypes$ && location && members$; else loadingTemplate">
-      <!--  -->
-      <mat-tab-group [dynamicHeight]="true">
+      <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
+                     [dynamicHeight]="true">
 
         <mat-tab label="{{'general.locations.edit.mainTitle' | translate}}">
 
           <div fxLayout="column"
-               *ngIf="categories$ | async as categories; else loadingTemplate"
                fxLayout.gt-sm="row"
                fxLayoutGap="10px">
 
@@ -98,7 +96,8 @@
               <location-edit-address [form]="form"></location-edit-address>
             </div>
             <div fxFlex="50">
-              <location-edit-contact [members]="members$ | async"
+              <location-edit-contact *ngIf="members$ | async as members; else loadingTemplate"
+                                     [members]="members"
                                      (addLocationContact)="addLocationContact()"
                                      (removeLocationContact)="removeLocationContact($event)"
                                      [form]="form">
@@ -108,15 +107,38 @@
         </mat-tab>
 
         <mat-tab label="{{ 'general.locations.edit.mediaTitle' | translate }}">
+          <!-- ToDo: Add Uploader -->
           <!--<media-center [uploaderConfig]="uploaderConfig"
                         [uploaderOptions]="uploaderOptions">
           </media-center>-->
         </mat-tab>
 
       </mat-tab-group>
-    </div>
   </mat-card-content>
 
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button mat-raised-button
+              color="primary"
+              [routerLink]="['/locations']">
+        {{'general.menu.location.list' | translate}}
+      </button>
+      <button mat-raised-button
+              color="accent"
+              [routerLink]="['/locations/detal', location.id]">
+        {{'general.detail' | translate }}
+      </button>
+      <button mat-raised-button
+              color="warn"
+              (click)="removeLocation(location)">
+        {{'general.delete' | translate }}
+      </button>
+    </div>
+  </mat-card-actions>
 </mat-card>
 
 <ng-template #loadingTemplate>

@@ -2,7 +2,6 @@
   <mat-card-title>{{'general.locations.edit.contactTitle' | translate}}</mat-card-title>
   <mat-card-content>
 
-
     <p *ngIf="!location.assignedContacts || location.assignedContacts.length === 0">
       {{ 'general.locations.edit.contact.noContacts' | translate}}
     </p>
@@ -10,8 +9,8 @@
     <ul>
       <li *ngFor="let contact of location.assignedContacts; let i = index">
         <a *ngIf="contact.isMember" [routerLink]="['/members/detail', contact.assignedMember]">
-          {{ (members | filterBy: ['id'] : contact.assignedMember)[0].mainData.lastName}}
-          {{ (members | filterBy: ['id'] : contact.assignedMember)[0].mainData.firstName}}
+          {{ (assignedMembers | filterBy: ['id'] : contact.assignedMember)[0].mainData.lastName}}
+          {{ (assignedMembers | filterBy: ['id'] : contact.assignedMember)[0].mainData.firstName}}
         </a>
         <span *ngIf="!contact.isMember">
             {{contact.lastName}} {{contact.firstName}} <br/>

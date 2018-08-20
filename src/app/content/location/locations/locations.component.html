@@ -5,11 +5,10 @@
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-    <!--<location-list [locations]="locations$ | async"
-                   *ngIf="categoryService.getCategoriesByCategoryType('location.types') | async as categories; else loadingTemplate"
+    <location-list *ngIf="categories$ | async as categories; else loadingTemplate"
+                   [locations]="locations$ | async"
                    [categories]="categories">
-    </location-list>-->
-    <pre>{{categoryService.getCategoriesByCategoryType('location.types') | async | json}}</pre>
+    </location-list>
   </mat-card-content>
 </mat-card>
 

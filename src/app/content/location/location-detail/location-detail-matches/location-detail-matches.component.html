@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{'general.locations.detail.assignedMatches' | translate}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+
+    <p *ngIf="!assignedMatches || assignedMatches.length === 0">
+      {{ 'general.locations.detail.noAssignedMatches' | translate }}
+    </p>
+
+    <ul>
+      <li *ngFor="let match of assignedMatches | orderBy: ['+matchStartDate.seconds']">
+        {{match.matchStartDate.seconds * 1000 | date: 'dd.MM.yy'}}: {{match.title}}
+      </li>
+    </ul>
+
+  </mat-card-content>
+</mat-card>
+

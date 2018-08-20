@@ -42,7 +42,7 @@
      [formGroup]="form">
 
   <div fxFlex="100"
-       *ngIf="categories && categoryTypes && locations; else loadingTemplate">
+       *ngIf="categories && locations; else loadingTemplate">
     <ngx-datatable #myTable
                    class='material'
                    [columnMode]="'force'"

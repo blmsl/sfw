@@ -12,10 +12,7 @@
   <mat-card-header>
     <mat-card-subtitle>{{'general.locations.list.colTitles.type' | translate}}</mat-card-subtitle>
     <mat-card-title>
-      <a *ngFor="let category of categories | filterBy: ['id']: location.assignedCategory"
-         [routerLink]="['/categories/detail', location.assignedCategory]">
-        {{category.title}}
-      </a>
+      <a [routerLink]="['/categories/detail', category.id]">{{category.title}}</a>
     </mat-card-title>
   </mat-card-header>
 

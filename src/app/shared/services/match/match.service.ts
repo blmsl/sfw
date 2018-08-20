@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable }          from '@angular/core';
+import { Observable }          from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
-import { IMatch } from '../../interfaces/match/match.interface';
-import { of } from 'rxjs/index';
-import { IFormation } from '../../interfaces/match/formation.interface';
+}                              from 'angularfire2/firestore';
+import { IMatch }              from '../../interfaces/match/match.interface';
+import { of }                  from 'rxjs/index';
+import { IFormation }          from '../../interfaces/match/formation.interface';
 import { IMatchEventCategory } from '../../interfaces/match/match-event-category.interface';
-import * as firebase from 'firebase';
+import * as firebase           from 'firebase';
 import Timestamp = firebase.firestore.Timestamp;
+import { ILocation }           from '../../interfaces/location/location.interface';
+import { IArticle }            from '../../interfaces/article.interface';
 
 @Injectable()
 export class MatchService {
@@ -253,6 +255,10 @@ export class MatchService {
 
   getMatchById(matchId: string): Observable<IMatch> {
     return this.afs.doc<IMatch>(this.path + '/' + matchId).valueChanges();
+  }
+
+  getMatchesForLocation(location: ILocation): Observable<IMatch[]> {
+    return this.afs.collection<IMatch>(this.path, ref => ref.where('assignedLocation', '==', location.id)).valueChanges();
   }
 
   setNewMatch(): Observable<IMatch> {

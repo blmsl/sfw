@@ -9,7 +9,7 @@ import { IMember } from '../../../../shared/interfaces/member/member.interface';
 export class LocationDetailContactComponent {
 
   @Input() location: ILocation;
-  @Input() members: IMember[];
+  @Input() assignedMembers: IMember[];
   @Input() showLinks: boolean = false;
 
   constructor() {

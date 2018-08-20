@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable }       from '@angular/core';
 import {
   Observable,
   of
-} from 'rxjs';
+}                           from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
-import { IMember } from '../../interfaces/member/member.interface';
-import { IMediaItem } from '../../interfaces/media/media-item.interface';
+}                           from 'angularfire2/firestore';
+import { IMember }          from '../../interfaces/member/member.interface';
+import { ILocationContact } from '../../interfaces/location/location-contact.interface';
+import { forkJoin }         from 'rxjs/observable/forkJoin';
 
 @Injectable()
 export class MemberService {
@@ -40,6 +41,20 @@ export class MemberService {
     return this.afs.collection(this.path).doc<IMember>(memberId).valueChanges();
   }
 
+  getMembersByLocationContacts(locationContacts: ILocationContact[]): Observable<IMember[]> {
+    if(!locationContacts || locationContacts.length === 0) {
+      return of([]);
+    }
+
+    const memberObservables: Observable<IMember>[] = [];
+    for (let i = 0; i < locationContacts.length; i++) {
+      if (locationContacts[ i ].isMember) {
+        memberObservables.push(this.getMemberById(locationContacts[ i ].assignedMember));
+      }
+    }
+    return forkJoin(memberObservables);
+  }
+
   getZodiac(birthday) {
     const dateOfBirth = new Date(birthday);
     const month = dateOfBirth.getMonth();
@@ -60,8 +75,8 @@ export class MemberService {
       'Sagittarius',
       'Capricorn'
     ];
-    const lastDay = [19, 18, 20, 20, 21, 21, 22, 22, 21, 22, 21, 20, 19];
-    return (day > lastDay[month]) ? zodiac[month * 1 + 1] : zodiac[month];
+    const lastDay = [ 19, 18, 20, 20, 21, 21, 22, 22, 21, 22, 21, 20, 19 ];
+    return (day > lastDay[ month ]) ? zodiac[ month * 1 + 1 ] : zodiac[ month ];
   }
 
   calculateAge(birthday): number {
@@ -70,18 +85,6 @@ export class MemberService {
     const ageDate = new Date(ageDifMs);
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
-
-  getProfileImage(member: IMember): Observable<IMediaItem[]> {
-    const collection: AngularFirestoreCollection<IMediaItem> = this.afs.collection('files/members/profile-images', ref => ref.where('itemId', '==', member.id));
-    return collection.valueChanges();
-
-    /* return member.profileImageUrl
-     ? member.profileImageUrl
-     : (member.mainData.gender === 'female'
-     ? 'assets/images/placeholder/avatar_female.jpg'
-     : 'assets/images/placeholder/avatar_male.jpg'); */
-  }
-
 
   setNewMember(): Observable<IMember> {
     return of(null);

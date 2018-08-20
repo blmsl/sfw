@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable }      from '@angular/core';
 import {
   Observable,
   of
-} from 'rxjs';
-import { IArticle } from '../../interfaces/article.interface';
+}                          from 'rxjs';
+import { IArticle }        from '../../interfaces/article.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
-import { AuthService } from '../auth/auth.service';
+}                          from 'angularfire2/firestore';
+import { AuthService }     from '../auth/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { map } from 'rxjs/internal/operators';
+import { map }             from 'rxjs/internal/operators';
+import { ILocation }       from '../../interfaces/location/location.interface';
 
 @Injectable()
 export class ArticleService {
@@ -69,6 +70,10 @@ export class ArticleService {
 
   getArticlesForMatch(matchId: string): Observable<IArticle[]> {
     return this.afs.collection<IArticle>(this.path, ref => ref.where('assignedMatches', 'array-contains', matchId)).valueChanges();
+  }
+
+  getArticlesForLocation(location: ILocation){
+    return this.afs.collection<IArticle>(this.path, ref => ref.where('assignedLocation', '==', location.id)).valueChanges();
   }
 
   setNewArticle(): Observable<IArticle> {

@@ -1,11 +1,17 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { ICategory } from '../../interfaces/category.interface';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { AuthService } from '../auth/auth.service';
+import { Injectable }          from '@angular/core';
+import {
+  Observable,
+  of
+}                              from 'rxjs';
+import { ICategory }           from '../../interfaces/category.interface';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+}                              from 'angularfire2/firestore';
+import { AuthService }         from '../auth/auth.service';
 import { CategoryTypeService } from '../category-type/category-type.service';
-import { switchMap, tap } from 'rxjs/internal/operators';
-import { ICategoryType } from '../../interfaces/category-type.interface';
+import { switchMap }           from 'rxjs/operators';
+import { ICategoryType }       from '../../interfaces/category-type.interface';
 
 @Injectable()
 export class CategoryService {
@@ -51,56 +57,10 @@ export class CategoryService {
   }
 
   getCategoriesByCategoryType(linkType: string): Observable<ICategory[]> {
-
-    this.categoryTypeService.categoryTypes$.subscribe((test) => console.log(test));
-
-    return this.categoryTypeService.categoryTypes$
-      .pipe(
-        tap((test) => console.log(test)),
-        switchMap((categoryTypes: ICategoryType[]) => {
-          console.log(categoryTypes);
-          return this.afs.collection<ICategory>(this.path, ref => ref.where('name', '==', categoryTypes[0].id)).valueChanges();
-        })
-      );
-
-    /*this.categoryTypeService.getCategoryTypeByLink(linkType).pipe(
-      tap((categoryTypes) => console.log(categoryTypes)),
-      map((categoryTypes: ICategoryType[]) => {
-        console.log(categoryTypes)
+    return this.categoryTypeService.getCategoryTypeByLink(linkType).pipe(
+      switchMap((categoryType: ICategoryType) => {
+        return this.afs.collection<ICategory>(this.path, ref => ref.where('assignedCategoryType', '==', categoryType.id)).valueChanges();
       })
     );
-
-    return of([]);
-
-    // this.categoryTypeService.getCategoryTypeByLink(linkType);
-
-    this.categoryTypeService.getCategoryTypeByLink(linkType).pipe(
-      tap((test) => console.log(test))
-    );
-
-   this.categoryTypeService.categoryTypes$.pipe(
-      map((categoryTypes: ICategoryType[]) => {
-        return categoryTypes.filter((categoryType: ICategoryType) => {
-          return categoryType.link === linkType;
-        });
-      }),
-      switchMap((categoryTypes: ICategoryType[]) => {
-        if (categoryTypes.length === 0) {
-          return [];
-        }
-        return this.categories$.pipe(
-          map((categories: ICategory[]) => {
-            return categories.filter((category: ICategory) => {
-              return category.assignedCategoryType === categoryTypes[0].id;
-            })
-          })
-        );
-      }),
-      tap((result) => console.log(result)),
-     _finally(() => {
-       return this.categories$
-     });
-    );
-    */
   }
 }
