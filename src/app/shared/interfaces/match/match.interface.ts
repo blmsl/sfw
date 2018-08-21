@@ -7,10 +7,7 @@ export interface IMatch {
 
   id?: string;
 
-  assignedCategories: {
-    assignedCategory: string;
-    assignedMainCategory: string;
-  };
+  assignedCategories: string[];
 
   assignedMatchEvents?: IMatchEvent[];
   assignedFormation?: string;

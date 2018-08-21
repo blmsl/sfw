@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { IMediaItem } from '../../interfaces/media/media-item.interface';
 import { AuthService } from '../auth/auth.service';
 import { FileType } from '../../interfaces/media/file-type.interface';
-import { map } from 'rxjs/internal/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MediaItemService {

@@ -6,13 +6,13 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ISponsor } from '../../../shared/interfaces/sponsor.interface';
-import { CategoryService }                                   from '../../../shared/services/category/category.service';
-import { SponsorService }                                    from '../../../shared/services/sponsor/sponsor.service';
-import { ICategory }                                         from '../../../shared/interfaces/category.interface';
+import { CategoryService } from '../../../shared/services/category/category.service';
+import { SponsorService } from '../../../shared/services/sponsor/sponsor.service';
+import { ICategory } from '../../../shared/interfaces/category.interface';
 import { BreakpointObserver, BreakpointState, MediaMatcher } from '@angular/cdk/layout';
-import { MediaItemService }                                  from '../../../shared/services/media/media-item.service';
-import { AlertService }                                      from '../../../shared/services/alert/alert.service';
-import { MatOption, MatOptionSelectionChange }               from '@angular/material';
+import { MediaItemService } from '../../../shared/services/media/media-item.service';
+import { AlertService } from '../../../shared/services/alert/alert.service';
+import { MatOption, MatOptionSelectionChange } from '@angular/material';
 import {
   FormBuilder,
   FormGroup
@@ -63,7 +63,7 @@ export class SponsorsComponent implements OnInit {
   removeSponsor(sponsor: ISponsor) {
     this.sponsorService.removeSponsor(sponsor)
       .then(() => this.mediaItemService.removeMediaItem(sponsor.id))
-      .then(() => this.alertService.success( 'general.sponsors.list.deleted', true))
+      .then(() => this.alertService.success('general.sponsors.list.deleted', true))
       .catch((error: any) => this.alertService.error(error.message));
   }
 

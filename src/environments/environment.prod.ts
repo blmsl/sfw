@@ -6,7 +6,7 @@ export const environment = {
   gaTrackingCode: 'UA-109145893-2',
   googleAnalytics: true,
   firebaseConfig: {
-    apiKey: "AIzaSyDm8L0UYiJ42K2mrIwF4Mraq7KxsTTF9l8",
+    apiKey: "AIzaSyC-zdeN919zhzqA1uTRn1tHotunLaLR7P8",
     authDomain: "sf-winterbach.firebaseapp.com",
     databaseURL: "https://sf-winterbach.firebaseio.com",
     projectId: "sf-winterbach",

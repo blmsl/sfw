@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
-import {
-  Observable,
-  of
-} from 'rxjs';
 import { ICategory } from '../../interfaces/category.interface';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AuthService } from '../auth/auth.service';
 import { CategoryTypeService } from '../category-type/category-type.service';
-import { switchMap } from 'rxjs/operators';
+import { forkJoin ,  Observable, of } from 'rxjs';
 import { ICategoryType } from '../../interfaces/category-type.interface';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class CategoryService {
@@ -34,7 +28,6 @@ export class CategoryService {
   }
 
   removeCategory(category: ICategory): Promise<void> {
-    console.log(category.id);
     return this.afs.collection(this.path).doc(category.id).delete();
   }
 
@@ -62,5 +55,18 @@ export class CategoryService {
         return this.afs.collection<ICategory>(this.path, ref => ref.where('assignedCategoryType', '==', categoryType.id)).valueChanges();
       })
     );
+  }
+
+  getCategoriesByIds(categoryIds: string[]): Observable<ICategory[]> {
+    if (!categoryIds || categoryIds.length === 0) {
+      return of([]);
+    }
+
+    let categoryObservables: Observable<ICategory>[] = [];
+    for (let i = 0; i < categoryIds.length; i++) {
+      console.log(categoryIds[i]);
+      categoryObservables.push(this.getCategoryById(categoryIds[i]));
+    }
+    return forkJoin(categoryObservables);
   }
 }

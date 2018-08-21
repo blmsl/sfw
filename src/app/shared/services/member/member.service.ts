@@ -1,15 +1,8 @@
-import { Injectable }       from '@angular/core';
-import {
-  Observable,
-  of
-}                           from 'rxjs';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-}                           from 'angularfire2/firestore';
-import { IMember }          from '../../interfaces/member/member.interface';
+import { Injectable } from '@angular/core';
+import { Observable, of ,  forkJoin } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { IMember } from '../../interfaces/member/member.interface';
 import { ILocationContact } from '../../interfaces/location/location-contact.interface';
-import { forkJoin }         from 'rxjs/observable/forkJoin';
 
 @Injectable()
 export class MemberService {
@@ -51,7 +44,7 @@ export class MemberService {
 
     let memberObservables: Observable<IMember>[] = [];
     for (let i = 0; i < memberIds.length; i++) {
-      memberObservables.push(this.getMemberById(memberIds[ i ].memberId));
+      memberObservables.push(this.getMemberById(memberIds[i].memberId));
     }
     return forkJoin(memberObservables);
   }
@@ -63,8 +56,8 @@ export class MemberService {
 
     let memberObservables: Observable<IMember>[] = [];
     for (let i = 0; i < locationContacts.length; i++) {
-      if (locationContacts[ i ].isMember) {
-        memberObservables.push(this.getMemberById(locationContacts[ i ].assignedMember));
+      if (locationContacts[i].isMember) {
+        memberObservables.push(this.getMemberById(locationContacts[i].assignedMember));
       }
     }
     return forkJoin(memberObservables);
@@ -90,8 +83,8 @@ export class MemberService {
       'Sagittarius',
       'Capricorn'
     ];
-    const lastDay = [ 19, 18, 20, 20, 21, 21, 22, 22, 21, 22, 21, 20, 19 ];
-    return (day > lastDay[ month ]) ? zodiac[ month * 1 + 1 ] : zodiac[ month ];
+    const lastDay = [19, 18, 20, 20, 21, 21, 22, 22, 21, 22, 21, 20, 19];
+    return (day > lastDay[month]) ? zodiac[month * 1 + 1] : zodiac[month];
   }
 
   calculateAge(birthday): number {

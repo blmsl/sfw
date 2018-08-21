@@ -9,7 +9,8 @@
          fxLayout.gt-sm="row"
          fxLayoutGap="10px">
       <div fxFlex.gt-sm="30">
-        <match-preview *ngIf="categories$ | async as categories; else loadingTemplate"
+        <pre>{{assignedCategories$ | async | json}}</pre>
+        <match-preview *ngIf="assignedCategories$ | async as categories; else loadingTemplate"
                        [categories]="categories"
                        [match]="match">
         </match-preview>
@@ -20,14 +21,10 @@
           <mat-card-content>
             <mat-tab-group [dynamicHeight]="true">
               <mat-tab [label]="'general.matches.detail.startingElevenTitle' | translate">
-                <div *ngIf="assignedPlayers$ | async as assignedPlayers; else loadingTemplate">
-                  <div *ngIf="assignedSubstitutes$ | async as assignedSubstitutes; else loadingTemplate">
-                    <match-detail-starting-eleven [assignedPlayers]="assignedPlayers"
-                                                  [assignedSubstitutes]="assignedSubstitutes"
+                    <match-detail-starting-eleven [assignedPlayers]="assignedPlayers$ | async "
+                                                  [assignedSubstitutes]="assignedSubstitutes$ | async"
                                                   [match]="match">
                     </match-detail-starting-eleven>
-                  </div>
-                </div>
               </mat-tab>
               <mat-tab [label]="'general.matches.detail.matchEventsTitle' | translate">
                 <ul style="color: red">
@@ -36,23 +33,7 @@
                 </ul>
               </mat-tab>
               <mat-tab [label]="'general.matches.detail.assignedArticle' | translate">
-
-                <div *ngIf="articles$ | async as articles; else loadingTemplate">
-
-                  <p *ngIf="articles.length === 0">
-                    {{'general.matches.detail.noAssignedArticles' | translate}}
-                  </p>
-
-                  <div fxLayout="column"
-                       fxLayout.gt-sm="row"
-                       fxLayoutGap="10px"
-                       *ngIf="articles.length > 0">
-                    <div fxFlex="50"
-                         *ngFor="let article of articles | orderBy: ['articleDate']">
-                      <article-card [article]="article"></article-card>
-                    </div>
-                  </div>
-                </div>
+                <match-detail-articles [articles]="assignedArticles$ | async"></match-detail-articles>
               </mat-tab>
             </mat-tab-group>
           </mat-card-content>

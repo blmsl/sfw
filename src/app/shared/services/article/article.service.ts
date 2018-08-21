@@ -10,7 +10,6 @@ import {
 } from 'angularfire2/firestore';
 import { AuthService } from '../auth/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { map } from 'rxjs/internal/operators';
 import { ILocation } from '../../interfaces/location/location.interface';
 
 @Injectable()

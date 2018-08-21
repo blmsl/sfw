@@ -1,5 +1,4 @@
 import { ICreation } from '../creation.interface';
-import { IMember } from '../member/member.interface';
 import { ITraining } from '../training.interface';
 import { ITeamManagement } from './team-management.interface';
 import { ICompetition } from './competition.interface';

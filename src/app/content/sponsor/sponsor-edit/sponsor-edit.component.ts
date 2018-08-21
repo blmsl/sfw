@@ -2,30 +2,30 @@ import {
   Component,
   OnInit,
   ViewChild
-}                               from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators
-}                               from '@angular/forms';
-import { ISponsor }             from '../../../shared/interfaces/sponsor.interface';
-import { SponsorService }       from '../../../shared/services/sponsor/sponsor.service';
+} from '@angular/forms';
+import { ISponsor } from '../../../shared/interfaces/sponsor.interface';
+import { SponsorService } from '../../../shared/services/sponsor/sponsor.service';
 import {
   ActivatedRoute,
   Router
-}                               from '@angular/router';
+} from '@angular/router';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
-import { CategoryService }      from '../../../shared/services/category/category.service';
-import { Observable }           from 'rxjs';
-import { ICategory }            from '../../../shared/interfaces/category.interface';
+import { CategoryService } from '../../../shared/services/category/category.service';
+import { Observable } from 'rxjs';
+import { ICategory } from '../../../shared/interfaces/category.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                               from 'rxjs/operators';
-import { IUploaderConfig }      from '../../../shared/interfaces/media/uploader-config.interface';
-import { IUploaderOptions }     from '../../../shared/interfaces/media/uploader-options.interface';
-import { MediaItemService }     from '../../../shared/services/media/media-item.service';
-import { AlertService }         from '../../../shared/services/alert/alert.service';
+} from 'rxjs/operators';
+import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
+import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
+import { MediaItemService } from '../../../shared/services/media/media-item.service';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 
 @Component({
@@ -51,20 +51,20 @@ export class SponsorEditComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    assignedObjects: [ 'sponsors', 'profile' ],
+    assignedObjects: ['sponsors', 'profile'],
     itemId: '',
     queueLimit: 1,
-    allowedMimeType: [ 'image/jpeg', 'image/jpg', 'image/png', 'image/gif' ],
-    allowedFileType: [ 'image' ]
+    allowedMimeType: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'],
+    allowedFileType: ['image']
   };
 
   constructor(private route: ActivatedRoute,
-              private alertService: AlertService,
-              private fb: FormBuilder,
-              private router: Router,
-              private mediaItemService: MediaItemService,
-              private sponsorService: SponsorService,
-              public categoryService: CategoryService) {
+    private alertService: AlertService,
+    private fb: FormBuilder,
+    private router: Router,
+    private mediaItemService: MediaItemService,
+    private sponsorService: SponsorService,
+    public categoryService: CategoryService) {
     this.categories$ = categoryService.getCategoriesByCategoryType('sponsor.types');
   }
 
@@ -76,10 +76,10 @@ export class SponsorEditComponent implements OnInit {
     });
 
     this.form = this.fb.group({
-      title: [ this.sponsor.title, [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ] ],
+      title: [this.sponsor.title, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       externalLink: this.sponsor.externalLink,
       description: this.sponsor.description,
-      assignedCategories: [ this.sponsor.assignedCategories, [ Validators.required ] ],
+      assignedCategories: [this.sponsor.assignedCategories, [Validators.required]],
       startDate: this.sponsor.startDate ? this.sponsor.startDate.toDate() : '',
       endDate: this.sponsor.endDate,
       internalInfo: this.sponsor.internalInfo
@@ -106,9 +106,9 @@ export class SponsorEditComponent implements OnInit {
       action = this.sponsorService.createSponsor(this.sponsor);
     }
     action.then(() => {
-        this.alertService.showSnackBar('success', 'general.applications.updateMessage');
-        if (redirect) this.redirectToList();
-      },
+      this.alertService.showSnackBar('success', 'general.applications.updateMessage');
+      if (redirect) this.redirectToList();
+    },
       (error: any) => this.alertService.showSnackBar('error', error.message)
     );
   }
@@ -118,7 +118,7 @@ export class SponsorEditComponent implements OnInit {
   }
 
   redirectToList() {
-    this.router.navigate([ '/sponsors' ]).then();
+    this.router.navigate(['/sponsors']).then();
   }
 
   uploadCompleted(mediaItemId: string) {

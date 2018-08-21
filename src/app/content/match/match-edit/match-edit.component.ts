@@ -154,7 +154,10 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     this.match.assignedMatchEvents.splice(this.match.assignedMatchEvents.indexOf(event), 1);
   }
 
-  initAssignedSubstitutes(assignedSubstitutes: string[]): FormArray {
+  initAssignedSubstitutes(assignedSubstitutes: {
+    memberId: string;
+    position: string
+  }[]): FormArray {
     const formArray = this.fb.array([]);
     if (assignedSubstitutes) {
       for (let i = 0; i < assignedSubstitutes.length; i++) {

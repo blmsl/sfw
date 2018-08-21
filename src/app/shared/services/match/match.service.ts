@@ -262,10 +262,7 @@ export class MatchService {
 
   setNewMatch(): Observable<IMatch> {
     return of({
-      assignedCategories: {
-        assignedCategory: '',
-        assignedMainCategory: ''
-      },
+      assignedCategories: [],
       assignedLocation: '',
       assignedTeam: '',
       homeTeam: {

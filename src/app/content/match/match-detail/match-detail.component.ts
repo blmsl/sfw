@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IMatch } from '../../../shared/interfaces/match/match.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
-import { ILocation } from '../../../shared/interfaces/location/location.interface';
-import { LocationService } from '../../../shared/services/location/location.service';
 import { IArticle } from '../../../shared/interfaces/article.interface';
 import { ArticleService } from '../../../shared/services/article/article.service';
 import { MatchService } from '../../../shared/services/match/match.service';
@@ -21,10 +19,9 @@ import { IMember } from '../../../shared/interfaces/member/member.interface';
 export class MatchDetailComponent implements OnInit {
 
   public match: IMatch;
-  public categories$: Observable<ICategory[]>;
-  public locations$: Observable<ILocation[]>;
-  public articles$: Observable<IArticle[]>;
 
+  public assignedCategories$: Observable<ICategory[]>;
+  public assignedArticles$: Observable<IArticle[]>;
   public assignedPlayers$: Observable<IMember[]>;
   public assignedSubstitutes$: Observable<IMember[]>;
 
@@ -33,11 +30,8 @@ export class MatchDetailComponent implements OnInit {
     private alertService: AlertService,
     private articleService: ArticleService,
     private categoryService: CategoryService,
-    private locationService: LocationService,
     private memberService: MemberService,
     private matchService: MatchService) {
-    this.categories$ = categoryService.categories$;
-    this.locations$ = locationService.locations$;
   }
 
   ngOnInit() {
@@ -45,8 +39,9 @@ export class MatchDetailComponent implements OnInit {
       this.match = data.match;
       this.assignedPlayers$ = this.memberService.getMembersByIds(this.match.assignedPlayers);
       this.assignedSubstitutes$ = this.memberService.getMembersByIds(this.match.assignedSubstitutes);
-      this.articles$ = this.articleService.getArticlesForMatch(this.match.id);
-      this.categories$ = this.categoryService.getCategoryByIDs(this.match.assignedCategories)
+      this.assignedArticles$ = this.articleService.getArticlesForMatch(this.match.id);
+      //  this.assignedCategories$ = this.categoryService.getCategoriesByIds(this.match.assignedCategories);
+      this.categoryService.getCategoriesByIds(this.match.assignedCategories).subscribe((test) => console.log(test), (error) => console.log(error));
     });
   }
 

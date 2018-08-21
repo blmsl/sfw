@@ -2,15 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
-import {
-  map,
-  switchMap,
-  take
-} from 'rxjs/internal/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { IMember } from '../../interfaces/member/member.interface';
 import { ICalendarEvent } from '../../interfaces/calendar-event.interface';
 import { MemberService } from '../member/member.service';
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class CalendarService {

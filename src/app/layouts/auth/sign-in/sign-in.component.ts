@@ -94,6 +94,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       .catch((error: any) => {
         this.isLoading = false;
         this.showDemoLoginMessage = false;
+        console.log(error);
         this.showAlert('signInAlertContainer');
         this.alertService.error(error.code);
       });
