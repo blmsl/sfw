@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ISponsor } from '../../../shared/interfaces/sponsor.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { IMediaItem } from '../../../shared/interfaces/media/media-item.interface';
 import { MediaItemService } from '../../../shared/services/media/media-item.service';
+import { SponsorService } from '../../../shared/services/sponsor/sponsor.service';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'app-sponsor-detail',
@@ -19,6 +21,9 @@ export class SponsorDetailComponent implements OnInit {
   public sponsorLogo: Observable<IMediaItem>;
 
   constructor(private route: ActivatedRoute,
+    private sponsorService: SponsorService,
+    private router: Router,
+    private alertService: AlertService,
     private mediaItemService: MediaItemService,
     private categoryService: CategoryService) {
     this.categories$ = categoryService.categories$;
@@ -32,7 +37,16 @@ export class SponsorDetailComponent implements OnInit {
         this.sponsorLogo = this.mediaItemService.getCurrentImage(['sponsors', 'profile'], this.sponsor.id);
       }
     }
-
   }
 
+  removeSponsor(sponsor: ISponsor) {
+    this.sponsorService.removeSponsor(sponsor)
+      .then(() => this.alertService.showSnackBar('success', 'general.sponsors.list.deleted'))
+      .then(() => this.redirectToList())
+      .catch((error: any) => this.alertService.showSnackBar('error', error.message));
+  }
+
+  redirectToList() {
+    this.router.navigate(['/sponsors']).then();
+  }
 }

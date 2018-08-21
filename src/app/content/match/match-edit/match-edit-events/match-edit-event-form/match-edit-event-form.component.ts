@@ -23,8 +23,6 @@ import { ICategoryType } from '../../../../../shared/interfaces/category-type.in
 export class MatchEditEventFormComponent implements OnInit {
 
   @Input() eventCategories: ICategory[];
-  @Input() categoryTypes: ICategoryType[];
-
   @Output() saveMatchEvent: EventEmitter<IMatchEvent> = new EventEmitter<IMatchEvent>(false);
 
   public form: FormGroup;
