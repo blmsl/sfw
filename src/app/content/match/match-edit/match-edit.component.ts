@@ -39,17 +39,17 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
   public assignedArticles$: Observable<IArticle[]>;
 
   constructor(private route: ActivatedRoute,
-              private cdRef: ChangeDetectorRef,
-              private fb: FormBuilder,
-              private matchService: MatchService,
-              private alertService: AlertService,
-              private locationService: LocationService,
-              private teamService: TeamService,
-              private categoryService: CategoryService,
-              private categoryTypeService: CategoryTypeService,
-              private seasonService: SeasonService,
-              private articleService: ArticleService,
-              private router: Router) {
+    private cdRef: ChangeDetectorRef,
+    private fb: FormBuilder,
+    private matchService: MatchService,
+    private alertService: AlertService,
+    private locationService: LocationService,
+    private teamService: TeamService,
+    private categoryService: CategoryService,
+    private categoryTypeService: CategoryTypeService,
+    private seasonService: SeasonService,
+    private articleService: ArticleService,
+    private router: Router) {
     this.locations$ = locationService.locations$;
     this.teams$ = teamService.teams$;
     this.categories$ = categoryService.categories$;
@@ -61,7 +61,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     this.route.data.subscribe((data: { match: IMatch }) => {
       this.match = data.match;
 
-      if(this.match){
+      if (this.match) {
         this.assignedArticles$ = this.articleService.getArticlesForMatch(this.match.id);
       }
     });
@@ -89,31 +89,31 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
       assignedMatchEvents: this.initMatchEvents(this.match.assignedMatchEvents)
     });
 
-     if (this.match.isImported) {
-       this.form.get('assignedCategories').disable();
-       this.form.get('assignedLocation').disable();
-       this.form.get('assignedTeam').disable();
-       this.form.get('guestTeam').disable();
-       this.form.get('homeTeam').disable();
-       this.form.get('isHomeTeam').disable();
-       this.form.get('isImported').disable();
-       this.form.get('isOfficialMatch').disable();
-       this.form.get('matchEndDate').disable();
-       this.form.get('matchLink').disable();
-       this.form.get('matchStartDate').disable();
-       this.form.get('matchType').disable();
-       this.form.get('title').disable();
-     }
+    if (this.match.isImported) {
+      this.form.get('assignedCategories').disable();
+      this.form.get('assignedLocation').disable();
+      this.form.get('assignedTeam').disable();
+      this.form.get('guestTeam').disable();
+      this.form.get('homeTeam').disable();
+      this.form.get('isHomeTeam').disable();
+      this.form.get('isImported').disable();
+      this.form.get('isOfficialMatch').disable();
+      this.form.get('matchEndDate').disable();
+      this.form.get('matchLink').disable();
+      this.form.get('matchStartDate').disable();
+      this.form.get('matchType').disable();
+      this.form.get('title').disable();
+    }
 
-     this.form.valueChanges.pipe(
-       debounceTime(1000),
-       distinctUntilChanged()
-     ).subscribe((changes: IMatch) => {
-       this.match = Object.assign({}, this.match, changes);
-       if (!this.form.invalid) {
-         this.saveMatch();
-       }
-     });
+    this.form.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()
+    ).subscribe((changes: IMatch) => {
+      this.match = Object.assign({}, this.match, changes);
+      if (!this.form.invalid) {
+        this.saveMatch();
+      }
+    });
   }
 
   ngAfterViewChecked() {

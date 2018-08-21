@@ -3,6 +3,7 @@
     {{'general.clubs.edit.history' | translate}}
   </mat-card-title>
   <mat-card-content>
-    <div [innerHTML]="club.history"></div>
+    <div *ngIf="club.history" [innerHTML]="club.history"></div>
+    <p *ngIf="!club.history">{{'general.clubs.edit.noHistory' | translate}}</p>
   </mat-card-content>
 </mat-card>

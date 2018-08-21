@@ -8,9 +8,9 @@ describe('MatchEditArticleFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchEditArticleFormComponent ]
+      declarations: [MatchEditArticleFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

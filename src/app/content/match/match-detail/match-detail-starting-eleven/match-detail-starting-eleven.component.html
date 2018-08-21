@@ -1,18 +1,15 @@
-<mat-card *ngIf="members; else loadingTemplate">
+<p *ngIf="assignedPlayers.length === 0 || match.assignedPlayers.length === 0">
+  {{'general.matches.edit.startingEleven.noStartingEleven' | translate}}
+</p>
 
-  <mat-card-title fxLayout="column"
-                  fxLayout.gt-sm="row"
-                  fxLayoutGap="10px">
-    <h3>{{'general.matches.edit.startingEleven.title' | translate}}</h3>
-  </mat-card-title>
+<mat-card *ngIf="assignedPlayers.length > 0">
 
-  <p *ngIf="!match.assignedPlayers || match.assignedPlayers.length === 0">
-    {{'general.matches.edit.startingEleven.noStartingEleven' | translate}}
-  </p>
+  <mat-card-header>
+    <mat-card-title>{{'general.matches.edit.startingEleven.title' | translate}}</mat-card-title>
+  </mat-card-header>
 
   <mat-card-content fxLayout="column"
-                    fxLayout.gt-sm="row"
-                    *ngIf="match.assignedPlayers && match.assignedPlayers.length > 0">
+                    fxLayout.gt-sm="row">
     <div class="players"
          fxFlex="100">
       <match-player
@@ -23,15 +20,11 @@
       </match-player>
     </div>
   </mat-card-content>
-  <mat-card-actions>
+
+  <mat-card-actions *ngIf="assignedSubstitutes.length > 0">
     <mat-card-subtitle>
       {{'general.matches.edit.substituteBench' | translate}}
     </mat-card-subtitle>
-
-    <p *ngIf="!match.assignedSubstitutes || match.assignedSubstitutes.length === 0">
-      {{'general.matches.edit.noSubstitutes' | translate}}
-    </p>
-
     <div class="substitutions"
          fxFlex="100">
       <div fxLayout="row wrap">

@@ -110,6 +110,32 @@
       </div>
     </div>
   </mat-card-content>
+
+  <mat-card-actions fxLayout.xs="column"
+                    fxLayoutGap="10px">
+    <span fxFlex></span>
+    <div>
+      <button type="button"
+              mat-raised-button
+              color="primary"
+              [routerLink]="['/sponsors']">
+        {{'general.menu.sponsor.list' | translate}}
+      </button>
+      <button type="button"
+              mat-raised-button
+              color="accent"
+              [routerLink]="['/sponsors/detail', sponsor.id]">
+        {{'general.detail' | translate }}
+      </button>
+      <button type="button"
+              mat-raised-button
+              color="warn"
+              (click)="removeSponsor(sponsor)">
+        {{'general.delete' | translate }}
+      </button>
+    </div>
+  </mat-card-actions>
+
 </mat-card>
 
 <ng-template #loadingTemplate>

@@ -24,7 +24,9 @@ export class MatchDetailComponent implements OnInit {
   public categories$: Observable<ICategory[]>;
   public locations$: Observable<ILocation[]>;
   public articles$: Observable<IArticle[]>;
-  public members$: Observable<IMember[]>;
+
+  public assignedPlayers$: Observable<IMember[]>;
+  public assignedSubstitutes$: Observable<IMember[]>;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -34,14 +36,18 @@ export class MatchDetailComponent implements OnInit {
     private locationService: LocationService,
     private memberService: MemberService,
     private matchService: MatchService) {
-    this.articles$ = articleService.articles$;
     this.categories$ = categoryService.categories$;
     this.locations$ = locationService.locations$;
-    this.members$ = memberService.members$;
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { match: IMatch }) => this.match = data.match);
+    this.route.data.subscribe((data: { match: IMatch }) => {
+      this.match = data.match;
+      this.assignedPlayers$ = this.memberService.getMembersByIds(this.match.assignedPlayers);
+      this.assignedSubstitutes$ = this.memberService.getMembersByIds(this.match.assignedSubstitutes);
+      this.articles$ = this.articleService.getArticlesForMatch(this.match.id);
+      this.categories$ = this.categoryService.getCategoryByIDs(this.match.assignedCategories)
+    });
   }
 
   removeMatch(match: IMatch) {

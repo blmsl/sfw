@@ -366,6 +366,8 @@
         "managementTitle": "Vorstand",
         "mediaTitle": "Dateien",
         "noAssignedContact": "Es wurde noch kein Ansprechpartner für diesen Verein ernannt",
+        "noAssignedLocationTemplate": "Keine Heimspielstätte festgelegt.",
+        "noDescription": "Es wurde keine Kurzinfo zum Verein hinterlegt.",
         "noHistory": "Es wurde noch kein Artikel über die Geschichte des Vereins verfasst!",
         "noLogo": "Kein Vereinswappen vorhanden",
         "noMembers": "Es sind noch keine Mitglieder vorhanden.",
@@ -1169,6 +1171,7 @@
     "sponsors": {
       "edit": {
         "category": "Art des Sponsorings",
+        "chooseAssignedCategories": "Sponsorart wählen",
         "description": "Firmeninformationen",
         "descriptionPlaceholder": "Gib hier eine Kurzinfo zum Sponsor ein",
         "endDate": "Ende des Sponsorings",

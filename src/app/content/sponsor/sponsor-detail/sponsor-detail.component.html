@@ -19,71 +19,102 @@
           <div fxLayout="column"
                fxLayoutGap="10px">
 
-            <h1>{{sponsor.title}}</h1>
-
-            <a target="_blank" style="color: red" href="{{sponsor.externalLink}}">
-              <mat-icon>link</mat-icon>
-              {{'general.sponsors.edit.link' | translate}}
-            </a>
-
-            <div [innerHtml]="sponsor.description"></div>
-
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>{{sponsor.title}}</mat-card-title>
+              </mat-card-header>
+              <mat-card-subtitle>
+                <a target="_blank" style="color: red" [attr.href]="sponsor.externalLink">
+                  <mat-icon>link</mat-icon>
+                  {{'general.sponsors.edit.link' | translate}}
+                </a>
+              </mat-card-subtitle>
+              <mat-card-content>
+                <div [innerHtml]="sponsor.description"></div>
+              </mat-card-content>
+            </mat-card>
           </div>
 
-          <h4>{{'general.sponsors.edit.timeTitle' | translate}}</h4>
-          <ul>
-            <li *ngIf="sponsor.startDate">
-              {{'general.sponsors.edit.startDate' | translate}}:
-              {{sponsor.startDate.seconds * 1000 | date: 'dd.MM.yy'}}
-            </li>
-            <li *ngIf="!sponsor.startDate">{{'general.sponsors.edit.noStartDate' | translate}}</li>
-            <li *ngIf="sponsor.endDate">
-              {{'general.sponsors.edit.endDate' | translate}}:
-              {{sponsor.endDate.seconds * 1000 | date: 'dd.MM.yy'}}
-            </li>
-            <li *ngIf="!sponsor.endDate">{{'general.sponsors.edit.noEndDate' | translate}}</li>
-          </ul>
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{'general.sponsors.edit.timeTitle' | translate}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <ul>
+                <li *ngIf="sponsor.startDate">
+                  {{'general.sponsors.edit.startDate' | translate}}:
+                  {{sponsor.startDate.seconds * 1000 | date: 'dd.MM.yy'}}
+                </li>
+                <li *ngIf="!sponsor.startDate">{{'general.sponsors.edit.noStartDate' | translate}}</li>
+                <li *ngIf="sponsor.endDate">
+                  {{'general.sponsors.edit.endDate' | translate}}:
+                  {{sponsor.endDate.seconds * 1000 | date: 'dd.MM.yy'}}
+                </li>
+                <li *ngIf="!sponsor.endDate">{{'general.sponsors.edit.noEndDate' | translate}}</li>
+              </ul>
+            </mat-card-content>
+          </mat-card>
 
-          <div class="mat-text-muted text-sm"
-               [innerHtml]="sponsor.internalInfo">
-          </div>
-
-          <h4>{{'general.sponsors.edit.category' | translate}}</h4>
-          <p>
-            <span *ngFor="let categoryId of sponsor.assignedCategories; let last = last">
-              <a [routerLink]="['/categories/details', categoryId]"
-                 *ngFor="let category of categories | filterBy: ['id']: categoryId">
-                {{category.title}}
-              </a>
-              <span *ngIf="!last">, </span>
-            </span>
-          </p>
-
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{'general.sponsors.edit.category' | translate}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <ul>
+                <li *ngFor="let categoryId of sponsor.assignedCategories">
+                  <a [routerLink]="['/categories/details', categoryId]">
+                    {{(categories | filterBy: ['id']: categoryId)[0].title}}
+                  </a>
+                </li>
+              </ul>
+            </mat-card-content>
+          </mat-card>
         </div>
 
         <div fxFlex="40">
-          <h3>{{'general.sponsors.edit.imageUrl' | translate}}</h3>
-          <img *ngIf="sponsorLogo | async as image; else loadingTemplate"
-               mat-card-image
-               [src]="image.downloadURL">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{'general.sponsors.edit.imageUrl' | translate}}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image
+                 *ngIf="sponsorLogo | async as image; else loadingTemplate"
+                 [src]="image.downloadURL"/>
+          </mat-card>
+          <mat-card-content>
+            <div class="mat-text-muted text-sm"
+                 [innerHtml]="sponsor.internalInfo">
+            </div>
+          </mat-card-content>
         </div>
 
       </div>
     </div>
   </mat-card-content>
+
   <mat-card-actions fxLayout="column"
                     fxLayout.gt-sm="row"
-                    fxLayoutGap="30px"
-                    *ngIf="sponsor">
-    <button type="button" mat-raised-button color="primary" [routerLink]="['/sponsors']">
-      {{'general.menu.sponsor.list' | translate}}
-    </button>
-    <button type="button" mat-raised-button color="accent" [routerLink]="['/sponsors/edit', sponsor.id]">
-      {{'general.edit' | translate }}
-    </button>
-    <button type="button" mat-raised-button color="warn" (click)="removeSponsor(sponsor)">
-      {{'general.delete' | translate }}
-    </button>
+                    fxLayoutGap="10px">
+    <span fxFlex></span>
+    <div>
+      <button type="button"
+              mat-raised-button
+              color="primary"
+              [routerLink]="['/sponsors']">
+        {{'general.menu.sponsor.list' | translate}}
+      </button>
+      <button type="button"
+              mat-raised-button
+              color="accent"
+              [routerLink]="['/sponsors/edit', sponsor.id]">
+        {{'general.edit' | translate }}
+      </button>
+      <button type="button"
+              mat-raised-button
+              color="warn"
+              (click)="removeSponsor(sponsor)">
+        {{'general.delete' | translate }}
+      </button>
+    </div>
   </mat-card-actions>
 </mat-card>
 

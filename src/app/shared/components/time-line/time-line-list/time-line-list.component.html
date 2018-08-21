@@ -1,7 +1,3 @@
-<p *ngIf="!form['controls'][0]">
-  {{'general.timeLine.noEvents' | translate}}
-</p>
-
 <mat-accordion dense>
   <mat-expansion-panel *ngFor="let control of form.controls; let i = index; let first = first; let last = last"
                        [expanded]="false"
@@ -51,11 +47,11 @@
 <button style="margin-top: 25px"
         mat-raised-button
         color="primary"
+        *ngIf="showLinks"
         (click)="add.emit()">
   {{ 'general.timeLine.addEvent' | translate}}
 </button>
 
-
-<ng-template #noEventsTemplate>
-  <p style="color: red">{{ 'general.timeLine.noEvents' | translate}}</p>
-</ng-template>
+<p *ngIf="!form['controls'][0]">
+  {{'general.timeLine.noEvents' | translate}}
+</p>

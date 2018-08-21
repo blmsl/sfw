@@ -1,17 +1,16 @@
-import { Injectable }          from '@angular/core';
-import { Observable }          from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                              from 'angularfire2/firestore';
-import { IMatch }              from '../../interfaces/match/match.interface';
-import { of }                  from 'rxjs/index';
-import { IFormation }          from '../../interfaces/match/formation.interface';
+} from 'angularfire2/firestore';
+import { IMatch } from '../../interfaces/match/match.interface';
+import { of } from 'rxjs/index';
+import { IFormation } from '../../interfaces/match/formation.interface';
 import { IMatchEventCategory } from '../../interfaces/match/match-event-category.interface';
-import * as firebase           from 'firebase';
+import * as firebase from 'firebase';
 import Timestamp = firebase.firestore.Timestamp;
-import { ILocation }           from '../../interfaces/location/location.interface';
-import { IArticle }            from '../../interfaces/article.interface';
+import { ILocation } from '../../interfaces/location/location.interface';
 
 @Injectable()
 export class MatchService {

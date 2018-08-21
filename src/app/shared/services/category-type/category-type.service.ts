@@ -1,11 +1,11 @@
-import { Injectable }    from '@angular/core';
-import { Observable }    from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ICategoryType } from '../../interfaces/category-type.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                        from 'angularfire2/firestore';
-import { map }           from 'rxjs/internal/operators';
+} from 'angularfire2/firestore';
+import { map } from 'rxjs/internal/operators';
 
 @Injectable()
 export class CategoryTypeService {
@@ -23,7 +23,7 @@ export class CategoryTypeService {
   getCategoryTypeByLink(categoryTypeLink: string) {
     return this.afs.collection<ICategoryType>(this.path, ref => ref.where('link', '==', categoryTypeLink)).valueChanges().pipe(
       map((categoryTypes: ICategoryType[]) => {
-        return categoryTypes[ 0 ];
+        return categoryTypes[0];
       })
     );
   }

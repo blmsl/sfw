@@ -83,7 +83,7 @@ export class ArticleEditComponent implements OnInit {
       articleDate: this.article.articleDate ? this.article.articleDate : new Date(),
       isFeaturedPost: this.article.isFeaturedPost,
       creation: this.initCreation(),
-      assignedTags:  [ this.article.assignedTags],
+      assignedTags: [this.article.assignedTags],
 
       // Links
       assignedLocation: this.article.assignedLocation,

@@ -25,7 +25,9 @@
           </div>
 
           <div fxFlex.gt-sm="50">
-            <club-detail-timeline [club]="club"></club-detail-timeline>
+            <club-detail-timeline [showLinks]="false"
+                                  [club]="club">
+            </club-detail-timeline>
           </div>
         </div>
       </mat-tab>
@@ -72,6 +74,7 @@
   <mat-card-actions fxLayout="column"
                     fxLayout.gt-sm="row"
                     fxLayoutGap="10px">
+    <span fxFlex></span>
     <button mat-raised-button
             color="primary"
             [routerLink]="['/clubs']">
@@ -88,6 +91,7 @@
       {{'general.delete' | translate }}
     </button>
   </mat-card-actions>
+
 
 </mat-card>
 

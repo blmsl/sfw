@@ -1,5 +1,5 @@
 import { ICreation } from './creation.interface';
-import { ICategory } from './category.interface';
+import * as firebase from 'firebase';
 
 export interface ISponsor {
 
@@ -10,16 +10,9 @@ export interface ISponsor {
 
   externalLink?: string;
 
-  startDate?: {
-    seconds: number,
-    nanoseconds: number
-  };
-  endDate?: {
-    seconds: number,
-    nanoseconds: number
-  };
+  startDate?: firebase.firestore.Timestamp;
+  endDate?: firebase.firestore.Timestamp;
 
   assignedCategories: string[];
   creation?: ICreation;
-  // publication?: IPublication;
 }

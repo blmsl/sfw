@@ -1,10 +1,10 @@
-import { Component }           from '@angular/core';
-import { Observable }          from 'rxjs';
-import { ICategory }           from '../../../shared/interfaces/category.interface';
-import { CategoryService }     from '../../../shared/services/category/category.service';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ICategory } from '../../../shared/interfaces/category.interface';
+import { CategoryService } from '../../../shared/services/category/category.service';
 import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
-import { ICategoryType }       from '../../../shared/interfaces/category-type.interface';
-import { AlertService }        from '../../../shared/services/alert/alert.service';
+import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'categories',
@@ -17,8 +17,8 @@ export class CategoriesComponent {
   categoryTypes$: Observable<ICategoryType[]>;
 
   constructor(private categoryService: CategoryService,
-              private alertService: AlertService,
-              private categoryTypeService: CategoryTypeService) {
+    private alertService: AlertService,
+    private categoryTypeService: CategoryTypeService) {
     this.categories$ = categoryService.categories$;
     this.categoryTypes$ = categoryTypeService.categoryTypes$;
   }

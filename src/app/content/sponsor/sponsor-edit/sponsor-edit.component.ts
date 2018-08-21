@@ -1,17 +1,31 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ISponsor } from '../../../shared/interfaces/sponsor.interface';
-import { SponsorService } from '../../../shared/services/sponsor/sponsor.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  ViewChild
+}                               from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+}                               from '@angular/forms';
+import { ISponsor }             from '../../../shared/interfaces/sponsor.interface';
+import { SponsorService }       from '../../../shared/services/sponsor/sponsor.service';
+import {
+  ActivatedRoute,
+  Router
+}                               from '@angular/router';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
-import { CategoryService } from '../../../shared/services/category/category.service';
-import { Observable } from 'rxjs';
-import { ICategory } from '../../../shared/interfaces/category.interface';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
-import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
-import { MediaItemService } from '../../../shared/services/media/media-item.service';
-import { AlertService } from '../../../shared/services/alert/alert.service';
+import { CategoryService }      from '../../../shared/services/category/category.service';
+import { Observable }           from 'rxjs';
+import { ICategory }            from '../../../shared/interfaces/category.interface';
+import {
+  debounceTime,
+  distinctUntilChanged
+}                               from 'rxjs/operators';
+import { IUploaderConfig }      from '../../../shared/interfaces/media/uploader-config.interface';
+import { IUploaderOptions }     from '../../../shared/interfaces/media/uploader-options.interface';
+import { MediaItemService }     from '../../../shared/services/media/media-item.service';
+import { AlertService }         from '../../../shared/services/alert/alert.service';
 
 
 @Component({
@@ -37,20 +51,20 @@ export class SponsorEditComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    assignedObjects: ['sponsors', 'profile'],
+    assignedObjects: [ 'sponsors', 'profile' ],
     itemId: '',
     queueLimit: 1,
-    allowedMimeType: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'],
-    allowedFileType: ['image']
+    allowedMimeType: [ 'image/jpeg', 'image/jpg', 'image/png', 'image/gif' ],
+    allowedFileType: [ 'image' ]
   };
 
   constructor(private route: ActivatedRoute,
-    private alertService: AlertService,
-    private fb: FormBuilder,
-    private router: Router,
-    private mediaItemService: MediaItemService,
-    private sponsorService: SponsorService,
-    public categoryService: CategoryService) {
+              private alertService: AlertService,
+              private fb: FormBuilder,
+              private router: Router,
+              private mediaItemService: MediaItemService,
+              private sponsorService: SponsorService,
+              public categoryService: CategoryService) {
     this.categories$ = categoryService.getCategoriesByCategoryType('sponsor.types');
   }
 
@@ -62,11 +76,11 @@ export class SponsorEditComponent implements OnInit {
     });
 
     this.form = this.fb.group({
-      title: [this.sponsor.title, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      title: [ this.sponsor.title, [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ] ],
       externalLink: this.sponsor.externalLink,
       description: this.sponsor.description,
-      assignedCategories: [this.sponsor.assignedCategories, [Validators.required]],
-      startDate: this.sponsor.startDate,
+      assignedCategories: [ this.sponsor.assignedCategories, [ Validators.required ] ],
+      startDate: this.sponsor.startDate ? this.sponsor.startDate.toDate() : '',
       endDate: this.sponsor.endDate,
       internalInfo: this.sponsor.internalInfo
     });
@@ -75,29 +89,28 @@ export class SponsorEditComponent implements OnInit {
       debounceTime(1000),
       distinctUntilChanged()
     ).subscribe((changes: ISponsor) => {
-      this.sponsor = Object.assign({}, this.sponsor, changes);
-      this.saveSponsor();
+      console.log(this.form);
+      if (this.form.valid) {
+        console.log('ok');
+        this.sponsor = Object.assign({}, this.sponsor, changes);
+        this.saveSponsor();
+      }
     });
   }
 
   saveSponsor(redirect: boolean = false): void {
     let action;
-    if (!this.form.invalid) {
-      if (this.sponsor.id) {
-        action = this.sponsorService.updateSponsor(this.sponsor.id, this.sponsor);
-      } else {
-        action = this.sponsorService.createSponsor(this.sponsor);
-      }
-      action.then(
-        () => {
-          if (redirect) {
-            this.redirectToList();
-          }
-          this.alertService.showSnackBar('success', 'general.applications.updateMessage');
-        },
-        (error: any) => this.alertService.showSnackBar('error', error.message)
-      );
+    if (this.sponsor.id) {
+      action = this.sponsorService.updateSponsor(this.sponsor.id, this.sponsor);
+    } else {
+      action = this.sponsorService.createSponsor(this.sponsor);
     }
+    action.then(() => {
+        this.alertService.showSnackBar('success', 'general.applications.updateMessage');
+        if (redirect) this.redirectToList();
+      },
+      (error: any) => this.alertService.showSnackBar('error', error.message)
+    );
   }
 
   cancel() {
@@ -105,11 +118,18 @@ export class SponsorEditComponent implements OnInit {
   }
 
   redirectToList() {
-    this.router.navigate(['/sponsors']).then();
+    this.router.navigate([ '/sponsors' ]).then();
   }
 
   uploadCompleted(mediaItemId: string) {
     this.uploaderOptions.itemId = this.sponsor.id = mediaItemId;
+  }
+
+  removeSponsor(sponsor: ISponsor) {
+    this.sponsorService.removeSponsor(sponsor)
+      .then(() => this.alertService.showSnackBar('success', 'general.sponsors.list.deleted'))
+      .then(() => this.redirectToList())
+      .catch((error: any) => this.alertService.showSnackBar('error', error.message));
   }
 
 }

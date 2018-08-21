@@ -8,7 +8,7 @@
         <div fxLayout="column"
              *ngIf="articles$ | async as articles; else loadingTemplate">
 
-            <div>
+            <!--<div>
                 <button mat-raised-button
                         style="margin-bottom: 25px;"
                         type="button"
@@ -16,7 +16,8 @@
                         (click)="add.emit()">
                     {{'general.timeLine.addEvent' | translate}}
                 </button>
-            </div>
+            </div>-->
+
 
             <time-line (add)="add.emit()"
                        (cancel)="cancel.emit()"

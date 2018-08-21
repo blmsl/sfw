@@ -33,11 +33,14 @@
             {{club.info.clubColours}}
           </mat-list-item>
 
-          <mat-list-item *ngIf="club.info && club.info.assignedContact; else noAssignedContactTemplate">
+          <mat-list-item>
             <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.contact' | translate}}</h3>
-            <span *ngFor="let member of members | filterBy: ['id'] : club.info.assignedContact">
-            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy' }}
-        </span>
+            <span *ngIf="club.info && club.info.assignedContact">
+              {{club.info.assignedContact}}
+            </span>
+            <span *ngIf="!club.info || !club.info.assignedContact">
+              {{'general.clubs.edit.noAssignedContact' | translate}}
+            </span>
           </mat-list-item>
 
           <mat-list-item *ngIf="club.info && club.info.website">
@@ -45,12 +48,15 @@
             <a target="_blank" [href]="'http://' + club.info.website">{{club.info.website}}</a>
           </mat-list-item>
 
-          <mat-list-item *ngIf="club.assignedLocation; else noAssignedLocationTemplate">
+          <mat-list-item>
             <h3 fxFlex.gt-sm="25">{{'general.clubs.edit.location' | translate}}</h3>
-            <a [routerLink]="['/locations/detail', club.assignedLocation]"
-               *ngFor="let location of locations | filterBy: ['id'] : club.assignedLocation">
-              {{location.title}}
-            </a>
+            <span *ngIf="club.assignedLocation">
+              <a [routerLink]="['/locations/detail', club.assignedLocation]"
+                 *ngFor="let location of locations | filterBy: ['id'] : club.assignedLocation">
+                {{location.title}}
+              </a>
+            </span>
+            <span *ngIf="!club.assignedLocation">{{'general.clubs.edit.noAssignedLocationTemplate' | translate}}</span>
           </mat-list-item>
 
         </mat-list>
@@ -60,7 +66,8 @@
     <mat-card>
       <mat-card-title>{{'general.clubs.edit.description' | translate}}</mat-card-title>
       <mat-card-content>
-        <div [innerHTML]="club.description"></div>
+        <div *ngIf="club.description" [innerHTML]="club.description"></div>
+        <div *ngIf="!club.description">{{'general.clubs.edit.noDescription' | translate}}</div>
       </mat-card-content>
     </mat-card>
   </div>
@@ -84,21 +91,6 @@
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>
 </ng-template>
-
-<ng-template #noAssignedContactTemplate>
-  <mat-list-item>
-    <h3 matSubheader>{{'general.clubs.edit.contact' | translate}}</h3>
-    {{'general.clubs.edit.noAssignedContact' | translate}}
-  </mat-list-item>
-</ng-template>
-
-<ng-template #noAssignedLocationTemplate>
-  <mat-list-item>
-    <h3 matSubheader>{{'general.clubs.edit.location' | translate}}</h3>
-    {{'general.clubs.edit.noAssignedLocationTemplate' | translate}}
-  </mat-list-item>
-</ng-template>
-
 
 <ng-template #noLogoTemplate>
   <p>{{'general.clubs.edit.noLogo' | translate}}</p>

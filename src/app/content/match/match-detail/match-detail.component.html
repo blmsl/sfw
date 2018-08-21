@@ -20,10 +20,14 @@
           <mat-card-content>
             <mat-tab-group [dynamicHeight]="true">
               <mat-tab [label]="'general.matches.detail.startingElevenTitle' | translate">
-                <match-detail-starting-eleven *ngIf="match.assignedFormation && match.assignedPlayers"
-                                              [members]="members$ | async"
-                                              [match]="match">
-                </match-detail-starting-eleven>
+                <div *ngIf="assignedPlayers$ | async as assignedPlayers; else loadingTemplate">
+                  <div *ngIf="assignedSubstitutes$ | async as assignedSubstitutes; else loadingTemplate">
+                    <match-detail-starting-eleven [assignedPlayers]="assignedPlayers"
+                                                  [assignedSubstitutes]="assignedSubstitutes"
+                                                  [match]="match">
+                    </match-detail-starting-eleven>
+                  </div>
+                </div>
               </mat-tab>
               <mat-tab [label]="'general.matches.detail.matchEventsTitle' | translate">
                 <ul style="color: red">
@@ -35,16 +39,16 @@
 
                 <div *ngIf="articles$ | async as articles; else loadingTemplate">
 
-                  <p *ngIf="(articles | filterBy: ['assignedMatch'] : match.id).length === 0">
+                  <p *ngIf="articles.length === 0">
                     {{'general.matches.detail.noAssignedArticles' | translate}}
                   </p>
 
                   <div fxLayout="column"
                        fxLayout.gt-sm="row"
                        fxLayoutGap="10px"
-                       *ngIf="(articles | filterBy: ['assignedMatch'] : match.id).length > 0">
+                       *ngIf="articles.length > 0">
                     <div fxFlex="50"
-                         *ngFor="let article of articles | filterBy: ['assignedMatch'] : match.id">
+                         *ngFor="let article of articles | orderBy: ['articleDate']">
                       <article-card [article]="article"></article-card>
                     </div>
                   </div>
@@ -52,31 +56,32 @@
               </mat-tab>
             </mat-tab-group>
           </mat-card-content>
-
-          <mat-card-actions fxLayout="column"
-                            fxLayout.gt-sm="row"
-                            fxLayoutGap="10px">
-            <button mat-raised-button
-                    color="primary"
-                    [routerLink]="['/matches']">
-              {{'general.menu.matches.list' | translate}}
-            </button>
-            <button mat-raised-button
-                    color="accent"
-                    [routerLink]="['/matches/edit', match.id]">
-              {{'general.edit' | translate }}
-            </button>
-            <button mat-raised-button
-                    color="warn"
-                    (click)="removeMatch(match)">
-              {{'general.delete' | translate }}
-            </button>
-          </mat-card-actions>
-
         </mat-card>
       </div>
     </div>
   </mat-card-content>
+
+  <mat-card-actions fxLayout.xs="column"
+                    fxLayoutGap="10px">
+    <span fxFlex></span>
+    <div>
+      <button mat-raised-button
+              color="primary"
+              [routerLink]="['/matches']">
+        {{'general.menu.matches.list' | translate}}
+      </button>
+      <button mat-raised-button
+              color="accent"
+              [routerLink]="['/matches/edit', match.id]">
+        {{'general.edit' | translate }}
+      </button>
+      <button mat-raised-button
+              color="warn"
+              (click)="removeMatch(match)">
+        {{'general.delete' | translate }}
+      </button>
+    </div>
+  </mat-card-actions>
 </mat-card>
 
 <ng-template #loadingTemplate>

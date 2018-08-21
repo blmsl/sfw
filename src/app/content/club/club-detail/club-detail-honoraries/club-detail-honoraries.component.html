@@ -1,7 +1,10 @@
-<p *ngIf="!club.honoraries">{{'general.clubs.edit.honoraries.noHonoraries' | translate}}</p>
+<p *ngIf="!club.honoraries || club.honoraries.length === 0">
+  {{'general.clubs.edit.honoraries.noHonoraries' | translate}}
+</p>
 <p *ngIf="members.length === 0">{{'general.clubs.edit.noMembers' | translate}}</p>
 
-<mat-accordion fxLayout="column"
+<mat-accordion *ngIf="club.honoraries"
+               fxLayout="column"
                dense>
   <mat-expansion-panel *ngFor="let honorary of club.honoraries"
                        [expanded]="false"

@@ -32,12 +32,12 @@
     <mat-card *ngFor="let season of seasons | orderBy: ['-title']">
       <mat-card-title>{{'general.clubs.edit.assignedTeams.teams' | translate}} {{season.title}}</mat-card-title>
       <mat-card-content *ngIf="teams && members; else loadingTemplate">
-        <p *ngIf="!(teams | filterBy: ['isMainTeam']: true | filterBy: ['assignedSeason']: season.id).length">
+        <p *ngIf="!(teams | filterBy: ['assignedSeason']: season.id).length">
           Für diese Saison wurden keine Mannschaften angemeldet.
         </p>
         <mat-list dense>
           <mat-list-item
-            *ngFor="let team of teams | filterBy: ['isMainTeam']: true | filterBy: ['assignedSeason']: season.id | orderBy: ['title']; let last = last">
+            *ngFor="let team of teams | filterBy: ['assignedSeason']: season.id | orderBy: ['title']; let last = last">
             <a [routerLink]="['/teams/detail', team.id]">{{team.title}} {{team.subTitle}}</a>
           </mat-list-item>
         </mat-list>

@@ -1,17 +1,17 @@
-import { Injectable }          from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Observable,
   of
-}                              from 'rxjs';
-import { ICategory }           from '../../interfaces/category.interface';
+} from 'rxjs';
+import { ICategory } from '../../interfaces/category.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                              from 'angularfire2/firestore';
-import { AuthService }         from '../auth/auth.service';
+} from 'angularfire2/firestore';
+import { AuthService } from '../auth/auth.service';
 import { CategoryTypeService } from '../category-type/category-type.service';
-import { switchMap }           from 'rxjs/operators';
-import { ICategoryType }       from '../../interfaces/category-type.interface';
+import { switchMap } from 'rxjs/operators';
+import { ICategoryType } from '../../interfaces/category-type.interface';
 
 @Injectable()
 export class CategoryService {
@@ -22,8 +22,8 @@ export class CategoryService {
   categories$: Observable<ICategory[]>;
 
   constructor(private afs: AngularFirestore,
-              private authService: AuthService,
-              private categoryTypeService: CategoryTypeService) {
+    private authService: AuthService,
+    private categoryTypeService: CategoryTypeService) {
     this.collectionRef = this.afs.collection<ICategory>(this.path);
     this.categories$ = this.collectionRef.valueChanges();
   }

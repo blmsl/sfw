@@ -16,7 +16,8 @@ import { MatchService } from '../../../../shared/services/match/match.service';
 export class MatchDetailStartingElevenComponent implements OnInit {
 
   @Input() match: IMatch;
-  @Input() members: IMember[];
+  @Input() assignedPlayers: IMember[];
+  @Input() assignedSubstitutes: IMember[];
 
   public tacticalFormations: IFormation[];
 

@@ -24,6 +24,7 @@ export class SponsorService {
   }
 
   createSponsor(sponsor: ISponsor): Promise<void> {
+    sponsor.id = this.afs.createId();
     return this.afs.collection(this.path).doc(sponsor.id).set(sponsor);
   }
 
@@ -48,16 +49,5 @@ export class SponsorService {
       creation: this.authService.getCreation()
     });
   }
-
-  /*
-   getSponsorsForSeason(seasonRange: any): Observable<any> {
-   return this.afs.collection(this.path, ref => {
-   let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-   query = query
-   .where('sponsorDate', '>=', seasonRange.startDate.toISOString())
-   .where('sponsorDate', '<', seasonRange.endDate.toISOString());
-   return query;
-   }).valueChanges();
-   } */
 
 }

@@ -41,12 +41,27 @@ export class MemberService {
     return this.afs.collection(this.path).doc<IMember>(memberId).valueChanges();
   }
 
-  getMembersByLocationContacts(locationContacts: ILocationContact[]): Observable<IMember[]> {
-    if(!locationContacts || locationContacts.length === 0) {
+  getMembersByIds(memberIds: {
+    memberId: string;
+    position: string;
+  }[]): Observable<IMember[]> {
+    if (!memberIds || memberIds.length === 0) {
       return of([]);
     }
 
-    const memberObservables: Observable<IMember>[] = [];
+    let memberObservables: Observable<IMember>[] = [];
+    for (let i = 0; i < memberIds.length; i++) {
+      memberObservables.push(this.getMemberById(memberIds[ i ].memberId));
+    }
+    return forkJoin(memberObservables);
+  }
+
+  getMembersByLocationContacts(locationContacts: ILocationContact[]): Observable<IMember[]> {
+    if (!locationContacts || locationContacts.length === 0) {
+      return of([]);
+    }
+
+    let memberObservables: Observable<IMember>[] = [];
     for (let i = 0; i < locationContacts.length; i++) {
       if (locationContacts[ i ].isMember) {
         memberObservables.push(this.getMemberById(locationContacts[ i ].assignedMember));

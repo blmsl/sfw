@@ -19,12 +19,12 @@ export class MatchEditArticlesComponent implements OnInit {
   @Input() articles: IArticle[];
 
   constructor(private alertService: AlertService,
-              private articleService: ArticleService) { }
+    private articleService: ArticleService) { }
 
   ngOnInit() {
   }
 
-  deleteArticleToMatchAssignment(article: IArticle): void{
+  deleteArticleToMatchAssignment(article: IArticle): void {
     let matchIndex = article.assignedMatches.indexOf(this.match.id);
     article.assignedMatches.splice(matchIndex, 1);
     this.articleService.updateArticle(article.id, article).then(

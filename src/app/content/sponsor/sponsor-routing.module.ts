@@ -25,7 +25,7 @@ export const sponsorRoutes: Routes = [
     }
   },
   {
-    path: 'details/:sponsorId',
+    path: 'detail/:sponsorId',
     component: SponsorDetailComponent,
     resolve: {
       sponsor: SponsorResolver

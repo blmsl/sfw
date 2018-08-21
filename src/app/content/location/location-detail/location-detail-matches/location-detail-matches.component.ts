@@ -2,7 +2,7 @@ import {
   Component,
   Input,
   OnInit
-}                 from '@angular/core';
+} from '@angular/core';
 import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 
 @Component({
