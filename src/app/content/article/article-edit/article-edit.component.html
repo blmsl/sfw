@@ -128,12 +128,11 @@
       </div>
     </div>
 
-    <app-ngx-editor [placeholder]="'general.articles.edit.textPlaceholder' | translate"
-                    formControlName="text"
-                    style="height: 60vh"
-                    *ngIf="!showPreview"
-                    [spellcheck]="true">
-    </app-ngx-editor>
+    <textarea [placeholder]="'general.articles.edit.textPlaceholder' | translate"
+              formControlName="text"
+              *ngIf="!showPreview"
+              style="height: 60vh">
+    </textarea>
 
     <div *ngIf="showPreview">
       <h1>

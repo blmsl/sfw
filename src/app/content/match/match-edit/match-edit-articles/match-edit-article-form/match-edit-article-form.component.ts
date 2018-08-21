@@ -17,7 +17,7 @@ export class MatchEditArticleFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  save($event){
+  save($event) {
     console.log($event);
   }
 }

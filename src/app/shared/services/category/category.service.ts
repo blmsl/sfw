@@ -3,7 +3,7 @@ import { ICategory } from '../../interfaces/category.interface';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AuthService } from '../auth/auth.service';
 import { CategoryTypeService } from '../category-type/category-type.service';
-import { forkJoin ,  Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { ICategoryType } from '../../interfaces/category-type.interface';
 import { switchMap } from 'rxjs/operators';
 
