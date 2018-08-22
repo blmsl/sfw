@@ -1,8 +1,6 @@
 /functions-cron/appengine/php/client_secret.json
 /functions-cron/appengine/php/twitter_secret.json
 
-/src/environments
-
 # compiled output
 /dist
 /tmp

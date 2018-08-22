@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
-import { IMatch } from '../../../../shared/interfaces/match/match.interface';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IMatchEvent } from '../../../../shared/interfaces/match/match-event.interface';
 import { IMatchEventCategory } from '../../../../shared/interfaces/match/match-event-category.interface';
 
@@ -16,8 +9,8 @@ import { IMatchEventCategory } from '../../../../shared/interfaces/match/match-e
 })
 export class MatchEditEventsComponent implements OnInit {
 
-  @Input() match: IMatch;
-  @Input() categories: IMatchEventCategory[];
+  @Input() assignedMatchEvents: IMatchEvent[];
+  @Input() eventCategories: IMatchEventCategory[];
 
   @Output() deleteMatchEvent: EventEmitter<IMatchEvent> = new EventEmitter<IMatchEvent>(false);
 
@@ -25,6 +18,7 @@ export class MatchEditEventsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.assignedMatchEvents);
   }
 
 }

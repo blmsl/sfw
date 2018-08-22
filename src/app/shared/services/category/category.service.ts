@@ -13,6 +13,7 @@ import {
 }                              from 'rxjs';
 import { ICategoryType }       from '../../interfaces/category-type.interface';
 import { switchMap }           from 'rxjs/operators';
+import { take } from 'rxjs/internal/operators';
 
 @Injectable()
 export class CategoryService {
@@ -71,7 +72,9 @@ export class CategoryService {
 
     let categoryObservables = [];
     for (let i = 0; i < categoryIds.length; i++) {
-      categoryObservables.push(this.getCategoryById(categoryIds[ i ]));
+      categoryObservables.push(this.getCategoryById(categoryIds[ i ]).pipe(
+        take(1)
+      ));
     }
     return forkJoin(...categoryObservables);
   }

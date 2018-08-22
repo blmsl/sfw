@@ -40,10 +40,10 @@
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
           <div fxFlex.gt-sm="50">
-            <!--<match-edit-events [match]="match"
-                               [categories]="categories"
+            <match-edit-events [assignedMatchEvents]="match.assignedMatchEvents | orderBy: ['-ordering']"
+                               [eventCategories]="matchEventCategories | orderBy: ['title']"
                                (deleteMatchEvent)="deleteMatchEvent($event)">
-            </match-edit-events>-->
+            </match-edit-events>
 
             <match-edit-event-form *ngIf="teams$ | async as teams"
                                    [assignedTeam]="(teams | filterBy: ['id']: match.assignedTeam)[0]"

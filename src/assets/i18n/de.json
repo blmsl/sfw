@@ -639,6 +639,33 @@
         "tacticalFormation": "Spielsystem",
         "title": "Spiel editieren"
       },
+      "events":  {
+        "additionalTime": "Nachspielzeit",
+        "assist": "Vorlage von",
+        "bigChance": "Große Chance",
+        "conclusion": "Fazit",
+        "endExtraTime": "Ende der Verlängerung",
+        "endFirstHalf": "Ende erste Halbzeit",
+        "endMatch": "Spielende",
+        "endSecondHalf": "Ende zweite Halbzeit",
+        "for": "für",
+        "from": "von",
+        "goal": "Tor",
+        "halfExtraTime": "Halbzeit der Verlängerung",
+        "halfTimeConclusion": "Halbzeitfazit",
+        "matchAbandoned": "Spielabbruch",
+        "matchPreview": "Matchvorschau",
+        "new": "neu im Spiel",
+        "penaltyShootout": "Elfmeterschießen",
+        "redCard": "Rote Karte",
+        "startExtraTime": "Beginn der Verlängerung",
+        "startFirstHalf": "Spielbeginn",
+        "startSecondHalf": "Beginn der zweiten Halbzeit",
+        "substitution": "Auswechselung",
+        "timePunishment": "Zeitstrafe",
+        "yellowCard": "Gelbe Karte",
+        "yellowRedCard": "Gelb-rote Karte"
+      },
       "list": {
         "noMatches": "Es wurden keine Spiele gefunden.",
         "noResult": "Kein Ergebnis"

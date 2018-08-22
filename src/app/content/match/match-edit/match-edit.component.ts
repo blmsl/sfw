@@ -147,13 +147,12 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
       for (let i = 0; i < assignedEvents.length; i++) {
         formArray.push(this.createMatchEvent(assignedEvents[ i ]));
       }
-    } else {
-      formArray.push(this.createMatchEvent(null));
     }
     return formArray;
   }
 
   saveMatchEvent($event: IMatchEvent) {
+    console.log($event);
     this.addMatchEvent($event);
   }
 
@@ -164,6 +163,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
 
   createMatchEvent(event: IMatchEvent) {
     return this.fb.group({
+      ordering: event ? event.ordering: 0,
       assignedCategory: event ? event.assignedCategory : null,
       description: [ event ? event.description : '', [ Validators.required, Validators.minLength(5) ] ],
       playMinute: event ? event.playMinute : null,

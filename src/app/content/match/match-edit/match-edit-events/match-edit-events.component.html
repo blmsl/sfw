@@ -1,27 +1,27 @@
-<mat-card *ngIf="match && categories">
+<mat-card *ngIf="assignedMatchEvents && eventCategories">
   <mat-card-title>
     {{ 'general.matches.edit.events.title' | translate }}
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-    <p *ngIf="!match.assignedMatchEvents || match.assignedMatchEvents.length === 0">
+    <p *ngIf="!assignedMatchEvents || assignedMatchEvents.length === 0">
       {{ 'general.matches.edit.events.noEventsFound' | translate }}
     </p>
 
     <div class="activity-stream">
-      <mat-card class="shadow-none" *ngFor="let event of match.assignedMatchEvents">
+      <mat-card class="shadow-none" *ngFor="let event of assignedMatchEvents; let first = first; let last = last">
+        <!--{{event.title}}
+        {{event.description}}
+        {{event.assignedCategory}}-->
         <mat-card-header>
           <img matCardAvatar
                src="/assets/sfw/sfw.png">
           <mat-card-title *ngIf="event.title || event.playMinute">
-            <span style="font-weight: bolder" *ngIf="event.playMinute">
-              {{event.playMinute}}.
-              {{ 'general.matches.edit.events.inputs.playMinute' | translate }}
-            </span>
+            <span style="font-weight: bolder" *ngIf="event.playMinute">{{event.playMinute}}.</span>
             {{event.title}}
           </mat-card-title>
           <mat-card-subtitle *ngIf="event.assignedCategory">
-            {{ (categories | filterBy: ['id'] : event.assignedCategory)[0].title }}
+            {{ 'general.matches.events.' + (eventCategories | filterBy: ['id'] : event.assignedCategory)[0].title | translate }}
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content [innerHTML]="event.description"></mat-card-content>
@@ -30,6 +30,12 @@
                           fxLayoutGap="10px">
           <span></span>
           <span fxFlex=""></span>
+          <button [disabled]="first" mat-icon-button="" color="warn">
+            <mat-icon>arrow_upward</mat-icon>
+          </button>
+          <button [disabled]="last" mat-icon-button="" color="primary">
+            <mat-icon>arrow_downward</mat-icon>
+          </button>
           <button (click)="deleteMatchEvent.emit(event)" mat-icon-button="" color="red">
             <mat-icon>delete</mat-icon>
           </button>

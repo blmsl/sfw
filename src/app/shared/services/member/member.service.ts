@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, forkJoin } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { IMember } from '../../interfaces/member/member.interface';
 import { ILocationContact } from '../../interfaces/location/location-contact.interface';
+import { take } from 'rxjs/internal/operators';
 
 @Injectable()
 export class MemberService {
@@ -30,7 +31,7 @@ export class MemberService {
     return this.afs.collection(this.path).doc(memberId).update(member);
   }
 
-  getMemberById(memberId: string): Observable<IMember | null> {
+  getMemberById(memberId: string): Observable<IMember> {
     return this.afs.collection(this.path).doc<IMember>(memberId).valueChanges();
   }
 
@@ -39,9 +40,11 @@ export class MemberService {
       return of([]);
     }
 
-    let memberObservables: Observable<IMember>[] = [];
+    let memberObservables : Observable<IMember>[] = [];
     for (let i = 0; i < memberIds.length; i++) {
-      memberObservables.push(this.getMemberById(memberIds[i]));
+      memberObservables.push(this.getMemberById(memberIds[i]).pipe(
+        take(1)
+      ));
     }
     return forkJoin(memberObservables);
   }

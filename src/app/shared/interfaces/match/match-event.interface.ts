@@ -5,7 +5,7 @@ export interface IMatchEvent {
   description: string;
   playMinute?: number;
   title: string;
-
+  ordering: number;
   playerOne: string;
   playerTwo: string;
 }
