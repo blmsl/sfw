@@ -14,5 +14,4 @@
 - Firebase (Auth, Storage, Firestore-DB, Firebase-Admin)
 - Sendgrid/mail
 
-
 [MIT](LICENSE.txt) license.
