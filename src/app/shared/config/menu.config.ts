@@ -201,11 +201,6 @@ export const MENUITEMS = [
         state: 'list',
         name: 'main',
         icon: 'list',
-      },
-      {
-        state: 'roles',
-        name: 'roles',
-        icon: ''
       }
     ]
   }
