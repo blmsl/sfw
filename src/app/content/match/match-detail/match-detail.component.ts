@@ -40,8 +40,7 @@ export class MatchDetailComponent implements OnInit {
       this.assignedPlayers$ = this.memberService.getMembersByIds(this.match.assignedPlayers);
       this.assignedSubstitutes$ = this.memberService.getMembersByIds(this.match.assignedSubstitutes);
       this.assignedArticles$ = this.articleService.getArticlesForMatch(this.match.id);
-      //  this.assignedCategories$ = this.categoryService.getCategoriesByIds(this.match.assignedCategories);
-      this.categoryService.getCategoriesByIds(this.match.assignedCategories).subscribe((test) => console.log(test), (error) => console.log(error));
+      this.assignedCategories$ = this.categoryService.getCategoriesByIds(this.match.assignedCategories);
     });
   }
 

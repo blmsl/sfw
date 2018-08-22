@@ -9,26 +9,54 @@
          fxLayout.gt-sm="row"
          fxLayoutGap="10px">
 
-      <mat-form-field fxFlex.gt-sm="50">
+      <mat-form-field fxFlex.gt-sm="40">
         <input matInput
                placeholder="{{'general.matches.edit.events.inputs.title' | translate}}"
                formControlName="title"/>
       </mat-form-field>
 
-      <mat-form-field fxFlex.gt-sm="30">
+      <mat-form-field fxFlex.gt-sm="35">
         <mat-select placeholder="{{'general.matches.edit.events.inputs.assignedEventCategory' | translate}}"
                     formControlName="assignedCategory">
           <mat-option *ngFor="let category of eventCategories | orderBy: ['title']"
-                      [value]="category.id">
-            {{category.title}}
+                      [value]="category">
+            {{'general.matches.events.' + category.title | translate}}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex.gt-sm="18">
+      <mat-form-field fxFlex.gt-sm="25">
         <input matInput
                placeholder="{{'general.matches.edit.events.inputs.playMinute' | translate}}"
-               formControlName="playMinute" />
+               formControlName="playMinute"/>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <mat-form-field fxFlex.gt-sm="50"
+                      *ngIf="form.get('assignedCategory').value && form.get('assignedCategory').value['showPlayerOneInput']">
+        <mat-select placeholder="{{'general.matches.events.' + form.get('assignedCategory').value['playerOneTitle']}}"
+                    formControlName="playerOne">
+          <mat-option
+            *ngFor="let member of assignedPlayers | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
+              [value]="member.id">
+            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date:'dd.MM.yy'}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex.gt-sm="50"
+                      *ngIf="form.get('assignedCategory').value && form.get('assignedCategory').value['showPlayerTwoInput']">
+        <mat-select placeholder="{{'general.matches.events.' + form.get('assignedCategory').value['playerTwoTitle']}}"
+                    formControlName="playerTwo">
+          <mat-option
+            *ngFor="let member of assignedPlayers | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
+            [value]="member.id">
+            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date:'dd.MM.yy'}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
 
     </div>

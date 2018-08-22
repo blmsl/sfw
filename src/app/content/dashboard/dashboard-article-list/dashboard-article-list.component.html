@@ -10,7 +10,7 @@
       <p *ngIf="!articles.length">{{'general.articles.list.noResult' | translate}}</p>
 
       <div *ngIf="users$ | async as users; else loadingTemplate">
-        <mat-card *ngFor="let article of articles | orderBy: ['-creation.at'] | slice: 0:5; let last = last">
+        <mat-card *ngFor="let article of articles; let last = last">
           <mat-card-header>
             <mat-card-title><a [routerLink]="['/articles/edit', article.id]">{{article.title}}</a></mat-card-title>
             <mat-card-subtitle>

@@ -1,4 +1,4 @@
-<mat-card *ngIf="categories && locations && seasons && teams">
+<mat-card *ngIf="categories && locations && seasons && teams; else loadingTemplate">
   <mat-card-title>
     {{'general.matches.edit.main' | translate}}
   </mat-card-title>
@@ -160,3 +160,7 @@
 
   </mat-card-content>
 </mat-card>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

@@ -5,6 +5,7 @@
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
+    <pre>{{test$ | async | json}}</pre>
     <app-fullcalendar *ngIf="events$; else loadingTemplate"
                       [events]="events$">
     </app-fullcalendar>

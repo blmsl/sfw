@@ -56,10 +56,11 @@
   <mat-form-field *ngIf="matchesListReady; else matchLoadingTemplate"
                   fxFlex="49">
     <mat-select placeholder="{{'general.articles.edit.sidebar.links.assignedMatch' | translate}}"
-                formControlName="assignedMatch">
-      <mat-option *ngFor="let match of matches | orderBy: ['startDate', 'title']"
+                multiple
+                formControlName="assignedMatches">
+      <mat-option *ngFor="let match of matches | orderBy: ['matchStartDate', 'title']"
                   [value]="match.id">
-        {{match.startDate | date: 'dd.MM.yy'}}: {{match.title}}
+        {{match.matchStartDate.seconds * 1000 | date: 'dd.MM.yy'}}: {{match.title}}
       </mat-option>
     </mat-select>
   </mat-form-field>

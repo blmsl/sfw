@@ -42,6 +42,7 @@ import { MatchDetailStartingElevenComponent } from './match-detail/match-detail-
 import { MatchEditArticlesComponent } from './match-edit/match-edit-articles/match-edit-articles.component';
 import { MatchEditArticleFormComponent } from './match-edit/match-edit-articles/match-edit-article-form/match-edit-article-form.component';
 import { MatchDetailArticlesComponent } from './match-detail/match-detail-articles/match-detail-articles.component';
+import { MatchEditResultComponent } from './match-edit/match-edit-result/match-edit-result.component';
 
 @NgModule({
   imports: [
@@ -81,7 +82,8 @@ import { MatchDetailArticlesComponent } from './match-detail/match-detail-articl
     MatchDetailStartingElevenComponent,
     MatchEditArticlesComponent,
     MatchEditArticleFormComponent,
-    MatchDetailArticlesComponent
+    MatchDetailArticlesComponent,
+    MatchEditResultComponent
   ],
   providers: [
     ArticleService,

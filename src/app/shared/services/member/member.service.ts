@@ -34,7 +34,19 @@ export class MemberService {
     return this.afs.collection(this.path).doc<IMember>(memberId).valueChanges();
   }
 
-  getMembersByIds(memberIds: {
+  getMembersByIds(memberIds: string[]): Observable<IMember[]> {
+    if (!memberIds || memberIds.length === 0) {
+      return of([]);
+    }
+
+    let memberObservables: Observable<IMember>[] = [];
+    for (let i = 0; i < memberIds.length; i++) {
+      memberObservables.push(this.getMemberById(memberIds[i]));
+    }
+    return forkJoin(memberObservables);
+  }
+
+  getMembersByPosition(memberIds: {
     memberId: string;
     position: string;
   }[]): Observable<IMember[]> {

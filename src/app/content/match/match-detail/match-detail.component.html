@@ -9,11 +9,12 @@
          fxLayout.gt-sm="row"
          fxLayoutGap="10px">
       <div fxFlex.gt-sm="30">
+        <!-- ToDo: get Categories -->
         <pre>{{assignedCategories$ | async | json}}</pre>
-        <match-preview *ngIf="assignedCategories$ | async as categories; else loadingTemplate"
+        <!--<match-preview *ngIf="assignedCategories$ | async as categories; else loadingTemplate"
                        [categories]="categories"
                        [match]="match">
-        </match-preview>
+        </match-preview>-->
       </div>
 
       <div fxFlex.gt-sm="70">

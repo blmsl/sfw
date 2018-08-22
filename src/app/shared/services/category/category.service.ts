@@ -1,11 +1,18 @@
-import { Injectable } from '@angular/core';
-import { ICategory } from '../../interfaces/category.interface';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { AuthService } from '../auth/auth.service';
+import { Injectable }          from '@angular/core';
+import { ICategory }           from '../../interfaces/category.interface';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+}                              from 'angularfire2/firestore';
+import { AuthService }         from '../auth/auth.service';
 import { CategoryTypeService } from '../category-type/category-type.service';
-import { forkJoin, Observable, of } from 'rxjs';
-import { ICategoryType } from '../../interfaces/category-type.interface';
-import { switchMap } from 'rxjs/operators';
+import {
+  forkJoin,
+  Observable,
+  of
+}                              from 'rxjs';
+import { ICategoryType }       from '../../interfaces/category-type.interface';
+import { switchMap }           from 'rxjs/operators';
 
 @Injectable()
 export class CategoryService {
@@ -16,8 +23,8 @@ export class CategoryService {
   categories$: Observable<ICategory[]>;
 
   constructor(private afs: AngularFirestore,
-    private authService: AuthService,
-    private categoryTypeService: CategoryTypeService) {
+              private authService: AuthService,
+              private categoryTypeService: CategoryTypeService) {
     this.collectionRef = this.afs.collection<ICategory>(this.path);
     this.categories$ = this.collectionRef.valueChanges();
   }
@@ -35,7 +42,7 @@ export class CategoryService {
     return this.afs.collection(this.path).doc(categoryId).update(category);
   }
 
-  getCategoryById(categoryId: string): Observable<ICategory | null> {
+  getCategoryById(categoryId: string): Observable<ICategory> {
     return this.afs.doc<ICategory>(this.path + '/' + categoryId).valueChanges();
   }
 
@@ -57,16 +64,15 @@ export class CategoryService {
     );
   }
 
-  getCategoriesByIds(categoryIds: string[]): Observable<ICategory[]> {
+  getCategoriesByIds(categoryIds: string[]):any {
     if (!categoryIds || categoryIds.length === 0) {
       return of([]);
     }
 
-    let categoryObservables: Observable<ICategory>[] = [];
+    let categoryObservables = [];
     for (let i = 0; i < categoryIds.length; i++) {
-      console.log(categoryIds[i]);
-      categoryObservables.push(this.getCategoryById(categoryIds[i]));
+      categoryObservables.push(this.getCategoryById(categoryIds[ i ]));
     }
-    return forkJoin(categoryObservables);
+    return forkJoin(...categoryObservables);
   }
 }

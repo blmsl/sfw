@@ -4,76 +4,76 @@
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content [formGroup]="form">
-    <div *ngIf="teams$ | async as teams; else loadingTemplate">
 
-      <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
-                     [dynamicHeight]="true">
-        <mat-tab [label]="'general.matches.edit.main' | translate">
-          <div fxLayout="column"
-               fxLayout.gt-sm="row"
-               fxLayoutGap="10px">
-            <div fxFlex.gt-sm="70">
-              <match-edit-main [form]="form"
+    <mat-tab-group [dynamicHeight]="true">
+      <mat-tab [label]="'general.matches.edit.main' | translate">
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px">
+          <div fxFlex.gt-sm="70">
+            <match-edit-main [form]="form"
+                             [categories]="categories$ | async"
+                             [teams]="teams$ | async"
+                             [seasons]="seasons$ | async"
+                             [locations]="locations$ | async">
+            </match-edit-main>
+          </div>
+          <div fxFlex.gt-sm="30">
+            <match-edit-result [otherMatchEventList]="otherMatchEventList"
+                               [form]="form.get('result')"></match-edit-result>
+            <pre>{{match | json}}</pre>
+          </div>
+        </div>
+      </mat-tab>
+      <!--<mat-tab [label]="'general.matches.edit.startingEleven.title' | translate">
+        <p *ngIf="!form.get('assignedTeam').value">{{'general.matches.edit.noAssignedTeam' | translate}}</p>
+
+        <match-edit-starting-eleven *ngIf="form.get('assignedTeam').value && teams"
+                                    [form]="form"
+                                    (addPlayerToStartingEleven)="addPlayerToStartingEleven($event)"
+                                    [team]="(teams | filterBy: ['id'] : form.get('assignedTeam').value)[0]">
+        </match-edit-starting-eleven>
+      </mat-tab>-->
+      <mat-tab
+        [label]="('general.matches.edit.articles' | translate) + ' & ' + ('general.matches.edit.match' | translate)">
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px">
+          <div fxFlex.gt-sm="50">
+            <!--<match-edit-events [match]="match"
                                [categories]="categories"
-                               [teams]="teams"
-                               [seasons]="seasons$ | async"
-                               [locations]="locations$ | async">
-              </match-edit-main>
-            </div>
-            <div fxFlex.gt-sm="30">
-              <pre>{{match | json}}</pre>
-            </div>
+                               (deleteMatchEvent)="deleteMatchEvent($event)">
+            </match-edit-events>-->
+
+            <match-edit-event-form *ngIf="teams$ | async as teams"
+                                   [assignedTeam]="(teams | filterBy: ['id']: match.assignedTeam)[0]"
+                                   [eventCategories]="matchEventCategories | orderBy: ['title']"
+                                   (createMatchEvent)="createMatchEvent(null)"
+                                   (saveMatchEvent)="saveMatchEvent($event)">
+            </match-edit-event-form>
           </div>
-        </mat-tab>
-        <mat-tab [label]="'general.matches.edit.startingEleven.title' | translate">
-          <p *ngIf="!form.get('assignedTeam').value">{{'general.matches.edit.noAssignedTeam' | translate}}</p>
 
-          <!--<match-edit-starting-eleven *ngIf="form.get('assignedTeam').value && teams"
-                                      [form]="form"
-                                      (addPlayerToStartingEleven)="addPlayerToStartingEleven($event)"
-                                      [team]="(teams | filterBy: ['id'] : form.get('assignedTeam').value)[0]">
-          </match-edit-starting-eleven>-->
-        </mat-tab>
-        <mat-tab
-          [label]="('general.matches.edit.articles' | translate) + ' & ' + ('general.matches.edit.match' | translate)">
-          <div fxLayout="column"
-               fxLayout.gt-sm="row"
-               fxLayoutGap="10px">
-            <div fxFlex.gt-sm="50">
-              <match-edit-events [match]="match"
-                                 [categories]="categories"
-                                 (deleteMatchEvent)="deleteMatchEvent($event)">
-              </match-edit-events>
+          <div fxFlex.gt-sm="50">
+            <match-edit-articles *ngIf="assignedArticles$ |async as assignedArticles; else loadingTemplate"
+                                 [match]="match"
+                                 [articles]="assignedArticles">
+            </match-edit-articles>
 
-              <match-edit-event-form [eventCategories]="matchService.getMatchEventCategories() | orderBy: ['title']"
-                                     (createMatchEvent)="createMatchEvent(null)"
-                                     (saveMatchEvent)="saveMatchEvent($event)">
-              </match-edit-event-form>
-            </div>
-
-            <div fxFlex.gt-sm="50">
-              <match-edit-articles *ngIf="assignedArticles$ |async as articles; else loadingTemplate"
-                                   [match]="match"
-                                   [articles]="articles">
-              </match-edit-articles>
-
-              <!--<match-edit-article-form *ngIf="articles$ |async as articles; else loadingTemplate"
-                                       [form]="form"
-                                       [articles]="articles">
-              </match-edit-article-form>-->
-
-            </div>
+            <!--<match-edit-article-form *ngIf="articles$ |async as articles; else loadingTemplate"
+                                     [match]="match"
+                                     [articles]="articles">
+            </match-edit-article-form>-->
           </div>
-        </mat-tab>
-        <mat-tab [label]="'general.matches.edit.media' | translate">
-          <ul>
-            <li>Verlinkte Video´s (soccerwatch.tv, youtube, facebook etc)</li>
-            <li>Verlinkte Fotos / Galerien (Link zu Facebook</li>
-            <li>Lokal hochgeladene Dateien</li>
-          </ul>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
+        </div>
+      </mat-tab>
+      <mat-tab [label]="'general.matches.edit.media' | translate">
+        <ul>
+          <li>Verlinkte Video´s (soccerwatch.tv, youtube, facebook etc)</li>
+          <li>Verlinkte Fotos / Galerien (Link zu Facebook</li>
+          <li>Lokal hochgeladene Dateien</li>
+        </ul>
+      </mat-tab>
+    </mat-tab-group>
 
   </mat-card-content>
 

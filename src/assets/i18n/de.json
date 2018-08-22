@@ -621,6 +621,15 @@
         "noAssignedPlayers": "Der Mannschaft wurden noch keine Spieler zugewiesen.",
         "noAssignedTeam": "Bitte zuerst die dazugehörige Mannschaft auswählen.",
         "noSubstitutes": "Es wurden keine Ersatzspieler benannt.",
+        "result": {
+          "guestTeam": "Gast",
+          "guestTeamGoals": "Tore Gast",
+          "homeTeam": "Heim",
+          "homeTeamGoals": "Tore Heim",
+          "otherEvents": "Sonstiges Ereignis",
+          "otherEventsText": "Falls das Spiel kein reguläres Ergebnis hatte, bitte ein Sonderereignis auswählen: ",
+          "title": "Ergebnis / Sonderereignis"
+        },
         "squad": "Kader",
         "startingEleven": {
           "noStartingEleven": "Es wurde keine Aufstellung freigegeben.",

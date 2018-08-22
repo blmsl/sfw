@@ -12,7 +12,7 @@ export class EventsResolver implements Resolve<ICalendarEvent[]> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICalendarEvent[]> {
 
-    this.calendarService.getCalendarEvents().subscribe(events => console.log(events));
+    // this.calendarService.getCalendarEvents().subscribe(events => console.log(events));
 
     return this.calendarService.getMemberBirthdays();
   }

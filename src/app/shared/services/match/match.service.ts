@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable }          from '@angular/core';
+import { Observable }          from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
-import { IMatch } from '../../interfaces/match/match.interface';
-import { of } from 'rxjs/index';
-import { IFormation } from '../../interfaces/match/formation.interface';
+}                              from 'angularfire2/firestore';
+import { IMatch }              from '../../interfaces/match/match.interface';
+import { of }                  from 'rxjs/index';
+import { IFormation }          from '../../interfaces/match/formation.interface';
 import { IMatchEventCategory } from '../../interfaces/match/match-event-category.interface';
-import * as firebase from 'firebase';
+import { ILocation }           from '../../interfaces/location/location.interface';
 import Timestamp = firebase.firestore.Timestamp;
-import { ILocation } from '../../interfaces/location/location.interface';
+import * as firebase           from 'firebase';
 
 @Injectable()
 export class MatchService {
@@ -196,31 +196,99 @@ export class MatchService {
 
   getMatchEventCategories(): IMatchEventCategory[] {
     return [
-      { id: 0, parentCategory: 'match', title: 'Spielbeginn' },
-      { id: 1, parentCategory: 'match', title: 'Ende 1. Halbzeit' },
-      { id: 2, parentCategory: 'match', title: 'Abpfiff 2. Halbzeit' },
-      { id: 3, parentCategory: 'match', title: 'Ende 2. Halbzeit' },
-      { id: 4, parentCategory: 'match', title: 'Verlängerung' },
-      { id: 5, parentCategory: 'match', title: 'Halbzeit der Verlängerung' },
-      { id: 6, parentCategory: 'match', title: 'Ende der Verlängerung' },
-      { id: 7, parentCategory: 'match', title: 'Elfmeterschießen' },
-      { id: 8, parentCategory: 'match', title: 'Spielende' },
-      { id: 9, parentCategory: 'match', title: 'Spielabbruch' },
-      { id: 10, parentCategory: 'match', title: 'Halbzeitfazit' },
-      { id: 11, parentCategory: 'match', title: 'Fazit' },
-      { id: 12, parentCategory: 'match', title: 'nachspielTime', showTextInput: true, inputTitle: 'nachspielTime' },
-
       {
-        id: 13, parentCategory: 'scene', title: 'goal', playerOneTitle: 'from', showPlayerOneInput: true,
-        playerTwoTitle: 'assist', showPlayerTwoInput: true
+        id: 0,
+        parentCategory: 'match',
+        title: 'startFirstHalf'
       },
       {
-        id: 14, parentCategory: 'scene', title: 'bigChance', playerOneTitle: 'from', showPlayerOneInput: true,
-        playerTwoTitle: 'assist', showPlayerTwoInput: true
+        id: 1,
+        parentCategory: 'match',
+        title: 'endFirstHalf'
       },
       {
-        id: 15, parentCategory: 'scene', title: 'substitution', playerOneTitle: 'for', showPlayerOneInput: true,
-        playerTwoTitle: 'new', showPlayerTwoInput: true
+        id: 2,
+        parentCategory: 'match',
+        title: 'startSecondHalf'
+      },
+      {
+        id: 3,
+        parentCategory: 'match',
+        title: 'endSecondHalf'
+      },
+      {
+        id: 4,
+        parentCategory: 'match',
+        title: 'startExtraTime'
+      },
+      {
+        id: 5,
+        parentCategory: 'match',
+        title: 'halfExtraTime'
+      },
+      {
+        id: 6,
+        parentCategory: 'match',
+        title: 'endExtraTime'
+      },
+      {
+        id: 7,
+        parentCategory: 'match',
+        title: 'penaltyShootout'
+      },
+      {
+        id: 8,
+        parentCategory: 'match',
+        title: 'endMatch'
+      },
+      {
+        id: 9,
+        parentCategory: 'match',
+        title: 'matchAbandoned'
+      },
+      {
+        id: 10,
+        parentCategory: 'match',
+        title: 'halfTimeConclusion'
+      },
+      {
+        id: 11,
+        parentCategory: 'match',
+        title: 'conclusion'
+      },
+      {
+        id: 12,
+        parentCategory: 'match',
+        title: 'additionalTime',
+        showTextInput: true,
+        inputTitle: 'additionalTime'
+      },
+      {
+        id: 13,
+        parentCategory: 'scene',
+        title: 'goal',
+        playerOneTitle: 'from',
+        showPlayerOneInput: true,
+        playerTwoTitle: 'assist',
+        showPlayerTwoInput: true
+      },
+      {
+        id: 14,
+        parentCategory: 'scene',
+        title: 'bigChance',
+        playerOneTitle: 'from',
+        showPlayerOneInput: true,
+        playerTwoTitle: 'assist',
+        showPlayerTwoInput: true
+      },
+      {
+        id: 15,
+        parentCategory: 'scene',
+        title: 'substitution',
+        playerOneTitle: 'for',
+        showPlayerOneInput: true,
+        playerTwoTitle: 'new',
+        showPlayerTwoInput: true
       },
 
       {
@@ -237,13 +305,22 @@ export class MatchService {
         playerOneTitle: 'for',
         showPlayerOneInput: true
       },
-      { id: 18, parentCategory: 'punishments', title: 'redCard', playerOneTitle: 'for', showPlayerOneInput: true },
+      { id: 18,
+        parentCategory: 'punishments',
+        title: 'redCard',
+        playerOneTitle: 'for',
+        showPlayerOneInput: true },
       {
         id: 19,
         parentCategory: 'punishments',
         title: 'timePunishment',
         playerOneTitle: 'for',
         showPlayerOneInput: true
+      },
+      {
+        id: 20,
+        parentCategory: 'match',
+        title: 'matchPreview'
       }
     ];
   }
@@ -258,6 +335,33 @@ export class MatchService {
 
   getMatchesForLocation(location: ILocation): Observable<IMatch[]> {
     return this.afs.collection<IMatch>(this.path, ref => ref.where('assignedLocation', '==', location.id)).valueChanges();
+  }
+
+  getUpcomingMatches(timeLimit: Date): Observable<IMatch[]> {
+    let now = new Date();
+    return this.afs.collection<IMatch>(this.path, ref =>
+      ref
+        .where('matchEndDate', '>=', now)
+        .where('matchEndDate', '<=', timeLimit)
+    ).valueChanges();
+  }
+
+  getPastMatches(timeLimit: Date) {
+    let now = new Date();
+    return this.afs.collection<IMatch>(this.path, ref =>
+      ref
+        .where('matchEndDate', '<=', now)
+        .where('matchEndDate', '>=', timeLimit)
+    ).valueChanges();
+  }
+
+  getMatchesWithoutResult(): Observable<IMatch[]> {
+    let now = new Date();
+    return this.afs.collection<IMatch>(this.path, ref =>
+      ref
+        .where('matchEndDate', '<=', now)
+        .where('result', '==', null)
+    ).valueChanges();
   }
 
   setNewMatch(): Observable<IMatch> {

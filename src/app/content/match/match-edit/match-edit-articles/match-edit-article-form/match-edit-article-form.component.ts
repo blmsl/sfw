@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { IArticle } from '../../../../../shared/interfaces/article.interface';
+import {
+  FormBuilder,
+  FormGroup
+}                                   from '@angular/forms';
+import { IArticle }                 from '../../../../../shared/interfaces/article.interface';
+import { IMatch }                   from '../../../../../shared/interfaces/match/match.interface';
+import { ActivatedRoute }           from '@angular/router';
 
 @Component({
   selector: 'match-edit-article-form',
@@ -9,15 +14,26 @@ import { IArticle } from '../../../../../shared/interfaces/article.interface';
 })
 export class MatchEditArticleFormComponent implements OnInit {
 
-  @Input() form: FormGroup;
   @Input() articles: IArticle[];
 
-  constructor() { }
+  public form: FormGroup;
+  @Input() match: IMatch;
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.form = this.fb.group({
+      assignedArticles: ''
+    });
   }
 
-  save($event) {
-    console.log($event);
+  compareFn(article: IArticle){
+    console.log(article.assignedMatches);
+    console.log(this.match.id);
   }
+  //[selected]="article.assignedMatches.indexOf(article.id) > 0"
+
+  /*save($event) {
+    console.log($event);
+  }*/
 }

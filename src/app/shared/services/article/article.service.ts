@@ -71,8 +71,12 @@ export class ArticleService {
     return this.afs.collection<IArticle>(this.path, ref => ref.where('assignedMatches', 'array-contains', matchId)).valueChanges();
   }
 
-  getArticlesForLocation(location: ILocation) {
+  getArticlesForLocation(location: ILocation): Observable<IArticle[]> {
     return this.afs.collection<IArticle>(this.path, ref => ref.where('assignedLocation', '==', location.id)).valueChanges();
+  }
+
+  getLatestArticles(limit: number): Observable<IArticle[]>{
+    return this.afs.collection<IArticle>(this.path, ref => ref.orderBy('creation.at', 'desc').limit(limit)).valueChanges();
   }
 
   setNewArticle(): Observable<IArticle> {

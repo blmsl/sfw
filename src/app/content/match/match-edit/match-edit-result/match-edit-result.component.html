@@ -1,0 +1,64 @@
+<mat-card [formGroup]="form">
+  <mat-card-title>
+    {{'general.matches.edit.result.title' | translate}}
+  </mat-card-title>
+
+  <mat-card-content>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px"
+         fxLayoutAlign="space-around center">
+
+      <mat-card fxFlex="">
+        <mat-card-header fxLayout fxLayoutAlign="center center">
+          <mat-card-title>{{'general.matches.edit.result.homeTeam' | translate}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field>
+            <input matInput
+                   type="number"
+                   min="0"
+                   max="99"
+                   formControlName="homeTeamGoals"
+                   placeholder="{{'general.matches.edit.result.homeTeamGoals' | translate}}"/>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card fxFlex="">
+        <mat-card-header fxLayout fxLayoutAlign="center center">
+          <mat-card-title>{{'general.matches.edit.result.guestTeam' | translate}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field>
+            <input matInput
+                   type="number"
+                   min="0"
+                   max="99"
+                   formControlName="guestTeamGoals"
+                   placeholder="{{'general.matches.edit.result.guestTeamGoals' | translate}}"/>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-subtitle>{{'general.matches.edit.result.otherEventsText' | translate}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field fxLayout="column">
+          <mat-select fxFlex="100"
+                      placeholder="{{'general.matches.edit.result.otherEvents' | translate}}"
+                      formControlName="otherEvent">
+            <mat-option *ngFor="let event of otherMatchEventList | orderBy: ['title']"
+                        [value]="event.id">
+              {{event.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+  </mat-card-content>
+</mat-card>

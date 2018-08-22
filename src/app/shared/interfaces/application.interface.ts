@@ -5,6 +5,8 @@ import { ISocialNetwork } from './social-network.interface';
 export interface IApplication {
   id?: string;
 
+  assignedCalendars?: any[];
+
   page: {
     isEnabled: boolean;
     name: string;

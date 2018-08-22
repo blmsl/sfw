@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import * as moment from 'moment';
-import { Observable } from 'rxjs';
+import { Injectable }           from '@angular/core';
+import { HttpClient }           from '@angular/common/http';
+import * as moment              from 'moment';
 import { map, switchMap, take } from 'rxjs/operators';
-import { IMember } from '../../interfaces/member/member.interface';
-import { ICalendarEvent } from '../../interfaces/calendar-event.interface';
-import { MemberService } from '../member/member.service';
+import { IMember }              from '../../interfaces/member/member.interface';
+import { ICalendarEvent }       from '../../interfaces/calendar-event.interface';
+import { MemberService }        from '../member/member.service';
+import { forkJoin, Observable, of } from 'rxjs';
 
 @Injectable()
 export class CalendarService {
@@ -14,27 +14,30 @@ export class CalendarService {
 
   constructor(private http: HttpClient,
     private memberService: MemberService) {
-    // const timeMin = moment().subtract('6', 'months').toISOString();
-    // const timeMax = moment().add('1', 'years').endOf('year').toISOString();
-    // this.url = 'https://www.googleapis.com/calendar/v3/calendars/' + environment.googleCalendar.id +
-    // '/events?timeMin=' + timeMin + '&timeMax=' + timeMax; // + ' &key=' + environment;
   }
 
-  getCalendarEvents(): any {
-    return this.http.get(this.url).pipe(
+  getCalendars(calendarIds: string[]){
+
+    if (!calendarIds || calendarIds.length === 0) {
+      return of([]);
+    }
+
+    const _this = this;
+
+    let calendarObservables: Observable<any>[] = [];
+    Object.keys(calendarIds).forEach(function (key) {
+      console.log(calendarIds[key]);
+      calendarObservables.push(_this.getCalendarEvents(calendarIds[key]));
+    });
+
+    return forkJoin(calendarObservables);
+  }
+
+  getCalendarEvents(calendarUrl: string): any {
+    return this.http.get('https://www.googleapis.com/calendar/v3/calendars/' + calendarUrl).pipe(
       map((calEvents: any) => {
         console.log(calEvents);
         return calEvents;
-
-        /* calEvents.items.forEach((event: ICalendarEvent) => {
-         const startDate = event.start.dateTime.substr(0, 10);
-         const calendarEvent: any = {
-         title: event.summary,
-         start: startDate
-         };
-         this.events$.push(calendarEvent);
-         });
-         return this.events$; */
       })
     );
   }

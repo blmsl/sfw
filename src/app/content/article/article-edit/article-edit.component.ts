@@ -22,7 +22,7 @@ export class ArticleEditComponent implements OnInit {
 
   @ViewChild('settings') settings;
 
-  public sidePanelOpened = true;
+  public sidePanelOpened: boolean = false;
   public isSmallDevice: boolean = false;
 
   public article: IArticle;
@@ -67,8 +67,9 @@ export class ArticleEditComponent implements OnInit {
     this.breakpointObserver
       .observe(['(min-width: ' + SMALL_WIDTH_BREAKPOINT + 'px)'])
       .subscribe((state: BreakpointState) => {
-        this.sidePanelOpened = state.matches;
-        this.isSmallDevice = !this.sidePanelOpened;
+        console.log(state);
+        this.isSmallDevice = state.matches;
+        //this.sidePanelOpened = state.matches;
       });
 
     this.form = this.fb.group({
@@ -88,7 +89,7 @@ export class ArticleEditComponent implements OnInit {
       // Links
       assignedLocation: this.article.assignedLocation,
       assignedTeams: [this.article.assignedTeams],
-      assignedMatches: this.article.assignedMatches,
+      assignedMatches: [this.article.assignedMatches],
       assignedCategories: [this.article.assignedCategories],
       isMatch: !!this.article.assignedMatches,
       soccerWatchLink: this.article.soccerWatchLink,
@@ -105,7 +106,7 @@ export class ArticleEditComponent implements OnInit {
       this.articleStatus = 'saving';
 
       if (!changes.isMatch) {
-        changes.assignedMatch = null;
+        changes.assignedMatches = null;
       }
       changes.isMatch = null;
 

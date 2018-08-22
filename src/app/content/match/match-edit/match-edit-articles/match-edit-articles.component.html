@@ -2,11 +2,22 @@
   <mat-card-title>{{'general.matches.edit.articles' | translate}}</mat-card-title>
   <mat-card-content>
 
-    <article-card *ngFor="let article of articles | orderBy: ['articleDate']"
-                  (deleteArticleToMatchAssignment)="deleteArticleToMatchAssignment($event)"
-                  [showDeleteButton]="true"
-                  [article]="article">
-    </article-card>
+    <mat-list>
+      <mat-list-item *ngFor="let article of articles | orderBy: ['articleDate']">
+        <div matLine="">
+          <span>{{article.title}}</span>
+          <span fxFlex=""></span>
+          <span>
+            <button mat-raised-button
+                    color="warn"
+                    (click)="deleteArticleToMatchAssignment(article)">
+              {{'general.articles.edit.deleteAssignment' | translate }}
+            </button>
+          </span>
+        </div>
+        <hr/>
+      </mat-list-item>
+    </mat-list>
 
     <p *ngIf="articles.length === 0">
       {{'general.matches.edit.noAssignedArticles' | translate}}

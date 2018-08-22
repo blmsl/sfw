@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ITimeLineEvent } from '../../../interfaces/time-line-event.interface';
 import { FormGroup } from '@angular/forms';
 import { IArticle } from '../../../interfaces/article.interface';
 
@@ -22,6 +21,10 @@ export class TimeLineListComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  isFunction(val) {
+    return typeof val === 'function';
   }
 
 }
