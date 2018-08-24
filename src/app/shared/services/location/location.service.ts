@@ -1,11 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable }  from '@angular/core';
 import {
+  forkJoin,
   Observable,
   of
-} from 'rxjs';
-import { ILocation } from '../../interfaces/location/location.interface';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+}                      from 'rxjs';
+import { ILocation }   from '../../interfaces/location/location.interface';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+}                      from 'angularfire2/firestore';
 import { AuthService } from '../auth/auth.service';
+import { ITraining }   from '../../interfaces/training.interface';
+import { take }        from 'rxjs/internal/operators';
 
 @Injectable()
 export class LocationService {
@@ -15,7 +21,7 @@ export class LocationService {
   locations$: Observable<ILocation[]>;
 
   constructor(private afs: AngularFirestore,
-    private authService: AuthService) {
+              private authService: AuthService) {
     this.collectionRef = this.afs.collection<ILocation>(this.path);
     this.locations$ = this.collectionRef.valueChanges();
   }
@@ -37,16 +43,19 @@ export class LocationService {
     return this.afs.doc<ILocation>(this.path + '/' + locationId).valueChanges();
   }
 
-  /*
-  getLocationsForSeason(seasonRange: any): Observable<any> {
-    return this.afs.collection(this.path, ref => {
-      let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-      query = query
-        .where('locationDate', '>=', seasonRange.startDate.toISOString())
-        .where('locationDate', '<', seasonRange.endDate.toISOString());
-      return query;
-    }).valueChanges();
-  } */
+  getLocationsByTraining(trainings: ITraining[]): Observable<ILocation[]> {
+    if (!trainings || trainings.length === 0) {
+      return of([]);
+    }
+
+    let observables: Observable<ILocation>[] = [];
+    for (let i = 0; i < trainings.length; i++) {
+      observables.push(this.getLocationById(trainings[ i ].assignedLocation).pipe(
+        take(1)
+      ));
+    }
+    return forkJoin(observables);
+  }
 
   setNewLocation(): Observable<ILocation> {
     return of({

@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of } from 'rxjs';
+import { Injectable }                                   from '@angular/core';
+import { forkJoin, Observable, of }                     from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { IMember } from '../../interfaces/member/member.interface';
-import { ILocationContact } from '../../interfaces/location/location-contact.interface';
-import { take } from 'rxjs/internal/operators';
+import { IMember }                                      from '../../interfaces/member/member.interface';
+import { ILocationContact }                             from '../../interfaces/location/location-contact.interface';
+import { take }                                         from 'rxjs/internal/operators';
+import { ITeamManagement }                              from '../../interfaces/team/team-management.interface';
 
 @Injectable()
 export class MemberService {
@@ -59,7 +60,23 @@ export class MemberService {
 
     let memberObservables: Observable<IMember>[] = [];
     for (let i = 0; i < memberIds.length; i++) {
-      memberObservables.push(this.getMemberById(memberIds[i].memberId));
+      memberObservables.push(this.getMemberById(memberIds[i].memberId).pipe(
+        take(1)
+      ));
+    }
+    return forkJoin(memberObservables);
+  }
+
+  getMembersByTeamPosition(memberIds: ITeamManagement[]): Observable<IMember[]> {
+    if (!memberIds || memberIds.length === 0) {
+      return of([]);
+    }
+
+    let memberObservables: Observable<IMember>[] = [];
+    for (let i = 0; i < memberIds.length; i++) {
+      memberObservables.push(this.getMemberById(memberIds[i].assignedMember).pipe(
+        take(1)
+      ));
     }
     return forkJoin(memberObservables);
   }
@@ -72,7 +89,9 @@ export class MemberService {
     let memberObservables: Observable<IMember>[] = [];
     for (let i = 0; i < locationContacts.length; i++) {
       if (locationContacts[i].isMember) {
-        memberObservables.push(this.getMemberById(locationContacts[i].assignedMember));
+        memberObservables.push(this.getMemberById(locationContacts[i].assignedMember).pipe(
+          take(1)
+        ));
       }
     }
     return forkJoin(memberObservables);

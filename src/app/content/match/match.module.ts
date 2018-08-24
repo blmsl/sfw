@@ -29,7 +29,6 @@ import { TeamService } from '../../shared/services/team/team.service';
 import { SeasonService } from '../../shared/services/season/season.service';
 import { MatchEditStartingElevenComponent } from './match-edit/match-edit-starting-eleven/match-edit-starting-eleven.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { ArticleCardComponent } from '../article/article-card/article-card.component';
 import { MatchPlayerComponent } from './match-edit/match-edit-starting-eleven/match-player/match-player.component';
 import { MemberService } from '../../shared/services/member/member.service';
 import { IsMemberInStartingElevenFilterPipe } from '../../shared/pipes/is-member-in-starting-eleven-filter.pipe';
@@ -39,10 +38,11 @@ import { MatchEditEventsComponent } from './match-edit/match-edit-events/match-e
 import { MatchEditEventFormComponent } from './match-edit/match-edit-events/match-edit-event-form/match-edit-event-form.component';
 import { QuillModule } from 'ngx-quill';
 import { MatchDetailStartingElevenComponent } from './match-detail/match-detail-starting-eleven/match-detail-starting-eleven.component';
-import { MatchEditArticlesComponent } from './match-edit/match-edit-articles/match-edit-articles.component';
-import { MatchEditArticleFormComponent } from './match-edit/match-edit-articles/match-edit-article-form/match-edit-article-form.component';
-import { MatchDetailArticlesComponent } from './match-detail/match-detail-articles/match-detail-articles.component';
-import { MatchEditResultComponent } from './match-edit/match-edit-result/match-edit-result.component';
+import { MatchEditArticlesComponent }         from './match-edit/match-edit-articles/match-edit-articles.component';
+import { MatchEditArticleFormComponent }      from './match-edit/match-edit-articles/match-edit-article-form/match-edit-article-form.component';
+import { MatchDetailArticlesComponent }       from './match-detail/match-detail-articles/match-detail-articles.component';
+import { MatchEditResultComponent }           from './match-edit/match-edit-result/match-edit-result.component';
+import { SharedArticleModule }                from '../../shared/components/article/shared-article.module';
 
 @NgModule({
   imports: [
@@ -63,11 +63,11 @@ import { MatchEditResultComponent } from './match-edit/match-edit-result/match-e
     PerfectScrollbarModule,
     QuillModule,
     SharedModule,
+    SharedArticleModule,
     SharedMatchModule,
     matchRoutingModule
   ],
   declarations: [
-    ArticleCardComponent,
     IsMemberInSubstitutesListFilterPipe,
     IsMemberInStartingElevenFilterPipe,
     MatchDetailComponent,

@@ -1310,6 +1310,11 @@
         "standingsTitle": "Tabellenstand"
       },
       "edit": {
+        "article": {
+          "assignedArticles": "Verknüpfte Artikel",
+          "noArticlesFound": "Es wurden noch keine Artikel mit dieser Mannschaft verknüpft.",
+          "title": "Artikel"
+        },
         "assignedCategories": "Verknüpfte Kategorien",
         "assignedClub": "Verein",
         "assignedSeason": "Saison",

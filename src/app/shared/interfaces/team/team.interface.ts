@@ -18,7 +18,7 @@ export interface ITeam {
 
   photoDescription?: string;
 
-  assignedClub?: IClub;
+  assignedClub?: string;
   assignedTeamCategories: string[];
   assignedSeason: string;
 

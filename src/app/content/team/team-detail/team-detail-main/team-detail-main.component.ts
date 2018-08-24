@@ -15,9 +15,10 @@ import { Observable } from 'rxjs/index';
 export class TeamDetailMainComponent implements OnInit {
 
   @Input() team: ITeam;
-  @Input() seasons: ISeason[];
-  @Input() clubs: IClub[];
-  @Input() categories: ICategory[];
+  @Input() assignedSeason: ISeason;
+  @Input() assignedClub: IClub;
+
+  @Input() assignedTeamCategories: ICategory[];
 
   public teamLogo: Observable<IMediaItem>;
   public teamImage: Observable<IMediaItem>;

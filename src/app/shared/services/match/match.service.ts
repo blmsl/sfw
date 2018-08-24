@@ -11,6 +11,7 @@ import { IMatchEventCategory } from '../../interfaces/match/match-event-category
 import { ILocation }           from '../../interfaces/location/location.interface';
 import Timestamp = firebase.firestore.Timestamp;
 import * as firebase           from 'firebase';
+import { ITeam }               from '../../interfaces/team/team.interface';
 
 @Injectable()
 export class MatchService {
@@ -335,6 +336,10 @@ export class MatchService {
 
   getMatchesForLocation(location: ILocation): Observable<IMatch[]> {
     return this.afs.collection<IMatch>(this.path, ref => ref.where('assignedLocation', '==', location.id)).valueChanges();
+  }
+
+  getMatchesForTeam(team: ITeam): Observable<IMatch[]>{
+    return this.afs.collection<IMatch>(this.path, ref => ref.where('assignedTeam', '==', team.id)).valueChanges();
   }
 
   getUpcomingMatches(timeLimit: Date): Observable<IMatch[]> {

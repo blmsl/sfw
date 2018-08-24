@@ -22,15 +22,11 @@
     </match-result-input>
 
     <div *ngIf="showResult && match.result">
-      <span *ngIf="match.result.homeTeamGoals !== '' && match.result.guestTeamGoals !== ''">
+      <span *ngIf="match.result.homeTeamGoals && match.result.guestTeamGoals">
         {{match.result.homeTeamGoals}} : {{match.result.guestTeamGoals}}
       </span>
-      <span *ngIf="(match.result.homeTeamGoals === '' && match.result.guestTeamGoals === '')
-                      && (!match.result.otherEvent || match.result.otherEvent === '')">
-        {{'general.matches.list.noResult' | translate}}
-      </span>
       <span *ngIf="match.result.otherEvent">
-        <span style="color: red">ToDo: {{match.result.otherEvent}}</span>
+        <span [innerHTML]="match.result.otherEvent"></span>
       </span>
     </div>
 

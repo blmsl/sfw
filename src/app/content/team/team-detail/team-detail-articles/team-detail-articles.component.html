@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-title>{{'general.teams.edit.article.assignedArticles' | translate }}</mat-card-title>
+  <mat-card-content fxLayout.gt-sm="row"
+                    fxLayout="column"
+                    fxLayoutGap="10px">
+
+    <p *ngIf="assignedArticles.length === 0">{{'general.teams.edit.article.noArticlesFound' | translate }}</p>
+
+    <article-card fxFlex="25"
+                  *ngFor="let article of assignedArticles | orderBy: ['articleDate']"
+                  [article]="article">
+    </article-card>
+  </mat-card-content>
+</mat-card>

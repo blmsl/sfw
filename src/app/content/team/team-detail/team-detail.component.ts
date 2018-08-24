@@ -8,13 +8,15 @@ import { IMember } from '../../../shared/interfaces/member/member.interface';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
 import { TeamService } from '../../../shared/services/team/team.service';
 import { SeasonService } from '../../../shared/services/season/season.service';
-import { ISeason } from '../../../shared/interfaces/season.interface';
-import { IClub } from '../../../shared/interfaces/club/club.interface';
-import { ClubService } from '../../../shared/services/club/club.service';
-import { ILocation } from '../../../shared/interfaces/location/location.interface';
+import { ISeason }         from '../../../shared/interfaces/season.interface';
+import { IClub }           from '../../../shared/interfaces/club/club.interface';
+import { ClubService }     from '../../../shared/services/club/club.service';
+import { ILocation }       from '../../../shared/interfaces/location/location.interface';
 import { LocationService } from '../../../shared/services/location/location.service';
-import { IMatch } from '../../../shared/interfaces/match/match.interface';
-import { MatchService } from '../../../shared/services/match/match.service';
+import { IMatch }          from '../../../shared/interfaces/match/match.interface';
+import { MatchService }    from '../../../shared/services/match/match.service';
+import { ArticleService }  from '../../../shared/services/article/article.service';
+import { IArticle }        from '../../../shared/interfaces/article.interface';
 
 @Component({
   selector: 'team-detail',
@@ -23,32 +25,44 @@ import { MatchService } from '../../../shared/services/match/match.service';
 export class TeamDetailComponent implements OnInit {
 
   public team: ITeam;
-  public categories$: Observable<ICategory[]>;
-  public locations$: Observable<ILocation[]>;
-  public matches$: Observable<IMatch[]>;
-  public members$: Observable<IMember[]>;
-  public seasons$: Observable<ISeason[]>;
-  public clubs$: Observable<IClub[]>;
+
+  public assignedSeason$: Observable<ISeason>;
+  public assignedClub$: Observable<IClub>;
+
+  public assignedTeamCategories$: Observable<ICategory[]>;
+  public assignedPlayers$: Observable<IMember[]>;
+  public assignedPositions$: Observable<IMember[]>;
+  public assignedLocations$: Observable<ILocation[]>;
+  public assignedMatches$: Observable<IMatch[]>;
+  public assignedArticles$: Observable<IArticle[]>;
+
+  public otherEventList: { id: number, title: string }[];
 
   constructor(private route: ActivatedRoute,
     private seasonService: SeasonService,
     private clubService: ClubService,
     private teamService: TeamService,
-    public matchService: MatchService,
+    private matchService: MatchService,
     private categoryService: CategoryService,
     private memberService: MemberService,
     private locationService: LocationService,
+    private articleService: ArticleService,
     private router: Router) {
-    this.clubs$ = clubService.clubs$;
-    this.matches$ = matchService.matches$;
-    this.locations$ = locationService.locations$;
-    this.categories$ = categoryService.categories$;
-    this.members$ = memberService.members$;
-    this.seasons$ = seasonService.seasons$;
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { team: ITeam }) => this.team = data.team);
+    this.route.data.subscribe((data: { team: ITeam }) => {
+      this.team = data.team;
+      this.assignedClub$ = this.clubService.getClubById(this.team.assignedClub);
+      this.assignedSeason$ = this.seasonService.getSeasonById(this.team.assignedSeason);
+      this.assignedTeamCategories$ = this.categoryService.getCategoriesByIds(this.team.assignedTeamCategories);
+      this.assignedPlayers$ = this.memberService.getMembersByIds(this.team.assignedPlayers);
+      this.assignedPositions$ = this.memberService.getMembersByTeamPosition(this.team.assignedPositions);
+      this.assignedLocations$ = this.locationService.getLocationsByTraining(this.team.assignedTrainings);
+      this.assignedMatches$ = this.matchService.getMatchesForTeam(this.team);
+      this.otherEventList = this.matchService.getOtherEventList();
+      this.assignedArticles$ = this.articleService.getArticlesForTeam(this.team);
+    });
   }
 
   removeTeam(team: ITeam) {

@@ -10,7 +10,7 @@ import { ILocation } from '../../../../shared/interfaces/location/location.inter
 export class TeamDetailTrainingComponent implements OnInit {
 
   @Input() team: ITeam;
-  @Input() locations: ILocation;
+  @Input() assignedLocations: ILocation[];
 
   constructor() {
   }

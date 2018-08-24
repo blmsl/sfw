@@ -11,18 +11,13 @@
        mat-card-image
        [src]="image.downloadURL">
 
-  <mat-card-content *ngIf="categories && clubs && seasons; else loadingTemplate">
+  <mat-card-content *ngIf="assignedTeamCategories && assignedClub && assignedSeason; else loadingTemplate">
 
     <div fxLayout.gt-sm="row"
          fxLayout="column">
       <div>{{'general.teams.edit.assignedClub' | translate}}</div>
       <span fxFlex></span>
-      <div>
-        <a [routerLink]="['clubs/detail', club.id]"
-           *ngFor="let club of clubs | filterBy: ['id'] : team.assignedClub">
-          {{club.title}}
-        </a>
-      </div>
+      <div><a [routerLink]="['/clubs/detail', assignedClub.id]">{{assignedClub.title}}</a></div>
     </div>
 
     <div style="margin-top: 25px"
@@ -33,9 +28,9 @@
       </div>
       <span fxFlex></span>
       <div>
-        <a *ngFor="let categoryId of team.assignedTeamCategories; let last = last"
-           [routerLink]="['/categories/detail', categoryId]">
-          {{(categories | filterBy: ['id'] : categoryId)[0].title}}
+        <a *ngFor="let category of assignedTeamCategories; let last = last"
+           [routerLink]="['/categories/detail', category.id]">
+          {{category.title}}
           <span *ngIf="!last">, </span>
         </a>
       </div>
@@ -60,11 +55,7 @@
         {{'general.teams.edit.assignedSeason' | translate}}
       </div>
       <span fxFlex></span>
-      <div>
-            <span *ngFor="let season of seasons | filterBy: ['id'] : team.assignedSeason">
-              {{season.title}}
-            </span>
-      </div>
+      <div><span>{{assignedSeason.title}}</span></div>
     </div>
 
     <div style="margin-top: 25px"

@@ -1,9 +1,3 @@
-<ul>
-  <li>Torjäger</li>
-  <li>Vorbereiter</li>
-  <li>Karten</li>
-</ul>
-
 <div fxLayout="column"
      fxLayout.gt-sm="row"
      fxLayoutGap="10px">
@@ -12,7 +6,42 @@
   </div>
 
   <div fxFlex.gt-sm="50">
-    <h3>{{'general.teams.detail.standingsTitle' | translate}}</h3>
-    <span style="color: red">ToDo!!!</span>
+    <mat-card>
+      <mat-card-title>{{'general.teams.detail.standingsTitle' | translate}}</mat-card-title>
+      <mat-card-content>
+
+        <p *ngIf="!team.currentStandings">ToDo</p>
+
+        <table class="table" *ngIf="team.currentStandings">
+          <thead>
+          <tr>
+            <td>rank</td>
+            <td>team</td>
+            <td>matches</td>
+            <td>won</td>
+            <td>draw</td>
+            <td>lost</td>
+            <td>goalRel</td>
+            <td>goalDiff</td>
+            <td>points</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let standing of team.currentStandings">
+            <td>{{standing.Rank}}</td>
+            <td>{{standing.Team}}</td>
+            <td>{{standing.Matches}}</td>
+            <td>{{standing.Won}}</td>
+            <td>{{standing.Draw}}</td>
+            <td>{{standing.Lost}}</td>
+            <td>{{standing.GoalRel}}</td>
+            <td>{{standing.GoalDiff}}</td>
+            <td>{{standing.Points}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </mat-card-content>
+    </mat-card>
+
   </div>
 </div>

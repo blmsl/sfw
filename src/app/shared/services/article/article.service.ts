@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable }      from '@angular/core';
 import {
   Observable,
   of
-} from 'rxjs';
-import { IArticle } from '../../interfaces/article.interface';
+}                          from 'rxjs';
+import { IArticle }        from '../../interfaces/article.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
-import { AuthService } from '../auth/auth.service';
+}                          from 'angularfire2/firestore';
+import { AuthService }     from '../auth/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { ILocation } from '../../interfaces/location/location.interface';
+import { ILocation }       from '../../interfaces/location/location.interface';
+import { ITeam }           from '../../interfaces/team/team.interface';
 
 @Injectable()
 export class ArticleService {
@@ -77,6 +78,10 @@ export class ArticleService {
 
   getLatestArticles(limit: number): Observable<IArticle[]>{
     return this.afs.collection<IArticle>(this.path, ref => ref.orderBy('creation.at', 'desc').limit(limit)).valueChanges();
+  }
+
+  getArticlesForTeam(team: ITeam): Observable<IArticle[]> {
+    return this.afs.collection<IArticle>(this.path, ref => ref.where('assignedTeams', 'array-contains', team.id)).valueChanges();
   }
 
   setNewArticle(): Observable<IArticle> {

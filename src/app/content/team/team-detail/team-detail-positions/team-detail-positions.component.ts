@@ -11,8 +11,9 @@ import { ICategoryType } from '../../../../shared/interfaces/category-type.inter
 export class TeamDetailPositionsComponent {
 
   @Input() team: ITeam;
-  @Input() members: IMember[];
-  @Input() categories: ICategoryType[];
+  @Input() assignedPlayers: IMember[];
+  @Input() assignedPositions: IMember[];
+  // @Input() categories: ICategoryType[];
 
   public savedPosition: string;
 
