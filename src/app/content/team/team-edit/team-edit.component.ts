@@ -86,6 +86,7 @@ export class TeamEditComponent implements OnInit {
       title: [this.team.title, [Validators.required, Validators.minLength(5), Validators.maxLength(this.titleMaxLength)]],
       subTitle: this.team.subTitle,
       externalLink: this.team.externalTeamLink,
+      photoDescription: this.team.photoDescription,
       isOfficialTeam: this.team.isOfficialTeam,
       isMainTeam: this.team.isMainTeam,
       assignedTeamCategories: [this.team.assignedTeamCategories, [Validators.required]],

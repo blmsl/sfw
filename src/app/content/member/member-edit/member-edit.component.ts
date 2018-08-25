@@ -82,7 +82,7 @@ export class MemberEditComponent implements OnInit {
       mainData: this.initMainData(),
       profile: this.initProfile(),
       opinions: this.initOpinions(),
-      interviews: this.initInterviews()
+      assignedInterviews: this.initInterviews()
     });
 
     this.form.valueChanges.pipe(
@@ -206,7 +206,7 @@ export class MemberEditComponent implements OnInit {
   }
 
   addInterview(): void {
-    const control = <FormArray>this.form.controls['interviews'];
+    const control = <FormArray>this.form.controls['assignedInterviews'];
     const interview: IInterview = {
       assignedArticleId: ''
     };
@@ -215,7 +215,7 @@ export class MemberEditComponent implements OnInit {
   }
 
   removeInterview($event: number): void {
-    const control = <FormArray>this.form.controls['interviews'];
+    const control = <FormArray>this.form.controls['assignedInterviews'];
     control.removeAt($event);
   }
 

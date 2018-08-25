@@ -21,6 +21,12 @@ import { StaticPageFormComponent } from './settings/static-pages/static-page-for
 import { CategoryService } from '../../shared/services/category/category.service';
 import { CategoryTypeService } from '../../shared/services/category-type/category-type.service';
 import { UserService } from '../../shared/services/user/user.service';
+import { SettingsMainComponent } from './settings/settings-main/settings-main.component';
+import { SettingsMailingComponent } from './settings/settings-mailing/settings-mailing.component';
+import { SettingsDowntimeComponent } from './settings/settings-downtime/settings-downtime.component';
+import { SettingsUrlshorteningComponent } from './settings/settings-urlshortening/settings-urlshortening.component';
+import { SettingsCalendarsComponent } from './settings/settings-calendars/settings-calendars.component';
+import { TagInputModule } from 'ngx-chips';
 
 @NgModule({
   imports: [
@@ -34,13 +40,19 @@ import { UserService } from '../../shared/services/user/user.service';
     MatTabsModule,
     QuillModule,
     settingsRoutingModule,
-    SharedModule
+    SharedModule,
+    TagInputModule
   ],
   declarations: [
     SettingsComponent,
     SettingsSocialDataComponent,
     StaticPagesComponent,
-    StaticPageFormComponent
+    StaticPageFormComponent,
+    SettingsMainComponent,
+    SettingsMailingComponent,
+    SettingsDowntimeComponent,
+    SettingsUrlshorteningComponent,
+    SettingsCalendarsComponent
   ],
   providers: [
     ApplicationResolver,

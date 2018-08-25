@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-forbidden',
+  selector: 'forbidden',
   templateUrl: './forbidden.component.html',
   styleUrls: [
-    '../../auth/login.component.scss'
+    '../login.component.scss'
   ],
 })
 export class ForbiddenComponent implements OnInit {

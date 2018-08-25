@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -11,10 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { urlShortener } from '../../../shared/config/url-shortener.config';
 import { ISocialNetwork } from '../../../shared/interfaces/social-network.interface';
-import {
-  debounceTime,
-  distinctUntilChanged
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { UserService } from '../../../shared/services/user/user.service';
 
 @Component({
@@ -39,12 +36,12 @@ export class SettingsComponent implements OnInit {
   public roles: string[];
 
   constructor(private fb: FormBuilder,
-    private route: ActivatedRoute,
-    public snackBar: MatSnackBar,
-    private title: Title,
-    private translateService: TranslateService,
-    private userService: UserService,
-    private applicationService: ApplicationService) {
+              private route: ActivatedRoute,
+              public snackBar: MatSnackBar,
+              private title: Title,
+              private translateService: TranslateService,
+              private userService: UserService,
+              private applicationService: ApplicationService) {
     this.roles = userService.getUserRoles();
   }
 
@@ -61,7 +58,9 @@ export class SettingsComponent implements OnInit {
         registration: this.application.registration,
         downtime: this.initDowntime(),
         staticPages: this.initStaticPages(),
-        social: this.initSocialProviders()
+        social: this.initSocialProviders(),
+        mailing: this.initMailing(),
+        assignedCalendars: this.initCalendars()
       });
 
       this.form.valueChanges.pipe(
@@ -69,6 +68,7 @@ export class SettingsComponent implements OnInit {
         distinctUntilChanged()
       ).subscribe((changes: IApplication) => {
         this.application = Object.assign({}, this.application, changes);
+        console.log(this.form);
         if (!this.form.invalid) {
           this.saveSettings();
         }
@@ -89,6 +89,33 @@ export class SettingsComponent implements OnInit {
       description: this.application.page.description,
       email: this.application.page.email,
       title: this.application.page.title
+    });
+  }
+
+  initCalendars(): FormArray {
+    const formArray = [];
+    if (this.application.assignedCalendars) {
+      for (let i = 0; i < this.application.assignedCalendars.length; i++) {
+        formArray.push(this.initCalendar(this.application.assignedCalendars[i]));
+      }
+    }
+    return this.fb.array(formArray);
+  }
+
+  initCalendar(calendar: { title: string, link: string }): FormGroup {
+    return this.fb.group({
+      link: [calendar ? calendar.link : '', [Validators.required]],
+      title: [calendar ? calendar.title : '', [Validators.required]]
+    });
+  }
+
+  initMailing(): FormGroup {
+    return this.fb.group({
+      birthdayRecipients: this.application.mailing ? this.application.mailing.birthdayRecipients : null,
+      teamOfTheMonth: this.application.mailing ? this.application.mailing.teamOfTheMonth : null,
+      memberOfTheWeek: this.application.mailing ? this.application.mailing.memberOfTheWeek : null,
+      newPublishedArticle: this.application.mailing ? this.application.mailing.newPublishedArticle : null,
+      newCreatedMatch: this.application.mailing ? this.application.mailing.newCreatedMatch : null,
     });
   }
 
@@ -185,19 +212,19 @@ export class SettingsComponent implements OnInit {
 
   saveSettings() {
     this.applicationService.updateApplication(this.application.id, this.application).then(() => {
-      // set Page Title
-      if (this.title.getTitle() !== this.application.page.title) {
-        this.title.setTitle(this.application.page.title);
-      }
+        // set Page Title
+        if (this.title.getTitle() !== this.application.page.title) {
+          this.title.setTitle(this.application.page.title);
+        }
 
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        data: {
-          status: 'success',
-          message: 'general.applications.updateMessage'
-        },
-        duration: 2500
-      });
-    },
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          data: {
+            status: 'success',
+            message: 'general.applications.updateMessage'
+          },
+          duration: 2500
+        });
+      },
       (error: any) => {
         this.snackBar.openFromComponent(SnackbarComponent, {
           data: {

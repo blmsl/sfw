@@ -10,20 +10,20 @@
       <mat-card-title>{{'general.teams.detail.standingsTitle' | translate}}</mat-card-title>
       <mat-card-content>
 
-        <p *ngIf="!team.currentStandings">ToDo</p>
+        <p *ngIf="!team.currentStandings">{{'general.teams.fame.noStandings' | translate}}</p>
 
         <table class="table" *ngIf="team.currentStandings">
           <thead>
           <tr>
-            <td>rank</td>
-            <td>team</td>
-            <td>matches</td>
-            <td>won</td>
-            <td>draw</td>
-            <td>lost</td>
-            <td>goalRel</td>
-            <td>goalDiff</td>
-            <td>points</td>
+            <td>{{'general.teams.detail.standings.rank' | translate}}</td>
+            <td>{{'general.teams.detail.standings.team' | translate}}</td>
+            <td>{{'general.teams.detail.standings.matches' | translate}}</td>
+            <td>{{'general.teams.detail.standings.won' | translate}}</td>
+            <td>{{'general.teams.detail.standings.draw' | translate}}</td>
+            <td>{{'general.teams.detail.standings.lost' | translate}}</td>
+            <td>{{'general.teams.detail.standings.goalRel' | translate}}</td>
+            <td>{{'general.teams.detail.standings.goalDiff' | translate}}</td>
+            <td>{{'general.teams.detail.standings.points' | translate}}</td>
           </tr>
           </thead>
           <tbody>

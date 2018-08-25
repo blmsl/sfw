@@ -102,6 +102,16 @@
         </media-uploader>
 
         <mat-card>
+          <mat-card-title>{{'general.teams.edit.photo.description' | translate}}</mat-card-title>
+          <mat-card-content>
+            <quill-editor [style]="{height: '250px'}"
+                          formControlName="photoDescription"
+                          placeholder="{{'general.teams.edit.photo.description' | translate}}">
+            </quill-editor>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card>
             <mat-card-title>
                 {{'general.tables.colTitles.creation' | translate }}
             </mat-card-title>

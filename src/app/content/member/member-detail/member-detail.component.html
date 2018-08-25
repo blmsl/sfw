@@ -21,7 +21,10 @@
                      fxLayout.gt-sm="row"
                      fxLayoutGap="10px">
                     <div fxFlex.gt-sm="33,3333">
-                        <member-detail-interviews [member]="member"></member-detail-interviews>
+                        <member-detail-interviews *ngIf="assignedArticles$ | async as assignedArticles; else loadingTemplate"
+                                                  [assignedArticles]="assignedArticles"
+                                                  [member]="member">
+                        </member-detail-interviews>
                     </div>
                     <div fxFlex.gt-sm="33,3333">
                         <member-detail-profile [member]="member"></member-detail-profile>

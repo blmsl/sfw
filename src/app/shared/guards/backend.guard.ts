@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Params,
+  Router,
+  RouterStateSnapshot
+} from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
@@ -9,6 +16,7 @@ import { IUser } from '../interfaces/user/user.interface';
 export class BackendGuard implements CanActivate {
 
   constructor(private authService: AuthService,
+    private route: ActivatedRoute,
     private router: Router) {
   }
 
@@ -20,8 +28,12 @@ export class BackendGuard implements CanActivate {
       map((user: IUser) => !!(user && (user.assignedRoles.admin || user.assignedRoles.editor))),
       tap((isAllowed: boolean) => {
         if (!isAllowed) {
-          console.error('Access denied - Admins and Editors only');
-          this.router.navigate(['forbidden']).then(() => console.log(123));
+          this.authService.signOut().then( () => {
+            console.error('Access denied - Admins and Editors only');
+            const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+            queryParams['page'] = 'forbidden';
+            return this.router.navigate(['/login'], { queryParams: queryParams })
+          });
         }
       })
     );

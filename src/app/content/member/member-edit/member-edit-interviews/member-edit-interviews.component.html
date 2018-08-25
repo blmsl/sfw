@@ -13,7 +13,7 @@
 
             <div fxFlex="100"
                  *ngIf="articles.length > 0"
-                 formArrayName="interviews">
+                 formArrayName="assignedInterviews">
 
                 <button mat-raised-button
                         style="margin-bottom: 25px"
@@ -27,13 +27,12 @@
                     <div>
                         <div fxLayout="row"
 
-                             *ngFor="let control of form.get('interviews')['controls']; let i = index">
+                             *ngFor="let control of form.get('assignedInterviews')['controls']; let i = index">
 
                             <div fxFlex="100"
                                  [formGroupName]="i">
 
-                                <div fxLayout="row"
-                                >
+                                <div fxLayout="row">
 
                                     <mat-form-field fxFlex="90">
                                         <mat-select

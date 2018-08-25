@@ -13,11 +13,14 @@ import { CategoryTypeService } from '../../shared/services/category-type/categor
 import { MatchResolver } from './match.resolver';
 import { LinkModule } from '../../shared/components/links/link.module';
 import {
-  MatButtonModule, MatCheckboxModule,
+  MatButtonModule,
+  MatCheckboxModule,
   MatChipsModule,
   MatExpansionModule,
-  MatFormFieldModule, MatInputModule,
-  MatListModule, MatSelectModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatListModule,
+  MatSelectModule,
   MatTabsModule
 } from '@angular/material';
 import { MatchesComponent } from './matches/matches.component';
@@ -29,7 +32,6 @@ import { TeamService } from '../../shared/services/team/team.service';
 import { SeasonService } from '../../shared/services/season/season.service';
 import { MatchEditStartingElevenComponent } from './match-edit/match-edit-starting-eleven/match-edit-starting-eleven.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { MatchPlayerComponent } from './match-edit/match-edit-starting-eleven/match-player/match-player.component';
 import { MemberService } from '../../shared/services/member/member.service';
 import { IsMemberInStartingElevenFilterPipe } from '../../shared/pipes/is-member-in-starting-eleven-filter.pipe';
 import { IsMemberInSubstitutesListFilterPipe } from '../../shared/pipes/is-member-in-substitutes-list-filter.pipe';
@@ -38,11 +40,11 @@ import { MatchEditEventsComponent } from './match-edit/match-edit-events/match-e
 import { MatchEditEventFormComponent } from './match-edit/match-edit-events/match-edit-event-form/match-edit-event-form.component';
 import { QuillModule } from 'ngx-quill';
 import { MatchDetailStartingElevenComponent } from './match-detail/match-detail-starting-eleven/match-detail-starting-eleven.component';
-import { MatchEditArticlesComponent }         from './match-edit/match-edit-articles/match-edit-articles.component';
-import { MatchEditArticleFormComponent }      from './match-edit/match-edit-articles/match-edit-article-form/match-edit-article-form.component';
-import { MatchDetailArticlesComponent }       from './match-detail/match-detail-articles/match-detail-articles.component';
-import { MatchEditResultComponent }           from './match-edit/match-edit-result/match-edit-result.component';
-import { SharedArticleModule }                from '../../shared/components/article/shared-article.module';
+import { MatchEditArticlesComponent } from './match-edit/match-edit-articles/match-edit-articles.component';
+import { MatchEditArticleFormComponent } from './match-edit/match-edit-articles/match-edit-article-form/match-edit-article-form.component';
+import { MatchDetailArticlesComponent } from './match-detail/match-detail-articles/match-detail-articles.component';
+import { MatchEditResultComponent } from './match-edit/match-edit-result/match-edit-result.component';
+import { SharedArticleModule } from '../../shared/components/article/shared-article.module';
 
 @NgModule({
   imports: [
@@ -76,7 +78,6 @@ import { SharedArticleModule }                from '../../shared/components/arti
     MatchPreviewComponent,
     MatchEditMainComponent,
     MatchEditStartingElevenComponent,
-    MatchPlayerComponent,
     MatchEditEventsComponent,
     MatchEditEventFormComponent,
     MatchDetailStartingElevenComponent,

@@ -1,0 +1,28 @@
+<mat-card>
+
+  <img *ngIf="memberImage | async as image; else loadingTemplate"
+       mat-card-image
+       [src]="image.downloadURL">
+  <mat-card-content>
+
+    <span *ngIf="assignedPosition && assignedPosition.length > 0 && members">
+      <a *ngIf="(members | filterBy: ['id'] : assignedPosition[0].memberId)[0] as member"
+         [routerLink]="['/members/detail', member.id]">
+      {{member.mainData.firstName}}
+      {{member.mainData.lastName}}
+      {{member.mainData.birthday |date :'dd.MM.yy' }}
+      </a>
+
+    </span>
+    <a *ngIf="member && member.mainData"
+       [routerLink]="['/members/detail', member.id]">
+      {{member.mainData.firstName}}
+      {{member.mainData.lastName}}
+      {{member.mainData.birthday |date :'dd.MM.yy' }}
+    </a>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

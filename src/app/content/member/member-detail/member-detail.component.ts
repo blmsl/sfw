@@ -9,6 +9,8 @@ import { IClub } from '../../../shared/interfaces/club/club.interface';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { ICategory } from '../../../shared/interfaces/category.interface';
+import { ArticleService } from '../../../shared/services/article/article.service';
+import { IArticle } from '../../../shared/interfaces/article.interface';
 
 @Component({
   selector: 'app-member-detail',
@@ -23,7 +25,10 @@ export class MemberDetailComponent implements OnInit {
   public members$: Observable<IMember[]>;
   public teams$: Observable<ITeam[]>;
 
+  public assignedArticles$: Observable<IArticle[]>;
+
   constructor(public route: ActivatedRoute,
+    private articleService: ArticleService,
     private clubService: ClubService,
     private memberService: MemberService,
     private teamService: TeamService,
@@ -36,7 +41,10 @@ export class MemberDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { member: IMember }) => this.member = data.member);
+    this.route.data.subscribe((data: { member: IMember }) => {
+      this.member = data.member;
+      this.assignedArticles$ = this.articleService.getArticlesByInterview(this.member.assignedInterviews);
+    });
   }
 
   removeMember(member: IMember) {

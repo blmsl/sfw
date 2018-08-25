@@ -54,6 +54,7 @@ import { IsMemberInClubManagementFilterPipe } from "../../shared/pipes/is-member
 import { MemberMatchStatisticsComponent } from './member-match-statistics/member-match-statistics.component';
 import { FameMemberListComponent } from './fame-member/fame-member-list/fame-member-list.component';
 import { FameMemberEntryComponent } from './fame-member/fame-member-entry/fame-member-entry.component';
+import { SharedArticleModule } from '../../shared/components/article/shared-article.module';
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import { FameMemberEntryComponent } from './fame-member/fame-member-entry/fame-m
     memberRoutingModule,
     PerfectScrollbarModule,
     QuillModule,
-    SharedModule
+    SharedModule,
+    SharedArticleModule
   ],
   declarations: [
     FameMemberComponent,

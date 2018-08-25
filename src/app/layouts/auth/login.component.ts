@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { zoomIn, zoomOut } from 'ng-animate';
 import { state, style, transition, trigger, useAnimation } from '@angular/animations';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute, ParamMap, Params } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -26,7 +27,7 @@ import { TranslateService } from '@ngx-translate/core';
     ])
   ]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   public loading: boolean = false;
   public nameMinLength: number = 5;
@@ -36,27 +37,35 @@ export class LoginComponent {
   public showSignInForm: boolean = true;
   public showSignUpForm: boolean = false;
   public showPasswordForm: boolean = false;
+  public showForbiddenPage: boolean = false;
 
   public signUpStatus;
   public currentLang = 'en';
 
-  constructor(public sanitizer: DomSanitizer, private translate: TranslateService) {
+  constructor(private route: ActivatedRoute, private translate: TranslateService) {
     translate.addLangs(['de', 'en', 'fr']);
     translate.setDefaultLang('de');
 
     const browserLang: string = translate.getBrowserLang();
     this.currentLang = browserLang.match(/en|fr/) ? browserLang : 'de';
     translate.use(this.currentLang);
+
+  }
+
+  ngOnInit() {
+
+    this.route.queryParamMap.subscribe((params: ParamMap) => {
+      if(params.get('page') === 'forbidden'){
+        this.showSignInForm = false;
+        this.showForbiddenPage = true;
+      }
+    });
   }
 
   toggleFormVisibility($event: any[]) {
     for (const key in $event) {
       this[key] = $event[key];
     }
-  }
-
-  signUpComplete($event) {
-    this.signUpStatus = $event;
   }
 
 }

@@ -5,7 +5,10 @@ import { ISocialNetwork } from './social-network.interface';
 export interface IApplication {
   id?: string;
 
-  assignedCalendars?: any[];
+  assignedCalendars?: {
+    link: string;
+    title: string;
+  }[];
 
   page: {
     isEnabled: boolean;
@@ -25,6 +28,14 @@ export interface IApplication {
   downtime: {
     isEnabled: boolean;
     message?: string;
+  };
+
+  mailing?: {
+    birthdayRecipients: string[];
+    teamOfTheMonth: string[];
+    memberOfTheWeek: string[];
+    newPublishedArticle: string[];
+    newCreatedMatch: string[];
   };
 
   staticPages: IStaticPage[];

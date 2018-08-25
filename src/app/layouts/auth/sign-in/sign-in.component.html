@@ -3,6 +3,14 @@
 
     <ng-template #signInAlertContainer></ng-template>
 
+    <div *ngIf="emailNotVerified" class="pb-1">
+      <button type="button"
+              mat-raised-button
+              color="primary">
+        {{ 'Global.Login.loginButton' | translate }}
+      </button>
+    </div>
+
     <div class="pb-1">
       <mat-form-field style="width: 100%">
         <input matInput placeholder="{{'Global.Login.Email' | translate}}" formControlName="email">

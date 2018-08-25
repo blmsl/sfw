@@ -71,6 +71,7 @@ import { SharedArticleModule }             from '../../shared/components/article
     RouterModule.forChild(teamRoutes),
     SharedModule,
     SharedArticleModule,
+    SharedMatchModule,
     TimeLineModule
   ],
   declarations: [

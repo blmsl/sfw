@@ -488,7 +488,7 @@
       }
     },
     "forbidden": {
-      "text": "Dir fehlen die Berechtigungen um die gewünschte Seite zu laden. Bitte wende Dich an einen Administrator um die Berechtiungen zu erhalten.",
+      "text": "<p>Du hast nur einen Gastzugang und Dir fehlen deshalb die Berechtigungen um die Administrationsoberfläche zu laden.</p><p>Bitte wende Dich an einen Administrator um die Berechtiungen zu erhalten.</p>",
       "title": "Zugriff verboten"
     },
     "home": "Startseite",
@@ -1145,6 +1145,11 @@
       "noSeasons": "Es wurden noch keine Saisons erstellt oder importiert."
     },
     "applications": {
+      "calendars": {
+        "link": "Google Link",
+        "fieldTitle": "Name des Kalenders",
+        "title": "Verknüpfte Google-Kalender"
+      },
       "downtime": {
         "checkbox": "Status der Hauptseite",
         "isActive": "Wartungsmodus aktiv",
@@ -1307,6 +1312,17 @@
         "mediaTitle": "Verknüpfte Dateien",
         "noMatch": "Es wurden keine Spiele für diese Mannschaft gefunden.",
         "noTeamLogo": "Es wurde noch kein Foto für diese Mannschaft hochgeladen.",
+        "standings": {
+          "rank": "Pos.",
+          "team": "Verein",
+          "won": "S",
+          "draw": "U",
+          "lost": "L",
+          "matches": "Spiele",
+          "goalDiff": "Diff",
+          "goalRel": "+/-",
+          "points": "Pkte"
+        },
         "standingsTitle": "Tabellenstand"
       },
       "edit": {
@@ -1397,13 +1413,16 @@
         "categories": "Kategorien",
         "draws": "Unentschieden",
         "loss": "Niederlagen",
+        "mainTitle": "Daten",
         "management": "Mannschaftsbetreuung",
         "noPhoto": "Es wurde noch kein Mannschaftsfoto hochgeladen",
         "playerList": "Spielerliste",
         "players": "Spieler",
         "photoDescription": "Bild-Beschreibung",
         "positions": "Aufgaben innerhalb der Mannschaft",
+        "positionsTitle": "Positionen",
         "season": "Spielzeit",
+        "teamImage": "Mannschaftsfoto",
         "title": "Mannschaft des Monats",
         "viewProfile": "Details anzeigen",
         "wins": "Siege"
