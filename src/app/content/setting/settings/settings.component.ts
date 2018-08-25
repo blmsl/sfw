@@ -9,7 +9,6 @@ import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.
 import { IStaticPage } from '../../../shared/interfaces/static-page.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { urlShortener } from '../../../shared/config/url-shortener.config';
 import { ISocialNetwork } from '../../../shared/interfaces/social-network.interface';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { UserService } from '../../../shared/services/user/user.service';
@@ -51,46 +50,43 @@ export class SettingsComponent implements OnInit {
       this.savedApplication = Object.freeze(Object.assign({}, this.application));
     });
 
-    if (this.application) {
-      this.form = this.fb.group({
-        page: this.initPage(),
-        urlShortening: this.application.urlShortening,
-        registration: this.application.registration,
-        downtime: this.initDowntime(),
-        staticPages: this.initStaticPages(),
-        social: this.initSocialProviders(),
-        mailing: this.initMailing(),
-        assignedCalendars: this.initCalendars()
-      });
+    this.form = this.fb.group({
+      page: this.fb.group({
+        name: [this.application.page.name, [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
+        description: this.application.page.description,
+        email: this.application.page.email,
+        title: this.application.page.title
+      }),
+      // urlShortening: this.application.urlShortening,
+      registration: this.application.registration,
+      downtime: this.fb.group({
+        isEnabled: this.application.downtime.isEnabled,
+        message: this.application.downtime.message
+      }),
+      staticPages: this.initStaticPages(),
+      social: this.initSocialProviders(),
+      mailing: this.fb.group({
+        birthdayRecipients: this.application.mailing ? this.application.mailing.birthdayRecipients : null,
+        teamOfTheMonth: this.application.mailing ? this.application.mailing.teamOfTheMonth : null,
+        memberOfTheWeek: this.application.mailing ? this.application.mailing.memberOfTheWeek : null,
+        newPublishedArticle: this.application.mailing ? this.application.mailing.newPublishedArticle : null,
+        newCreatedMatch: this.application.mailing ? this.application.mailing.newCreatedMatch : null,
+      }),
+      assignedCalendars: this.initCalendars()
+    });
 
-      this.form.valueChanges.pipe(
-        debounceTime(1000),
-        distinctUntilChanged()
-      ).subscribe((changes: IApplication) => {
-        this.application = Object.assign({}, this.application, changes);
-        console.log(this.form);
-        if (!this.form.invalid) {
-          this.saveSettings();
-        }
-      });
-    }
-
-    for (let i = 0; i < urlShortener.length; i++) {
-      this.shorteningProviders.push({
-        title: urlShortener[i]['title'],
-        key: urlShortener[i]['key']
-      });
-    }
-  }
-
-  initPage(): FormGroup {
-    return this.fb.group({
-      name: [this.application.page.name, [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
-      description: this.application.page.description,
-      email: this.application.page.email,
-      title: this.application.page.title
+    this.form.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()
+    ).subscribe((changes: IApplication) => {
+      this.application = Object.assign({}, this.application, changes);
+      console.log(this.form);
+      if (!this.form.invalid) {
+        this.saveSettings();
+      }
     });
   }
+
 
   initCalendars(): FormArray {
     const formArray = [];
@@ -106,23 +102,6 @@ export class SettingsComponent implements OnInit {
     return this.fb.group({
       link: [calendar ? calendar.link : '', [Validators.required]],
       title: [calendar ? calendar.title : '', [Validators.required]]
-    });
-  }
-
-  initMailing(): FormGroup {
-    return this.fb.group({
-      birthdayRecipients: this.application.mailing ? this.application.mailing.birthdayRecipients : null,
-      teamOfTheMonth: this.application.mailing ? this.application.mailing.teamOfTheMonth : null,
-      memberOfTheWeek: this.application.mailing ? this.application.mailing.memberOfTheWeek : null,
-      newPublishedArticle: this.application.mailing ? this.application.mailing.newPublishedArticle : null,
-      newCreatedMatch: this.application.mailing ? this.application.mailing.newCreatedMatch : null,
-    });
-  }
-
-  initDowntime(): FormGroup {
-    return this.fb.group({
-      isEnabled: this.application.downtime.isEnabled,
-      message: this.application.downtime.message
     });
   }
 

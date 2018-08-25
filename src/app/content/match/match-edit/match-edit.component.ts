@@ -1,9 +1,9 @@
 import {
   AfterViewChecked,
   ChangeDetectorRef,
-  Component,
+  Component, OnDestroy,
   OnInit
-}                              from '@angular/core';
+} from '@angular/core';
 import { IMatch }              from '../../../shared/interfaces/match/match.interface';
 import {
   ActivatedRoute,
@@ -19,7 +19,7 @@ import {
 }                              from '@angular/forms';
 import { IPublication }        from '../../../shared/interfaces/publication.interface';
 import { LocationService }     from '../../../shared/services/location/location.service';
-import { Observable }          from 'rxjs/index';
+import { Observable, Subscription } from 'rxjs/index';
 import { ILocation }           from '../../../shared/interfaces/location/location.interface';
 import { ITeam }               from '../../../shared/interfaces/team/team.interface';
 import { TeamService }         from '../../../shared/services/team/team.service';
@@ -35,22 +35,29 @@ import {
   debounceTime,
   distinctUntilChanged
 }                              from 'rxjs/internal/operators';
+import { MemberService } from '../../../shared/services/member/member.service';
+import { IMember } from '../../../shared/interfaces/member/member.interface';
 
 @Component({
   selector: 'match-edit',
   templateUrl: './match-edit.component.html',
   styleUrls: [ './match-edit.component.scss' ]
 })
-export class MatchEditComponent implements OnInit, AfterViewChecked {
+export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   public match: IMatch;
   public form: FormGroup;
 
   public assignedArticles$: Observable<IArticle[]>;
+
+  public assignedTeam: ITeam;
+  public assignedMembers: IMember[];
+
+  public notAssignedArticles$: Observable<IArticle[]>;
   public locations$: Observable<ILocation[]>;
-  public teams$: Observable<ITeam[]>;
   public categories$: Observable<ICategory[]>;
   public seasons$: Observable<ISeason[]>;
+  public teams$: Observable<ITeam[]>;
 
   public otherMatchEventList: {
     id: number;
@@ -60,6 +67,10 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
     id: number;
     title: string;
   }[];
+
+  private teamSubscription: Subscription;
+  private memberSubscription: Subscription;
+
 
   constructor(private route: ActivatedRoute,
               private cdRef: ChangeDetectorRef,
@@ -72,6 +83,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
               private categoryTypeService: CategoryTypeService,
               private seasonService: SeasonService,
               private articleService: ArticleService,
+              private memberService: MemberService,
               private router: Router) {
     this.categories$ = this.categoryService.getCategoriesByCategoryType('team.types');
     this.locations$ = locationService.locations$;
@@ -84,7 +96,16 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.route.data.subscribe((data: { match: IMatch }) => {
       this.match = data.match;
+
       this.assignedArticles$ = this.articleService.getArticlesForMatch(this.match.id);
+      this.notAssignedArticles$ = this.articleService.getArticlesNotAssignedToMatch(this.match);
+
+      this.teamSubscription = this.teamService.getTeamById(this.match.assignedTeam).subscribe((team: ITeam) => {
+        this.assignedTeam = team;
+        this.memberSubscription = this.memberService.getMembersByIds(team.assignedPlayers).subscribe((members: IMember[]) => {
+          this.assignedMembers = members;
+        });
+      });
     });
 
     this.form = this.fb.group({
@@ -135,6 +156,11 @@ export class MatchEditComponent implements OnInit, AfterViewChecked {
         this.saveMatch();
       }
     });
+  }
+
+  ngOnDestroy(){
+    this.memberSubscription.unsubscribe();
+    this.teamSubscription.unsubscribe();
   }
 
   ngAfterViewChecked() {

@@ -6,8 +6,9 @@ import { AuthService } from '../auth/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ILocation } from '../../interfaces/location/location.interface';
 import { ITeam } from '../../interfaces/team/team.interface';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { IInterview } from '../../interfaces/member/interview.interface';
+import { IMatch } from '../../interfaces/match/match.interface';
 
 @Injectable()
 export class ArticleService {
@@ -89,6 +90,29 @@ export class ArticleService {
       observables.push(this.getArticleById(interviews[i].assignedArticleId).pipe(
         take(1)
       ));
+    }
+    return forkJoin(...observables);
+  }
+
+  getArticlesNotAssignedToMatch(match: IMatch): Observable<IArticle[]>{
+    return this.articles$.pipe(
+      map((articles: IArticle[]) => {
+        return articles.map((article: IArticle) => {
+          if(!article.assignedMatches || !article.assignedMatches.includes(match.id)){
+            return article;
+          }
+        });
+      })
+    )
+  }
+
+  assignMatchToArticles(matchId: string, articles: IArticle[]): Observable<any> {
+    if(!matchId || !articles || articles.length === 0) return;
+
+    let observables = [];
+    for(let i = 0; i < articles.length; i++) {
+      articles[i].assignedMatches ? articles[i].assignedMatches.push(matchId) : articles[i].assignedMatches = [matchId];
+      observables.push(this.updateArticle(articles[i].id, articles[i]));
     }
     return forkJoin(...observables);
   }

@@ -1,5 +1,4 @@
-<mat-card [formGroup]="form"
-          *ngIf="members$ | async as members; else loadingTemplate">
+<mat-card [formGroup]="form">
 
   <mat-card-title fxLayout="column"
                   fxLayout.gt-sm="row"
@@ -19,54 +18,47 @@
   </mat-card-title>
 
   <mat-card-content fxLayout="column"
-                    fxLayout.gt-sm="row"
-                    *ngIf="team.assignedPlayers && team.assignedPlayers.length > 0">
+                    fxLayout.gt-sm="row">
     <div class="players"
-         [dragula]="playerList"
-         fxFlex="93"
+         fxFlex="90"
          *ngIf="form.get('assignedFormation').value">
 
-      <match-player
-        *ngFor="let position of (tacticalFormations | filterBy: ['title'] : form.get('assignedFormation').value)[0].positionList; trackBy: title"
-        [ngClass]="'player ' + position"
-        [members]="members"
-        [assignedPosition]="form.get('assignedPlayers').value | filterBy: ['position'] : position">
+      <match-player *ngFor="let position of (tacticalFormations | filterBy: ['title'] : form.get('assignedFormation').value)[0].positionList; trackBy: title"
+                    [ngClass]="'player ' + position"
+                    [dragula]="playerList"
+                    [assignedPosition]="form.get('assignedPlayers').value | filterBy: ['position'] : position"
+                    [members]="members">
       </match-player>
     </div>
+
     <div class="substitutions"
-         fxFlex="7"
+         fxFlex="10"
          *ngIf="form.get('assignedFormation').value">
       <mat-card-subtitle>{{'general.matches.edit.substituteBench' | translate}}</mat-card-subtitle>
-
-      <div fxLayout="row wrap"
+      <!--<div fxLayout="row wrap"
            [dragula]="playerList">
-        <!--<match-player
+        <match-player
           *ngFor="let member of getSubstitutesList((tacticalFormations | filterBy: ['title'] : form.get('assignedFormation').value)[0].maxSubstitutes, form.get('assignedSubstitutes').value, members)"
           [id]="member.id"
           [member]="member">
-        </match-player>-->
-      </div>
-
+        </match-player>
+      </div>-->
     </div>
   </mat-card-content>
 
 
-  <mat-card-actions *ngIf="team.assignedPlayers
+  <mat-card-actions><!-- *ngIf="(team.assignedPlayers
                     | isMemberInStartingElevenFilter : form.get('assignedPlayers').value
-                    | isMemberInSubstitutesListFilter : form.get('assignedSubstitutes').value as players">
+                    | isMemberInSubstitutesListFilter : form.get('assignedSubstitutes').value) as players" -->
     <mat-card-subtitle>{{'general.matches.edit.squad' | translate}}</mat-card-subtitle>
 
-    <p *ngIf="!team.assignedPlayers || team.assignedPlayers.length === 0">
-      {{'general.matches.edit.noAssignedPlayers' | translate}}
-    </p>
+    <p *ngIf="!members || members.length === 0">{{'general.matches.edit.noAssignedPlayers' | translate}}</p>
 
     <div fxLayout="row wrap"
-         fxLayoutGap="10px"
          [dragula]="playerList">
-      <match-player fxFlex="8.4%"
-                    *ngFor="let memberId of players"
-                    [id]="(members | filterBy: ['id'] : memberId)[0].id"
-                    [member]="(members | filterBy: ['id'] : memberId)[0]">
+      <match-player fxFlex="5"
+                    *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
+                    [member]="member">
       </match-player>
     </div>
   </mat-card-actions>

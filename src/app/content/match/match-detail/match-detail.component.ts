@@ -38,7 +38,7 @@ export class MatchDetailComponent implements OnInit {
     this.route.data.subscribe((data: { match: IMatch }) => {
       this.match = data.match;
       this.assignedPlayers$ = this.memberService.getMembersByPosition(this.match.assignedPlayers);
-      this.assignedSubstitutes$ = this.memberService.getMembersByPosition(this.match.assignedSubstitutes);
+      // this.assignedSubstitutes$ = this.memberService.getMembersByPosition(this.match.assignedSubstitutes);
       this.assignedArticles$ = this.articleService.getArticlesForMatch(this.match.id);
       this.assignedCategories$ = this.categoryService.getCategoriesByIds(this.match.assignedCategories);
     });

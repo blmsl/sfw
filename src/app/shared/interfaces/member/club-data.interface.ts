@@ -6,5 +6,3 @@ export interface IClubData {
   assignedClub?: string;                    //
   positionsInClub?: string;                 //
 }
-
-// ToDo: Positions in Club

@@ -13,7 +13,6 @@ export class SettingsCalendarsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.form);
   }
 
 }

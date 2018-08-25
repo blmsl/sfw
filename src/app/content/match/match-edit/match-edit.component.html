@@ -25,15 +25,16 @@
           </div>
         </div>
       </mat-tab>
-      <!--<mat-tab [label]="'general.matches.edit.startingEleven.title' | translate">
+      <mat-tab [label]="'general.matches.edit.startingEleven.title' | translate">
         <p *ngIf="!form.get('assignedTeam').value">{{'general.matches.edit.noAssignedTeam' | translate}}</p>
 
-        <match-edit-starting-eleven *ngIf="form.get('assignedTeam').value && teams"
+        <match-edit-starting-eleven *ngIf="assignedTeam && assignedMembers; else loadingTemplate"
                                     [form]="form"
                                     (addPlayerToStartingEleven)="addPlayerToStartingEleven($event)"
-                                    [team]="(teams | filterBy: ['id'] : form.get('assignedTeam').value)[0]">
+                                    [members]="assignedMembers"
+                                    [team]="assignedTeam">
         </match-edit-starting-eleven>
-      </mat-tab>-->
+      </mat-tab>
       <mat-tab
         [label]="('general.matches.edit.articles' | translate) + ' & ' + ('general.matches.edit.match' | translate)">
         <div fxLayout="column"
@@ -54,15 +55,15 @@
           </div>
 
           <div fxFlex.gt-sm="50">
-            <match-edit-articles *ngIf="assignedArticles$ |async as assignedArticles; else loadingTemplate"
+            <match-edit-articles *ngIf="assignedArticles$ | async as assignedArticles; else loadingTemplate"
                                  [match]="match"
                                  [articles]="assignedArticles">
             </match-edit-articles>
 
-            <!--<match-edit-article-form *ngIf="articles$ |async as articles; else loadingTemplate"
+            <match-edit-article-form *ngIf="notAssignedArticles$ | async as notAssignedArticles; else loadingTemplate"
                                      [match]="match"
-                                     [articles]="articles">
-            </match-edit-article-form>-->
+                                     [notAssignedArticles]="notAssignedArticles">
+            </match-edit-article-form>
           </div>
         </div>
       </mat-tab>

@@ -1,0 +1,26 @@
+<mat-card *ngIf="assignedArticles && match">
+  <mat-card-content>
+    <mat-tab-group [dynamicHeight]="true">
+      <mat-tab [label]="'general.matches.detail.previewTitle' | translate">
+        <match-preview [categories]="assignedCategories"
+                       [match]="match">
+        </match-preview>
+      </mat-tab>
+      <mat-tab [label]="'general.matches.detail.startingElevenTitle' | translate">
+        <!--<match-detail-starting-eleven [assignedPlayers]="assignedPlayers"
+                                      [assignedSubstitutes]="assignedSubstitutes"
+                                      [match]="match">
+        </match-detail-starting-eleven>-->
+      </mat-tab>
+      <mat-tab [disabled]="!match.assignedMatchEvents || match.assignedMatchEvents.length === 0"
+               [label]="'general.matches.detail.matchEventsTitle' | translate">
+        <match-detail-events [eventCategories]="eventCategories"
+                             [matchEvents]="match.assignedMatchEvents"></match-detail-events>
+      </mat-tab>
+      <mat-tab [disabled]="!assignedArticles || assignedArticles.length === 0"
+               [label]="('general.matches.detail.assignedArticle' | translate) + (assignedArticles ? ' (' + assignedArticles.length + ')' : '' )">
+        <match-detail-articles [assignedArticles]="assignedArticles"></match-detail-articles>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

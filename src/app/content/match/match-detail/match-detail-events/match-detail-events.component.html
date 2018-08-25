@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-title>
+    {{ 'general.matches.edit.events.title' | translate }}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
+    <div class="activity-stream">
+      <mat-card class="shadow-none"
+                *ngFor="let event of matchEvents | orderBy: ['ordering']; let first = first; let last = last">
+        <mat-card-header>
+          <img matCardAvatar
+               src="/assets/sfw/sfw.png">
+          <mat-card-title *ngIf="event.title || event.playMinute">
+            <span style="font-weight: bolder" *ngIf="event.playMinute">{{event.playMinute}}.</span>
+            {{event.title}}
+          </mat-card-title>
+          <mat-card-subtitle *ngIf="event.assignedCategory">
+            {{ 'general.matches.events.' + (eventCategories | filterBy: ['id'] : event.assignedCategory)[0].title |
+            translate }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content [innerHTML]="event.description"></mat-card-content>
+      </mat-card>
+    </div>
+
+  </mat-card-content>
+</mat-card>

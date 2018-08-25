@@ -3,18 +3,29 @@
     {{'general.matches.edit.articles.assignArticleTitle' | translate}}
   </mat-card-title>
 
-  <mat-card-content>
+  <mat-card-content fxLayout="column"
+                    fxLayoutGap="15px"
+                    fxLayout.gt-sm="row">
 
-    <mat-form-field fxFlex.gt-sm="100">
+
+    <!--<mat-form-field fxFlex.gt-sm="80">
       <mat-select multiple
                   placeholder="{{'general.matches.edit.articles.assignArticle' | translate}}"
-                  formControlName="assignedArticles">
-        <mat-option *ngFor="let article of articles | orderBy: ['title']"
+                  formControlName="assignArticles">
+        <mat-option *ngFor="let article of notAssignedArticles | orderBy: ['title']"
                     [value]="article">
           {{article.title}}
         </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field>-->
+
+    <div>
+      <button mat-raised-button
+              (click)="assignArticlesToMatch()"
+              color="primary">
+        {{'general.matches.edit.articles.assignArticleToMatch' | translate}}
+      </button>
+    </div>
 
   </mat-card-content>
 

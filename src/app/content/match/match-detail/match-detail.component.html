@@ -4,41 +4,13 @@
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-
-    <div fxLayout="column"
-         fxLayout.gt-sm="row"
-         fxLayoutGap="10px">
-      <div fxFlex.gt-sm="30">
-        <match-preview *ngIf="assignedCategories$ | async as categories; else loadingTemplate"
-                       [categories]="categories"
-                       [match]="match">
-        </match-preview>
-      </div>
-
-      <div fxFlex.gt-sm="70">
-        <mat-card>
-          <mat-card-content>
-            <mat-tab-group [dynamicHeight]="true">
-              <mat-tab [label]="'general.matches.detail.startingElevenTitle' | translate">
-                    <match-detail-starting-eleven [assignedPlayers]="assignedPlayers$ | async "
-                                                  [assignedSubstitutes]="assignedSubstitutes$ | async"
-                                                  [match]="match">
-                    </match-detail-starting-eleven>
-              </mat-tab>
-              <mat-tab [label]="'general.matches.detail.matchEventsTitle' | translate">
-                <ul style="color: red">
-                  <li>Ergebnis oder Sonderereignis (Nichtantritt, Spielabbruch etc.) eintragen</li>
-                  <li>Spielverlauf (Tore, Chancen, Karten, Auswechselungen, Sonstiges)</li>
-                </ul>
-              </mat-tab>
-              <mat-tab [label]="'general.matches.detail.assignedArticle' | translate">
-                <match-detail-articles [articles]="assignedArticles$ | async"></match-detail-articles>
-              </mat-tab>
-            </mat-tab-group>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
+    <match-detail-content *ngIf="assignedCategories$ | async as assignedCategories; else loadingTemplate"
+                          [match]="match"
+                          [assignedCategories]="assignedCategories"
+                          [assignedPlayers]="assignedPlayers$ | async"
+                          [assignedSubstitutes]="assignedSubstitutes$ | async"
+                          [assignedArticles]="assignedArticles$ | async">
+    </match-detail-content>
   </mat-card-content>
 
   <mat-card-actions fxLayout.xs="column"

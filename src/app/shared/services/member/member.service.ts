@@ -50,21 +50,23 @@ export class MemberService {
     return forkJoin(memberObservables);
   }
 
-  getMembersByPosition(memberIds: {
+  getMembersByPosition(positions: {
     memberId: string;
     position: string;
   }[]): Observable<IMember[]> {
-    if (!memberIds || memberIds.length === 0) {
+    if (!positions || positions.length === 0) {
       return of([]);
     }
 
-    let memberObservables: Observable<IMember>[] = [];
-    for (let i = 0; i < memberIds.length; i++) {
-      memberObservables.push(this.getMemberById(memberIds[i].memberId).pipe(
-        take(1)
-      ));
+    let observables: Observable<IMember>[] = [];
+    for (let i = 0; i < positions.length; i++) {
+      if(positions[i].memberId !== '') {
+        observables.push(this.getMemberById(positions[i].memberId).pipe(
+          take(1)
+        ));
+      }
     }
-    return forkJoin(memberObservables);
+    return forkJoin(observables);
   }
 
   getMembersByTeamPosition(memberIds: ITeamManagement[]): Observable<IMember[]> {
@@ -72,13 +74,13 @@ export class MemberService {
       return of([]);
     }
 
-    let memberObservables: Observable<IMember>[] = [];
+    let observables: Observable<IMember>[] = [];
     for (let i = 0; i < memberIds.length; i++) {
-      memberObservables.push(this.getMemberById(memberIds[i].assignedMember).pipe(
+      observables.push(this.getMemberById(memberIds[i].assignedMember).pipe(
         take(1)
       ));
     }
-    return forkJoin(memberObservables);
+    return forkJoin(observables);
   }
 
   getMembersByLocationContacts(locationContacts: ILocationContact[]): Observable<IMember[]> {
@@ -86,15 +88,15 @@ export class MemberService {
       return of([]);
     }
 
-    let memberObservables: Observable<IMember>[] = [];
+    let observables: Observable<IMember>[] = [];
     for (let i = 0; i < locationContacts.length; i++) {
       if (locationContacts[i].isMember) {
-        memberObservables.push(this.getMemberById(locationContacts[i].assignedMember).pipe(
+        observables.push(this.getMemberById(locationContacts[i].assignedMember).pipe(
           take(1)
         ));
       }
     }
-    return forkJoin(memberObservables);
+    return forkJoin(observables);
   }
 
   getZodiac(birthday) {

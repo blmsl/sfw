@@ -1,67 +1,52 @@
 <mat-card [formGroup]="form">
-    <mat-card-title>
-        {{'general.members.edit.interviews.title' | translate}}
-    </mat-card-title>
-    <mat-card-subtitle>{{'general.members.edit.interviews.text' | translate}}</mat-card-subtitle>
-    <mat-card-content>
+  <mat-card-title>
+    {{'general.members.edit.interviews.title' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle>{{'general.members.edit.interviews.text' | translate}}</mat-card-subtitle>
+  <hr/>
+  <mat-card-content formArrayName="assignedInterviews">
 
-        <div *ngIf="articles$ | async as articles; else loadingTemplate">
+    <p *ngIf="articles.length === 0">
+      {{'general.members.edit.interviews.noArticles' | translate}}
+    </p>
 
-            <p *ngIf="articles.length === 0">
-                {{'general.members.edit.interviews.noArticles' | translate}}
-            </p>
 
-            <div fxFlex="100"
-                 *ngIf="articles.length > 0"
-                 formArrayName="assignedInterviews">
+    <button mat-raised-button
+            *ngIf="articles.length > 0"
+            style="margin-bottom: 25px"
+            type="button"
+            color="primary"
+            (click)="addEntry()">
+      {{'general.members.edit.interviews.addEntry' | translate}}
+    </button>
 
-                <button mat-raised-button
-                        style="margin-bottom: 25px"
-                        type="button"
-                        color="primary"
-                        (click)="addEntry()">
-                    {{'general.members.edit.interviews.addEntry' | translate}}
-                </button>
+    <div *ngIf="showForm">
 
-                <div *ngIf="showForm">
-                    <div>
-                        <div fxLayout="row"
+      <div *ngFor="let control of form.get('assignedInterviews')['controls']; let i = index">
 
-                             *ngFor="let control of form.get('assignedInterviews')['controls']; let i = index">
+        <div [formGroupName]="i" fxLayout="row">
 
-                            <div fxFlex="100"
-                                 [formGroupName]="i">
+          <mat-form-field fxFlex="80">
+            <mat-select
+              placeholder="{{'general.members.edit.interviews.articleTitle' | translate}}"
+              formControlName="assignedArticleId">
+              <mat-option *ngFor="let article of articles | orderBy: ['title']"
+                          [value]="article.id">
+                {{article.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-                                <div fxLayout="row">
+          <button mat-icon-button
+                  (click)="delete.emit(i)"
+                  color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
 
-                                    <mat-form-field fxFlex="90">
-                                        <mat-select
-                                                placeholder="{{'general.members.edit.interviews.articleTitle' | translate}}"
-                                                formControlName="assignedArticleId">
-                                            <mat-option *ngFor="let article of articles | orderBy: ['title']"
-                                                        [value]="article.id">
-                                                {{article.title}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-
-                                    <button mat-icon-button
-                                            (click)="delete.emit(i)"
-                                            color="warn">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </mat-card-content>
+
+      </div>
+    </div>
+  </mat-card-content>
 </mat-card>
 
-<ng-template #loadingTemplate>
-    <loading-indicator></loading-indicator>
-</ng-template>

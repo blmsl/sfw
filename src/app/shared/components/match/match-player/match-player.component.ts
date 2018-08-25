@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IMember } from '../../../interfaces/member/member.interface';
-import { Observable } from 'rxjs/index';
+import { Observable, of } from 'rxjs/index';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 import { MediaItemService } from '../../../services/media/media-item.service';
 
@@ -25,6 +25,10 @@ export class MatchPlayerComponent implements OnInit {
       if (!this.memberImage) {
         this.memberImage = this.mediaItemService.getCurrentImage(['members', 'profile'], this.member.id, '/assets/sfw/placeholder/avatar_male.jpg');
       }
+    } else {
+      this.memberImage = of({
+        downloadURL: '/assets/sfw/placeholder/avatar_male.jpg'
+      });
     }
   }
 

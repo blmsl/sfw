@@ -18,7 +18,6 @@ export class MatchEditEventsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.assignedMatchEvents);
   }
 
 }

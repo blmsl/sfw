@@ -12,6 +12,8 @@ export interface ITeam {
   title: string;
   subTitle?: string;
 
+  info?: string;
+
   externalTeamLink?: string;
   isOfficialTeam: boolean;
   isMainTeam?: boolean;

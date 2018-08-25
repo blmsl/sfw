@@ -45,6 +45,8 @@ import { MatchEditArticleFormComponent } from './match-edit/match-edit-articles/
 import { MatchDetailArticlesComponent } from './match-detail/match-detail-articles/match-detail-articles.component';
 import { MatchEditResultComponent } from './match-edit/match-edit-result/match-edit-result.component';
 import { SharedArticleModule } from '../../shared/components/article/shared-article.module';
+import { MatchDetailContentComponent } from './match-detail/match-detail-content/match-detail-content.component';
+import { MatchDetailEventsComponent } from './match-detail/match-detail-events/match-detail-events.component';
 
 @NgModule({
   imports: [
@@ -84,7 +86,9 @@ import { SharedArticleModule } from '../../shared/components/article/shared-arti
     MatchEditArticlesComponent,
     MatchEditArticleFormComponent,
     MatchDetailArticlesComponent,
-    MatchEditResultComponent
+    MatchEditResultComponent,
+    MatchDetailContentComponent,
+    MatchDetailEventsComponent
   ],
   providers: [
     ArticleService,

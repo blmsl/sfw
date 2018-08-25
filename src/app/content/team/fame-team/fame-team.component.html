@@ -34,11 +34,56 @@
             </mat-list>
 
           </mat-card-content>
+          <hr>
+          <mat-card-content>
+            <div fxLayout="row" class="text-xs-center">
+              <div fxFlex="33" style="color: green">
+                <h1 class="ma-0"><b>23,8K</b></h1>
+                <small>{{'general.teams.fame.wins' | translate}}</small>
+              </div>
+              <div fxFlex="33" style="color: red">
+                <h1 class="ma-0"><b>569</b></h1>
+                <small>{{'general.teams.fame.loss' | translate}}</small>
+              </div>
+              <div fxFlex="33">
+                <h1 class="ma-0"><b>67</b></h1>
+                <small>{{'general.teams.fame.draws' | translate}}</small>
+              </div>
+            </div>
+          </mat-card-content>
+          <hr>
+          <mat-card-content *ngIf="teamOfTheMonth.info">
+            <h4 class="mt-0">{{'general.teams.fame.info' | translate}}</h4>
+            <p [innerHTML]="teamOfTheMonth.info"></p>
+          </mat-card-content>
+          <mat-card-actions>
+            <div style="margin-top: 25px"
+                 fxLayout.gt-sm="row"
+                 fxLayout="column">
+              <span></span>
+              <span fxFlex></span>
+              <button type="button"
+                      mat-raised-button
+                      color="primary"
+                      [routerLink]="['/teams/detail', teamOfTheMonth.id]">
+                {{'general.teams.fame.viewProfile' | translate}}
+              </button>
+              <button type="button"
+                      mat-raised-button
+                      color="accent"
+                      [routerLink]="['/teams/edit', teamOfTheMonth.id]">
+                {{'general.edit' | translate }}
+              </button>
+            </div>
+          </mat-card-actions>
         </mat-card>
 
         <mat-card *ngIf="assignedPositions$ | async as assignedPositions;">
           <mat-card-title>{{'general.teams.fame.positionsTitle' | translate}}</mat-card-title>
           <mat-card-content>
+            <p *ngIf="!teamOfTheMonth.assignedPositions || !teamOfTheMonth.assignedPositions.length">
+              {{'general.teams.edit.position.noPosition' | translate}}
+            </p>
             <div *ngFor="let position of teamOfTheMonth.assignedPositions">
               <h3>{{position.position}}</h3>
               <mat-list>
@@ -56,41 +101,43 @@
         </mat-card>
       </div>
 
-      <mat-card fxFlex="35">
-        <mat-card-title>{{'general.teams.detail.standingsTitle' | translate}}</mat-card-title>
-        <mat-card-content>
-          <p *ngIf="!teamOfTheMonth.currentStandings">{{'general.teams.fame.noStandings' | translate}}</p>
+      <div fxFlex="35">
+        <mat-card>
+          <mat-card-title>{{'general.teams.detail.standingsTitle' | translate}}</mat-card-title>
+          <mat-card-content>
+            <p *ngIf="!teamOfTheMonth.currentStandings">{{'general.teams.fame.noStandings' | translate}}</p>
 
-          <table class="table table-condensed" *ngIf="teamOfTheMonth.currentStandings">
-            <thead>
-            <tr>
-              <td>{{'general.teams.detail.standings.rank' | translate}}</td>
-              <td>{{'general.teams.detail.standings.team' | translate}}</td>
-              <td>{{'general.teams.detail.standings.matches' | translate}}</td>
-              <td>{{'general.teams.detail.standings.won' | translate}}</td>
-              <td>{{'general.teams.detail.standings.draw' | translate}}</td>
-              <td>{{'general.teams.detail.standings.lost' | translate}}</td>
-              <td>{{'general.teams.detail.standings.goalRel' | translate}}</td>
-              <td>{{'general.teams.detail.standings.goalDiff' | translate}}</td>
-              <td>{{'general.teams.detail.standings.points' | translate}}</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let standing of teamOfTheMonth.currentStandings">
-              <td>{{standing.Rank}}</td>
-              <td>{{standing.Team}}</td>
-              <td>{{standing.Matches}}</td>
-              <td>{{standing.Won}}</td>
-              <td>{{standing.Draw}}</td>
-              <td>{{standing.Lost}}</td>
-              <td>{{standing.GoalRel}}</td>
-              <td>{{standing.GoalDiff}}</td>
-              <td>{{standing.Points}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </mat-card-content>
-      </mat-card>
+            <table class="table table-condensed" *ngIf="teamOfTheMonth.currentStandings">
+              <thead>
+              <tr>
+                <td>{{'general.teams.detail.standings.rank' | translate}}</td>
+                <td>{{'general.teams.detail.standings.team' | translate}}</td>
+                <td>{{'general.teams.detail.standings.matches' | translate}}</td>
+                <td>{{'general.teams.detail.standings.won' | translate}}</td>
+                <td>{{'general.teams.detail.standings.draw' | translate}}</td>
+                <td>{{'general.teams.detail.standings.lost' | translate}}</td>
+                <td>{{'general.teams.detail.standings.goalRel' | translate}}</td>
+                <td>{{'general.teams.detail.standings.goalDiff' | translate}}</td>
+                <td>{{'general.teams.detail.standings.points' | translate}}</td>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let standing of teamOfTheMonth.currentStandings">
+                <td>{{standing.Rank}}</td>
+                <td>{{standing.Team}}</td>
+                <td>{{standing.Matches}}</td>
+                <td>{{standing.Won}}</td>
+                <td>{{standing.Draw}}</td>
+                <td>{{standing.Lost}}</td>
+                <td>{{standing.GoalRel}}</td>
+                <td>{{standing.GoalDiff}}</td>
+                <td>{{standing.Points}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
       <div fxFlex="50">
         <mat-card>
@@ -118,83 +165,10 @@
 
     </div>
 
-
   </mat-card-content>
-
 </mat-card>
 
-
-<!--
-    <h3 style="margin-top: 25px;">{{'general.teams.edit.management.title' | translate}}</h3>
-    <span class="block mt-xs mb-xs" *ngIf="!team.assignedPositions.length">
-      {{'general.teams.edit.position.noPosition' | translate}}
-    </span>
-
-    <p *ngIf="members$ | async as members; else loadingTemplate">
-    <span class="block mt-xs mb-xs" *ngFor="let position of team.assignedPositions | orderBy: 'position.type'">
-      {{position.title}}
-      <a [routerLink]="['/members/detail', position.assignedMember]">
-        {{(members | filterBy: ['id'] : position.assignedMember)[0].mainData.lastName}} {{(members | filterBy: ['id'] : position.assignedMember)[0].mainData.firstName}}
-        {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.birthday | date: 'dd.MM.yy'}}
-        ({{position.position}})
-      </a>
-    </span>
-    </p>
-
-    <a [routerLink]="['/teams/detail', team.id]"
-       mat-raised-button
-       color="primary">{{'general.teams.fame.viewProfile' | translate}}
-    </a>
-  </span>
-
-  <div fxFlex.gt-sm="55"
-       fxFlex="100">
-    <figure *ngIf="team.photoURL; else noPhotoTemplate">
-      <div>
-        <img fxFlex="100"
-             [src]="team.photoURL"
-             alt="">
-      </div>
-      <div class="text-xs-left">
-        <small>{{'general.teams.fame.photoDescription' | translate}}</small>
-        {{team.photoDescription}}
-      </div>
-    </figure>
-  </div>
-</div>
-</mat-card-content>
-<hr>
-<mat-card-content>
-<div fxLayout="row" class="text-xs-center">
-  <div fxFlex="33" style="color: green">
-    <h1 class="ma-0"><b>23,8K</b></h1>
-    <small>{{'general.teams.fame.wins' | translate}}</small>
-  </div>
-  <div fxFlex="33" style="color: red">
-    <h1 class="ma-0"><b>569</b></h1>
-    <small>{{'general.teams.fame.loss' | translate}}</small>
-  </div>
-  <div fxFlex="33">
-    <h1 class="ma-0"><b>67</b></h1>
-    <small>{{'general.teams.fame.draws' | translate}}</small>
-  </div>
-</div>
-</mat-card-content>
-<!--<hr>
-<mat-card-content>
-<h4 class="mt-0">About</h4>
-<p>Infotext</p>
-</mat-card-content
-</mat-card>
-</div>
-
-</div>-->
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>
 </ng-template>
-
-<!--
-<ng-template #noPhotoTemplate>
-<p>{{'general.teams.fame.noPhoto' | translate}}</p>
-</ng-template>-->

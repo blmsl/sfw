@@ -576,6 +576,7 @@
         "matchEventsTitle": "Spielverlauf",
         "noAssignedArticles": "Es wurden noch keine Artikel mit diesem Spiel verknüpft.",
         "startingElevenTitle": "Aufstellung",
+        "previewTitle": "Spielübersicht",
         "title": "Spieldetails"
       },
       "edit": {
@@ -860,6 +861,7 @@
           "title": "Interviews"
         },
         "assignedAsPlayer": "Als Spieler in einer Mannschaft ...",
+        "mainTitle": "Wichtigste Daten",
         "notAssignedToAnyTeamManagements": "Das Mitglied hat noch keine Aufgaben in einer Mannschaft übernommen.",
         "notAssignedToAnyTeams": "Das Mitglied wurde noch nicht mit einer Mannschaft verknüpft.",
         "opinions": {
@@ -1341,6 +1343,8 @@
         },
         "editTeam": "Mannschaft editieren",
         "externalLink": "Externer Link",
+        "infoDescription": "Freitext",
+        "info": "Hier kann zum Beispiel ein Grußwort des Trainers geschrieben werden.",
         "isMainTeam": "Hauptmannschaft?",
         "isOfficialTeam": "Aktiver Spielbetrieb?",
         "logo": {

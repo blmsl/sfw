@@ -1,26 +1,21 @@
 <mat-card>
-
   <img *ngIf="memberImage | async as image; else loadingTemplate"
        mat-card-image
-       [src]="image.downloadURL">
-  <mat-card-content>
+       [src]="image.downloadURL" />
 
-    <span *ngIf="assignedPosition && assignedPosition.length > 0 && members">
-      <a *ngIf="(members | filterBy: ['id'] : assignedPosition[0].memberId)[0] as member"
-         [routerLink]="['/members/detail', member.id]">
-      {{member.mainData.firstName}}
-      {{member.mainData.lastName}}
-      {{member.mainData.birthday |date :'dd.MM.yy' }}
-      </a>
-
-    </span>
-    <a *ngIf="member && member.mainData"
+  <span *ngIf="assignedPosition && assignedPosition.length > 0 && members">
+    <a *ngIf="(members | filterBy: ['id'] : assignedPosition[0].memberId)[0] as member"
        [routerLink]="['/members/detail', member.id]">
-      {{member.mainData.firstName}}
-      {{member.mainData.lastName}}
-      {{member.mainData.birthday |date :'dd.MM.yy' }}
+      <mat-card-title>{{member.mainData.lastName}} {{member.mainData.firstName}}</mat-card-title>
+      <mat-card-subtitle>{{member.mainData.birthday |date :'dd.MM.yy' }}</mat-card-subtitle>
     </a>
-  </mat-card-content>
+  </span>
+
+  <a *ngIf="member && member.mainData"
+     [routerLink]="['/members/detail', member.id]">
+    <mat-card-title>{{member.mainData.lastName}} {{member.mainData.firstName}}</mat-card-title>
+    <mat-card-subtitle>{{member.mainData.birthday |date :'dd.MM.yy' }}</mat-card-subtitle>
+  </a>
 </mat-card>
 
 <ng-template #loadingTemplate>

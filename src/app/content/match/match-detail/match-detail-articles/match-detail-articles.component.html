@@ -1,19 +1,12 @@
-<div *ngIf="articles; else loadingTemplate">
+<p *ngIf="assignedArticles.length === 0">
+  {{'general.matches.detail.noAssignedArticles' | translate}}
+</p>
 
-  <p *ngIf="articles.length === 0">
-    {{'general.matches.detail.noAssignedArticles' | translate}}
-  </p>
-
-  <div fxLayout="column"
-       fxLayout.gt-sm="row"
-       fxLayoutGap="10px"
-       *ngIf="articles.length > 0">
-    <div fxFlex="50" *ngFor="let article of articles | orderBy: ['articleDate']">
-      <article-card [article]="article"></article-card>
-    </div>
+<div fxLayout="column"
+     fxLayout.gt-sm="row"
+     fxLayoutGap="10px"
+     *ngIf="assignedArticles.length > 0">
+  <div fxFlex="50" *ngFor="let article of assignedArticles | orderBy: ['articleDate']">
+    <article-card [article]="article"></article-card>
   </div>
 </div>
-
-<ng-template #loadingTemplate>
-  <loading-indicator></loading-indicator>
-</ng-template>

@@ -3,18 +3,18 @@
      fxLayoutGap="10px"
      [formGroup]="form">
 
-  <mat-form-field formGroupName="creation"
-                  fxFlex="50">
+  <mat-form-field fxFlex="50">
     <input matInput
            placeholder="{{'general.creation.creationDate' | translate}}"
            formControlName="at">
   </mat-form-field>
 
-  <mat-form-field formGroupName="creation"
-                  fxFlex="50">
+  <mat-form-field fxFlex="50">
     <mat-select placeholder="{{'general.creation.author' | translate}}"
                 formControlName="from">
+
       <mat-option value="system">{{'general.creation.viaScript' | translate}}</mat-option>
+
       <mat-option *ngFor="let user of users| orderBy: ['firstName', 'lastName', 'email']"
                   [value]="user.id">
         {{user.firstName && user.lastName ? user.firstName + ' ' + user.lastName : user.email}}
