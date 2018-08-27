@@ -178,7 +178,7 @@ export const MENUITEMS = [
         state: 'fame',
         name: 'fame',
         icon: 'alarm_on'
-      },
+      }/* ,
       {
         state: 'media',
         name: 'media',
@@ -188,7 +188,7 @@ export const MENUITEMS = [
         state: 'statistics',
         name: 'statistics',
         icon: 'trending_up'
-      }
+      } */
     ]
   },
   {

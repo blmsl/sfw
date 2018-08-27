@@ -8,7 +8,7 @@ import { IArticle } from '../../../../shared/interfaces/article.interface';
 })
 export class MatchDetailArticlesComponent implements OnInit {
 
-  @Input() articles: IArticle[];
+  @Input() assignedArticles: IArticle[];
 
   constructor() { }
 

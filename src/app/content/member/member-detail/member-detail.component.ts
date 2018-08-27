@@ -9,6 +9,10 @@ import { IClub } from '../../../shared/interfaces/club/club.interface';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { ICategory } from '../../../shared/interfaces/category.interface';
+import { ArticleService } from '../../../shared/services/article/article.service';
+import { IArticle } from '../../../shared/interfaces/article.interface';
+import { SeasonService } from '../../../shared/services/season/season.service';
+import { ISeason } from '../../../shared/interfaces/season.interface';
 
 @Component({
   selector: 'app-member-detail',
@@ -22,21 +26,30 @@ export class MemberDetailComponent implements OnInit {
   public clubs$: Observable<IClub[]>;
   public members$: Observable<IMember[]>;
   public teams$: Observable<ITeam[]>;
+  public seasons$: Observable<ISeason[]>;
+
+  public assignedArticles$: Observable<IArticle[]>;
 
   constructor(public route: ActivatedRoute,
-    private clubService: ClubService,
-    private memberService: MemberService,
-    private teamService: TeamService,
-    private categoryService: CategoryService,
-    private router: Router) {
+              private articleService: ArticleService,
+              private clubService: ClubService,
+              private memberService: MemberService,
+              private teamService: TeamService,
+              private categoryService: CategoryService,
+              private seasonService: SeasonService,
+              private router: Router) {
     this.categories$ = categoryService.categories$;
     this.clubs$ = clubService.clubs$;
     this.members$ = this.memberService.members$;
     this.teams$ = teamService.teams$;
+    this.seasons$ = seasonService.seasons$;
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { member: IMember }) => this.member = data.member);
+    this.route.data.subscribe((data: { member: IMember }) => {
+      this.member = data.member;
+      this.assignedArticles$ = this.articleService.getArticlesByInterview(this.member.assignedInterviews);
+    });
   }
 
   removeMember(member: IMember) {

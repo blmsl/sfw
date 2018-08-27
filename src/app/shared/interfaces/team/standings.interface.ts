@@ -1,11 +1,11 @@
 export interface IStanding {
-  rank: string;
-  team: string;
-  matches: number;
-  won: number;
-  draw: number;
-  lost: number;
-  goalRef: string;
-  goalDiff: string;
-  points: string;
+  Rank: string;
+  Team: string;
+  Matches: number;
+  Won: number;
+  Draw: number;
+  Lost: number;
+  GoalRel: string;
+  GoalDiff: string;
+  Points: string;
 }

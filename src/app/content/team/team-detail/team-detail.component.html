@@ -8,23 +8,23 @@
   <mat-card-content *ngIf="team; else loadingTemplate">
     <mat-tab-group [dynamicHeight]="true">
       <mat-tab label="{{'general.teams.edit.mainTitle' | translate}}">
-        <team-detail-main [seasons]="seasons$ | async"
-                          [clubs]="clubs$ | async"
-                          [categories]="categories$ | async"
+        <team-detail-main [assignedSeason]="assignedSeason$ | async"
+                          [assignedClub]="assignedClub$ | async"
+                          [assignedTeamCategories]="assignedTeamCategories$ | async"
                           [team]="team">
         </team-detail-main>
       </mat-tab>
 
       <mat-tab label="{{'general.teams.edit.management.title' | translate}}">
         <team-detail-positions [team]="team"
-                               [categories]="categories$ | async"
-                               [members]="members$ | async">
+                               [assignedPlayers]="assignedPlayers$ | async"
+                               [assignedPositions]="assignedPositions$ | async">
         </team-detail-positions>
       </mat-tab>
 
       <mat-tab label="{{'general.teams.edit.training.title' | translate}}">
         <team-detail-training [team]="team"
-                              [locations]="locations$ | async">
+                              [assignedLocations]="assignedLocations$ | async">
         </team-detail-training>
       </mat-tab>
 
@@ -33,13 +33,9 @@
       </mat-tab>
 
       <mat-tab label="{{'general.teams.edit.matches.title' | translate}}">
-        <ul>
-          <li>höchster Sieg, höchste Niederlage</li>
-          <li>Serie</li>
-        </ul>
-        <team-detail-matches [categories]="categories$ | async"
-                             [matches]="matches$ | async"
-                             [events]="matchService.getOtherEventList() | orderBy: ['title']"
+        <team-detail-matches [assignedTeamCategories]="assignedTeamCategories$ | async"
+                             [assignedMatches]="assignedMatches$ | async"
+                             [events]="otherEventList | orderBy: ['title']"
                              [team]="team">
         </team-detail-matches>
       </mat-tab>
@@ -51,6 +47,11 @@
 
       <mat-tab label="{{'general.teams.edit.media.title' | translate}}">
         <team-detail-media [team]="team"></team-detail-media>
+      </mat-tab>
+      <mat-tab label="{{'general.teams.edit.article.title' | translate}}">
+        <team-detail-articles *ngIf="assignedArticles$ | async as assignedArticles; else loadingTemplate"
+                              [assignedArticles]="assignedArticles">
+        </team-detail-articles>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>

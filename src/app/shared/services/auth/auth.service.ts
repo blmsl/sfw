@@ -80,6 +80,11 @@ export class AuthService implements OnDestroy {
     return this.oAuthLogin(provider);
   }
 
+  twitterLogin(): Promise<any> {
+    const provider = new firebase.auth.TwitterAuthProvider();
+    return this.oAuthLogin(provider);
+  }
+
   /* resendVerificationMail(): Promise<any> {
    return this.afAuth.auth.currentUser.sendEmailVerification();
    } */

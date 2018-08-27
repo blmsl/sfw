@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArticleService } from '../../../../shared/services/article/article.service';
-import { Observable } from 'rxjs';
 import { IArticle } from '../../../../shared/interfaces/article.interface';
 
 @Component({
@@ -12,15 +10,14 @@ import { IArticle } from '../../../../shared/interfaces/article.interface';
 export class MemberEditInterviewsComponent implements OnInit {
 
   @Input() form: FormGroup;
+  @Input() articles: IArticle[];
 
   @Output() add: EventEmitter<boolean> = new EventEmitter<boolean>(false);
   @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
 
-  public articles$: Observable<IArticle[]>;
   public showForm: boolean = false;
 
-  constructor(private articleService: ArticleService) {
-    this.articles$ = articleService.articles$;
+  constructor() {
   }
 
   ngOnInit() {

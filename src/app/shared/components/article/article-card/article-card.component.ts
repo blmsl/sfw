@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IArticle } from '../../../shared/interfaces/article.interface';
+import { IArticle }                                       from '../../../interfaces/article.interface';
 
 @Component({
   selector: 'article-card',

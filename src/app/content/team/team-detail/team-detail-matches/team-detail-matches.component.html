@@ -8,10 +8,11 @@
         <mat-card-title>{{'general.teams.detail.matchPlan.pastMatches' | translate}}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <match-list *ngIf="categories && matches && events && team; else loadingTemplate"
-                    [categories]="categories"
+        <match-list *ngIf="assignedTeamCategories && assignedMatches && events && team; else loadingTemplate"
+                    [categories]="assignedTeamCategories"
                     [events]="events"
-                    [matches]="matches | orderBy: ['-matchStartDate.seconds'] | matchFilter : 'matchStartDate' : '<=' | matchFilter: 'assignedTeam' : '===' : team.id">
+                    [showResult]="true"
+                    [matches]="assignedMatches | orderBy: ['-matchStartDate.seconds'] | matchFilter : 'matchStartDate' : '<=' | matchFilter: 'assignedTeam' : '===' : team.id">
         </match-list>
       </mat-card-content>
     </mat-card>
@@ -23,9 +24,9 @@
         <mat-card-title>{{'general.teams.detail.matchPlan.upcomingMatches' | translate}}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <match-list *ngIf="categories && matches && team; else loadingTemplate"
-                    [categories]="categories"
-                    [matches]="matches | orderBy: ['matchStartDate.seconds'] | matchFilter : 'matchStartDate' : '>=' | matchFilter: 'assignedTeam' : '===' : team.id">
+        <match-list *ngIf="assignedTeamCategories && assignedMatches && team; else loadingTemplate"
+                    [categories]="assignedTeamCategories"
+                    [matches]="assignedMatches | orderBy: ['matchStartDate.seconds'] | matchFilter : 'matchStartDate' : '>=' | matchFilter: 'assignedTeam' : '===' : team.id">
         </match-list>
       </mat-card-content>
     </mat-card>

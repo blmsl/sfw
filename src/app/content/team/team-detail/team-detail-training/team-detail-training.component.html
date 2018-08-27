@@ -1,30 +1,28 @@
 <div fxLayout.gt-sm="row"
      fxLayout="column"
      fxLayoutGap="10px"
-     *ngIf="locations; else loadingTemplate">
+     *ngIf="assignedLocations; else loadingTemplate">
 
   <p *ngIf="!team.assignedTrainings || !team.assignedTrainings.length">
     {{'general.teams.edit.training.noTraining' | translate}}
   </p>
 
-  <div *ngFor="let training of team.assignedTrainings">
-    <mat-list dense>
-      <mat-list-item>
-        <h3 matLine>
-          {{'general.datetime.weekdays.' + training.day | translate }},
-          {{training.startTime}} {{'general.oClock' | translate}}
-          &ndash; {{training.endTime}} {{'general.oClock' | translate}}</h3>
-        <span matLine>{{'general.teams.edit.training.place' | translate}}:
-            <a style="color: orangered" [routerLink]="['/locations/detail', location.id]"
-               *ngFor="let location of locations | filterBy: ['id'] : training.assignedLocation">
-            {{location.title}}
-          </a>
-          </span><br/>
-        <p matLine [innerHTML]="training.comment"></p>
-      </mat-list-item>
-    </mat-list>
-  </div>
-
+  <mat-card *ngFor="let training of team.assignedTrainings">
+    <mat-card-title>{{'general.datetime.weekdays.' + training.day | translate }},
+      {{training.startTime}} {{'general.oClock' | translate}}
+      &ndash; {{training.endTime}} {{'general.oClock' | translate}}
+    </mat-card-title>
+    <mat-card-content>
+      <span matLine>{{'general.teams.edit.training.place' | translate}}:
+        <a *ngFor="let location of assignedLocations | filterBy: ['id'] : training.assignedLocation"
+           [routerLink]="['/locations/detail', location.id]">
+          {{location.title}}
+        </a>
+      </span>
+      <br/>
+      <p matLine [innerHTML]="training.comment"></p>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <ng-template #loadingTemplate>

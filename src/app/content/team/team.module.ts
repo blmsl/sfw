@@ -45,11 +45,13 @@ import { TeamOfTheMonthService } from '../../shared/services/team/team-of-the-mo
 import { TeamDetailMatchesComponent } from './team-detail/team-detail-matches/team-detail-matches.component';
 import { SharedMatchModule } from '../../shared/components/match/shared-match.module';
 import { MatchService } from '../../shared/services/match/match.service';
-import { TeamDetailStandingsComponent } from './team-detail/team-detail-standings/team-detail-standings.component';
-import { TeamDetailMediaComponent } from './team-detail/team-detail-media/team-detail-media.component';
-import { TeamStatisticsComponent } from './team-statistics/team-statistics.component';
-import { ChartsModule } from 'ng2-charts';
+import { TeamDetailStandingsComponent }    from './team-detail/team-detail-standings/team-detail-standings.component';
+import { TeamDetailMediaComponent }        from './team-detail/team-detail-media/team-detail-media.component';
+import { TeamStatisticsComponent }         from './team-statistics/team-statistics.component';
+import { ChartsModule }                    from 'ng2-charts';
 import { TeamDetailCompetitionsComponent } from './team-detail/team-detail-standings/team-detail-competitions/team-detail-competitions.component';
+import { TeamDetailArticlesComponent }     from './team-detail/team-detail-articles/team-detail-articles.component';
+import { SharedArticleModule }             from '../../shared/components/article/shared-article.module';
 
 @NgModule({
   imports: [
@@ -68,6 +70,8 @@ import { TeamDetailCompetitionsComponent } from './team-detail/team-detail-stand
     QuillModule,
     RouterModule.forChild(teamRoutes),
     SharedModule,
+    SharedArticleModule,
+    SharedMatchModule,
     TimeLineModule
   ],
   declarations: [
@@ -90,7 +94,8 @@ import { TeamDetailCompetitionsComponent } from './team-detail/team-detail-stand
     TeamDetailStandingsComponent,
     TeamDetailMediaComponent,
     TeamStatisticsComponent,
-    TeamDetailCompetitionsComponent
+    TeamDetailCompetitionsComponent,
+    TeamDetailArticlesComponent
   ],
   providers: [
     ApplicationService,

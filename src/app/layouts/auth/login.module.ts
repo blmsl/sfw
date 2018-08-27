@@ -13,7 +13,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatProgressSpinnerModule,
-  MatSnackBarModule
+  MatSnackBarModule, MatToolbarModule
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -24,10 +24,12 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { AlertService } from '../../shared/services/alert/alert.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { TermsOfUseComponent } from '../../shared/components/terms-of-use/terms-of-use.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
     AlertComponent,
+    ForbiddenComponent,
     ForgotPasswordComponent,
     LoginComponent,
     SignInComponent,
@@ -45,6 +47,7 @@ import { TermsOfUseComponent } from '../../shared/components/terms-of-use/terms-
     MatButtonModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatToolbarModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     RouterModule.forChild(loginRoutes),

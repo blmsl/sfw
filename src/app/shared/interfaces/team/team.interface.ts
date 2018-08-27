@@ -12,13 +12,15 @@ export interface ITeam {
   title: string;
   subTitle?: string;
 
+  info?: string;
+
   externalTeamLink?: string;
   isOfficialTeam: boolean;
   isMainTeam?: boolean;
 
   photoDescription?: string;
 
-  assignedClub?: IClub;
+  assignedClub?: string;
   assignedTeamCategories: string[];
   assignedSeason: string;
 

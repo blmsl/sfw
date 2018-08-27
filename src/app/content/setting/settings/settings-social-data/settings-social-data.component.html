@@ -1,8 +1,7 @@
 <div fxLayout="row"
       [formGroup]="form">
 
-  <div fxFlex="100"
-       formArrayName="social">
+  <div fxFlex="100">
 
     <button mat-raised-button
             type="button"
@@ -12,11 +11,10 @@
     </button>
 
     <div style="margin-top: 25px"
-         *ngFor="let provider of form.controls['social']['controls']; let i=index">
+         *ngFor="let provider of form.controls; let i=index">
 
       <div [formGroupName]="i"
-           fxLayout="row"
-           >
+           fxLayout="row">
 
         <mat-form-field fxFlex.gt-sm="25"
                         fxFlex="100">
@@ -36,8 +34,8 @@
         <div fxFlexOffset="5">
           <a mat-raised-button
              target="_blank"
-             [href]="form.controls['social']['controls'][i]['controls']['link']['value']"
-             *ngIf="form.controls['social']['controls'][i]['controls']['link']['value']"
+             [href]="form.controls[i]['controls']['link']['value']"
+             *ngIf="form.controls[i]['controls']['link']['value']"
              type="button">
             {{'general.applications.social.visitLink' | translate}}
           </a>

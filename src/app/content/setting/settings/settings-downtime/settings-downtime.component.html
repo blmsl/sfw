@@ -1,0 +1,26 @@
+<mat-card [formGroup]="form">
+  <mat-card-title>{{'general.applications.downtime.title' | translate}}</mat-card-title>
+  <mat-card-content>
+
+    <div fxLayout="column"
+              fxLayout.gt-sm="row wrap"
+              fxLayoutGap="10px">
+      <mat-checkbox fxflex="100"
+                    formControlName="isEnabled">
+        {{'general.applications.downtime.isActive' | translate}}
+      </mat-checkbox>
+
+      <br/>
+
+      <div fxFlex="100" style="margin-top: 25px">
+        <label>{{'general.applications.downtime.message' | translate}}</label><br/>
+        <quill-editor [style]="{height: '150px'}"
+                      formControlName="message">
+        </quill-editor>
+        <p>{{'general.applications.downtime.messageDescription' | translate}}</p>
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>
+

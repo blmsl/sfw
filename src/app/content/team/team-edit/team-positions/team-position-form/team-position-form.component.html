@@ -2,7 +2,7 @@
      fxLayout.gt-sm="row"
      fxLayout="column"
      fxLayoutGap="10px">
-    <mat-form-field fxFlex="50">
+    <mat-form-field fxFlex="25">
         <mat-select placeholder="{{'general.teams.edit.position.assignedMember' | translate}}"
                     formControlName="assignedMember">
             <mat-option
@@ -14,7 +14,7 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="50">
+    <mat-form-field fxFlex="25">
         <mat-select placeholder="{{'general.teams.edit.position.type' | translate}}"
                     formControlName="type">
             <mat-option
@@ -24,13 +24,8 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-</div>
 
-<div [formGroup]="form"
-     fxLayout.gt-sm="row"
-     fxLayout="column"
-     fxLayoutGap="10px">
-    <mat-form-field fxFlex="50">
+    <mat-form-field fxFlex="25">
         <input matInput
                formControlName="position"
                placeholder="{{'general.teams.edit.position.title' | translate}}">

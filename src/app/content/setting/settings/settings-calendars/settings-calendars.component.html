@@ -1,0 +1,40 @@
+<mat-card [formGroup]="form">
+  <mat-card-title>{{'general.applications.calendars.title' | translate}}</mat-card-title>
+  <mat-card-content>
+
+    <div *ngFor="let formGroup of form.controls; let i = index">
+      <div fxLayout="column"
+           fxLayout.gt-sm="row"
+           fxLayoutGap="10px"
+           [formGroupName]="i">
+
+        <mat-form-field fxFlex="30">
+          <input matInput
+                 placeholder="{{'general.applications.calendars.fieldTitle' | translate}}"
+                 formControlName="title"/>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="70">
+          <input matInput
+                 placeholder="{{'general.applications.calendars.link' | translate}}"
+                 formControlName="link"/>
+        </mat-form-field>
+
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button mat-raised-button
+              type="button"
+              color="primary"
+              (click)="addSocialProvider.emit(true)">
+        {{'general.applications.social.addProvider' | translate}}
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

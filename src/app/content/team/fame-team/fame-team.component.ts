@@ -1,73 +1,67 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { ITeamOfTheMonth } from '../../../shared/interfaces/member/team-of-the-month.interface';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
 import { TeamOfTheMonthService } from '../../../shared/services/team/team-of-the-month.service';
-import { TeamService } from '../../../shared/services/team/team.service';
-import { ICategory } from '../../../shared/interfaces/category.interface';
+import { Observable, Subscription } from 'rxjs';
+import { SeasonService } from '../../../shared/services/season/season.service';
 import { ISeason } from '../../../shared/interfaces/season.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
-import { SeasonService } from '../../../shared/services/season/season.service';
-import { MemberService } from '../../../shared/services/member/member.service';
+import { ICategory } from '../../../shared/interfaces/category.interface';
 import { IMember } from '../../../shared/interfaces/member/member.interface';
-import { forkJoin, of } from 'rxjs/index';
+import { MemberService } from '../../../shared/services/member/member.service';
+import { MediaItemService } from '../../../shared/services/media/media-item.service';
+import { IMediaItem } from '../../../shared/interfaces/media/media-item.interface';
 
 @Component({
   selector: 'fame-team',
   templateUrl: './fame-team.component.html',
   styleUrls: ['./fame-team.component.scss']
 })
-export class FameTeamComponent implements OnInit {
+export class FameTeamComponent implements OnInit, OnDestroy {
 
-  public teamsOfTheMonth$: ITeamOfTheMonth[];
-  public teams$: ITeam[];
-  public categories$: ICategory[];
-  public members$: IMember[];
-  public seasons$: ISeason[];
-
+  public teamOfTheMonth: ITeam;
   public currentMonth: string;
-  public dataIsLoaded: boolean = false;
+  public title: string;
 
-  constructor(private teamOfTheMonthService: TeamOfTheMonthService,
-    private categoryService: CategoryService,
-    private memberService: MemberService,
-    private seasonService: SeasonService,
-    private teamService: TeamService) {
+  public assignedSeason$: Observable<ISeason>;
+  public assignedCategories$: Observable<ICategory[]>;
+  public assignedPlayers$: Observable<IMember[]>;
+  public assignedPositions$: Observable<IMember[]>;
+
+  public teamImage: Observable<IMediaItem>;
+
+  private teamSubscription: Subscription;
+
+  constructor(private seasonService: SeasonService,
+              private categoryService: CategoryService,
+              private memberService: MemberService,
+              private mediaItemService: MediaItemService,
+              private teamOfTheMonthService: TeamOfTheMonthService) {
   }
 
   ngOnInit() {
     this.currentMonth = moment().format('YY') + '-' + moment().format('MM');
+    this.teamSubscription = this.teamOfTheMonthService.getTeamOfTheMonthByTitle(this.currentMonth).subscribe((team: ITeam) => {
+      this.teamOfTheMonth = team;
 
-    forkJoin([
-      this.seasonService.seasons$,
-      // this.teamService.teams$,
-      of('4555')
-    ]).subscribe((results: any) => {
-      console.log(results);
-      this.dataIsLoaded = true;
+      if (this.teamOfTheMonth) {
+        this.assignedSeason$ = this.seasonService.getSeasonById(this.teamOfTheMonth.assignedSeason);
+        this.assignedCategories$ = this.categoryService.getCategoriesByIds(this.teamOfTheMonth.assignedTeamCategories);
+        this.assignedPlayers$ = this.memberService.getMembersByIds(this.teamOfTheMonth.assignedPlayers);
+        this.assignedPositions$ = this.memberService.getMembersByTeamPosition(this.teamOfTheMonth.assignedPositions);
+
+        if (!this.teamImage) {
+          this.teamImage = this.mediaItemService.getCurrentImage(['teams', 'profile'], this.teamOfTheMonth.id,);
+        }
+
+      }
     });
 
-    /*
-
-    (
-      //teamOfTheMonthService.teamsOfTheMonth$,
-      this.teamService.teams$,
-      //memberService.members$,
-      //categoryService.categories$,
-      this.seasonService.seasons$
-    ).subscribe((results:any) => {
-      console.log(results);
-      /*this.teamsOfTheMonth$ = results[0];
-      this.teams$ = results[1];
-       this.members$ = results[2];
-      this.categories$ = results[3];
-      this.seasons$ = results[4];
-
-    }, (error: any) => console.log(error));
-    */
+    this.title = moment.localeData().months(moment()) + ' ' + moment().format('YYYY');
   }
 
-  getTitle() {
-    return moment.localeData().months(moment()) + ' ' + moment().format('YYYY');
+  ngOnDestroy() {
+    this.teamSubscription.unsubscribe();
   }
+
 }

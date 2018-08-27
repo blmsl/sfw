@@ -6,9 +6,9 @@ import { ISeason } from '../../../../shared/interfaces/season.interface';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { TeamService } from '../../../../shared/services/team/team.service';
 import { AlertService } from '../../../../shared/services/alert/alert.service';
-import { IClub } from "../../../../shared/interfaces/club/club.interface";
-import { ICategory } from "../../../../shared/interfaces/category.interface";
-import { CategoryService } from "../../../../shared/services/category/category.service";
+import { IClub } from '../../../../shared/interfaces/club/club.interface';
+import { ICategory } from '../../../../shared/interfaces/category.interface';
+import { CategoryService } from '../../../../shared/services/category/category.service';
 
 @Component({
   selector: 'member-edit-functions',
@@ -28,9 +28,9 @@ export class MemberEditFunctionsComponent implements OnInit {
   public categories$: Observable<ICategory[]>;
 
   constructor(private teamService: TeamService,
-    private categoryService: CategoryService,
-    private alertService: AlertService,
-    private seasonService: SeasonService) {
+              private categoryService: CategoryService,
+              private alertService: AlertService,
+              private seasonService: SeasonService) {
     this.seasons$ = seasonService.seasons$;
     this.categories$ = categoryService.categories$;
   }

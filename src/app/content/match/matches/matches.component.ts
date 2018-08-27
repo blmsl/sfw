@@ -10,7 +10,7 @@ import { LocationService } from '../../../shared/services/location/location.serv
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 
 @Component({
-  selector: 'app-matches',
+  selector: 'matches',
   templateUrl: './matches.component.html',
   styleUrls: ['./matches.component.scss']
 })
@@ -30,7 +30,7 @@ export class MatchesComponent implements OnInit {
     private locationService: LocationService,
     public matchService: MatchService) {
     this.matches$ = matchService.matches$;
-    this.categories$ = categoryService.categories$;
+    this.categories$ = categoryService.getCategoriesByCategoryType('team.types');
     this.locations$ = locationService.locations$;
   }
 

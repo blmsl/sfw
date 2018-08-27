@@ -1,102 +1,108 @@
 <mat-card *ngIf="member; else loadingTemplate"
           [formGroup]="form">
-    <mat-card-title>
-        <mat-icon>mode_edit</mat-icon>
-        {{'general.menu.member.edit' | translate}}
-    </mat-card-title>
-    <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-title>
+    <mat-icon>mode_edit</mat-icon>
+    {{'general.menu.member.edit' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <hr/>
+  <mat-card-content>
 
-    <mat-card-content>
+    <mat-tab-group [dynamicHeight]="true">
+      <mat-tab label="{{'general.members.tabs.main' | translate}}">
+        <member-edit-main [form]="form"
+                          [member]="member">
+        </member-edit-main>
+      </mat-tab>
+      <mat-tab label="{{'general.members.tabs.driveAndDFB' | translate}}">
+        <member-edit-drive *ngIf="clubs$ | async as clubs; else loadingTemplate"
+                           [form]="form"
+                           [clubs]="clubs"
+                           [member]="member">
+        </member-edit-drive>
+      </mat-tab>
 
-        <mat-tab-group [dynamicHeight]="true">
-            <mat-tab label="{{'general.members.tabs.main' | translate}}">
-                <member-edit-main [form]="form"
-                                  [member]="member">
-                </member-edit-main>
-            </mat-tab>
-            <mat-tab label="{{'general.members.tabs.driveAndDFB' | translate}}">
-                <member-edit-drive [form]="form"
-                                   [member]="member">
-                </member-edit-drive>
-            </mat-tab>
-
-            <mat-tab label="{{'general.members.tabs.interview' | translate}} / {{'general.members.tabs.otherOpinions' | translate}}">
-                <div fxLayout="column"
-                     fxLayout.gt-sm="row"
-                     fxLayoutGap="10px">
-                    <div fxFlex.gt-sm="33,3333">
-                        <member-edit-interviews (add)="addInterview()"
-                                                (delete)="removeInterview($event)"
-                                                [form]="form">
-                        </member-edit-interviews>
-                    </div>
-                    <div fxFlex.gt-sm="33,3333">
-                        <member-edit-profile (add)="addProfileEntry()"
-                                             (delete)="removeProfileEntry()"
-                                             [form]="form">
-                        </member-edit-profile>
-                    </div>
-                    <div fxFlex.gt-sm="33,3333">
-                        <member-edit-other-opinions (add)="addOpinion()"
-                                                    (delete)="removeOpinion($event)"
-                                                    (setOpinionValidators)="setOpinionValidators($event)"
-                                                    [members]="members$ | async"
-                                                    [form]="form">
-                        </member-edit-other-opinions>
-                    </div>
-                </div>
-            </mat-tab>
-
-            <mat-tab
-                    label="{{'general.members.tabs.teams' | translate}} & {{'general.members.tabs.functions' | translate}}">
-                <member-edit-functions *ngIf="teams$ | async as teams; else loadingTemplate"
-                                       (deleteMemberFromTeam)="deleteMemberFromTeam($event)"
-                                       (deleteMemberFromTeamManagement)="deleteMemberFromTeamManagement($event)"
-                                       [member]="member"
-                                       [clubs]="clubs$ | async"
-                                       [teams]="teams">
-                </member-edit-functions>
-            </mat-tab>
-
-            <mat-tab label="{{'general.members.tabs.media' | translate}}">
-                <p>Mit dem Mitglied verknüpfte Fotos, Videos etc.</p>
-            </mat-tab>
-            <mat-tab label="{{'general.members.tabs.statistics' | translate}}">
-                <member-match-statistics [member]="member"></member-match-statistics>
-            </mat-tab>
-
-        </mat-tab-group>
-    </mat-card-content>
-
-    <mat-card-actions>
+      <mat-tab
+        label="{{'general.members.tabs.interview' | translate}} / {{'general.members.tabs.otherOpinions' | translate}}">
         <div fxLayout="column"
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
-            <span></span>
-            <span fxFlex=""></span>
-            <button mat-raised-button
-                    type="button"
-                    color="primary"
-                    [routerLink]="['/members']">
-                {{'general.menu.member.list' | translate}}
-            </button>
-            <button mat-raised-button
-                    *ngIf="member.id"
-                    type="button"
-                    color="accent"
-                    [routerLink]="['/members/detail', member.id]">
-                {{'general.detail' | translate }}
-            </button>
-            <button mat-raised-button
-                    type="button"
-                    color="warn"
-                    (click)="removeMember(member)">
-                {{'general.delete' | translate }}
-            </button>
+          <div fxFlex.gt-sm="33,3333">
+            <member-edit-interviews *ngIf="articles$ | async as articles; else loadingTemplate"
+                                    (add)="addInterview()"
+                                    (delete)="removeInterview($event)"
+                                    [articles]="articles"
+                                    [form]="form">
+            </member-edit-interviews>
+          </div>
+          <div fxFlex.gt-sm="33,3333">
+            <member-edit-profile (add)="addProfileEntry()"
+                                 (delete)="removeProfileEntry($event)"
+                                 [form]="form">
+            </member-edit-profile>
+          </div>
+          <div fxFlex.gt-sm="33,3333">
+            <member-edit-other-opinions *ngIf="members$ | async as members; else loadingTemplate"
+                                        (add)="addOpinion()"
+                                        (delete)="removeOpinion($event)"
+                                        (setOpinionValidators)="setOpinionValidators($event)"
+                                        [members]="members"
+                                        [form]="form">
+            </member-edit-other-opinions>
+          </div>
         </div>
-    </mat-card-actions>
+      </mat-tab>
+
+      <mat-tab
+        label="{{'general.members.tabs.teams' | translate}} & {{'general.members.tabs.functions' | translate}}">
+        <div *ngIf="clubs$ | async as clubs; else loadingTemplate">
+          <!--<member-edit-functions *ngIf="teams$ | async as teams; else loadingTemplate"
+                                 (deleteMemberFromTeam)="deleteMemberFromTeam($event)"
+                                 (deleteMemberFromTeamManagement)="deleteMemberFromTeamManagement($event)"
+                                 [member]="member"
+                                 [clubs]="clubs"
+                                 [teams]="teams">
+          </member-edit-functions>-->
+        </div>
+      </mat-tab>
+
+      <mat-tab label="{{'general.members.tabs.media' | translate}}">
+        <!-- ToDo: Mit dem Mitglied verknüpfte Fotos, Videos etc. -->
+        <p>Mit dem Mitglied verknüpfte Fotos, Videos etc.</p>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button mat-raised-button
+              type="button"
+              color="primary"
+              [routerLink]="['/members']">
+        {{'general.menu.member.list' | translate}}
+      </button>
+      <button mat-raised-button
+              *ngIf="member.id"
+              type="button"
+              color="accent"
+              [routerLink]="['/members/detail', member.id]">
+        {{'general.detail' | translate }}
+      </button>
+      <button mat-raised-button
+              type="button"
+              color="warn"
+              (click)="removeMember(member)">
+        {{'general.delete' | translate }}
+      </button>
+    </div>
+  </mat-card-actions>
 </mat-card>
 
 <ng-template #loadingTemplate>
-    <loading-indicator></loading-indicator>
+  <loading-indicator></loading-indicator>
 </ng-template>

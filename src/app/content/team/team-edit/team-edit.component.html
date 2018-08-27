@@ -38,18 +38,25 @@
       </mat-tab>
 
       <mat-tab label="{{'general.teams.edit.timeLine.title' | translate}}">
-        <h3>{{'general.teams.edit.timeLineTitle' | translate}}</h3>
-        <time-line [showLinks]="true"
-                   (delete)="removeEvent($event)"
-                   (add)="addEvent()"
-                   (edit)="editEvent($event)"
-                   (save)="saveEvent()"
-                   [selectedTimeLineEvent]="selectedEvent"
-                   [form]="form.controls['assignedEvents']">
-        </time-line>
+        <mat-card>
+          <mat-card-title>{{'general.teams.edit.timeLine.title' | translate}}</mat-card-title>
+          <mat-card-subtitle>{{'general.teams.edit.timeLineTitle' | translate}}</mat-card-subtitle>
+          <hr/>
+          <mat-card-content>
+            <time-line [showLinks]="true"
+                       (delete)="removeEvent($event)"
+                       (add)="addEvent()"
+                       (edit)="editEvent($event)"
+                       (save)="saveEvent()"
+                       [selectedTimeLineEvent]="selectedEvent"
+                       [form]="form.controls['assignedEvents']">
+            </time-line>
+          </mat-card-content>
+        </mat-card>
       </mat-tab>
 
       <mat-tab label="Dateien">
+        <!-- TodDo: Trainingspläne, Videos, Fotos zur Mannschaft-->
         Trainingspläne, Videos, Fotos zur Mannschaft
       </mat-tab>
 

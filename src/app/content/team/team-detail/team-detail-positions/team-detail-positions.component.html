@@ -2,20 +2,25 @@
      fxLayout="column"
      fxLayoutAlign="start start"
      fxLayoutGap="10px"
-     *ngIf="team && members && categories; else loadingTemplate">
+     *ngIf="team && assignedPlayers && assignedPositions; else loadingTemplate">
 
   <div fxFlex.gt-sm="50">
-    <h3>{{'general.teams.edit.position.players' | translate}}</h3>
-    <p *ngIf="!team.assignedPlayers">{{'general.teams.edit.players.noPlayers' | translate}}</p>
 
-    <mat-list dense>
-      <mat-list-item *ngFor="let memberId of team.assignedPlayers">
-        <a [routerLink]="['/members/detail', memberId]"
-           *ngFor="let member of members | filterBy: ['id'] : memberId">
-          {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
-        </a>
-      </mat-list-item>
-    </mat-list>
+    <mat-card>
+      <mat-card-title>{{'general.teams.edit.position.players' | translate}}</mat-card-title>
+      <mat-card-content>
+        <p *ngIf="!team.assignedPlayers">{{'general.teams.edit.players.noPlayers' | translate}}</p>
+
+        <mat-list dense>
+          <mat-list-item *ngFor="let member of assignedPlayers; let i = index">
+            {{i + 1 }}.&nbsp;
+            <a [routerLink]="['/members/detail', member.id]">
+              {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
+            </a>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <div fxFlex.gt-sm="50">
@@ -25,24 +30,21 @@
       {{'general.teams.edit.position.noPosition' |
       translate}}</p>
 
-    <div *ngFor="let position of team.assignedPositions | orderBy: 'type'" style="margin-bottom: 25px;">
-
-      <!--<h4 *ngIf="!isSavedPosition(position.type)">
-        {{ (categories | filterBy: ['id'] : position.type)[0].title}}
-      </h4>-->
-
-      <mat-list dense>
-        <mat-list-item *ngFor="let member of members | filterBy: ['id'] : position.assignedMember">
-          <a [routerLink]="['/members/detail', member.id]">
-            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
-            ({{position.position}})
-          </a>
-        </mat-list-item>
-      </mat-list>
-    </div>
+    <mat-card *ngFor="let position of team.assignedPositions">
+      <mat-card-title>{{position.position}}</mat-card-title>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let member of assignedPositions |filterBy: ['id'] : position.assignedMember | orderBy: 'type'">
+            <h3 matLine>{{member.type}}</h3>
+            <a matLine [routerLink]="['/members/detail', member.id]">
+              {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
+            </a>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
 
   </div>
-
 </div>
 
 <ng-template #loadingTemplate>

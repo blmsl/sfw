@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of } from 'rxjs';
+import { Injectable }                                   from '@angular/core';
+import { forkJoin, Observable, of }                     from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { IMember } from '../../interfaces/member/member.interface';
-import { ILocationContact } from '../../interfaces/location/location-contact.interface';
-import { take } from 'rxjs/internal/operators';
+import { IMember }                                      from '../../interfaces/member/member.interface';
+import { ILocationContact }                             from '../../interfaces/location/location-contact.interface';
+import { take }                                         from 'rxjs/internal/operators';
+import { ITeamManagement }                              from '../../interfaces/team/team-management.interface';
 
 @Injectable()
 export class MemberService {
@@ -49,19 +50,37 @@ export class MemberService {
     return forkJoin(memberObservables);
   }
 
-  getMembersByPosition(memberIds: {
+  getMembersByPosition(positions: {
     memberId: string;
     position: string;
   }[]): Observable<IMember[]> {
+    if (!positions || positions.length === 0) {
+      return of([]);
+    }
+
+    let observables: Observable<IMember>[] = [];
+    for (let i = 0; i < positions.length; i++) {
+      if(positions[i].memberId !== '') {
+        observables.push(this.getMemberById(positions[i].memberId).pipe(
+          take(1)
+        ));
+      }
+    }
+    return forkJoin(observables);
+  }
+
+  getMembersByTeamPosition(memberIds: ITeamManagement[]): Observable<IMember[]> {
     if (!memberIds || memberIds.length === 0) {
       return of([]);
     }
 
-    let memberObservables: Observable<IMember>[] = [];
+    let observables: Observable<IMember>[] = [];
     for (let i = 0; i < memberIds.length; i++) {
-      memberObservables.push(this.getMemberById(memberIds[i].memberId));
+      observables.push(this.getMemberById(memberIds[i].assignedMember).pipe(
+        take(1)
+      ));
     }
-    return forkJoin(memberObservables);
+    return forkJoin(observables);
   }
 
   getMembersByLocationContacts(locationContacts: ILocationContact[]): Observable<IMember[]> {
@@ -69,13 +88,15 @@ export class MemberService {
       return of([]);
     }
 
-    let memberObservables: Observable<IMember>[] = [];
+    let observables: Observable<IMember>[] = [];
     for (let i = 0; i < locationContacts.length; i++) {
       if (locationContacts[i].isMember) {
-        memberObservables.push(this.getMemberById(locationContacts[i].assignedMember));
+        observables.push(this.getMemberById(locationContacts[i].assignedMember).pipe(
+          take(1)
+        ));
       }
     }
-    return forkJoin(memberObservables);
+    return forkJoin(observables);
   }
 
   getZodiac(birthday) {

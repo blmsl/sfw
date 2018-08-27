@@ -488,7 +488,7 @@
       }
     },
     "forbidden": {
-      "text": "Dir fehlen die Berechtigungen um die gewünschte Seite zu laden. Bitte wende Dich an einen Administrator um die Berechtiungen zu erhalten.",
+      "text": "<p>Du hast nur einen Gastzugang und Dir fehlen deshalb die Berechtigungen um die Administrationsoberfläche zu laden.</p><p>Bitte wende Dich an einen Administrator um die Berechtiungen zu erhalten.</p>",
       "title": "Zugriff verboten"
     },
     "home": "Startseite",
@@ -576,6 +576,7 @@
         "matchEventsTitle": "Spielverlauf",
         "noAssignedArticles": "Es wurden noch keine Artikel mit diesem Spiel verknüpft.",
         "startingElevenTitle": "Aufstellung",
+        "previewTitle": "Spielübersicht",
         "title": "Spieldetails"
       },
       "edit": {
@@ -860,6 +861,7 @@
           "title": "Interviews"
         },
         "assignedAsPlayer": "Als Spieler in einer Mannschaft ...",
+        "mainTitle": "Wichtigste Daten",
         "notAssignedToAnyTeamManagements": "Das Mitglied hat noch keine Aufgaben in einer Mannschaft übernommen.",
         "notAssignedToAnyTeams": "Das Mitglied wurde noch nicht mit einer Mannschaft verknüpft.",
         "opinions": {
@@ -1145,6 +1147,11 @@
       "noSeasons": "Es wurden noch keine Saisons erstellt oder importiert."
     },
     "applications": {
+      "calendars": {
+        "link": "Google Link",
+        "fieldTitle": "Name des Kalenders",
+        "title": "Verknüpfte Google-Kalender"
+      },
       "downtime": {
         "checkbox": "Status der Hauptseite",
         "isActive": "Wartungsmodus aktiv",
@@ -1307,9 +1314,25 @@
         "mediaTitle": "Verknüpfte Dateien",
         "noMatch": "Es wurden keine Spiele für diese Mannschaft gefunden.",
         "noTeamLogo": "Es wurde noch kein Foto für diese Mannschaft hochgeladen.",
+        "standings": {
+          "rank": "Pos.",
+          "team": "Verein",
+          "won": "S",
+          "draw": "U",
+          "lost": "L",
+          "matches": "Spiele",
+          "goalDiff": "Diff",
+          "goalRel": "+/-",
+          "points": "Pkte"
+        },
         "standingsTitle": "Tabellenstand"
       },
       "edit": {
+        "article": {
+          "assignedArticles": "Verknüpfte Artikel",
+          "noArticlesFound": "Es wurden noch keine Artikel mit dieser Mannschaft verknüpft.",
+          "title": "Artikel"
+        },
         "assignedCategories": "Verknüpfte Kategorien",
         "assignedClub": "Verein",
         "assignedSeason": "Saison",
@@ -1320,6 +1343,8 @@
         },
         "editTeam": "Mannschaft editieren",
         "externalLink": "Externer Link",
+        "infoDescription": "Freitext",
+        "info": "Hier kann zum Beispiel ein Grußwort des Trainers geschrieben werden.",
         "isMainTeam": "Hauptmannschaft?",
         "isOfficialTeam": "Aktiver Spielbetrieb?",
         "logo": {
@@ -1392,13 +1417,16 @@
         "categories": "Kategorien",
         "draws": "Unentschieden",
         "loss": "Niederlagen",
+        "mainTitle": "Daten",
         "management": "Mannschaftsbetreuung",
         "noPhoto": "Es wurde noch kein Mannschaftsfoto hochgeladen",
         "playerList": "Spielerliste",
         "players": "Spieler",
         "photoDescription": "Bild-Beschreibung",
         "positions": "Aufgaben innerhalb der Mannschaft",
+        "positionsTitle": "Positionen",
         "season": "Spielzeit",
+        "teamImage": "Mannschaftsfoto",
         "title": "Mannschaft des Monats",
         "viewProfile": "Details anzeigen",
         "wins": "Siege"

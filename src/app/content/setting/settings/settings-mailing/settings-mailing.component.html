@@ -1,0 +1,21 @@
+<mat-card [formGroup]="form">
+  <mat-card-title>{{'general.applications.mailing.title' | translate}}</mat-card-title>
+  <mat-card-content>
+
+    <div fxLayout="column"
+         fxLayout.gt-sm="row wrap"
+         fxLayoutGap="10px" *ngFor="let control of form.controls | keys; let i = index">
+
+      <p>{{'general.applications.mailing.'+control+'.description' | translate}}</p>
+
+      <tag-input fxFlex="100"
+                 [identifyBy]="'value'"
+                 [displayBy]="'display'"
+                 placeholder="{{'general.applications.'+control+'.birthday' | translate}}"
+                 [formControlName]="control"
+                 [editable]="true">
+      </tag-input>
+    </div>
+
+  </mat-card-content>
+</mat-card>

@@ -33,6 +33,8 @@
             (toggleFormVisibility)="toggleFormVisibility($event)">
           </forgot-password>
 
+          <forbidden *ngIf="showForbiddenPage"></forbidden>
+
         </mat-card-content>
       </mat-card>
     </div>

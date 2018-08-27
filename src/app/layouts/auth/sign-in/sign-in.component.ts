@@ -2,7 +2,8 @@ import {
   Component,
   ComponentFactoryResolver,
   EventEmitter,
-  Input, OnDestroy,
+  Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -41,11 +42,11 @@ export class SignInComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   constructor(private alertService: AlertService,
-    public authService: AuthService,
-    private cfr: ComponentFactoryResolver,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router) {
+              public authService: AuthService,
+              private cfr: ComponentFactoryResolver,
+              private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -132,11 +133,15 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     let loginAction;
     switch (provider) {
+
       case 'facebook':
         loginAction = this.authService.facebookLogin();
         break;
       case 'google':
         loginAction = this.authService.googleLogin();
+        break;
+      case 'twitter':
+        loginAction = this.authService.twitterLogin();
         break;
     }
     return loginAction

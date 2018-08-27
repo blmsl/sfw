@@ -15,8 +15,10 @@ import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 export class TeamDetailMatchesComponent implements OnInit {
 
   @Input() team: ITeam;
-  @Input() categories: ICategory[];
-  @Input() matches: IMatch[];
+
+  @Input() assignedTeamCategories: ICategory[];
+  @Input() assignedMatches: IMatch[];
+
   @Input() events: {
     id: number,
     title: string

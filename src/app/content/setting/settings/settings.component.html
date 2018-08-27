@@ -11,111 +11,23 @@
         <div fxLayout="column"
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
-          <div fxFlex.gt-sm="50"
-               formGroupName="page">
-
-            <div fxLayout="column"
-                 fxLayout.gt-sm="row"
-                 fxLayoutGap="10px">
-              <mat-form-field fxFlex="33,3333">
-                <input matInput
-                       placeholder="{{'general.applications.page.name' | translate}}"
-                       formControlName="name"/>
-                <mat-hint>{{'general.applications.page.nameDescription' | translate}}</mat-hint>
-              </mat-form-field>
-
-              <mat-form-field fxFlex="33,3333">
-                <input matInput
-                       placeholder="{{'general.applications.page.emailTitle' | translate}}"
-                       formControlName="email"/>
-                <mat-hint>{{'general.applications.page.emailDescription' | translate}}</mat-hint>
-              </mat-form-field>
-
-              <mat-form-field fxFlex="33,3333">
-                <input matInput
-                       placeholder="{{'general.applications.page.title' | translate}}"
-                       formControlName="title"/>
-                <mat-hint>{{'general.applications.page.titleDescription' | translate}}</mat-hint>
-              </mat-form-field>
-            </div>
-
-            <div style="margin-top: 40px"
-                 fxFlex="100">
-              <label>{{'general.applications.page.descriptionDescription' | translate}}</label><br/>
-              <quill-editor [style]="{height: '150px'}"
-                            formControlName="description">
-              </quill-editor>
-            </div>
+          <div fxFlex="40">
+            <settings-main [form]="form.get('page')"></settings-main>
+            <settings-calendars [form]="form.get('assignedCalendars')"></settings-calendars>
           </div>
 
-          <div fxFlex.gt-sm="50">
-
-            <div fxLayout="column"
-                 fxLayoutGap="10px">
-              <h3>{{'general.applications.urlShorteningTitle' | translate}}</h3>
-              <mat-form-field fxflex="100"
-                              style="margin-top: 25px;">
-                <mat-select placeholder="{{'general.applications.urlShorteningService' | translate}}"
-                            formControlName="urlShortening">
-                  <mat-option [value]="0">
-                    {{'general.applications.noUrlShorteningService' | translate}}
-                  </mat-option>
-                  <mat-option *ngFor="let shorteningProvider of shorteningProviders | orderBy: ['title']"
-                              [value]="shorteningProvider">
-                    {{shorteningProvider.title}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <h3 style="margin-top: 40px">{{'general.applications.registration.title' | translate}}</h3>
-
-              <mat-form-field fxflex="100" style="margin-top: 25px;">
-                <mat-select placeholder="{{'general.applications.registration.newUserLabel' | translate}}"
-                            formControlName="registration">
-                  <mat-option [value]="0">
-                    {{'general.applications.registration.disableRegistration' | translate}}
-                  </mat-option>
-                  <mat-option *ngFor="let role of roles"
-                              [value]="role">
-                    {{'general.users.edit.roles.' + role | translate}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-            </div>
-
-          </div>
+          <!--<settings-urlshortening fxFlex="20" [form]="form"></settings-urlshortening>-->
+          <settings-mailing fxFlex="40" [form]="form.get('mailing')"></settings-mailing>
         </div>
 
       </mat-tab>
 
       <mat-tab label="{{'general.applications.downtime.title' | translate}}">
-        <div fxLayout="row">
-          <div fxFlex.gt-sm="50"
-               fxFlex.gt-xs="100"
-               fxFlex="100"
-               formGroupName="downtime">
-            <div fxLayout="column">
-              <mat-checkbox fxflex="100"
-                            formControlName="isEnabled">
-                {{'general.applications.downtime.isActive' | translate}}
-              </mat-checkbox>
-
-              <br/>
-
-              <div fxFlex="100" style="margin-top: 25px">
-                <label>{{'general.applications.downtime.message' | translate}}</label><br/>
-                <quill-editor [style]="{height: '150px'}"
-                              formControlName="message">
-                </quill-editor>
-                <p>{{'general.applications.downtime.messageDescription' | translate}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <settings-downtime [form]="form.get('downtime')"></settings-downtime>
       </mat-tab>
+
       <mat-tab label="{{'general.applications.socialTitle' | translate}}">
-        <settings-social-data [form]="form"
+        <settings-social-data [form]="form.get('social')"
                               (removeSocialProvider)="removeSocialProvider($event)"
                               (addSocialProvider)="addSocialProvider()">
         </settings-social-data>
@@ -128,6 +40,7 @@
                       (removeStaticPage)="removeStaticPage($event)">
         </static-pages>
       </mat-tab>
+
     </mat-tab-group>
   </mat-card-content>
 </mat-card>

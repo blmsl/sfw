@@ -1,11 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormGroup
-}                                   from '@angular/forms';
+} from '@angular/forms';
 import { IArticle }                 from '../../../../../shared/interfaces/article.interface';
 import { IMatch }                   from '../../../../../shared/interfaces/match/match.interface';
 import { ActivatedRoute }           from '@angular/router';
+import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
+import { ArticleService } from '../../../../../shared/services/article/article.service';
 
 @Component({
   selector: 'match-edit-article-form',
@@ -14,26 +17,24 @@ import { ActivatedRoute }           from '@angular/router';
 })
 export class MatchEditArticleFormComponent implements OnInit {
 
-  @Input() articles: IArticle[];
+  @Input() match: IMatch;
+  @Input() notAssignedArticles: IArticle[];
 
   public form: FormGroup;
-  @Input() match: IMatch;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute) { }
+  constructor(private fb: FormBuilder,
+              private articleService: ArticleService) { }
 
   ngOnInit() {
     this.form = this.fb.group({
-      assignedArticles: ''
+      assignArticles: ''
     });
   }
 
-  compareFn(article: IArticle){
-    console.log(article.assignedMatches);
-    console.log(this.match.id);
+  assignArticlesToMatch(){
+    const assignedArticles: IArticle[] = this.form.get('assignArticles').value;
+    this.articleService.assignMatchToArticles(this.match.id, assignedArticles);
+    this.form.reset();
   }
-  //[selected]="article.assignedMatches.indexOf(article.id) > 0"
 
-  /*save($event) {
-    console.log($event);
-  }*/
 }

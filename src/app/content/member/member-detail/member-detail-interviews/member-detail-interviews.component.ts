@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
-import { ArticleService } from '../../../../shared/services/article/article.service';
-import { Observable } from 'rxjs';
 import { IArticle } from '../../../../shared/interfaces/article.interface';
 
 @Component({
@@ -12,10 +10,9 @@ import { IArticle } from '../../../../shared/interfaces/article.interface';
 export class MemberDetailInterviewsComponent implements OnInit {
 
   @Input() member: IMember;
-  public articles$: Observable<IArticle[]>;
+  @Input() assignedArticles: IArticle[];
 
-  constructor(private articleService: ArticleService) {
-    this.articles$ = articleService.articles$;
+  constructor() {
   }
 
   ngOnInit() {

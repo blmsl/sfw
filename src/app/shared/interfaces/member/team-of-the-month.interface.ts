@@ -1,4 +1,4 @@
 export interface ITeamOfTheMonth {
   assignedTeamId: string;
-  week: string;
+  title: string;
 }

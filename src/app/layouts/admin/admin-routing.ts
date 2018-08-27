@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { ForbiddenComponent } from '../auth/forbidden/forbidden.component';
 import { BackendGuard } from '../../shared/guards/backend.guard';
 import { AdminGuard } from '../../shared/guards/admin.guard';
 
@@ -8,11 +8,8 @@ export const adminRoutes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    canActivate: [BackendGuard],
     children: [
-      {
-        path: 'forbidden',
-        component: ForbiddenComponent
-      },
       {
         path: 'dashboard',
         loadChildren: '../../content/dashboard/dashboard.module#DashboardModule'
@@ -20,7 +17,6 @@ export const adminRoutes: Routes = [
       {
         path: 'articles',
         loadChildren: '../../content/article/article.module#ArticleModule',
-        canActivate: [BackendGuard]
       },
       {
         path: 'categories',

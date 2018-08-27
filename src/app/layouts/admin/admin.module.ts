@@ -42,7 +42,6 @@ import {
   AccordionDirective,
   AccordionLinkDirective
 } from '../../shared/directives/accordion';
-import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { BackendGuard } from '../../shared/guards/backend.guard';
 import { AdminGuard } from '../../shared/guards/admin.guard';
 
@@ -58,7 +57,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AccordionDirective,
     AccordionAnchorDirective,
     AccordionLinkDirective,
-    ForbiddenComponent,
     AdminComponent,
     HeaderComponent,
     SidebarComponent,

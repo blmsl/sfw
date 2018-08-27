@@ -15,8 +15,10 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
 import * as firebase from 'firebase';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
 import { TeamService } from '../../../shared/services/team/team.service';
-import { ClubService } from "../../../shared/services/club/club.service";
-import { IClub } from "../../../shared/interfaces/club/club.interface";
+import { ClubService } from '../../../shared/services/club/club.service';
+import { IClub } from '../../../shared/interfaces/club/club.interface';
+import { ArticleService } from '../../../shared/services/article/article.service';
+import { IArticle } from '../../../shared/interfaces/article.interface';
 
 @Component({
   selector: 'member-edit',
@@ -31,11 +33,12 @@ export class MemberEditComponent implements OnInit {
   }
 
   public member: IMember;
-  private savedMember: IMember;
   public form: FormGroup;
+
   public members$: Observable<IMember[]>;
   public teams$: Observable<ITeam[]>;
   public clubs$: Observable<IClub[]>;
+  public articles$: Observable<IArticle[]>;
 
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,
@@ -51,23 +54,24 @@ export class MemberEditComponent implements OnInit {
   };
 
   constructor(public route: ActivatedRoute,
-    private cdRef: ChangeDetectorRef,
-    private fb: FormBuilder,
-    private clubService: ClubService,
-    private authService: AuthService,
-    private alertService: AlertService,
-    public memberService: MemberService,
-    private teamService: TeamService,
-    private router: Router) {
-    this.clubs$ = clubService.clubs$;
+              private cdRef: ChangeDetectorRef,
+              private fb: FormBuilder,
+              private clubService: ClubService,
+              private authService: AuthService,
+              private alertService: AlertService,
+              public memberService: MemberService,
+              private teamService: TeamService,
+              private articleService: ArticleService,
+              private router: Router) {
     this.members$ = memberService.members$;
+    this.clubs$ = clubService.clubs$;
     this.teams$ = teamService.teams$;
+    this.articles$ = articleService.articles$;
   }
 
   ngOnInit() {
     this.route.data.subscribe((data: { member: IMember }) => {
       this.member = data.member;
-      this.savedMember = Object.freeze(Object.assign({}, this.member));
       this.uploaderOptions.itemId = this.member.id;
     });
 
@@ -82,7 +86,7 @@ export class MemberEditComponent implements OnInit {
       mainData: this.initMainData(),
       profile: this.initProfile(),
       opinions: this.initOpinions(),
-      interviews: this.initInterviews()
+      assignedInterviews: this.initInterviews()
     });
 
     this.form.valueChanges.pipe(
@@ -206,7 +210,7 @@ export class MemberEditComponent implements OnInit {
   }
 
   addInterview(): void {
-    const control = <FormArray>this.form.controls['interviews'];
+    const control = <FormArray>this.form.controls['assignedInterviews'];
     const interview: IInterview = {
       assignedArticleId: ''
     };
@@ -215,7 +219,7 @@ export class MemberEditComponent implements OnInit {
   }
 
   removeInterview($event: number): void {
-    const control = <FormArray>this.form.controls['interviews'];
+    const control = <FormArray>this.form.controls['assignedInterviews'];
     control.removeAt($event);
   }
 
@@ -246,16 +250,12 @@ export class MemberEditComponent implements OnInit {
   }
 
   setOpinionValidators($event: { i: number, type: string }) {
-    console.log($event);
-    // i: number, type: string
     const control = <FormArray>this.form.controls['opinions']['controls'][$event.i];
-    console.log(control);
 
     if (control.get('type').value === 'insert') {
       control.get('type').setValue('list');
       control.get('name').get('firstName').setValue('');
       control.get('name').get('lastName').setValue('');
-      // control.get('assignedMember').setValue('');
       control.get('assignedMember').setValidators(Validators.required);
     }
     else {
@@ -335,11 +335,11 @@ export class MemberEditComponent implements OnInit {
       action = this.memberService.createMember(this.member);
     }
     action.then(() => {
-      if (redirect) {
-        this.redirectToList();
-      }
-      this.alertService.showSnackBar('success', 'general.members.edit.saved');
-    },
+        if (redirect) {
+          this.redirectToList();
+        }
+        this.alertService.showSnackBar('success', 'general.members.edit.saved');
+      },
       (error: any) => {
         this.alertService.showSnackBar('error', error.message);
       }
@@ -363,7 +363,6 @@ export class MemberEditComponent implements OnInit {
   }
 
   deleteMemberFromTeam($event: { team: ITeam, member: IMember }) {
-    console.log($event);
     let index = $event.team.assignedPlayers.indexOf($event.member.id);
     $event.team.assignedPlayers.splice(index, 1);
     this.teamService.updateTeam($event.team.id, $event.team).then(
@@ -373,12 +372,10 @@ export class MemberEditComponent implements OnInit {
   }
 
   deleteMemberFromTeamManagement($event: { team: ITeam, member: IMember }) {
-    console.log($event);
     for (let i = 0; i < $event.team.assignedPositions.length; i++) {
-      console.log($event.team.assignedPositions[i]);
-      /*if ($event.team.assignedPositions[i].assignedMember === $event.member.id) {
-          $event.team.assignedPositions.splice(i, 1);
-      }*/
+      if ($event.team.assignedPositions[i].assignedMember === $event.member.id) {
+        $event.team.assignedPositions.splice(i, 1);
+      }
     }
     this.teamService.updateTeam($event.team.id, $event.team).then(
       () => this.alertService.success('general.members.edit.removedMemberFromTeamManagement'),

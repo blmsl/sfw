@@ -10,23 +10,7 @@
       {{'general.members.edit.interviews.noEntries' | translate}}
     </p>
 
-    <div *ngIf="member.assignedInterviews && member.assignedInterviews.length > 0">
-      <mat-list dense *ngIf="articles$ | async as articles; else loadingTemplate">
-        <mat-list-item *ngFor="let entry of articles | filterBy: ['id'] : member.assignedInterviews">
-        <span fxFlex.gt-sm="40"
-              fxFlex="100">{{entry.entry}}
-        </span>
-          <span fxFlex.gt-sm="60"
-                fxFlex="100">{{entry.value}}
-        </span>
-        </mat-list-item>
-
-      </mat-list>
-    </div>
+    <article-card *ngFor="let article of assignedArticles" [article]="article" ></article-card>
+   
   </mat-card-content>
 </mat-card>
-
-
-<ng-template #loadingTemplate>
-  <loading-indicator></loading-indicator>
-</ng-template>

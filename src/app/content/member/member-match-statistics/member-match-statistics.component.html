@@ -1,14 +1,38 @@
-Spielstatistiken
-<ul>
-  <li>Pro Saison wird aufgelistet, in welcher Mannschaft der Spieler gespielt hat.
-    <ul>
-      <li>Anzahl Spiele</li>
-      <li>Spielminuten</li>
-      <li>Einwechselungen</li>
-      <li>Auswechselungen</li>
-      <li>Gelbe, gelb-rote und rote Karten</li>
-      <li>Spieler des Spiels Auszeichnungen (Liste + Anzahl / Liste mit Saison und Anzahl)</li>
-      <li>Tore & Torvorlagen</li>
-    </ul>
-  </li>
-</ul>
+<mat-card *ngFor="let season of seasons">
+  <mat-card-title>{{season.title}}</mat-card-title>
+  <mat-card-subtitle>{{season.title}}</mat-card-subtitle>
+  <hr/>
+  <mat-card-content>
+
+    <table class="table table-condensed table-bordered">
+      <thead>
+      <tr>
+        <th>Mannschaft</th>
+        <th>Einsätze</th>
+        <th>Einwechselungen</th>
+        <th>Auswechselungen</th>
+        <th>Spielminuten</th>
+        <th>Gelbe Karten</th>
+        <th>Gelb-Rote Karten</th>
+        <th>Rote Karten</th>
+        <th>Tore</th>
+        <th>Vorlagen</th>
+      </tr>
+      </thead>
+      <!-- ToDo: Spielerstatistik -->
+      <tr *ngFor="let team of teams | isTeamMemberFilter : member : 'assignedPlayers'">
+        <td><a [routerLink]="['/teams/detail', team.id]">{{team.title}} {{team.subTitle}}</a></td>
+        <td style="color: red">34</td>
+        <td style="color: red">11</td>
+        <td style="color: red">14</td>
+        <td style="color: red">2421</td>
+        <td style="color: red">3</td>
+        <td style="color: red">1</td>
+        <td style="color: red">0</td>
+        <td style="color: red">7</td>
+        <td style="color: red">3</td>
+      </tr>
+    </table>
+
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,26 @@
+<mat-card [formGroup]="form">
+  <mat-card-header>
+    <mat-card-title>{{'general.applications.urlShorteningTitle' | translate}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+
+    <div fxLayout="column"
+         fxLayout.gt-sm="row wrap"
+         fxLayoutGap="10px">
+      <mat-form-field fxFlex="100">
+        <mat-select placeholder="{{'general.applications.urlShorteningService' | translate}}"
+                    formControlName="urlShortening">
+
+          <mat-option [value]="0">
+            {{'general.applications.noUrlShorteningService' | translate}}
+          </mat-option>
+
+          <mat-option *ngFor="let shorteningProvider of shorteningProviders | orderBy: ['title']"
+                      [value]="shorteningProvider">
+            {{shorteningProvider.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -3,10 +3,13 @@ mat-card-content {
   padding: 0 !important;
 }
 
+.ex-over {
+  border: 3px solid red;
+}
+
 .players {
   background: transparent url('/assets/sfw/match/soccer-field.jpg') center center / cover no-repeat;
-  min-height: 888px;
-  // height: 80vh;
+  height: 888px;
   display: flex;
   flex-direction: row;
 }
@@ -16,7 +19,7 @@ mat-card-content {
 
 .player {
   position: absolute;
-  width: 8%;
+  width: 6%;
 }
 
 /**

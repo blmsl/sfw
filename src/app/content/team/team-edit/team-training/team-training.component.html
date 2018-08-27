@@ -1,33 +1,34 @@
-<div fxLayout="column"
-     [formGroup]="form">
+<mat-card [formGroup]="form">
+  <mat-card-title>{{'general.teams.edit.training.title' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'general.teams.edit.training.description' | translate}}</mat-card-subtitle>
+  <hr/>
+  <mat-card-content>
+    <p *ngIf="!form.controls['assignedTrainings']">{{'general.teams.edit.training.noTraining' | translate}}</p>
 
-  <p style="margin-bottom: 25px;">{{'general.teams.edit.training.description' | translate}}</p>
-
-  <p *ngIf="!form.controls['assignedTrainings']">{{'general.teams.edit.training.noTraining' | translate}}</p>
-
-  <div formArrayName="assignedTrainings">
-    <div *ngFor="let training of form.controls['assignedTrainings']['controls']; let i=index">
-      <div [formGroupName]="i"
-           fxFlex="100">
-        <team-training-form
-          (removeTraining)="removeTraining.emit(i)"
-          [weekdays]="weekdays"
-          [locations]="locations"
-          [form]="form.controls['assignedTrainings']['controls'][i]">
-        </team-training-form>
-      </div>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row wrap">
+      <team-training-form fxFlex.gt-sm="50"
+                          *ngFor="let training of form.get('assignedTrainings').controls; let i=index"
+                          (removeTraining)="removeTraining.emit(i)"
+                          [weekdays]="weekdays"
+                          [locations]="locations"
+                          [form]="form.get('assignedTrainings').controls[i]">
+      </team-training-form>
     </div>
-  </div>
 
-  <div>
-    <button fxFlex.gt-sm="10"
-            fxFlex.gt-xs="50"
-            mat-raised-button
-            type="button"
-            color="primary"
-            (click)="addTraining.emit(true)">
-      {{ 'general.teams.edit.training.add' | translate}}
-    </button>
-  </div>
-
-</div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button mat-raised-button
+              type="button"
+              color="primary"
+              (click)="addTraining.emit(true)">
+        {{ 'general.teams.edit.training.add' | translate}}
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

@@ -12,7 +12,7 @@ export class MemberEditProfileComponent implements OnInit {
   @Input() form: FormGroup;
 
   @Output() add: EventEmitter<boolean> = new EventEmitter<boolean>(false);
-  @Output() delete: EventEmitter<IProfile> = new EventEmitter<IProfile>(false);
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
 
   constructor() {
   }

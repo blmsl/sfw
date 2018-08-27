@@ -151,6 +151,7 @@ foreach ($assignedTeams as $team) {
   $project->updateTeam($team["id"], $teamPageData, $i < 450 ? $batch : $batch2);
   $i++;
 }
+
 // End Competitions and Standings
 
 $batch->commit();
