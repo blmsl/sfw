@@ -31,13 +31,13 @@ export class MemberDetailComponent implements OnInit {
   public assignedArticles$: Observable<IArticle[]>;
 
   constructor(public route: ActivatedRoute,
-              private articleService: ArticleService,
-              private clubService: ClubService,
-              private memberService: MemberService,
-              private teamService: TeamService,
-              private categoryService: CategoryService,
-              private seasonService: SeasonService,
-              private router: Router) {
+    private articleService: ArticleService,
+    private clubService: ClubService,
+    private memberService: MemberService,
+    private teamService: TeamService,
+    private categoryService: CategoryService,
+    private seasonService: SeasonService,
+    private router: Router) {
     this.categories$ = categoryService.categories$;
     this.clubs$ = clubService.clubs$;
     this.members$ = this.memberService.members$;

@@ -8,9 +8,9 @@ describe('SettingsDowntimeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsDowntimeComponent ]
+      declarations: [SettingsDowntimeComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -19,7 +19,7 @@ export const teamOfTheWeekCron = functions.pubsub.topic('monthly-tick').onPublis
 
       const teamList: any = [];
 
-      values.forEach(function (doc: any) {
+      values.forEach(function(doc: any) {
         const teamData = doc.data();
         teamList.push(teamData);
       });

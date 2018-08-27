@@ -1,17 +1,17 @@
-import { Injectable }          from '@angular/core';
-import { Observable }          from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                              from 'angularfire2/firestore';
-import { IMatch }              from '../../interfaces/match/match.interface';
-import { of }                  from 'rxjs/index';
-import { IFormation }          from '../../interfaces/match/formation.interface';
+} from 'angularfire2/firestore';
+import { IMatch } from '../../interfaces/match/match.interface';
+import { of } from 'rxjs/index';
+import { IFormation } from '../../interfaces/match/formation.interface';
 import { IMatchEventCategory } from '../../interfaces/match/match-event-category.interface';
-import { ILocation }           from '../../interfaces/location/location.interface';
+import { ILocation } from '../../interfaces/location/location.interface';
 import Timestamp = firebase.firestore.Timestamp;
-import * as firebase           from 'firebase';
-import { ITeam }               from '../../interfaces/team/team.interface';
+import * as firebase from 'firebase';
+import { ITeam } from '../../interfaces/team/team.interface';
 
 @Injectable()
 export class MatchService {
@@ -178,7 +178,6 @@ export class MatchService {
 
   getOtherEventList(): { id: number, title: string }[] {
     return [
-      { id: 0, title: 'ohne Ergebnis' },
       { id: 1, title: 'ohne Wertung' },
       { id: 2, title: 'Abbruch' },
       { id: 3, title: 'Ausfall' },
@@ -191,7 +190,8 @@ export class MatchService {
       { id: 10, title: 'Nichtantritt Heim' },
       { id: 11, title: 'nach Elfmeterschießen' },
       { id: 12, title: 'nach Verlängerung' },
-      { id: 13, title: 'keine Angabe' }
+      { id: 13, title: 'keine Angabe' },
+      { id: 14, title: 'ohne Ergebnis' }
     ];
   }
 
@@ -306,11 +306,13 @@ export class MatchService {
         playerOneTitle: 'for',
         showPlayerOneInput: true
       },
-      { id: 18,
+      {
+        id: 18,
         parentCategory: 'punishments',
         title: 'redCard',
         playerOneTitle: 'for',
-        showPlayerOneInput: true },
+        showPlayerOneInput: true
+      },
       {
         id: 19,
         parentCategory: 'punishments',
@@ -338,7 +340,7 @@ export class MatchService {
     return this.afs.collection<IMatch>(this.path, ref => ref.where('assignedLocation', '==', location.id)).valueChanges();
   }
 
-  getMatchesForTeam(team: ITeam): Observable<IMatch[]>{
+  getMatchesForTeam(team: ITeam): Observable<IMatch[]> {
     return this.afs.collection<IMatch>(this.path, ref => ref.where('assignedTeam', '==', team.id)).valueChanges();
   }
 

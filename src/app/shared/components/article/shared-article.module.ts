@@ -1,12 +1,12 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { ArticleCardComponent } from './article-card/article-card.component';
-import { CommonModule }         from '@angular/common';
-import { SharedModule }         from '../../shared.module';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from '../../shared.module';
 import {
   MatButtonModule,
   MatCardModule
-}                               from '@angular/material';
-import { RouterModule }         from '@angular/router';
+} from '@angular/material';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [

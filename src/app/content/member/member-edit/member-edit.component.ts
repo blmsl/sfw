@@ -54,15 +54,15 @@ export class MemberEditComponent implements OnInit {
   };
 
   constructor(public route: ActivatedRoute,
-              private cdRef: ChangeDetectorRef,
-              private fb: FormBuilder,
-              private clubService: ClubService,
-              private authService: AuthService,
-              private alertService: AlertService,
-              public memberService: MemberService,
-              private teamService: TeamService,
-              private articleService: ArticleService,
-              private router: Router) {
+    private cdRef: ChangeDetectorRef,
+    private fb: FormBuilder,
+    private clubService: ClubService,
+    private authService: AuthService,
+    private alertService: AlertService,
+    public memberService: MemberService,
+    private teamService: TeamService,
+    private articleService: ArticleService,
+    private router: Router) {
     this.members$ = memberService.members$;
     this.clubs$ = clubService.clubs$;
     this.teams$ = teamService.teams$;
@@ -335,11 +335,11 @@ export class MemberEditComponent implements OnInit {
       action = this.memberService.createMember(this.member);
     }
     action.then(() => {
-        if (redirect) {
-          this.redirectToList();
-        }
-        this.alertService.showSnackBar('success', 'general.members.edit.saved');
-      },
+      if (redirect) {
+        this.redirectToList();
+      }
+      this.alertService.showSnackBar('success', 'general.members.edit.saved');
+    },
       (error: any) => {
         this.alertService.showSnackBar('error', error.message);
       }

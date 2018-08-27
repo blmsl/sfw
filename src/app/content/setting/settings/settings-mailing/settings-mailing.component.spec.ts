@@ -8,9 +8,9 @@ describe('SettingsMailingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsMailingComponent ]
+      declarations: [SettingsMailingComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

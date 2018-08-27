@@ -22,7 +22,7 @@ export class MatchEditEventFormComponent implements OnInit {
   public assignedPlayers$: Observable<IMember[]>;
 
   constructor(private fb: FormBuilder,
-              private memberService: MemberService) {
+    private memberService: MemberService) {
   }
 
   ngOnInit() {

@@ -3,7 +3,7 @@
   <mat-card-subtitle>{{'general.teams.edit.training.description' | translate}}</mat-card-subtitle>
   <hr/>
   <mat-card-content>
-    <p *ngIf="!form.controls['assignedTrainings']">{{'general.teams.edit.training.noTraining' | translate}}</p>
+    <!--<p *ngIf="!form.controls['assignedTrainings']">{{'general.teams.edit.training.noTraining' | translate}}</p>
 
     <div fxLayout="column"
          fxLayout.gt-sm="row wrap">
@@ -14,7 +14,7 @@
                           [locations]="locations"
                           [form]="form.get('assignedTrainings').controls[i]">
       </team-training-form>
-    </div>
+    </div>-->
 
   </mat-card-content>
   <mat-card-actions>
@@ -26,7 +26,7 @@
       <button mat-raised-button
               type="button"
               color="primary"
-              (click)="addTraining.emit(true)">
+              (click)="addTraining.emit()">
         {{ 'general.teams.edit.training.add' | translate}}
       </button>
     </div>

@@ -2,7 +2,7 @@ import {
   Component,
   Input,
   OnInit
-}                   from '@angular/core';
+} from '@angular/core';
 import { IArticle } from '../../../../shared/interfaces/article.interface';
 
 @Component({

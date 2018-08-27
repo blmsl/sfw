@@ -28,9 +28,9 @@ export class MemberEditFunctionsComponent implements OnInit {
   public categories$: Observable<ICategory[]>;
 
   constructor(private teamService: TeamService,
-              private categoryService: CategoryService,
-              private alertService: AlertService,
-              private seasonService: SeasonService) {
+    private categoryService: CategoryService,
+    private alertService: AlertService,
+    private seasonService: SeasonService) {
     this.seasons$ = seasonService.seasons$;
     this.categories$ = categoryService.categories$;
   }

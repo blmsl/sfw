@@ -28,7 +28,7 @@ export class BackendGuard implements CanActivate {
       map((user: IUser) => !!(user && (user.assignedRoles.admin || user.assignedRoles.editor))),
       tap((isAllowed: boolean) => {
         if (!isAllowed) {
-          this.authService.signOut().then( () => {
+          this.authService.signOut().then(() => {
             console.error('Access denied - Admins and Editors only');
             const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
             queryParams['page'] = 'forbidden';

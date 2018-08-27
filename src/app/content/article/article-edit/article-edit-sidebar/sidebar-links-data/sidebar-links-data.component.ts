@@ -34,7 +34,7 @@ export class SidebarLinksDataComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if(this.form.get('isMatch').value && !this.matches){
+    if (this.form.get('isMatch').value && !this.matches) {
       this.loadMatches();
     }
 

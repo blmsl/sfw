@@ -4,31 +4,31 @@ import {
   VERSION,
   ViewChild
 } from '@angular/core';
-import { environment }     from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import {
   FormBuilder,
   FormGroup,
   Validators
-}                          from '@angular/forms';
-import { MemberService }   from '../../shared/services/member/member.service';
-import { Observable }      from 'rxjs';
-import { IMember }         from '../../shared/interfaces/member/member.interface';
-import * as moment         from 'moment';
-import { IMatch }          from '../../shared/interfaces/match/match.interface';
-import { MatchService }    from '../../shared/services/match/match.service';
+} from '@angular/forms';
+import { MemberService } from '../../shared/services/member/member.service';
+import { Observable } from 'rxjs';
+import { IMember } from '../../shared/interfaces/member/member.interface';
+import * as moment from 'moment';
+import { IMatch } from '../../shared/interfaces/match/match.interface';
+import { MatchService } from '../../shared/services/match/match.service';
 import {
   PerfectScrollbarConfigInterface,
   PerfectScrollbarDirective
-}                          from 'ngx-perfect-scrollbar';
+} from 'ngx-perfect-scrollbar';
 import { CategoryService } from '../../shared/services/category/category.service';
-import { ICategory }       from '../../shared/interfaces/category.interface';
-import { ArticleService }  from '../../shared/services/article/article.service';
-import { IArticle }        from '../../shared/interfaces/article.interface';
+import { ICategory } from '../../shared/interfaces/category.interface';
+import { ArticleService } from '../../shared/services/article/article.service';
+import { IArticle } from '../../shared/interfaces/article.interface';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: [ './dashboard.component.scss' ]
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
 
@@ -55,10 +55,10 @@ export class DashboardComponent implements OnInit {
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
 
   constructor(private fb: FormBuilder,
-              private articleService: ArticleService,
-              private categoryService: CategoryService,
-              public memberService: MemberService,
-              public matchService: MatchService) {
+    private articleService: ArticleService,
+    private categoryService: CategoryService,
+    public memberService: MemberService,
+    public matchService: MatchService) {
 
     this.angularVersion = VERSION.full;
     this.env = environment;
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.mindForm = this.fb.group({
-      comment: [ '', [ Validators.required, Validators.minLength(5) ] ]
+      comment: ['', [Validators.required, Validators.minLength(5)]]
     });
   }
 

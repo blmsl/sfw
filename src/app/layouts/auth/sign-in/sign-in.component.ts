@@ -42,11 +42,11 @@ export class SignInComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   constructor(private alertService: AlertService,
-              public authService: AuthService,
-              private cfr: ComponentFactoryResolver,
-              private fb: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router) {
+    public authService: AuthService,
+    private cfr: ComponentFactoryResolver,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router) {
   }
 
   ngOnInit() {

@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
     this.route.queryParamMap.subscribe((params: ParamMap) => {
-      if(params.get('page') === 'forbidden'){
+      if (params.get('page') === 'forbidden') {
         this.showSignInForm = false;
         this.showForbiddenPage = true;
       }

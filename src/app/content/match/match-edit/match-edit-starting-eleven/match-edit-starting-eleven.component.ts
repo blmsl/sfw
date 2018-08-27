@@ -30,9 +30,9 @@ export class MatchEditStartingElevenComponent implements OnInit, OnDestroy {
   private savedInnerHTML: string;
 
   constructor(private fb: FormBuilder,
-              private dragulaService: DragulaService,
-              private memberService: MemberService,
-              private matchService: MatchService) {
+    private dragulaService: DragulaService,
+    private memberService: MemberService,
+    private matchService: MatchService) {
     this.tacticalFormations = matchService.getFormations();
 
     dragulaService.createGroup(this.playerList, {

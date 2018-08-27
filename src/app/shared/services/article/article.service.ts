@@ -22,16 +22,16 @@ export class ArticleService {
     value: number,
     title: string
   }[] = [
-    { value: 0, title: 'all' },
-    { value: 1, title: 'published' },
-    { value: 2, title: 'scheduled' },
-    { value: 3, title: 'draft' },
-    { value: 4, title: 'featured' }
-  ];
+      { value: 0, title: 'all' },
+      { value: 1, title: 'published' },
+      { value: 2, title: 'scheduled' },
+      { value: 3, title: 'draft' },
+      { value: 4, title: 'featured' }
+    ];
 
   constructor(private afs: AngularFirestore,
-              private afAuth: AngularFireAuth,
-              private authService: AuthService) {
+    private afAuth: AngularFireAuth,
+    private authService: AuthService) {
     this.collectionRef = this.afs.collection<IArticle>(this.path);
     this.articles$ = this.collectionRef.valueChanges();
   }
@@ -94,11 +94,11 @@ export class ArticleService {
     return forkJoin(...observables);
   }
 
-  getArticlesNotAssignedToMatch(match: IMatch): Observable<IArticle[]>{
+  getArticlesNotAssignedToMatch(match: IMatch): Observable<IArticle[]> {
     return this.articles$.pipe(
       map((articles: IArticle[]) => {
         return articles.map((article: IArticle) => {
-          if(!article.assignedMatches || !article.assignedMatches.includes(match.id)){
+          if (!article.assignedMatches || !article.assignedMatches.includes(match.id)) {
             return article;
           }
         });
@@ -107,10 +107,10 @@ export class ArticleService {
   }
 
   assignMatchToArticles(matchId: string, articles: IArticle[]): Observable<any> {
-    if(!matchId || !articles || articles.length === 0) return;
+    if (!matchId || !articles || articles.length === 0) return;
 
     let observables = [];
-    for(let i = 0; i < articles.length; i++) {
+    for (let i = 0; i < articles.length; i++) {
       articles[i].assignedMatches ? articles[i].assignedMatches.push(matchId) : articles[i].assignedMatches = [matchId];
       observables.push(this.updateArticle(articles[i].id, articles[i]));
     }

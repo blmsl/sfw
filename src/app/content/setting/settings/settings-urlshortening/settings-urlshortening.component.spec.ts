@@ -8,9 +8,9 @@ describe('SettingsUrlshorteningComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsUrlshorteningComponent ]
+      declarations: [SettingsUrlshorteningComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

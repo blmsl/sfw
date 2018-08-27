@@ -1,11 +1,11 @@
 import {
   Component,
   OnInit
-}                         from '@angular/core';
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'fullcalendar';
 import { ICalendarEvent } from '../../../shared/interfaces/calendar-event.interface';
-import { Observable }     from 'rxjs/index';
+import { Observable } from 'rxjs/index';
 
 @Component({
   selector: 'calendar-dashboard',

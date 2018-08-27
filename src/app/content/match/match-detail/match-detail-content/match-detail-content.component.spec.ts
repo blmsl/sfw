@@ -8,9 +8,9 @@ describe('MatchDetailContentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchDetailContentComponent ]
+      declarations: [MatchDetailContentComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

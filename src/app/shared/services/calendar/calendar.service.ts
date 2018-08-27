@@ -1,10 +1,10 @@
-import { Injectable }           from '@angular/core';
-import { HttpClient }           from '@angular/common/http';
-import * as moment              from 'moment';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment';
 import { map, switchMap, take } from 'rxjs/operators';
-import { IMember }              from '../../interfaces/member/member.interface';
-import { ICalendarEvent }       from '../../interfaces/calendar-event.interface';
-import { MemberService }        from '../member/member.service';
+import { IMember } from '../../interfaces/member/member.interface';
+import { ICalendarEvent } from '../../interfaces/calendar-event.interface';
+import { MemberService } from '../member/member.service';
 import { forkJoin, Observable, of } from 'rxjs';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class CalendarService {
     private memberService: MemberService) {
   }
 
-  getCalendars(calendarIds: string[]){
+  getCalendars(calendarIds: string[]) {
 
     if (!calendarIds || calendarIds.length === 0) {
       return of([]);
@@ -25,7 +25,7 @@ export class CalendarService {
     const _this = this;
 
     let calendarObservables: Observable<any>[] = [];
-    Object.keys(calendarIds).forEach(function (key) {
+    Object.keys(calendarIds).forEach(function(key) {
       console.log(calendarIds[key]);
       calendarObservables.push(_this.getCalendarEvents(calendarIds[key]));
     });

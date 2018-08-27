@@ -13,7 +13,9 @@
              fxLayoutGap="10px">
           <div fxFlex="40">
             <settings-main [form]="form.get('page')"></settings-main>
-            <settings-calendars [form]="form.get('assignedCalendars')"></settings-calendars>
+            <settings-calendars (addCalendar)="addCalendar($event)"
+                                [form]="form.get('assignedCalendars')">
+            </settings-calendars>
           </div>
 
           <!--<settings-urlshortening fxFlex="20" [form]="form"></settings-urlshortening>-->

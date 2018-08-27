@@ -10,6 +10,8 @@ export class SettingsUrlshorteningComponent implements OnInit {
 
   @Input() form: FormGroup;
 
+  public shorteningProviders = [];
+
   constructor() { }
 
   ngOnInit() {

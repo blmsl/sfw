@@ -30,7 +30,7 @@
       </mat-tab>
 
       <mat-tab label="{{'general.teams.edit.training.title' | translate}}">
-        <team-training [form]="form"
+        <team-training [form]="form.get('assignedTrainings').controls"
                        [locations]="locations$ | async"
                        (addTraining)="addTraining()"
                        (removeTraining)="removeTraining($event)">

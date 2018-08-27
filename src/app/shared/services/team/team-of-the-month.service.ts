@@ -15,7 +15,7 @@ export class TeamOfTheMonthService {
   teamsOfTheMonth$: Observable<ITeamOfTheMonth[]>;
 
   constructor(private afs: AngularFirestore,
-              private teamService: TeamService) {
+    private teamService: TeamService) {
     this.collectionRef = this.afs.collection<ITeamOfTheMonth>(this.path);
     this.teamsOfTheMonth$ = this.collectionRef.valueChanges();
   }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class SettingsCalendarsComponent implements OnInit {
 
   @Input() form: FormGroup;
+  @Output() addCalendar: EventEmitter<void> = new EventEmitter<void>(false);
 
   constructor() { }
 

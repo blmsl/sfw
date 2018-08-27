@@ -14,7 +14,7 @@ export class TeamTrainingComponent implements OnInit {
 
   public weekdays: number[];
 
-  @Output() addTraining: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() addTraining: EventEmitter<void> = new EventEmitter<void>(false);
   @Output() removeTraining: EventEmitter<number> = new EventEmitter<number>(false);
 
   constructor(private applicationService: ApplicationService) {
@@ -22,6 +22,7 @@ export class TeamTrainingComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.form);
   }
 
 }
