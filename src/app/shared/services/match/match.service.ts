@@ -371,6 +371,26 @@ export class MatchService {
     ).valueChanges();
   }
 
+  getMatchesWithResult(teamId: string): Observable<IMatch[]> {
+    return this.afs.collection<IMatch>(this.path, ref =>
+      ref.orderBy('result').startAt('!')
+        .where('assignedTeam', "==", teamId)
+    ).valueChanges()
+  }
+
+  getSeriesOfMatches(teamId: string): Observable<IMatch[]> {
+    let now = new Date();
+
+    return this.afs.collection<IMatch>(this.path, ref =>
+      ref.where('assignedTeam', "==", teamId)
+        .where('matchEndDate', '<=', now)
+        .orderBy("matchEndDate", "desc")
+        .limit(5)
+    ).valueChanges();
+  }
+
+
+
   setNewMatch(): Observable<IMatch> {
     return of({
       assignedCategories: [],
