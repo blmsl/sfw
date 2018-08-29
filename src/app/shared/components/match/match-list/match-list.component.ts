@@ -1,6 +1,8 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { IMatch } from '../../../interfaces/match/match.interface';
 import { ICategory } from '../../../interfaces/category.interface';
+import { MatchService } from '../../../services/match/match.service';
+import { IMatchEvent } from '../../../interfaces/match/match-event.interface';
 
 @Component({
   selector: 'match-list',
@@ -10,15 +12,17 @@ import { ICategory } from '../../../interfaces/category.interface';
 export class MatchListComponent implements OnInit, AfterViewChecked {
 
   @Input() matches: IMatch[];
-  @Input() events: { id: number; title: string }[];
   @Input() categories: ICategory[];
   @Input() showResultInputs: boolean = false;
   @Input() showResult: boolean = false;
 
-  constructor(private cdRef: ChangeDetectorRef) {
+  public otherEvents: { id: number, title: string }[];
+
+  constructor(private cdRef: ChangeDetectorRef, private matchService: MatchService) {
   }
 
   ngOnInit() {
+    this.otherEvents = this.matchService.getOtherEventList();
   }
 
   ngAfterViewChecked() {

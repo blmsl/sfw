@@ -888,9 +888,9 @@
         "saved": "Die Änderungen am Mitglied wurden gespeichert"
       },
       "fame": {
+        "ah": "AH-Mitglied",
         "club": "Vereinsmitglied",
         "honorary": "Ehrenmitglied",
-        "ah": "AH-Mitglied",
         "player": "Spieler",
         "viewProfile": "Profil anzeigen"
       },
@@ -1416,6 +1416,8 @@
       "fame": {
         "categories": "Kategorien",
         "draws": "Unentschieden",
+        "highestDefeat": "Höchste Niederlage",
+        "highestWin": "Höchster Sieg",
         "loss": "Niederlagen",
         "mainTitle": "Daten",
         "management": "Mannschaftsbetreuung",
@@ -1426,6 +1428,7 @@
         "positions": "Aufgaben innerhalb der Mannschaft",
         "positionsTitle": "Positionen",
         "season": "Spielzeit",
+        "stats": "Statistiken",
         "teamImage": "Mannschaftsfoto",
         "title": "Mannschaft des Monats",
         "viewProfile": "Details anzeigen",

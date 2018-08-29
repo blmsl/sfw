@@ -22,8 +22,8 @@ handlers:
   #secure: always
   #login: admin
 
-#- url: /php/club/matchplan-calendar.php
-#  script: /php/club/matchplan-calendar.php
+- url: /php/club/matchplan-calendar.php
+  script: /php/club/matchplan-calendar.php
 
 #- url: /php/club/matchplan-export.php
 #  script: /php/club/matchplan-export.php

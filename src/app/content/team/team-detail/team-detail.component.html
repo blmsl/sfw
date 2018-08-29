@@ -35,7 +35,6 @@
       <mat-tab label="{{'general.teams.edit.matches.title' | translate}}">
         <team-detail-matches [assignedTeamCategories]="assignedTeamCategories$ | async"
                              [assignedMatches]="assignedMatches$ | async"
-                             [events]="otherEventList | orderBy: ['title']"
                              [team]="team">
         </team-detail-matches>
       </mat-tab>

@@ -35,22 +35,6 @@
 
           </mat-card-content>
           <hr>
-          <mat-card-content>
-            <div fxLayout="row" class="text-xs-center">
-              <div fxFlex="33" style="color: green">
-                <h1 class="ma-0"><b>23,8K</b></h1>
-                <small>{{'general.teams.fame.wins' | translate}}</small>
-              </div>
-              <div fxFlex="33" style="color: red">
-                <h1 class="ma-0"><b>569</b></h1>
-                <small>{{'general.teams.fame.loss' | translate}}</small>
-              </div>
-              <div fxFlex="33">
-                <h1 class="ma-0"><b>67</b></h1>
-                <small>{{'general.teams.fame.draws' | translate}}</small>
-              </div>
-            </div>
-          </mat-card-content>
           <hr>
           <mat-card-content *ngIf="teamOfTheMonth.info">
             <h4 class="mt-0">{{'general.teams.fame.info' | translate}}</h4>
@@ -137,6 +121,8 @@
             </table>
           </mat-card-content>
         </mat-card>
+        
+        <team-detail-statistics [team]="teamOfTheMonth"></team-detail-statistics>
       </div>
 
       <div fxFlex="50">

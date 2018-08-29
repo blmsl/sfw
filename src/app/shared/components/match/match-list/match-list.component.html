@@ -6,6 +6,7 @@
     <mat-list dense>
       <match-list-item *ngFor="let match of matches"
                        [match]="match"
+                       [otherEvents]="otherEvents"
                        [categories]="categories"
                        [showResult]="showResult"
                        [showResultInputs]="showResultInputs">

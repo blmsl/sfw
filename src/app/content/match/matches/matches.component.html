@@ -29,7 +29,6 @@
             <mat-card-content style="max-height: 300px"
                               [perfectScrollbar]="config">
               <match-list [categories]="categories"
-                          [events]="matchService.getOtherEventList() | orderBy: ['title']"
                           [matches]="matches | orderBy: ['-matchEndDate.seconds']
                                       | matchFilter: 'matchEndDate' : '<='
                                       | matchFilter: 'matchEndDate' : '>=' : inLastTwoWeeks">
@@ -53,7 +52,6 @@
             <mat-card-content style="max-height: 300px"
                               [perfectScrollbar]="config">
               <match-list [categories]="categories"
-                          [events]="matchService.getOtherEventList() | orderBy: ['title']"
                           [showResultInputs]="true"
                           [matches]="matches
                                 | matchFilter: 'matchStartDate' : '<='

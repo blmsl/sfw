@@ -7,6 +7,7 @@ import {
 import { IMatch } from '../../../../interfaces/match/match.interface';
 import { ICategory } from '../../../../interfaces/category.interface';
 import { fadeOutAnimation } from '../../../../animations/fade-out.animations';
+import { IMatchEvent } from '../../../../interfaces/match/match-event.interface';
 
 @Component({
   selector: 'match-list-item',
@@ -20,6 +21,7 @@ export class MatchListItemComponent implements OnInit {
   @Input() categories: ICategory[];
   @Input() showResultInputs: boolean = false;
   @Input() showResult: boolean = false;
+  @Input() otherEvents: { id: number, title: string }[];
 
   @HostBinding('@visibilityChanged') visibilityChanged: boolean = false;
 

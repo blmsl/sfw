@@ -389,8 +389,6 @@ export class MatchService {
     ).valueChanges();
   }
 
-
-
   setNewMatch(): Observable<IMatch> {
     return of({
       assignedCategories: [],

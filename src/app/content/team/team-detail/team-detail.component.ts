@@ -36,18 +36,16 @@ export class TeamDetailComponent implements OnInit {
   public assignedMatches$: Observable<IMatch[]>;
   public assignedArticles$: Observable<IArticle[]>;
 
-  public otherEventList: { id: number, title: string }[];
-
   constructor(private route: ActivatedRoute,
-    private seasonService: SeasonService,
-    private clubService: ClubService,
-    private teamService: TeamService,
-    private matchService: MatchService,
-    private categoryService: CategoryService,
-    private memberService: MemberService,
-    private locationService: LocationService,
-    private articleService: ArticleService,
-    private router: Router) {
+              private seasonService: SeasonService,
+              private clubService: ClubService,
+              private teamService: TeamService,
+              private matchService: MatchService,
+              private categoryService: CategoryService,
+              private memberService: MemberService,
+              private locationService: LocationService,
+              private articleService: ArticleService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -60,7 +58,6 @@ export class TeamDetailComponent implements OnInit {
       this.assignedPositions$ = this.memberService.getMembersByTeamPosition(this.team.assignedPositions);
       this.assignedLocations$ = this.locationService.getLocationsByTraining(this.team.assignedTrainings);
       this.assignedMatches$ = this.matchService.getMatchesForTeam(this.team);
-      this.otherEventList = this.matchService.getOtherEventList();
       this.assignedArticles$ = this.articleService.getArticlesForTeam(this.team);
     });
   }

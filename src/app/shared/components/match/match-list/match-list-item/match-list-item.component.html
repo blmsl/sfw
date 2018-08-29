@@ -25,13 +25,17 @@
       <span *ngIf="match.result.homeTeamGoals && match.result.guestTeamGoals || (match.result.homeTeamGoals === 0 || match.result.guestTeamGoals === 0)">
         {{match.result.homeTeamGoals}} : {{match.result.guestTeamGoals}}
       </span>
-      <span *ngIf="match.result.otherEvent">
-        <span [innerHTML]="match.result.otherEvent"></span>
+      <span *ngIf="match.result.otherEvent && (otherEvents |filterBy: ['id']: match.result.otherEvent : [true]).length > 0">
+        {{(otherEvents |filterBy: ['id']: match.result.otherEvent : [true])[0].title}}
       </span>
+      <span *ngIf="match.result.otherEvent && (otherEvents |filterBy: ['id']: match.result.otherEvent : [true]).length === 0" [innerHTML]="match.result.otherEvent"></span>
     </div>
 
     <div *ngIf="!showResult && !showResultInputs">
-      <span *ngIf="match.result && match.result.otherEvent" [innerHTML]="match.result.otherEvent"></span>
+      <span *ngIf="match.result && match.result.otherEvent && (otherEvents |filterBy: ['id']: match.result.otherEvent : [true]).length > 0">
+        {{(otherEvents |filterBy: ['id']: match.result.otherEvent : [true])[0].title}}
+      </span>
+      <span *ngIf="match.result && match.result.otherEvent && (otherEvents |filterBy: ['id']: match.result.otherEvent : [true]).length === 0" [innerHTML]="match.result.otherEvent"></span>
       <span *ngIf="!match.result || !match.result.otherEvent">
         {{match.matchStartDate.seconds *1000 | date: 'dd.MM.yy HH:mm'}}
       </span>

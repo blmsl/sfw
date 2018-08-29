@@ -6,6 +6,7 @@ use Google\Cloud\Storage\StorageClient;
 
 use duzun\hQuery;
 
+require_once "application.class.php";
 require_once "article.class.php";
 require_once "calendar.class.php";
 require_once "category.class.php";
@@ -20,6 +21,7 @@ require_once "team.class.php";
 
 class sfwApp
 {
+  use sfwApplication;
   use sfwArticle;
   use sfwBase;
   use sfwCalendar;
@@ -73,6 +75,7 @@ trait sfwBase
       $this->storage = $this->getStorageConnection($projectId);
     }
 
+    $this->applicationCollection = $this->db->collection('applications');
     $this->articleCollection = $this->db->collection('articles');
     $this->categoryCollection = $this->db->collection('categories');
     $this->categoryTypeCollection = $this->db->collection('category-types');
@@ -80,7 +83,6 @@ trait sfwBase
     $this->locationCollection = $this->db->collection('locations');
     $this->matchCollection = $this->db->collection('matches');
     $this->memberCollection = $this->db->collection('members');
-
     $this->seasonCollection = $this->db->collection('seasons');
     $this->teamCollection = $this->db->collection('teams');
   }

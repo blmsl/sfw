@@ -8,9 +8,8 @@
         <mat-card-title>{{'general.teams.detail.matchPlan.pastMatches' | translate}}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <match-list *ngIf="assignedTeamCategories && assignedMatches && events && team; else loadingTemplate"
+        <match-list *ngIf="assignedTeamCategories && assignedMatches && team; else loadingTemplate"
                     [categories]="assignedTeamCategories"
-                    [events]="events"
                     [showResult]="true"
                     [matches]="assignedMatches | orderBy: ['-matchStartDate.seconds'] | matchFilter : 'matchStartDate' : '<=' | matchFilter: 'assignedTeam' : '===' : team.id">
         </match-list>

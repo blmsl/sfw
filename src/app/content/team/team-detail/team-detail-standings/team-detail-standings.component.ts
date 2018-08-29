@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 
 @Component({
@@ -14,7 +10,8 @@ export class TeamDetailStandingsComponent implements OnInit {
 
   @Input() team: ITeam;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

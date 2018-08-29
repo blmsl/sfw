@@ -82,7 +82,7 @@ trait sfwCalendar
         ));
     }
 
-    public function generateEventItem($match, $locations)
+    public function generateEventItem($match, $location)
     {
         /**
          * @var $match array
@@ -91,12 +91,12 @@ trait sfwCalendar
             'description' => $match["matchType"] . ' <a target="_blank" href="' . $match["matchLink"] . '">Link</a>',
             'end' => $match["matchEndDate"]->get()->format(DATE_RFC3339),
             'start' => $match["matchStartDate"]->get()->format(DATE_RFC3339),
-            'location' => $locations[$match['assignedLocation']],
+            'location' => $location,
             'title' => $match['title']
         );
     }
 
-    public function saveCalendarEvent($matchEvent)
+    public function setCalendarEvent($matchEvent)
     {
         $start = new Google_Service_Calendar_EventDateTime();
         $start->setDateTime($matchEvent["start"]);

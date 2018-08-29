@@ -1,0 +1,67 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{'general.teams.fame.stats' | translate}}</mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout.gt-sm="row"
+         fxLayout="column"
+         fxLayoutGap="10px"
+         class="text-xs-center">
+      <div fxFlex="33" style="color: green">
+        <h1 class="ma-0"><b>{{wins.length}}</b></h1>
+        <small>{{'general.teams.fame.wins' | translate}}</small>
+      </div>
+      <div fxFlex="33">
+        <h1 class="ma-0"><b>{{draws.length}}</b></h1>
+        <small>{{'general.teams.fame.draws' | translate}}</small>
+      </div>
+      <div fxFlex="33" style="color: red">
+        <h1 class="ma-0"><b>{{defeats.length}}</b></h1>
+        <small>{{'general.teams.fame.loss' | translate}}</small>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-content>
+
+    <div fxLayout.gt-sm="row"
+         fxLayout="column"
+         fxLayoutGap="10px">
+      <mat-card fxFlex="50" style="color: green" *ngIf="highestWin">
+        <mat-card-title>{{'general.teams.fame.highestWin' | translate}}</mat-card-title>
+        <mat-card-content class="text-xs-center">
+          <h1 class="ma-0">
+            <div class="row wrap">
+              <span fxFlex="50"><img [src]="highestWin.homeTeam.logoURL"/></span>
+              <span fxFlex="50"><img [src]="highestWin.guestTeam.logoURL"/></span>
+              <span fxFlex="49">{{highestWin.result.homeTeamGoals}}</span>
+              <span fxFlex="2">:</span>
+              <span fxFlex="49">{{highestWin.result.guestTeamGoals}}</span>
+            </div>
+          </h1>
+          <small>{{highestWin.homeTeam.title}} &ndash; {{highestWin.guestTeam.title}}
+            ({{highestWin.matchStartDate.toDate() | date: 'd.M.y H:m'}})
+          </small>
+        </mat-card-content>
+      </mat-card>
+      <mat-card fxFlex="50" style="color: red" *ngIf="highestDefeat">
+        <mat-card-title>{{'general.teams.fame.highestDefeat' | translate}}</mat-card-title>
+        <mat-card-content class="text-xs-center">
+          <h1 class="ma-0">
+            <div class="row wrap">
+              <span fxFlex="50"><img [src]="highestDefeat.homeTeam.logoURL"/></span>
+              <span fxFlex="50"><img [src]="highestDefeat.guestTeam.logoURL"/></span>
+              <span fxFlex="49">{{highestDefeat.result.homeTeamGoals}}</span>
+              <span fxFlex="2">:</span>
+              <span fxFlex="49">{{highestDefeat.result.guestTeamGoals}}</span>
+            </div>
+          </h1>
+          <small>{{highestDefeat.homeTeam.title}} &ndash; {{highestDefeat.guestTeam.title}}
+            ({{highestDefeat.matchStartDate.toDate() | date: 'd.M.y H:m'}})
+          </small>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </mat-card-content>
+</mat-card>

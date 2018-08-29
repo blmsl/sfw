@@ -52,6 +52,7 @@ import { ChartsModule } from 'ng2-charts';
 import { TeamDetailCompetitionsComponent } from './team-detail/team-detail-standings/team-detail-competitions/team-detail-competitions.component';
 import { TeamDetailArticlesComponent } from './team-detail/team-detail-articles/team-detail-articles.component';
 import { SharedArticleModule } from '../../shared/components/article/shared-article.module';
+import { TeamDetailStatisticsComponent } from './team-detail/team-detail-statistics/team-detail-statistics.component';
 
 @NgModule({
   imports: [
@@ -95,7 +96,8 @@ import { SharedArticleModule } from '../../shared/components/article/shared-arti
     TeamDetailMediaComponent,
     TeamStatisticsComponent,
     TeamDetailCompetitionsComponent,
-    TeamDetailArticlesComponent
+    TeamDetailArticlesComponent,
+    TeamDetailStatisticsComponent
   ],
   providers: [
     ApplicationService,

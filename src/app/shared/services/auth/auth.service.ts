@@ -66,6 +66,7 @@ export class AuthService implements OnDestroy {
 
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider).then((credential) => {
+      console.log(credential);
       return this.updateUser(credential.user);
     });
   }
@@ -81,7 +82,9 @@ export class AuthService implements OnDestroy {
   }
 
   twitterLogin(): Promise<any> {
+    console.log('twitter');
     const provider = new firebase.auth.TwitterAuthProvider();
+    console.log(provider);
     return this.oAuthLogin(provider);
   }
 
