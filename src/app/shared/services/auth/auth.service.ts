@@ -68,7 +68,7 @@ export class AuthService implements OnDestroy {
     return this.afAuth.auth.signInWithPopup(provider).then((credential) => {
 
       const data = {
-        id: this.userId,
+        id: firebase.auth().currentUser.uid,
         creation: this.getCreation(),
         displayName: credential.user.displayName,
         email: credential.user.email,
