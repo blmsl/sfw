@@ -146,6 +146,8 @@ export class SignInComponent implements OnInit, OnDestroy {
     }
     return loginAction
       .then(() => {
+        console.log('finished social login');
+        console.log(this.returnUrl);
         return this.router.navigate([this.returnUrl])
       })
       .catch((error: any) => {
