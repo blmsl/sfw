@@ -149,6 +149,7 @@ export class SignInComponent implements OnInit, OnDestroy {
         return this.router.navigate([this.returnUrl])
       })
       .catch((error: any) => {
+        console.log(error);
         _that.isLoading = false;
         _that.showDemoLoginMessage = false;
         _that.showAlert('signInAlertContainer');
