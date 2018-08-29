@@ -182,7 +182,6 @@
                        [perfectScrollbar]="config">
                     <match-list *ngIf="pastMatches$ | async as pastMatches; else loadingTemplate"
                                 [categories]="categories"
-                                [events]="matchService.getOtherEventList() | orderBy: ['title']"
                                 [matches]="pastMatches | orderBy: ['-matchEndDate.seconds'] ">
                     </match-list>
                   </div>
@@ -194,7 +193,6 @@
                        [perfectScrollbar]="config">
                     <match-list *ngIf="matchesWithoutResult$ | async as matchesWithoutResult; else loadingTemplate"
                                 [categories]="categories"
-                                [events]="matchService.getOtherEventList() | orderBy: ['title']"
                                 [showResultInputs]="true"
                                 [matches]="matchesWithoutResult | orderBy: ['-matchEndDate.seconds']">
                     </match-list>

@@ -71,14 +71,12 @@
 
           <mat-tab label="{{'general.dashboard.lastMatches' | translate}}">
             <match-list [categories]="categories"
-                        [events]="matchService.getOtherEventList() | orderBy: ['title']"
                         [matches]="matches | orderBy: ['-endDate'] | matchFilter : 'endDate' : '<='">
             </match-list>
           </mat-tab>
 
           <mat-tab label="{{'general.dashboard.matchesWithoutResult' | translate}}">
             <match-list [categories]="categories"
-                        [events]="matchService.getOtherEventList() | orderBy: ['title']"
                         [matches]="matches | matchFilter : 'endDate' : '<=' | orderBy: ['-endDate']">
             </match-list>
           </mat-tab>
