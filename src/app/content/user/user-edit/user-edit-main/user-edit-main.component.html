@@ -1,0 +1,24 @@
+<mat-card [formGroup]="form">
+  <mat-card-title>{{'general.users.edit.main.title' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'general.users.edit.main.subTitle' | translate}}</mat-card-subtitle>
+  <mat-card-content>
+    <div fxLayoutGap="10px"
+         fxLayout="column">
+      <mat-checkbox formControlName="isDisabled">{{'general.users.edit.disabled' | translate}}</mat-checkbox>
+      <mat-error *ngIf="disableOwnAccount">{{'general.users.edit.disableOwnAccount' | translate}}</mat-error>
+
+      <mat-form-field>
+        <input matInput formControlName="email" [placeholder]="'general.users.edit.email' | translate" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="firstName" [placeholder]="'general.users.edit.firstName' | translate" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="lastName" [placeholder]="'general.users.edit.lastName' | translate" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="displayName" [placeholder]="'general.users.edit.displayName' | translate" />
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+</mat-card>

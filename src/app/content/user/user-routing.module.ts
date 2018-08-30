@@ -1,45 +1,22 @@
-import { Routes } from '@angular/router';
-import { UsersComponent } from './users/users.component';
+import { Routes }              from '@angular/router';
+import { UsersComponent }      from './users/users.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
-import { UserResolver } from './user.resolver';
+import { UserResolver }        from './user.resolver';
+import { UserEditComponent }   from './user-edit/user-edit.component';
 
 export const userRoutes: Routes = [
   {
     path: 'list',
     component: UsersComponent,
     pathMatch: 'full'
-  }/*,
+  },
   {
     path: 'edit/:userId',
     component: UserEditComponent,
     resolve: {
       user: UserResolver
-    },
-    pathMatch: 'full',
-    children: [
-      {
-        path: '',
-        component: UserEditMainProfileComponent
-      },
-      {
-        path: 'articles',
-        component: UserEditAssignedArticlesComponent
-      },
-      {
-        path: 'todos',
-        component: UserEditAssignedTodosComponent
-      },
-      {
-        path: 'uploads',
-        component: UserEditAssignedUploadsComponent
-      },
-      {
-        path: '**',
-        redirectTo: '',
-        pathMatch: 'full'
-      }
-    ]
-  }*/,
+    }
+  },
   {
     path: 'detail/:userId',
     component: UserDetailComponent,

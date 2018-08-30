@@ -1,5 +1,4 @@
 <div fxLayout="row"
-
      [formGroup]="form">
 
   <mat-form-field fxFlex.gt-xs="33"
@@ -79,7 +78,7 @@
           </button>
           <button mat-icon-button
                   color="warn"
-                  (click)="remove.emit(row.id)">
+                  (click)="remove.emit(row)">
             <mat-icon>delete</mat-icon>
           </button>
         </ng-template>

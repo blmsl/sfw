@@ -1,0 +1,18 @@
+<mat-card [formGroup]="form">
+  <mat-card-title>{{'general.users.edit.roles.title' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'general.users.edit.roles.subTitle' | translate}}</mat-card-subtitle>
+  <mat-card-content>
+    <div fxLayoutGap="10px"
+         fxLayout="column">
+
+      <mat-error *ngIf="rolesNotEditableMessage">{{'general.users.edit.roles.notEditable' | translate}}</mat-error>
+
+      <mat-checkbox formControlName="subscriber">{{'general.users.edit.roles.subscriber' | translate}}</mat-checkbox>
+
+      <mat-checkbox formControlName="editor">{{'general.users.edit.roles.editor' | translate}}</mat-checkbox>
+
+      <mat-checkbox formControlName="admin">{{'general.users.edit.roles.admin' | translate}}</mat-checkbox>
+
+    </div>
+  </mat-card-content>
+</mat-card>

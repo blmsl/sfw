@@ -1,9 +1,10 @@
-import { ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders }  from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MatchResolver } from './match.resolver';
+import { MatchResolver }        from './match.resolver';
 import { MatchDetailComponent } from './match-detail/match-detail.component';
-import { MatchesComponent } from './matches/matches.component';
-import { MatchEditComponent } from './match-edit/match-edit.component';
+import { MatchesComponent }     from './matches/matches.component';
+import { MatchEditComponent }   from './match-edit/match-edit.component';
+import { MatchTableComponent }  from './match-table/match-table.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    component: MatchesComponent,
+    component: MatchTableComponent,
   },
   {
     path: 'edit/:matchId',

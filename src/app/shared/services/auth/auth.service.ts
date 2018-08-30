@@ -71,8 +71,10 @@ export class AuthService implements OnDestroy {
         id: firebase.auth().currentUser.uid,
         displayName: credential.user.displayName,
         email: credential.user.email,
-        emailVerified: credential.user.emailVerified,
-        assignedRoles: null
+        emailVerified: true,
+        assignedRoles: {
+          subscriber: true
+        }
       };
 
       return this.updateUser(data);

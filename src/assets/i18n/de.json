@@ -668,6 +668,13 @@
         "yellowRedCard": "Gelb-rote Karte"
       },
       "list": {
+        "colTitles": {
+          "assignedCategories": "Kategorien",
+          "guestTeam": "Gast",
+          "homeTeam": "Heim",
+          "startDate": "Anstoß",
+          "title": "Titel"
+        },
         "noMatches": "Es wurden keine Spiele gefunden.",
         "noResult": "Kein Ergebnis"
       },
@@ -1526,13 +1533,22 @@
         "createdArticles": "Erstellte Artikel",
         "createdArticlesCount": "Erstellte Artikel",
         "creationAt": "Registriert am",
+        "disabled": "Account deaktiviert",
+        "disableOwnAccount": "Du kannst Deine eigenen Account nicht deaktivieren.",
+        "displayName": "Anzeigename",
         "editUser": "Benutzer editieren",
         "emailIsVerified": "Die E-Mail Adresse wurde bereits bestätigt.",
         "emailNotVerified": "E-Mail Adresse wurde noch NICHT bestätigt.",
+        "email": "E-Mail Adresse",
+        "firstName": "Vorname",
         "group": "Benutzergruppe",
         "groupDefaultPlaceholder": "Gruppe wählen",
-        "mainTitle": "Benutzerdaten",
-        "memberTitle": "Verknüpftes Mitglied",
+        "lastName": "Nachname",
+        "main": {
+          "subTitle": "Informationen zum angemeldeten Benutzer",
+          "title": "Benutzerdaten"
+        },
+          "memberTitle": "Verknüpftes Mitglied",
         "noImage": "Es ist noch kein Profilfoto vorhanden.",
         "personal": {
           "addressTitle": "2. Adresse",
@@ -1558,10 +1574,15 @@
         "roles": {
           "admin": "Administratoren",
           "editor": "Redakteure",
+          "notEditable": "Du kannst Deine eigenen Rollen nicht ändern.",
           "subscriber": "Gäste",
+          "title": "Rollen",
+          "subTitle": "Gäste haben keinen Zugriff, Redakteure haben beschränkten und Admins haben Vollzugriff auf die Adminoberfläche",
           "noAssignedRole": "Keiner Rolle zugewiesen"
         },
         "saveUser": "Benutzer speichern",
+        "title": "Benutzer editieren",
+        "subTitle": "Festlegen der Berechtigungen, Sperren und Freigeben, Foto des Benutzers hochladen",
         "todo": "Aufgaben des Benutzers",
         "updateUser": "Änderungen speichern",
         "uploadImage": "Foto hochladen",

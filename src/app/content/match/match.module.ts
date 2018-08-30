@@ -16,6 +16,7 @@ import {
   MatButtonModule,
   MatCheckboxModule,
   MatChipsModule,
+  MatDatepickerModule,
   MatExpansionModule,
   MatFormFieldModule,
   MatInputModule,
@@ -47,6 +48,9 @@ import { MatchEditResultComponent } from './match-edit/match-edit-result/match-e
 import { SharedArticleModule } from '../../shared/components/article/shared-article.module';
 import { MatchDetailContentComponent } from './match-detail/match-detail-content/match-detail-content.component';
 import { MatchDetailEventsComponent } from './match-detail/match-detail-events/match-detail-events.component';
+import { MatchTableComponent } from './match-table/match-table.component';
+import { MatchTableFilterComponent } from './match-table/match-table-filter/match-table-filter.component';
+import { MatchTableListComponent } from './match-table/match-table-list/match-table-list.component';
 
 @NgModule({
   imports: [
@@ -56,6 +60,7 @@ import { MatchDetailEventsComponent } from './match-detail/match-detail-events/m
     MatButtonModule,
     MatCheckboxModule,
     MatChipsModule,
+    MatDatepickerModule,
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
@@ -88,7 +93,10 @@ import { MatchDetailEventsComponent } from './match-detail/match-detail-events/m
     MatchDetailArticlesComponent,
     MatchEditResultComponent,
     MatchDetailContentComponent,
-    MatchDetailEventsComponent
+    MatchDetailEventsComponent,
+    MatchTableComponent,
+    MatchTableFilterComponent,
+    MatchTableListComponent
   ],
   providers: [
     ArticleService,

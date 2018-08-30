@@ -28,8 +28,8 @@ export class UserService {
     return this.afs.collection<IUser>(this.path).doc(user.id).set(user);
   }
 
-  removeUser(userId: string): Promise<any> {
-    return this.afs.collection<IUser>(this.path).doc(userId).delete();
+  removeUser(user: IUser): Promise<any> {
+    return this.afs.collection<IUser>(this.path).doc(user.id).delete();
   }
 
   updateUser(userId: string, user: IUser): Promise<any> {
@@ -38,20 +38,6 @@ export class UserService {
 
   getUserById(userId: string): Observable<IUser> {
     return this.afs.doc<IUser>(this.path + '/' + userId).valueChanges();
-  }
-
-  setNewUser(): IUser {
-    return {
-      firstName: '',
-      lastName: '',
-      email: '',
-      providerId: 'firebase',
-      assignedRoles: {
-        subscriber: true,
-        editor: false,
-        admin: false
-      }
-    };
   }
 
   getUserRoles(): string[] {

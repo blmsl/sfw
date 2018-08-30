@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 
-export const userDeleted = functions.firestore.document('/users/{userId}').onDelete((snap, context) => {
+export const userDeleted = functions.firestore.document('/users/{userId}').onDelete((snap) => {
 
   const userId = snap.id;
 

@@ -16,8 +16,8 @@ export class UsersComponent {
     this.users$ = userService.users$;
   }
 
-  removeUser(userId: string) {
-    this.userService.removeUser(userId).then();
+  removeUser(user: IUser) {
+    this.userService.removeUser(user).then();
   }
 
   updateUser($event) {

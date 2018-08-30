@@ -1,5 +1,4 @@
-<div fxLayout="row"
-     >
+<div fxLayout="row">
 
   <div fxFlex.gt-sm="25"
        fxFlex="100">
@@ -78,10 +77,9 @@
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-    <user-list
-      [users]="users$ | async"
-      (remove)="removeUser($event)"
-      (update)="updateUser($event)">
+    <user-list [users]="users$ | async"
+               (remove)="removeUser($event)"
+               (update)="updateUser($event)">
     </user-list>
   </mat-card-content>
 </mat-card>

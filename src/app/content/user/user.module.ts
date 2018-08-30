@@ -7,12 +7,22 @@ import { userRoutes } from './user-routing.module';
 import { UserService } from '../../shared/services/user/user.service';
 import { SharedModule } from '../../shared/shared.module';
 import { UserListComponent } from './user-list/user-list.component';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule
+} from '@angular/material';
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { UserEditMainComponent } from './user-edit/user-edit-main/user-edit-main.component';
+import { UserEditRolesComponent } from './user-edit/user-edit-roles/user-edit-roles.component';
 
 @NgModule({
   imports: [
     MatButtonModule,
     MatFormFieldModule,
+    MatCheckboxModule,
     MatInputModule,
     MatSelectModule,
     RouterModule.forChild(userRoutes),
@@ -21,7 +31,10 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule } 
   declarations: [
     UserDetailComponent,
     UsersComponent,
-    UserListComponent
+    UserListComponent,
+    UserEditComponent,
+    UserEditMainComponent,
+    UserEditRolesComponent
   ],
   providers: [
     UserResolver,

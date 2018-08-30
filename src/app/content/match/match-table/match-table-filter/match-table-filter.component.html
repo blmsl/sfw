@@ -1,0 +1,46 @@
+<div fxLayout="column"
+     fxLayout.gt-sm="row"
+     fxLayoutGap="10px"
+     [formGroup]="form">
+
+  <mat-form-field>
+    <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}"
+                formControlName="limit">
+      <mat-option [value]="matches.length" *ngIf="matches">
+        {{ 'general.pagination.allItems' | translate}}
+      </mat-option>
+      <mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">
+        {{ option }} {{ 'general.items' | translate}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput
+           placeholder="{{ 'general.typeToFilter' | translate}}"
+           formControlName="searchFor"/>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+
+  <!--<mat-form-field fxFlex="100">
+    <mat-select placeholder="{{ 'general.pagination.filterByCategory' | translate}}"
+                formControlName="assignedCategory">
+      <mat-option [value]="">{{ 'general.pagination.allItems' | translate}}</mat-option>
+      <mat-option *ngFor="let category of categories" [value]="category.id">
+        {{ category.title}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>-->
+
+  <div>
+    <a mat-raised-button color="primary" [routerLink]="['./edit/new']">
+      {{ 'general.matches.list.createMatch' | translate}}
+    </a>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-title>
+    <mat-icon>list</mat-icon>
+    {{'general.menu.matches.main' | translate}}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content><!-- [formGroup]="form" -->
+    <div *ngIf="categories$ | async as categories; else loadingTemplate">
+
+      <match-table-filter [categories]="categories"
+                          [matches]="matches"
+                          [form]="form">
+      </match-table-filter>
+
+      <match-table-list *ngIf="matches$ | async as matches; else loadingTemplate"
+                        [matches]="matches"
+                        [form]="form"
+                        [categories]="categories">
+      </match-table-list>
+
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

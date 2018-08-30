@@ -22,14 +22,14 @@ import * as team from './team/index';
 import * as user from './user/index';
 
 export const newUserCreation = user.userCreated;
-// export const onUserDelete = user.userDeleted;
+export const onUserDelete = user.userDeleted;
 // export const userPresence = user.userPresence;
 
 // export const urlShortener = shortener.shortener;
 
 // export const sendNotificationNewMatch = match.sendNotificationNewMatch;
 
-export const generateThumbnailCron = media.generateThumbnailCron;
+// export const generateThumbnailCron = media.generateThumbnailCron;
 // export const removeMediaItemCron = media.deleteMediaCron;
 
 export const birthdayReminder = member.birthdayReminderCron;

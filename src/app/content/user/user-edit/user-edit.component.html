@@ -1,0 +1,49 @@
+<mat-card *ngIf="user">
+  <mat-card-header>
+    <mat-card-title>{{'general.users.edit.title' | translate}}</mat-card-title>
+    <mat-card-subtitle>{{'general.users.edit.subTitle' | translate}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row">
+      <div fxFlex="35">
+        <user-edit-main [disableOwnAccount]="notEditableMessage"
+                        [form]="form"></user-edit-main>
+      </div>
+      <div fxFlex="35">
+        <user-edit-roles [rolesNotEditableMessage]="notEditableMessage"
+                         [form]="form.get('assignedRoles')"></user-edit-roles>
+      </div>
+      <div fxFlex="30">
+        <media-uploader (uploadCompleted)="uploadCompleted($event)"
+                        [uploaderConfig]="uploaderConfig"
+                        [uploaderOptions]="uploaderOptions">
+        </media-uploader>
+      </div>
+    </div>
+  </mat-card-content>
+    <mat-card-actions fxLayout.xs="column"
+                      fxLayoutGap="10px">
+      <span fxFlex></span>
+      <div>
+        <button type="button"
+                mat-raised-button
+                color="primary"
+                [routerLink]="['/users']">
+          {{'general.menu.user.list' | translate}}
+        </button>
+        <button type="button"
+                mat-raised-button
+                color="accent"
+                [routerLink]="['/users/edit', user.id]">
+          {{'general.edit' | translate }}
+        </button>
+        <button type="button"
+                mat-raised-button
+                color="warn"
+                (click)="removeUser(user)">
+          {{'general.delete' | translate }}
+        </button>
+      </div>
+    </mat-card-actions>
+</mat-card>
