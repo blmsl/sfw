@@ -35,7 +35,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   }) signInAlertContainer: ViewContainerRef;
 
   public form: FormGroup;
-  public returnUrl: string = '';
+  public returnUrl: string = '/dashboard';
   public isLoading: boolean = false;
   public error: string;
 
@@ -90,7 +90,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.authService.signIn(credentials)
       .then(() => {
         this.isLoading = false;
-        this.router.navigate([this.returnUrl]).then();
+        this.router.navigate([this.returnUrl ]).then();
       })
       .catch((error: any) => {
         this.isLoading = false;

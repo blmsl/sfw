@@ -1392,7 +1392,7 @@
         },
         "subTitle": "Untertitel",
         "timeLine": {
-          "title": "Erfolge / Ereignisse"
+          "title": "Erfolge"
         },
         "timeLineTitle": "Große Erfolge / Ereignisse, die die Mannschaft betreffen",
         "title": "Name",
@@ -1409,7 +1409,7 @@
           "noTraining": "Es wurden bisher noch keine Trainingseinheiten für diese Mannschaft erstellt.",
           "place": "Ort",
           "startTime": "Beginn",
-          "title": "Trainingszeiten und -Orte"
+          "title": "Training"
         },
         "visitExternalLink": "Anzeigen"
       },

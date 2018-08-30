@@ -16,8 +16,9 @@
       </mat-tab>
 
       <mat-tab label="{{'general.teams.edit.management.title' | translate}}">
-        <team-detail-positions [team]="team"
-                               [assignedPlayers]="assignedPlayers$ | async"
+        <team-detail-positions *ngIf="assignedPlayers$ | async as assignedPlayers; else loadingTemplate"
+                               [team]="team"
+                               [assignedPlayers]="assignedPlayers"
                                [assignedPositions]="assignedPositions$ | async">
         </team-detail-positions>
       </mat-tab>
@@ -28,8 +29,20 @@
         </team-detail-training>
       </mat-tab>
 
-      <mat-tab label="{{'general.teams.edit.timeLine.title' | translate}}">
-        <team-detail-events [team]="team"></team-detail-events>
+      <mat-tab
+        label="{{'general.teams.edit.timeLine.title' | translate}} & {{'general.teams.edit.article.title' | translate}}">
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px">
+          <div fxFlex.gt-sm="50">
+            <team-detail-events [team]="team"></team-detail-events>
+          </div>
+          <div fxFlex.gt-sm="50">
+            <team-detail-articles *ngIf="assignedArticles$ | async as assignedArticles; else loadingTemplate"
+                                  [assignedArticles]="assignedArticles">
+            </team-detail-articles>
+          </div>
+        </div>
       </mat-tab>
 
       <mat-tab label="{{'general.teams.edit.matches.title' | translate}}">
@@ -47,10 +60,11 @@
       <mat-tab label="{{'general.teams.edit.media.title' | translate}}">
         <team-detail-media [team]="team"></team-detail-media>
       </mat-tab>
-      <mat-tab label="{{'general.teams.edit.article.title' | translate}}">
-        <team-detail-articles *ngIf="assignedArticles$ | async as assignedArticles; else loadingTemplate"
-                              [assignedArticles]="assignedArticles">
-        </team-detail-articles>
+      <mat-tab label="{{'general.teams.edit.playerStatsTitle' | translate}}">
+        <team-detail-playerstats *ngIf="assignedPlayers$ | async as assignedPlayers; else loadingTemplate"
+                                 [assignedPlayers]="assignedPlayers"
+                                 [team]="team">
+        </team-detail-playerstats>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>

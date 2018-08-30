@@ -106,7 +106,7 @@
          fxLayout.gt-sm="row"
          fxLayoutAlign.gt-sm="center start">
 
-      <mat-card class="profile-post" fxFlex>
+      <!--<mat-card class="profile-post" fxFlex>
         <form fxLayout="row"
               [formGroup]="mindForm">
            <textarea formControlName="comment"
@@ -130,9 +130,13 @@
             <button mat-raised-button color="primary">Post</button>
           </div>
         </mat-card-actions>
-      </mat-card>
+      </mat-card>-->
 
-      <mat-card fxFlex.gt-sm="20">
+      <div fxFlex="40">
+        <dashboard-article-list [articles$]="latestArticles$"></dashboard-article-list>
+      </div>
+
+      <mat-card fxFlex.gt-sm="15">
         <mat-card-title class="mat-red">
           <h2 mat-card-widget-title>{{'general.dashboard.birthdays' | translate}}</h2>
           <hr>
@@ -153,9 +157,7 @@
         </mat-card-content>
       </mat-card>
 
-      <div fxFlex="50">
-        <dashboard-article-list [articles$]="latestArticles$"></dashboard-article-list>
-
+      <div fxFlex="45">
         <mat-card>
           <mat-card-title class="mat-amber">
             <h2 mat-card-widget-title>{{'general.dashboard.matches' | translate}}</h2>

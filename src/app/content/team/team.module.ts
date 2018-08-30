@@ -53,6 +53,7 @@ import { TeamDetailCompetitionsComponent } from './team-detail/team-detail-stand
 import { TeamDetailArticlesComponent } from './team-detail/team-detail-articles/team-detail-articles.component';
 import { SharedArticleModule } from '../../shared/components/article/shared-article.module';
 import { TeamDetailStatisticsComponent } from './team-detail/team-detail-statistics/team-detail-statistics.component';
+import { TeamDetailPlayerstatsComponent } from './team-detail/team-detail-playerstats/team-detail-playerstats.component';
 
 @NgModule({
   imports: [
@@ -97,7 +98,8 @@ import { TeamDetailStatisticsComponent } from './team-detail/team-detail-statist
     TeamStatisticsComponent,
     TeamDetailCompetitionsComponent,
     TeamDetailArticlesComponent,
-    TeamDetailStatisticsComponent
+    TeamDetailStatisticsComponent,
+    TeamDetailPlayerstatsComponent
   ],
   providers: [
     ApplicationService,

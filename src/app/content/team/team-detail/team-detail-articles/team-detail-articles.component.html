@@ -6,7 +6,7 @@
 
     <p *ngIf="assignedArticles.length === 0">{{'general.teams.edit.article.noArticlesFound' | translate }}</p>
 
-    <article-card fxFlex="25"
+    <article-card fxFlex="50"
                   *ngFor="let article of assignedArticles | orderBy: ['articleDate']"
                   [article]="article">
     </article-card>
