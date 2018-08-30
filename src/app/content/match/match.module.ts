@@ -21,6 +21,7 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatListModule,
+  MatNativeDateModule,
   MatSelectModule,
   MatTabsModule
 } from '@angular/material';
@@ -65,6 +66,7 @@ import { MatchTableListComponent } from './match-table/match-table-list/match-ta
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
+    MatNativeDateModule,
     MatSelectModule,
     MatTabsModule,
     OwlDateTimeModule,
