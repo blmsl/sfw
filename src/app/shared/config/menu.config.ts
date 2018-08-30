@@ -195,13 +195,6 @@ export const MENUITEMS = [
     state: 'users',
     name: 'user',
     icon: 'people',
-    type: 'sub',
-    children: [
-      {
-        state: 'list',
-        name: 'main',
-        icon: 'list',
-      }
-    ]
+    type: 'link'
   }
 ];

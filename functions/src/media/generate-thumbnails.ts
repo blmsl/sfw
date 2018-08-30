@@ -18,7 +18,7 @@ export const generateThumbnailCron = functions.storage.object('uploads/{imageId}
 
   const SIZES = [64, 256, 512]; // Resize target width in pixels
 
-  if (!contentType.startsWith('image/') || resourceState == 'not_exists') {
+  if (!contentType.startsWith('image/') || resourceState === 'not_exists') {
     console.log('This is not an image.');
     return;
   }

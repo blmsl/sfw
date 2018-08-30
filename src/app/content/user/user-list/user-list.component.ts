@@ -12,8 +12,8 @@ export class UserListComponent implements OnInit {
 
   @Input() users: IUser[];
 
-  @Output() remove: EventEmitter<any> = new EventEmitter(false);
-  @Output() update: EventEmitter<any> = new EventEmitter(false);
+  @Output() remove: EventEmitter<IUser> = new EventEmitter<IUser>(false);
+  @Output() update: EventEmitter<IUser> = new EventEmitter<IUser>(false);
 
   public form: FormGroup;
   public searchFor: string = '';
@@ -22,19 +22,21 @@ export class UserListComponent implements OnInit {
     1, 5, 10, 25, 50, 100
   ];
 
-  constructor(private fb: FormBuilder, public authService: AuthService) {
+  constructor(private fb: FormBuilder,
+              public authService: AuthService) {
   }
 
   ngOnInit() {
     this.form = this.fb.group({
       searchFor: '',
-      limit: 10
+      limit: 10,
+      assignedRoles: []
     });
   }
 
   toggleUserStatus(user: IUser) {
     user.isDisabled = !user.isDisabled;
-    console.log(user);
+    this.update.emit(user);
   }
 
 }

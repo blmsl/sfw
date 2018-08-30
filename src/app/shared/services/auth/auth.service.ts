@@ -73,7 +73,9 @@ export class AuthService implements OnDestroy {
         email: credential.user.email,
         emailVerified: true,
         assignedRoles: {
-          subscriber: true
+          subscriber: true,
+          editor: false,
+          admin: false
         }
       };
 

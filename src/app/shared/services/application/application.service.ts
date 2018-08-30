@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { IApplication } from '../../interfaces/application.interface';
+import { IMatch } from '../../interfaces/match/match.interface';
 
 @Injectable()
 export class ApplicationService {
@@ -24,6 +25,12 @@ export class ApplicationService {
 
   updateApplication(applicationId: string, application: IApplication): Promise<any> {
     return this.afs.collection(this.path).doc(applicationId).update(application);
+  }
+
+  getCurrentApplication(): Observable<IApplication[]> {
+    return this.afs.collection<IApplication>(this.path, ref =>
+      ref.where('isCurrentApplication', '==', true)
+    ).valueChanges();
   }
 
   setNewApplication(): IApplication {

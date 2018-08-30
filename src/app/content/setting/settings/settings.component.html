@@ -11,9 +11,10 @@
         <div fxLayout="column"
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
-          <div fxFlex="40">
+          <div fxFlex="60">
             <settings-main [form]="form.get('page')"></settings-main>
-            <settings-calendars (addCalendar)="addCalendar($event)"
+            <settings-calendars (addCalendar)="addCalendar()"
+                                (deleteCalendar)="deleteCalendar($event)"
                                 [form]="form.get('assignedCalendars')">
             </settings-calendars>
           </div>

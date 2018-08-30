@@ -26,7 +26,6 @@ export class UserResolver implements Resolve<IUser> {
       take(1),
       map((user: IUser) => {
         if (user && user.id) {
-          console.log(user);
           return user;
         } else {
           this.router.navigate([ '/users' ]).then();

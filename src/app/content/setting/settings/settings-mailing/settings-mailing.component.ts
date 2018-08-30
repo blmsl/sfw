@@ -10,7 +10,8 @@ export class SettingsMailingComponent implements OnInit {
 
   @Input() form: FormGroup;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

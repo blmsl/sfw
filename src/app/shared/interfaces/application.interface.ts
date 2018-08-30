@@ -24,6 +24,7 @@ export interface IApplication {
   } | number;
 
   registration: string | IRole;
+  assignedKeywords: string;
 
   downtime: {
     isEnabled: boolean;

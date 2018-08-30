@@ -20,7 +20,7 @@ export class ApplicationResolver implements Resolve<IApplication> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IApplication> {
 
-    return this.applicationService.applications$.pipe(
+    return this.applicationService.getCurrentApplication().pipe(
       take(1),
       map((applications: IApplication[]) => {
         if (!applications || applications.length === 0) {

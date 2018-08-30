@@ -1,10 +1,13 @@
-<div fxLayout="row"
+<div fxLayoutGap="10px"
+     fxLayout="column"
+     fxLayout.gt-sm="row"
      [formGroup]="form">
 
-  <mat-form-field fxFlex.gt-xs="33"
-                  fxFlex="100">
-    <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}" formControlName="limit">
-      <mat-option [value]="users.length" *ngIf="users">
+  <mat-form-field fxFlex="20">
+    <mat-select placeholder="{{ 'general.pagination.itemsPerPage' | translate}}"
+                formControlName="limit">
+      <mat-option [value]="users.length"
+                  *ngIf="users">
         {{ 'general.pagination.allItems' | translate}}
       </mat-option>
       <mat-option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}
@@ -13,12 +16,20 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlexOffset="1"
-                  fxFlex.gt-xs="33"
-                  fxFlex="100">
+  <mat-form-field fxFlex="20">
     <input matInput
            placeholder="{{ 'general.typeToFilter' | translate}}"
            formControlName="searchFor"/>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="20">
+    <mat-select multiple
+                placeholder="{{ 'general.users.list.filterRoles' | translate}}"
+                formControlName="assignedRoles">
+      <mat-option value="subscriber" >{{ 'general.users.list.filter.subscriber' | translate}}</mat-option>
+      <mat-option value="editor">{{ 'general.users.list.filter.editor' | translate}}</mat-option>
+      <mat-option value="admin">{{ 'general.users.list.filter.admin' | translate}}</mat-option>
+    </mat-select>
   </mat-form-field>
 
 </div>
@@ -34,28 +45,36 @@
                    [headerHeight]="50"
                    [footerHeight]="50"
                    [rowHeight]="'auto'"
-                   [limit]="form.controls['limit'].value"
-                   [rows]="users | filterBy: ['firstName', 'lastName', 'email'] : form.controls['searchFor'].value">
+                   [limit]="form.get('limit').value"
+                   [rows]="users
+                   | assignedRolesFilter: form.get('assignedRoles').value
+                   | filterBy: ['firstName', 'lastName', 'email'] : form.get('searchFor').value">
 
-      <ngx-datatable-column name="{{'general.users.edit.personal.lastName' | translate}}">
+      <ngx-datatable-column name="{{'general.users.edit.personal.lastName' | translate}}" prop="lastName" fxHide.xs>
         <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
           {{row.lastName ? row.lastName : row.displayName}}
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="{{'general.users.edit.personal.firstName' | translate}}">
+      <ngx-datatable-column name="{{'general.users.edit.personal.firstName' | translate}}" prop="firstName" fxHide.xs>
         <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
           {{row.firstName}}
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="{{'general.users.edit.personal.email' | translate}}">
+      <ngx-datatable-column name="{{'general.users.edit.personal.displayName' | translate}}" prop="displayName" fxHide.xs>
+        <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
+          {{row.displayName }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{'general.users.edit.personal.email' | translate}}" prop="email">
         <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
           <a [href]="'mailto:' + row.email">{{row.email}}</a>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="{{'general.users.list.roleTitle' | translate}}">
+      <ngx-datatable-column name="{{'general.users.list.roleTitle' | translate}}" [sortable]="false" fxHide.xs>
         <ng-template let-row="row" let-value="assignedRoles" ngx-datatable-cell-template>
           {{row.assignedRoles.admin ? ('general.users.list.adminTitle' | translate)
           : row.assignedRoles.editor ? ('general.users.list.editorTitle' | translate)
@@ -63,16 +82,16 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="actions">
+      <ngx-datatable-column name="actions" [sortable]="false">
         <ng-template let-column="column" ngx-datatable-header-template>
           {{'general.tables.colTitles.actions' | translate}}
         </ng-template>
         <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
           <edit-link [objectId]="row.id"></edit-link>
-          <button *ngIf="row.id !== authService.id"
+          <button *ngIf="row.id !== authService.userId"
                   title="Disable User"
                   mat-icon-button
-                  [color]="row.isDisabled ? 'warn' : 'primary'"
+                  [color]="row.isDisabled ? 'warn' : ''"
                   (click)="toggleUserStatus(row)">
             <mat-icon>perm_identity</mat-icon>
           </button>

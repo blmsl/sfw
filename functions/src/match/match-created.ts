@@ -1,15 +1,16 @@
 import * as functions from 'firebase-functions';
 
-export const sendNotificationNewMatch = functions.database.ref('/matches/{matchId}').onCreate((change) => {
+export const sendNotificationNewMatch = functions.database.ref('/matches/{matchId}').onCreate((change, context) => {
 
-  let data = change.val();
+  const data = change.val();
 
   if (!data) {
     return true;
   }
 
-  console.log('Updated match');
+  console.log('created match');
   console.log(data.value);
+  console.log(context.params.matchId);
 
   /* const message = {
     notification: {

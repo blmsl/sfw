@@ -4,14 +4,15 @@
 
     <div fxLayout="column"
          fxLayout.gt-sm="row wrap"
-         fxLayoutGap="10px" *ngFor="let control of form.controls | keys; let i = index">
+         fxLayoutGap="10px"
+         style="margin-bottom: 30px"
+         *ngFor="let control of form.controls | keys; let i = index">
 
-      <p>{{'general.applications.mailing.'+control+'.description' | translate}}</p>
+      <p>{{'general.applications.mailing.' + control | translate}}</p>
 
       <tag-input fxFlex="100"
                  [identifyBy]="'value'"
                  [displayBy]="'display'"
-                 placeholder="{{'general.applications.'+control+'.birthday' | translate}}"
                  [formControlName]="control"
                  [editable]="true">
       </tag-input>

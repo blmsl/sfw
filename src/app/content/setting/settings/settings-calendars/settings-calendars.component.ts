@@ -10,6 +10,7 @@ export class SettingsCalendarsComponent implements OnInit {
 
   @Input() form: FormGroup;
   @Output() addCalendar: EventEmitter<void> = new EventEmitter<void>(false);
+  @Output() deleteCalendar: EventEmitter<number> = new EventEmitter<number>(false);
 
   constructor() { }
 

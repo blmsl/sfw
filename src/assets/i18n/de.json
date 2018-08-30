@@ -1155,6 +1155,8 @@
     },
     "applications": {
       "calendars": {
+        "addCalendar": "Kalender hinzufügen",
+        "deleteCalendar": "Kalender löschen",
         "link": "Google Link",
         "fieldTitle": "Name des Kalenders",
         "title": "Verknüpfte Google-Kalender"
@@ -1166,6 +1168,16 @@
         "messageDescription": "Eine kurze Information, warum die Seite offline ist und wann sie wahrscheinlich wieder verfügbar ist.",
         "title": "Wartungsmodus"
       },
+      "mailing": {
+        "title": "Mail Empfänger",
+        "birthdayRecipients": "Kopie der Geburtstagswünsche",
+        "teamOfTheMonth": "Mannschaft des Monats",
+        "memberOfTheWeek": "Mitglieder der Woche",
+        "newPublishedArticle": "Neuer Artikel wurde veröffentlicht",
+        "newCreatedMatch": "Neues Spiel wurde erstellt",
+        "userDisabled": "Benuter wurde deaktiviert",
+        "userDeleted": "Benutzer wurde gelöscht"
+      },
       "mainTitle": "Einstellungen",
       "noUrlShorteningService": "Keine kürzeren Links verwenden.",
       "staticPagesTitle": "Statische Seiten",
@@ -1174,6 +1186,8 @@
         "descriptionTitle": "Eine kurze Beschreibung der Seiteninhalte",
         "emailDescription": "Hauptadresse der Seite. Anfragen und Berichte werden hierhin gesendet-",
         "emailTitle": "E-Mail Adresse",
+        "keywords": "Keywords für Suchmaschinen",
+        "keywordDescription": "Kommaseparierte Liste um die Website leichter zu finden",
         "settings": "Globale Einstellungen",
         "name": "Name der Seite",
         "nameDescription": "Der Name der Seite (wird in der Titelleiste des Browsers verwendet)",
@@ -1558,6 +1572,7 @@
           "county": "Landkreis",
           "email": "E-Mail",
           "fax": "Fax",
+          "displayName": "Anzeigename",
           "firstName": "Vorname",
           "lastName": "Nachname",
           "houseNumber": "Hausnummer",
@@ -1601,7 +1616,12 @@
         },
         "createUser": "Benutzer hinzufügen",
         "editorTitle": "Redakteure",
-        "filterTitle": "Benutzer filtern nach",
+        "filterRoles": "Benutzer filtern nach",
+        "filter": {
+          "subscriber": "Alle Gäste",
+          "editor": "Alle Redakteure",
+          "admin": "Alle Administratoren"
+        },
         "guestTitle": "Benutzer",
         "noMatchingResult": "Es wurden keine Benutzer mit diesen Suchkriterien gefunden.",
         "noResult": "Es wurden keine Benutzer gefunden.",

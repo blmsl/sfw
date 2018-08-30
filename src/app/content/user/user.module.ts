@@ -17,6 +17,7 @@ import {
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserEditMainComponent } from './user-edit/user-edit-main/user-edit-main.component';
 import { UserEditRolesComponent } from './user-edit/user-edit-roles/user-edit-roles.component';
+import { AssignedRolesFilterPipe } from '../../shared/pipes/assigned-roles-filter.pipe';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { UserEditRolesComponent } from './user-edit/user-edit-roles/user-edit-ro
     SharedModule
   ],
   declarations: [
+    AssignedRolesFilterPipe,
     UserDetailComponent,
     UsersComponent,
     UserListComponent,

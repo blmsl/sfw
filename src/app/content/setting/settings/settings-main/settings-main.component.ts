@@ -13,7 +13,6 @@ export class SettingsMainComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.form);
   }
 
 }
