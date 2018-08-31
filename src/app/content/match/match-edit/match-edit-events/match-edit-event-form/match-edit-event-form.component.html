@@ -20,7 +20,7 @@
         <mat-select placeholder="{{'general.matches.edit.events.inputs.assignedEventCategory' | translate}}"
                     formControlName="assignedCategory">
           <mat-option *ngFor="let category of eventCategories | orderBy: ['title']"
-                      [value]="category.id">
+                      [value]="category">
             {{'general.matches.events.' + category.title | translate}}
           </mat-option>
         </mat-select>

@@ -41,8 +41,10 @@
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
           <div fxFlex.gt-sm="50">
-            <match-edit-events [assignedMatchEvents]="match.assignedMatchEvents | orderBy: ['-ordering']"
+            <match-edit-events [form]="form.get('assignedMatchEvents')"
                                [eventCategories]="matchEventCategories | orderBy: ['title']"
+                               (pullUp)="pullUp($event)"
+                               (pullDown)="pullDown($event)"
                                (deleteMatchEvent)="deleteMatchEvent($event)">
             </match-edit-events>
 

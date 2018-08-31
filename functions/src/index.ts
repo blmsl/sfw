@@ -20,6 +20,9 @@ export const onUserDelete = user.userDeleted;
 export const onUserDisable = user.userDisabled;
 // export const userPresence = user.userPresence;
 
+import * as calendar from './calendar/index';
+export const googleCalendar = calendar.getGoogleCalendarEvents;
+
 /*
 import * as shortener from './url-shortener/index';
 export const urlShortener = shortener.shortener;

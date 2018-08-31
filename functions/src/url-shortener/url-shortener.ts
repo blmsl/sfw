@@ -1,28 +1,18 @@
 'use strict';
 
-import * as google from 'googleapis';
-import * as functions from 'firebase-functions';
+// firebase functions:config:set bitly.access_token=XXXXXXXXXXXXX
 
-const urlshortener = google.google.urlshortener({
-  version: 'v1',
-  auth: functions.config().google ? functions.config().google.api_key : undefined,
-});
+const functions = require('firebase-functions');
+const BitlyClient = require('bitly');
+
+const bitly = BitlyClient(functions.config().bitly.access_token);
 
 // Shorten URL written to /links/{linkID}.
-export const urlShortener = functions.database.ref('/links/{linkID}').onCreate((snap, context) => {
+export const urlShortener = functions.database.ref('/links/{linkID}').onCreate(async (snap) => {
   const originalUrl = snap.val();
-  return new Promise((resolve, reject) => {
-    urlshortener.url.insert({ resource: { longUrl: originalUrl } }, (err: any, response: any) => {
-      if (err) {
-        reject(err);
-      } else {
-        snap.ref.set({
-          original: originalUrl,
-          short: response.data.id,
-        })
-          .then(() => resolve())
-          .catch((error: any) => reject(error));
-      }
-    });
-  });
+  const response = await bitly.shorten(originalUrl);
+  return snap.ref.set({
+    original: originalUrl,
+    short: response.data.url,
+  })
 });

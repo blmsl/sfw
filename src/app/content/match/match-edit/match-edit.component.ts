@@ -14,6 +14,7 @@ import { AlertService } from '../../../shared/services/alert/alert.service';
 import {
   FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   Validators
 } from '@angular/forms';
@@ -178,12 +179,13 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   saveMatchEvent($event: IMatchEvent) {
-    console.log($event);
     this.addMatchEvent($event);
   }
 
   addMatchEvent(event: IMatchEvent) {
     const control = <FormArray>this.form.controls['assignedMatchEvents'];
+    const index = control.controls.length;
+    event.ordering = index;
     control.push(this.createMatchEvent(event));
   }
 
@@ -197,8 +199,23 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
     });
   }
 
-  deleteMatchEvent(event: IMatchEvent) {
-    this.match.assignedMatchEvents.splice(this.match.assignedMatchEvents.indexOf(event), 1);
+  deleteMatchEvent(position: number) {
+    const control = <FormArray>this.form.get('assignedMatchEvents');
+    control.removeAt(position);
+  }
+
+  pullUp($event: {source: FormControl, destination: FormControl}){
+    const sourceIndex = $event.source.get('ordering').value;
+    const destinationIndex = $event.destination.get('ordering').value;
+    const control = <FormArray>this.form.get('assignedMatchEvents');
+    console.log(control);
+    control.controls[sourceIndex].get('ordering').setValue(destinationIndex);
+    control.controls[destinationIndex].get('ordering').setValue(sourceIndex);
+    console.log(control);
+  }
+
+  pullDown($event){
+    console.log($event);
   }
 
   initAssignedSubstitutes(assignedSubstitutes: {
