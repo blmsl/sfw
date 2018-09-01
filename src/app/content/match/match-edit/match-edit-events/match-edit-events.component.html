@@ -3,40 +3,40 @@
     {{ 'general.matches.edit.events.title' | translate }}
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
-  <mat-card-content [formGroup]="form">
-    <p *ngIf="form.controls.length === 0">
+  <mat-card-content>
+    <p *ngIf="matchEvents.length == 0">
       {{ 'general.matches.edit.events.noEventsFound' | translate }}
     </p>
 
     <div class="activity-stream">
       <mat-card class="shadow-none"
-                *ngFor="let control of form.controls; let i = index; let first = first; let last = last">
+                *ngFor="let event of orderedMatchEvents; let i = index; let first = first; let last = last">
         <mat-card-header>
           <img matCardAvatar
                src="/assets/sfw/sfw.png">
-          <mat-card-title *ngIf="control.get('title').value || control.get('playMinute').value">
-            <span style="font-weight: bolder" *ngIf="control.get('playMinute').value">{{control.get('playMinute').value}}.</span>
-            {{control.get('title').value}}
-            {{control.get('ordering').value}}
+          <mat-card-title *ngIf="event.title || event.playMinute">
+            <span style="font-weight: bolder" *ngIf="event.playMinute">{{event.playMinute}}.</span>
+            {{event.title}}
+            {{event.ordering}}
           </mat-card-title>
-          <mat-card-subtitle *ngIf="control.get('assignedCategory').value">
-            {{ 'general.matches.events.' + control.get('assignedCategory').value.title | translate }}
+          <mat-card-subtitle *ngIf="event.assignedCategory">
+            {{ 'general.matches.events.' + event.assignedCategory.title | translate }}
           </mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content [innerHTML]="control.get('description').value"></mat-card-content>
+        <mat-card-content [innerHTML]="event.description"></mat-card-content>
         <mat-card-actions fxLayout="column"
                           fxLayout.gt-sm="row"
                           fxLayoutGap="10px">
           <span></span>
           <span fxFlex=""></span>
           <button [disabled]="first"
-                  (click)="pullUp.emit({ source: form.controls[i], destination: form.controls[i -1] })"
+                  (click)="changeOrder(i, i-1)"
                   mat-icon-button=""
                   color="warn">
             <mat-icon>arrow_upward</mat-icon>
           </button>
           <button [disabled]="last"
-                  (click)="pullDown.emit({ source: form.controls[i], destination: form.controls[i + 1] })"
+                  (click)="changeOrder(i, i+1)"
                   mat-icon-button=""
                   color="primary">
             <mat-icon>arrow_downward</mat-icon>

@@ -41,11 +41,11 @@
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
           <div fxFlex.gt-sm="50">
-            <match-edit-events [form]="form.get('assignedMatchEvents')"
-                               [eventCategories]="matchEventCategories | orderBy: ['title']"
-                               (pullUp)="pullUp($event)"
-                               (pullDown)="pullDown($event)"
-                               (deleteMatchEvent)="deleteMatchEvent($event)">
+            <match-edit-events
+              [matchEvents]="match.assignedMatchEvents"
+              [eventCategories]="matchEventCategories | orderBy: ['title']"
+              (changeOrder)="changeOrder($event)"
+              (deleteMatchEvent)="deleteMatchEvent($event)">
             </match-edit-events>
 
             <match-edit-event-form *ngIf="teams$ | async as teams"

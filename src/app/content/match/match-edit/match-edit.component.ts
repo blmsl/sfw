@@ -72,7 +72,6 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
   private teamSubscription: Subscription;
   private memberSubscription: Subscription;
 
-
   constructor(private route: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
@@ -204,19 +203,6 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
     control.removeAt(position);
   }
 
-  pullUp($event: {source: FormControl, destination: FormControl}){
-    const sourceIndex = $event.source.get('ordering').value;
-    const destinationIndex = $event.destination.get('ordering').value;
-    const control = <FormArray>this.form.get('assignedMatchEvents');
-    console.log(control);
-    control.controls[sourceIndex].get('ordering').setValue(destinationIndex);
-    control.controls[destinationIndex].get('ordering').setValue(sourceIndex);
-    console.log(control);
-  }
-
-  pullDown($event){
-    console.log($event);
-  }
 
   initAssignedSubstitutes(assignedSubstitutes: {
     memberId: string;

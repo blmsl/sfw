@@ -1,16 +1,12 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Input, OnChanges,
   OnInit,
-  Output
-}                              from '@angular/core';
+  Output, SimpleChanges
+} from '@angular/core';
 import { IMatchEventCategory } from '../../../../shared/interfaces/match/match-event-category.interface';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup
-} from '@angular/forms';
+import { IMatchEvent } from "src/app/shared/interfaces/match/match-event.interface";
 
 @Component({
   selector: 'match-edit-events',
@@ -19,20 +15,25 @@ import {
 })
 export class MatchEditEventsComponent implements OnInit {
 
-  @Input() form: FormArray;
+  @Input() matchEvents: IMatchEvent[];
   @Input() eventCategories: IMatchEventCategory[];
-
   @Output() deleteMatchEvent: EventEmitter<number> = new EventEmitter<number>(false);
-  @Output() pullUp: EventEmitter<any> = new EventEmitter<any>(false);
-  @Output() pullDown: EventEmitter<any> = new EventEmitter<any>(false);
 
-  constructor(private fb: FormBuilder) {
-  }
+  orderedMatchEvents: any[];
 
   ngOnInit() {
-    this.form = this.fb.array(this.form.controls.sort((a,b) => {
-      return (a.get('ordering').value > b.get('ordering').value) ? 1 : 0;
-    }));
+    this.orderMatchEvents();
   }
 
+  changeOrder(sourceIndex: number, destinationIndex: number) {
+    // Swap Variables and order again
+    [this.matchEvents[sourceIndex].ordering, this.matchEvents[destinationIndex].ordering] = [this.matchEvents[destinationIndex].ordering, this.matchEvents[sourceIndex].ordering];
+    this.orderMatchEvents();
+  }
+
+  private orderMatchEvents() {
+    this.orderedMatchEvents = this.matchEvents.sort((a,b) => {
+      return (a.ordering > b.ordering) ? 1 : 0;
+    });
+  }
 }
