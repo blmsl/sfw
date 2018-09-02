@@ -4,12 +4,12 @@ mat-card-content {
 }
 
 .ex-over {
-  border: 3px solid red;
+  border: 2px #cecece dashed;
 }
 
 .players {
   background: transparent url('/assets/sfw/match/soccer-field.jpg') center center / cover no-repeat;
-  height: 888px;
+  min-height: 888px;
   display: flex;
   flex-direction: row;
 }

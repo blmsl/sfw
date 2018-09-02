@@ -1,93 +1,76 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { IFormation } from '../../../../shared/interfaces/match/formation.interface';
 import { MatchService } from '../../../../shared/services/match/match.service';
-import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import { MemberService } from '../../../../shared/services/member/member.service';
 import { Subscription } from 'rxjs/index';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { DragulaService } from 'ng2-dragula';
+import { MatSelectChange } from '@angular/material';
 
 @Component({
   selector: 'match-edit-starting-eleven',
   templateUrl: './match-edit-starting-eleven.component.html',
-  styleUrls: ['./match-edit-starting-eleven.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./match-edit-starting-eleven.component.scss']
 })
 export class MatchEditStartingElevenComponent implements OnInit, OnDestroy {
 
-  @Input() team: ITeam;
-  @Input() members: IMember[];
-  @Input() form: FormGroup;
 
-  @Output() addPlayerToStartingEleven: EventEmitter<any> = new EventEmitter<any>(false);
+  // @Input() team: ITeam;
+  @Input() assignedTeamPlayers: IMember[];
+  @Input() substitutes: any;
+  @Input() startingElven: any;
 
   public tacticalFormations: IFormation[];
+  public assignedFormation: IFormation;
+  public numbers: number[] = [];
 
   public subscription = new Subscription();
   public playerList: string = 'playerList';
 
-  private savedInnerHTML: string;
+  public savedInnerHTML: any;
 
-  constructor(private fb: FormBuilder,
-    private dragulaService: DragulaService,
-    private memberService: MemberService,
-    private matchService: MatchService) {
+  constructor(private dragulaService: DragulaService,
+              private memberService: MemberService,
+              private matchService: MatchService) {
     this.tacticalFormations = matchService.getFormations();
-
-    dragulaService.createGroup(this.playerList, {
-      revertOnSpill: true
-    });
   }
 
   ngOnInit() {
 
-    /*this.subscription.add(this.dragulaService.drag(this.playerList)
+    this.subscription.add(this.dragulaService.drag(this.playerList)
       .subscribe(({ el }) => {
-        console.log('drag');
-        console.log(el);
-        // this.removeClass(el, 'ex-moved');
       })
-    ); */
+    );
 
     this.subscription.add(this.dragulaService.drop(this.playerList)
       .subscribe(({ el, target }) => {
-        console.log(el);
-        if (target.className.indexOf('player') > -1) {
-          let newString = target.className.replace('ng-star-inserted', '');
-          let className = newString.replace('player', '').trim();
-          console.log(className);
-          this.addPlayerToStartingEleven.emit({
-            memberId: el.id,
-            position: className
-          });
+        if (target.className.indexOf('substitute') > -1) {
+          this.removeClass(target, 'ex-over');
         }
       })
     );
 
-    /*
-        this.subscription.add(this.dragulaService.over(this.playerList)
-          .subscribe(({ el, container }) => {
-            console.log('over');
 
-            if(container.className.indexOf('player') > -1){
-              let newString = container.className.replace("ng-star-inserted", "");
-              let className = newString.replace("player", "").trim();
-              console.log(className);
-              this.savedInnerHTML = container.innerHTML;
-              console.log(this.savedInnerHTML);
-              // container.innerHTML = '';
-              this.addClass(container, 'ex-over');
-            }
-          })
-        );
+    this.subscription.add(this.dragulaService.over(this.playerList)
+      .subscribe(({ el, container }) => {
 
-        /* this.subscription.add(this.dragulaService.out(this.playerList)
-          .subscribe(({ el, container }) => {
-            container.innerHTML = this.savedInnerHTML;
-            this.removeClass(container, 'ex-over');
-          })
-        ); */
+        if (container.className.indexOf('substitute') > -1) {
+          this.addClass(container, 'ex-over');
+
+          this.savedInnerHTML = container.cloneNode(true);
+          console.log(this.savedInnerHTML);
+          // container.innerHTML = '';
+        }
+      })
+    );
+
+    this.subscription.add(this.dragulaService.out(this.playerList)
+      .subscribe(({ el, container }) => {
+        this.removeClass(container, 'ex-over');
+        console.log(container);
+        // container.appendChild(this.savedInnerHTML);
+      })
+    );
   }
 
   private hasClass(el: Element, name: string): any {
@@ -107,7 +90,14 @@ export class MatchEditStartingElevenComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
+  }
+
+  setFormation($event: MatSelectChange) {
+    this.assignedFormation = $event.value;
+    for (let i = 0; i < this.assignedFormation.maxSubstitutes; i++) {
+      this.numbers.push(i);
+    }
   }
 
   /* getSubstitutesList(maxSubstitutes: number, assignedSubstitutes: { memberId: string }[], members: IMember[]) {

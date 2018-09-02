@@ -21,18 +21,21 @@
           <div fxFlex.gt-sm="30">
             <match-edit-result [otherMatchEventList]="otherMatchEventList"
                                [form]="form.get('result')"></match-edit-result>
-            <pre>{{match | json}}</pre>
           </div>
         </div>
       </mat-tab>
       <mat-tab [label]="'general.matches.edit.startingEleven.title' | translate">
         <p *ngIf="!form.get('assignedTeam').value">{{'general.matches.edit.noAssignedTeam' | translate}}</p>
 
+        <!-- [form]="form"
+        (addPlayerToStartingEleven)="addPlayerToStartingEleven($event)"
+        [members]="assignedMembers"
+        [team]="assignedTeam"-->
+
         <match-edit-starting-eleven *ngIf="assignedTeam && assignedMembers; else loadingTemplate"
-                                    [form]="form"
-                                    (addPlayerToStartingEleven)="addPlayerToStartingEleven($event)"
-                                    [members]="assignedMembers"
-                                    [team]="assignedTeam">
+                                    [assignedTeamPlayers]="assignedMembers"
+                                    [substitutes]="match.assignedSubstitutes"
+                                    [startingElven]="match.assignedPlayers">
         </match-edit-starting-eleven>
       </mat-tab>
       <mat-tab
@@ -41,11 +44,10 @@
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
           <div fxFlex.gt-sm="50">
-            <match-edit-events
-              [matchEvents]="match.assignedMatchEvents"
-              [eventCategories]="matchEventCategories | orderBy: ['title']"
-              (changeOrder)="changeOrder($event)"
-              (deleteMatchEvent)="deleteMatchEvent($event)">
+            <match-edit-events [matchEvents]="match.assignedMatchEvents ? match.assignedMatchEvents : []"
+                               [eventCategories]="matchEventCategories | orderBy: ['title']"
+                               (changeOrder)="changeOrder($event)"
+                               (deleteMatchEvent)="deleteMatchEvent($event)">
             </match-edit-events>
 
             <match-edit-event-form *ngIf="teams$ | async as teams"
@@ -57,7 +59,8 @@
           </div>
 
           <div fxFlex.gt-sm="50">
-            <match-edit-articles *ngIf="assignedArticles$ | async as assignedArticles; else loadingTemplate"
+            <!-- ToDo: assign Articles to match -->
+            <!--<match-edit-articles *ngIf="assignedArticles$ | async as assignedArticles; else loadingTemplate"
                                  [match]="match"
                                  [articles]="assignedArticles">
             </match-edit-articles>
@@ -65,14 +68,15 @@
             <match-edit-article-form *ngIf="notAssignedArticles$ | async as notAssignedArticles; else loadingTemplate"
                                      [match]="match"
                                      [notAssignedArticles]="notAssignedArticles">
-            </match-edit-article-form>
+            </match-edit-article-form>-->
           </div>
         </div>
       </mat-tab>
       <mat-tab [label]="'general.matches.edit.media' | translate">
+        <!-- ToDo -->
         <ul>
           <li>Verlinkte Video´s (soccerwatch.tv, youtube, facebook etc)</li>
-          <li>Verlinkte Fotos / Galerien (Link zu Facebook</li>
+          <li>Verlinkte Fotos / Galerien (Link zu Facebook)</li>
           <li>Lokal hochgeladene Dateien</li>
         </ul>
       </mat-tab>

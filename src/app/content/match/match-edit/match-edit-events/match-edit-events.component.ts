@@ -25,9 +25,9 @@ export class MatchEditEventsComponent implements OnInit {
     this.orderMatchEvents();
   }
 
-  changeOrder(sourceIndex: number, destinationIndex: number) {
+  changeOrder($event: {sourceIndex: number, destinationIndex: number}) {
     // Swap Variables and order again
-    [this.matchEvents[sourceIndex].ordering, this.matchEvents[destinationIndex].ordering] = [this.matchEvents[destinationIndex].ordering, this.matchEvents[sourceIndex].ordering];
+    [this.matchEvents[$event.sourceIndex].ordering, this.matchEvents[$event.destinationIndex].ordering] = [this.matchEvents[$event.destinationIndex].ordering, this.matchEvents[$event.sourceIndex].ordering];
     this.orderMatchEvents();
   }
 

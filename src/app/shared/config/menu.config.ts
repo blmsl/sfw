@@ -58,8 +58,8 @@ export const MENUITEMS = [
         icon: 'trending_up'
       },
       {
-        state: 'list',
-        name: 'list',
+        state: 'table',
+        name: 'table',
         icon: 'event_note'
       },
       {

@@ -9,10 +9,7 @@
                    [headerHeight]="50"
                    [footerHeight]="50"
                    [rowHeight]="'auto'"
-                   [limit]="form.controls['limit'].value"
-                   [rows]="matches | orderBy: ['title']
-                   | filterBy: ['matchStartDate'] : form.controls['selectedDate'].value
-                   | filterBy: ['title', 'homeTeam.title', 'guestTeam.title'] : form.controls['searchFor'].value">
+                   [rows]="matches">
 
       <ngx-datatable-column [name]="'general.matches.list.colTitles.title' | translate" prop="title">
         <ng-template let-row="row" let-value="title" ngx-datatable-cell-template>
@@ -22,7 +19,7 @@
 
       <ngx-datatable-column [name]="'general.matches.list.colTitles.startDate' | translate" prop="matchStartDate">
         <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
-          {{row.matchStartDate.seconds * 1000 | date: 'dd.MM.y H:MM'}}
+          {{row.matchStartDate.seconds * 1000 | date: 'dd.MM.y H:mm'}}
         </ng-template>
       </ngx-datatable-column>
 

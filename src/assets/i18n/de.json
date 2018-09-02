@@ -581,6 +581,9 @@
       },
       "edit": {
         "articles": "Artikel",
+        "assignArticle": "Artikel auswählen",
+        "assignArticleTitle": "Artikel verknüpfen",
+        "assignArticleToMatch": "Mit einem Artikel verknüpfen",
         "events": {
           "createEvent": "Neues Ereignis erstellen",
           "inputs": {
@@ -989,7 +992,8 @@
       "matches": {
         "create": "Spiel erstellen",
         "dashboard": "Übersicht",
-        "list": "Alle Spiele",
+        "list": "Zur Übersicht",
+        "table": "Alle Spiele",
         "main": "Spiele"
       },
       "member": {

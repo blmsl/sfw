@@ -106,10 +106,11 @@ export class ArticleService {
     )
   }
 
-  assignMatchToArticles(matchId: string, articles: IArticle[]): Observable<any> {
+  assignMatchToArticles(matchId: string, articles: IArticle[]): Observable<IArticle> {
     if (!matchId || !articles || articles.length === 0) return;
 
     let observables = [];
+
     for (let i = 0; i < articles.length; i++) {
       articles[i].assignedMatches ? articles[i].assignedMatches.push(matchId) : articles[i].assignedMatches = [matchId];
       observables.push(this.updateArticle(articles[i].id, articles[i]));

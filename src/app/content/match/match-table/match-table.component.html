@@ -4,18 +4,21 @@
     {{'general.menu.matches.main' | translate}}
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
-  <mat-card-content><!-- [formGroup]="form" -->
+  <mat-card-content [formGroup]="form">
     <div *ngIf="categories$ | async as categories; else loadingTemplate">
 
       <match-table-filter [categories]="categories"
                           [matches]="matches"
                           [form]="form">
       </match-table-filter>
-
+      
       <match-table-list *ngIf="matches$ | async as matches; else loadingTemplate"
-                        [matches]="matches"
-                        [form]="form"
-                        [categories]="categories">
+                        [matches]="matches
+                        | orderBy: ['title']
+                        | filterBy: ['matchStartDate'] : form.get('selectedDate').value
+                        | filterBy: ['title'] : form.get('searchFor').value
+                        "
+                        [categories]="categories"><!-- | filterBy: ['matchStartDate'] : form.get('selectedDate').value | initial: form.get('limit').value-->
       </match-table-list>
 
     </div>

@@ -30,13 +30,13 @@
           <span></span>
           <span fxFlex=""></span>
           <button [disabled]="first"
-                  (click)="changeOrder(i, i-1)"
+                  (click)="changeOrder({ sourceIndex: i, destinationIndex: i-1 })"
                   mat-icon-button=""
                   color="warn">
             <mat-icon>arrow_upward</mat-icon>
           </button>
           <button [disabled]="last"
-                  (click)="changeOrder(i, i+1)"
+                  (click)="changeOrder({ sourceIndex: i, destinationIndex: i+1 })"
                   mat-icon-button=""
                   color="primary">
             <mat-icon>arrow_downward</mat-icon>

@@ -34,7 +34,8 @@ export class MatchTableComponent implements OnInit {
     this.form = this.fb.group({
       limit: 50,
       searchFor: '',
-      selectedDate: ''
+      selectedDate: '',
+      assignedCategory: ''
     });
   }
 

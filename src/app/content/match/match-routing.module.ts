@@ -12,7 +12,7 @@ const routes: Routes = [
     component: MatchesComponent,
   },
   {
-    path: 'list',
+    path: 'table',
     component: MatchTableComponent,
   },
   {

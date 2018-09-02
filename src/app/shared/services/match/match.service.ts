@@ -187,7 +187,7 @@ export class MatchService {
         [
           'keeper centered',
           'defense left', 'defense centered', 'defense right',
-          'mdf right', 'mdf left-centered', 'mdf right-centered', 'mdf right',
+          'mdf left', 'mdf left-centered', 'mdf right-centered', 'mdf right',
           'offense left', 'offense centered', 'offense right'
         ]
     },
@@ -217,7 +217,7 @@ export class MatchService {
     {
       'title': '3-5-2',
       'mainFormation': 11,
-      'maxSubstitutes': 7,
+      'maxSubstitutes': 3,
       'positionList': [
         'keeper centered',
         'defense left', 'defense centered', 'defense right',
