@@ -31,12 +31,15 @@
         (addPlayerToStartingEleven)="addPlayerToStartingEleven($event)"
         [members]="assignedMembers"
         [team]="assignedTeam"-->
+        <match-edit-formation *ngIf="assignedTeam && assignedMembers; else loadingTemplate"
+                              [assignedTeamPlayers]="assignedMembers">
+        </match-edit-formation>
 
-        <match-edit-starting-eleven *ngIf="assignedTeam && assignedMembers; else loadingTemplate"
+        <!--<match-edit-starting-eleven *ngIf="assignedTeam && assignedMembers; else loadingTemplate"
                                     [assignedTeamPlayers]="assignedMembers"
                                     [substitutes]="match.assignedSubstitutes"
                                     [startingElven]="match.assignedPlayers">
-        </match-edit-starting-eleven>
+        </match-edit-starting-eleven>-->
       </mat-tab>
       <mat-tab
         [label]="('general.matches.edit.articles' | translate) + ' & ' + ('general.matches.edit.match' | translate)">

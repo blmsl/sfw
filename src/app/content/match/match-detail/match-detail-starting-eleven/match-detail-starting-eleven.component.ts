@@ -11,7 +11,7 @@ import { MatchService } from '../../../../shared/services/match/match.service';
 @Component({
   selector: 'match-detail-starting-eleven',
   templateUrl: './match-detail-starting-eleven.component.html',
-  styleUrls: ['../../match-edit/match-edit-starting-eleven/match-edit-starting-eleven.component.scss']
+  styleUrls: ['../../match-edit/match-edit-formation/match-edit-starting-eleven/match-edit-starting-eleven.component.scss']
 })
 export class MatchDetailStartingElevenComponent implements OnInit {
 

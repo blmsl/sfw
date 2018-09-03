@@ -148,10 +148,6 @@ export class MatchService {
       'maxSubstitutes': 7,
       'positionList':
         [
-          'keeper centered',
-          'defense left', 'defense left-centered', 'defense right-centered', 'defense right',
-          'mdf left', 'mdf  left-centered', 'mdf right-centered', 'mdf right',
-          'offense left-centered', 'offense  right-centered'
         ]
     },
     {
@@ -160,11 +156,6 @@ export class MatchService {
       'maxSubstitutes': 7,
       'positionList':
         [
-          'keeper centered',
-          'defense left', 'defense left-centered', 'defense right-centered', 'defense right',
-          'd-mdf left-centered', 'd-mdf right-centered',
-          'mdf left', 'mdf right',
-          'offense left-centered', 'offense right-centered'
         ]
     },
     {
@@ -173,10 +164,6 @@ export class MatchService {
       'maxSubstitutes': 7,
       'positionList':
         [
-          'keeper centered',
-          'defense left', 'defense left-centered', 'defense right-centered', 'defense right',
-          'mdf left-centered', 'mdf right-centered',
-          'offense left', 'offense left-centered', 'offense  right-centered', 'offense right'
         ]
     },
     {
@@ -185,10 +172,6 @@ export class MatchService {
       'maxSubstitutes': 7,
       'positionList':
         [
-          'keeper centered',
-          'defense left', 'defense centered', 'defense right',
-          'mdf left', 'mdf left-centered', 'mdf right-centered', 'mdf right',
-          'offense left', 'offense centered', 'offense right'
         ]
     },
     // ** //
@@ -197,10 +180,6 @@ export class MatchService {
       'mainFormation': 11,
       'maxSubstitutes': 7,
       'positionList': [
-        'keeper centered',
-        'defense left', 'defense left-centered', 'defense right-centered', 'defense right',
-        'mdf centered', 'mdf left', 'mdf right',
-        'offense left', 'offense centered', 'offense right'
       ]
     },
     {
@@ -208,10 +187,6 @@ export class MatchService {
       'mainFormation': 11,
       'maxSubstitutes': 7,
       'positionList': [
-        'keeper centered',
-        'defense left', 'defense left-centered', 'defense centered', 'defense right-centered', 'defense right',
-        'mdf centered', 'mdf left', 'mdf right',
-        'offense left-centered', 'offense right-centered'
       ]
     },
     {
@@ -219,10 +194,22 @@ export class MatchService {
       'mainFormation': 11,
       'maxSubstitutes': 3,
       'positionList': [
-        'keeper centered',
-        'defense left', 'defense centered', 'defense right',
-        'd-mdf left-centered', 'd-mdf right-centered', 'mdf right', 'mdf left', 'o-mdf centered',
-        'offense left-centered', 'offense right-centered'
+        {x: 0, y: 2},
+
+        {x: 1, y: 0},
+        {x: 1, y: 2},
+        {x: 1, y: 4},
+
+
+        {x: 2, y: 1},
+        {x: 2, y: 3},
+
+        {x: 3, y: 0},
+        {x: 3, y: 2},
+        {x: 3, y: 4},
+
+        {x: 5, y: 1},
+        {x: 5, y: 3},
       ]
     },
     {
@@ -230,10 +217,6 @@ export class MatchService {
       'mainFormation': 11,
       'maxSubstitutes': 7,
       'positionList': [
-        'keeper centered',
-        'defense left', 'defense left-centered', 'defense centered', 'defense right-centered', 'defense right',
-        'mdf left', 'd-mdf left-centered', 'd-mdf right-centered', 'mdf right',
-        'offense centered'
       ]
     }/*,
      {

@@ -7,8 +7,13 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
 import { CommonModule } from '@angular/common';
 import { TimeagoModule } from 'ngx-timeago';
-import { DragulaModule } from 'ng2-dragula';
+import { SkyhookDndModule } from 'angular-skyhook';
+import { HTML5ToTouch } from 'angular-skyhook-multi-backend';
+import MultiBackend from 'dnd-multi-backend';
 
+export function createBackend() {
+  return MultiBackend(HTML5ToTouch);
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +21,7 @@ import { DragulaModule } from 'ng2-dragula';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
     CommonModule,
-    DragulaModule.forRoot(),
+    SkyhookDndModule.forRoot({ backendFactory: createBackend }),
     /* ServiceWorkerModule.register("/ngsw-worker.js", {
       enabled: environment.production
     }),*/

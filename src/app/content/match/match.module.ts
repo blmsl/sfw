@@ -32,12 +32,11 @@ import { ArticleService } from '../../shared/services/article/article.service';
 import { MatchEditMainComponent } from './match-edit/match-edit-main/match-edit-main.component';
 import { TeamService } from '../../shared/services/team/team.service';
 import { SeasonService } from '../../shared/services/season/season.service';
-import { MatchEditStartingElevenComponent } from './match-edit/match-edit-starting-eleven/match-edit-starting-eleven.component';
+import { MatchEditStartingElevenComponent } from './match-edit/match-edit-formation/match-edit-starting-eleven/match-edit-starting-eleven.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MemberService } from '../../shared/services/member/member.service';
 import { IsMemberInStartingElevenFilterPipe } from '../../shared/pipes/is-member-in-starting-eleven-filter.pipe';
 import { IsMemberInSubstitutesListFilterPipe } from '../../shared/pipes/is-member-in-substitutes-list-filter.pipe';
-import { DragulaModule, DragulaService } from 'ng2-dragula';
 import { MatchEditEventsComponent } from './match-edit/match-edit-events/match-edit-events.component';
 import { MatchEditEventFormComponent } from './match-edit/match-edit-events/match-edit-event-form/match-edit-event-form.component';
 import { QuillModule } from 'ngx-quill';
@@ -52,11 +51,16 @@ import { MatchDetailEventsComponent } from './match-detail/match-detail-events/m
 import { MatchTableComponent } from './match-table/match-table.component';
 import { MatchTableFilterComponent } from './match-table/match-table-filter/match-table-filter.component';
 import { MatchTableListComponent } from './match-table/match-table-list/match-table-list.component';
+import { MatchEditFormationComponent } from './match-edit/match-edit-formation/match-edit-formation.component';
+import { MatchEditSubstitutionsComponent } from './match-edit/match-edit-formation/match-edit-substitutions/match-edit-substitutions.component';
+import { MatchEditPlayerlistComponent } from './match-edit/match-edit-formation/match-edit-playerlist/match-edit-playerlist.component';
+import { SkyhookDndModule } from 'angular-skyhook';
+import { MatchFormationService } from '../../shared/services/match/match-formation.service';
+import { MatchFieldSquareComponent } from './match-edit/match-edit-formation/match-field-square/match-field-square.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    DragulaModule,
     LinkModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -76,6 +80,7 @@ import { MatchTableListComponent } from './match-table/match-table-list/match-ta
     SharedModule,
     SharedArticleModule,
     SharedMatchModule,
+    SkyhookDndModule,
     matchRoutingModule
   ],
   declarations: [
@@ -98,16 +103,20 @@ import { MatchTableListComponent } from './match-table/match-table-list/match-ta
     MatchDetailEventsComponent,
     MatchTableComponent,
     MatchTableFilterComponent,
-    MatchTableListComponent
+    MatchTableListComponent,
+    MatchEditFormationComponent,
+    MatchEditSubstitutionsComponent,
+    MatchEditPlayerlistComponent,
+    MatchFieldSquareComponent
   ],
   providers: [
     ArticleService,
     CategoryService,
     CategoryTypeService,
-    DragulaService,
     LocationService,
     MatchResolver,
     MatchService,
+    MatchFormationService,
     MemberService,
     SeasonService,
     TeamService

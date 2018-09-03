@@ -1,6 +1,9 @@
 export interface IFormation {
   mainFormation: number;
   maxSubstitutes: number;
-  positionList: string[];
+  positionList?: {
+    x: number;
+    y: number;
+  }[];
   title: string;
 }

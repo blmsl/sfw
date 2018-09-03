@@ -1,0 +1,12 @@
+<div class="wrapper"
+     [dropTarget]="target" style="color: #fff; padding: 20px">
+
+  {{position | json}}
+  <match-player *ngIf="isVisible"></match-player>
+
+  <div class="overlay"
+       *ngIf="showOverlay$ | async"
+       [ngStyle]="overlayStyle$ | async">
+  </div>
+
+</div>

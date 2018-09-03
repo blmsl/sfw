@@ -1,0 +1,10 @@
+<div class="soccer-field" *ngIf="playerPositions$ | async as kp">
+  <div *ngFor="let i of thirty">
+    <match-field-square *ngIf="getCoordinates(i) as position"
+                        [kp]="kp"
+                        [position]="position">
+
+      <!--<match-player *ngIf="isVisible(pos, kp)"></match-player>-->
+    </match-field-square>
+  </div>
+</div>
