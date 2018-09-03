@@ -8,7 +8,9 @@ const clubPath = 'clubs';
 let data;
 let fireBaseUserId;
 
-export const driveMemberWriteCron = functions.database.ref('/drive-members/{userId}').onWrite((change, context) => {
+export const driveMemberWriteCron = functions.region('europe-west1')
+  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .database.ref('/drive-members/{userId}').onWrite((change, context) => {
 
   data = change.after.val();
 
@@ -121,12 +123,16 @@ export const driveMemberWriteCron = functions.database.ref('/drive-members/{user
     });
 });
 
-export const driveMemberDeleteCron = functions.database.ref('/drive-members/{userId}').onDelete((snap, context) => {
+export const driveMemberDeleteCron = functions.region('europe-west1')
+  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .database.ref('/drive-members/{userId}').onDelete((snap, context) => {
   fireBaseUserId = context.params.userId;
   return db.collection(memberPath).doc(fireBaseUserId).delete().catch((error: any) => console.error(error));
 });
 
-export const driveMemberUpdateCron = functions.database.ref('/drive-members/{userId}').onUpdate((change, context) => {
+export const driveMemberUpdateCron = functions.region('europe-west1')
+  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .database.ref('/drive-members/{userId}').onUpdate((change, context) => {
   data = change.after.val();
   if (!data) return true;
   console.log(data);

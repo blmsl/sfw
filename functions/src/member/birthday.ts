@@ -110,7 +110,9 @@ const birthdayWishes: {
     },
   ];
 
-export const birthdayReminderCron = functions.pubsub.topic('daily-tick').onPublish(() => {
+export const birthdayReminderCron = functions.region('europe-west1')
+  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .pubsub.topic('daily-tick').onPublish(() => {
 
   return admin.firestore()
     .collection('members')

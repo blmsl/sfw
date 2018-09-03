@@ -5,7 +5,9 @@ import * as admin from 'firebase-admin';
 
 const firestore = admin.firestore();
 
-export const onUserStatusChanged = functions.database.ref('/status/{uid}').onUpdate((change, context: any) => {
+export const onUserStatusChanged = functions.region('europe-west1')
+  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .database.ref('/status/{uid}').onUpdate((change, context: any) => {
 
   const eventStatus = change.after.val();
 

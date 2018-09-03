@@ -8,7 +8,9 @@ const clubPath = 'clubs';
 let data;
 let fireBaseUserId;
 
-export const dfbMemberWriteCron = functions.database.ref('/dfb-members/{userId}').onWrite((change, context) => {
+export const dfbMemberWriteCron = functions.region('europe-west1')
+  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .database.ref('/dfb-members/{userId}').onWrite((change, context) => {
 
   data = change.after.val();
 
@@ -104,12 +106,16 @@ export const dfbMemberWriteCron = functions.database.ref('/dfb-members/{userId}'
     });
 });
 
-export const dfbMemberDeleteCron = functions.database.ref('/dfb-members/{userId}').onDelete((snap, context) => {
+export const dfbMemberDeleteCron = functions.region('europe-west1')
+  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .database.ref('/dfb-members/{userId}').onDelete((snap, context) => {
   fireBaseUserId = context.params.userId;
   return db.collection(memberPath).doc(fireBaseUserId).delete().catch((error: any) => console.error(error));
 });
 
-export const dfbMemberUpdateCron = functions.database.ref('/dfb-members/{userId}').onUpdate((change) => {
+export const dfbMemberUpdateCron = functions.region('europe-west1')
+  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .database.ref('/dfb-members/{userId}').onUpdate((change) => {
   data = change.after.val();
   if (!data) return true;
   console.log(data);
