@@ -84,7 +84,6 @@ export class SettingsComponent implements OnInit {
       distinctUntilChanged()
     ).subscribe((changes: IApplication) => {
       this.application = Object.assign({}, this.application, changes);
-      console.log(this.form);
       if (!this.form.invalid) {
         this.saveSettings();
       }
