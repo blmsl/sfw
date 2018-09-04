@@ -2,17 +2,17 @@ import {
   Component,
   Input,
   OnInit
-}                                from '@angular/core';
-import { IFormation }            from '../../../../../shared/interfaces/match/formation.interface';
-import { Observable }            from 'rxjs/index';
-import { ICoord }                from '../../../../../shared/interfaces/match/coord.interface';
+} from '@angular/core';
+import { IFormation } from '../../../../../shared/interfaces/match/formation.interface';
+import { Observable } from 'rxjs/index';
+import { ICoord } from '../../../../../shared/interfaces/match/coord.interface';
 import { MatchFormationService } from '../../../../../shared/services/match/match-formation.service';
-import { IMatch }                from '../../../../../shared/interfaces/match/match.interface';
+import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
 
 @Component({
   selector: 'match-edit-starting-eleven',
   templateUrl: './match-edit-starting-eleven.component.html',
-  styleUrls: [ './match-edit-starting-eleven.component.scss' ]
+  styleUrls: ['./match-edit-starting-eleven.component.scss']
 })
 export class MatchEditStartingElevenComponent implements OnInit {
 

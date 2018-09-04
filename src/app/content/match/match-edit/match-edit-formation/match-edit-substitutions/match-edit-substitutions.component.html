@@ -1,10 +1,14 @@
-<!-- *ngIf="form.get('assignedFormation').value" -->
 <div class="substitutions">
   <mat-card-subtitle>{{'general.matches.edit.substituteBench' | translate}}</mat-card-subtitle>
 
-  <div fxLayout="column" [dropTarget]="target">
-    <!-- [member]="substituteList[i]" -->
-    <match-player *ngFor="let i of maxSubstitutes"></match-player>
-  </div>
+  <div fxLayout="column">
 
+    <div *ngFor="let i of maxSubstitutes"
+         [dropTarget]="target"
+         [ngStyle]="overlayStyle$|async">
+      <match-player [member]="match.assignedSubstitutes ? match.assignedSubstitutes[i] : null">
+      </match-player>
+    </div>
+
+  </div>
 </div>

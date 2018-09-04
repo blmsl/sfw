@@ -6,11 +6,11 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { IMember }                  from '../../../interfaces/member/member.interface';
-import { Observable, of }           from 'rxjs/index';
-import { IMediaItem }               from '../../../interfaces/media/media-item.interface';
-import { MediaItemService }         from '../../../services/media/media-item.service';
-import { SkyhookDndService }        from 'angular-skyhook';
+import { IMember } from '../../../interfaces/member/member.interface';
+import { Observable, of } from 'rxjs/index';
+import { IMediaItem } from '../../../interfaces/media/media-item.interface';
+import { MediaItemService } from '../../../services/media/media-item.service';
+import { SkyhookDndService } from 'angular-skyhook';
 
 @Component({
   selector: 'match-player',
@@ -35,7 +35,7 @@ export class MatchPlayerComponent implements OnInit, OnDestroy {
   });
 
   constructor(private mediaItemService: MediaItemService,
-              private dnd: SkyhookDndService) {
+    private dnd: SkyhookDndService) {
   }
 
   ngOnInit() {

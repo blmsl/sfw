@@ -4,49 +4,49 @@ import {
   Component,
   OnDestroy,
   OnInit
-}                              from '@angular/core';
-import { IMatch }              from '../../../shared/interfaces/match/match.interface';
+} from '@angular/core';
+import { IMatch } from '../../../shared/interfaces/match/match.interface';
 import {
   ActivatedRoute,
   Router
-}                              from '@angular/router';
-import { MatchService }        from '../../../shared/services/match/match.service';
-import { AlertService }        from '../../../shared/services/alert/alert.service';
+} from '@angular/router';
+import { MatchService } from '../../../shared/services/match/match.service';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   Validators
-}                              from '@angular/forms';
-import { IPublication }        from '../../../shared/interfaces/publication.interface';
-import { LocationService }     from '../../../shared/services/location/location.service';
+} from '@angular/forms';
+import { IPublication } from '../../../shared/interfaces/publication.interface';
+import { LocationService } from '../../../shared/services/location/location.service';
 import {
   Observable,
   Subscription
-}                              from 'rxjs/index';
-import { ILocation }           from '../../../shared/interfaces/location/location.interface';
-import { ITeam }               from '../../../shared/interfaces/team/team.interface';
-import { TeamService }         from '../../../shared/services/team/team.service';
-import { CategoryService }     from '../../../shared/services/category/category.service';
-import { ICategory }           from '../../../shared/interfaces/category.interface';
-import { ISeason }             from '../../../shared/interfaces/season.interface';
-import { SeasonService }       from '../../../shared/services/season/season.service';
-import { IArticle }            from '../../../shared/interfaces/article.interface';
-import { ArticleService }      from '../../../shared/services/article/article.service';
+} from 'rxjs/index';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
+import { ITeam } from '../../../shared/interfaces/team/team.interface';
+import { TeamService } from '../../../shared/services/team/team.service';
+import { CategoryService } from '../../../shared/services/category/category.service';
+import { ICategory } from '../../../shared/interfaces/category.interface';
+import { ISeason } from '../../../shared/interfaces/season.interface';
+import { SeasonService } from '../../../shared/services/season/season.service';
+import { IArticle } from '../../../shared/interfaces/article.interface';
+import { ArticleService } from '../../../shared/services/article/article.service';
 import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
-import { IMatchEvent }         from '../../../shared/interfaces/match/match-event.interface';
+import { IMatchEvent } from '../../../shared/interfaces/match/match-event.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                              from 'rxjs/internal/operators';
-import { MemberService }       from '../../../shared/services/member/member.service';
-import { IMember }             from '../../../shared/interfaces/member/member.interface';
-import { ICoord }              from '../../../shared/interfaces/match/coord.interface';
+} from 'rxjs/internal/operators';
+import { MemberService } from '../../../shared/services/member/member.service';
+import { IMember } from '../../../shared/interfaces/member/member.interface';
+import { ICoord } from '../../../shared/interfaces/match/coord.interface';
 
 @Component({
   selector: 'match-edit',
   templateUrl: './match-edit.component.html',
-  styleUrls: [ './match-edit.component.scss' ]
+  styleUrls: ['./match-edit.component.scss']
 })
 export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
 
@@ -77,18 +77,18 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
   private memberSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
-              private cdRef: ChangeDetectorRef,
-              private fb: FormBuilder,
-              private matchService: MatchService,
-              private alertService: AlertService,
-              private locationService: LocationService,
-              private teamService: TeamService,
-              private categoryService: CategoryService,
-              private categoryTypeService: CategoryTypeService,
-              private seasonService: SeasonService,
-              private articleService: ArticleService,
-              private memberService: MemberService,
-              private router: Router) {
+    private cdRef: ChangeDetectorRef,
+    private fb: FormBuilder,
+    private matchService: MatchService,
+    private alertService: AlertService,
+    private locationService: LocationService,
+    private teamService: TeamService,
+    private categoryService: CategoryService,
+    private categoryTypeService: CategoryTypeService,
+    private seasonService: SeasonService,
+    private articleService: ArticleService,
+    private memberService: MemberService,
+    private router: Router) {
     this.categories$ = this.categoryService.getCategoriesByCategoryType('team.types');
     this.locations$ = locationService.locations$;
     this.teams$ = teamService.teams$;
@@ -113,9 +113,9 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
     });
 
     this.form = this.fb.group({
-      assignedCategories: [ this.match.assignedCategories, [ Validators.required ] ],
-      assignedLocation: [ this.match.assignedLocation, [ Validators.required ] ],
-      assignedTeam: [ this.match.assignedTeam, [ Validators.required ] ],
+      assignedCategories: [this.match.assignedCategories, [Validators.required]],
+      assignedLocation: [this.match.assignedLocation, [Validators.required]],
+      assignedTeam: [this.match.assignedTeam, [Validators.required]],
       creation: this.initCreation(),
       guestTeam: this.initTeam(this.match.guestTeam),
       homeTeam: this.initTeam(this.match.homeTeam),
@@ -125,10 +125,10 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
       matchEndDate: this.match.matchEndDate.toDate(),
       matchLink: this.match.matchLink,
       matchStartDate: this.match.matchStartDate.toDate(),
-      matchType: [ this.match.matchType, [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ] ],
+      matchType: [this.match.matchType, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       publication: this.initPublication(this.match.publication),
       result: this.initResult(this.match.result),
-      title: [ this.match.title, [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ] ],
+      title: [this.match.title, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       assignedFormation: this.match.assignedFormation,
       assignedPlayers: this.initAssignedPlayers(this.match.startingEleven),
       assignedSubstitutes: this.initAssignedSubstitutes(this.match.assignedSubstitutes),
@@ -175,7 +175,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
     const formArray = this.fb.array([]);
     if (assignedEvents) {
       for (let i = 0; i < assignedEvents.length; i++) {
-        formArray.push(this.createMatchEvent(assignedEvents[ i ]));
+        formArray.push(this.createMatchEvent(assignedEvents[i]));
       }
     }
     return formArray;
@@ -186,7 +186,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   addMatchEvent(event: IMatchEvent) {
-    const control = <FormArray>this.form.controls[ 'assignedMatchEvents' ];
+    const control = <FormArray>this.form.controls['assignedMatchEvents'];
     event.ordering = control.controls.length;
     control.push(this.createMatchEvent(event));
   }
@@ -195,7 +195,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
     return this.fb.group({
       ordering: event ? event.ordering : 0,
       assignedCategory: event ? event.assignedCategory : null,
-      description: [ event ? event.description : '', [ Validators.required, Validators.minLength(5) ] ],
+      description: [event ? event.description : '', [Validators.required, Validators.minLength(5)]],
       playMinute: event ? event.playMinute : null,
       title: event ? event.title : ''
     });
@@ -215,7 +215,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
     if (assignedSubstitutes) {
       for (let i = 0; i < assignedSubstitutes.length; i++) {
         let formControl = this.fb.group({
-          memberId: assignedSubstitutes[ i ]
+          memberId: assignedSubstitutes[i]
         });
         formArray.push(formControl);
       }
@@ -228,8 +228,8 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
     position: ICoord;
   }) {
     return this.fb.group({
-      memberId: assignedPosition[ 'memberId' ],
-      position: assignedPosition[ 'position' ]
+      memberId: assignedPosition['memberId'],
+      position: assignedPosition['position']
     });
   }
 
@@ -240,7 +240,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
     const formArray = this.fb.array([]);
     if (assignedPositions) {
       for (let i = 0; i < assignedPositions.length; i++) {
-        let formControl = this.createAssignedPlayer(assignedPositions[ i ]);
+        let formControl = this.createAssignedPlayer(assignedPositions[i]);
         formArray.push(formControl);
       }
     }
@@ -293,7 +293,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   removeMatch(match: IMatch): void {
     this.matchService.removeMatch(match).then(
-      () => this.router.navigate([ '/matches' ]).then(),
+      () => this.router.navigate(['/matches']).then(),
       (error: any) => this.alertService.showSnackBar('error', error)
     );
   }
@@ -317,7 +317,7 @@ export class MatchEditComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   redirectToList(): void {
-    this.router.navigate([ '/matches' ]).then();
+    this.router.navigate(['/matches']).then();
   }
 
 }

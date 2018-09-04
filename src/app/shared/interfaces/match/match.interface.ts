@@ -1,8 +1,8 @@
-import { ICreation }    from '../creation.interface';
+import { ICreation } from '../creation.interface';
 import { IPublication } from '../publication.interface';
-import * as firebase    from 'firebase';
-import { IMatchEvent }  from './match-event.interface';
-import { ICoord }       from './coord.interface';
+import * as firebase from 'firebase';
+import { IMatchEvent } from './match-event.interface';
+import { ICoord } from './coord.interface';
 
 export interface IMatch {
 

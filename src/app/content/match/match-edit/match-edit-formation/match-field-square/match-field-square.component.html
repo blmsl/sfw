@@ -1,8 +1,9 @@
 <div class="wrapper"
-     style="color: #fff; padding: 20px">
+     [ngStyle]="overlayStyle$|async"
+     style=" padding: 20px">
 
-  <match-player [dropTarget]="target"
-                *ngIf="isVisible">
+  <match-player *ngIf="isVisible"
+                [dropTarget]="target">
   </match-player>
 
 </div>

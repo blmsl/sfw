@@ -4,16 +4,16 @@ import {
   Input,
   OnDestroy,
   OnInit
-}                            from '@angular/core';
-import { IMember }           from '../../../../../shared/interfaces/member/member.interface';
+} from '@angular/core';
+import { IMember } from '../../../../../shared/interfaces/member/member.interface';
 import { SkyhookDndService } from 'angular-skyhook';
-import { MatchService }      from '../../../../../shared/services/match/match.service';
-import { IMatch }            from '../../../../../shared/interfaces/match/match.interface';
+import { MatchService } from '../../../../../shared/services/match/match.service';
+import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
 
 @Component({
   selector: 'match-edit-player-list',
   templateUrl: './match-edit-player-list.component.html',
-  styleUrls: [ './match-edit-player-list.component.scss' ],
+  styleUrls: ['./match-edit-player-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatchEditPlayerListComponent implements OnInit, OnDestroy {
@@ -22,7 +22,7 @@ export class MatchEditPlayerListComponent implements OnInit, OnDestroy {
   @Input() match: IMatch;
 
   constructor(private dnd: SkyhookDndService,
-              private matchService: MatchService) {
+    private matchService: MatchService) {
   }
 
   ngOnInit() {
@@ -35,7 +35,7 @@ export class MatchEditPlayerListComponent implements OnInit, OnDestroy {
   public target = this.dnd.dropTarget('PLAYERS', {
     canDrop: () => true,
     drop: monitor => {
-      const $event = <IDraggedItemInterface> monitor.getItem();
+      const $event = <IDraggedItemInterface>monitor.getItem();
       console.log('Spieler aus der Aufstellung und von der Ersatzbank löschen.');
       this.matchService.removePlayerFromStartingElevenAndSubstitutes($event.id, this.match);
     },
