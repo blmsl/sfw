@@ -115,7 +115,7 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteCalendar(i: number) {
-    const control = <FormArray>this.form.get('assignedCalendar');
+    const control = <FormArray>this.form.controls[ 'assignedCalendars' ];
     control.removeAt(i);
   }
 
