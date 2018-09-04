@@ -30,7 +30,7 @@ export class TeamDetailStatisticsComponent implements OnInit {
   private getMatchesForTeam(teamId: string) {
     this.matchService.getMatchesWithResult(teamId).subscribe((matches: IMatch[]) => {
 
-      matches.forEach( (match: IMatch) => {
+      matches.forEach((match: IMatch) => {
         if (match.result.guestTeamGoals != null && match.result.homeTeamGoals != null) {
           if (match.isHomeTeam) {
             if (match.result.homeTeamGoals < match.result.guestTeamGoals) {
@@ -63,7 +63,7 @@ export class TeamDetailStatisticsComponent implements OnInit {
   }
 
   private highestForArray(array: IMatch[]) {
-    return array.reduce( (previousValue, currentValue) => {
+    return array.reduce((previousValue, currentValue) => {
 
       const previousDiff = Math.abs(Number(previousValue.result.guestTeamGoals) - Number(previousValue.result.homeTeamGoals));
       const currentDiff = Math.abs(Number(currentValue.result.guestTeamGoals) - Number(currentValue.result.homeTeamGoals));
@@ -78,8 +78,8 @@ export class TeamDetailStatisticsComponent implements OnInit {
 
   private getSeriesForTeam(teamId: string) {
 
-    this.matchService.getSeriesOfMatches(teamId).subscribe( (matches: IMatch[]) => {
-      matches.forEach( (match: IMatch) => {
+    this.matchService.getSeriesOfMatches(teamId).subscribe((matches: IMatch[]) => {
+      matches.forEach((match: IMatch) => {
         // console.log(match);
         if (match.result.guestTeamGoals && match.result.homeTeamGoals) {
           // Defeats

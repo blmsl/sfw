@@ -2,9 +2,9 @@ import {
   Component,
   Input,
   OnInit
-}                    from '@angular/core';
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IMatch }    from '../../../../shared/interfaces/match/match.interface';
+import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 import { ICategory } from '../../../../shared/interfaces/category.interface';
 
 @Component({

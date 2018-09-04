@@ -9,7 +9,7 @@ const cors = require('cors')({
 const calendarId = '41q3u1q8pfh26dm1lpkuh7lsrs@group.calendar.google.com';
 
 export const getGoogleCalendarEvents = functions.region('europe-west1')
-// .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  // .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .https.onRequest((req, resp) => {
 
     const cal = google.calendar({ version: 'v3' });

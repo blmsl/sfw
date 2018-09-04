@@ -16,24 +16,29 @@
     </mat-form-field>
   </mat-card-title>
 
-  <!-- *ngIf="form.get('assignedFormation').value" -->
   <mat-card-content fxLayout="column"
                     fxLayout.gt-sm="row">
 
     <match-edit-starting-eleven *ngIf="assignedFormation"
                                 fxFlex="90"
+                                [match]="match"
                                 [assignedFormation]="assignedFormation">
     </match-edit-starting-eleven>
 
     <match-edit-substitutions *ngIf="assignedFormation"
                               fxFlex="10"
+                              [match]="match"
                               [assignedFormation]="assignedFormation">
     </match-edit-substitutions>
+
   </mat-card-content>
 
   <mat-card-actions>
-    <match-edit-playerlist [assignedTeamPlayers]="assignedTeamPlayers"></match-edit-playerlist>
+    <match-edit-player-list [match]="match"
+                            [assignedTeamPlayers]="assignedTeamPlayers">
+    </match-edit-player-list>
   </mat-card-actions>
+
 </mat-card>
 
 <ng-template #loadingTemplate>

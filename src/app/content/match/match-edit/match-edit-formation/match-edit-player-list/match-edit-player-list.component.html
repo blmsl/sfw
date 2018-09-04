@@ -1,0 +1,15 @@
+<mat-card-subtitle>{{'general.matches.edit.squad' | translate}}</mat-card-subtitle>
+
+<p *ngIf="!assignedTeamPlayers || assignedTeamPlayers.length === 0">
+  {{'general.matches.edit.noAssignedPlayers' | translate}}
+</p>
+
+<div fxLayout="row wrap"
+     [dropTarget]="target">
+
+  <match-player fxFlex="8.25"
+                *ngFor="let member of assignedTeamPlayers| orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
+                [member]="member">
+  </match-player>
+
+</div>

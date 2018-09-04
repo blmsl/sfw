@@ -1,30 +1,30 @@
 import {
   Component,
   OnInit
-}                           from '@angular/core';
+} from '@angular/core';
 import {
   ActivatedRoute,
   Router
-}                           from '@angular/router';
-import { IUser }            from '../../../shared/interfaces/user/user.interface';
-import { IUploaderConfig }  from '../../../shared/interfaces/media/uploader-config.interface';
+} from '@angular/router';
+import { IUser } from '../../../shared/interfaces/user/user.interface';
+import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
 import {
   FormBuilder,
   FormGroup
-}                           from '@angular/forms';
+} from '@angular/forms';
 import {
   debounceTime,
   distinctUntilChanged
-}                           from 'rxjs/operators';
-import { AuthService }      from '../../../shared/services/auth/auth.service';
-import { UserService }      from '../../../shared/services/user/user.service';
-import { AlertService }     from '../../../shared/services/alert/alert.service';
+} from 'rxjs/operators';
+import { AuthService } from '../../../shared/services/auth/auth.service';
+import { UserService } from '../../../shared/services/user/user.service';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'user-edit',
   templateUrl: './user-edit.component.html',
-  styleUrls: [ './user-edit.component.scss' ]
+  styleUrls: ['./user-edit.component.scss']
 })
 export class UserEditComponent implements OnInit {
 
@@ -41,18 +41,18 @@ export class UserEditComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    assignedObjects: [ 'users', 'profile' ],
+    assignedObjects: ['users', 'profile'],
     itemId: '',
     queueLimit: 1,
-    allowedMimeType: [ 'image/jpeg', 'image/gif', 'image/png' ]
+    allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
   constructor(private route: ActivatedRoute,
-              private authService: AuthService,
-              private userService: UserService,
-              private router: Router,
-              private alertService: AlertService,
-              private fb: FormBuilder) {
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router,
+    private alertService: AlertService,
+    private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -109,7 +109,7 @@ export class UserEditComponent implements OnInit {
   }
 
   redirectToList() {
-    this.router.navigate([ '/locations' ]).then();
+    this.router.navigate(['/locations']).then();
   }
 
   uploadCompleted() {

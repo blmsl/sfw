@@ -6,13 +6,12 @@ import {
 }                              from 'angularfire2/firestore';
 import { IMatch }              from '../../interfaces/match/match.interface';
 import { of }                  from 'rxjs/index';
-import { IFormation }          from '../../interfaces/match/formation.interface';
 import { IMatchEventCategory } from '../../interfaces/match/match-event-category.interface';
 import { ILocation }           from '../../interfaces/location/location.interface';
 import { ITeam }               from '../../interfaces/team/team.interface';
-
 import Timestamp = firebase.firestore.Timestamp;
 import * as firebase           from 'firebase';
+import { ICoord }              from '../../interfaces/match/coord.interface';
 
 @Injectable()
 export class MatchService {
@@ -38,10 +37,6 @@ export class MatchService {
 
   updateMatch(matchId: string, data: any): Promise<any> {
     return this.afs.collection(this.path).doc(matchId).update(data);
-  }
-
-  getFormations(): IFormation[] {
-    return this.formations;
   }
 
   getMatchById(matchId: string): Observable<IMatch> {
@@ -141,125 +136,17 @@ export class MatchService {
     ];
   }
 
-  private formations: IFormation[] = [
-    {
-      'title': '4-4-2 (2)',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList':
-        [
-        ]
-    },
-    {
-      'title': '4-4-2 (1)',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList':
-        [
-        ]
-    },
-    {
-      'title': '4-2-4',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList':
-        [
-        ]
-    },
-    {
-      'title': '3-4-3',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList':
-        [
-        ]
-    },
-    // ** //
-    {
-      'title': '4-3-3',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList': [
-      ]
-    },
-    {
-      'title': '5-3-2',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList': [
-      ]
-    },
-    {
-      'title': '3-5-2',
-      'mainFormation': 11,
-      'maxSubstitutes': 3,
-      'positionList': [
-        {x: 0, y: 2},
+  removePlayerFromStartingElevenAndSubstitutes(memberId: string, match: IMatch) {
+    console.log('MemberId:' + memberId + ' MatchId: ' + match.id);
+  }
 
-        {x: 1, y: 0},
-        {x: 1, y: 2},
-        {x: 1, y: 4},
+  setPlayerToSubstitute(memberId: string, match: IMatch) {
+    console.log('MemberId:' + memberId + ' MatchId: ' + match.id);
+  }
 
-
-        {x: 2, y: 1},
-        {x: 2, y: 3},
-
-        {x: 3, y: 0},
-        {x: 3, y: 2},
-        {x: 3, y: 4},
-
-        {x: 5, y: 1},
-        {x: 5, y: 3},
-      ]
-    },
-    {
-      'title': '5-4-1',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList': [
-      ]
-    }/*,
-     {
-     'title': '4-5-1',
-     'mainFormation': 11,
-     'maxSubstitutes': 7,
-     'positionList': ['']
-     },
-     {
-     'title': '4-2-3-1',
-     'mainFormation': 11,
-     'maxSubstitutes': 7,
-     'positionList': ['']
-     },
-     {
-     'title': '4-3-2-1',
-     'mainFormation': 11,
-     'maxSubstitutes': 7,
-     'positionList': ['']
-     },
-     {
-     'title': '4-1-4-1',
-     'mainFormation': 11,
-     'maxSubstitutes': 7,
-     'positionList': ['']
-     },
-     {
-     'title': '3-3-4',
-     'mainFormation': 11,
-     'maxSubstitutes': 7,
-     'positionList': ['']
-     },
-     {
-     'title': '3-3-1-3',
-     'mainFormation': 11,
-     'maxSubstitutes': 7, 'positionList': ['']
-     },
-     {
-     'title': '4-2-2-2',
-     'mainFormation': 11,
-     'maxSubstitutes': 7, 'positionList': ['']
-     } */
-  ];
+  setPlayerToStartingEleven(memberId: string, match: IMatch, position: ICoord) {
+    console.log('MemberId:' + memberId + ' MatchId: ' + match.id + ' Position X' + position.x + ' Position Y' + position.y);
+  }
 
   getMatchEventCategories(): IMatchEventCategory[] {
     return [

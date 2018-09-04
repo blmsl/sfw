@@ -35,12 +35,12 @@ export class SettingsComponent implements OnInit {
   public roles: string[];
 
   constructor(private fb: FormBuilder,
-              private route: ActivatedRoute,
-              public snackBar: MatSnackBar,
-              private title: Title,
-              private translateService: TranslateService,
-              private userService: UserService,
-              private applicationService: ApplicationService) {
+    private route: ActivatedRoute,
+    public snackBar: MatSnackBar,
+    private title: Title,
+    private translateService: TranslateService,
+    private userService: UserService,
+    private applicationService: ApplicationService) {
     this.roles = userService.getUserRoles();
   }
 
@@ -111,7 +111,7 @@ export class SettingsComponent implements OnInit {
     control.push(this.initCalendar({ title: '', link: '' }));
   }
 
-  deleteCalendar(i: number){
+  deleteCalendar(i: number) {
     console.log(i);
     const formArray = <FormArray>this.form.controls['assignedCalendars'];
     formArray.controls.splice(i, 1);
@@ -203,19 +203,19 @@ export class SettingsComponent implements OnInit {
 
   saveSettings() {
     this.applicationService.updateApplication(this.application.id, this.application).then(() => {
-        // set Page Title
-        if (this.title.getTitle() !== this.application.page.title) {
-          this.title.setTitle(this.application.page.title);
-        }
+      // set Page Title
+      if (this.title.getTitle() !== this.application.page.title) {
+        this.title.setTitle(this.application.page.title);
+      }
 
-        this.snackBar.openFromComponent(SnackbarComponent, {
-          data: {
-            status: 'success',
-            message: 'general.applications.updateMessage'
-          },
-          duration: 2500
-        });
-      },
+      this.snackBar.openFromComponent(SnackbarComponent, {
+        data: {
+          status: 'success',
+          message: 'general.applications.updateMessage'
+        },
+        duration: 2500
+      });
+    },
       (error: any) => {
         this.snackBar.openFromComponent(SnackbarComponent, {
           data: {

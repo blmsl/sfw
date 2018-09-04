@@ -16,7 +16,7 @@ export class TeamDetailPlayerstatsComponent implements OnInit {
   constructor(private teamService: TeamService) { }
 
   ngOnInit() {
-    if(this.assignedPlayers){
+    if (this.assignedPlayers) {
       this.teamService.getPlayerStats(this.assignedPlayers);
     }
   }

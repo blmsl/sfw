@@ -38,10 +38,10 @@ export class TeamService {
     return this.afs.doc<ITeam>(this.path + '/' + teamId).valueChanges();
   }
 
-  getPlayerStats(assignedPlayers: IMember[]){
-    if(!assignedPlayers ||assignedPlayers.length === 0) return of(null);
+  getPlayerStats(assignedPlayers: IMember[]) {
+    if (!assignedPlayers || assignedPlayers.length === 0) return of(null);
     let memberObservables: Observable<IMember>[] = [];
-    for(let i = 0; i < assignedPlayers.length; i++){
+    for (let i = 0; i < assignedPlayers.length; i++) {
       memberObservables.push(this.getPlayerStatisticById(assignedPlayers[i]).pipe(
         take(1)
       ));
@@ -49,7 +49,7 @@ export class TeamService {
     return forkJoin(memberObservables);
   }
 
-  getPlayerStatisticById(member: IMember){
+  getPlayerStatisticById(member: IMember) {
     console.log(member.id);
     return of(member);
   }

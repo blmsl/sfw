@@ -32,6 +32,7 @@
         [members]="assignedMembers"
         [team]="assignedTeam"-->
         <match-edit-formation *ngIf="assignedTeam && assignedMembers; else loadingTemplate"
+                              [match]="match"
                               [assignedTeamPlayers]="assignedMembers">
         </match-edit-formation>
 

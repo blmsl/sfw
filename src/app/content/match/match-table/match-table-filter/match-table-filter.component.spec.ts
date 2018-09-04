@@ -8,9 +8,9 @@ describe('MatchTableFilterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchTableFilterComponent ]
+      declarations: [MatchTableFilterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

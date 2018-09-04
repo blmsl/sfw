@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ICategory }                          from '../../../../../shared/interfaces/category.interface';
-import { IMatchEvent }                        from '../../../../../shared/interfaces/match/match-event.interface';
-import { IMember }                            from '../../../../../shared/interfaces/member/member.interface';
-import { ITeam }                              from '../../../../../shared/interfaces/team/team.interface';
-import { Observable }                         from 'rxjs/index';
-import { MemberService }                      from '../../../../../shared/services/member/member.service';
-import { IMatchEventCategory }                from '../../../../../shared/interfaces/match/match-event-category.interface';
+import { ICategory } from '../../../../../shared/interfaces/category.interface';
+import { IMatchEvent } from '../../../../../shared/interfaces/match/match-event.interface';
+import { IMember } from '../../../../../shared/interfaces/member/member.interface';
+import { ITeam } from '../../../../../shared/interfaces/team/team.interface';
+import { Observable } from 'rxjs/index';
+import { MemberService } from '../../../../../shared/services/member/member.service';
+import { IMatchEventCategory } from '../../../../../shared/interfaces/match/match-event-category.interface';
 
 @Component({
   selector: 'match-edit-event-form',

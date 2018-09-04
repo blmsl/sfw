@@ -53,7 +53,7 @@ import { MatchTableFilterComponent } from './match-table/match-table-filter/matc
 import { MatchTableListComponent } from './match-table/match-table-list/match-table-list.component';
 import { MatchEditFormationComponent } from './match-edit/match-edit-formation/match-edit-formation.component';
 import { MatchEditSubstitutionsComponent } from './match-edit/match-edit-formation/match-edit-substitutions/match-edit-substitutions.component';
-import { MatchEditPlayerlistComponent } from './match-edit/match-edit-formation/match-edit-playerlist/match-edit-playerlist.component';
+import { MatchEditPlayerListComponent } from './match-edit/match-edit-formation/match-edit-player-list/match-edit-player-list.component';
 import { SkyhookDndModule } from 'angular-skyhook';
 import { MatchFormationService } from '../../shared/services/match/match-formation.service';
 import { MatchFieldSquareComponent } from './match-edit/match-edit-formation/match-field-square/match-field-square.component';
@@ -106,7 +106,7 @@ import { MatchFieldSquareComponent } from './match-edit/match-edit-formation/mat
     MatchTableListComponent,
     MatchEditFormationComponent,
     MatchEditSubstitutionsComponent,
-    MatchEditPlayerlistComponent,
+    MatchEditPlayerListComponent,
     MatchFieldSquareComponent
   ],
   providers: [

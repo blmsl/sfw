@@ -8,9 +8,9 @@ describe('MatchFieldSquareComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchFieldSquareComponent ]
+      declarations: [MatchFieldSquareComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

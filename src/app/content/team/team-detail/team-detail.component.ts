@@ -37,15 +37,15 @@ export class TeamDetailComponent implements OnInit {
   public assignedArticles$: Observable<IArticle[]>;
 
   constructor(private route: ActivatedRoute,
-              private seasonService: SeasonService,
-              private clubService: ClubService,
-              private teamService: TeamService,
-              private matchService: MatchService,
-              private categoryService: CategoryService,
-              private memberService: MemberService,
-              private locationService: LocationService,
-              private articleService: ArticleService,
-              private router: Router) {
+    private seasonService: SeasonService,
+    private clubService: ClubService,
+    private teamService: TeamService,
+    private matchService: MatchService,
+    private categoryService: CategoryService,
+    private memberService: MemberService,
+    private locationService: LocationService,
+    private articleService: ArticleService,
+    private router: Router) {
   }
 
   ngOnInit() {

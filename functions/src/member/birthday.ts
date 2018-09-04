@@ -1,6 +1,6 @@
-import * as admin     from 'firebase-admin';
+import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
-import * as moment    from 'moment';
+import * as moment from 'moment';
 
 moment.locale('de');
 
@@ -114,82 +114,82 @@ export const birthdayReminderCron = functions.region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .pubsub.topic('daily-tick').onPublish(() => {
 
-  return admin.firestore()
-    .collection('members')
-    .get()
-    .then((value) => {
+    return admin.firestore()
+      .collection('members')
+      .get()
+      .then((value) => {
 
-      let birthdayList = '<ul>';
+        let birthdayList = '<ul>';
 
-      value.forEach(function(doc) {
-        const memberData = doc.data();
-        if (moment(memberData.mainData.birthday).format("MM-DD") === today) {
-          if (memberData.contact && memberData.contact.email) {
-            const data = {
-              email: memberData.contact.email,
-              firstName: memberData.mainData.firstName,
-              lastName: memberData.mainData.lastName,
-              age: calculateAge(memberData.mainData.birthday)
-            };
-            recipients.push(data);
+        value.forEach(function(doc) {
+          const memberData = doc.data();
+          if (moment(memberData.mainData.birthday).format("MM-DD") === today) {
+            if (memberData.contact && memberData.contact.email) {
+              const data = {
+                email: memberData.contact.email,
+                firstName: memberData.mainData.firstName,
+                lastName: memberData.mainData.lastName,
+                age: calculateAge(memberData.mainData.birthday)
+              };
+              recipients.push(data);
+            }
+            birthdayList += '<li>' + memberData.mainData.firstName + ' ' + memberData.mainData.lastName + ' wird heute ' + calculateAge(memberData.mainData.birthday) + ' Jahre</li>';
           }
-          birthdayList += '<li>' + memberData.mainData.firstName + ' ' + memberData.mainData.lastName + ' wird heute ' + calculateAge(memberData.mainData.birthday) + ' Jahre</li>';
+        });
+
+        // if no there are no birthdays today
+        if (birthdayList === '<ul>') {
+          birthdayList = '<li>Heute hat niemand Geburtstag.</li>';
         }
-      });
 
-      // if no there are no birthdays today
-      if (birthdayList === '<ul>') {
-        birthdayList = '<li>Heute hat niemand Geburtstag.</li>';
-      }
-
-      birthdayList += '</ul>';
-      return birthdayList;
-    }).then((list) => {
-      return sgMail.send({
-        to: [
-          'thomas.handle@gmail.com',
-          'mail@r-klein.com',
-          'nathalie.feller@gmx.de',
-          'ronnyhassel@gmail.com'
-        ],
-        from: 'Geburtstage@sfwinterbach.com',
-        subject: 'Geburtstage vom ' + moment().format("LL"),
-        templateId: '3b21edd6-0c49-40c2-a2e3-68ae679ff440',
-        substitutionWrappers: ['{{', '}}'],
-        substitutions: {
-          adminName: '',
-          birthdayList: list,
-          dateString: moment().format("LL")
-        }
-      });
-    }).then(() => {
-      recipients.forEach((recipient: {
-        email: string,
-        firstName: string,
-        lastName: string,
-        age: number
-      }) => {
-        const birthdaySample = birthdayWishes[Math.floor(Math.random() * birthdayWishes.length)];
-
+        birthdayList += '</ul>';
+        return birthdayList;
+      }).then((list) => {
         return sgMail.send({
-          to: [recipient.email],
-          bcc: [
+          to: [
             'thomas.handle@gmail.com',
             'mail@r-klein.com',
+            'nathalie.feller@gmx.de',
             'ronnyhassel@gmail.com'
           ],
           from: 'Geburtstage@sfwinterbach.com',
-          subject: 'Geburtstagswünsche',
-          templateId: '780bf24e-b085-4ece-9262-f727c47a3edc',
+          subject: 'Geburtstage vom ' + moment().format("LL"),
+          templateId: '3b21edd6-0c49-40c2-a2e3-68ae679ff440',
           substitutionWrappers: ['{{', '}}'],
           substitutions: {
-            firstName: recipient.firstName,
-            lastName: recipient.lastName,
-            age: recipient.age,
-            message: birthdaySample.message,
-            author: birthdaySample.author
+            adminName: '',
+            birthdayList: list,
+            dateString: moment().format("LL")
           }
         });
+      }).then(() => {
+        recipients.forEach((recipient: {
+          email: string,
+          firstName: string,
+          lastName: string,
+          age: number
+        }) => {
+          const birthdaySample = birthdayWishes[Math.floor(Math.random() * birthdayWishes.length)];
+
+          return sgMail.send({
+            to: [recipient.email],
+            bcc: [
+              'thomas.handle@gmail.com',
+              'mail@r-klein.com',
+              'ronnyhassel@gmail.com'
+            ],
+            from: 'Geburtstage@sfwinterbach.com',
+            subject: 'Geburtstagswünsche',
+            templateId: '780bf24e-b085-4ece-9262-f727c47a3edc',
+            substitutionWrappers: ['{{', '}}'],
+            substitutions: {
+              firstName: recipient.firstName,
+              lastName: recipient.lastName,
+              age: recipient.age,
+              message: birthdaySample.message,
+              author: birthdaySample.author
+            }
+          });
+        });
       });
-    });
-});
+  });

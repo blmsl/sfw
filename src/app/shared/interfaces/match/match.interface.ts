@@ -1,7 +1,8 @@
-import { ICreation } from '../creation.interface';
+import { ICreation }    from '../creation.interface';
 import { IPublication } from '../publication.interface';
-import * as firebase from 'firebase';
-import { IMatchEvent } from './match-event.interface';
+import * as firebase    from 'firebase';
+import { IMatchEvent }  from './match-event.interface';
+import { ICoord }       from './coord.interface';
 
 export interface IMatch {
 
@@ -12,14 +13,14 @@ export interface IMatch {
   assignedMatchEvents?: IMatchEvent[];
   assignedFormation?: string;
 
-  assignedPlayers?: {
+  startingEleven?: {
     memberId: string;
-    position: string;
+    position: ICoord;
   }[];
 
   assignedSubstitutes?: {
     memberId: string;
-    position: string;
+    position: ICoord;
   }[];
 
   assignedLocation: string;

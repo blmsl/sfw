@@ -1,4 +1,6 @@
-<mat-card>
+<mat-card [dragSource]="playerSource"
+          [class.dragging]="isDragging$|async">
+
   <img *ngIf="memberImage | async as image; else loadingTemplate"
        mat-card-image
        [src]="image.downloadURL" />

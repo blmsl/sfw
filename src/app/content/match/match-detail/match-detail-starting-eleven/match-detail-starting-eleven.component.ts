@@ -22,7 +22,7 @@ export class MatchDetailStartingElevenComponent implements OnInit {
   public tacticalFormations: IFormation[];
 
   constructor(private matchService: MatchService) {
-    this.tacticalFormations = matchService.getFormations();
+    // this.tacticalFormations = matchService.getFormations();
   }
 
   ngOnInit() {

@@ -2,16 +2,9 @@
 <div class="substitutions">
   <mat-card-subtitle>{{'general.matches.edit.substituteBench' | translate}}</mat-card-subtitle>
 
-  <div fxLayout="column">
-
-    <div *ngFor="let i of maxSubstitutes">
-      <match-player [member]="substituteList[i]"></match-player>
-      <!--<match-player [ngClass]="'substitute ' + number"></match-player>
-      <!-- *ngFor="let member of substitutes"
-                    [id]="member.id"
-                    [member]="member" -
-      <match-player [ngClass]="'substitute ' + number"></match-player>-->
-    </div>
-
+  <div fxLayout="column" [dropTarget]="target">
+    <!-- [member]="substituteList[i]" -->
+    <match-player *ngFor="let i of maxSubstitutes"></match-player>
   </div>
+
 </div>

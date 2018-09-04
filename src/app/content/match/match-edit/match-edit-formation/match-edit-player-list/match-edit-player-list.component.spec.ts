@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MatchEditPlayerlistComponent } from './match-edit-playerlist.component';
+import { MatchEditPlayerlistComponent } from './match-edit-player-list.component';
 
 describe('MatchEditPlayerlistComponent', () => {
   let component: MatchEditPlayerlistComponent;
@@ -8,9 +8,9 @@ describe('MatchEditPlayerlistComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchEditPlayerlistComponent ]
+      declarations: [MatchEditPlayerlistComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

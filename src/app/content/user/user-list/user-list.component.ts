@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit {
   ];
 
   constructor(private fb: FormBuilder,
-              public authService: AuthService) {
+    public authService: AuthService) {
   }
 
   ngOnInit() {

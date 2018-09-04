@@ -1,7 +1,3 @@
-.ex-over {
-  border: 2px #cecece dashed;
-}
-
 .soccer-field {
   background: transparent url('/assets/sfw/match/soccer-field.jpg') center center / cover no-repeat;
   min-height: 888px;
@@ -12,63 +8,3 @@
   grid-template-columns: repeat(6, 12%);
   grid-template-rows: repeat(5, 20%);
 }
-
-/*.player {
-  position: absolute;
-  width: 6%;
-}
-
-/**
-Horizontal alignment
- *
-.keeper {
-  left: 3%;
-}
-
-.defense {
-  left: 15%;
-}
-
-.d-mdf {
-  left: 25%;
-}
-
-.mdf {
-  left: 35%;
-}
-
-.o-mdf {
-  left: 45%;
-}
-
-.offense {
-  left: 55%;
-}
-
-/**
-Vertical Alignment
- *
-.centered {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.left-centered {
-  top: 26.5%;
-  transform: translateY(-26.5%);
-}
-
-.left {
-  top: 3%;
-  transform: translateY(-3%);
-}
-
-.right-centered {
-  top: 73.5%;
-  transform: translateY(-73.5%);
-}
-
-.right {
-  top: 97%;
-  transform: translateY(-97%);
-} */

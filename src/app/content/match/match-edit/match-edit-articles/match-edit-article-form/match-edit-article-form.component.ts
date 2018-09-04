@@ -17,7 +17,7 @@ export class MatchEditArticleFormComponent implements OnInit {
   public form: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private articleService: ArticleService) {
+    private articleService: ArticleService) {
   }
 
   ngOnInit() {

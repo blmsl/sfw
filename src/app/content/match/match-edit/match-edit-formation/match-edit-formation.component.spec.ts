@@ -8,9 +8,9 @@ describe('MatchEditFormationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchEditFormationComponent ]
+      declarations: [MatchEditFormationComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

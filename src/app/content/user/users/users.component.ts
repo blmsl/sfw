@@ -14,7 +14,7 @@ export class UsersComponent {
   public users$: Observable<IUser[]>;
 
   constructor(public userService: UserService,
-              private alertService: AlertService) {
+    private alertService: AlertService) {
     this.users$ = userService.users$;
   }
 

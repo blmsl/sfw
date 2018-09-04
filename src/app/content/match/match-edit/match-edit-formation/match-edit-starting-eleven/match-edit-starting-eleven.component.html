@@ -2,9 +2,9 @@
   <div *ngFor="let i of thirty">
     <match-field-square *ngIf="getCoordinates(i) as position"
                         [kp]="kp"
+                        [match]="match"
                         [position]="position">
-
-      <!--<match-player *ngIf="isVisible(pos, kp)"></match-player>-->
+      <match-player></match-player>
     </match-field-square>
   </div>
 </div>
