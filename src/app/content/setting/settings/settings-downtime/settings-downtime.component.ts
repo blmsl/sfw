@@ -33,8 +33,8 @@ export class SettingsDowntimeComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       downtime: this.fb.group({
-        isEnabled: this.application.downtime.isEnabled,
-        message: this.application.downtime.message
+        isEnabled: this.application.downtime ? this.application.downtime.isEnabled: false,
+        message: this.application.downtime ? this.application.downtime.message : ''
       }),
     });
 
