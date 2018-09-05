@@ -53,11 +53,11 @@
       </mat-tab>
 
       <mat-tab label="{{'general.applications.staticTitle' | translate}}">
-        <!--<static-pages *ngIf="categories$ | async as categories; else loadingTemplate"
+        <static-pages *ngIf="categories$ | async as categories; else loadingTemplate"
                       (saveApplication)="saveApplication($event)"
                       [categories]="categories"
                       [application]="application">
-        </static-pages>-->
+        </static-pages>
       </mat-tab>
 
     </mat-tab-group>

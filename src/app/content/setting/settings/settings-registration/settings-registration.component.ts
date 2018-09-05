@@ -36,7 +36,7 @@ export class SettingsRegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      roles: this.application.registration ? this.application.registration : []
+      registration: this.application.registration ? this.application.registration : []
     });
 
     this.form.valueChanges.pipe(
