@@ -1,9 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup
-} from '@angular/forms';
+}                                   from '@angular/forms';
 import { IApplication }             from '../../../../shared/interfaces/application.interface';
+import {
+  debounceTime,
+  distinctUntilChanged
+} from 'rxjs/operators';
 
 @Component({
   selector: 'settings-urlshortening',
@@ -13,6 +23,7 @@ import { IApplication }             from '../../../../shared/interfaces/applicat
 export class SettingsUrlshorteningComponent implements OnInit {
 
   @Input() application: IApplication;
+  @Output() saveApplication: EventEmitter<IApplication> = new EventEmitter<IApplication>(false);
 
   public form: FormGroup;
   public shorteningProviders = [];
@@ -22,6 +33,16 @@ export class SettingsUrlshorteningComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       urlShortening: ''
+    });
+
+    this.form.valueChanges.pipe(
+      debounceTime(1500),
+      distinctUntilChanged()
+    ).subscribe((changes: any) => {
+      if (this.form.valid) {
+        this.application = Object.assign({}, this.application, changes);
+        this.saveApplication.emit(this.application);
+      }
     });
   }
 
