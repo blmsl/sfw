@@ -1,14 +1,13 @@
-import { IRole } from './user/role.interface';
-import { IStaticPage } from './static-page.interface';
-import { ISocialNetwork } from './social-network.interface';
+import { IRole }           from './user/role.interface';
+import { IStaticPage }     from './static-page.interface';
+import { ISocialNetwork }  from './social-network.interface';
+import { IGoogleCalendar } from './calendar/google-calendar.interface';
+import { IMailList }       from './mail-list.interface';
 
 export interface IApplication {
   id?: string;
 
-  assignedCalendars?: {
-    link: string;
-    title: string;
-  }[];
+  assignedCalendars?: IGoogleCalendar[];
 
   page: {
     isEnabled: boolean;
@@ -31,13 +30,7 @@ export interface IApplication {
     message?: string;
   };
 
-  mailing?: {
-    birthdayRecipients: string[];
-    teamOfTheMonth: string[];
-    memberOfTheWeek: string[];
-    newPublishedArticle: string[];
-    newCreatedMatch: string[];
-  };
+  mailing?: IMailList[];
 
   staticPages: IStaticPage[];
   social: ISocialNetwork[];

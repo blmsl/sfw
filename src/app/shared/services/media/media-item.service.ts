@@ -28,9 +28,10 @@ export class MediaItemService {
     return this.afs.collection(this.path).doc(itemId).delete();
   }
 
-  getMediaItems(assignedObjects: any, itemId: string) {
-    return this.afs.collection('files', ref => {
+  getMediaItems(assignedObjects: any, itemId: string):Observable<IMediaItem[]> {
+    return this.afs.collection<IMediaItem>('files', ref => {
       if (!assignedObjects) {
+        console.log(itemId);
         return ref
           .where('itemId', '==', itemId);
       }
@@ -50,11 +51,11 @@ export class MediaItemService {
           .where('assignedObjects.' + assignedObjects[1], '==', true)
           .where('assignedObjects.' + assignedObjects[2], '==', true);
       }
-    });
+    }).valueChanges();
   }
 
   getAssignedMedia(assignedObjects: any, itemId: string): Observable<IMediaItem[]> {
-    return this.getMediaItems(assignedObjects, itemId).valueChanges().pipe(
+    return this.getMediaItems(assignedObjects, itemId).pipe(
       map((mediaItems: IMediaItem[]) => {
         return mediaItems;
       })
@@ -62,7 +63,7 @@ export class MediaItemService {
   }
 
   getCurrentImage(assignedObjects: any, itemId: string, placeholderImage: string = ''): Observable<IMediaItem> {
-    return this.getMediaItems(assignedObjects, itemId).valueChanges().pipe(
+    return this.getMediaItems(assignedObjects, itemId).pipe(
       map((mediaItems: IMediaItem[]) => {
         let foundFile: IMediaItem;
         mediaItems.forEach((mediaItem: IMediaItem) => {

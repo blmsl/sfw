@@ -2,7 +2,7 @@
   <mat-card-header>
     <mat-card-title>{{'general.applications.mainTitle' | translate}}</mat-card-title>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content formGroupName="page">
 
     <div fxLayout="column"
          fxLayout.gt-sm="row wrap"
@@ -35,7 +35,6 @@
                formControlName="assignedKeywords"/>
         <mat-hint>{{'general.applications.page.keywordDescription' | translate}}</mat-hint>
       </mat-form-field>
-
     </div>
 
     <div style="margin-top: 40px">

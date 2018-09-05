@@ -8,7 +8,10 @@ import { MediaItemService } from '../../../services/media/media-item.service';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 import { AlertService } from '../../../services/alert/alert.service';
 import { AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
-import { Observable } from 'rxjs/index';
+import {
+  Observable,
+  of
+} from 'rxjs/index';
 
 @Component({
   selector: 'media-uploader',
@@ -40,6 +43,7 @@ export class MediaUploaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.uploaderOptions.queueLimit);
     if (this.uploaderOptions.queueLimit === 1) {
       this.currentMediaItem = this.mediaItemService.getCurrentImage(
         this.uploaderOptions.assignedObjects,

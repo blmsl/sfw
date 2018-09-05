@@ -1,0 +1,17 @@
+<media-gallery *ngIf="mediaItems$ | async as mediaItems; else loadingTemplate"
+               [mediaItems]="mediaItems">
+</media-gallery>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>
+
+<h3 style="color: red">Dateien</h3>
+<ul>
+  <li>Mitgliedsanträge Erwachsene</li>
+  <li>Mitgliedsantrag Kinder / Jugendliche</li>
+  <li>Datenschutzerklärung</li>
+  <li>Kündigung der Mitgliedschaft</li>
+  <li>Antrag Mitgliedschaft Kunstrasenplatzförderverein</li>
+  <li>Vereinssatzung</li>
+</ul>

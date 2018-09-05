@@ -1,37 +1,48 @@
 <div fxLayout="column"
      fxLayout.gt-sm="row"
-     fxLayoutGap="10px">
+     fxLayoutGap="10px"
+     [formGroup]="form">
 
-  <div fxFlex.gt-sm="20">
-    <h3>{{'general.applications.static.currentStaticPages' | translate}}</h3>
-    <p *ngIf="form.length === 0">
-      {{'general.applications.static.noStaticPagesFound' | translate}}
-    </p>
+  <div fxFlex="25">
+    <mat-card>
+      <mat-card-title>{{'general.applications.static.currentStaticPages' | translate}}</mat-card-title>
+      <mat-card-content formArrayName="staticPages">
 
-    <mat-list>
-      <mat-list-item *ngFor="let staticPage of form; let i = index">
-        <a (click)="setSelectedStaticPage.emit(form[i])" mat-line>{{form[i].controls.title.value}}</a>
+        <mat-list>
+          <mat-list-item *ngFor="let control of form.get('staticPages').controls; let i = index">
+            <span mat-line>{{form.get('staticPages').controls[i].get('title').value}}</span>
+            <button mat-icon-button
+                    color="accent"
+                    (click)="setSelectedStaticPage(i)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button
+                    (click)="removeStaticPage(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
 
-        <button mat-icon-button (click)="removeStaticPage.emit(i)">
-          <mat-icon>delete</mat-icon>
+        <p *ngIf="form.get('staticPages').controls.length === 0">
+          {{'general.applications.static.noStaticPagesFound' | translate}}
+        </p>
+
+        <button mat-raised-button
+                type="button"
+                color="primary"
+                (click)="addStaticPage()">
+          {{ 'general.applications.static.addStaticPage' | translate}}
         </button>
-      </mat-list-item>
-    </mat-list>
-
-    <button mat-raised-button
-            type="button"
-            color="primary"
-            (click)="addStaticPage.emit()">
-      {{ 'general.applications.static.addStaticPage' | translate}}
-    </button>
+      </mat-card-content>
+    </mat-card>
   </div>
 
-  <div fxFlex.gt-sm="80">
-    <static-page-form *ngIf="selectedStaticPage"
-                      [categories]="categories$ | async"
-                      [form]="selectedStaticPage"
-                      (removeStaticPage)="removeStaticPage.emit($event)"
-                      (setSelectedStaticPage)="setSelectedStaticPage.emit($event)">
+  <div fxFlex="75">
+    <static-page-form *ngIf="selectedStaticPage !== -1"
+                      (setSelectedPage)="selectedStaticPage = $event"
+                      [categories]="categories"
+                      [form]="form"
+                      [selectedStaticPage]="selectedStaticPage">
     </static-page-form>
   </div>
 </div>

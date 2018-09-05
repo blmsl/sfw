@@ -1,41 +1,60 @@
-<div [formGroup]="form">
+<mat-card [formGroup]="form">
+  <mat-card-title>{{ 'general.applications.static.editStaticPage' | translate}}</mat-card-title>
+  <mat-card-content formArrayName="staticPages">
+    <div *ngFor="let control of form.get('staticPages').controls; let i = index">
 
-  <div fxLayout.gt-sm="row"
-       fxLayout="column"
-       fxLayoutGap="10px">
+      <div *ngIf="i === selectedStaticPage"
+           [formArrayName]="i">
 
-    <mat-form-field fxFlex.gt-sm="40"
-                    hintLabel="Max {{titleMaxLength}} characters">
-      <input matInput
-             placeholder="{{'general.applications.static.title' | translate}}"
-             formControlName="title"/>
-    </mat-form-field>
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px">
 
-    <mat-form-field fxFlex.gt-sm="35">
-      <mat-select placeholder="{{'general.applications.static.sectionTitle' | translate}}"
-                  formControlName="assignedCategories" multiple>
-        <mat-option *ngFor="let category of categories | orderBy: 'title'"
-                    [value]="category.id">
-          {{category.title}}
-        </mat-option>
-      </mat-select>
-      <mat-hint align="end">{{'general.applications.static.chooseSectionTitle' | translate}}</mat-hint>
-    </mat-form-field>
+          <mat-form-field fxFlex.gt-sm="40"
+                          hintLabel="Max {{titleMaxLength}} characters">
+            <input matInput
+                   placeholder="{{'general.applications.static.title' | translate}}"
+                   formControlName="title"/>
+          </mat-form-field>
 
-    <div>
-      <mat-checkbox formControlName="isEnabled">
-        {{'general.applications.static.isEnabled' | translate}}
-      </mat-checkbox>
+          <mat-form-field fxFlex.gt-sm="35">
+            <mat-select placeholder="{{'general.applications.static.sectionTitle' | translate}}"
+                        formControlName="assignedCategories" multiple>
+              <mat-option *ngFor="let category of categories | orderBy: 'title'"
+                          [value]="category.id">
+                {{category.title}}
+              </mat-option>
+            </mat-select>
+            <mat-hint>{{'general.applications.static.chooseSectionTitle' | translate}}</mat-hint>
+          </mat-form-field>
+
+          <mat-checkbox formControlName="isEnabled">
+            {{'general.applications.static.isEnabled' | translate}}
+          </mat-checkbox>
+        </div>
+
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px" style="margin-top: 40px">
+          <div fxFlex="100">
+            <label>{{'general.applications.static.text' | translate}}</label><br/>
+            <quill-editor [style]="{height: '60vh'}"
+                          formControlName="text">
+            </quill-editor>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div>
-
-  <div style="margin-top: 25px;">
-    <div fxFlex="100">
-      <textarea formControlName="text" [style]="{height: '60vh'}"></textarea>
-      <!--
-      <quill-editor [formControl]="form.get('text')"
-                    [style]="{height: '60vh'}">
-      </quill-editor>-->
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row wrap"
+         fxLayoutGap="10px">
+      <span fxFlex></span>
+      <button mat-icon-button (click)="setSelectedPage.emit(-1)">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
-  </div>
-</div>
+  </mat-card-actions>
+</mat-card>

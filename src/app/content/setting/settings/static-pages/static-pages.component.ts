@@ -1,30 +1,90 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormArray } from '@angular/forms';
-import { IApplication } from '../../../../shared/interfaces/application.interface';
-import { Observable } from 'rxjs';
-import { ICategory } from '../../../../shared/interfaces/category.interface';
-import { CategoryService } from '../../../../shared/services/category/category.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+}                           from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators
+}                           from '@angular/forms';
+import { IApplication }     from '../../../../shared/interfaces/application.interface';
+import { Observable }       from 'rxjs';
+import { ICategory }        from '../../../../shared/interfaces/category.interface';
+import { IStaticPage }      from '../../../../shared/interfaces/static-page.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'static-pages',
   templateUrl: './static-pages.component.html',
-  styleUrls: ['static-pages.component.scss']
+  styleUrls: [ 'static-pages.component.scss' ]
 })
 export class StaticPagesComponent implements OnInit {
 
-  @Input() form: FormArray;
-  @Input() selectedStaticPage: number;
+  @Input() application: IApplication;
+  @Input() categories: ICategory[];
+  @Output() saveApplication: EventEmitter<IApplication> = new EventEmitter<IApplication>(false);
 
-  @Output() removeStaticPage: EventEmitter<number> = new EventEmitter<number>(false);
-  @Output() addStaticPage: EventEmitter<void> = new EventEmitter<void>(false);
-  @Output() setSelectedStaticPage: EventEmitter<AbstractControl> = new EventEmitter<AbstractControl>(false);
+  public form: FormGroup;
+  public selectedStaticPage: number = -1;
 
-  public categories$: Observable<ICategory[]>;
-
-  constructor(private categoryService: CategoryService) {
-    this.categories$ = categoryService.getCategoriesByCategoryType('static.types');
+  constructor(private translateService: TranslateService,
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {
+    this.form = this.fb.group({
+      staticPages: this.initStaticPages()
+    });
   }
+
+  initStaticPages(): FormArray {
+    const formArray = [];
+    if (this.application.staticPages) {
+      for (let i = 0; i < this.application.staticPages.length; i++) {
+        formArray.push(this.initStaticPage(this.application.staticPages[ i ]));
+      }
+    }
+    return this.fb.array(formArray);
+  }
+
+  initStaticPage(staticPage: IStaticPage): FormGroup {
+    return this.fb.group({
+      isEnabled: [ staticPage.isEnabled ],
+      assignedCategories: [ staticPage.assignedCategories, [ Validators.required ] ],
+      text: [ staticPage.text, [ Validators.required ] ],
+      title: [ staticPage.title, [ Validators.required ] ]
+    });
+  }
+
+  setSelectedStaticPage(i: number): void {
+    this.selectedStaticPage = i;
+  }
+
+  getNewStaticPageTitle(): Observable<string> {
+    return this.translateService.get('general.applications.static.noTitle');
+  }
+
+  addStaticPage(): void {
+    this.getNewStaticPageTitle().subscribe((staticPageTitle: string) => {
+      const control = this.form.get('staticPages') as FormArray;
+
+      const staticPage: IStaticPage = {
+        isEnabled: true,
+        assignedCategories: [],
+        text: '',
+        title: control.length === 0 ? staticPageTitle : staticPageTitle + ' (' + control.length + ')'
+      };
+      control.push(this.initStaticPage(staticPage));
+    });
+  }
+
+  removeStaticPage(i: number): void {
+    const control = this.form.get('staticPages') as FormArray;
+    control.removeAt(i);
+  }
+
 }

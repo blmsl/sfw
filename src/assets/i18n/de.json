@@ -81,6 +81,91 @@
     }
   },
   "general": {
+    "applications": {
+      "calendars": {
+        "addCalendar": "Kalender hinzufügen",
+        "deleteCalendar": "Kalender löschen",
+        "link": "Google Link",
+        "fieldTitle": "Name des Kalenders",
+        "title": "Verknüpfte Google-Kalender"
+      },
+      "downtime": {
+        "checkbox": "Status der Hauptseite",
+        "isActive": "Wartungsmodus aktiv",
+        "message": "Nachricht an die Benutzer",
+        "messageDescription": "Eine kurze Information, warum die Seite offline ist und wann sie wahrscheinlich wieder verfügbar ist.",
+        "title": "Wartungsmodus"
+      },
+      "mailing": {
+        "addMailList": "Liste hinzufügen",
+        "deleteMailList": "Liste löschen",
+        "isActive": "Mailversand aktiviert?",
+        "emails": "Liste der E-Mail Adressen",
+        "fieldTitle": "Name der Liste",
+        "title": "Mail Empfänger",
+        "birthdayRecipients": "Kopie der Geburtstagswünsche",
+        "teamOfTheMonth": "Mannschaft des Monats",
+        "memberOfTheWeek": "Mitglieder der Woche",
+        "newPublishedArticle": "Neuer Artikel wurde veröffentlicht",
+        "newCreatedMatch": "Neues Spiel wurde erstellt",
+        "userDisabled": "Benuter wurde deaktiviert",
+        "userDeleted": "Benutzer wurde gelöscht"
+      },
+      "mainTitle": "Einstellungen",
+      "noUrlShorteningService": "Keine kürzeren Links verwenden.",
+      "staticPagesTitle": "Statische Seiten",
+      "page": {
+        "descriptionDescription": "Die Beschreibung hilft Suchmaschinen, passende Seiten zu filtern.",
+        "descriptionTitle": "Eine kurze Beschreibung der Seiteninhalte",
+        "emailDescription": "Hauptadresse der Seite. Anfragen und Berichte werden hierhin gesendet-",
+        "emailTitle": "E-Mail Adresse",
+        "keywords": "Keywords für Suchmaschinen",
+        "keywordDescription": "Kommaseparierte Liste um die Website leichter zu finden",
+        "settings": "Globale Einstellungen",
+        "name": "Name der Seite",
+        "nameDescription": "Der Name der Seite (wird in der Titelleiste des Browsers verwendet)",
+        "title": "Titel",
+        "titleDescription": "Titel der Seite"
+      },
+      "registration": {
+        "disableRegistration": "Benutzeranmeldung sperren",
+        "isEnabled": "Anmeldungen erlauben",
+        "newUserLabel": "Rolle für neuer Benutzer",
+        "statusLabel": "Registrieren neuer Benutzer",
+        "title": "Benutzeranmeldung"
+      },
+      "resetForm": "Die ursprünglichen Einstellungen wurden geladen.",
+      "social": {
+        "addProvider": "Seite hinzufügen",
+        "chooseProvider": "Gib den Namen des sozialen Netzwerkes an",
+        "deleteProvider": "Eintrag löschen",
+        "setLink": "Link zur Detailseite bei dem Netzwerk",
+        "visitLink": "Seite besuchen"
+      },
+      "socialTitle": "Soziale Netzwerke",
+      "staticTitle": "Statische Seiten",
+      "static": {
+        "addStaticPage": "Neue Seite erstellen",
+        "currentStaticPages": "Vorhandene Seiten",
+        "chooseSectionTitle": "Wähle eine Kategorie",
+        "chooseStaticPage": "Du musst erst eine Seite aus der Liste wählen oder eine neue erstellen",
+        "createStaticPage": "Neue Seite erstellen",
+        "editStaticPage": "Seite editieren",
+        "isEnabled": "Öffentlich sichtbar?",
+        "noStaticPagesFound": "Es wurden noch keine Seiten erstellt.",
+        "noTitle": "Unbenannt",
+        "saveStaticPage": "Seite speichern",
+        "sectionTitle": "Kategorie",
+        "text": "Seiteninhalt",
+        "title": "Titel der Seite"
+      },
+      "undoChanges": "Änderungen verwerfen",
+      "updateApplication": "Einstellungen speichern",
+      "updateMessage": "Die neuen Einstellungen wurden gespeichert!",
+      "urlShortening": "Kurze Links erstellen?",
+      "urlShorteningService": "Anbieter",
+      "urlShorteningTitle": "Links"
+    },
     "articles": {
       "detail": {
         "assignedCategories": "Kategorien",
@@ -1156,85 +1241,6 @@
         "title": "Spielzeiten"
       },
       "noSeasons": "Es wurden noch keine Saisons erstellt oder importiert."
-    },
-    "applications": {
-      "calendars": {
-        "addCalendar": "Kalender hinzufügen",
-        "deleteCalendar": "Kalender löschen",
-        "link": "Google Link",
-        "fieldTitle": "Name des Kalenders",
-        "title": "Verknüpfte Google-Kalender"
-      },
-      "downtime": {
-        "checkbox": "Status der Hauptseite",
-        "isActive": "Wartungsmodus aktiv",
-        "message": "Nachricht an die Benutzer",
-        "messageDescription": "Eine kurze Information, warum die Seite offline ist und wann sie wahrscheinlich wieder verfügbar ist.",
-        "title": "Wartungsmodus"
-      },
-      "mailing": {
-        "title": "Mail Empfänger",
-        "birthdayRecipients": "Kopie der Geburtstagswünsche",
-        "teamOfTheMonth": "Mannschaft des Monats",
-        "memberOfTheWeek": "Mitglieder der Woche",
-        "newPublishedArticle": "Neuer Artikel wurde veröffentlicht",
-        "newCreatedMatch": "Neues Spiel wurde erstellt",
-        "userDisabled": "Benuter wurde deaktiviert",
-        "userDeleted": "Benutzer wurde gelöscht"
-      },
-      "mainTitle": "Einstellungen",
-      "noUrlShorteningService": "Keine kürzeren Links verwenden.",
-      "staticPagesTitle": "Statische Seiten",
-      "page": {
-        "descriptionDescription": "Die Beschreibung hilft Suchmaschinen, passende Seiten zu filtern.",
-        "descriptionTitle": "Eine kurze Beschreibung der Seiteninhalte",
-        "emailDescription": "Hauptadresse der Seite. Anfragen und Berichte werden hierhin gesendet-",
-        "emailTitle": "E-Mail Adresse",
-        "keywords": "Keywords für Suchmaschinen",
-        "keywordDescription": "Kommaseparierte Liste um die Website leichter zu finden",
-        "settings": "Globale Einstellungen",
-        "name": "Name der Seite",
-        "nameDescription": "Der Name der Seite (wird in der Titelleiste des Browsers verwendet)",
-        "title": "Titel",
-        "titleDescription": "Titel der Seite"
-      },
-      "registration": {
-        "disableRegistration": "Benutzeranmeldung sperren",
-        "isEnabled": "Anmeldungen erlauben",
-        "newUserLabel": "Rolle für neuer Benutzer",
-        "statusLabel": "Registrieren neuer Benutzer",
-        "title": "Benutzeranmeldung"
-      },
-      "resetForm": "Die ursprünglichen Einstellungen wurden geladen.",
-      "social": {
-        "addProvider": "Seite hinzufügen",
-        "chooseProvider": "Gib den Namen des sozialen Netzwerkes an",
-        "deleteProvider": "Eintrag löschen",
-        "setLink": "Link zur Detailseite bei dem Netzwerk",
-        "visitLink": "Seite besuchen"
-      },
-      "socialTitle": "Soziale Netzwerke",
-      "staticTitle": "Statische Seiten",
-      "static": {
-        "addStaticPage": "Neue Seite erstellen",
-        "currentStaticPages": "Vorhandene Seiten",
-        "chooseSectionTitle": "Wähle eine Kategorie",
-        "chooseStaticPage": "Du musst erst eine Seite aus der Liste wählen oder eine neue erstellen",
-        "createStaticPage": "Neue Seite erstellen",
-        "isEnabled": "Öffentlich sichtbar?",
-        "noStaticPagesFound": "Es wurden noch keine Seiten erstellt.",
-        "noTitle": "Unbenannt",
-        "saveStaticPage": "Seite speichern",
-        "sectionTitle": "Kategorie",
-        "text": "Seiteninhalt",
-        "title": "Titel der Seite"
-      },
-      "undoChanges": "Änderungen verwerfen",
-      "updateApplication": "Einstellungen speichern",
-      "updateMessage": "Die neuen Einstellungen wurden gespeichert!",
-      "urlShortening": "Kurze Links erstellen?",
-      "urlShorteningService": "Anbieter",
-      "urlShorteningTitle": "Links"
     },
     "sponsors": {
       "edit": {

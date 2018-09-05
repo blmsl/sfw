@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup
+} from '@angular/forms';
+import { IApplication }             from '../../../../shared/interfaces/application.interface';
 
 @Component({
   selector: 'settings-urlshortening',
@@ -8,13 +12,17 @@ import { FormGroup } from '@angular/forms';
 })
 export class SettingsUrlshorteningComponent implements OnInit {
 
-  @Input() form: FormGroup;
+  @Input() application: IApplication;
 
+  public form: FormGroup;
   public shorteningProviders = [];
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.form = this.fb.group({
+      urlShortening: ''
+    });
   }
 
 }

@@ -2,7 +2,6 @@
   {{'general.media.gallery.noGalleriesFound' | translate}}
 </p>
 
-
 <mat-nav-list>
   <mat-list-item *ngFor="let mediaGallery of mediaGalleries | orderBy: ['title']">
     <a mat-line inline-edit
@@ -19,23 +18,3 @@
     </button>-->
   </mat-list-item>
 </mat-nav-list>
-
-
-<!--
-<pre>{{uploaderOptions | json}}</pre>
-
-<ul class="text-md">
-  <li>
-    Liste
-    <ul>
-      <li>Anlegen / Editieren und Löschen von Galerien mit Titel, Datum Author (User), Veröffentlichung (Sichtbarkeit im
-        Frontend) festlegen
-      </li>
-      <li>Verschieben von Dateien in diese Galerien per Drag & Drop
-      <li>Editieren des Titels und der Beschreibung</li>
-      <li>Veröffentlichung einer Galerie oder einzelnen Fotos in sozialen Medien
-      <li>Datei fürs Frontend sperren</li>
-    </ul>
-  </li>
-
-</ul>-->

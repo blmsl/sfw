@@ -1,35 +1,3 @@
-<!--<mat-sidenav #unsplashSidebar
-             position="end"
-             class="chat-panel"
-             mode="over"
-             fxFlex="60"
-             opened="false">
-  <div fxLayout="row">
-
-    <div fxFlex="100">
-      <mat-card>
-        <mat-card-title>
-          <button type="button"
-                  mat-raised-button
-                  color="warn"
-                  (click)="unsplashSidebar.toggle()">Schließen
-          </button>
-        </mat-card-title>
-        <mat-card-content>
-          <ul>
-            <li>Lade und Speichern von Fotos von unsplash.com</li>
-          </ul>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
-</mat-sidenav>
-
-<div fxLayout="row"
-     >
-
-  <div fxFlex="100">-->
-
 <mat-card>
   <mat-card-title>
     <mat-icon>file_upload</mat-icon>
@@ -43,37 +11,37 @@
                    [dynamicHeight]="true">
       <mat-tab label="{{'general.media.list.title' | translate}} {{'(' + mediaItems.length + ')' }}">
 
-
-        <!--<div class="container" [class.is-mobile]="mobileQuery.matches">
-          <mat-toolbar color="primary" class="toolbar">
-            <button mat-raised-button
-                    (click)="mediaGallerySidebar.toggle()">
-              <mat-icon>folder_special</mat-icon>
-              {{'general.media.gallery.list' | translate }}
-            </button>
+        <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+          <mat-toolbar class="example-toolbar">
+            <button mat-icon-button (click)="snav.toggle()"><mat-icon>folder_special</mat-icon></button>
+            <h1 class="example-app-name">{{'general.media.gallery.list' | translate}}</h1>
           </mat-toolbar>
 
-          <mat-sidenav-container class="sidenav-container"
+          <mat-sidenav-container class="example-sidenav-container"
                                  [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-            <mat-sidenav #mediaGallerySidebar
+            <mat-sidenav #snav
+                         position="end"
+                         [opened]="false"
                          [mode]="mobileQuery.matches ? 'over' : 'side'"
                          [fixedInViewport]="mobileQuery.matches"
                          fixedTopGap="56">
-              <media-galleries (closeGallerySidebar)="mediaGallerySidebar.toggle()"></media-galleries>
+              <media-gallery-list *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
+                                  [mediaGalleries]="mediaGalleries">
+              </media-gallery-list>
+
             </mat-sidenav>
 
-            <mat-sidenav-content>-->
-        <media-gallery [mediaItems]="mediaItems"
-                       (removeMediaItem)="removeMediaItem($event)">
-        </media-gallery>
-        <!--</mat-sidenav-content>
-      </mat-sidenav-container>
-    </div>-->
-
+            <mat-sidenav-content>
+              <media-gallery [mediaItems]="mediaItems"
+                             (removeMediaItem)="removeMediaItem($event)">
+              </media-gallery>
+            </mat-sidenav-content>
+          </mat-sidenav-container>
+        </div>
       </mat-tab>
       <mat-tab label="{{'general.media.uploader.title' | translate}}">
         <media-uploader [uploaderConfig]="uploaderConfig"
-                        [uploaderOptions]="uploaderOptions"><!-- unsplashSidebar)="unsplashSidebar.toggle()" -->
+                        [uploaderOptions]="uploaderOptions">
         </media-uploader>
       </mat-tab>
     </mat-tab-group>

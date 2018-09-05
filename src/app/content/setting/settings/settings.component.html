@@ -1,46 +1,56 @@
-<mat-card [formGroup]="form">
+<mat-card>
   <mat-card-title>
     <mat-icon>list</mat-icon>
     {{'general.menu.application.main' | translate}}
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-    <mat-tab-group [dynamicHeight]="true" *ngIf="application; else loadingTemplate">
+    <mat-tab-group [dynamicHeight]="true"
+                   *ngIf="application; else loadingTemplate">
+
       <mat-tab label="{{'general.applications.mainTitle' | translate}}">
 
         <div fxLayout="column"
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
           <div fxFlex="60">
-            <settings-main [form]="form.get('page')"></settings-main>
-            <settings-calendars (addCalendar)="addCalendar()"
-                                (deleteCalendar)="deleteCalendar($event)"
-                                [form]="form.get('assignedCalendars')">
+            <settings-main (saveApplication)="saveApplication($event)"
+                           [application]="application">
+            </settings-main>
+            <settings-calendars (saveApplication)="saveApplication($event)"
+                                [application]="application">
             </settings-calendars>
           </div>
 
-          <!--<settings-urlshortening fxFlex="20" [form]="form"></settings-urlshortening>-->
-          <settings-mailing fxFlex="40" [form]="form.get('mailing')"></settings-mailing>
+          <div fxFlex="40">
+            <settings-mailing (saveApplication)="saveApplication($event)"
+                              [application]="application">
+            </settings-mailing>
+            <settings-urlshortening (saveApplication)="saveApplication($event)"
+                                    [application]="application">
+            </settings-urlshortening>
+          </div>
         </div>
 
       </mat-tab>
 
       <mat-tab label="{{'general.applications.downtime.title' | translate}}">
-        <settings-downtime [form]="form.get('downtime')"></settings-downtime>
+        <settings-downtime (saveApplication)="saveApplication($event)"
+                           [application]="application">
+        </settings-downtime>
       </mat-tab>
 
       <mat-tab label="{{'general.applications.socialTitle' | translate}}">
-        <settings-social-data [form]="form.get('social')"
-                              (removeSocialProvider)="removeSocialProvider($event)"
-                              (addSocialProvider)="addSocialProvider()">
+        <settings-social-data (saveApplication)="saveApplication($event)"
+                              [application]="application">
         </settings-social-data>
       </mat-tab>
+
       <mat-tab label="{{'general.applications.staticTitle' | translate}}">
-        <static-pages [form]="form.get('staticPages').controls"
-                      [selectedStaticPage]="selectedStaticPage"
-                      (setSelectedStaticPage)="setSelectedStaticPage($event)"
-                      (addStaticPage)="addStaticPage()"
-                      (removeStaticPage)="removeStaticPage($event)">
+        <static-pages *ngIf="categories$ | async as categories; else loadingTemplate"
+                      (saveApplication)="saveApplication($event)"
+                      [categories]="categories"
+                      [application]="application">
         </static-pages>
       </mat-tab>
 

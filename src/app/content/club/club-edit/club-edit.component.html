@@ -78,15 +78,13 @@
       </mat-tab>
 
       <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
-        <h3 style="color: red">Dateien</h3>
-        <ul>
-          <li>Mitgliedsanträge Erwachsene</li>
-          <li>Mitgliedsantrag Kinder / Jugendliche</li>
-          <li>Datenschutzerklärung</li>
-          <li>Kündigung der Mitgliedschaft</li>
-          <li>Antrag Mitgliedschaft Kunstrasenplatzförderverein</li>
-          <li>Vereinssatzung</li>
-        </ul>
+        <club-edit-media [club]="club"></club-edit-media>
+      </mat-tab>
+
+      <mat-tab label="{{ 'general.clubs.edit.uploaderTitle' | translate }}">
+        <media-uploader [uploaderConfig]="uploaderConfig"
+                        [uploaderOptions]="uploaderOptions">
+        </media-uploader>
       </mat-tab>
 
     </mat-tab-group>

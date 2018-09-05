@@ -1,53 +1,64 @@
-<div fxLayout="row"
-      [formGroup]="form">
+<mat-card [formGroup]="form">
+  <mat-card-title>{{'general.applications.socialTitle' | translate}}</mat-card-title>
+  <mat-card-content formArrayName="social">
 
-  <div fxFlex="100">
+    <div *ngFor="let control of form.get('social').controls; let i = index; let last = last">
+      <div fxLayout="column"
+           fxLayout.gt-sm="row wrap"
+           [formGroupName]="i">
 
-    <button mat-raised-button
-            type="button"
-            color="primary"
-            (click)="addSocialProvider.emit(true)">
-      {{'general.applications.social.addProvider' | translate}}
-    </button>
-
-    <div style="margin-top: 25px"
-         *ngFor="let provider of form.controls; let i=index">
-
-      <div [formGroupName]="i"
-           fxLayout="row">
-
-        <mat-form-field fxFlex.gt-sm="25"
-                        fxFlex="100">
+        <mat-form-field fxFlex.gt-sm="25">
           <input matInput
                  placeholder="{{'general.applications.social.chooseProvider' | translate}}"
                  formControlName="title"/>
         </mat-form-field>
 
-        <mat-form-field fxFlexOffset="5"
-                        fxFlex.gt-sm="35"
-                        fxFlex="100">
+        <mat-form-field fxFlexOffset="3"
+                        fxFlex.gt-sm="35">
           <input matInput
                  placeholder="{{'general.applications.social.setLink' | translate}}"
                  formControlName="link"/>
         </mat-form-field>
 
-        <div fxFlexOffset="5">
+        <div fxFlex></div>
+
+        <div>
           <a mat-raised-button
+             color="accent"
              target="_blank"
-             [href]="form.controls[i]['controls']['link']['value']"
-             *ngIf="form.controls[i]['controls']['link']['value']"
+             [href]="form.get('social')['controls'][i].get('link').value"
+             *ngIf="form.get('social')['controls'][i].get('link').value"
              type="button">
             {{'general.applications.social.visitLink' | translate}}
           </a>
+        </div>
+
+        <div fxFlexOffset="2">
           <button mat-raised-button
                   type="button"
-                  (click)="removeSocialProvider.emit(i)"
+                  (click)="removeSocialProvider(i)"
                   color="warn">
             {{'general.applications.social.deleteProvider' | translate}}
           </button>
         </div>
 
+        <hr *ngIf="!last" />
+
       </div>
     </div>
-  </div>
-</div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button mat-raised-button
+              type="button"
+              color="primary"
+              (click)="addSocialProvider()">
+        {{'general.applications.social.addProvider' | translate}}
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

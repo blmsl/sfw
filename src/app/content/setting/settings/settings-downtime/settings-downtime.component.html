@@ -1,6 +1,6 @@
 <mat-card [formGroup]="form">
   <mat-card-title>{{'general.applications.downtime.title' | translate}}</mat-card-title>
-  <mat-card-content>
+  <mat-card-content formArrayName="downtime">
 
     <div fxLayout="column"
               fxLayout.gt-sm="row wrap"
@@ -14,10 +14,10 @@
 
       <div fxFlex="100" style="margin-top: 25px">
         <label>{{'general.applications.downtime.message' | translate}}</label><br/>
+        <p>{{'general.applications.downtime.messageDescription' | translate}}</p>
         <quill-editor [style]="{height: '150px'}"
                       formControlName="message">
         </quill-editor>
-        <p>{{'general.applications.downtime.messageDescription' | translate}}</p>
       </div>
     </div>
 

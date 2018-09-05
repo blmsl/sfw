@@ -1,8 +1,8 @@
 <mat-card [formGroup]="form">
   <mat-card-title>{{'general.applications.calendars.title' | translate}}</mat-card-title>
-  <mat-card-content>
+  <mat-card-content formArrayName="assignedCalendars">
 
-    <div *ngFor="let formGroup of form.controls; let i = index">
+    <div *ngFor="let control of form.get('assignedCalendars').controls; let i = index">
       <div fxLayout="column"
            fxLayout.gt-sm="row"
            fxLayoutGap="10px"
@@ -24,7 +24,7 @@
           <button mat-raised-button
                   type="button"
                   color="warn"
-                  (click)="deleteCalendar.emit(i)">
+                  (click)="deleteCalendar(i)">
             {{'general.applications.calendars.deleteCalendar' | translate}}
           </button>
         </div>
@@ -41,7 +41,7 @@
       <button mat-raised-button
               type="button"
               color="primary"
-              (click)="addCalendar.emit()">
+              (click)="addCalendar()">
         {{'general.applications.calendars.addCalendar' | translate}}
       </button>
     </div>

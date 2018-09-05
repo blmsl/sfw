@@ -17,7 +17,9 @@ import { MatSnackBar } from '@angular/material';
 import { IClubHonorary } from '../../../shared/interfaces/club/club-honorary.interface';
 
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import * as moment from 'moment';
+import * as moment                            from 'moment';
+import { IUploaderOptions }                   from '../../../shared/interfaces/media/uploader-options.interface';
+import { IUploaderConfig }                    from '../../../shared/interfaces/media/uploader-config.interface';
 
 @Component({
   selector: 'club-edit',
@@ -36,6 +38,21 @@ export class ClubEditComponent implements OnInit {
   public selectedClubTimeLineEvent: number = -1;
   public selectedClubManagementPosition: number = -1;
   public selectedHonorary: number = -1;
+
+  public uploaderConfig: IUploaderConfig = {
+    autoUpload: true,
+    showDropZone: true,
+    removeAfterUpload: true,
+    showQueue: true,
+    headerTitle: 'general.clubs.edit.uploader.title'
+  };
+
+  public uploaderOptions: IUploaderOptions = {
+    assignedObjects: ['clubs'],
+    itemId: '',
+    queueLimit: 99,
+    // allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
+  };
 
   constructor(public clubService: ClubService,
     private locationService: LocationService,
@@ -56,6 +73,7 @@ export class ClubEditComponent implements OnInit {
     this.route.data.subscribe((data: { club: IClub }) => {
       this.club = data.club;
       this.savedClub = Object.freeze(Object.assign({}, this.club));
+      this.uploaderOptions.itemId = this.club.id;
     });
 
     this.form = this.fb.group({
