@@ -38,7 +38,7 @@ export class SettingsMainComponent implements OnInit {
         description: this.application.page.description,
         email: this.application.page.email,
         title: this.application.page.title,
-        assignedKeywords: this.application.assignedKeywords
+        assignedKeywords: this.application.page.assignedKeywords
       })
     });
 

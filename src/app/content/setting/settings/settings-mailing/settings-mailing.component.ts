@@ -38,7 +38,6 @@ export class SettingsMailingComponent implements OnInit {
     this.form = this.fb.group({
       mailing: this.initMailing()
     });
-    console.log(this.form);
 
     this.form.valueChanges.pipe(
       debounceTime(1500),

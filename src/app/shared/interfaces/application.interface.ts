@@ -15,6 +15,7 @@ export interface IApplication {
     title?: string;
     description?: string;
     email?: string;
+    assignedKeywords?: string[];
   };
 
   urlShortening: {
@@ -23,7 +24,6 @@ export interface IApplication {
   } | number;
 
   registration: string | IRole;
-  assignedKeywords?: string;
 
   downtime: {
     isEnabled: boolean;
