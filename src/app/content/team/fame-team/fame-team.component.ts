@@ -51,7 +51,7 @@ export class FameTeamComponent implements OnInit, OnDestroy {
         this.assignedPositions$ = this.memberService.getMembersByTeamPosition(this.teamOfTheMonth.assignedPositions);
 
         if (!this.teamImage) {
-          this.teamImage = this.mediaItemService.getCurrentImage(['teams', 'profile'], this.teamOfTheMonth.id, );
+          this.teamImage = this.mediaItemService.getCurrentImage(['teams', 'profile'], this.teamOfTheMonth.id);
         }
 
       }
