@@ -1,17 +1,10 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-export const deleteMediaItemCron = functions.firestore.document('files/{mediaItemId}').onDelete((snap, context) => {
+let data;
+const bucket = admin.storage().bucket();
 
-  const appOptions = JSON.parse(process.env.FIREBASE_CONFIG as any);
-  const bucketName: string = appOptions.storageBucket;
-
-  const storage = admin.storage().bucket(bucketName);
-
-  if (snap && snap.get('path')) {
-    return storage.file(snap.get('path')).delete();
-  }
-
-  return true;
-
+export const deleteMediaItemCron = functions.firestore.document('files/{mediaItemId}').onDelete((snap) => {
+  data = snap.data();
+  return bucket.file(data.downloadURL).delete();
 });

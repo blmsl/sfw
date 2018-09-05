@@ -42,10 +42,10 @@ import * as match from './match/index';
 export const sendNotificationNewMatch = match.sendNotificationNewMatch;
 */
 
-/*
 import * as media from './media/index';
-export const generateThumbnailCron = media.generateThumbnailCron;
 export const removeMediaItemCron = media.deleteMediaCron;
+/*
+export const generateThumbnailCron = media.generateThumbnailCron;
 */
 
 import * as member from './member/index';
