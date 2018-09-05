@@ -8,8 +8,8 @@ import {
 import {
   FormBuilder,
   FormGroup
-}                                   from '@angular/forms';
-import { IApplication }             from '../../../../shared/interfaces/application.interface';
+} from '@angular/forms';
+import { IApplication } from '../../../../shared/interfaces/application.interface';
 import {
   debounceTime,
   distinctUntilChanged

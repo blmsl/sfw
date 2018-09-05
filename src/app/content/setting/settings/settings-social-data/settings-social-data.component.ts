@@ -4,16 +4,16 @@ import {
   Input,
   OnInit,
   Output
-}                               from '@angular/core';
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   Validators
-}                               from '@angular/forms';
-import { IApplication }         from '../../../../shared/interfaces/application.interface';
-import { ISocialNetwork }       from '../../../../shared/interfaces/social-network.interface';
-import { IGoogleCalendar }      from '../../../../shared/interfaces/calendar/google-calendar.interface';
+} from '@angular/forms';
+import { IApplication } from '../../../../shared/interfaces/application.interface';
+import { ISocialNetwork } from '../../../../shared/interfaces/social-network.interface';
+import { IGoogleCalendar } from '../../../../shared/interfaces/calendar/google-calendar.interface';
 import {
   debounceTime,
   distinctUntilChanged
@@ -33,7 +33,7 @@ export class SettingsSocialDataComponent implements OnInit {
   constructor(private fb: FormBuilder) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.form = this.fb.group({
       social: this.initSocialProviders()
     });
@@ -53,7 +53,7 @@ export class SettingsSocialDataComponent implements OnInit {
     const formArray = [];
     if (this.application.social) {
       for (let i = 0; i < this.application.social.length; i++) {
-        formArray.push(this.initSocialProvider(this.application.social[ i ]));
+        formArray.push(this.initSocialProvider(this.application.social[i]));
       }
     }
     return this.fb.array(formArray);
@@ -61,8 +61,8 @@ export class SettingsSocialDataComponent implements OnInit {
 
   initSocialProvider(provider: ISocialNetwork): FormGroup {
     return this.fb.group({
-      link: [provider.link, [ Validators.required ] ],
-      title: [ provider.title, [ Validators.required ] ]
+      link: [provider.link, [Validators.required]],
+      title: [provider.title, [Validators.required]]
     });
   }
 

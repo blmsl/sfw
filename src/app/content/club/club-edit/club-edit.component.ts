@@ -17,9 +17,9 @@ import { MatSnackBar } from '@angular/material';
 import { IClubHonorary } from '../../../shared/interfaces/club/club-honorary.interface';
 
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import * as moment                            from 'moment';
-import { IUploaderOptions }                   from '../../../shared/interfaces/media/uploader-options.interface';
-import { IUploaderConfig }                    from '../../../shared/interfaces/media/uploader-config.interface';
+import * as moment from 'moment';
+import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
+import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
 
 @Component({
   selector: 'club-edit',

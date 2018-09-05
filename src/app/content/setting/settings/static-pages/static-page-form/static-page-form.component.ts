@@ -11,7 +11,7 @@ import { ICategory } from '../../../../../shared/interfaces/category.interface';
 @Component({
   selector: 'static-page-form',
   templateUrl: './static-page-form.component.html',
-  styleUrls: [ './static-page-form.component.scss' ]
+  styleUrls: ['./static-page-form.component.scss']
 })
 export class StaticPageFormComponent implements OnInit {
 

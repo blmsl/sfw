@@ -1,10 +1,10 @@
 import { Component, ElementRef, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import * as $                                                                                from 'jquery';
-import { OptionsInput }                                                                      from 'fullcalendar';
-import { ICalendarEvent }                                                                    from '../../../../shared/interfaces/calendar/calendar-event.interface';
-import { ActivatedRoute }                                                                    from '@angular/router';
-import * as moment                                                                           from 'moment';
-import { CalendarComponent }                                                                 from 'ap-angular-fullcalendar';
+import * as $ from 'jquery';
+import { OptionsInput } from 'fullcalendar';
+import { ICalendarEvent } from '../../../../shared/interfaces/calendar/calendar-event.interface';
+import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
+import { CalendarComponent } from 'ap-angular-fullcalendar';
 
 @Component({
   selector: 'app-fullcalendar',

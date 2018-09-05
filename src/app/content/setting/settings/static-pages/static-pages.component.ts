@@ -4,18 +4,18 @@ import {
   Input,
   OnInit,
   Output
-}                               from '@angular/core';
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   Validators
-}                               from '@angular/forms';
-import { IApplication }         from '../../../../shared/interfaces/application.interface';
-import { Observable }           from 'rxjs';
-import { ICategory }            from '../../../../shared/interfaces/category.interface';
-import { IStaticPage }          from '../../../../shared/interfaces/static-page.interface';
-import { TranslateService }     from '@ngx-translate/core';
+} from '@angular/forms';
+import { IApplication } from '../../../../shared/interfaces/application.interface';
+import { Observable } from 'rxjs';
+import { ICategory } from '../../../../shared/interfaces/category.interface';
+import { IStaticPage } from '../../../../shared/interfaces/static-page.interface';
+import { TranslateService } from '@ngx-translate/core';
 import {
   debounceTime,
   distinctUntilChanged
@@ -24,7 +24,7 @@ import {
 @Component({
   selector: 'static-pages',
   templateUrl: './static-pages.component.html',
-  styleUrls: [ 'static-pages.component.scss' ]
+  styleUrls: ['static-pages.component.scss']
 })
 export class StaticPagesComponent implements OnInit {
 
@@ -36,7 +36,7 @@ export class StaticPagesComponent implements OnInit {
   public selectedStaticPage: number = -1;
 
   constructor(private translateService: TranslateService,
-              private fb: FormBuilder) {
+    private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -59,7 +59,7 @@ export class StaticPagesComponent implements OnInit {
     const formArray = [];
     if (this.application.staticPages) {
       for (let i = 0; i < this.application.staticPages.length; i++) {
-        formArray.push(this.initStaticPage(this.application.staticPages[ i ]));
+        formArray.push(this.initStaticPage(this.application.staticPages[i]));
       }
     }
     return this.fb.array(formArray);
@@ -67,10 +67,10 @@ export class StaticPagesComponent implements OnInit {
 
   initStaticPage(staticPage: IStaticPage): FormGroup {
     return this.fb.group({
-      isEnabled: [ staticPage.isEnabled ],
-      assignedCategories: [ staticPage.assignedCategories, [ Validators.required ] ],
-      text: [ staticPage.text, [ Validators.required ] ],
-      title: [ staticPage.title, [ Validators.required ] ]
+      isEnabled: [staticPage.isEnabled],
+      assignedCategories: [staticPage.assignedCategories, [Validators.required]],
+      text: [staticPage.text, [Validators.required]],
+      title: [staticPage.title, [Validators.required]]
     });
   }
 

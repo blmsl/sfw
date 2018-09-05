@@ -1,8 +1,8 @@
-import { IRole }           from './user/role.interface';
-import { IStaticPage }     from './static-page.interface';
-import { ISocialNetwork }  from './social-network.interface';
+import { IRole } from './user/role.interface';
+import { IStaticPage } from './static-page.interface';
+import { ISocialNetwork } from './social-network.interface';
 import { IGoogleCalendar } from './calendar/google-calendar.interface';
-import { IMailList }       from './mail-list.interface';
+import { IMailList } from './mail-list.interface';
 
 export interface IApplication {
   id?: string;

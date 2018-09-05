@@ -8,13 +8,13 @@ import {
 import {
   FormBuilder,
   FormGroup
-}                                   from '@angular/forms';
-import { IApplication }             from '../../../../shared/interfaces/application.interface';
+} from '@angular/forms';
+import { IApplication } from '../../../../shared/interfaces/application.interface';
 import {
   debounceTime,
   distinctUntilChanged
 } from 'rxjs/operators';
-import { IMailList }                from '../../../../shared/interfaces/mail-list.interface';
+import { IMailList } from '../../../../shared/interfaces/mail-list.interface';
 
 @Component({
   selector: 'settings-downtime',
@@ -33,7 +33,7 @@ export class SettingsDowntimeComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       downtime: this.fb.group({
-        isEnabled: this.application.downtime ? this.application.downtime.isEnabled: false,
+        isEnabled: this.application.downtime ? this.application.downtime.isEnabled : false,
         message: this.application.downtime ? this.application.downtime.message : ''
       }),
     });

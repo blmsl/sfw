@@ -10,18 +10,18 @@ import {
   FormBuilder,
   FormGroup,
   Validators
-}                          from '@angular/forms';
-import { IApplication }    from '../../../../shared/interfaces/application.interface';
+} from '@angular/forms';
+import { IApplication } from '../../../../shared/interfaces/application.interface';
 import { IGoogleCalendar } from '../../../../shared/interfaces/calendar/google-calendar.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                          from 'rxjs/operators';
+} from 'rxjs/operators';
 
 @Component({
   selector: 'settings-calendars',
   templateUrl: './settings-calendars.component.html',
-  styleUrls: [ './settings-calendars.component.scss' ]
+  styleUrls: ['./settings-calendars.component.scss']
 })
 export class SettingsCalendarsComponent implements OnInit {
 
@@ -53,7 +53,7 @@ export class SettingsCalendarsComponent implements OnInit {
     const formArray = [];
     if (this.application.assignedCalendars) {
       for (let i = 0; i < this.application.assignedCalendars.length; i++) {
-        formArray.push(this.initCalendar(this.application.assignedCalendars[ i ]));
+        formArray.push(this.initCalendar(this.application.assignedCalendars[i]));
       }
     }
     return this.fb.array(formArray);
@@ -61,8 +61,8 @@ export class SettingsCalendarsComponent implements OnInit {
 
   initCalendar(calendar: IGoogleCalendar): FormGroup {
     return this.fb.group({
-      link: [ calendar.link, [ Validators.required ] ],
-      title: [ calendar.title, [ Validators.required ] ]
+      link: [calendar.link, [Validators.required]],
+      title: [calendar.title, [Validators.required]]
     });
   }
 

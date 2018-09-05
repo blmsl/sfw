@@ -2,7 +2,7 @@ import { ICreation } from '../creation.interface';
 
 export class IMediaItem {
 
-  // id?: string;
+  id?: string;
 
   itemId?: string; // id from parent object
   assignedObjects?: {};

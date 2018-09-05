@@ -4,17 +4,17 @@ import {
   Input,
   OnInit,
   Output
-}                       from '@angular/core';
+} from '@angular/core';
 import { IApplication } from '../../../../shared/interfaces/application.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                       from 'rxjs/operators';
+} from 'rxjs/operators';
 import {
   FormBuilder,
   FormGroup
-}                       from '@angular/forms';
-import { UserService }  from '../../../../shared/services/user/user.service';
+} from '@angular/forms';
+import { UserService } from '../../../../shared/services/user/user.service';
 
 @Component({
   selector: 'settings-registration',
@@ -30,7 +30,7 @@ export class SettingsRegistrationComponent implements OnInit {
   public roles: string[];
 
   constructor(private fb: FormBuilder,
-              private userService: UserService) {
+    private userService: UserService) {
     this.roles = userService.getUserRoles();
   }
 

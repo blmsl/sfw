@@ -8,9 +8,9 @@ describe('ClubEditMediaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClubEditMediaComponent ]
+      declarations: [ClubEditMediaComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

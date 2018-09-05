@@ -2,11 +2,11 @@ import {
   Component,
   Input,
   OnInit
-}                           from '@angular/core';
-import { IClub }            from '../../../../shared/interfaces/club/club.interface';
+} from '@angular/core';
+import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import { MediaItemService } from '../../../../shared/services/media/media-item.service';
-import { Observable }       from 'rxjs/index';
-import { IMediaItem }       from '../../../../shared/interfaces/media/media-item.interface';
+import { Observable } from 'rxjs/index';
+import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
 
 @Component({
   selector: 'club-edit-media',
@@ -23,7 +23,7 @@ export class ClubEditMediaComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.club.id && !this.mediaItems$){
+    if (this.club.id && !this.mediaItems$) {
       this.mediaItems$ = this.mediaItemService.getMediaItems(null, this.club.id);
     }
   }

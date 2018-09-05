@@ -11,17 +11,9 @@
 // https://sf-winterbach.appspot.com
 
 import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
 
 admin.initializeApp();
 
-export const status = functions.region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 5 })
-  .https.onRequest(async (request, response) => {
-    return response.status(200).json({
-      version: require('../package.json').version,
-    });
-  });
 
 import * as user from './user/index';
 export const newUserCreation = user.userCreated;

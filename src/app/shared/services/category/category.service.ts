@@ -60,7 +60,7 @@ export class CategoryService {
   getCategoriesByCategoryType(linkType: string): Observable<ICategory[]> {
     return this.categoryTypeService.getCategoryTypeByLink(linkType).pipe(
       switchMap((categoryType: ICategoryType) => {
-        if(!categoryType) return of([]);
+        if (!categoryType) return of([]);
         return this.afs.collection<ICategory>(this.path, ref => ref.where('assignedCategoryType', '==', categoryType.id)).valueChanges();
       })
     );

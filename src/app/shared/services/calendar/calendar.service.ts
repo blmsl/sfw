@@ -1,17 +1,17 @@
-import { Injectable }         from '@angular/core';
-import { HttpClient }         from '@angular/common/http';
-import * as moment            from 'moment';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment';
 import {
   map,
   switchMap,
   take
-}                             from 'rxjs/operators';
-import { IMember }            from '../../interfaces/member/member.interface';
-import { ICalendarEvent }     from '../../interfaces/calendar/calendar-event.interface';
-import { MemberService }      from '../member/member.service';
-import { Observable }         from 'rxjs';
+} from 'rxjs/operators';
+import { IMember } from '../../interfaces/member/member.interface';
+import { ICalendarEvent } from '../../interfaces/calendar/calendar-event.interface';
+import { MemberService } from '../member/member.service';
+import { Observable } from 'rxjs';
 import { ApplicationService } from '../application/application.service';
-import { IApplication }       from '../../interfaces/application.interface';
+import { IApplication } from '../../interfaces/application.interface';
 
 @Injectable()
 export class CalendarService {
@@ -19,14 +19,14 @@ export class CalendarService {
   private url: string;
 
   constructor(private http: HttpClient,
-              private applicationService: ApplicationService,
-              private memberService: MemberService) {
+    private applicationService: ApplicationService,
+    private memberService: MemberService) {
   }
 
   getCalendars(): Observable<{ link: string, title: string }[]> {
     return this.applicationService.getCurrentApplication().pipe(
       map((applications: IApplication[]) => {
-        return applications[ 0 ].assignedCalendars;
+        return applications[0].assignedCalendars;
       })
     );
 
@@ -61,15 +61,15 @@ export class CalendarService {
         let events: ICalendarEvent[] = [];
 
         for (let i = 0; i < members.length; i++) {
-          if (members[ i ].mainData.birthday) {
+          if (members[i].mainData.birthday) {
             const event: ICalendarEvent = {
-              title: 'Geburtstag von ' + members[ i ].mainData.firstName + ' ' + members[ i ].mainData.lastName + ' (' + this.memberService.calculateAge(members[ i ].mainData.birthday) + ' Jahre)',
-              start: moment(members[ i ].mainData.birthday).set('year', moment().year()).format('YYYY-MM-DD')
+              title: 'Geburtstag von ' + members[i].mainData.firstName + ' ' + members[i].mainData.lastName + ' (' + this.memberService.calculateAge(members[i].mainData.birthday) + ' Jahre)',
+              start: moment(members[i].mainData.birthday).set('year', moment().year()).format('YYYY-MM-DD')
             };
             events.push(event);
           }
         }
-        return [ events ];
+        return [events];
       }),
       take(1)
     );

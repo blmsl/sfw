@@ -24,11 +24,11 @@ export class MediaItemService {
     return this.afs.collection(this.path).doc(this.afs.createId()).set(mediaItem, { merge: true });
   }
 
-  removeMediaItem(itemId): Promise<void> {
-    return this.afs.collection(this.path).doc(itemId).delete();
+  removeMediaItem(mediaItem: IMediaItem): Promise<void> {
+    return this.afs.collection(this.path).doc(mediaItem.id).delete();
   }
 
-  getMediaItems(assignedObjects: any, itemId: string):Observable<IMediaItem[]> {
+  getMediaItems(assignedObjects: any, itemId: string): Observable<IMediaItem[]> {
     return this.afs.collection<IMediaItem>('files', ref => {
       if (!assignedObjects) {
         console.log(itemId);

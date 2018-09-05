@@ -9,9 +9,9 @@ import {
   FormBuilder,
   FormGroup,
   Validators
-}                                   from '@angular/forms';
-import { IApplication }             from '../../../../shared/interfaces/application.interface';
-import { IGoogleCalendar }          from '../../../../shared/interfaces/calendar/google-calendar.interface';
+} from '@angular/forms';
+import { IApplication } from '../../../../shared/interfaces/application.interface';
+import { IGoogleCalendar } from '../../../../shared/interfaces/calendar/google-calendar.interface';
 import {
   debounceTime,
   distinctUntilChanged
@@ -34,7 +34,7 @@ export class SettingsMainComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       page: this.fb.group({
-        name: [ this.application.page.name, [ Validators.required, Validators.minLength(10), Validators.maxLength(100) ] ],
+        name: [this.application.page.name, [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
         description: this.application.page.description,
         email: this.application.page.email,
         title: this.application.page.title,
