@@ -32,7 +32,7 @@ export class SettingsUrlshorteningComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      urlShortening: ''
+      urlShortening: this.application.urlShortening ? this.application.urlShortening : 0
     });
 
     this.form.valueChanges.pipe(
