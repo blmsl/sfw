@@ -1,17 +1,17 @@
 <mat-card [formGroup]="form">
   <mat-card-title>{{'general.applications.registration.title' | translate}}</mat-card-title>
   <mat-card-content>
-
-    <mat-form-field fxflex="100" style="margin-top: 25px;">
-      <mat-select placeholder="{{'general.applications.registration.newUserLabel' | translate}}"
-                  formControlName="registration">
-        <mat-option [value]="">{{'general.applications.registration.disableRegistration' | translate}}</mat-option>
-        <mat-option *ngFor="let role of roles"
-                    [value]="role">
-          {{'general.users.edit.roles.' + role | translate}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
+    <div fxLayout="column">
+      <mat-form-field fxflex="100" style="margin-top: 25px;">
+        <mat-select placeholder="{{'general.applications.registration.newUserLabel' | translate}}"
+                    formControlName="registration">
+          <mat-option [value]="0">{{'general.applications.registration.disableRegistration' | translate}}</mat-option>
+          <mat-option *ngFor="let role of roles"
+                      [value]="role">
+            {{'general.users.edit.roles.' + role | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </mat-card-content>
 </mat-card>
