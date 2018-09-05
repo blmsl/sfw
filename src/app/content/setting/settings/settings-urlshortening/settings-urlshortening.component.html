@@ -10,11 +10,7 @@
       <mat-form-field fxFlex="100">
         <mat-select placeholder="{{'general.applications.urlShorteningService' | translate}}"
                     formControlName="urlShortening">
-
-          <mat-option [value]="0">
-            {{'general.applications.noUrlShorteningService' | translate}}
-          </mat-option>
-
+          <mat-option [value]="">{{'general.applications.noUrlShorteningService' | translate}}</mat-option>
           <mat-option *ngFor="let shorteningProvider of shorteningProviders | orderBy: ['title']"
                       [value]="shorteningProvider">
             {{shorteningProvider.title}}

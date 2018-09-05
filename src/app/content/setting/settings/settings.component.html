@@ -17,6 +17,7 @@
             <settings-main (saveApplication)="saveApplication($event)"
                            [application]="application">
             </settings-main>
+
             <settings-calendars (saveApplication)="saveApplication($event)"
                                 [application]="application">
             </settings-calendars>
@@ -26,9 +27,14 @@
             <settings-mailing (saveApplication)="saveApplication($event)"
                               [application]="application">
             </settings-mailing>
+
             <settings-urlshortening (saveApplication)="saveApplication($event)"
                                     [application]="application">
             </settings-urlshortening>
+
+            <settings-registration (saveApplication)="saveApplication($event)"
+                                   [application]="application">
+            </settings-registration>
           </div>
         </div>
 

@@ -27,6 +27,7 @@ import { SettingsDowntimeComponent } from './settings/settings-downtime/settings
 import { SettingsUrlshorteningComponent } from './settings/settings-urlshortening/settings-urlshortening.component';
 import { SettingsCalendarsComponent } from './settings/settings-calendars/settings-calendars.component';
 import { TagInputModule } from 'ngx-chips';
+import { SettingsRegistrationComponent } from './settings/settings-registration/settings-registration.component';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { TagInputModule } from 'ngx-chips';
     SettingsMailingComponent,
     SettingsDowntimeComponent,
     SettingsUrlshorteningComponent,
-    SettingsCalendarsComponent
+    SettingsCalendarsComponent,
+    SettingsRegistrationComponent
   ],
   providers: [
     ApplicationResolver,
