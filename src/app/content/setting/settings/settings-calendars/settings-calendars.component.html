@@ -2,7 +2,7 @@
   <mat-card-title>{{'general.applications.calendars.title' | translate}}</mat-card-title>
   <mat-card-content formArrayName="assignedCalendars">
 
-    <div *ngFor="let control of form.get('assignedCalendars').controls; let i = index">
+    <div *ngFor="let control of form.get('assignedCalendars')['controls']; let i = index">
       <div fxLayout="column"
            fxLayout.gt-sm="row"
            fxLayoutGap="10px"

@@ -38,6 +38,7 @@ export class SettingsMailingComponent implements OnInit {
     this.form = this.fb.group({
       mailing: this.initMailing()
     });
+    console.log(this.form);
 
     this.form.valueChanges.pipe(
       debounceTime(1500),
@@ -54,7 +55,7 @@ export class SettingsMailingComponent implements OnInit {
     const formArray = [];
     if (this.application.mailing) {
       for (let i = 0; i < this.application.mailing.length; i++) {
-        formArray.push(this.initMailList({ title: '', emails: [], isActive: true }));
+        formArray.push(this.initMailList(this.application.mailing[i]));
       }
     }
     return this.fb.array(formArray);
@@ -63,7 +64,7 @@ export class SettingsMailingComponent implements OnInit {
   initMailList(mailList: IMailList): FormGroup {
     return this.fb.group({
       title: [ mailList.title, [ Validators.required ] ],
-      emails: mailList.emails,
+      emails: [ mailList.emails ? mailList.emails : [], [ Validators.required ] ],
       isActive: mailList.isActive
     });
   }

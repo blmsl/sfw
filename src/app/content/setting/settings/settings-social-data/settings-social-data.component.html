@@ -2,7 +2,7 @@
   <mat-card-title>{{'general.applications.socialTitle' | translate}}</mat-card-title>
   <mat-card-content formArrayName="social">
 
-    <div *ngFor="let control of form.get('social').controls; let i = index; let last = last">
+    <div *ngFor="let control of form.get('social')['controls']; let i = index; let last = last">
       <div fxLayout="column"
            fxLayout.gt-sm="row wrap"
            [formGroupName]="i">

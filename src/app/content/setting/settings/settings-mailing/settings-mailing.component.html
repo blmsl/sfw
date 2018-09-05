@@ -2,33 +2,36 @@
   <mat-card-title>{{'general.applications.mailing.title' | translate}}</mat-card-title>
   <mat-card-content formArrayName="mailing">
 
-    <div *ngFor="let control of form.get('mailing').controls; let i = index; let last = last">
+    <p *ngIf="form.get('mailing')['controls'].length === 0">
+      {{'general.applications.mailing.noMailLists' | translate}}
+    </p>
+
+    <div *ngFor="let control of form.get('mailing')['controls']; let i = index">
       <div fxLayout="column"
-           fxLayout.gt-sm="row wrap"
            [formGroupName]="i">
 
-        <mat-form-field fxFlex="49">
+        <mat-form-field>
           <input matInput
                  placeholder="{{'general.applications.mailing.fieldTitle' | translate}}"
                  formControlName="title"/>
         </mat-form-field>
 
-        <div fxFlexOffset="2"
-                        fxFlex="49">
+        <div>
           <mat-checkbox formControlName="isActive">
             {{'general.applications.mailing.isActive' | translate}}
           </mat-checkbox>
         </div>
 
-        <mat-form-field fxFlex="75">
-          <input matInput
-                 placeholder="{{'general.applications.mailing.emails' | translate}}"
-                 formControlName="emails"/>
-        </mat-form-field>
-
-        <span fxFlex=""></span>
-
         <div>
+          <tag-input placeholder="{{'general.applications.mailing.emails' | translate}}"
+                     formControlName="emails"
+                     [identifyBy]="'value'"
+                     [displayBy]="'display'"
+                     [editable]="true">
+          </tag-input>
+        </div>
+
+        <div style="margin-top: 25px;">
           <button mat-raised-button
                   type="button"
                   color="warn"
@@ -36,8 +39,6 @@
             {{'general.applications.mailing.deleteMailList' | translate}}
           </button>
         </div>
-
-        <hr *ngIf="!last" />
 
       </div>
     </div>
@@ -56,15 +57,4 @@
       </button>
     </div>
   </mat-card-actions>
-
-        <!--<p>{{'general.applications.mailing.' + control | translate}}</p>
-
-        <tag-input fxFlex="100"
-                   [formControlName]="control"
-                   [editable]="true">
-        </tag-input>
-      </div>
-    </div>
-
-  </mat-card-content>-->
 </mat-card>

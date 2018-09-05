@@ -108,6 +108,7 @@
         "memberOfTheWeek": "Mitglieder der Woche",
         "newPublishedArticle": "Neuer Artikel wurde veröffentlicht",
         "newCreatedMatch": "Neues Spiel wurde erstellt",
+        "noMailLists": "Es wurden noch keine Listen für den Mailempfang erstellt.",
         "userDisabled": "Benuter wurde deaktiviert",
         "userDeleted": "Benutzer wurde gelöscht"
       },

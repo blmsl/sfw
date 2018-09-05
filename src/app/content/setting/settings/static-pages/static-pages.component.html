@@ -9,7 +9,7 @@
       <mat-card-content formArrayName="staticPages">
 
         <mat-list>
-          <mat-list-item *ngFor="let control of form.get('staticPages').controls; let i = index">
+          <mat-list-item *ngFor="let control of form.get('staticPages')['controls']; let i = index">
             <span mat-line>{{form.get('staticPages').controls[i].get('title').value}}</span>
             <button mat-icon-button
                     color="accent"
@@ -23,7 +23,7 @@
           </mat-list-item>
         </mat-list>
 
-        <p *ngIf="form.get('staticPages').controls.length === 0">
+        <p *ngIf="form.get('staticPages')['controls'].length === 0">
           {{'general.applications.static.noStaticPagesFound' | translate}}
         </p>
 
