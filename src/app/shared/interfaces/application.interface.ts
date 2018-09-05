@@ -23,7 +23,7 @@ export interface IApplication {
     key: string
   } | number;
 
-  registration: string | IRole;
+  registration: string;
 
   downtime: {
     isEnabled: boolean;
