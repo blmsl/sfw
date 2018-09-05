@@ -45,6 +45,7 @@ export class SettingsComponent implements OnInit {
   }
 
   saveApplication(application: IApplication) {
+    this.application = Object.assign({}, this.application, application);
     this.applicationService.updateApplication(application.id, application).then(() => {
         // set Page Title
         if (this.title.getTitle() !== application.page.title) {
