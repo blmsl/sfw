@@ -1,16 +1,19 @@
 <mat-card [formGroup]="form">
 
-  <mat-card-header fxLayout.gt-sm="row"
-                   fxLayout="column"
-                   fxLayoutGap="10px">
-    <mat-card-title>
-      <mat-icon>euro_symbol</mat-icon>
-      {{'general.menu.sponsor.main' | translate }}
-    </mat-card-title>
+  <mat-card-title>
+    <mat-icon>euro_symbol</mat-icon>
+    {{'general.menu.sponsor.main' | translate }}
+  </mat-card-title>
 
-    <span fxFlex></span>
+  <hr />
 
-    <div style="padding-right: 25px">
+  <mat-card-actions>
+    <div style="margin-top: 25px"
+         fxLayoutGap="10px"
+         fxLayout.gt-sm="row"
+         fxLayout="column">
+      <span fxFlex></span>
+
       <mat-form-field *ngIf="categories$ | async as categories">
         <mat-select placeholder="{{'general.sponsors.edit.chooseAssignedCategories' | translate}}"
                     formControlName="assignedCategories" multiple>
@@ -23,18 +26,19 @@
           {{'general.sponsors.edit.chooseCategories' | translate}}
         </mat-hint>
       </mat-form-field>
-    </div>
 
-    <div>
-      <button type="button"
-              mat-raised-button
-              color="accent"
-              [routerLink]="['/sponsors/create']">
-        {{'general.menu.sponsor.create' | translate }}
-      </button>
+      <div>
+        <button type="button"
+                mat-raised-button
+                color="accent"
+                [routerLink]="['/sponsors/create']">
+          {{'general.menu.sponsor.create' | translate }}
+        </button>
+      </div>
     </div>
+  </mat-card-actions>
 
-  </mat-card-header>
+  <hr />
 
   <mat-card-content>
 

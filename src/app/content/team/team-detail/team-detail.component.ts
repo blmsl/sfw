@@ -74,7 +74,8 @@ export class TeamDetailComponent implements OnInit {
     this.teamService.removeTeam(team)
       .then(() => this.alertService.showSnackBar('success', 'general.applications.removedMessage'),
         (error: any) => this.alertService.showSnackBar('error', error.message))
-      .then(() => this.router.navigate(['/teams']));
+      .then(() => this.router.navigate([ '/teams' ]))
+      .catch((error: any) => this.alertService.showSnackBar('error', error.message));
   }
 
 }

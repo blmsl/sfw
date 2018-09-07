@@ -46,7 +46,9 @@ export class SponsorsComponent implements OnInit {
 
   removeSponsor(sponsor: ISponsor) {
     this.sponsorService.removeSponsor(sponsor)
-      .then(() => this.mediaItemService.removeMediaItem(sponsor.id))
+      .then(() => this.mediaItemService.removeMediaItem(sponsor.id),
+        (error: any) => this.alertService.showSnackBar('error', error.message)
+      )
       .then(() => this.alertService.success('general.sponsors.list.deleted', true))
       .catch((error: any) => this.alertService.error(error.message));
   }
