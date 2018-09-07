@@ -11,7 +11,7 @@
     <div fxLayout="column"
          fxLayout.gt-sm="row wrap">
       <team-training-form fxFlex.gt-sm="50"
-                          *ngFor="let training of form.get('assignedTrainings').controls; let i=index"
+                          *ngFor="let training of form.get('assignedTrainings')['controls']; let i=index"
                           (removeTraining)="removeTraining(i)"
                           [weekdays]="weekdays"
                           [locations]="locations"
