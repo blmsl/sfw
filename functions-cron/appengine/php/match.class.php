@@ -41,6 +41,7 @@ trait sfwMatch
         'guestTeam' => $match["guestTeam"],
         'homeTeam' => $match["homeTeam"],
         'isHomeTeam' => $match["isHomeTeam"],
+        'isImported' => true,
         'isOfficialMatch' => true,
         'matchEndDate' => $match["matchEndDate"],
         'matchLink' => $match["matchLink"],

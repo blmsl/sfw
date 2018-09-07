@@ -43,6 +43,7 @@ trait sfwTeam
           'externalTeamLink' => $teamData["externalTeamLink"],
           'logoURL' => $teamData["logoURL"],
           'subTitle' => $teamData["title"],
+          'isImported' => true,
           'assignedSeason' => $season["id"],
           'assignedClub' => $club["id"],
           'assignedTeamCategories' => array($category["id"], $mainCategory["id"])

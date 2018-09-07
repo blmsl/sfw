@@ -38,13 +38,13 @@ export class TeamsComponent {
 
   removeTeam(team: ITeam) {
     this.teamService.removeTeam(team).then(
-      () => this.alertService.showSnackBar('success', 'general.applications.updateMessage'),
+      () => this.alertService.showSnackBar('success', 'general.applications.removedMessage'),
       (error: any) => this.alertService.showSnackBar('error', error.message));
   }
 
   updateTeam(team :ITeam) {
     this.teamService.updateTeam(team.id, team).then(
-      () => this.alertService.showSnackBar('success', 'general.applications.removedMessage'),
+      () => this.alertService.showSnackBar('success', 'general.applications.updatedMessage'),
       (error: any) => this.alertService.showSnackBar('error', error.message));
   }
 

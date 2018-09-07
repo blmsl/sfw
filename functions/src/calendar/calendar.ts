@@ -15,7 +15,7 @@ const timeMax = currentDate.add(2, 'year').toISOString();
 
 export const getGoogleCalendarEvents = functions.region('europe-west1').https.onRequest(async (req, resp) => {
 
-  const eventList = [];
+  const eventList: Promise<any>[] = [];
 
   try {
     const applicationRef = db.collection('applications');
@@ -24,7 +24,7 @@ export const getGoogleCalendarEvents = functions.region('europe-west1').https.on
       resp.send('No current Application found');
     }
 
-    const promises = [];
+    const promises: Promise<any>[] = [];
     for (let cal of activeAppRef.docs[0].data().assignedCalendars) {
       console.log(cal.link);
       promises.push(getEventList(cal.link));

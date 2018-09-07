@@ -19,7 +19,7 @@ export class MembersComponent {
 
   removeMember($event: IMember) {
     this.memberService.removeMember($event).then(
-      () => this.alertService.showSnackBar('success', 'general.members.list.deleted'),
+      () => this.alertService.showSnackBar('success', 'general.applications.removedMessage'),
       (error: any) => this.alertService.showSnackBar('error', error.message)
     );
   }
