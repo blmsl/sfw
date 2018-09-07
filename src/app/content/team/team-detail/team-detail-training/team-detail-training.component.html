@@ -14,9 +14,8 @@
     </mat-card-title>
     <mat-card-content>
       <span matLine>{{'general.teams.edit.training.place' | translate}}:
-        <a *ngFor="let location of assignedLocations | filterBy: ['id'] : training.assignedLocation"
-           [routerLink]="['/locations/detail', location.id]">
-          {{location.title}}
+        <a [routerLink]="['/locations/detail', training.assignedLocation]">
+          {{(assignedLocations | filterBy: ['id'] : training.assignedLocation)[0].title}}
         </a>
       </span>
       <br/>

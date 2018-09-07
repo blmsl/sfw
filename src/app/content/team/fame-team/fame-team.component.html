@@ -13,29 +13,29 @@
          fxLayoutGap="10px"
          fxLayout.gt-sm="row">
 
-      <div fxFlex="15">
+      <div fxFlex="20">
         <mat-card>
           <mat-card-title>{{'general.teams.fame.mainTitle' | translate}}</mat-card-title>
           <mat-card-content>
-            <mat-list>
-
-              <mat-list-item *ngIf="assignedSeason$ | async as season">
-                {{'general.teams.fame.season' | translate}}:&nbsp;{{season.title}}
-              </mat-list-item>
-
-              <mat-list-item *ngIf="assignedCategories$ | async as assignedCategories">
-                {{'general.teams.fame.categories' | translate}}:&nbsp;
-                <span *ngFor="let category of assignedCategories; let last = last">
-                <a [routerLink]="['/categories/detail',category.id ]">{{category.title}}</a>
-                <span *ngIf="!last">,&nbsp;</span>
-              </span>
-              </mat-list-item>
-
-            </mat-list>
-
+            <table class="table table-condensed table-borderless">
+              <tr *ngIf="assignedSeason$ | async as season">
+                <th>{{'general.teams.fame.season' | translate}}</th>
+                <td>{{season.title}}</td>
+              </tr>
+              <tr *ngIf="assignedCategories$ | async as assignedCategories">
+                <th>{{'general.teams.fame.categories' | translate}}</th>
+                <td>
+                  <span *ngFor="let category of assignedCategories; let last = last">
+                    <a [routerLink]="['/categories/detail',category.id ]">{{category.title}}</a>
+                    <span *ngIf="!last">,&nbsp;</span>
+                  </span>
+                </td>
+              </tr>
+            </table>
           </mat-card-content>
+
           <hr>
-          <hr>
+
           <mat-card-content *ngIf="teamOfTheMonth.info">
             <h4 class="mt-0">{{'general.teams.fame.info' | translate}}</h4>
             <p [innerHTML]="teamOfTheMonth.info"></p>
@@ -89,9 +89,12 @@
         <mat-card>
           <mat-card-title>{{'general.teams.detail.standingsTitle' | translate}}</mat-card-title>
           <mat-card-content>
-            <p *ngIf="!teamOfTheMonth.currentStandings">{{'general.teams.fame.noStandings' | translate}}</p>
+            <p *ngIf="!teamOfTheMonth.currentStandings || teamOfTheMonth.currentStandings.length === 0">
+              {{'general.teams.fame.noStandings' | translate}}
+            </p>
 
-            <table class="table table-condensed" *ngIf="teamOfTheMonth.currentStandings">
+            <table class="table table-condensed"
+                   *ngIf="teamOfTheMonth.currentStandings && teamOfTheMonth.currentStandings.length > 0">
               <thead>
               <tr>
                 <td>{{'general.teams.detail.standings.rank' | translate}}</td>
@@ -121,11 +124,11 @@
             </table>
           </mat-card-content>
         </mat-card>
-        
+
         <team-detail-statistics [team]="teamOfTheMonth"></team-detail-statistics>
       </div>
 
-      <div fxFlex="50">
+      <div fxFlex="45">
         <mat-card>
           <mat-card-title>{{'general.teams.fame.teamImage' | translate}}</mat-card-title>
           <img *ngIf="teamImage | async as image; else loadingTemplate"
@@ -137,6 +140,11 @@
         <mat-card *ngIf="assignedPlayers$ | async as assignedPlayers">
           <mat-card-title>{{'general.teams.fame.playerList' | translate}} ({{assignedPlayers.length}})</mat-card-title>
           <mat-card-content>
+
+            <p *ngIf="!assignedPlayers || assignedPlayers.length === 0">
+              {{'general.teams.fame.noPlayers' | translate}}
+            </p>
+
             <div fxLayout="column"
                  fxLayout.gt-sm="row wrap"
                  fxLayoutGap="10px">

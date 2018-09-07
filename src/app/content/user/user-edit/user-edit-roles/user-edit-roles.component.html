@@ -1,7 +1,9 @@
 <mat-card [formGroup]="form">
+
   <mat-card-title>{{'general.users.edit.roles.title' | translate}}</mat-card-title>
   <mat-card-subtitle>{{'general.users.edit.roles.subTitle' | translate}}</mat-card-subtitle>
-  <mat-card-content>
+
+  <mat-card-content formArrayName="assignedRoles">
     <div fxLayoutGap="10px"
          fxLayout="column">
 

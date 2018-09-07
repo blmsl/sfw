@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Stats</mat-card-title>
-    <mat-card-subtitle>Stats 123</mat-card-subtitle>
+    <mat-card-title>{{'general.teams.edit.playerStats.title' | translate}}</mat-card-title>
+    <mat-card-subtitle>{{'general.teams.edit.playerStats.description' | translate}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
 
@@ -9,20 +9,29 @@
       {{'general.teams.edit.playerStats.noAssignedPlayers' | translate}}
     </p>
 
-    <table class="table table-responsive table-bordered table-condensed">
+    <table class="table table-bordered table-condensed table-responsive">
       <thead>
       <tr>
-        <th>Name</th>
-        <th>Tore</th>
-        <th>Vorlagen</th>
-        <th>Gelbe Karten</th>
-        <th>Gelb-rote Karten</th>
-        <th>Rote Karten</th>
+        <th>{{'general.number' | translate}}</th>
+        <th>{{'general.teams.edit.playerStats.name' | translate}}</th>
+        <th>{{'general.teams.edit.playerStats.matches' | translate}}</th>
+        <th>{{'general.teams.edit.playerStats.minutesPlayed' | translate}}</th>
+        <th>{{'general.teams.edit.playerStats.substitutions' | translate}}</th>
+        <th>{{'general.teams.edit.playerStats.replacements' | translate}}</th>
+        <th>{{'general.teams.edit.playerStats.goals' | translate}}</th>
+        <th>{{'general.teams.edit.playerStats.assists' | translate}}</th>
+        <th>{{'general.teams.edit.playerStats.yellowCard' | translate}}</th>
+        <th>{{'general.teams.edit.playerStats.yellowRedCard' | translate}}</th>
+        <th>{{'general.teams.edit.playerStats.redCard' | translate}}</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let player of assignedPlayers">
-        <td>{{player.id}}</td>
+      <tr
+        *ngFor="let player of assignedPlayers | orderBy: ['mainData.lastName', 'mainData.firstName', 'maindata.birthday']; let i= index">
+        <td>{{i +1}}</td>
+        <td>
+          <a [routerLink]="['/members/detail', player.id]">{{player.mainData.lastName}} {{player.mainData.firstName}}</a>
+        </td>
       </tr>
       </tbody>
     </table>

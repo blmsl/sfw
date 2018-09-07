@@ -54,6 +54,13 @@ import { TeamDetailArticlesComponent } from './team-detail/team-detail-articles/
 import { SharedArticleModule } from '../../shared/components/article/shared-article.module';
 import { TeamDetailStatisticsComponent } from './team-detail/team-detail-statistics/team-detail-statistics.component';
 import { TeamDetailPlayerstatsComponent } from './team-detail/team-detail-playerstats/team-detail-playerstats.component';
+import { TeamEditPhotoDescriptionComponent } from './team-edit/team-edit-photo-description/team-edit-photo-description.component';
+import { TeamEditPlayersComponent } from './team-edit/team-edit-players/team-edit-players.component';
+import { TeamEditTimelineComponent } from './team-edit/team-edit-timeline/team-edit-timeline.component';
+import { TeamEditDescriptionComponent } from './team-edit/team-edit-description/team-edit-description.component';
+import { TeamEditCreationComponent } from './team-edit/team-edit-creation/team-edit-creation.component';
+import { TeamEditPhotoComponent } from './team-edit/team-edit-photo/team-edit-photo.component';
+import { TeamEditMediaComponent } from './team-edit/team-edit-media/team-edit-media.component';
 
 @NgModule({
   imports: [
@@ -99,7 +106,14 @@ import { TeamDetailPlayerstatsComponent } from './team-detail/team-detail-player
     TeamDetailCompetitionsComponent,
     TeamDetailArticlesComponent,
     TeamDetailStatisticsComponent,
-    TeamDetailPlayerstatsComponent
+    TeamDetailPlayerstatsComponent,
+    TeamEditPhotoDescriptionComponent,
+    TeamEditPlayersComponent,
+    TeamEditTimelineComponent,
+    TeamEditDescriptionComponent,
+    TeamEditCreationComponent,
+    TeamEditPhotoComponent,
+    TeamEditMediaComponent
   ],
   providers: [
     ApplicationService,

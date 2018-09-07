@@ -54,11 +54,6 @@ export class TeamDetailStatisticsComponent implements OnInit {
 
       this.highestDefeat = this.highestForArray(this.defeats);
       this.highestWin = this.highestForArray(this.wins);
-
-      console.log(this.defeats);
-      console.log(this.wins);
-      console.log(this.highestDefeat);
-      console.log(this.highestWin)
     })
   }
 

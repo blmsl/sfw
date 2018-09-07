@@ -25,9 +25,8 @@ export class UsersComponent {
   }
 
   updateUser(user: IUser) {
-    console.log(user);
     this.userService.updateUser(user.id, user).then(
-      () => this.alertService.showSnackBar('success', 'general.applications.updateMessage'),
+      () => this.alertService.showSnackBar('success', 'general.applications.removedMessage'),
       (error: any) => this.alertService.showSnackBar('error', error.message));
   }
 

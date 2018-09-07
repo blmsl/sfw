@@ -4,7 +4,7 @@
          fxLayoutGap="10px"
          fxLayout.gt-sm="row">
 
-      <mat-form-field fxFlex="30">
+      <mat-form-field fxFlex="50">
         <mat-select placeholder="{{'general.teams.edit.training.day' | translate}}"
                     formControlName="day">
           <mat-option *ngFor="let weekday of weekdays"
@@ -15,20 +15,22 @@
       </mat-form-field>
 
 
-      <mat-form-field fxFlex="15">
+      <mat-form-field fxFlex="25">
         <input matInput
                formControlName="startTime"
                placeholder="{{'general.teams.edit.training.startTime' | translate}}">
       </mat-form-field>
 
 
-      <mat-form-field fxFlex="15">
+      <mat-form-field fxFlex="25">
         <input matInput
                formControlName="endTime"
                placeholder="{{'general.teams.edit.training.endTime' | translate}}">
       </mat-form-field>
+    </div>
 
-      <mat-form-field fxFlex="40">
+    <div style="margin: 15px 0;" fxLayout="column">
+      <mat-form-field fxFlex="100">
         <mat-select placeholder="{{'general.teams.edit.training.location' | translate}}"
                     formControlName="assignedLocation">
           <mat-option *ngFor="let location of locations | orderBy: ['title']"
@@ -37,16 +39,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <div>
-        <button
-          mat-raised-button
-          type="button"
-          color="warn"
-          (click)="removeTraining.emit(true)">
-          {{ 'general.teams.edit.training.delete' | translate}}
-        </button>
-      </div>
     </div>
 
     <div>
@@ -57,6 +49,21 @@
     </div>
 
   </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button
+        mat-raised-button
+        type="button"
+        color="warn"
+        (click)="removeTraining.emit(true)">
+        {{ 'general.teams.edit.training.delete' | translate}}
+      </button>
+    </div>
+  </mat-card-actions>
 </mat-card>
 
 

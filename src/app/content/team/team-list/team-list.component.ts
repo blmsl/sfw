@@ -18,8 +18,7 @@ export class TeamListComponent {
   @Input() seasons: ISeason[];
   @Input() clubs: IClub[];
 
-  @Output() remove = new EventEmitter(false);
-  @Output() update = new EventEmitter(false);
+  @Output() remove: EventEmitter<ITeam> = new EventEmitter<ITeam>(false);
 
   public form: FormGroup;
   public itemsPerPageOptions = [5, 10, 25, 50, 100];

@@ -7,12 +7,14 @@
     <div fxLayout="column"
          fxLayout.gt-sm="row">
       <div fxFlex="35">
-        <user-edit-main [disableOwnAccount]="notEditableMessage"
-                        [form]="form"></user-edit-main>
+        <user-edit-main (saveUser)="saveUser($event)"
+                        [user]="user">
+        </user-edit-main>
       </div>
       <div fxFlex="35">
-        <user-edit-roles [rolesNotEditableMessage]="notEditableMessage"
-                         [form]="form.get('assignedRoles')"></user-edit-roles>
+        <user-edit-roles (saveUser)="saveUser($event)"
+                         [user]="user">
+        </user-edit-roles>
       </div>
       <div fxFlex="30">
         <media-uploader (uploadCompleted)="uploadCompleted($event)"

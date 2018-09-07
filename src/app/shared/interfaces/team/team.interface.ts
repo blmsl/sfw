@@ -9,6 +9,8 @@ import { IStanding } from './standings.interface';
 export interface ITeam {
 
   id?: string;
+  isImported?: boolean;
+
   title: string;
   subTitle?: string;
 

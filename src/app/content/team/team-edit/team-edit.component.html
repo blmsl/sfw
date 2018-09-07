@@ -1,63 +1,86 @@
-<mat-card [formGroup]="form">
+<mat-card>
   <mat-card-title>
     <mat-icon>mode_edit</mat-icon>
     {{ 'general.menu.team.edit' | translate}}
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
 
-  <mat-card-content
-    *ngIf="team && clubs$ && categories$ && categoryTypes$ && locations$ && users$ && members$; else loadingTemplate">
+  <mat-card-content>
 
-    <mat-tab-group [dynamicHeight]="true">
+    <mat-tab-group *ngIf="team; else loadingTemplate"
+                   [dynamicHeight]="true">
+
       <mat-tab label="{{'general.teams.edit.mainTitle' | translate}}">
-        <team-edit-main [form]="form"
-                        [team]="team"
-                        [categories]="categories$ | async"
-                        [categoryTypes]="categoryTypes$ | async"
-                        [clubs]="clubs$ | async"
-                        [seasons]="seasons$ | async">
-        </team-edit-main>
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px">
+          <div fxFlex="70">
+            <team-edit-main (saveTeam)="saveTeam($event)"
+                            [team]="team"
+                            [categories]="categories$ | async"
+                            [categoryTypes]="categoryTypes$ | async"
+                            [clubs]="clubs$ | async"
+                            [seasons]="seasons$ | async">
+            </team-edit-main>
+
+            <team-edit-description (saveTeam)="saveTeam($event)"
+                                   [team]="team">
+            </team-edit-description>
+          </div>
+
+          <div fxFlex="30">
+            <team-edit-photo [team]="team"></team-edit-photo>
+
+            <team-edit-photo-description (saveTeam)="saveTeam($event)"
+                                         [team]="team">
+            </team-edit-photo-description>
+
+            <team-edit-creation [team]="team"></team-edit-creation>
+          </div>
+        </div>
       </mat-tab>
 
       <mat-tab label="{{'general.teams.edit.management.title' | translate}}">
-        <team-positions [form]="form"
-                        [categories]="categories$ | async"
-                        [categoryTypes]="categoryTypes$ | async | filterBy: ['link']: 'team.position.types'"
-                        [members]="members$ | async"
-                        (addPosition)="addPosition()"
-                        (removePosition)="removePosition($event)">
-        </team-positions>
+        <div fxLayout.gt-sm="row"
+             fxLayout="column"
+             fxLayoutGap="10px">
+          <div fxFlex.gt-sm="30">
+            <team-edit-players *ngIf="members$ | async as members; else loadingTemplate"
+                               (saveTeam)="saveTeam($event)"
+                               [team]="team"
+                               [members]="members">
+            </team-edit-players>
+          </div>
+
+          <div fxFlex.gt-sm="70">
+            <team-positions *ngIf="members$ | async as members; else loadingTemplate"
+                            (saveTeam)="saveTeam($event)"
+                            [team]="team"
+                            [categories]="teamPositionCategories$ | async"
+                            [members]="members">
+            </team-positions>
+          </div>
+        </div>
       </mat-tab>
 
+
       <mat-tab label="{{'general.teams.edit.training.title' | translate}}">
-        <team-training [form]="form.get('assignedTrainings').controls"
-                       [locations]="locations$ | async"
-                       (addTraining)="addTraining()"
-                       (removeTraining)="removeTraining($event)">
+        <team-training *ngIf="locations$ | async as locations; else loadingTemplate"
+                       (saveTeam)="saveTeam($event)"
+                       [team]="team"
+                       [locations]="locations">
         </team-training>
       </mat-tab>
 
+
       <mat-tab label="{{'general.teams.edit.timeLine.title' | translate}}">
-        <mat-card>
-          <mat-card-title>{{'general.teams.edit.timeLine.title' | translate}}</mat-card-title>
-          <mat-card-subtitle>{{'general.teams.edit.timeLineTitle' | translate}}</mat-card-subtitle>
-          <hr/>
-          <mat-card-content>
-            <time-line [showLinks]="true"
-                       (delete)="removeEvent($event)"
-                       (add)="addEvent()"
-                       (edit)="editEvent($event)"
-                       (save)="saveEvent()"
-                       [selectedTimeLineEvent]="selectedEvent"
-                       [form]="form.controls['assignedEvents']">
-            </time-line>
-          </mat-card-content>
-        </mat-card>
+        <team-edit-timeline (saveTeam)="saveTeam($event)"
+                            [team]="team">
+        </team-edit-timeline>
       </mat-tab>
 
-      <mat-tab label="Dateien">
-        <!-- TodDo: Trainingspläne, Videos, Fotos zur Mannschaft-->
-        Trainingspläne, Videos, Fotos zur Mannschaft
+      <mat-tab label="{{'general.teams.edit.media.title' | translate}}">
+        <team-edit-media [team]="team"></team-edit-media>
       </mat-tab>
 
     </mat-tab-group>

@@ -1,0 +1,12 @@
+<mat-card [formGroup]="form"
+          style="margin-top: 50px">
+  <mat-card-title>{{'general.teams.edit.infoDescription' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'general.teams.edit.info' | translate}}</mat-card-subtitle>
+  <hr>
+  <mat-card-content>
+    <quill-editor [style]="{height: '250px'}"
+                  formControlName="info"
+                  placeholder="{{'general.teams.edit.info' | translate}}">
+    </quill-editor>
+  </mat-card-content>
+</mat-card>

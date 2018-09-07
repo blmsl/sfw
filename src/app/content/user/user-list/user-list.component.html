@@ -50,31 +50,38 @@
                    | assignedRolesFilter: form.get('assignedRoles').value
                    | filterBy: ['firstName', 'lastName', 'email'] : form.get('searchFor').value">
 
-      <ngx-datatable-column name="{{'general.users.edit.personal.lastName' | translate}}" prop="lastName" fxHide.xs>
+      <ngx-datatable-column name="{{'general.users.edit.personal.lastName' | translate}}"
+                            prop="lastName"
+                            fxHide.xs="true"
+                            fxHide.sm="true">
         <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
           {{row.lastName ? row.lastName : row.displayName}}
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="{{'general.users.edit.personal.firstName' | translate}}" prop="firstName" fxHide.xs>
+      <ngx-datatable-column name="{{'general.users.edit.personal.firstName' | translate}}"
+                            prop="firstName">
         <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
           {{row.firstName}}
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="{{'general.users.edit.personal.displayName' | translate}}" prop="displayName" fxHide.xs>
+      <ngx-datatable-column name="{{'general.users.edit.personal.displayName' | translate}}"
+                            prop="displayName">
         <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
           {{row.displayName }}
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="{{'general.users.edit.personal.email' | translate}}" prop="email">
+      <ngx-datatable-column name="{{'general.users.edit.personal.email' | translate}}"
+                            prop="email">
         <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
           <a [href]="'mailto:' + row.email">{{row.email}}</a>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="{{'general.users.list.roleTitle' | translate}}" [sortable]="false" fxHide.xs>
+      <ngx-datatable-column name="{{'general.users.list.roleTitle' | translate}}"
+                            [sortable]="false" >
         <ng-template let-row="row" let-value="assignedRoles" ngx-datatable-cell-template>
           {{row.assignedRoles.admin ? ('general.users.list.adminTitle' | translate)
           : row.assignedRoles.editor ? ('general.users.list.editorTitle' | translate)
@@ -82,11 +89,15 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="actions" [sortable]="false">
-        <ng-template let-column="column" ngx-datatable-header-template>
+      <ngx-datatable-column name="actions"
+                            [sortable]="false">
+        <ng-template let-column="column"
+                     ngx-datatable-header-template>
           {{'general.tables.colTitles.actions' | translate}}
         </ng-template>
-        <ng-template let-row="row" let-value="id" ngx-datatable-cell-template>
+        <ng-template let-row="row"
+                     let-value="id"
+                     ngx-datatable-cell-template>
           <edit-link [objectId]="row.id"></edit-link>
           <button *ngIf="row.id !== authService.userId"
                   title="Disable User"

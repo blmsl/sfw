@@ -1,14 +1,24 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+}                        from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+}                        from '@angular/forms';
 import { ICategoryType } from '../../../../shared/interfaces/category-type.interface';
-import { ICategory } from '../../../../shared/interfaces/category.interface';
-import { ISeason } from '../../../../shared/interfaces/season.interface';
-import { IClub } from '../../../../shared/interfaces/club/club.interface';
-import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-options.interface';
-import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
-import { ITeam } from '../../../../shared/interfaces/team/team.interface';
-import { TeamService } from '../../../../shared/services/team/team.service';
-import { MediaItemService } from '../../../../shared/services/media/media-item.service';
+import { ICategory }     from '../../../../shared/interfaces/category.interface';
+import { ISeason }       from '../../../../shared/interfaces/season.interface';
+import { IClub }         from '../../../../shared/interfaces/club/club.interface';
+import { ITeam }         from '../../../../shared/interfaces/team/team.interface';
+import {
+  debounceTime,
+  distinctUntilChanged
+}                        from 'rxjs/internal/operators';
 
 @Component({
   selector: 'team-edit-main',
@@ -17,36 +27,46 @@ import { MediaItemService } from '../../../../shared/services/media/media-item.s
 })
 export class TeamEditMainComponent implements OnInit {
 
-  @Input() form: FormGroup;
   @Input() team: ITeam;
   @Input() categoryTypes: ICategoryType[];
   @Input() categories: ICategory[];
   @Input() seasons: ISeason[];
   @Input() clubs: IClub[];
+  @Output() saveTeam: EventEmitter<ITeam> = new EventEmitter<ITeam>(false);
 
+  public form: FormGroup;
   public titleMaxLength: number = 50;
   public shortTitleMaxLength: number = 25;
 
-  public uploaderConfig: IUploaderConfig = {
-    autoUpload: true,
-    showDropZone: true,
-    removeAfterUpload: true,
-    showQueue: false,
-    headerTitle: 'general.teams.edit.photo.title'
-  };
-
-  public uploaderOptions: IUploaderOptions = {
-    assignedObjects: ['teams', 'profile'],
-    itemId: '',
-    queueLimit: 1,
-    allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
-  };
-
-  constructor() {
+  constructor(private fb: FormBuilder) {
   }
 
   ngOnInit() {
-    this.uploaderOptions.itemId = this.team.id;
+
+    this.form = this.fb.group({
+      title: [this.team.title, [Validators.required, Validators.minLength(5), Validators.maxLength(this.titleMaxLength)]],
+      subTitle: this.team.subTitle,
+      assignedTeamCategories: [this.team.assignedTeamCategories, [Validators.required]],
+      externalLink: this.team.externalTeamLink,
+      assignedClub: [this.team.assignedClub, [Validators.required]],
+      assignedSeason: this.team.assignedSeason,
+      isOfficialTeam: this.team.isOfficialTeam,
+      isMainTeam: this.team.isMainTeam
+    });
+
+    if(this.team.isImported){
+      this.form.disable();
+      this.form.get('isMainTeam').enable();
+    }
+
+    this.form.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()
+    ).subscribe((changes: ITeam) => {
+      if (this.form.valid) {
+        this.saveTeam.emit(changes);
+      }
+    });
   }
 
 }

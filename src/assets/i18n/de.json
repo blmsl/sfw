@@ -1404,6 +1404,21 @@
           "noPlayers": "Es wurden noch keine Spieler ernannt",
           "title": "Spieler"
         },
+        "playerStats": {
+          "assists": "Vorlagen",
+          "description": "Aufgelistet werden alle Spieler der Mannschaft mit den dazugehörigen Statistiken.",
+          "goals": "Tore",
+          "matches": "Spiele",
+          "minutesPlayed": "Spielminuten",
+          "name": "Name",
+          "redCard": "Rote Karten",
+          "replacements": "Auswechselungen",
+          "substitutions": "Einwechselungen",
+          "title": "Mannschaftsstatistik",
+          "yellowCard": "Gelbe Karten",
+          "yellowRedCard": "Gelb-rote Karten"
+        },
+        "playerStatsTitle": "Statistiken",
         "position": {
           "add": "Neue Aufgabe",
           "assignedMember": "Verknüpftes Mitglied",
@@ -1710,6 +1725,7 @@
     "myProfile": "Mein Profil",
     "no": "Nein",
     "noTitle": "Unbenannt",
+    "number": "#",
     "oClock": "Uhr",
     "only": "nur",
     "options": "Optionen",
