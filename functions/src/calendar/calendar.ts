@@ -25,6 +25,7 @@ export const getGoogleCalendarEvents = functions.region('europe-west1').https.on
     }
 
     const promises: Promise<any>[] = [];
+    console.log(activeAppRef.docs[0].data().assignedCalendars);
     for (let cal of activeAppRef.docs[0].data().assignedCalendars) {
       console.log(cal.link);
       promises.push(getEventList(cal.link));
@@ -33,7 +34,8 @@ export const getGoogleCalendarEvents = functions.region('europe-west1').https.on
     const snapshots = await Promise.all(promises);
 
     snapshots.forEach(snap => {
-        eventList.push(snap.data().items);
+      console.log(snap.data().items);
+      eventList.push(snap.data().items);
     });
 
     return resp.send(eventList);
@@ -45,9 +47,10 @@ export const getGoogleCalendarEvents = functions.region('europe-west1').https.on
 
 });
 
-function getEventList(cal): Promise<any> {
+function getEventList(cal: string): Promise<any> {
+  console.log(cal);
   return calendar.events.list({
-    calendarId: cal.link,
+    calendarId: cal,
     timeMin: timeMin,
     timeMax: timeMax,
     // maxResults: 100,

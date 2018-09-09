@@ -9,4 +9,4 @@ export const deleteMediaItemCron = functions
   .firestore.document('files/{mediaItemId}').onDelete((snap) => {
     data = snap.data();
     return bucket.file(data.downloadURL).delete();
-});
+  });
