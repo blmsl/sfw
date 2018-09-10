@@ -1,12 +1,13 @@
 import {
   Component,
   Input
-} from '@angular/core';
+}                            from '@angular/core';
 import { SkyhookDndService } from 'angular-skyhook';
-import { ICoord } from '../../../../../shared/interfaces/match/coord.interface';
-import { MatchService } from '../../../../../shared/services/match/match.service';
-import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
-import { map } from 'rxjs/internal/operators';
+import { ICoord }            from '../../../../../shared/interfaces/match/coord.interface';
+import { MatchService }      from '../../../../../shared/services/match/match.service';
+import { IMatch }            from '../../../../../shared/interfaces/match/match.interface';
+import { map }               from 'rxjs/internal/operators';
+import { AlertService }      from '../../../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'match-field-square',
@@ -20,6 +21,7 @@ export class MatchFieldSquareComponent {
   @Input() match: IMatch;
 
   constructor(private dnd: SkyhookDndService,
+    private alertService: AlertService,
     private matchService: MatchService) {
   }
 
@@ -37,8 +39,10 @@ export class MatchFieldSquareComponent {
     canDrop: () => true,
     drop: monitor => {
       const $event = <IDraggedItemInterface>monitor.getItem();
-      console.log('Spieler in der Startelf setzen.');
-      this.matchService.setPlayerToStartingEleven($event.id, this.match, this.position);
+      this.matchService.setPlayerToStartingEleven($event.id, this.match, this.position).then(
+        () => this.alertService.showSnackBar('success', 'member.formation.startingEleven.added'),
+        (error: any) => this.alertService.showSnackBar('error', error.message)
+      );
     }
   });
 

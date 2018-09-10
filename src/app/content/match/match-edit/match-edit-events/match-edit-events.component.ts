@@ -1,23 +1,25 @@
 import {
   Component,
   EventEmitter,
-  Input, OnChanges,
+  Input,
+  OnChanges,
   OnInit,
-  Output, SimpleChanges
-} from '@angular/core';
+  Output
+}                              from '@angular/core';
 import { IMatchEventCategory } from '../../../../shared/interfaces/match/match-event-category.interface';
-import { IMatchEvent } from "src/app/shared/interfaces/match/match-event.interface";
+import { IMatchEvent }         from 'src/app/shared/interfaces/match/match-event.interface';
+import { IMatch }              from '../../../../shared/interfaces/match/match.interface';
 
 @Component({
   selector: 'match-edit-events',
   templateUrl: './match-edit-events.component.html',
-  styleUrls: ['./match-edit-events.component.scss']
+  styleUrls: [ './match-edit-events.component.scss' ]
 })
-export class MatchEditEventsComponent implements OnInit {
+export class MatchEditEventsComponent implements OnInit, OnChanges {
 
-  @Input() matchEvents: IMatchEvent[];
+  @Input() match: IMatch;
   @Input() eventCategories: IMatchEventCategory[];
-  @Output() deleteMatchEvent: EventEmitter<number> = new EventEmitter<number>(false);
+  @Output() saveMatch: EventEmitter<IMatch> = new EventEmitter<IMatch>(false);
 
   orderedMatchEvents: any[];
 
@@ -25,15 +27,26 @@ export class MatchEditEventsComponent implements OnInit {
     this.orderMatchEvents();
   }
 
-  changeOrder($event: { sourceIndex: number, destinationIndex: number }) {
-    // Swap Variables and order again
-    [this.matchEvents[$event.sourceIndex].ordering, this.matchEvents[$event.destinationIndex].ordering] = [this.matchEvents[$event.destinationIndex].ordering, this.matchEvents[$event.sourceIndex].ordering];
+  ngOnChanges(){
     this.orderMatchEvents();
   }
 
+  changeOrder($event: { sourceIndex: number, destinationIndex: number }) {
+    [ this.match.assignedMatchEvents[ $event.sourceIndex ].ordering, this.match.assignedMatchEvents[ $event.destinationIndex ].ordering ] = [ this.match.assignedMatchEvents[ $event.destinationIndex ].ordering, this.match.assignedMatchEvents[ $event.sourceIndex ].ordering ];
+    this.orderMatchEvents();
+    this.saveMatch.emit(this.match);
+  }
+
+  deleteMatchEvent(matchEvent: IMatchEvent) {
+    this.match.assignedMatchEvents.splice(this.match.assignedMatchEvents.indexOf(matchEvent), 1);
+    this.saveMatch.emit(this.match);
+  }
+
   private orderMatchEvents() {
-    this.orderedMatchEvents = this.matchEvents.sort((a, b) => {
-      return (a.ordering > b.ordering) ? 1 : 0;
-    });
+    if (this.match.assignedMatchEvents) {
+      this.orderedMatchEvents = this.match.assignedMatchEvents.sort((a, b) => {
+        return (a.ordering > b.ordering) ? 1 : 0;
+      });
+    }
   }
 }

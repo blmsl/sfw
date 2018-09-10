@@ -1,14 +1,16 @@
-<mat-card *ngIf="notAssignedArticles"
-          [formGroup]="form">
-  <mat-card-title>
-    {{'general.matches.edit.assignArticleTitle' | translate}}
-  </mat-card-title>
+<mat-card *ngIf="articles">
+  <mat-card-title>{{'general.matches.edit.assignArticleTitle' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'general.matches.edit.assignArticleDescription' | translate}}</mat-card-subtitle>
+  <hr/>
+  <mat-card-content fxLayout="column"
+                    [formGroup]="form">
 
-  <mat-card-content fxLayout="column">
     <mat-form-field fxFlex.gt-sm="100">
       <mat-select placeholder="{{'general.matches.edit.assignArticle' | translate}}"
+                  multiple=""
                   formControlName="assignArticles">
-        <mat-option *ngFor="let article of notAssignedArticles | orderBy: ['title']"
+        <mat-option
+          *ngFor="let article of articles | without: (articles | filterBy: ['assignedMatches']: match.id) | orderBy: ['title']"
                     [value]="article">
           {{article.title}}
         </mat-option>
@@ -21,13 +23,13 @@
          fxLayout.gt-sm="row"
          fxLayoutGap="10px">
       <span></span>
-      <span fxFlex=""></span>
-      <!--<button mat-raised-button
-              [disabled]="form.invalid"
+      <span fxFlex=""></span><!-- [disabled]="form.invalid" -->
+      <button mat-raised-button
+
               (click)="assignArticlesToMatch()"
               color="primary">
         {{'general.matches.edit.assignArticleToMatch' | translate}}
-      </button>-->
+      </button>
     </div>
   </mat-card-actions>
 

@@ -3,15 +3,16 @@ import { Observable } from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
-import { IMatch } from '../../interfaces/match/match.interface';
-import { of } from 'rxjs/index';
+}                              from 'angularfire2/firestore';
+import { IMatch }              from '../../interfaces/match/match.interface';
+import { of }                  from 'rxjs';
 import { IMatchEventCategory } from '../../interfaces/match/match-event-category.interface';
-import { ILocation } from '../../interfaces/location/location.interface';
-import { ITeam } from '../../interfaces/team/team.interface';
+import { ILocation }           from '../../interfaces/location/location.interface';
+import { ITeam }               from '../../interfaces/team/team.interface';
 import Timestamp = firebase.firestore.Timestamp;
-import * as firebase from 'firebase';
-import { ICoord } from '../../interfaces/match/coord.interface';
+import * as firebase           from 'firebase';
+import { ICoord }              from '../../interfaces/match/coord.interface';
+import { IStartingPosition }   from '../../interfaces/match/starting-position.interface';
 
 @Injectable()
 export class MatchService {
@@ -109,7 +110,7 @@ export class MatchService {
       },
       isHomeTeam: true,
       isOfficialMatch: true,
-      matchStartDate: Timestamp.now(),
+      matchStartDate: null,
       matchEndDate: null,
       matchLink: '',
       matchType: '',
@@ -145,7 +146,12 @@ export class MatchService {
   }
 
   setPlayerToStartingEleven(memberId: string, match: IMatch, position: ICoord) {
-    console.log('MemberId:' + memberId + ' MatchId: ' + match.id + ' Position X' + position.x + ' Position Y' + position.y);
+    if(!match.startingEleven) match.startingEleven = [];
+    match.startingEleven.push({
+      position: position,
+      memberId: memberId
+    });
+    return this.updateMatch(match.id, match);
   }
 
   getMatchEventCategories(): IMatchEventCategory[] {

@@ -63,7 +63,7 @@ export const MENUITEMS = [
         icon: 'event_note'
       },
       {
-        state: 'edit/new',
+        state: 'create',
         name: 'create',
         icon: 'create'
       }

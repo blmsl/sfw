@@ -3,7 +3,7 @@
     {{ 'general.matches.edit.title' | translate }}
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
-  <mat-card-content [formGroup]="form">
+  <mat-card-content>
 
     <mat-tab-group [dynamicHeight]="true">
       <mat-tab [label]="'general.matches.edit.main' | translate">
@@ -11,7 +11,8 @@
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
           <div fxFlex.gt-sm="70">
-            <match-edit-main [form]="form"
+            <match-edit-main (saveMatch)="saveMatch($event)"
+                             [match]="match"
                              [categories]="categories$ | async"
                              [teams]="teams$ | async"
                              [seasons]="seasons$ | async"
@@ -19,55 +20,58 @@
             </match-edit-main>
           </div>
           <div fxFlex.gt-sm="30">
-            <match-edit-result [otherMatchEventList]="otherMatchEventList"
-                               [form]="form.get('result')"></match-edit-result>
+            <match-edit-result (saveMatch)="saveMatch($event)"
+                               [otherMatchEventList]="otherMatchEventList"
+                               [match]="match">
+            </match-edit-result>
           </div>
         </div>
       </mat-tab>
-      <mat-tab [label]="'general.matches.edit.startingEleven.title' | translate">
-        <p *ngIf="!form.get('assignedTeam').value">{{'general.matches.edit.noAssignedTeam' | translate}}</p>
+      <mat-tab [disabled]="!match.id"
+               [label]="'general.matches.edit.startingEleven.title' | translate">
+        <p *ngIf="!match.assignedTeam">{{'general.matches.edit.noAssignedTeam' | translate}}</p>
 
-        <match-edit-formation *ngIf="assignedTeam && assignedMembers; else loadingTemplate"
+        <match-edit-formation *ngIf="assignedMembers$ | async as assignedMembers; else loadingTemplate"
+                              (saveMatch)="saveMatch($event)"
                               [match]="match"
                               [assignedTeamPlayers]="assignedMembers">
         </match-edit-formation>
       </mat-tab>
-      <mat-tab
-        [label]="('general.matches.edit.articles' | translate) + ' & ' + ('general.matches.edit.match' | translate)">
+      <mat-tab [disabled]="!match.id"
+               [label]="('general.matches.edit.articles' | translate) + ' & ' + ('general.matches.edit.match' | translate)">
         <div fxLayout="column"
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
           <div fxFlex.gt-sm="50">
-            <match-edit-events [matchEvents]="match.assignedMatchEvents ? match.assignedMatchEvents : []"
-                               [eventCategories]="matchEventCategories | orderBy: ['title']"
-                               (changeOrder)="changeOrder($event)"
-                               (deleteMatchEvent)="deleteMatchEvent($event)">
+            <match-edit-events (saveMatch)="saveMatch($event)"
+                               [match]="match"
+                               [eventCategories]="matchEventCategories | orderBy: ['title']">
             </match-edit-events>
 
             <match-edit-event-form *ngIf="teams$ | async as teams"
+                                   [match]="match"
                                    [assignedTeam]="(teams | filterBy: ['id']: match.assignedTeam)[0]"
                                    [eventCategories]="matchEventCategories | orderBy: ['title']"
-                                   (createMatchEvent)="createMatchEvent(null)"
-                                   (saveMatchEvent)="saveMatchEvent($event)">
+                                   (saveMatch)="saveMatch($event)">
             </match-edit-event-form>
+
           </div>
 
           <div fxFlex.gt-sm="50">
-            <!-- ToDo: assign Articles to match -->
-            <!--<match-edit-articles *ngIf="assignedArticles$ | async as assignedArticles; else loadingTemplate"
+            <match-edit-articles *ngIf="articles$ | async as articles; else loadingTemplate"
                                  [match]="match"
-                                 [articles]="assignedArticles">
+                                 [articles]="articles">
             </match-edit-articles>
 
-            <match-edit-article-form *ngIf="notAssignedArticles$ | async as notAssignedArticles; else loadingTemplate"
+            <match-edit-article-form *ngIf="articles$ | async as articles"
                                      [match]="match"
-                                     [notAssignedArticles]="notAssignedArticles">
-            </match-edit-article-form>-->
+                                     [articles]="articles">
+            </match-edit-article-form>
           </div>
         </div>
       </mat-tab>
-      <mat-tab [label]="'general.matches.edit.media' | translate">
-        <!-- ToDo -->
+      <mat-tab [disabled]="!match.id"
+               [label]="'general.matches.edit.media' | translate">
         <ul>
           <li>Verlinkte Video´s (soccerwatch.tv, youtube, facebook etc)</li>
           <li>Verlinkte Fotos / Galerien (Link zu Facebook)</li>

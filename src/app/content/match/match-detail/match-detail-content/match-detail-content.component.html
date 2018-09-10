@@ -6,7 +6,8 @@
                        [match]="match">
         </match-preview>
       </mat-tab>
-      <mat-tab [label]="'general.matches.detail.startingElevenTitle' | translate">
+      <mat-tab [disabled]="!match.startingEleven || match.startingEleven.length === 0"
+               [label]="'general.matches.detail.startingElevenTitle' | translate">
         <!--<match-detail-starting-eleven [assignedPlayers]="assignedPlayers"
                                       [assignedSubstitutes]="assignedSubstitutes"
                                       [match]="match">

@@ -51,7 +51,7 @@
           <mat-optgroup *ngFor="let season of seasons | orderBy: ['title']" [label]="season.title">
             <mat-option *ngFor="let team of teams | filterBy: ['assignedSeason'] : season.id | orderBy: ['title']"
                         [value]="team.id">
-              {{team.title}}
+              {{team.title}} {{team.subTitle}}
             </mat-option>
           </mat-optgroup>
 

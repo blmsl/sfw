@@ -1,5 +1,6 @@
-<mat-card>
-  <mat-card-title fxLayout="column"
+<mat-card [formGroup]="form">
+  <mat-card-title *ngIf="assignedTeamPlayers"
+                  fxLayout="column"
                   fxLayout.gt-sm="row"
                   fxLayoutGap="10px">
     <h3>{{'general.matches.edit.startingEleven.title' | translate}}</h3>
@@ -7,29 +8,28 @@
     <span fxFlex=""></span>
     <mat-form-field>
       <mat-select placeholder="{{'general.matches.edit.tacticalFormation' | translate}}"
-                  (selectionChange)="setFormation($event)">
+                  formControlName="assignedFormation">
         <mat-option *ngFor="let formation of tacticalFormations | orderBy: ['title']"
-                    [value]="formation">
+                    [value]="formation.title">
           {{formation.title}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </mat-card-title>
 
-  <mat-card-content fxLayout="column"
+  <mat-card-content *ngIf="assignedTeamPlayers && match.assignedFormation"
+                    fxLayout="column"
                     fxLayout.gt-sm="row">
 
-    <match-edit-starting-eleven *ngIf="assignedFormation"
-                                fxFlex="90"
-                                [match]="match"
-                                [assignedFormation]="assignedFormation">
+    <match-edit-starting-eleven fxFlex="90"
+                                [assignedFormation]="tacticalFormations | filterBy: ['title'] : match.assignedFormation"
+                                [match]="match">
     </match-edit-starting-eleven>
 
-    <match-edit-substitutions *ngIf="assignedFormation"
+    <!--<match-edit-substitutions *ngIf="assignedFormation"
                               fxFlex="10"
-                              [match]="match"
-                              [assignedFormation]="assignedFormation">
-    </match-edit-substitutions>
+                              [match]="match">
+    </match-edit-substitutions>-->
 
   </mat-card-content>
 

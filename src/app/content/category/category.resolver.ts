@@ -1,12 +1,17 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { ICategory } from '../../shared/interfaces/category.interface';
+import { Injectable }      from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  Router,
+  RouterStateSnapshot
+}                          from '@angular/router';
+import { ICategory }       from '../../shared/interfaces/category.interface';
 import { CategoryService } from '../../shared/services/category/category.service';
-import { Observable } from 'rxjs';
+import { Observable }      from 'rxjs';
 import {
   map,
   take
-} from 'rxjs/operators';
+}                          from 'rxjs/operators';
 
 @Injectable()
 export class CategoryResolver implements Resolve<ICategory> {
@@ -17,7 +22,7 @@ export class CategoryResolver implements Resolve<ICategory> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICategory> {
 
-    if (!route.params['categoryId']) {
+    if (!route.params[ 'categoryId' ]) {
       return this.categoryService.setNewCategory();
     }
 

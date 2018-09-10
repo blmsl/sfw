@@ -1,19 +1,29 @@
-import { ModuleWithProviders } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { MatchResolver } from './match.resolver';
+import { ModuleWithProviders }  from '@angular/core';
+import {
+  RouterModule,
+  Routes
+}                               from '@angular/router';
+import { MatchResolver }        from './match.resolver';
 import { MatchDetailComponent } from './match-detail/match-detail.component';
-import { MatchesComponent } from './matches/matches.component';
-import { MatchEditComponent } from './match-edit/match-edit.component';
-import { MatchTableComponent } from './match-table/match-table.component';
+import { MatchesComponent }     from './matches/matches.component';
+import { MatchEditComponent }   from './match-edit/match-edit.component';
+import { MatchTableComponent }  from './match-table/match-table.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MatchesComponent,
+    component: MatchesComponent
   },
   {
     path: 'table',
-    component: MatchTableComponent,
+    component: MatchTableComponent
+  },
+  {
+    path: 'create',
+    component: MatchEditComponent,
+    resolve: {
+      match: MatchResolver
+    }
   },
   {
     path: 'edit/:matchId',
@@ -27,7 +37,7 @@ const routes: Routes = [
     component: MatchDetailComponent,
     resolve: {
       match: MatchResolver
-    },
+    }
   },
   {
     path: '**',

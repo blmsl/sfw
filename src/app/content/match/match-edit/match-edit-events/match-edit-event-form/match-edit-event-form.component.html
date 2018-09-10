@@ -1,9 +1,8 @@
 <mat-card *ngIf="assignedPlayers$ | async as assignedPlayers; else loadingTemplate"
           [formGroup]="form">
-  <mat-card-title>
-    {{'general.matches.edit.events.createEvent' | translate}}
-  </mat-card-title>
-
+  <mat-card-title>{{'general.matches.edit.events.createEvent.title' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'general.matches.edit.events.createEvent.description' | translate}}</mat-card-subtitle>
+  <hr/>
   <mat-card-content>
 
     <div fxLayout="column"
@@ -84,7 +83,7 @@
               color="primary"
               title="{{'general.save' | translate}}"
               [disabled]="form.invalid"
-              (click)="save(form.value)">
+              (click)="saveEvent(form.value)">
         <mat-icon>save</mat-icon>
       </button>
     </div>

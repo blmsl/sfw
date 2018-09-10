@@ -12,7 +12,7 @@ import { ArticleService } from '../../../../../shared/services/article/article.s
 export class MatchEditArticleFormComponent implements OnInit {
 
   @Input() match: IMatch;
-  @Input() notAssignedArticles: IArticle[];
+  @Input() articles: IArticle[];
 
   public form: FormGroup;
 
@@ -22,20 +22,14 @@ export class MatchEditArticleFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      assignArticles: ''
+      assignArticles: ['', [Validators.required]]
     });
   }
 
   assignArticlesToMatch() {
-    const assignedArticles: IArticle[] = this.form.get('assignArticles').value;
-    console.log(assignedArticles);
-    this.articleService.assignMatchToArticles(this.match.id, assignedArticles).subscribe(
-      (success) => {
-        console.log(success);
-        // this.form.reset();
-      },
-      (error) => console.log(error)
-    );
+    const assignedArticles = this.form.get('assignArticles').value;
+    this.articleService.assignMatchToArticles(this.match.id, assignedArticles);
+
   }
 
 }

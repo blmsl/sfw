@@ -2,12 +2,12 @@ import {
   Component,
   Input,
   OnInit
-} from '@angular/core';
-import { IFormation } from '../../../../../shared/interfaces/match/formation.interface';
-import { Observable } from 'rxjs/index';
-import { ICoord } from '../../../../../shared/interfaces/match/coord.interface';
+}                                from '@angular/core';
+import { Observable }            from 'rxjs/index';
+import { ICoord }                from '../../../../../shared/interfaces/match/coord.interface';
 import { MatchFormationService } from '../../../../../shared/services/match/match-formation.service';
-import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
+import { IMatch }                from '../../../../../shared/interfaces/match/match.interface';
+import { IFormation }            from '../../../../../shared/interfaces/match/formation.interface';
 
 @Component({
   selector: 'match-edit-starting-eleven',
@@ -16,8 +16,8 @@ import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
 })
 export class MatchEditStartingElevenComponent implements OnInit {
 
-  @Input() assignedFormation: IFormation;
   @Input() match: IMatch;
+  @Input() assignedFormation: IFormation[];
 
   public thirty: number[];
   public playerPositions$: Observable<ICoord[]>;
@@ -27,7 +27,10 @@ export class MatchEditStartingElevenComponent implements OnInit {
 
   ngOnInit() {
     this.thirty = new Array(30).fill(0).map((_, i) => i);
-    this.playerPositions$ = this.matchFormationService.getFormationPositions(this.assignedFormation);
+    if(this.match.assignedFormation) {
+      console.log(this.assignedFormation);
+      this.playerPositions$ = this.matchFormationService.getFormationPositions(this.assignedFormation[0]);
+    }
   }
 
   getCoordinates(i): ICoord {

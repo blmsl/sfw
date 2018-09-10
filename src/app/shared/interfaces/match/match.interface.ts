@@ -1,8 +1,10 @@
-import { ICreation } from '../creation.interface';
-import { IPublication } from '../publication.interface';
-import * as firebase from 'firebase';
-import { IMatchEvent } from './match-event.interface';
-import { ICoord } from './coord.interface';
+import { ICreation }         from '../creation.interface';
+import { IPublication }      from '../publication.interface';
+import * as firebase         from 'firebase';
+import { IMatchEvent }       from './match-event.interface';
+import { ICoord }            from './coord.interface';
+import { IStartingPosition } from './starting-position.interface';
+import { IFormation }        from './formation.interface';
 
 export interface IMatch {
 
@@ -11,12 +13,9 @@ export interface IMatch {
   assignedCategories: string[];
 
   assignedMatchEvents?: IMatchEvent[];
-  assignedFormation?: string;
+  assignedFormation?: IFormation;
 
-  startingEleven?: {
-    memberId: string;
-    position: ICoord;
-  }[];
+  startingEleven?: IStartingPosition[];
 
   assignedSubstitutes?: {
     memberId: string;
