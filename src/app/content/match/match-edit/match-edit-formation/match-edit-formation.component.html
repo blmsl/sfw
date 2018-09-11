@@ -21,25 +21,81 @@
                     fxLayout="column"
                     fxLayout.gt-sm="row">
 
+    <div fxFlex="90">
+
+    </div>
+    <!--<cdk-drop fxFlex="90"
+              #startingElevenList
+              [connectedTo]="['substitutionList', 'playerList']"
+              (dropped)="drop($event)">
+
+      <match-player *ngFor="let i of getMaxSubstitutes(form.get('assignedFormation').value, match.assignedSubstitutes)">
+      </match-player>
+    </cdk-drop>
     <match-edit-starting-eleven fxFlex="90"
+                                [connectedToDropables]="['playerList', 'substitutionList']"
+                                [members]="assignedTeamPlayers"
                                 [assignedFormation]="tacticalFormations | filterBy: ['title'] : match.assignedFormation"
                                 [match]="match">
-    </match-edit-starting-eleven>
+    </match-edit-starting-eleven>-->
 
-    <!--<match-edit-substitutions *ngIf="assignedFormation"
-                              fxFlex="10"
-                              [match]="match">
-    </match-edit-substitutions>-->
+    <div class="substitutions"
+         fxFlex="10">
 
+      <mat-card-subtitle>{{'general.matches.edit.substituteBench' | translate}}</mat-card-subtitle>
+      <div fxLayout="column">
+
+        <cdk-drop #playerList [connectedTo]="[substitutionList]" class="list-sorted" (dropped)="addToList($event)" [data]="items">
+          <match-player *ngFor="let item of items"
+                        cdkDrag
+                        class="list-sorted__item">
+          </match-player>
+
+        </cdk-drop>
+
+        <!--<cdk-drop [connectedTo]="[playerList]"
+                  [data]="match.assignedSubstitutes"
+                  #substitutionList
+                  [enterPredicate]="isAllowed"
+                  (exited)="exited($event)"
+                  (entered)="entered($event)"
+                  (dropped)="drop($event)">
+          <match-player *ngFor="let i of getMaxSubstitutes(form.get('assignedFormation').value, match.assignedSubstitutes)"
+                        cdkDrag>
+            <img *cdkDragPlaceHolder src="/assets/sfw/sfw.png">
+          </match-player>
+        </cdk-drop>
+        <cdk-drop #listTwo
+                  [connectedTo]="listOne"
+                  style="min-height: 150px; border: 1px solid red;"
+                  (dropped)="addToList($event)"
+                  [data]="substituteList">
+          <div *ngFor="let item of substituteList" cdkDrag>{{item.mainData.firstName}}</div>
+        </cdk-drop>-->
+      </div>
+    </div>
   </mat-card-content>
 
   <mat-card-actions>
-    <match-edit-player-list [match]="match"
-                            [assignedTeamPlayers]="assignedTeamPlayers">
-    </match-edit-player-list>
+    <mat-card-subtitle>{{'general.matches.edit.squad' | translate}}</mat-card-subtitle>
+
+    <p *ngIf="!assignedTeamPlayers || assignedTeamPlayers.length === 0">
+      {{'general.matches.edit.noAssignedPlayers' | translate}}
+    </p>
+
+    <cdk-drop style="border: 1px solid green"
+              orientation="horizontal"
+              #substitutionList [connectedTo]="[playerList]" class="list-sorted" (dropped)="addToList($event)"
+              [data]="assignedTeamPlayers">
+      <div *ngFor="let item of assignedTeamPlayers" cdkDrag class="list-sorted__item">{{item | json}}</div>
+    </cdk-drop>
+
   </mat-card-actions>
 
 </mat-card>
+
+<pre>{{substituteList | json}}</pre>
+<pre>{{assignedTeamPlayers | json}}</pre>
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

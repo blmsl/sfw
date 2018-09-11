@@ -53,14 +53,15 @@ import { MatchTableFilterComponent } from './match-table/match-table-filter/matc
 import { MatchTableListComponent } from './match-table/match-table-list/match-table-list.component';
 import { MatchEditFormationComponent } from './match-edit/match-edit-formation/match-edit-formation.component';
 import { MatchEditSubstitutionsComponent } from './match-edit/match-edit-formation/match-edit-substitutions/match-edit-substitutions.component';
-import { MatchEditPlayerListComponent } from './match-edit/match-edit-formation/match-edit-player-list/match-edit-player-list.component';
-import { SkyhookDndModule } from 'angular-skyhook';
-import { MatchFormationService } from '../../shared/services/match/match-formation.service';
-import { MatchFieldSquareComponent } from './match-edit/match-edit-formation/match-field-square/match-field-square.component';
+import { MatchEditPlayerListComponent }    from './match-edit/match-edit-formation/match-edit-player-list/match-edit-player-list.component';
+import { MatchFormationService }           from '../../shared/services/match/match-formation.service';
+import { MatchFieldSquareComponent }       from './match-edit/match-edit-formation/match-field-square/match-field-square.component';
+import { DragDropModule }                  from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
     CommonModule,
+    DragDropModule,
     LinkModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -80,7 +81,6 @@ import { MatchFieldSquareComponent } from './match-edit/match-edit-formation/mat
     SharedModule,
     SharedArticleModule,
     SharedMatchModule,
-    SkyhookDndModule,
     matchRoutingModule
   ],
   declarations: [

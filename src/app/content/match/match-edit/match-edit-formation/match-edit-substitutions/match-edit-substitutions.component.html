@@ -3,12 +3,17 @@
 
   <div fxLayout="column">
 
-    <div *ngFor="let i of maxSubstitutes"
-         [dropTarget]="target"
-         [ngStyle]="overlayStyle$|async">
-      <match-player [member]="match.assignedSubstitutes ? match.assignedSubstitutes[i] : null">
-      </match-player>
-    </div>
+    <cdk-drop #doneList
+              [data]="done"
+              [connectedTo]="connectedToDropables"
+              class="list"
+              (dropped)="drop($event)">
 
+      <match-player *ngFor="let i of maxSubstitutes"
+                    [member]="match.assignedSubstitutes ? match.assignedSubstitutes[i] : null"
+                    cdkDrag="false">
+      </match-player>
+
+    </cdk-drop>
   </div>
 </div>

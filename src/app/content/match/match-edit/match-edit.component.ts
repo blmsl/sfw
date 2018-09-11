@@ -92,14 +92,6 @@ export class MatchEditComponent implements OnInit, OnDestroy,OnChanges {
       this.match = data.match;
       this.getAssignedPlayers();
     });
-
-    /*this.form = this.fb.group({
-      creation: this.initCreation(),
-      publication: this.initPublication(this.match.publication),
-      assignedFormation: this.match.assignedFormation,
-      assignedPlayers: this.initAssignedPlayers(this.match.startingEleven),
-      assignedSubstitutes: this.initAssignedSubstitutes(this.match.assignedSubstitutes)
-    });*/
   }
 
   ngOnChanges() {
@@ -121,52 +113,6 @@ export class MatchEditComponent implements OnInit, OnDestroy,OnChanges {
   }
 
   /*
-  initAssignedSubstitutes(assignedSubstitutes: {
-    memberId: string;
-    position: ICoord
-  }[]): FormArray {
-    const formArray = this.fb.array([]);
-    if (assignedSubstitutes) {
-      for (let i = 0; i < assignedSubstitutes.length; i++) {
-        let formControl = this.fb.group({
-          memberId: assignedSubstitutes[ i ]
-        });
-        formArray.push(formControl);
-      }
-    }
-    return formArray;
-  }
-
-  createAssignedPlayer(assignedPosition: {
-    memberId: string;
-    position: ICoord;
-  }) {
-    return this.fb.group({
-      memberId: assignedPosition[ 'memberId' ],
-      position: assignedPosition[ 'position' ]
-    });
-  }
-
-  initAssignedPlayers(assignedPositions: {
-    memberId: string;
-    position: ICoord;
-  }[]): FormArray {
-    const formArray = this.fb.array([]);
-    if (assignedPositions) {
-      for (let i = 0; i < assignedPositions.length; i++) {
-        let formControl = this.createAssignedPlayer(assignedPositions[ i ]);
-        formArray.push(formControl);
-      }
-    }
-    return formArray;
-  }
-
-  /*addPlayerToStartingEleven($event: { memberId: string, position: ICoord }): void {
-   const control = <FormArray>this.form.get('assignedPlayers');
-   control.push(this.createAssignedPlayer($event));
-   }
-
-
   initCreation(): FormGroup {
     return this.fb.group({
       at: this.match.creation.at.toDate(),

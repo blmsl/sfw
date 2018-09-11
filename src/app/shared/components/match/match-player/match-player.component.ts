@@ -1,15 +1,16 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnDestroy,
-  OnInit,
-  Output
-} from '@angular/core';
-import { IMember } from '../../../interfaces/member/member.interface';
-import { Observable, of } from 'rxjs/index';
-import { IMediaItem } from '../../../interfaces/media/media-item.interface';
-import { MediaItemService } from '../../../services/media/media-item.service';
+  OnInit
+}                            from '@angular/core';
+import { IMember }           from '../../../interfaces/member/member.interface';
+import {
+  Observable,
+  of
+}                            from 'rxjs/index';
+import { IMediaItem }        from '../../../interfaces/media/media-item.interface';
+import { MediaItemService }  from '../../../services/media/media-item.service';
 import { SkyhookDndService } from 'angular-skyhook';
 
 @Component({
@@ -25,17 +26,20 @@ export class MatchPlayerComponent implements OnInit, OnDestroy {
 
   public memberImage: Observable<IMediaItem>;
 
-  public playerSource = this.dnd.dragSource<IDraggedItemInterface>('PLAYERS', {
+  /*public playerSource = this.dnd.dragSource<IDraggedItemInterface>('PLAYERS', {
+    canDrag: () => {
+      return true;
+    },
     beginDrag: () => ({ id: this.member.id }),
     endDrag: () => ({ id: this.member.id }),
   });
 
   public isDragging$ = this.playerSource.listen(m => {
     return m.isDragging();
-  });
+  });*/
 
   constructor(private mediaItemService: MediaItemService,
-    private dnd: SkyhookDndService) {
+    /*private dnd: SkyhookDndService*/) {
   }
 
   ngOnInit() {
@@ -51,7 +55,7 @@ export class MatchPlayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.playerSource.unsubscribe();
+    //this.playerSource.unsubscribe();
   }
 
 }

@@ -17,10 +17,7 @@ export interface IMatch {
 
   startingEleven?: IStartingPosition[];
 
-  assignedSubstitutes?: {
-    memberId: string;
-    position: ICoord;
-  }[];
+  assignedSubstitutes?: string[];
 
   assignedLocation: string;
   assignedTeam: string;

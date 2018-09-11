@@ -4,12 +4,18 @@
   {{'general.matches.edit.noAssignedPlayers' | translate}}
 </p>
 
-<div fxLayout="row wrap"
-     [dropTarget]="target">
 
-  <match-player fxFlex="8.25"
+<cdk-drop orientation="horizontal"
+          class="list"
+          [connectedTo]="connectedToDropables"
+          *ngIf="assignedTeamPlayers"
+          #playerList
+          [data]="assignedTeamPlayers"
+          (dropped)="drop($event)">
+
+  <match-player cdkDrag
                 *ngFor="let member of assignedTeamPlayers| orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
                 [member]="member">
   </match-player>
 
-</div>
+</cdk-drop>

@@ -1,10 +1,23 @@
 <div class="soccer-field" *ngIf="playerPositions$ | async as kp">
+
   <div *ngFor="let i of thirty">
-    <match-field-square *ngIf="getCoordinates(i) as position"
-                        [kp]="kp"
-                        [match]="match"
-                        [position]="position">
-      <match-player></match-player>
-    </match-field-square>
+
+    <cdk-drop #startingElevenList
+              [connectedTo]="connectedToDropables"
+              class="list"
+              (dropped)="drop($event)"><!-- [data]="done"  -->
+
+      <match-field-square *ngIf="getCoordinates(i) as position"
+                          cdkDrag
+                          [kp]="kp"
+                          [members]="members"
+                          [match]="match"
+                          [position]="position">
+      </match-field-square>
+
+      <!--<div class="box" *ngFor="let item of done" cdkDrag>{{item}}</div>-->
+
+    </cdk-drop>
   </div>
+
 </div>

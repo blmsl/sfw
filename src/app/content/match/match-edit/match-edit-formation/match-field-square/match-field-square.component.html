@@ -1,9 +1,11 @@
-<div class="wrapper"
-     [ngStyle]="overlayStyle$|async"
-     style=" padding: 20px">
+<div style="padding: 20px; color: #fff">
 
-  <match-player *ngIf="isVisible"
-                [dropTarget]="target">
+  <match-player class="wrapper"
+                cdkDrag=""
+                *ngIf="isVisible && selectedPlayer"
+                [member]="selectedPlayer">
   </match-player>
+
+  <match-player *ngIf="isVisible && !selectedPlayer"></match-player>
 
 </div>

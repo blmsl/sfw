@@ -7,3 +7,17 @@
   opacity: 0.4;
   border: 1px solid red;
 }
+
+/*
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  flex-grow: 1;
+  flex-basis: 0;
+  height: 300px;
+  width: 100px;
+}*/

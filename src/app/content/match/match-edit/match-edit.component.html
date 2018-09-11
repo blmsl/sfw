@@ -30,7 +30,6 @@
       <mat-tab [disabled]="!match.id"
                [label]="'general.matches.edit.startingEleven.title' | translate">
         <p *ngIf="!match.assignedTeam">{{'general.matches.edit.noAssignedTeam' | translate}}</p>
-
         <match-edit-formation *ngIf="assignedMembers$ | async as assignedMembers; else loadingTemplate"
                               (saveMatch)="saveMatch($event)"
                               [match]="match"
