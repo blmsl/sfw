@@ -1,19 +1,24 @@
-<h3>Statistik</h3>
-<ul>
-  <li>Spiele</li>
-  <li>Artikel</li>
-</ul>
+<mat-card>
+  <mat-card-title>{{'general.articles.dashboard.title' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'general.articles.dashboard.description' | translate}}</mat-card-subtitle>
+  <hr>
+  <mat-card-content>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px" *ngIf="articles$ | async as articles; else loadingTemplate">
+      <div fxFlex="70">
+        <article-dashboard-list [articles]="articles"></article-dashboard-list>
+      </div>
+      <div fxFlex="30">
+        <article-authors-stats *ngIf="users$ | async as users"
+                               [users]="users"
+                               [articles]="articles"></article-authors-stats>
+      </div>
+    </div>
 
-<h3>Ergebnisse / Spiele</h3>
-<ul>
-  <li>Letzte Spiele</li>
-  <li>Nächste Spiele</li>
-  <li>Fehlende Ergebnisse</li>
-</ul>
+  </mat-card-content>
+</mat-card>
 
-<h3>Artikel</h3>
-<ul>
-  <li>Neue Artikel</li>
-  <li>Vorberichte</li>
-  <li>Nachberichte</li>
-</ul>
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

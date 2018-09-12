@@ -10,6 +10,7 @@ export class ArticleCardComponent implements OnInit {
 
   @Input() article: IArticle;
   @Input() showDeleteButton: boolean = false;
+  @Input() showPublication: boolean = false;
 
   @Output() deleteArticleToMatchAssignment: EventEmitter<IArticle> = new EventEmitter<IArticle>(false);
 

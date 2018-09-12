@@ -168,6 +168,21 @@
       "urlShorteningTitle": "Links"
     },
     "articles": {
+      "dashboard":{
+        "articles": {
+          "all": "Alle Artikel",
+          "list": "Artikel",
+          "description": "Neue, zur Veröffentlichung geplante und alle Artikel in einer Übersicht.",
+          "latest": "Neue Artikel",
+          "planned": "Geplante Artikel"
+        },
+        "authors": {
+          "description": "Welcher Author hat die meisten Artikel erstellt?",
+          "title": "Statistiken"
+        },
+        "description": "Übersicht und Statistiken zum Artikel-Modul",
+        "title": "Schnellübersicht"
+      },
       "detail": {
         "assignedCategories": "Kategorien",
         "assignedImages": "Verknüpfte Fotos",

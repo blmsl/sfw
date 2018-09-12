@@ -1,9 +1,6 @@
 <mat-card>
-  <mat-card-title>
-    <mat-icon>donut_small</mat-icon>
-    {{'general.categories.list.categoriesByCategoryType' | translate}}
-  </mat-card-title>
-  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-title>{{'general.articles.dashboard.authors.title' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'general.articles.dashboard.authors.description' | translate}}</mat-card-subtitle>
   <hr>
   <mat-card-content>
     <canvas *ngIf="isDataAvailable; else loadingTemplate"
@@ -12,7 +9,10 @@
             [data]="doughnutChartData"
             [labels]="doughnutChartLabels"
             [options]="doughnutOptions"
-            [chartType]="doughnutChartType"></canvas>
+            [chartType]="doughnutChartType">
+    </canvas>
+    <pre>{{doughnutChartData | json}}</pre>
+    <pre>{{doughnutChartLabels | json}}</pre>
   </mat-card-content>
 </mat-card>
 

@@ -5,28 +5,34 @@
   </mat-card-header>
   <mat-card-content [innerHTML]="article.excerpt ? article.excerpt : article.text">
   </mat-card-content>
-  <mat-card-actions fxLayout="column"
-                    fxLayout.gt-sm="row"
-                    fxLayoutGap="10px">
-    <span>{{'general.articles.detail.writtenAt' | translate}}
-      <span style="font-weight: bold">{{article.articleDate | date: 'dd.MM.yy'}}</span>
-    </span>
-    <span fxFlex></span>
-    <button mat-raised-button
-            color="primary"
-            [routerLink]="['/articles/detail', article.id]">
-      {{'general.detail' | translate }}
-    </button>
-    <button mat-raised-button
-            color="accent"
-            [routerLink]="['/articles/edit', article.id]">
-      {{'general.edit' | translate }}
-    </button>
-    <button mat-raised-button
-            *ngIf="showDeleteButton"
-            color="warn"
-            (click)="deleteArticleToMatchAssignment.emit(article)">
-      {{'general.articles.edit.deleteAssignment' | translate }}
-    </button>
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="20px">
+      <span>{{'general.articles.detail.writtenAt' | translate}}
+        <span style="font-weight: bold">{{article.creation.at.seconds*1000 | date: 'dd.MM.yy HH:mm' }}</span>
+        <span *ngIf="showPublication && article.publication && article.publication.dateTime">
+          {{'general.articles.detail.plannedFor' | translate}}
+          {{article.publication.dateTime | date:'dd.MM.yy HH:mm' }}
+        </span>
+      </span>
+      <span fxFlex></span>
+      <button mat-raised-button
+              color="primary"
+              [routerLink]="['/articles/detail', article.id]">
+        {{'general.detail' | translate }}
+      </button>
+      <button mat-raised-button
+              color="accent"
+              [routerLink]="['/articles/edit', article.id]">
+        {{'general.edit' | translate }}
+      </button>
+      <button mat-raised-button
+              *ngIf="showDeleteButton"
+              color="warn"
+              (click)="deleteArticleToMatchAssignment.emit(article)">
+        {{'general.articles.edit.deleteAssignment' | translate }}
+      </button>
+    </div>
   </mat-card-actions>
 </mat-card>
