@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-title>{{ 'general.matches.edit.links.title' | translate }}</mat-card-title>
+  <mat-card-subtitle>{{ 'general.matches.edit.links.description' | translate }}</mat-card-subtitle>
+  <hr/>
+  <mat-card-content>
+    <p *ngIf="!match.assignedLinks || match.assignedLinks.length === 0">
+      {{ 'general.matches.edit.links.noLinksFound' | translate }}
+    </p>
+
+    <mat-list *ngIf="match.assignedLinks && match.assignedLinks.length > 0">
+      <mat-list-item *ngFor="let matchLink of match.assignedLinks; let i = index">
+        <a matLine
+           target="_blank"
+           [href]="matchLink.link">
+          {{ matchLink.title }}
+        </a>
+        <button mat-icon-button (click)="removeMatchLink(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

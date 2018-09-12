@@ -3,7 +3,7 @@ mat-card-content {
   padding: 0 !important;
 }
 
-.list {
+.playerList {
   display: flex;
   /*flex-direction: row;
   flex-flow: wrap;
@@ -41,5 +41,16 @@ mat-card-content {
 
 .list.cdk-drop-dragging .box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.soccer-field {
+  background: transparent url('/assets/sfw/match/soccer-field.jpg') center center / cover no-repeat;
+  min-height: 888px;
+  height: 100%;
+  width: 100%;
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(6, 12%);
+  grid-template-rows: repeat(5, 20%);
 }
 

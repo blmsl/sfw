@@ -1,0 +1,42 @@
+<mat-card [formGroup]="form">
+  <mat-card-title>{{'general.matches.edit.links.createLink.title' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'general.matches.edit.links.createLink.description' | translate}}</mat-card-subtitle>
+  <hr/>
+  <mat-card-content>
+
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+
+      <mat-form-field fxFlex.gt-sm="30">
+        <input matInput
+               placeholder="{{'general.matches.edit.links.inputs.title' | translate}}"
+               formControlName="title"/>
+      </mat-form-field>
+
+
+      <mat-form-field fxFlex.gt-sm="70">
+        <input matInput
+               placeholder="{{'general.matches.edit.links.inputs.link' | translate}}"
+               formControlName="link"/>
+      </mat-form-field>
+    </div>
+
+  </mat-card-content>
+
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button mat-icon-button
+              color="primary"
+              title="{{'general.save' | translate}}"
+              [disabled]="form.invalid"
+              (click)="saveLink(form.value)">
+        <mat-icon>save</mat-icon>
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

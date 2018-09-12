@@ -32,7 +32,6 @@ import { ArticleService } from '../../shared/services/article/article.service';
 import { MatchEditMainComponent } from './match-edit/match-edit-main/match-edit-main.component';
 import { TeamService } from '../../shared/services/team/team.service';
 import { SeasonService } from '../../shared/services/season/season.service';
-import { MatchEditStartingElevenComponent } from './match-edit/match-edit-formation/match-edit-starting-eleven/match-edit-starting-eleven.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MemberService } from '../../shared/services/member/member.service';
 import { IsMemberInStartingElevenFilterPipe } from '../../shared/pipes/is-member-in-starting-eleven-filter.pipe';
@@ -52,11 +51,11 @@ import { MatchTableComponent } from './match-table/match-table.component';
 import { MatchTableFilterComponent } from './match-table/match-table-filter/match-table-filter.component';
 import { MatchTableListComponent } from './match-table/match-table-list/match-table-list.component';
 import { MatchEditFormationComponent } from './match-edit/match-edit-formation/match-edit-formation.component';
-import { MatchEditSubstitutionsComponent } from './match-edit/match-edit-formation/match-edit-substitutions/match-edit-substitutions.component';
-import { MatchEditPlayerListComponent }    from './match-edit/match-edit-formation/match-edit-player-list/match-edit-player-list.component';
 import { MatchFormationService }           from '../../shared/services/match/match-formation.service';
 import { MatchFieldSquareComponent }       from './match-edit/match-edit-formation/match-field-square/match-field-square.component';
 import { DragDropModule }                  from '@angular/cdk/drag-drop';
+import { MatchEditLinksComponent } from './match-edit/match-edit-links/match-edit-links.component';
+import { MatchEditLinkFormComponent } from './match-edit/match-edit-links/match-edit-link-form/match-edit-link-form.component';
 
 @NgModule({
   imports: [
@@ -91,7 +90,6 @@ import { DragDropModule }                  from '@angular/cdk/drag-drop';
     MatchesComponent,
     MatchPreviewComponent,
     MatchEditMainComponent,
-    MatchEditStartingElevenComponent,
     MatchEditEventsComponent,
     MatchEditEventFormComponent,
     MatchDetailStartingElevenComponent,
@@ -105,9 +103,9 @@ import { DragDropModule }                  from '@angular/cdk/drag-drop';
     MatchTableFilterComponent,
     MatchTableListComponent,
     MatchEditFormationComponent,
-    MatchEditSubstitutionsComponent,
-    MatchEditPlayerListComponent,
-    MatchFieldSquareComponent
+    MatchFieldSquareComponent,
+    MatchEditLinksComponent,
+    MatchEditLinkFormComponent
   ],
   providers: [
     ArticleService,

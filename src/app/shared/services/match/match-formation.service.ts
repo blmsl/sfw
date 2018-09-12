@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable
-} from 'rxjs/index';
-import { ICoord } from '../../interfaces/match/coord.interface';
+import { ICoord }     from '../../interfaces/match/coord.interface';
 import { IFormation } from '../../interfaces/match/formation.interface';
 
 @Injectable()
 export class MatchFormationService {
 
-  playerPositions$: BehaviorSubject<ICoord[]> = new BehaviorSubject<ICoord[]>([]);
+  playerPositions: ICoord[] = [];
 
   constructor() {
   }
 
-  getFormationPositions(formation: IFormation): Observable<ICoord[]> {
+  getFormationPositions(formation: IFormation): ICoord[] {
     for (let i = 0; i < formation.positionList.length; i++) {
-      this.playerPositions$.next(this.playerPositions$.getValue().concat(formation.positionList[i]));
+      this.playerPositions.push(formation.positionList[ i ]);
     }
-    return this.playerPositions$;
+    return this.playerPositions;
   }
 
   getFormations(): IFormation[] {
@@ -26,53 +22,68 @@ export class MatchFormationService {
   }
 
   private formations: IFormation[] = [
-    {
-      'title': '4-4-2 (2)',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList':
-        [
-        ]
-    },
-    {
-      'title': '4-4-2 (1)',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList':
-        [
-        ]
-    },
-    {
-      'title': '4-2-4',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList':
-        [
-        ]
-    },
+    /*{
+     'title': '4-4-2 (2)',
+     'mainFormation': 11,
+     'maxSubstitutes': 7,
+     'positionList':
+     [
+     ]
+     },
+     {
+     'title': '4-4-2 (1)',
+     'mainFormation': 11,
+     'maxSubstitutes': 7,
+     'positionList':
+     [
+     ]
+     },
+     {
+     'title': '4-2-4',
+     'mainFormation': 11,
+     'maxSubstitutes': 7,
+     'positionList':
+     [
+     ]
+     },*/
     {
       'title': '3-4-3',
       'mainFormation': 11,
       'maxSubstitutes': 7,
-      'positionList':
-        [
-        ]
-    },
-    // ** //
-    {
-      'title': '4-3-3',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
       'positionList': [
+        { x: 0, y: 2 },
+
+        { x: 1, y: 0 },
+        { x: 1, y: 2 },
+        { x: 1, y: 4 },
+
+
+        { x: 2, y: 1 },
+        { x: 2, y: 3 },
+
+        { x: 3, y: 0 },
+        // { x: 3, y: 2 },
+        { x: 3, y: 4 },
+
+        { x: 5, y: 1 },
+        { x: 5, y: 3 }
       ]
     },
-    {
-      'title': '5-3-2',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList': [
-      ]
-    },
+    /*
+     {
+     'title': '4-3-3',
+     'mainFormation': 11,
+     'maxSubstitutes': 7,
+     'positionList': [
+     ]
+     },
+     {
+     'title': '5-3-2',
+     'mainFormation': 11,
+     'maxSubstitutes': 7,
+     'positionList': [
+     ]
+     },*/
     {
       'title': '3-5-2',
       'mainFormation': 11,
@@ -93,16 +104,16 @@ export class MatchFormationService {
         { x: 3, y: 4 },
 
         { x: 5, y: 1 },
-        { x: 5, y: 3 },
+        { x: 5, y: 3 }
       ]
-    },
-    {
-      'title': '5-4-1',
-      'mainFormation': 11,
-      'maxSubstitutes': 7,
-      'positionList': [
-      ]
-    }/*,
+    }
+    /*{
+     'title': '5-4-1',
+     'mainFormation': 11,
+     'maxSubstitutes': 7,
+     'positionList': [
+     ]
+     },
      {
      'title': '4-5-1',
      'mainFormation': 11,

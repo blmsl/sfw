@@ -10,10 +10,15 @@ export interface IMatch {
 
   id?: string;
 
+  assignedLinks?: {
+    title: string;
+    link: string;
+  }[];
+
   assignedCategories: string[];
 
   assignedMatchEvents?: IMatchEvent[];
-  assignedFormation?: IFormation;
+  assignedFormation?: string;
 
   startingEleven?: IStartingPosition[];
 

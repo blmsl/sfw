@@ -667,11 +667,17 @@
       },
       "edit": {
         "articles": "Artikel",
+        "articlesDescription": "Liste der mit dem Spiel verknüpften Artikel",
         "assignArticle": "Artikel auswählen",
+        "assignArticleDescription": "Verknüpfe weitere Artikel mit diesem Spiel",
         "assignArticleTitle": "Artikel verknüpfen",
         "assignArticleToMatch": "Mit einem Artikel verknüpfen",
         "events": {
-          "createEvent": "Neues Ereignis erstellen",
+          "createEvent": {
+            "description": "Hier können weitere Geschehnisse für den Spielbericht erfasst werden.",
+            "title": "Neues Ereignis erstellen"
+          },
+          "description": "Aufgelistet werden alle bisherigen Spielereignisse, die sortiert werden können.",
           "inputs": {
             "assignedEventCategory": "Art des Ereignisses",
             "description": "Freitext",
@@ -703,6 +709,19 @@
           },
           "timeHeader": "Datum und Uhrzeit",
           "title": "Spieltitel"
+        },
+        "links": {
+          "createLink": {
+            "description": "Bitte gib einen Linknamen und den Link an",
+            "title": "Link erstellen"
+          },
+          "description": "Alle bisher erfassten Links zu diesem Spiel (bspw. Soccerwatch Videos, Youtube etc.)",
+          "inputs": {
+            "link": "Link",
+            "title": "Titel des Links"
+          },
+          "noLinksFound": "Bisher wurden noch externen keine Links erfasst.",
+          "title": "Externe Links"
         },
         "main": "Spieldaten",
         "match": "Spielverlauf",

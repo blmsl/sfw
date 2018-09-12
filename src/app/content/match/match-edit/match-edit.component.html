@@ -41,7 +41,7 @@
         <div fxLayout="column"
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
-          <div fxFlex.gt-sm="50">
+          <div fxFlex.gt-sm="33,3333">
             <match-edit-events (saveMatch)="saveMatch($event)"
                                [match]="match"
                                [eventCategories]="matchEventCategories | orderBy: ['title']">
@@ -56,7 +56,7 @@
 
           </div>
 
-          <div fxFlex.gt-sm="50">
+          <div fxFlex.gt-sm="33,3333">
             <match-edit-articles *ngIf="articles$ | async as articles; else loadingTemplate"
                                  [match]="match"
                                  [articles]="articles">
@@ -67,14 +67,22 @@
                                      [articles]="articles">
             </match-edit-article-form>
           </div>
+
+          <div fxFlex.gt-sm="33,3333">
+            <match-edit-links [match]="match"
+                              (saveMatch)="saveMatch($event)">
+            </match-edit-links>
+
+            <match-edit-link-form [match]="match"
+                                  (saveMatch)="saveMatch($event)">
+            </match-edit-link-form>
+          </div>
         </div>
       </mat-tab>
       <mat-tab [disabled]="!match.id"
                [label]="'general.matches.edit.media' | translate">
         <ul>
-          <li>Verlinkte Video´s (soccerwatch.tv, youtube, facebook etc)</li>
-          <li>Verlinkte Fotos / Galerien (Link zu Facebook)</li>
-          <li>Lokal hochgeladene Dateien</li>
+          <li>hochgeladene Dateien</li>
         </ul>
       </mat-tab>
     </mat-tab-group>

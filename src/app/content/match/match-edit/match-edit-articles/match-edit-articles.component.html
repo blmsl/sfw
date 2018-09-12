@@ -4,15 +4,15 @@
   <hr/>
   <mat-card-content>
 
+    <p *ngIf="(articles | filterBy: ['assignedMatches'] : match.id).length === 0">
+      {{'general.matches.edit.noAssignedArticles' | translate}}
+    </p>
+
     <article-card *ngFor="let article of articles | filterBy: ['assignedMatches'] : match.id | orderBy: ['articleDate']"
                   (deleteArticleToMatchAssignment)="deleteArticleToMatchAssignment($event)"
                   [showDeleteButton]="true"
                   [article]="article">
     </article-card>
-
-    <p *ngIf="(articles | filterBy: ['assignedMatches'] : match.id).length === 0">
-      {{'general.matches.edit.noAssignedArticles' | translate}}
-    </p>
 
   </mat-card-content>
 </mat-card>

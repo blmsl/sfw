@@ -19,6 +19,9 @@ import {
   moveItemInArray,
   transferArrayItem
 }                                from '@angular/cdk/drag-drop';
+import { ICoord }                from '../../../../shared/interfaces/match/coord.interface';
+import { Observable }            from 'rxjs/index';
+import { MatSelectChange }       from '@angular/material';
 
 @Component({
   selector: 'match-edit-formation',
@@ -34,8 +37,11 @@ export class MatchEditFormationComponent implements OnInit {
   public tacticalFormations: IFormation[];
   public form: FormGroup;
 
+  public thirty: number[];
+  public playerPositions: ICoord[];
+  public coordinates = [];
+
   items = [ 'Zero', 'One', 'Two', 'Three' ];
-  items2 = [ 'Test', 'asd', 'Tdfs', 'Tmmndr' ];
 
   constructor(private matchFormationService: MatchFormationService,
               private fb: FormBuilder) {
@@ -47,9 +53,8 @@ export class MatchEditFormationComponent implements OnInit {
       assignedFormation: this.match.assignedFormation
     });
 
-    if (!this.match.assignedSubstitutes) {
-      this.match.assignedSubstitutes = [];
-    }
+    this.thirty = new Array(30).fill(0).map((_, i) => i);
+    this.setPlayerPositions(this.match.assignedFormation);
 
     this.form.valueChanges.pipe(
       distinctUntilChanged()
@@ -60,8 +65,31 @@ export class MatchEditFormationComponent implements OnInit {
     });
   }
 
+  changeFormation($event: MatSelectChange) {
+    this.setPlayerPositions($event.value);
+  }
+
+  setPlayerPositions(formationTitle: string) {
+    const formation = this.tacticalFormations.filter((formation: IFormation) => {
+      return formation.title === formationTitle;
+    });
+    this.playerPositions = this.matchFormationService.getFormationPositions(formation[ 0 ]);
+  }
+
+  getCoordinates(i): ICoord {
+    if (this.coordinates[ i ]) {
+      return this.coordinates[ i ];
+    }
+    let coords: ICoord = {
+      x: i % 6,
+      y: Math.floor(i / 6)
+    };
+    return this.coordinates[ i ] = coords;
+  }
+
   addToList(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
+      console.log(event);
       moveItemInArray(
         event.container.data,
         event.previousIndex,
@@ -79,14 +107,15 @@ export class MatchEditFormationComponent implements OnInit {
     }
   }
 
-  getMaxSubstitutes(assignedFormationTitle: string, substitutionList: string[]) {
-    const substitutionListLength = substitutionList ? substitutionList.length : 0;
-    const maxSubstitutes = this.tacticalFormations.filter((formation: IFormation) => {
-      return formation.title === assignedFormationTitle;
-    });
-    return maxSubstitutes.length === 0
-      ? []
-      : new Array(maxSubstitutes[ 0 ].maxSubstitutes - substitutionListLength).fill(0).map((_, i) => i);
-  }
+  /*
+   getMaxSubstitutes(assignedFormationTitle: string, substitutionList: string[]) {
+   const substitutionListLength = substitutionList ? substitutionList.length : 0;
+   const maxSubstitutes = this.tacticalFormations.filter((formation: IFormation) => {
+   return formation.title === assignedFormationTitle;
+   });
+   return maxSubstitutes.length === 0
+   ? []
+   : new Array(maxSubstitutes[ 0 ].maxSubstitutes - substitutionListLength).fill(0).map((_, i) => i);
+   } */
 
 }
