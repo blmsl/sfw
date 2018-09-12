@@ -10,8 +10,8 @@ const calendar = google.calendar({ version: 'v3', auth: GOOGLE_API_KEY });
 const db = admin.firestore();
 
 const currentDate = moment();
-const timeMin = currentDate.subtract(1, 'year').toISOString();
-const timeMax = currentDate.add(2, 'year').toISOString();
+const timeMin = currentDate.subtract(1, 'month').toISOString();
+const timeMax = currentDate.add(2, 'month').toISOString();
 
 export const getGoogleCalendarEvents = functions.region('europe-west1').https.onRequest(async (req, resp) => {
 
@@ -25,9 +25,7 @@ export const getGoogleCalendarEvents = functions.region('europe-west1').https.on
     }
 
     const promises: Promise<any>[] = [];
-    console.log(activeAppRef.docs[0].data().assignedCalendars);
     for (let cal of activeAppRef.docs[0].data().assignedCalendars) {
-      console.log(cal.link);
       promises.push(getEventList(cal.link));
     }
 
@@ -38,7 +36,7 @@ export const getGoogleCalendarEvents = functions.region('europe-west1').https.on
       eventList.push(snap.data().items);
     });
 
-    return resp.send(eventList);
+    return resp.send([]);
 
   } catch (error) {
     console.log(error);
@@ -48,7 +46,6 @@ export const getGoogleCalendarEvents = functions.region('europe-west1').https.on
 });
 
 function getEventList(cal: string): Promise<any> {
-  console.log(cal);
   return calendar.events.list({
     calendarId: cal,
     timeMin: timeMin,
@@ -58,13 +55,3 @@ function getEventList(cal: string): Promise<any> {
     orderBy: 'startTime'
   });
 }
-
-/*
-, (err, res) => {
-    if (err) {
-      console.log(cal.link + ' ' + err);
-      return [];
-    }
-    return res.data.items;
-  })
- */
