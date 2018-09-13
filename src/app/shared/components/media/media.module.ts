@@ -5,6 +5,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatDialogModule,
+  MatDialogRef,
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
@@ -27,7 +28,6 @@ import { DropZoneDirective } from '../../directives/media/drop-zone.directive';
 import { FileSelectDirective } from '../../directives/media/file-select.directive';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
 import { MediaGalleryComponent } from './media-gallery/media-gallery.component';
-import { MediaGalleryFormComponent } from './media-gallery-form/media-gallery-form.component';
 import { MediaGalleryListComponent } from './media-gallery-list/media-gallery-list.component';
 import { LoadingIndicatorModule } from '../loading-indicator/loading-indicator.module';
 import { InlineEditModule } from '../inline-edit/inline-edit.module';
@@ -68,7 +68,6 @@ import { MediaAvatarComponent } from './media-avatar/media-avatar.component';
   declarations: [
     MediaAvatarComponent,
     MediaCenterComponent,
-    MediaGalleryFormComponent,
     MediaGalleryListComponent,
     MediaUploaderComponent,
     MediaGalleryComponent,
@@ -82,13 +81,14 @@ import { MediaAvatarComponent } from './media-avatar/media-avatar.component';
     MediaAvatarComponent,
     MediaCenterComponent,
     MediaGalleryComponent,
-    MediaGalleryFormComponent,
+    // MediaGalleryFormComponent,
     MediaGalleryListComponent,
     MediaUploaderComponent
   ],
   entryComponents: [
+    MediaGalleryListComponent,
     MediaItemInfoComponent,
-    MediaGalleryFormComponent
+    // MediaGalleryFormComponent
   ],
   providers: [
     MediaGalleryService,

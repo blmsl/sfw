@@ -10,31 +10,31 @@ import { MediaGalleryService } from '../../../services/media/media-gallery.servi
 export class MediaGalleryFormComponent {
 
   // @Input() uploaderOptions: IUploaderOptions;
-  public form: FormGroup;
-  public isLoading: boolean = false;
+  //public form: FormGroup;
+  //public isLoading: boolean = false;
 
-  constructor(private fb: FormBuilder,
-    private mediaGalleryService: MediaGalleryService,
+  constructor(//private fb: FormBuilder,
+    //private mediaGalleryService: MediaGalleryService,
     public dialogRef: MatDialogRef<MediaGalleryFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
 
   ngOnInit() {
-    this.form = this.fb.group({
+    /*this.form = this.fb.group({
       title: '',
       description: '',
       creation: this.fb.group({
         by: ''
       })
-    });
+    });*/
   }
 
   closeDialog(): void {
     this.dialogRef.close();
   }
 
-  saveMediaGallery() {
+  /*saveMediaGallery() {
     this.isLoading = true;
     this.mediaGalleryService.createMediaGallery(this.form.getRawValue())
       .then(() => {
@@ -55,6 +55,5 @@ export class MediaGalleryFormComponent {
   showStatusMessage(status: string, message: string) {
     console.log(status);
     console.log(message);
-  }
-
+  } */
 }

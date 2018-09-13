@@ -10,10 +10,12 @@
          fxLayout.gt-sm="row"
          fxLayoutGap="20px">
       <span>{{'general.articles.detail.writtenAt' | translate}}
-        <span style="font-weight: bold">{{article.creation.at.seconds*1000 | date: 'dd.MM.yy HH:mm' }}</span>
+        <span style="font-weight: bold">{{article.creation.at.seconds*1000 | date: 'dd.MM.yy HH:mm' }}
+          {{'general.oClock' | translate}}</span><br />
         <span *ngIf="showPublication && article.publication && article.publication.dateTime">
           {{'general.articles.detail.plannedFor' | translate}}
-          {{article.publication.dateTime | date:'dd.MM.yy HH:mm' }}
+          <span style="font-weight: bold">{{article.publication.dateTime | date:'dd.MM.yy HH:mm' }}</span>
+            {{'general.oClock' | translate}}
         </span>
       </span>
       <span fxFlex></span>

@@ -48,7 +48,6 @@ export class ArticleAuthorsStatsComponent implements OnInit {
         const value: IArticle[] = this.articles[memberId];
 
         let author = this.users.find((user: IUser) => {
-          console.log(memberId);
           return user.id === memberId;
         });
         const name = author.firstName && author.lastName ? author.firstName +' ' + author.lastName : author.email;
