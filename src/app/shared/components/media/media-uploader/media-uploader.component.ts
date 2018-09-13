@@ -35,6 +35,8 @@ export class MediaUploaderComponent implements OnInit {
   public env;
   public currentMediaItem: Observable<IMediaItem>;
 
+  public savedItemId: string;
+
   constructor(private alertService: AlertService,
     private afs: AngularFirestore,
     private el: ElementRef,
@@ -43,6 +45,8 @@ export class MediaUploaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.savedItemId = this.uploaderOptions.itemId;
+
     if (this.uploaderOptions.queueLimit === 1) {
       this.currentMediaItem = this.mediaItemService.getCurrentImage(
         this.uploaderOptions.assignedObjects,
@@ -178,7 +182,7 @@ export class MediaUploaderComponent implements OnInit {
     const promises: Promise<any>[] = [];
 
     this.currentUploads.forEach((fileUpload: Upload) => {
-      if (this.currentUploads.length >= 1 && !this.uploaderOptions.itemId) {
+      if (this.currentUploads.length >= 1 && (!this.uploaderOptions.itemId || this.savedItemId === '')) {
         this.uploaderOptions.itemId = this.afs.createId();
       }
       promises.push(this.upload(fileUpload, this.uploaderOptions.itemId));
