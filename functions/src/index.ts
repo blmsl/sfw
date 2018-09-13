@@ -12,7 +12,9 @@
 
 import * as admin from 'firebase-admin';
 
-admin.initializeApp();
+admin.initializeApp({
+  storageBucket: "sf-winterbach.appspot.com"
+});
 
 
 import * as user from './user/index';

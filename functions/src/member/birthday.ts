@@ -24,7 +24,7 @@ const recipients: {
   age: number
 }[] = [];
 
-let currentApplication = {};
+let currentApplications = {};
 
 const birthdayWishes: {
   message: string,
@@ -116,17 +116,17 @@ export const birthdayReminderCron = functions.region('europe-west1')
   .pubsub.topic('daily-tick').onPublish(() => {
 
 
-    admin.firestore().collection('application').get().then(
+    return admin.firestore().collection('application').get().then(
       applications => {
         applications.forEach(function (application) {
           if (application.data().isCurrentApplication) {
-            currentApplication = application.data();
+            currentApplications =application.data();
           }
         });
       }
     ).then(() => {
 
-      console.log(currentApplication);
+      console.log(currentApplications);
 
       return admin.firestore()
         .collection('members')

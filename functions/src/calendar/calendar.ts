@@ -15,7 +15,9 @@ const currentDate = moment();
 const timeMin = currentDate.subtract(1, 'month').toISOString();
 const timeMax = currentDate.add(2, 'month').toISOString();
 
-export const getGoogleCalendarEvents = functions.region('europe-west1').https.onRequest(async (req, resp) => {
+export const getGoogleCalendarEvents = functions
+  .runWith({ memory: '128MB', timeoutSeconds: 20 })
+  .region('europe-west1').https.onRequest(async (req, resp) => {
 
   const eventList: Promise<any>[] = [];
 
@@ -27,10 +29,11 @@ export const getGoogleCalendarEvents = functions.region('europe-west1').https.on
     }
 
     const promises: Promise<any>[] = [];
-    for (let cal of activeAppRef.docs[0].data().assignedCalendars) {
+    promises.push(getEventList(activeAppRef.docs[0].data().assignedCalendars[0]));
+    /*for (const cal of activeAppRef.docs[0].data().assignedCalendars) {
       console.log(getEventList(cal.link));
       promises.push(getEventList(cal.link));
-    }
+    } */
 
     const snapshots = await Promise.all(promises);
 
