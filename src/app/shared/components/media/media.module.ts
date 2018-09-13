@@ -69,6 +69,7 @@ import { MediaGalleryFormComponent } from './media-gallery-form/media-gallery-fo
   declarations: [
     MediaAvatarComponent,
     MediaCenterComponent,
+    MediaGalleryFormComponent,
     MediaGalleryListComponent,
     MediaUploaderComponent,
     MediaGalleryComponent,
