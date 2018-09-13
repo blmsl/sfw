@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
       map((user: IUser) => {
         if (user && !user.emailVerified) {
           this.authService.signOut().then(() => {
-            return this.router.navigate(['/login'], { queryParams: { message: 'Global.Login.notVerified' } });
+            return this.router.navigate(['login'], { queryParams: { message: 'Global.Login.notVerified' } });
           }
           );
         }
@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
       }),
       tap((user: boolean) => {
         if (!user) {
-          return this.router.navigate(['/login']);
+          return this.router.navigate(['login']);
         }
       })
     );

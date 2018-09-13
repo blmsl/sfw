@@ -30,7 +30,7 @@ export class UnAuthGuard implements CanActivate {
       map((user: IUser) => !user),
       tap((isLoggedOut: boolean) => {
         if (!isLoggedOut) {
-          return this.router.navigate(['/dashboard']);
+          return this.router.navigate(['dashboard']);
         }
       })
     );
