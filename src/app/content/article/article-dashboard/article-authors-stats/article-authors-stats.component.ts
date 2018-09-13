@@ -13,7 +13,7 @@ import { IUser }    from '../../../../shared/interfaces/user/user.interface';
 })
 export class ArticleAuthorsStatsComponent implements OnInit {
 
-  @Input() articles: IArticle[];
+  @Input() articles: {};
   @Input() users: IUser[];
 
   public isDataAvailable: boolean = false;
@@ -26,10 +26,10 @@ export class ArticleAuthorsStatsComponent implements OnInit {
     }
   };
 
-  doughnutChartLabels: string[] = [];
-  doughnutChartData: number[] = [];
-  doughnutChartType = 'doughnut';
-  doughnutOptions: any = Object.assign({
+  chartLabels: string[] = [];
+  chartData: number[] = [];
+  chartType = 'doughnut';
+  options: any = Object.assign({
     elements: {
       arc: {
         borderWidth: 0
@@ -41,29 +41,22 @@ export class ArticleAuthorsStatsComponent implements OnInit {
   }
 
   ngOnInit() {
-    let data = [];
 
     if (this.articles) {
-      for (let i = 0; i < this.articles.length; i++) {
+
+      for (let memberId in this.articles) {
+        const value: IArticle[] = this.articles[memberId];
 
         let author = this.users.find((user: IUser) => {
-          return user.id === this.articles[i].creation.by;
+          console.log(memberId);
+          return user.id === memberId;
         });
         const name = author.firstName && author.lastName ? author.firstName +' ' + author.lastName : author.email;
-        if(this.doughnutChartLabels.indexOf(name) === -1){
-          this.doughnutChartLabels.push(name);
-        }
+        this.chartLabels.push(name);
 
-        if(data.indexOf(name) === -1){
-          data[name] = 1;
-        } else {
-          console.log(data[name]);
-          data[name] = data[name]+ 1;
-        }
-        console.log(data);
-
-
+        this.chartData.push(value.length);
       }
+
       this.isDataAvailable = true;
     }
   }
