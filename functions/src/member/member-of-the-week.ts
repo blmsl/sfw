@@ -43,7 +43,7 @@ export const memberOfTheWeekCron = functions.region('europe-west1')
           });
 
           const honoraryList = memberList.filter((member: any) => {
-            return member.clubData && member.clubData.status && member.clubData.status === '2';
+            return member.clubData && member.clubData.status && member.clubData.status === 2;
           });
 
           data = {
