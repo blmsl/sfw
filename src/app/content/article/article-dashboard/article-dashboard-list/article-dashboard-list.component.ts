@@ -1,9 +1,14 @@
 import {
   Component,
   Input,
-  OnInit
+  OnInit,
+  ViewChild
 } from '@angular/core';
-import { IArticle }          from '../../../../shared/interfaces/article.interface';
+import { IArticle }                        from '../../../../shared/interfaces/article.interface';
+import {
+  PerfectScrollbarConfigInterface,
+  PerfectScrollbarDirective
+} from 'ngx-perfect-scrollbar';
 
 @Component({
   selector: 'article-dashboard-list',
@@ -13,6 +18,10 @@ import { IArticle }          from '../../../../shared/interfaces/article.interfa
 export class ArticleDashboardListComponent implements OnInit {
 
   @Input() articles: IArticle[];
+
+  public config: PerfectScrollbarConfigInterface = {};
+
+  @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
 
   constructor() { }
 

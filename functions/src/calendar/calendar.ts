@@ -8,6 +8,8 @@ const GOOGLE_API_KEY = functions.config().google.calendar.key;
 const calendar = google.calendar({ version: 'v3', auth: GOOGLE_API_KEY });
 
 const db = admin.firestore();
+const settings = {timestampsInSnapshots: true};
+db.settings(settings);
 
 const currentDate = moment();
 const timeMin = currentDate.subtract(1, 'month').toISOString();
@@ -26,14 +28,15 @@ export const getGoogleCalendarEvents = functions.region('europe-west1').https.on
 
     const promises: Promise<any>[] = [];
     for (let cal of activeAppRef.docs[0].data().assignedCalendars) {
+      console.log(getEventList(cal.link));
       promises.push(getEventList(cal.link));
     }
 
     const snapshots = await Promise.all(promises);
 
     snapshots.forEach(snap => {
-      console.log(snap.data().items);
-      eventList.push(snap.data().items);
+      console.log(snap.data());
+      // eventList.push(snap.data().items);
     });
 
     return resp.send([]);

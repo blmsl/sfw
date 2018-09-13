@@ -42,6 +42,7 @@ export class MatchEditFormationComponent implements OnInit {
   public coordinates = [];
 
   items = [ 'Zero', 'One', 'Two', 'Three' ];
+  playerList = [];
 
   constructor(private matchFormationService: MatchFormationService,
               private fb: FormBuilder) {
