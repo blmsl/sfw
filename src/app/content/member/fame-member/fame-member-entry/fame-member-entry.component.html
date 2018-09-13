@@ -1,61 +1,105 @@
-<!--<mat-card fxFlex="25">
+<div *ngIf="entry.value.assignedMemberId !== ''">
+  <mat-card *ngIf="member; else loadingTemplate">
 
-  <mat-card-title *ngIf="getTitle(memberOfTheWeek) === currentWeek">
-    {{'general.menu.member.fame' | translate}} {{ getTitle(memberOfTheWeek) }}
-  </mat-card-title>
+    <mat-card-content>
+      <div fxLayout="row">
+        <div fxFlex="55">
+          <h1 class="ma-0"><b>{{'general.members.fame.' + entry.value.type | translate}}</b></h1>
+          <small>{{member.contact ? member.contact.email : '&nbsp;'}}</small>
+          <p class="mt-xs mb-xs">
+            {{member.mainData.firstName}} {{member.mainData.lastName}}
+          </p>
+          <p class="block mt-xs mb-xs">
+            {{member.mainData.birthday ? (member.mainData.birthday | date : 'dd.MM.yy') : ''}}
+          </p>
+          <a [routerLink]="['/members/detail', member.id]"
+             mat-raised-button
+             color="primary">
+            {{'general.members.fame.viewProfile' | translate}}
+          </a>
+        </div>
+        <div fxFlex="45">
+          <figure>
+            <div class="text-xs-center">
+              <img *ngIf="memberImage | async as image; else loadingTemplate"
+                   class="radius-circle"
+                   [src]="image.downloadURL">
+            </div>
+          </figure>
+        </div>
+      </div>
+    </mat-card-content>
+    <hr>
+    <mat-card-content *ngIf="member.clubData || member.ahData || member.dfbData">
+      <div fxLayout="row" class="text-xs-center">
 
-  <mat-card-content *ngFor="let member of members | filterBy: ['id']: entry.assignedMemberId">
-    <div fxLayout="row">
-      <div fxFlex="55">
-        <h1 class="ma-0"><b>{{'general.members.fame.' + entry.type | translate}}</b></h1>
-        <small>{{member.contact ? member.contact.email : '&nbsp;'}}</small>
-        <p class="mt-xs mb-xs">{{member.mainData.firstName}}
-          {{member.mainData.lastName}}</p>
-        <p class="block mt-xs mb-xs">{{member.mainData.birthday ? (member.mainData.birthday
-          | date : 'dd.MM.yy') : ''}}</p>
-        <a [routerLink]="['/members/detail', member.id]" mat-raised-button color="primary">
-          {{'general.members.fame.viewProfile' | translate}}
-        </a>
+        <div fxFlex="33" *ngIf="member.clubData && member.clubData.joined && member.clubData.joined !== ''">
+          <h1 class="ma-0">
+            <b>{{member.clubData.joined | date: 'dd.MM.yyyy'}}</b>
+          </h1>
+          <small>{{'general.members.fame.clubJoined' | translate}}</small>
+        </div>
+
+        <div fxFlex="33" *ngIf="member.ahData && member.ahData.joined && member.ahData.joined !== ''">
+          <h1 class="ma-0">
+            <b>{{member.ahData.joined | date: 'dd.MM.yyyy'}}</b>
+          </h1>
+          <small>{{'general.members.fame.ahJoined' | translate}}</small>
+        </div>
+
+        <div fxFlex="33"
+             *ngIf="member.dfbData && member.dfbData.eligibleForOfficialMatches && member.dfbData.eligibleForOfficialMatches !== ''">
+          <h1 class="ma-0">
+            <b>{{member.dfbData.eligibleForOfficialMatches | date: 'dd.MM.yyyy'}}</b>
+          </h1>
+          <small>{{'general.members.fame.allowedToPlayOfficialMatches' | translate}}</small>
+        </div>
       </div>
-      <div fxFlex="45">
-        <figure>
-          <div class="text-xs-center">
-            <img [src]="memberService.getProfileImage(member)"
-                 alt="{{member.mainData.firstName}} {{member.mainData.lastName}}"
-                 class="radius-circle">
-            <div class="text-md mt10">Account Usage</div>
-          </div>
-          <div class="ma-xs">
-          </div>
-          <div class="text-xs-center">
-            <small>234Gb of 879Gb</small>
-          </div>
-        </figure>
+    </mat-card-content>
+    <hr>
+    <mat-card-content fxLayout="column"
+                      fxLayoutGap="10px"
+                      fxLayout.gt-sm="row">
+
+      <div fxFlex="50">
+      <h4 class="mt-0">{{'general.members.fame.contact' | translate}}</h4>
+      <table class="table" *ngIf="member.contact">
+        <tr *ngIf="member.contact.email">
+          <th>{{'general.members.fame.email' | translate}}</th>
+          <td><a target="_blank" [href]="'mailto:' + member.contact.email">{{member.contact.email}}</a></td>
+        </tr>
+        <tr *ngIf="member.contact.fax">
+          <th>{{'general.members.fame.fax' | translate}}</th>
+          <td>{{member.contact.fax}}</td>
+        </tr>
+        <tr *ngIf="member.contact.phoneHome">
+          <th>{{'general.members.fame.phoneHome' | translate}}</th>
+          <td>{{member.contact.phoneHome}}</td>
+        </tr>
+        <tr *ngIf="member.contact.phoneMobile">
+          <th>{{'general.members.fame.phoneMobile' | translate}}</th>
+          <td>{{member.contact.phoneMobile}}</td>
+        </tr>
+        <tr *ngIf="member.contact.phoneWork">
+          <th>{{'general.members.fame.phoneWork' | translate}}</th>
+          <td>{{member.contact.phoneWork}}</td>
+        </tr>
+      </table>
       </div>
-    </div>
-  </mat-card-content>
-  <hr>
-  <mat-card-content>
-    <div fxLayout="row" class="text-xs-center">
-      <div fxFlex="33">
-        <h1 class="ma-0"><b>23,8K</b></h1>
-        <small>Followers</small>
+
+      <div fxFlex="50">
+        <h4 class="mt-0">{{'general.members.fame.address' | translate}}</h4>
+        <address *ngIf="member.address">
+          {{member.address.streetName}} {{member.address.houseNumber}}<br />
+          {{member.address.zip}} {{member.address.city}}
+          <span *ngIf="member.address.county">({{member.address.county}})</span>
+        </address>
       </div>
-      <div fxFlex="33">
-        <h1 class="ma-0"><b>569</b></h1>
-        <small>Following</small>
-      </div>
-      <div fxFlex="33">
-        <h1 class="ma-0"><b>67</b></h1>
-        <small>Posts</small>
-      </div>
-    </div>
-  </mat-card-content>
-  <hr>
-  <mat-card-content>
-    <h4 class="mt-0">About</h4>
-    <pre>{{entry | json}}</pre>
-    <p>Test</p>
-  </mat-card-content>
-</mat-card>-->
-ToDo
+      <p *ngIf="member.comment" [innerHTML]="member.comment"></p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

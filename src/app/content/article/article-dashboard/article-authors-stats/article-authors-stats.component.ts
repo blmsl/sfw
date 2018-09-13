@@ -46,29 +46,23 @@ export class ArticleAuthorsStatsComponent implements OnInit {
     if (this.articles) {
       for (let i = 0; i < this.articles.length; i++) {
 
-        //this.doughnutChartData[] = this.articles[ i ].id;
-
         let author = this.users.find((user: IUser) => {
           return user.id === this.articles[i].creation.by;
         });
-        const name = author.firstName + '' + author.lastName + ' ('+ author.email + ')';
+        const name = author.firstName && author.lastName ? author.firstName +' ' + author.lastName : author.email;
         if(this.doughnutChartLabels.indexOf(name) === -1){
-          this.doughnutChartLabels.push(author.firstName + '' + author.lastName + ' ('+ author.email + ')');
+          this.doughnutChartLabels.push(name);
         }
 
-        /*if (!(this.articles[ i ].creation.by in data)) {
-          this.doughnutChartLabels.push(this.articles[ i ].creation.by);
+        if(data.indexOf(name) === -1){
+          data[name] = 1;
+        } else {
+          console.log(data[name]);
+          data[name] = data[name]+ 1;
         }
+        console.log(data);
 
-        /*let categoryCounter: number = 0;
-         for (let j = 0; j < this.categories.length; j++) {
-         if (this.categories[j].assignedCategoryType === this.categoryTypes[i].id) {
-         categoryCounter++;
-         }
-         }*/
-        /*this.translateService.get('general.menu.' + this.categoryTypes[i].link + '.main').subscribe(
-         (translation: string) => this.doughnutChartLabels.push(translation)
-         );*/
+
       }
       this.isDataAvailable = true;
     }

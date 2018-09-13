@@ -1,33 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+}                                 from '@angular/core';
 import { MemberOfTheWeekService } from '../../../shared/services/member/member-of-the-week.service';
-import { Observable } from 'rxjs';
-import { IMemberOfTheWeek } from '../../../shared/interfaces/member/member-of-the-week.interface';
-import * as moment from 'moment';
-import { IMember } from '../../../shared/interfaces/member/member.interface';
-import { MemberService } from '../../../shared/services/member/member.service';
+import { Observable }             from 'rxjs';
+import { IMemberOfTheWeek }       from '../../../shared/interfaces/member/member-of-the-week.interface';
 
 @Component({
   selector: 'fame-member',
   templateUrl: './fame-member.component.html',
-  styleUrls: ['./fame-member.component.scss']
+  styleUrls: [ './fame-member.component.scss' ]
 })
 export class FameMemberComponent implements OnInit {
 
-  public membersOfTheWeek$: Observable<IMemberOfTheWeek[]>;
-  public members$: Observable<IMember[]>;
-  public currentWeek: string;
+  public membersOfTheWeeks$: Observable<IMemberOfTheWeek[]>;
+  // public members$: Observable<IMember[]>;
+  // public currentWeek: string;
 
-  constructor(private memberOfTheWeekService: MemberOfTheWeekService, public memberService: MemberService) {
-    this.membersOfTheWeek$ = memberOfTheWeekService.membersOfTheWeek$;
-    this.members$ = this.memberService.members$;
+  constructor(private memberOfTheWeekService: MemberOfTheWeekService) {
+    this.membersOfTheWeeks$ = memberOfTheWeekService.membersOfTheWeek$;
+    //this.members$ = this.memberService.getMembersByIds(members$;
   }
 
   ngOnInit() {
-    this.currentWeek = moment().week() + '-' + moment().format('YY');
+    // this.currentWeek = moment().week() + '-' + moment().format('YY');
   }
 
-  getTitle(memberOfTheWeek) {
-    return Object.keys(memberOfTheWeek)[0];
-  }
+  /*getTitle(memberOfTheWeek) {
+   return Object.keys(memberOfTheWeek)[0];
+   }*/
 
 }

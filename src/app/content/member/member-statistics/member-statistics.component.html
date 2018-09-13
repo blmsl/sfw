@@ -1,100 +1,109 @@
 <mat-card>
-    <mat-card-title>{{'general.menu.member.statistics' | translate}}</mat-card-title>
-    <mat-card-subtitle></mat-card-subtitle>
-    <mat-card-content>
-        <div *ngIf="members$ | async as members; else loadingTemplate">
+  <mat-card-title>{{'general.menu.member.statistics' | translate}}</mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-content>
+    <div *ngIf="members$ | async as members; else loadingTemplate">
 
-            <!--<mat-card fxFlex="20">
-                <mat-card-title>
-                    <mat-icon>cake</mat-icon>
-                    {{(members | isEmpty: 'mainData.birthday').length}} {{'general.members.statistics.noBirthdayTitle' |
-                    translate}}
-                </mat-card-title>
-                <mat-card-content style="max-height: 80vh;" [perfectScrollbar]="config">
-                    <mat-list dense>
-                        <mat-list-item
-                                *ngFor="let member of members | isEmpty: 'mainData.birthday' | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']">
-                            <a [routerLink]="['/members/edit', member.id]">{{member.mainData.lastName}}
-                                {{member.mainData.firstName}}</a>
-                        </mat-list-item>
-                    </mat-list>
-                </mat-card-content>
-            </mat-card>-->
+      <!--<mat-card fxFlex="20">
+          <mat-card-title>
+              <mat-icon>cake</mat-icon>
+              {{(members | isEmpty: 'mainData.birthday').length}} {{'general.members.statistics.noBirthdayTitle' |
+              translate}}
+          </mat-card-title>
+          <mat-card-content style="max-height: 80vh;" [perfectScrollbar]="config">
+              <mat-list dense>
+                  <mat-list-item
+                          *ngFor="let member of members | isEmpty: 'mainData.birthday' | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']">
+                      <a [routerLink]="['/members/edit', member.id]">{{member.mainData.lastName}}
+                          {{member.mainData.firstName}}</a>
+                  </mat-list-item>
+              </mat-list>
+          </mat-card-content>
+      </mat-card>-->
 
-            <mat-card fxFlex="25">
-                <mat-card-title>
-                    <mat-icon>email</mat-icon>
-                    {{(members | isEmpty: 'contact.email').length}} {{'general.members.statistics.noEmailTitle' |
-                    translate}}
-                </mat-card-title>
-                <mat-card-content style="max-height: 80vh;" [perfectScrollbar]="config">
-                    <mat-list dense>
-                        <mat-list-item
-                                *ngFor="let member of members | isEmpty: 'contact.email' | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']">
-                            <a [routerLink]="['/members/edit', member.id]">{{member.mainData.lastName}}
-                                {{member.mainData.firstName}}</a>
-                        </mat-list-item>
-                    </mat-list>
-                </mat-card-content>
-            </mat-card>
+      <div fxFlex="25">
+        <mat-card>
+          <mat-card-title>
+            <mat-icon>email</mat-icon>
+            {{(members | isEmpty: 'contact.email').length}} {{'general.members.statistics.noEmailTitle' |
+            translate}}
+          </mat-card-title>
+          <mat-card-content style="max-height: 70vh;" [perfectScrollbar]="config">
+            <mat-list dense>
+              <mat-list-item
+                *ngFor="let member of members | isEmpty: 'contact.email' | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']">
+                <a [routerLink]="['/members/edit', member.id]">{{member.mainData.lastName}}
+                  {{member.mainData.firstName}}</a>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
-            <mat-card fxFlex="25">
-                <mat-card-title>
-                    <mat-icon>show_chart</mat-icon>
-                    {{'general.members.statistics.clubTitle' | translate}}
-                </mat-card-title>
-                <mat-card-content style="max-height: 80vh;" [perfectScrollbar]="config">
-                    <mat-list dense>
-                        <mat-list-item *ngFor="let memberState of memberStates | orderBy: ['value']">
-                            <span fxFlex="70">{{'general.members.clubMemberStates.' + memberState.title | translate}}</span>
-                            {{ (members | filterBy: ['clubData.status'] : memberState.value).length}}
-                        </mat-list-item>
-                        <mat-list-item>
-                            <span fxFlex="70">{{'general.members.clubMemberStates.ahOnlyMembers' | translate}}</span>
-                            {{ (members | filterBy: ['clubData.status'] : 0 | filterBy: ['ahData.status'] : 1).length}}
-                        </mat-list-item>
-                    </mat-list>
-                </mat-card-content>
-            </mat-card>
+      <div fxFlex="25">
+        <mat-card>
+          <mat-card-title>
+            <mat-icon>show_chart</mat-icon>
+            {{'general.members.statistics.clubTitle' | translate}}
+          </mat-card-title>
+          <mat-card-content style="max-height: 70vh;" [perfectScrollbar]="config">
+            <mat-list dense>
+              <mat-list-item *ngFor="let memberState of memberStates | orderBy: ['value']">
+                <span fxFlex="70">{{'general.members.clubMemberStates.' + memberState.title | translate}}</span>
+                {{ (members | filterBy: ['clubData.status'] : memberState.value).length}}
+              </mat-list-item>
+              <mat-list-item>
+                <span fxFlex="70">{{'general.members.clubMemberStates.ahOnlyMembers' | translate}}</span>
+                {{ (members | filterBy: ['clubData.status'] : 0 | filterBy: ['ahData.status'] : 1).length}}
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
-            <mat-card fxFlex="25">
-                <mat-card-title style="max-height: 80vh;" [perfectScrollbar]="config">
-                    <mat-icon>show_chart</mat-icon>
-                    {{'general.members.statistics.ahTitle' | translate}}
-                </mat-card-title>
-                <mat-card-content>
-                    <mat-list dense>
-                        <mat-list-item *ngFor="let memberState of ahStates | orderBy: ['value']">
-                            <span fxFlex="70">{{'general.members.ahMemberStates.' + memberState.title | translate}}</span>
-                            {{ (members | filterBy: ['ahData.status'] : memberState.value).length}}
-                        </mat-list-item>
-                    </mat-list>
-                </mat-card-content>
-            </mat-card>
+      <div fxFlex="25">
+        <mat-card>
+          <mat-card-title style="max-height: 70vh;" [perfectScrollbar]="config">
+            <mat-icon>show_chart</mat-icon>
+            {{'general.members.statistics.ahTitle' | translate}}
+          </mat-card-title>
+          <mat-card-content>
+            <mat-list dense>
+              <mat-list-item *ngFor="let memberState of ahStates | orderBy: ['value']">
+                <span fxFlex="70">{{'general.members.ahMemberStates.' + memberState.title | translate}}</span>
+                {{ (members | filterBy: ['ahData.status'] : memberState.value).length}}
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
-            <mat-card fxFlex="25">
-                <mat-card-title>
-                    <mat-icon>cake</mat-icon>
-                    {{'general.members.statistics.birthdayTitle' | translate}}
-                </mat-card-title>
-                <mat-card-content style="max-height: 80vh;" [perfectScrollbar]="config">
-                    <mat-list dense>
-                        <mat-list-item *ngFor="let member of members | birthdayRangeFilter: 5 : 14">
-                            <a [routerLink]="['/members/edit', member.id]">
-                                <span [ngStyle]="{ 'font-weight': member.mainData.birthday.substring(5, 10) === today ? 'bold' : ''}">
+      <div fxFlex="25">
+        <mat-card>
+          <mat-card-title>
+            <mat-icon>cake</mat-icon>
+            {{'general.members.statistics.birthdayTitle' | translate}}
+          </mat-card-title>
+          <mat-card-content style="max-height: 70vh;" [perfectScrollbar]="config">
+            <mat-list dense>
+              <mat-list-item *ngFor="let member of members | birthdayRangeFilter: 5 : 14">
+                <a [routerLink]="['/members/edit', member.id]">
+                                <span
+                                  [ngStyle]="{ 'font-weight': member.mainData.birthday.substring(5, 10) === today ? 'bold' : ''}">
                                     {{member.mainData.firstName}} {{member.mainData.lastName}}
                                     {{ member.mainData.birthday | date: 'dd.MM.yy' }}
                                 </span>
-                            </a>
-                        </mat-list-item>
-                    </mat-list>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </mat-card-content>
+                </a>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card-content>
 </mat-card>
 
 
 <ng-template #loadingTemplate>
-    <loading-indicator></loading-indicator>
+  <loading-indicator></loading-indicator>
 </ng-template>

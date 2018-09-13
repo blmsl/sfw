@@ -9,12 +9,17 @@ import { IMemberOfTheWeek } from "../../../../shared/interfaces/member/member-of
 })
 export class FameMemberListComponent implements OnInit {
 
-  @Input() members: IMember[];
-  @Input() membersOfTheWeek: IMemberOfTheWeek[];
+  @Input() membersOfTheWeeks: IMemberOfTheWeek[];
+
+  public selectedFameMemberWeek: IMemberOfTheWeek;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  setFameMemberWeek(memberOfTheWeek: IMemberOfTheWeek){
+    this.selectedFameMemberWeek = memberOfTheWeek;
   }
 
 }

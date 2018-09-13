@@ -1018,9 +1018,23 @@
         "saved": "Die Änderungen am Mitglied wurden gespeichert"
       },
       "fame": {
+        "address": "Addresse",
         "ah": "AH-Mitglied",
+        "ahJoined": "AH Beitritt",
+        "allowedToPlayOfficialMatches": "Spielberechtigt seit",
+        "calendarWeek": "Kalenderwoche",
+        "chooseCalendarWeek": "Wähle die Kalenderwoche",
         "club": "Vereinsmitglied",
+        "clubJoined": "Vereinsbeitritt",
+        "contact": "Kontaktdaten",
+        "description": "Ehre, wem Ehre gebührt &ndash; jede Woche werden zufällige Mitglieder ausgewählt.",
+        "email": "E-Mail",
+        "fax": "Fax",
+        "phoneHome": "Telefon",
+        "phoneMobile": "Mobil",
+        "phoneWork": "Dienstlich",
         "honorary": "Ehrenmitglied",
+        "memberOfTheWeekForThe": "Ausgewählte Mitglieder für die ",
         "player": "Spieler",
         "viewProfile": "Profil anzeigen"
       },

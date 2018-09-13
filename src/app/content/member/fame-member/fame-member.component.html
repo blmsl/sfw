@@ -1,13 +1,13 @@
 <mat-card>
-    <mat-card-title>{{'general.menu.member.fame' | translate}}</mat-card-title>
-    <mat-card-subtitle></mat-card-subtitle>
-    <mat-card-content>
-        <fame-member-list [membersOfTheWeek]="membersOfTheWeek$ | async"
-                          [members]="members$ | async"></fame-member-list>
-
-    </mat-card-content>
+  <mat-card-title>{{'general.menu.member.fame' | translate}}</mat-card-title>
+  <mat-card-subtitle innerHTML="{{'general.members.fame.description' | translate}}"></mat-card-subtitle>
+  <mat-card-content>
+    <fame-member-list *ngIf="membersOfTheWeeks$ | async as membersOfTheWeeks; else loadingTemplate"
+                      [membersOfTheWeeks]="membersOfTheWeeks">
+    </fame-member-list>
+  </mat-card-content>
 </mat-card>
 
 <ng-template #loadingTemplate>
-    <loading-indicator></loading-indicator>
+  <loading-indicator></loading-indicator>
 </ng-template>

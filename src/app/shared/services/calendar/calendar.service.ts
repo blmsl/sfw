@@ -16,45 +16,22 @@ import { IApplication } from '../../interfaces/application.interface';
 @Injectable()
 export class CalendarService {
 
-  private url: string;
+  private url: string = 'https://europe-west1-sf-winterbach.cloudfunctions.net/googleCalendar';
 
-  constructor(private http: HttpClient,
+  constructor(private httpClient: HttpClient,
     private applicationService: ApplicationService,
     private memberService: MemberService) {
   }
 
-  getCalendars(): Observable<{ link: string, title: string }[]> {
-    return this.applicationService.getCurrentApplication().pipe(
-      map((applications: IApplication[]) => {
-        return applications[0].assignedCalendars;
-      })
-    );
-
-    /*if (!calendarIds || calendarIds.length === 0) {
-     return of([]);
-     }
-
-     const _this = this;
-
-     let calendarObservables: Observable<any>[] = [];
-     Object.keys(calendarIds).forEach(function(key) {
-     console.log(calendarIds[key]);
-     calendarObservables.push(_this.getCalendarEvents(calendarIds[key]));
-     });
-
-     return forkJoin(calendarObservables);*/
-  }
-
-  getCalendarEvents(calendarUrl: string): any {
-    return this.http.get('https://www.googleapis.com/calendar/v3/calendars/' + calendarUrl).pipe(
-      map((calEvents: any) => {
-        console.log(calEvents);
-        return calEvents;
+  public getCalendars(): Observable<ICalendarEvent[]> {
+    return this.httpClient.get(this.url).pipe(
+      map((events: ICalendarEvent[]) => {
+        return events;
       })
     );
   }
 
-  getMemberBirthdays(): Observable<ICalendarEvent[]> {
+  public getMemberBirthdays(): Observable<ICalendarEvent[]> {
     return this.memberService.members$.pipe(
       switchMap((members: IMember[]) => {
 

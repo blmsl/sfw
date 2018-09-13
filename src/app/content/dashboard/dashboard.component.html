@@ -164,43 +164,40 @@
             <hr>
           </mat-card-title>
           <mat-card-content>
-              <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
-                             [dynamicHeight]="true">
+            <mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
+                           [dynamicHeight]="true">
 
-                <mat-tab
-                  [label]="('general.dashboard.upComingMatches' | translate) + ' (' + (nextMatches$ |async)?.length + ')'">
-                  <div style="max-height: 300px"
-                       [perfectScrollbar]="config">
-                    <match-list *ngIf="nextMatches$ | async as nextMatches; else loadingTemplate"
-                                [categories]="categories"
-                                [matches]="nextMatches | orderBy: ['matchStartDate.seconds']">
-                    </match-list>
-                  </div>
-                </mat-tab>
+              <mat-tab *ngIf="nextMatches$ |async as nextMatches"
+                       [label]="('general.dashboard.upComingMatches' | translate) + ' (' + nextMatches.length + ')'">
+                <div style="max-height: 300px"
+                     [perfectScrollbar]="config">
+                  <match-list [categories]="categories"
+                              [matches]="nextMatches | orderBy: ['matchStartDate.seconds']">
+                  </match-list>
+                </div>
+              </mat-tab>
 
-                <mat-tab
-                  [label]="('general.dashboard.lastMatches' | translate) + ' (' + (pastMatches$ |async)?.length + ')'">
-                  <div style="max-height: 300px"
-                       [perfectScrollbar]="config">
-                    <match-list *ngIf="pastMatches$ | async as pastMatches; else loadingTemplate"
-                                [categories]="categories"
-                                [matches]="pastMatches | orderBy: ['-matchEndDate.seconds'] ">
-                    </match-list>
-                  </div>
-                </mat-tab>
+              <mat-tab *ngIf="pastMatches$ |async as pastMatches"
+                       [label]="('general.dashboard.lastMatches' | translate) + ' (' + pastMatches.length + ')'">
+                <div style="max-height: 300px"
+                     [perfectScrollbar]="config">
+                  <match-list [categories]="categories"
+                              [matches]="pastMatches | orderBy: ['-matchEndDate.seconds'] ">
+                  </match-list>
+                </div>
+              </mat-tab>
 
-                <mat-tab
-                  [label]="('general.dashboard.matchesWithoutResult' | translate) + ' (' + (matchesWithoutResult$ | async)?.length + ')'">
-                  <div style="max-height: 300px"
-                       [perfectScrollbar]="config">
-                    <match-list *ngIf="matchesWithoutResult$ | async as matchesWithoutResult; else loadingTemplate"
-                                [categories]="categories"
-                                [showResultInputs]="true"
-                                [matches]="matchesWithoutResult | orderBy: ['-matchEndDate.seconds']">
-                    </match-list>
-                  </div>
-                </mat-tab>
-              </mat-tab-group>
+              <mat-tab *ngIf="matchesWithoutResult$ | async as matchesWithoutResult"
+                       [label]="('general.dashboard.matchesWithoutResult' | translate) + ' (' + matchesWithoutResult.length + ')'">
+                <div style="max-height: 300px"
+                     [perfectScrollbar]="config">
+                  <match-list [categories]="categories"
+                              [showResultInputs]="true"
+                              [matches]="matchesWithoutResult | orderBy: ['-matchEndDate.seconds']">
+                  </match-list>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
           </mat-card-content>
         </mat-card>
       </div>

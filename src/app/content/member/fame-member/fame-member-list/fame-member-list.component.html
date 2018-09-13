@@ -1,16 +1,42 @@
-<div *ngIf="members && membersOfTheWeek; else loadingTemplate">
+<mat-card>
 
-  <div *ngFor="let memberOfTheWeek of membersOfTheWeek"
-       fxLayout="column"
-       fxLayout.gt-sm="row"
-       fxLayoutGap="10px">
+  <mat-card-header fxLayout="column">
+    <mat-card-title>
+      <span></span>
+      <span fxFlex></span>
+      <div>
+        <mat-form-field>
+          <mat-select [placeholder]="'general.members.fame.chooseCalendarWeek' | translate">
+            <mat-option *ngFor="let memberOfTheWeek of membersOfTheWeeks | orderBy: ['-ah.week']"
+                        [value]="memberOfTheWeek"
+                        (onSelectionChange)="setFameMemberWeek(memberOfTheWeek)">
+              {{memberOfTheWeek.ah.week}}. {{'general.members.fame.calendarWeek' | translate}}
+              {{memberOfTheWeek.ah.year}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+  <hr>
+  <mat-card-content *ngIf="selectedFameMemberWeek">
+    <h3>{{'general.members.fame.memberOfTheWeekForThe' | translate}}
+      <span style="font-weight: bolder">{{selectedFameMemberWeek.ah.week}}</span>.
+      {{'general.members.fame.calendarWeek' | translate}}
+      <span style="font-weight: bolder">{{selectedFameMemberWeek.ah.year}}</span>
+    </h3>
 
-    <pre>{{memberOfTheWeek | json}}</pre>
-    <!--
-    <fame-member-entry *ngFor="let entry of memberOfTheWeek | keyvalue"></fame-member-entry>
-    -->
-  </div>
-</div>
+    <div fxFlexLayout="column"
+         fxLayout.gt-sm="row wrap">
+      <fame-member-entry fxFlex="50"
+                         *ngFor="let entry of selectedFameMemberWeek | keyvalue"
+                         [entry]="entry">
+      </fame-member-entry>
+    </div>
+
+  </mat-card-content>
+</mat-card>
+
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>
