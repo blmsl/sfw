@@ -29,14 +29,15 @@ import { FileSelectDirective } from '../../directives/media/file-select.directiv
 import { FileSizePipe } from '../../pipes/file-size.pipe';
 import { MediaGalleryComponent } from './media-gallery/media-gallery.component';
 import { MediaGalleryListComponent } from './media-gallery-list/media-gallery-list.component';
-import { LoadingIndicatorModule } from '../loading-indicator/loading-indicator.module';
-import { InlineEditModule } from '../inline-edit/inline-edit.module';
-import { MediaItemInfoComponent } from './media-item-info/media-item-info.component';
-import { MediaGalleriesComponent } from './media-galleries/media-galleries.component';
-import { NgPipesModule } from 'ngx-pipes';
-import { MediaGalleryService } from '../../services/media/media-gallery.service';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MediaAvatarComponent } from './media-avatar/media-avatar.component';
+import { LoadingIndicatorModule }    from '../loading-indicator/loading-indicator.module';
+import { InlineEditModule }          from '../inline-edit/inline-edit.module';
+import { MediaItemInfoComponent }    from './media-item-info/media-item-info.component';
+import { MediaGalleriesComponent }   from './media-galleries/media-galleries.component';
+import { NgPipesModule }             from 'ngx-pipes';
+import { MediaGalleryService }       from '../../services/media/media-gallery.service';
+import { ReactiveFormsModule }       from '@angular/forms';
+import { MediaAvatarComponent }      from './media-avatar/media-avatar.component';
+import { MediaGalleryFormComponent } from './media-gallery-form/media-gallery-form.component';
 
 @NgModule({
   imports: [
@@ -81,7 +82,7 @@ import { MediaAvatarComponent } from './media-avatar/media-avatar.component';
     MediaAvatarComponent,
     MediaCenterComponent,
     MediaGalleryComponent,
-    // MediaGalleryFormComponent,
+    MediaGalleryFormComponent,
     MediaGalleryListComponent,
     MediaUploaderComponent
   ],
