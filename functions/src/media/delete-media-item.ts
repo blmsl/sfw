@@ -6,7 +6,8 @@ const bucket = admin.storage().bucket('sf-winterbach.appspot.com');
 
 export const deleteMediaItemCron = functions
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
-  .firestore.document('files/{mediaItemId}').onDelete((snap) => {
-    data = snap.data();
+  .firestore.document('/files/{mediaItemId}').onDelete((snap) => {
+    data = snap.data()
+    console.log(snap.data());
     return bucket.file(data.downloadURL).delete();
   });

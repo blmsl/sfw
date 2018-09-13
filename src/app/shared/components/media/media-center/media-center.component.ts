@@ -45,10 +45,9 @@ export class MediaCenterComponent implements OnDestroy {
   }
 
   removeMediaItem(mediaItem: IMediaItem): void {
-    console.log(mediaItem.id);
-    /*this.mediaItemService.removeMediaItem(mediaItem.id)
+    this.mediaItemService.removeMediaItem(mediaItem.id)
       .then(() => this.alertService.showSnackBar('success', 'general.media.uploader.removedFile'))
-      .catch(error => this.alertService.showSnackBar('error', error.message)); */
+      .catch(error => this.alertService.showSnackBar('error', error.message));
   }
 
 }
