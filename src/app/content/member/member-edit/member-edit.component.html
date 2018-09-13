@@ -1,5 +1,4 @@
-<mat-card *ngIf="member; else loadingTemplate"
-          [formGroup]="form">
+<mat-card *ngIf="member; else loadingTemplate">
   <mat-card-title>
     <mat-icon>mode_edit</mat-icon>
     {{'general.menu.member.edit' | translate}}
@@ -10,13 +9,13 @@
 
     <mat-tab-group [dynamicHeight]="true">
       <mat-tab label="{{'general.members.tabs.main' | translate}}">
-        <member-edit-main [form]="form"
+        <member-edit-main (saveMember)="saveMember($event)"
                           [member]="member">
         </member-edit-main>
       </mat-tab>
       <mat-tab label="{{'general.members.tabs.driveAndDFB' | translate}}">
         <member-edit-drive *ngIf="clubs$ | async as clubs; else loadingTemplate"
-                           [form]="form"
+                           (saveMember)="saveMember($event)"
                            [clubs]="clubs"
                            [member]="member">
         </member-edit-drive>
@@ -29,25 +28,22 @@
              fxLayoutGap="10px">
           <div fxFlex.gt-sm="33,3333">
             <member-edit-interviews *ngIf="articles$ | async as articles; else loadingTemplate"
-                                    (add)="addInterview()"
-                                    (delete)="removeInterview($event)"
+                                    (saveMember)="saveMember($event)"
+                                    [showForm]="true"
                                     [articles]="articles"
-                                    [form]="form">
+                                    [member]="member">
             </member-edit-interviews>
           </div>
           <div fxFlex.gt-sm="33,3333">
-            <member-edit-profile (add)="addProfileEntry()"
-                                 (delete)="removeProfileEntry($event)"
-                                 [form]="form">
+            <member-edit-profile (saveMember)="saveMember($event)"
+                                 [member]="member">
             </member-edit-profile>
           </div>
           <div fxFlex.gt-sm="33,3333">
             <member-edit-other-opinions *ngIf="members$ | async as members; else loadingTemplate"
-                                        (add)="addOpinion()"
-                                        (delete)="removeOpinion($event)"
-                                        (setOpinionValidators)="setOpinionValidators($event)"
+                                        (saveMember)="saveMember($event)"
                                         [members]="members"
-                                        [form]="form">
+                                        [member]="member">
             </member-edit-other-opinions>
           </div>
         </div>
@@ -56,13 +52,12 @@
       <mat-tab
         label="{{'general.members.tabs.teams' | translate}} & {{'general.members.tabs.functions' | translate}}">
         <div *ngIf="clubs$ | async as clubs; else loadingTemplate">
-          <!--<member-edit-functions *ngIf="teams$ | async as teams; else loadingTemplate"
-                                 (deleteMemberFromTeam)="deleteMemberFromTeam($event)"
-                                 (deleteMemberFromTeamManagement)="deleteMemberFromTeamManagement($event)"
+          <member-edit-functions *ngIf="teams$ | async as teams; else loadingTemplate"
+                                 (saveMember)="saveMember($event)"
                                  [member]="member"
                                  [clubs]="clubs"
                                  [teams]="teams">
-          </member-edit-functions>-->
+          </member-edit-functions>
         </div>
       </mat-tab>
 

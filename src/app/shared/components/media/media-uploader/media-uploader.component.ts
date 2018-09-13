@@ -43,12 +43,13 @@ export class MediaUploaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.uploaderOptions.queueLimit);
     if (this.uploaderOptions.queueLimit === 1) {
       this.currentMediaItem = this.mediaItemService.getCurrentImage(
         this.uploaderOptions.assignedObjects,
         this.uploaderOptions.itemId ? this.uploaderOptions.itemId : ''
       );
+    } else {
+      this.currentMediaItem = of(null);
     }
   }
 

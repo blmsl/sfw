@@ -1,16 +1,19 @@
 import {
   Component,
   ElementRef,
+  EventEmitter,
   forwardRef,
   Input,
   OnInit,
+  Output,
   Renderer2,
   ViewChild
 } from '@angular/core';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR
-} from '@angular/forms';
+}                          from '@angular/forms';
+import { OuterSubscriber } from 'rxjs/internal/OuterSubscriber';
 
 const INLINE_EDIT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,

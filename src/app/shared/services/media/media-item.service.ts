@@ -21,7 +21,8 @@ export class MediaItemService {
 
   createMediaItem(mediaItem: IMediaItem): Promise<void> {
     mediaItem.creation = this.authService.getCreation();
-    return this.afs.collection(this.path).doc(this.afs.createId()).set(mediaItem, { merge: true });
+    mediaItem.id = this.afs.createId();
+    return this.afs.collection(this.path).doc(mediaItem.id).set(mediaItem, { merge: true });
   }
 
   removeMediaItem(mediaItemId: string)/*: Promise<void>*/ {

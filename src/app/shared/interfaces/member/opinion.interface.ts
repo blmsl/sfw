@@ -4,7 +4,7 @@ import { ICreation } from '../creation.interface';
 export interface IOpinion {
   comment: string;
   type: string;
-  creation: ICreation;
+  creation?: ICreation;
   name: {
     firstName: string;
     lastName: string;

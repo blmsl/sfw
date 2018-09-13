@@ -16,7 +16,7 @@
             style="margin-bottom: 25px"
             type="button"
             color="primary"
-            (click)="addEntry()">
+            (click)="addInterview()">
       {{'general.members.edit.interviews.addEntry' | translate}}
     </button>
 
@@ -38,7 +38,7 @@
           </mat-form-field>
 
           <button mat-icon-button
-                  (click)="delete.emit(i)"
+                  (click)="removeInterview(i)"
                   color="warn">
             <mat-icon>delete</mat-icon>
           </button>

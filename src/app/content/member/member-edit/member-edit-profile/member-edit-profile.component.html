@@ -10,7 +10,7 @@
               style="margin-bottom: 25px"
               type="button"
               color="primary"
-              (click)="add.emit(true)">
+              (click)="addProfileEntry()">
         {{'general.members.edit.profile.addEntry' | translate}}
       </button>
 
@@ -42,7 +42,7 @@
             <button fxFlexOffset.gt-sm="2"
                     fxFlex.gt-sm="6"
                     mat-icon-button
-                    (click)="delete.emit(i)"
+                    (click)="removeProfileEntry(i)"
                     color="warn">
               <mat-icon>delete</mat-icon>
             </button>

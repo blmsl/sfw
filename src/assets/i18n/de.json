@@ -937,6 +937,7 @@
           "ageGroupAndPassData": "Altersklasse, Pass-Nr./-datum",
           "birthday": "Geburtsdatum",
           "comment": "Bemerkung",
+          "commentDescription": "Hier können weiter Informationen zum Mitglied hinterlegt werden.",
           "contact": "Kontaktdaten",
           "createMember": "Mitglied erstellen",
           "delete": "Mitglied löschen",
@@ -994,7 +995,9 @@
         "assignedAsPlayer": "Als Spieler in einer Mannschaft ...",
         "mainTitle": "Wichtigste Daten",
         "notAssignedToAnyTeamManagements": "Das Mitglied hat noch keine Aufgaben in einer Mannschaft übernommen.",
+        "notAssignedToAnyTeamManagementsInSeason ": "Das Mitglied hat in dieser Saison keine Aufgaben übernommen",
         "notAssignedToAnyTeams": "Das Mitglied wurde noch nicht mit einer Mannschaft verknüpft.",
+        "notAssignedToAnyTeamsInSeason": "Das Mitglied spielt in keiner Mannschaft in dieser Saison",
         "opinions": {
           "addEntry": "Neuer Kommentar",
           "comment": "Der Kommentar",

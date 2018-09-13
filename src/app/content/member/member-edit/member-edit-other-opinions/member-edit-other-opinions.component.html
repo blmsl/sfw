@@ -16,14 +16,14 @@
                style="margin-bottom: 40px;">
             <button mat-raised-button
                     [disabled]="form.get('opinions')['controls'][i]['controls']['type'].value === 'insert'"
-                    (click)="setOpinionValidators.emit({'i': i, 'type': 'insert' })"
+                    (click)="setOpinionValidators({'i': i, 'type': 'insert' })"
                     color="primary">
               {{'general.members.edit.opinions.perTextField' | translate}}
             </button>
 
             <button mat-raised-button
                     [disabled]="form.get('opinions')['controls'][i]['controls']['type'].value === 'list'"
-                    (click)="setOpinionValidators.emit({'i': i, 'type': 'list' })"
+                    (click)="setOpinionValidators({'i': i, 'type': 'list' })"
                     color="primary">
               {{'general.members.edit.opinions.perSelectField' | translate}}
             </button>
@@ -32,7 +32,7 @@
           <div fxFlex="10"
                class="text-md-right">
             <button mat-icon-button
-                    (click)="delete.emit(i)"
+                    (click)="removeOpinion(i)"
                     color="warn">
               <mat-icon>delete</mat-icon>
             </button>
@@ -97,7 +97,7 @@
             style="margin-bottom: 25px"
             type="button"
             color="primary"
-            (click)="add.emit(true)">
+            (click)="addOpinion()">
       {{'general.members.edit.opinions.addEntry' | translate}}
     </button>
   </mat-card-actions>

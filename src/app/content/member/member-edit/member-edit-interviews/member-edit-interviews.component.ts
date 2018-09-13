@@ -1,6 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { IArticle } from '../../../../shared/interfaces/article.interface';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
+import { IArticle }                                       from '../../../../shared/interfaces/article.interface';
+import { IMember }                                        from '../../../../shared/interfaces/member/member.interface';
+import {
+  debounceTime,
+  distinctUntilChanged
+}                                                         from 'rxjs/operators';
+import { IInterview }                                     from '../../../../shared/interfaces/member/interview.interface';
 
 @Component({
   selector: 'member-edit-interviews',
@@ -9,23 +20,61 @@ import { IArticle } from '../../../../shared/interfaces/article.interface';
 })
 export class MemberEditInterviewsComponent implements OnInit {
 
-  @Input() form: FormGroup;
   @Input() articles: IArticle[];
+  @Input() member: IMember;
+  @Input() showForm: boolean = false;
 
-  @Output() add: EventEmitter<boolean> = new EventEmitter<boolean>(false);
-  @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
+  @Output() saveMember: EventEmitter<IMember> = new EventEmitter<IMember>(false);
 
-  public showForm: boolean = false;
+  public form: FormGroup;
 
-  constructor() {
+  constructor(private fb: FormBuilder) {
   }
 
   ngOnInit() {
+    this.form = this.fb.group({
+      assignedInterviews: this.initInterviews()
+    });
+
+    this.form.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()
+    ).subscribe((changes: IMember) => {
+      // this.member = Object.assign({}, this.member, changes);
+      if (this.form.valid) {
+        this.saveMember.emit(changes);
+      }
+    });
   }
 
-  addEntry() {
-    this.showForm = true;
-    this.add.emit(true);
+  // Interviews
+  initInterviews(): FormArray {
+    const formArray = [];
+    if (this.member.assignedInterviews) {
+      for (let i = 0; i < this.member.assignedInterviews.length; i++) {
+        formArray.push(this.initInterview(this.member.assignedInterviews[ i ]));
+      }
+    }
+    return this.fb.array(formArray);
+  }
+
+  initInterview(interview: IInterview): FormGroup {
+    return this.fb.group({
+      assignedArticleId: [ interview.assignedArticleId ? interview.assignedArticleId : '', [ Validators.required, Validators.maxLength(100) ] ]
+    });
+  }
+
+  addInterview(): void {
+    const control = this.form.controls[ 'assignedInterviews' ] as FormArray;
+    const interview: IInterview = {
+      assignedArticleId: ''
+    };
+    control.push(this.initInterview(interview));
+  }
+
+  removeInterview($event: number): void {
+    const control = this.form.controls[ 'assignedInterviews' ] as FormArray;
+    control.removeAt($event);
   }
 
 }

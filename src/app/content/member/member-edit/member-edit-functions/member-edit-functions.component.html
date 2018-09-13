@@ -20,6 +20,11 @@
             *ngFor="let season of seasons | seasonsWithTeamsFilter: (teams | isTeamMemberFilter : member : 'assignedPlayers')">
             <h3>{{season.title}}</h3>
 
+            <p
+              *ngIf="(teams | isTeamMemberFilter : member : 'assignedPlayers'| filterBy: ['assignedSeason'] : season.id).length === 0">
+              {{'general.members.edit.notAssignedToAnyTeamsInSeason' | translate}}
+            </p>
+
             <mat-list dense *ngIf="(teams | isTeamMemberFilter : member : 'assignedPlayers'
                     | orderBy: ['subTitle', 'title'] | filterBy: ['assignedSeason'] : season.id).length > 0">
 
@@ -28,7 +33,7 @@
                 <a [routerLink]="['/teams/detail', team.id]">{{team.title}} {{team.subTitle}}</a>
                 <span fxFlex></span>
                 <button mat-icon-button
-                        (click)="deleteMemberFromTeam.emit({team: team, member: member})">
+                        (click)="deleteMemberFromTeam({team: team, member: member})">
                   <mat-icon>delete</mat-icon>
                 </button>
               </mat-list-item>
@@ -58,6 +63,11 @@
           <div *ngFor="let season of seasons | seasonsWithTeamsFilter: (teams | isTeamManagementFilter : member)">
             <h3>{{season.title}}</h3>
 
+            <p
+              *ngIf="(teams | isTeamManagementFilter : member | filterBy: ['assignedSeason'] : season.id).length === 0">
+              {{'general.members.edit.notAssignedToAnyTeamManagementsInSeason' | translate}}
+            </p>
+
             <mat-list dense
                       *ngIf="(teams | isTeamManagementFilter : member | orderBy: ['subTitle', 'title'] | filterBy: ['assignedSeason'] : season.id).length > 0">
               <mat-list-item
@@ -70,7 +80,7 @@
                             </span>
                 <span fxFlex></span>
                 <button mat-icon-button
-                        (click)="deleteMemberFromTeamManagement.emit({team: team, member: member})">
+                        (click)="deleteMemberFromTeamManagement({team: team, member: member})">
                   <mat-icon>delete</mat-icon>
                 </button>
               </mat-list-item>
@@ -94,6 +104,8 @@
         <p *ngIf="(clubs | isMemberInClubManagementFilter: member).length === 0">
           {{'general.members.detail.functions.noClubManagementPositions' | translate}}
         </p>
+
+        <pre>{{clubs | isMemberInClubManagementFilter: member | json}}</pre>
 
         <!--<div *ngIf="categories$ | async as categories; else loadingTemplate">
             <div *ngFor="let club of clubs | isMemberInClubManagementFilter: member">

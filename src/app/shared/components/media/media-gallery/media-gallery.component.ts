@@ -40,4 +40,7 @@ export class MediaGalleryComponent implements OnInit {
     });
   }
 
+  saveMediaItemTitle(title: string){
+    console.log(title);
+  }
 }
