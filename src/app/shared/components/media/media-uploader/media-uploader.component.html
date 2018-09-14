@@ -1,5 +1,6 @@
 <mat-card>
-  <mat-card-header fxLayout="row">
+  <mat-card-header
+    fxLayout="row">
 
     <mat-card-title *ngIf="uploaderConfig.showHeader">
       <span *ngIf="uploaderConfig.headerTitle">{{uploaderConfig.headerTitle | translate}}</span>
@@ -10,13 +11,15 @@
 
     <span fxFlex></span>
 
-    <button mat-icon-button
-            color="warn"
-            (click)="removeMediaItem()"
-            *ngIf="uploaderOptions.queueLimit === 1 && (currentMediaItem | async)?.downloadURL !== '/assets/sfw/placeholder/no-image-found.jpg'"
-            type="button">
-      <mat-icon>delete</mat-icon>
-    </button>
+    <span *ngIf="currentMediaItem | async  as currentMediaItem">
+      <button mat-icon-button
+              color="warn"
+              (click)="removeMediaItem((currentMediaItem | async)?.id)"
+              *ngIf="uploaderOptions.queueLimit === 1 && currentMediaItem.downloadURL !== '/assets/sfw/placeholder/no-image-found.jpg'"
+              type="button">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </span>
 
 
     <!--<button

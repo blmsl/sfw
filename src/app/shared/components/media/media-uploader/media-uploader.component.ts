@@ -107,11 +107,10 @@ export class MediaUploaderComponent implements OnInit {
     }
   }
 
-  upload(fileUpload: Upload, id: string): Promise<void> {
+  upload(fileUpload: Upload): Promise<void> {
 
     // create Id, if not exists
     if (!this.uploaderOptions.itemId) {
-      console.log(this.uploaderOptions.itemId);
       this.uploaderOptions.itemId = this.afs.createId();
     }
 
@@ -173,7 +172,7 @@ export class MediaUploaderComponent implements OnInit {
     if (!itemId) {
       itemId = this.uploaderOptions.itemId;
     }
-    this.upload(fileUpload, itemId).then(() => {
+    this.upload(fileUpload).then(() => {
       // this.uploadCompleted.emit();
     });
   }
@@ -185,7 +184,7 @@ export class MediaUploaderComponent implements OnInit {
       if (this.currentUploads.length >= 1 && (!this.uploaderOptions.itemId || this.savedItemId === '')) {
         this.uploaderOptions.itemId = this.afs.createId();
       }
-      promises.push(this.upload(fileUpload, this.uploaderOptions.itemId));
+      promises.push(this.upload(fileUpload));
     });
 
     Promise.all(promises).then(() => {
@@ -222,8 +221,8 @@ export class MediaUploaderComponent implements OnInit {
     this.currentUploads.splice(index, 1);
   }
 
-  removeMediaItem() {
-    console.log(this.currentMediaItem);
+  removeMediaItem(mediaItemId: string) {
+    console.log(mediaItemId);
   }
 
 }
