@@ -10,7 +10,7 @@ export const deleteMediaItemCron = functions
   .firestore.document('files/{mediaItemId}').onDelete((snap) => {
     data = snap.data();
 
-    let path:string = '/';
+    let path:string = '';
     if('assignedObjects' in data){
       Object.keys(data.assignedObjects).forEach(function (key) {
         path = path + '/' + key;
