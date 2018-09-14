@@ -222,7 +222,9 @@ export class MediaUploaderComponent implements OnInit {
   }
 
   removeMediaItem(mediaItemId: string) {
-    console.log(mediaItemId);
+    this.mediaItemService.removeMediaItem(mediaItemId)
+      .then(() => this.alertService.showSnackBar('success', 'general.media.uploader.removedFile'))
+      .catch(error => this.alertService.showSnackBar('error', error.message));
   }
 
 }

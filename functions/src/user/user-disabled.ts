@@ -1,7 +1,8 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-export const userDisabled = functions.region('europe-west1')
+export const userDisabled = functions
+  .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .firestore.document('/users/{userId}').onUpdate((change, context) => {
 

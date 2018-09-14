@@ -10,7 +10,8 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 
 const collectionString = 'team-of-the-month';
 
-export const teamOfTheWeekCron = functions.region('europe-west1')
+export const teamOfTheWeekCron = functions
+  .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .pubsub.topic('monthly-tick').onPublish(() => {
 

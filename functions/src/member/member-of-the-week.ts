@@ -14,7 +14,8 @@ const now = moment();
 const docId: string = now.week() + '-' + now.format('YY');
 let data = {};
 
-export const memberOfTheWeekCron = functions.region('europe-west1')
+export const memberOfTheWeekCron = functions
+  .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .pubsub.topic('weekly-tick').onPublish(() => {
     return admin.firestore().collection('members')

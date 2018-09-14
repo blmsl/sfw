@@ -14,7 +14,7 @@
     <span *ngIf="currentMediaItem | async  as currentMediaItem">
       <button mat-icon-button
               color="warn"
-              (click)="removeMediaItem((currentMediaItem | async)?.id)"
+              (click)="removeMediaItem(currentMediaItem.id)"
               *ngIf="uploaderOptions.queueLimit === 1 && currentMediaItem.downloadURL !== '/assets/sfw/placeholder/no-image-found.jpg'"
               type="button">
         <mat-icon>delete</mat-icon>

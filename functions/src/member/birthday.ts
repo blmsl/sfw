@@ -111,7 +111,8 @@ const birthdayWishes: {
   }
 ];
 
-export const birthdayReminderCron = functions.region('europe-west1')
+export const birthdayReminderCron = functions
+  .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .pubsub.topic('daily-tick').onPublish(() => {
 

@@ -16,8 +16,9 @@ const timeMin = currentDate.subtract(1, 'month').toISOString();
 const timeMax = currentDate.add(2, 'month').toISOString();
 
 export const getGoogleCalendarEvents = functions
-  .runWith({ memory: '128MB', timeoutSeconds: 20 })
-  .region('europe-west1').https.onRequest(async (req, resp) => {
+  .region('europe-west1')
+  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .https.onRequest(async (req, resp) => {
 
   const eventList: Promise<any>[] = [];
 

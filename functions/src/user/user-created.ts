@@ -5,7 +5,8 @@ const SENDGRID_API_KEY = functions.config().sendgrid.key;
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(SENDGRID_API_KEY);
 
-export const userCreated = functions.region('europe-west1')
+export const userCreated = functions
+  .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .auth.user()
   .onCreate((event: any) => {

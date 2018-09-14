@@ -5,7 +5,10 @@ const _ = require('lodash');
 const path = require('path');
 const os = require('os');
 
-export const generateThumbnailCron = functions.storage.object('uploads/{imageId}').onFinalize(object => {
+export const generateThumbnailCron = functions
+  .region('europe-west1')
+  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .storage.object('uploads/{imageId}').onFinalize(object => {
 
   console.log(object);
 
