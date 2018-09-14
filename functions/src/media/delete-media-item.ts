@@ -18,5 +18,5 @@ export const deleteMediaItemCron = functions
       });
     }
 
-    return bucket.file(path + data.itemId).delete();
+    return bucket.file(path ? path + '/' + data.itemId : data.itemId).delete();
   });
