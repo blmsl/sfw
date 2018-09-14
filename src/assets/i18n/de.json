@@ -168,7 +168,7 @@
       "urlShorteningTitle": "Links"
     },
     "articles": {
-      "dashboard":{
+      "dashboard": {
         "articles": {
           "all": "Alle Artikel",
           "list": "Artikel",
@@ -764,7 +764,7 @@
         "tacticalFormation": "Spielsystem",
         "title": "Spiel editieren"
       },
-      "events":  {
+      "events": {
         "additionalTime": "Nachspielzeit",
         "assist": "Vorlage von",
         "bigChance": "Große Chance",
@@ -817,11 +817,33 @@
         "close": "Schließen",
         "create": "Neue Sammlung",
         "form": {
+          "assignedItem": {
+            "title": "Bitte wähle nun, zu welchem Element die Gallerie gehört."
+          },
+          "assignedItemType": {
+            "title": "Bitte wähle die Kategorie, zu der die Gallerie erstellt werden soll",
+            "article": "Zu einem Artikel",
+            "club": "Zu einem Verein",
+            "location": "Zu einer Spielstätte",
+            "match": "Zu einem Spiel",
+            "member": "Zu einem Mitglied",
+            "sponsor": "Zu einem Sponsor",
+            "team": "Zu einer Mannschaft"
+          },
           "author": "Author",
           "description": "Beschreibung der Sammlung",
+          "save": "Sammlung anlegen",
+          "visibility": {
+            "hide": "Nicht veröffentlichen",
+            "planned": "Veröffentlichung planen",
+            "show": "Jetzt veröffentlichen"
+          },
           "title": "Titel der Sammlung"
         },
-        "list": "Sammlungen",
+        "list": {
+          "description": "Dateien können in Sammlungen / Gallerien angeordnet werden, um sie einfach mit einem Objekt zu verbinden.",
+          "title": "Vorhandene Sammlungen"
+        },
         "noGalleriesFound": "Es wurden noch keine Galerien gespeichert",
         "filter": "Sammlung suchen",
         "title": "Sammlungen"
@@ -1640,7 +1662,7 @@
           "subTitle": "Informationen zum angemeldeten Benutzer",
           "title": "Benutzerdaten"
         },
-          "memberTitle": "Verknüpftes Mitglied",
+        "memberTitle": "Verknüpftes Mitglied",
         "noImage": "Es ist noch kein Profilfoto vorhanden.",
         "personal": {
           "addressTitle": "2. Adresse",

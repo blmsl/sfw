@@ -4,7 +4,10 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { AuthService } from '../auth/auth.service';
 import { Observable, of } from 'rxjs';
 import { IMember } from '../../interfaces/member/member.interface';
-import { take } from 'rxjs/internal/operators';
+import {
+  map,
+  take
+} from 'rxjs/internal/operators';
 import { forkJoin } from 'rxjs/index';
 
 @Injectable()

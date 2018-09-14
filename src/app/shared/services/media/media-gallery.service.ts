@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable }    from '@angular/core';
+import { Observable }    from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
-import { ICreation } from '../../interfaces/creation.interface';
-import { AuthService } from '../auth/auth.service';
+}                        from 'angularfire2/firestore';
+import { ICreation }     from '../../interfaces/creation.interface';
+import { AuthService }   from '../auth/auth.service';
 import { IMediaGallery } from '../../interfaces/media/media-gallery.interface';
 
 @Injectable()
@@ -15,8 +15,10 @@ export class MediaGalleryService {
   private path = `galleries`;
   public mediaGalleries$: Observable<IMediaGallery[]>;
 
+  private galleryTypes: string[] = ['article', 'club', 'location', 'match', 'member', 'sponsor', 'team'];
+
   constructor(private afs: AngularFirestore,
-    private authService: AuthService) {
+              private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMediaGallery>(this.path);
     this.mediaGalleries$ = this.collectionRef.valueChanges();
   }
@@ -31,6 +33,10 @@ export class MediaGalleryService {
 
   removeMediaGallery(mediaGallery: IMediaGallery): Promise<void> {
     return this.afs.collection(this.path).doc(mediaGallery.id).delete();
+  }
+
+  getMediaGalleryTypes(): string[] {
+    return this.galleryTypes;
   }
 
 }

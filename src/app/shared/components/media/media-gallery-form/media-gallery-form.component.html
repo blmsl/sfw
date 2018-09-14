@@ -1,47 +1,70 @@
-<!--<div fxLayout="row"
-      *ngIf="!isLoading; else loadingTemplate">
+<mat-card>
+  <mat-card-title>{{'general.media.gallery.form.title' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'general.media.gallery.form.description' | translate}}</mat-card-subtitle>
+  <hr>
+  <mat-card-content [formGroup]="form"
+                    fxLayout="column">
 
-  <div fxFlex="100"
-       [formGroup]="form">
+    <mat-form-field>
+      <input matInput
+             placeholder="{{'general.media.gallery.form.title' | translate}}"
+             formControlName="title">
+    </mat-form-field>
 
-    <mat-card>
-      <mat-card-title>
-        {{'general.media.gallery.create' | translate}}
-      </mat-card-title>
-      <mat-card-content>
+    <mat-form-field>
+      <textarea matInput
+                placeholder="{{'general.media.gallery.form.description' | translate}}"
+                formControlName="description">
+      </textarea>
+    </mat-form-field>
 
-        <div fxLayout="column">
+    <div style="margin: 25px 0"
+         formGroupName="publication">
+      <mat-radio-group formControlName="status">
+        <mat-radio-button value="1">{{'general.media.gallery.form.visibility.show' | translate}}</mat-radio-button>
+        <mat-radio-button value="0">{{'general.media.gallery.form.visibility.hide' | translate}}</mat-radio-button>
+        <mat-radio-button value="2">{{'general.media.gallery.form.visibility.planned' | translate}}</mat-radio-button>
+      </mat-radio-group>
+    </div>
 
-          <mat-form-field fxFlex="90">
-            <input matInput
-                   placeholder="{{'general.media.gallery.form.title' | translate}}"
-                   formControlName="title">
-          </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="{{'general.media.gallery.form.assignedItemType.title' | translate}}"
+                  formControlName="assignedItemType">
+        <mat-option *ngFor="let galleryType of mediaGalleryService.getMediaGalleryTypes()"
+                    [value]="galleryType">
+          {{'general.media.gallery.form.assignedItemType.' + galleryType | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-          <mat-form-field fxFlex="90">
-            <input matInput
-                   placeholder="{{'general.media.gallery.form.description' | translate}}"
-                   formControlName="description">
-          </mat-form-field>
-        </div>
+    <div *ngIf="form.get('assignedItemType').value">
+    <media-gallery-form-assigned-objects *ngIf="seasons$ | async as seasons"
+                                         [seasons]="seasons"
+                                         [form]="form"
+                                         [assignedItemType]="form.get('assignedItemType').value">
+    </media-gallery-form-assigned-objects>
+    </div>
 
-        <button type="button"
-                (click)="saveMediaGallery()"
-                mat-raised-button color="accent"
-                [disabled]="!form.valid">
-          Save
-        </button>
+    <pre>{{gallery | json}}</pre>
 
-        <button type="button"
-                (click)="closeDialog()"
-                mat-raised-button color="primary">
-          Cancel
-        </button>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>-->
-New gal
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button type="button"
+              (click)="saveMediaGallery()"
+              mat-raised-button
+              color="accent"
+              [disabled]="!form.valid">
+        {{'general.media.gallery.form.save' | translate}}
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>
+
 
 <ng-template #loadingTemplate>
   <loading-indicator></loading-indicator>

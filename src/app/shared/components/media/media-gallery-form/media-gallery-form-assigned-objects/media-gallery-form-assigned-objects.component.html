@@ -1,0 +1,21 @@
+<div [formGroup]="form"
+     *ngIf="assignedItems$ | async as assignedItems; else loadingTemplate"
+     fxLayout="column">
+  <mat-form-field>
+    <mat-select placeholder="{{'general.media.gallery.form.assignedItem.title' | translate}}"
+                formControlName="assignedItem">
+      <mat-option *ngFor="let item of assignedItems | orderBy: ['title']"
+                  [value]="item.id">
+        {{item.title}}
+        {{item.matchStartDate ? (item.matchStartDate.seconds*1000 | date: 'dd.MM.yy HH:mm') :''}}
+        {{item.mainData && item.mainData.birthday ? (item.mainData.birthday | date: 'dd.MM.yy') :''}}
+        {{item.subTitle ? '(' +item.subTitle+')' : ''}}
+        {{item.assignedSeason ? item.assignedSeason : ''}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

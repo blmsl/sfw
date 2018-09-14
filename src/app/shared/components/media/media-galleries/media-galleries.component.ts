@@ -1,37 +1,35 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  OnInit
+}                              from '@angular/core';
 import { MediaGalleryService } from '../../../services/media/media-gallery.service';
-import { Observable } from 'rxjs/index';
-import { IMediaGallery } from '../../../interfaces/media/media-gallery.interface';
-import { FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material';
-import { MediaGalleryFormComponent } from '../media-gallery-form/media-gallery-form.component';
+import { Observable }          from 'rxjs/index';
+import { IMediaGallery }       from '../../../interfaces/media/media-gallery.interface';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+}                              from '@angular/forms';
 
 @Component({
   selector: 'media-galleries',
   templateUrl: './media-galleries.component.html',
-  styleUrls: ['./media-galleries.component.scss']
+  styleUrls: [ './media-galleries.component.scss' ]
 })
 export class MediaGalleriesComponent implements OnInit {
-
-  @Output() closeGallerySidebar: EventEmitter<void> = new EventEmitter<void>(false);
 
   public mediaGalleries$: Observable<IMediaGallery[]>;
   public form: FormGroup;
 
-  constructor(public dialog: MatDialog,
-    private mediaGalleryService: MediaGalleryService) {
+  constructor(private mediaGalleryService: MediaGalleryService,
+              private fb: FormBuilder) {
     this.mediaGalleries$ = mediaGalleryService.mediaGalleries$;
   }
 
   ngOnInit() {
-    /* this.form = this.fb.group({
-      search: ['', [Validators.required, Validators.minLength(3)]]
-    }); */
-  }
-
-  openGalleryForm() {
-    this.dialog.open(MediaGalleryFormComponent, {
-      // data: { uploaderOptions: this.uploaderOptions }
+    this.form = this.fb.group({
+      search: [ '', [ Validators.required, Validators.minLength(3) ] ]
     });
   }
+
 }

@@ -1,31 +1,15 @@
-<div fxLayout="column">
+<div fxLayout="column"
+     fxLayout.gt-sm="row"
+     fxLayoutGap="10px">
 
-  <!--<mat-form-field fxFlex="90">
-    <input matInput
-           placeholder="{{'general.media.gallery.filter' | translate}}"
-           formControlName="search">
-  </mat-form-field>-->
+  <div fxFlex="50">
+    <media-gallery-list *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
+                        [mediaGalleries]="mediaGalleries">
+    </media-gallery-list>
+  </div>
 
-  <!-- | filterBy: ['title'] : search -->
-  <media-gallery-list [mediaGalleries]="mediaGalleries$ | async"></media-gallery-list>
-
-  <button type="button" style="margin: 10px 0"
-          mat-raised-button
-          (click)="openGalleryForm()"
-          color="accent">
-    <mat-icon>create_new_folder</mat-icon>
-    {{'general.media.gallery.create' | translate}}
-  </button>
-
-  <button type="button"
-          color="primary"
-          mat-raised-button
-          (click)="closeGallerySidebar.emit()">
-    {{'general.media.gallery.close' | translate}}
-  </button>
+  <div fxFlex="50">
+    <media-gallery-form></media-gallery-form>
+  </div>
 
 </div>
-
-
-
-

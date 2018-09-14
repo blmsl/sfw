@@ -22,7 +22,14 @@ export class MemberService {
 
   constructor(private afs: AngularFirestore) {
     this.collectionRef = this.afs.collection<IMember>(this.path);
-    this.members$ = this.collectionRef.valueChanges();
+    this.members$ = this.collectionRef.valueChanges().pipe(
+      map((members: IMember[]) => {
+        for(let i = 0; i <members.length; i++){
+          members[i].title = members[i].mainData.lastName +' '+ members[i].mainData.firstName;
+        }
+        return members;
+      })
+    );
   }
 
   createMember(member: IMember): Promise<void> {

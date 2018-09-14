@@ -4,9 +4,9 @@ import * as moment    from 'moment';
 
 moment.locale('de');
 
+// Sengrid
 const sgMail = require('@sendgrid/mail');
 const SENDGRID_API_KEY = functions.config().sendgrid.key;
-
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 function calculateAge(birthday: string) {
@@ -116,8 +116,7 @@ export const birthdayReminderCron = functions
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .pubsub.topic('daily-tick').onPublish(() => {
 
-
-    return admin.firestore().collection('application').get().then(
+    return admin.firestore().collection('applications').get().then(
       applications => {
         applications.forEach(function (application) {
           console.log(application);
@@ -126,9 +125,10 @@ export const birthdayReminderCron = functions
             currentApplications =application.data();
           }
         });
+        return currentApplications;
       }
-    ).then(() => {
-
+    ).then((test) => {
+      console.log(test);
       console.log(currentApplications);
 
       return admin.firestore()

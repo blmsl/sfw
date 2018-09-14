@@ -11,6 +11,8 @@ import { IOpinion } from './opinion.interface';
 export interface IMember {
   id?: string;
 
+  title?: string;
+
   driveImport: boolean;
   dfbImport: boolean;
 

@@ -1,4 +1,23 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Input
+}                              from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+}                              from '@angular/forms';
+import { IUploaderOptions }    from '../../../interfaces/media/uploader-options.interface';
+import { MediaGalleryService } from '../../../services/media/media-gallery.service';
+import { AuthService }         from '../../../services/auth/auth.service';
+import {
+  debounceTime,
+  distinctUntilChanged
+}                              from 'rxjs/operators';
+import { IMediaGallery }       from '../../../interfaces/media/media-gallery.interface';
+import { SeasonService }       from '../../../services/season/season.service';
+import { Observable }          from 'rxjs/index';
+import { ISeason }             from '../../../interfaces/season.interface';
 
 @Component({
   selector: 'media-gallery-form',
@@ -6,52 +25,43 @@ import { Component } from '@angular/core';
 })
 export class MediaGalleryFormComponent {
 
-  // @Input() uploaderOptions: IUploaderOptions;
-  //public form: FormGroup;
-  //public isLoading: boolean = false;
+  @Input() uploaderOptions: IUploaderOptions;
 
-  constructor(//private fb: FormBuilder,
-    //private mediaGalleryService: MediaGalleryService,
-    //public dialogRef: MatDialogRef<MediaGalleryFormComponent>,
-    //@Inject(MAT_DIALOG_DATA) public data: any
-  ) {
+  public form: FormGroup;
+  public gallery: IMediaGallery;
+  public seasons$: Observable<ISeason[]>;
+
+  constructor(private fb: FormBuilder,
+              private authService: AuthService,
+              private seasonService: SeasonService,
+              public mediaGalleryService: MediaGalleryService) {
   }
 
 
   ngOnInit() {
-    /*this.form = this.fb.group({
-     title: '',
-     description: '',
-     creation: this.fb.group({
-     by: ''
-     })
-     });*/
+    this.form = this.fb.group({
+      title: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
+      description: '',
+      publication: this.fb.group({
+        dateTime: new Date(),
+        from: this.authService.userId,
+        status: 0
+      }),
+      assignedItemType: [ '', [Validators.required]],
+      assignedItem: [ '', [Validators.required]]
+    });
+
+    this.form.valueChanges.pipe(
+      distinctUntilChanged()
+    ).subscribe((changes: IMediaGallery) => {
+      if (this.form.valid) {
+        this.gallery = Object.assign({}, this.gallery, changes);
+      }
+    });
   }
 
-  closeDialog(): void {
-    // this.dialogRef.close();
+  saveMediaGallery() {
+    console.log(this.gallery);
   }
 
-  /*saveMediaGallery() {
-   this.isLoading = true;
-   this.mediaGalleryService.createMediaGallery(this.form.getRawValue())
-   .then(() => {
-   this.form.reset();
-   this.closeDialog();
-   this.showStatusMessage('success', '');
-   this.isLoading = false;
-   }
-   )
-   .catch((error: any) => {
-   this.closeDialog();
-   this.showStatusMessage('error', error.message);
-   this.isLoading = false;
-   }
-   )
-   }
-
-   showStatusMessage(status: string, message: string) {
-   console.log(status);
-   console.log(message);
-   } */
 }

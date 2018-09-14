@@ -1,26 +1,40 @@
-<p style="color: red;" *ngIf="mediaGalleries && mediaGalleries.length === 0">
-  {{'general.media.gallery.noGalleriesFound' | translate}}
-</p>
+<mat-card>
+  <mat-card-title>{{'general.media.gallery.list.title' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'general.media.gallery.list.description' | translate}}</mat-card-subtitle>
+  <hr>
+  <mat-card-content>
 
-<mat-nav-list>
-  <mat-list-item *ngFor="let mediaGallery of mediaGalleries | orderBy: ['title']">
-    <a mat-line inline-edit
-       [title]="mediaGallery.title"
-       [required]="true"
-       [disabled]="false"
-       [type]="'text'"
-       class="inline-edit">{{ mediaGallery.title }} (0)</a>
-    <!--<button mat-icon-button>
-      <mat-icon>delete</mat-icon>
-    </button>
-    <button mat-icon-button>
-      <mat-icon>info</mat-icon>
-    </button>-->
-  </mat-list-item>
-</mat-nav-list>
+    <div class="alert alert-warning" *ngIf="mediaGalleries && mediaGalleries.length === 0">
+      <p>{{'general.media.gallery.noGalleriesFound' | translate}}</p>
+    </div>
 
-<!--<button mat-raised-button=""
-        (click)="openDialog()"
-        color="primary">{{'general.media.gallery".create' | translate}}
-</button>-->
+    <div *ngIf="mediaGalleries.length > 0">
+
+      <mat-form-field fxFlex="90">
+        <input matInput
+               placeholder="{{'general.media.gallery.filter' | translate}}">
+      </mat-form-field><!-- formControlName="search" -->
+
+      <!-- | filterBy: ['title'] : search -->
+
+      <mat-nav-list>
+        <mat-list-item *ngFor="let mediaGallery of mediaGalleries | orderBy: ['title']">
+          <a mat-line inline-edit
+             [title]="mediaGallery.title"
+             [required]="true"
+             [disabled]="false"
+             [type]="'text'"
+             class="inline-edit">{{ mediaGallery.title }} (0)</a>
+          <!--<button mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>info</mat-icon>
+          </button>-->
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+
+  </mat-card-content>
+</mat-card>
 

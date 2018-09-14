@@ -10,7 +10,6 @@
     <mat-tab-group *ngIf="mediaItems$ | async as mediaItems; else loadingTemplate"
                    [dynamicHeight]="true">
       <mat-tab label="{{'general.media.list.title' | translate}} {{'(' + mediaItems.length + ')' }}">
-
         <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
           <mat-toolbar class="example-toolbar">
             <button mat-icon-button (click)="snav.toggle()"><mat-icon>folder_special</mat-icon></button>
@@ -43,6 +42,9 @@
         <media-uploader [uploaderConfig]="uploaderConfig"
                         [uploaderOptions]="uploaderOptions">
         </media-uploader>
+      </mat-tab>
+      <mat-tab label="{{'general.media.gallery.title' | translate}}">
+        <media-galleries></media-galleries>
       </mat-tab>
     </mat-tab-group>
 
