@@ -5,7 +5,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
-  MatDialogModule,
+  MatDialogModule, MatExpansionModule,
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
@@ -18,7 +18,7 @@ import {
   MatSidenavModule,
   MatTabsModule,
   MatToolbarModule
-}                                                   from '@angular/material';
+} from '@angular/material';
 import { MediaCenterComponent }                     from './media-center/media-center.component';
 import { MediaUploaderService }                     from '../../services/media/media-uploader.service';
 import { AngularFireStorageModule }                 from 'angularfire2/storage';
@@ -51,9 +51,12 @@ import { MemberService }   from '../../services/member/member.service';
 import { SponsorService }  from '../../services/sponsor/sponsor.service';
 import { TeamService }     from '../../services/team/team.service';
 import { SeasonService }   from '../../services/season/season.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
+    DragDropModule,
+    MatExpansionModule,
     MatProgressBarModule,
     AngularFireStorageModule,
     CommonModule,

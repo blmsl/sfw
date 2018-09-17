@@ -9,6 +9,7 @@ import {
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 import { MatDialog } from '@angular/material';
 import { MediaItemInfoComponent } from '../media-item-info/media-item-info.component';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'media-gallery',
@@ -42,5 +43,12 @@ export class MediaGalleryComponent implements OnInit {
 
   saveMediaItemTitle(title: string){
     console.log(title);
+  }
+
+  onDrop(event: CdkDragDrop<string[]>) {
+    console.log(this.mediaItems);
+    console.log(event.previousIndex);
+    console.log(event.currentIndex);
+    // moveItemInArray(this.items, event.previousIndex, event.currentIndex);
   }
 }

@@ -2,37 +2,59 @@
   <mat-card-title>{{'general.media.gallery.list.title' | translate}}</mat-card-title>
   <mat-card-subtitle>{{'general.media.gallery.list.description' | translate}}</mat-card-subtitle>
   <hr>
-  <mat-card-content>
+  <mat-card-content [formGroup]="form">
 
     <div class="alert alert-warning" *ngIf="mediaGalleries && mediaGalleries.length === 0">
       <p>{{'general.media.gallery.noGalleriesFound' | translate}}</p>
     </div>
 
-    <div *ngIf="mediaGalleries.length > 0">
+    <div *ngIf="mediaGalleries.length > 0"
+         fxLayout="column"
+         fxLayoutGap="10px">
 
-      <mat-form-field fxFlex="90">
+      <mat-form-field fxFlex="100">
         <input matInput
+               formControlName="search"
                placeholder="{{'general.media.gallery.filter' | translate}}">
-      </mat-form-field><!-- formControlName="search" -->
+      </mat-form-field>
 
-      <!-- | filterBy: ['title'] : search -->
+      <p *ngIf="mediaGalleries.length > 0 && (mediaGalleries | filterBy: ['title'] : form.get('search').value).length === 0">
+        {{'general.media.gallery.noFilteredGalleryFound' | translate}}
+      </p>
 
-      <mat-nav-list>
-        <mat-list-item *ngFor="let mediaGallery of mediaGalleries | orderBy: ['title']">
-          <a mat-line inline-edit
-             [title]="mediaGallery.title"
-             [required]="true"
-             [disabled]="false"
-             [type]="'text'"
-             class="inline-edit">{{ mediaGallery.title }} (0)</a>
-          <!--<button mat-icon-button>
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button mat-icon-button>
-            <mat-icon>info</mat-icon>
-          </button>-->
-        </mat-list-item>
-      </mat-nav-list>
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel *ngFor="let mediaGallery of mediaGalleries | filterBy: ['title'] : form.get('search').value | orderBy: ['title']; let i = index"
+                             [expanded]="step === i"
+                             (opened)="setStep(i)"
+                             hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title fxFlex="20">{{ mediaGallery.title }} ({{mediaGallery.assignedMediaItems.length}})</mat-panel-title>
+            <mat-panel-description>{{mediaGallery.description}}
+              <span fxFlex></span>
+              <span class="text-danger" *ngIf="mediaGallery.publication.status === '0'">offline</span>
+              <span class="text-success" *ngIf="mediaGallery.publication.status === '1'">online</span>
+              <span class="text-warning" *ngIf="mediaGallery.publication.status === '2'">planned</span>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+
+
+          <mat-action-row>
+            <button color="warn"
+                    (click)="removeMediaGallery(mediaGallery)"
+                    mat-icon-button>
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button color="primary"
+                    (click)="editMediaGallery(mediaGallery)"
+                    mat-icon-button>
+              <mat-icon>edit</mat-icon>
+            </button>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+      </mat-accordion>
+
     </div>
 
   </mat-card-content>

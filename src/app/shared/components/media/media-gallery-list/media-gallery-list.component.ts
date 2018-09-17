@@ -1,12 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit
-}                                    from '@angular/core';
-import { IMediaGallery }             from '../../../interfaces/media/media-gallery.interface';
-import { MatDialog }                 from '@angular/material';
-import { MediaGalleryFormComponent } from '../media-gallery-form/media-gallery-form.component';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { IMediaGallery } from '../../../interfaces/media/media-gallery.interface';
+import { MatDialog } from '@angular/material';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
+import { MediaGalleryService } from '../../../services/media/media-gallery.service';
+import { AlertService } from '../../../services/alert/alert.service';
 
 @Component({
   selector: 'media-gallery-list',
@@ -18,22 +16,34 @@ export class MediaGalleryListComponent implements OnInit {
 
   @Input() mediaGalleries: IMediaGallery[];
 
+  public form: FormGroup;
+  public step: number;
+
+  constructor(private fb: FormBuilder,
+              private mediaGalleryService: MediaGalleryService,
+              private alertService: AlertService,
+              public dialog: MatDialog) {
+  }
+
   ngOnInit() {
+    this.form = this.fb.group({
+      search: ''
+    });
   }
 
-  constructor(public dialog: MatDialog) {
+  setStep(index: number) {
+    this.step = index;
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(MediaGalleryFormComponent, {
-      width: '250px',
-      // data: {name: this.name, animal: this.animal}
-    });
+  removeMediaGallery(mediaGallery: IMediaGallery) {
+    this.mediaGalleryService.removeMediaGallery(mediaGallery)
+      .then(() => this.alertService.showSnackBar('success', 'general.media.gallery.deleted'),
+        (error: any) => this.alertService.showSnackBar('error', error.message));
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // this.animal = result;
-    });
+  editMediaGallery(mediaGallery: IMediaGallery) {
+    console.log(mediaGallery);
+    alert('ToDo');
   }
 
 }

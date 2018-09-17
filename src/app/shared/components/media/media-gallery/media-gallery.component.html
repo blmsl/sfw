@@ -1,21 +1,15 @@
-<mat-grid-list [gutterSize]="20"
-               [cols]="breakpoint"
-               (window:resize)="onResize($event)"
-               *ngIf="mediaItems && mediaItems.length > 0; else noMediaItemsTemplate">
+<cdk-drop
+  *ngIf="mediaItems && mediaItems.length > 0; else noMediaItemsTemplate"
+  (dropped)="onDrop($event)"
+  class="list-sorted">
 
-  <mat-grid-tile class="mediaItem"
-                 *ngFor="let mediaItem of mediaItems">
-    <mat-grid-tile-header class="header">
-      <h3 matLine
-          inline-edit
-          (save)="saveMediaItemTitle($event)"
-          [title]="mediaItem.file.name"
-          [required]="true"
-          [disabled]="false"
-          [type]="'text'"
-          class="inline-edit">
-      </h3>
-    </mat-grid-tile-header>
+  <!--<figure class="figure" cdkDrag>
+    <img src="..." class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+    <figcaption class="figure-caption">A caption for the above image.</figcaption>
+  </figure>-->
+
+
+  <figure class="figure" *ngFor="let mediaItem of mediaItems" cdkDrag>
 
     <img *ngIf="mediaItem.file.type.indexOf('image') > -1"
          [src]="mediaItem.downloadURL"
@@ -44,18 +38,91 @@
       {{mediaItem.file ? mediaItem.file.name : 'TEST'}}
     </a>
 
-    <mat-grid-tile-footer class="footer">
-      <a mat-icon-button
-         (click)="openDialog(mediaItem)">
-        <mat-icon>info</mat-icon>
+    <figcaption class="figure-caption">A caption for the above image.</figcaption>
+
+    <!--
+    <img *cdkDragPlaceholder src="https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/media/assets/submodel/7817.jpg">
+    <img *cdkDragPreview src="https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/media/assets/submodel/7817.jpg">-->
+  </figure>
+
+</cdk-drop>
+
+<!--
+<mat-grid-list [gutterSize]="20"
+               [cols]="breakpoint"
+               (window:resize)="onResize($event)"
+               *ngIf="mediaItems && mediaItems.length > 0; else noMediaItemsTemplate">
+
+
+
+  <cdk-drop (dropped)="onDrop($event)">
+    <mat-grid-tile class="mediaItem"
+                   cdkDrag
+                   *ngFor="let mediaItem of mediaItems">
+      <img *cdkDragPlaceholder
+           [src]="mediaItem.downloadURL">
+      <!-- <img *cdkDragPreview src="https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/media/assets/submodel/7817.jpg">
+      <mat-grid-tile-header class="header">
+        <div matLine>
+        <span
+          inline-edit
+          (save)="saveMediaItemTitle($event)"
+          [title]="mediaItem.file.name"
+          [required]="true"
+          [disabled]="false"
+          [type]="'text'"
+          class="inline-edit">
+        </span>
+          <span fxFlex></span>
+          <button class="mat-icon-button handler"
+                  cdkDragHandle
+                  color="primary">
+            <mat-icon>add_to_photos</mat-icon>
+          </button>
+        </div>
+      </mat-grid-tile-header>
+
+      <img *ngIf="mediaItem.file.type.indexOf('image') > -1"
+           [src]="mediaItem.downloadURL"
+           mat-card-image
+           alt="{{mediaItem.file ? mediaItem.file.name : 'TEST'}}"/>
+
+      <audio *ngIf="mediaItem.file.type.indexOf('audio') > -1" controls>
+        <source [src]="mediaItem.downloadURL" type="audio/ogg">
+        <source [src]="mediaItem.downloadURL" type="audio/mpeg">
+        Your browser does not support the audio tag.
+      </audio>
+
+      <video *ngIf="mediaItem.file.type.indexOf('video') > -1" controls>
+        <source [src]="mediaItem.downloadURL" type="video/mp4">
+        <source [src]="mediaItem.downloadURL" type="video/ogg">
+        Your browser does not support the video tag.
+      </video>
+
+      <a
+        *ngIf="
+      mediaItem.file.type.indexOf('video') === -1
+      && mediaItem.file.type.indexOf('image') === -1
+      && mediaItem.file.type.indexOf('audio') === -1"
+        [href]="mediaItem.downloadURL"
+        target="_blank">
+        {{mediaItem.file ? mediaItem.file.name : 'TEST'}}
       </a>
-      <a (click)="removeMediaItem.emit(mediaItem)"
-         mat-icon-button color="warn">
-        <mat-icon>delete</mat-icon>
-      </a>
-    </mat-grid-tile-footer>
-  </mat-grid-tile>
-</mat-grid-list>
+
+      <mat-grid-tile-footer class="footer">
+        <a mat-icon-button
+           (click)="openDialog(mediaItem)">
+          <mat-icon>info</mat-icon>
+        </a>
+        <a (click)="removeMediaItem.emit(mediaItem)"
+           mat-icon-button color="warn">
+          <mat-icon>delete</mat-icon>
+        </a>
+      </mat-grid-tile-footer>
+    </mat-grid-tile>
+  </cdk-drop>
+
+</mat-grid-list>-->
 
 
 <ng-template #noMediaItemsTemplate>

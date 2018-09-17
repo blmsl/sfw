@@ -7,9 +7,14 @@
       <mat-option *ngFor="let item of assignedItems | orderBy: ['title']"
                   [value]="item.id">
         {{item.title}}
-        {{item.matchStartDate ? (item.matchStartDate.seconds*1000 | date: 'dd.MM.yy HH:mm') :''}}
-        {{item.mainData && item.mainData.birthday ? (item.mainData.birthday | date: 'dd.MM.yy') :''}}
+        <!-- Articles -->
+        {{item.articleDate ? (item.articleDate | date: 'dd.MM.yy')  : ''}}
         {{item.subTitle ? '(' +item.subTitle+')' : ''}}
+        <!-- Matches -->
+        {{item.matchStartDate ? (item.matchStartDate.seconds*1000 | date: 'dd.MM.yy HH:mm') :''}}
+        <!-- Members -->
+        {{item.mainData && item.mainData.birthday ? (item.mainData.birthday | date: 'dd.MM.yy') :''}}
+        <!-- Teams -->
         {{item.assignedSeason ? item.assignedSeason : ''}}
       </mat-option>
     </mat-select>

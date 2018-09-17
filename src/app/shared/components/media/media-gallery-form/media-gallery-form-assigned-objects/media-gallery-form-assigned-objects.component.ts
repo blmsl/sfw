@@ -50,13 +50,6 @@ export class MediaGalleryFormAssignedObjectsComponent implements OnInit, OnChang
     this.getAssignedItems(this.assignedItemType);
   }
 
-  getItemTitle(assignedItemType: string, item: any){
-    switch (assignedItemType) {
-      case 'article':
-        return item.title;
-    }
-  }
-
   getAssignedItems(assignedItemType: string): void {
     this.isLoading = true;
     switch (assignedItemType) {

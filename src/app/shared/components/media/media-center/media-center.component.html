@@ -12,8 +12,10 @@
       <mat-tab label="{{'general.media.list.title' | translate}} {{'(' + mediaItems.length + ')' }}">
         <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
           <mat-toolbar class="example-toolbar">
-            <button mat-icon-button (click)="snav.toggle()"><mat-icon>folder_special</mat-icon></button>
-            <h1 class="example-app-name">{{'general.media.gallery.list' | translate}}</h1>
+            <button mat-icon-button (click)="snav.toggle()">
+              <mat-icon>folder_special</mat-icon>
+            </button>
+            {{'general.media.gallery.list' | translate}}
           </mat-toolbar>
 
           <mat-sidenav-container class="example-sidenav-container"
@@ -24,9 +26,10 @@
                          [mode]="mobileQuery.matches ? 'over' : 'side'"
                          [fixedInViewport]="mobileQuery.matches"
                          fixedTopGap="56">
-              <media-gallery-list *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
+              <!--<media-gallery-list *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
                                   [mediaGalleries]="mediaGalleries">
-              </media-gallery-list>
+              </media-gallery-list>-->
+              12asd
 
             </mat-sidenav>
 

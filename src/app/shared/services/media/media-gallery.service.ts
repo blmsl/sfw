@@ -28,6 +28,7 @@ export class MediaGalleryService {
     mediaGallery.id = this.afs.createId();
     const creation: ICreation = this.authService.getCreation();
     mediaGallery.creation = creation;
+    mediaGallery.assignedMediaItems = [];
     return this.afs.collection(this.path).doc(mediaGallery.id).set(mediaGallery);
   }
 

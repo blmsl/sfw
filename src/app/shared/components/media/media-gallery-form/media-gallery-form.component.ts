@@ -18,6 +18,7 @@ import { IMediaGallery }       from '../../../interfaces/media/media-gallery.int
 import { SeasonService }       from '../../../services/season/season.service';
 import { Observable }          from 'rxjs/index';
 import { ISeason }             from '../../../interfaces/season.interface';
+import { AlertService } from '../../../services/alert/alert.service';
 
 @Component({
   selector: 'media-gallery-form',
@@ -33,8 +34,10 @@ export class MediaGalleryFormComponent {
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
+              private alertService: AlertService,
               private seasonService: SeasonService,
               public mediaGalleryService: MediaGalleryService) {
+    this.seasons$ = seasonService.seasons$;
   }
 
 
@@ -61,7 +64,12 @@ export class MediaGalleryFormComponent {
   }
 
   saveMediaGallery() {
-    console.log(this.gallery);
+    this.mediaGalleryService.createMediaGallery(this.gallery)
+      .then(() => this.alertService.showSnackBar('success', 'general.media.gallery.saved'),
+      (error: any) => this.alertService.showSnackBar('error', error.message)
+    ).catch((error: any) => {
+      this.alertService.showSnackBar('error', error.message);
+    });
   }
 
 }
