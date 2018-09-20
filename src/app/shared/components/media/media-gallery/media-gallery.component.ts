@@ -5,11 +5,18 @@ import {
   Input,
   OnInit,
   Output
-} from '@angular/core';
-import { IMediaItem } from '../../../interfaces/media/media-item.interface';
-import { MatDialog } from '@angular/material';
+}                                 from '@angular/core';
+import { IMediaItem }             from '../../../interfaces/media/media-item.interface';
+import { MatDialog }              from '@angular/material';
 import { MediaItemInfoComponent } from '../media-item-info/media-item-info.component';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDrop,
+  moveItemInArray,
+  transferArrayItem
+}                                 from '@angular/cdk/drag-drop';
+import { IMediaGallery }          from '../../../interfaces/media/media-gallery.interface';
 
 @Component({
   selector: 'media-gallery',
@@ -20,6 +27,8 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 export class MediaGalleryComponent implements OnInit {
 
   @Input() mediaItems: IMediaItem[];
+  @Input() mediaGalleryList: IMediaGallery[];
+
   @Output() removeMediaItem: EventEmitter<IMediaItem> = new EventEmitter<IMediaItem>(false);
 
   public breakpoint: number;
@@ -31,24 +40,32 @@ export class MediaGalleryComponent implements OnInit {
     this.breakpoint = (window.screen.width <= 600) ? 1 : (window.screen.width <= 1024) ? 2 : (window.screen.width <= 1280) ? 4 : 5;
   }
 
-  onResize(event) {
-    this.breakpoint = (event.target.innerWidth <= 600) ? 1 : (event.target.innerWidth <= 1024) ? 2 : (event.target.innerWidth <= 1280) ? 4 : 5;
+  onDrop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.mediaItems, event.previousIndex, event.currentIndex);
   }
 
-  openDialog(mediaItem: IMediaItem) {
-    this.dialog.open(MediaItemInfoComponent, {
-      data: { mediaItem: mediaItem }
-    });
-  }
+  isAllowed = (drag?: CdkDrag, drop?: CdkDrop) => {
+    return false;
+  };
 
   saveMediaItemTitle(title: string){
     console.log(title);
   }
 
-  onDrop(event: CdkDragDrop<string[]>) {
-    console.log(this.mediaItems);
-    console.log(event.previousIndex);
-    console.log(event.currentIndex);
-    // moveItemInArray(this.items, event.previousIndex, event.currentIndex);
+  addToList(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
   }
 }
