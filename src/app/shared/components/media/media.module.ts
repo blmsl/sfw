@@ -52,6 +52,7 @@ import { SponsorService }  from '../../services/sponsor/sponsor.service';
 import { TeamService }     from '../../services/team/team.service';
 import { SeasonService }   from '../../services/season/season.service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MediaGalleryItemComponent } from './media-gallery/media-gallery-item/media-gallery-item.component';
 
 @NgModule({
   imports: [
@@ -96,7 +97,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FileSizePipe,
     MediaItemInfoComponent,
     MediaGalleriesComponent,
-    MediaGalleryFormAssignedObjectsComponent
+    MediaGalleryFormAssignedObjectsComponent,
+    MediaGalleryItemComponent
   ],
   exports: [
     MediaAvatarComponent,

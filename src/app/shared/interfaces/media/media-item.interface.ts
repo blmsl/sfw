@@ -8,6 +8,8 @@ export class IMediaItem {
   assignedObjects?: {};
   downloadURL: string;
 
+  ordering?: number;
+
   file?: {
     size?: number;
     type?: string;

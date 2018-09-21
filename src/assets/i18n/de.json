@@ -871,6 +871,7 @@
         "status": "Status"
       },
       "uploader": {
+        "browse": "Dateien auswählen",
         "cancel": "Abbrechen",
         "canceled": "abgebrochen",
         "clearQueue": "Warteschlange löschen",

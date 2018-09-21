@@ -1,55 +1,11 @@
-<cdk-drop *ngIf="mediaItems && mediaItems.length > 0; else noMediaItemsTemplate"
-          #mediaList
-          fxLayout="row wrap"
-          [connectedTo]="[mediaGalleryList]"
-          (dropped)="addToList($event)"
-          [data]="mediaItems">
+<cdk-drop class="list" (dropped)="drop($event)">
 
-  <div fxFlex="20%"
-       cdkDrag
-       *ngFor="let mediaItem of mediaItems">
+  <media-gallery-item class="box"
+                      *ngFor="let mediaItem of mediaItems | orderBy: ['ordering']"
+                      [mediaItem]="mediaItem"
+                      cdkDrag>
+  </media-gallery-item>
 
-    <img *cdkDragPlaceholder src="mediaItem.downloadURL">
-    <img *cdkDragPreview src="mediaItem.downloadURL">
-
-    <mat-card>
-      <mat-card-header fxLayout="row">
-        <mat-card-title><a [href]="mediaItem.downloadURL" target="_blank">{{mediaItem.file.name}}</a></mat-card-title>
-        <div fxFlex></div>
-        <span cdkDragHandle
-              class="move-media-item">
-        <i class="fa fa-arrows"></i>
-      </span>
-      </mat-card-header>
-      <mat-card-content class="text-center">
-
-        <img *ngIf="mediaItem.file.type.indexOf('image') > -1"
-             class="image"
-             [src]="mediaItem.downloadURL"
-             alt="{{mediaItem.file.name}}"/>
-
-        <audio *ngIf="mediaItem.file.type.indexOf('audio') > -1" controls>
-          <source [src]="mediaItem.downloadURL" type="audio/ogg">
-          <source [src]="mediaItem.downloadURL" type="audio/mpeg">
-          Your browser does not support the audio tag.
-        </audio>
-
-        <video *ngIf="mediaItem.file.type.indexOf('video') > -1" controls>
-          <source [src]="mediaItem.downloadURL" type="video/mp4">
-          <source [src]="mediaItem.downloadURL" type="video/ogg">
-          Your browser does not support the video tag.
-        </video>
-
-        <div class="other-file-type"
-             *ngIf="mediaItem.file.type.indexOf('video') === -1
-          && mediaItem.file.type.indexOf('audio') === -1
-          && mediaItem.file.type.indexOf('image') === -1">
-          <h5>{{mediaItem.file.type}}</h5>
-        </div>
-      </mat-card-content>
-      <mat-card-content [innerHTML]="mediaItem.description"></mat-card-content>
-    </mat-card>
-  </div>
 </cdk-drop>
 
 <ng-template #noMediaItemsTemplate>

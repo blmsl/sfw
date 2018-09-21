@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable }                                   from '@angular/core';
+import {
+  Observable,
+  of
+} from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { IMediaItem } from '../../interfaces/media/media-item.interface';
-import { AuthService } from '../auth/auth.service';
-import { FileType } from '../../interfaces/media/file-type.interface';
-import { map } from 'rxjs/operators';
+import { IMediaItem }                                   from '../../interfaces/media/media-item.interface';
+import { AuthService }                                  from '../auth/auth.service';
+import { FileType }                                     from '../../interfaces/media/file-type.interface';
+import { map }                                          from 'rxjs/operators';
+import { IMember }                                      from '../../interfaces/member/member.interface';
 
 @Injectable()
 export class MediaItemService {
@@ -22,11 +26,23 @@ export class MediaItemService {
   createMediaItem(mediaItem: IMediaItem): Promise<void> {
     mediaItem.creation = this.authService.getCreation();
     mediaItem.id = this.afs.createId();
+    mediaItem.ordering = 0;
     return this.afs.collection(this.path).doc(mediaItem.id).set(mediaItem, { merge: true });
   }
 
   removeMediaItem(mediaItemId: string): Promise<void> {
     return this.afs.collection(this.path).doc(mediaItemId).delete();
+  }
+
+  updateMediaItems(mediaItems: IMediaItem[]): Observable<void> {
+    const updates = mediaItems.forEach((mediaItem: IMediaItem) => {
+      return this.updateMediaItem(mediaItem);
+    });
+    return of(updates);
+  }
+
+  updateMediaItem(mediaItem: IMediaItem): Promise<void> {
+    return this.afs.collection(this.path).doc(mediaItem.id).update(mediaItem);
   }
 
   getMediaItems(assignedObjects: any, itemId: string): Observable<IMediaItem[]> {
