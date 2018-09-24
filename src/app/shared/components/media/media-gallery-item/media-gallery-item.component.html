@@ -32,23 +32,23 @@
   </mat-card-content>
   <mat-card-actions class="text-right">
     <div fxLayout="column"
-         fxLayout.gt-sm="row"
-         fxLayoutGap="10px">
-      <button mat-raised-button
-              color="accent"
+         fxLayoutGap="15px"
+         fxLayout.gt-sm="row">
+      <button color="accent"
+              mat-mini-fab
               (click)="showInfoDialog(mediaItem)">
         <i class="fa fa-info"></i>
       </button>
 
       <button color="primary"
-              mat-raised-button
+              mat-mini-fab
               class="drag-handle"
               cdkDragHandle>
         <i class="fa fa-arrows"></i>
       </button>
 
       <button color="warn"
-              mat-raised-button
+              mat-mini-fab
               (click)="removeMediaItem(mediaItem)">
         <i class="fa fa-remove"></i>
       </button>

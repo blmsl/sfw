@@ -40,7 +40,7 @@
                   <mat-card-content fxLayout="column"
                                     fxLayoutGap="10px">
 
-                    <cdk-drop id="{{gallery.id}}"
+                    <!--<cdk-drop id="{{gallery.id}}"
                               [connectedTo]="['media-gallery']"
                               (dropped)="drop($event)"
                               style="min-height: 90px; border: 1px solid red;">
@@ -48,8 +48,9 @@
                                           *ngFor="let mediaItem of gallery.assignedMediaItems | orderBy: ['ordering']"
                                           [mediaItem]="mediaItem"
                                           cdkDrag>
+                        <img *cdkDragPreview src="https://via.placeholder.com/150x90" [alt]="mediaItem.title">
                       </media-gallery-item>
-                    </cdk-drop>
+                    </cdk-drop>-->
                   </mat-card-content>
                 </mat-card>
 
@@ -64,20 +65,75 @@
                 <strong>{{ 'general.info' | translate }}</strong> {{ 'general.media.noItemsFound' | translate}}
               </div>
 
-              <cdk-drop fxLayout="column"
-                        fxLayout.gt-sm="row wrap"
-                        fxLayoutGap="1"
+              <!-- [connectedTo]="['Hh1JA4PJ9731jJlcCMf7', 'Ppwn5ARWqVeCvOJlu4p6']"-->
+              <cdk-drop orientation="horizontal"
+                        class="list"
                         id="media-gallery"
-                        [connectedTo]="['Hh1JA4PJ9731jJlcCMf7', 'Ppwn5ARWqVeCvOJlu4p6']"
                         (dropped)="drop($event)">
 
-                <media-gallery-item fxFlex="24"
-                                    style="display: flex; flex-direction: column;"
-                                    *ngFor="let mediaItem of mediaItems"
-                                    [mediaItem]="mediaItem"
-                                    cdkDrag>
-                  <img *cdkDragPreview src="https://via.placeholder.com/90x90">
-                </media-gallery-item>
+                <mat-card class="box"
+                          fxFlex="24"
+                          *ngFor="let mediaItem of mediaItems"
+                          cdkDrag>
+
+                  <mat-card-title>{{mediaItem.file.name}}</mat-card-title>
+
+                  <mat-card-content class="text-center">
+
+                    <img *cdkDragPreview src="https://via.placeholder.com/90x90" [alt]="mediaItem.title">
+
+                    <img *ngIf="mediaItem.file.type.indexOf('image') > -1"
+                         [src]="mediaItem.downloadURL"
+                         alt="{{mediaItem.file.name}}"/>
+
+                    <div class="audio-file" *ngIf="mediaItem.file.type.indexOf('audio') > -1">
+                      <audio controls>
+                        <source [src]="mediaItem.downloadURL" type="audio/ogg">
+                        <source [src]="mediaItem.downloadURL" type="audio/mpeg">
+                        Your browser does not support the audio tag.
+                      </audio>
+                    </div>
+
+                    <div class="video-file" *ngIf="mediaItem.file.type.indexOf('video') > -1">
+                      <video class="preview-video" controls>
+                        <source [src]="mediaItem.downloadURL" type="video/mp4">
+                        <source [src]="mediaItem.downloadURL" type="video/ogg">
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+
+                    <div class="other-file-type"
+                         *ngIf="mediaItem.file.type.indexOf('video') === -1  && mediaItem.file.type.indexOf('audio') === -1 && mediaItem.file.type.indexOf('image') === -1">
+                      <h5>{{mediaItem.file.type}}</h5>
+                    </div>
+                  </mat-card-content>
+                  <mat-card-actions class="text-right">
+                    <div fxLayout="column"
+                         fxLayoutGap="15px"
+                         fxLayout.gt-sm="row">
+                      <button color="accent"
+                              mat-mini-fab
+                              type="button"
+                              (click)="showInfoDialog(mediaItem)">
+                        <i class="fa fa-info"></i>
+                      </button>
+
+                      <button color="primary"
+                              mat-mini-fab
+                              class="handle"
+                              cdkDragHandle>
+                        <i class="fa fa-arrows"></i>
+                      </button>
+
+                      <button color="warn"
+                              mat-mini-fab
+                              (click)="removeMediaItem(mediaItem)">
+                        <i class="fa fa-remove"></i>
+                      </button>
+                    </div>
+                  </mat-card-actions>
+                </mat-card>
+
               </cdk-drop>
 
 
