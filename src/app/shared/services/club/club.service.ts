@@ -7,7 +7,7 @@ import { IClub } from '../../interfaces/club/club.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
+} from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable()

@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
-import { IArticle } from '../../interfaces/article.interface';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { AuthService } from '../auth/auth.service';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { ILocation } from '../../interfaces/location/location.interface';
-import { ITeam } from '../../interfaces/team/team.interface';
-import { take, map } from 'rxjs/operators';
-import { IInterview } from '../../interfaces/member/interview.interface';
-import { IMatch } from '../../interfaces/match/match.interface';
+import { IArticle }        from '../../interfaces/article.interface';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+}                          from '@angular/fire/firestore';
+import { AuthService }     from '../auth/auth.service';
+import { ILocation }       from '../../interfaces/location/location.interface';
+import { ITeam }           from '../../interfaces/team/team.interface';
+import { take, map }       from 'rxjs/operators';
+import { IInterview }      from '../../interfaces/member/interview.interface';
+import { IMatch }          from '../../interfaces/match/match.interface';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable()
 export class ArticleService {

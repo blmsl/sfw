@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ITeam } from '../../interfaces/team/team.interface';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
 import { Observable, of } from 'rxjs';
 import { IMember } from '../../interfaces/member/member.interface';
 import {
-  map,
   take
 } from 'rxjs/internal/operators';
 import { forkJoin } from 'rxjs/index';

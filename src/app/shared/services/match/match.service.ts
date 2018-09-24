@@ -3,16 +3,13 @@ import { Observable } from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
+} from '@angular/fire/firestore';
 import { IMatch } from '../../interfaces/match/match.interface';
 import { of } from 'rxjs';
 import { IMatchEventCategory } from '../../interfaces/match/match-event-category.interface';
 import { ILocation } from '../../interfaces/location/location.interface';
 import { ITeam } from '../../interfaces/team/team.interface';
-import Timestamp = firebase.firestore.Timestamp;
-import * as firebase from 'firebase';
 import { ICoord } from '../../interfaces/match/coord.interface';
-import { IStartingPosition } from '../../interfaces/match/starting-position.interface';
 
 @Injectable()
 export class MatchService {

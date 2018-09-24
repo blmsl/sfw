@@ -4,7 +4,7 @@ import { ICategoryType } from '../../interfaces/category-type.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
+} from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 
 @Injectable()

@@ -6,7 +6,7 @@ import {
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
+} from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
 import { ISponsor } from '../../interfaces/sponsor.interface';
 

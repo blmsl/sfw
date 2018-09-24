@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
+} from '@angular/fire/firestore';
 import { ITask } from '../../interfaces/task.interface';
 import { AuthService } from '../auth/auth.service';
 import { IPriority } from '../../interfaces/priority.interface';

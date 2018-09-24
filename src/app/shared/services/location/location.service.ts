@@ -8,7 +8,7 @@ import { ILocation } from '../../interfaces/location/location.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
+} from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
 import { ITraining } from '../../interfaces/training.interface';
 import { take } from 'rxjs/internal/operators';

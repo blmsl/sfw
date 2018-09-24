@@ -6,7 +6,7 @@ import {
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
+} from '@angular/fire/firestore';
 import { IMediaItem } from '../../interfaces/media/media-item.interface';
 import { AuthService } from '../auth/auth.service';
 import { FileType } from '../../interfaces/media/file-type.interface';

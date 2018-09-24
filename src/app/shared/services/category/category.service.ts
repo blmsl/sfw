@@ -3,7 +3,7 @@ import { ICategory } from '../../interfaces/category.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
+} from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
 import { CategoryTypeService } from '../category-type/category-type.service';
 import {

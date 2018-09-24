@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
+} from '@angular/fire/firestore';
 import { IUser } from '../../interfaces/user/user.interface';
 import { Observable } from 'rxjs';
 

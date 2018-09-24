@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from '@angular/fire/firestore';
 import { IMember } from '../../interfaces/member/member.interface';
 import { ILocationContact } from '../../interfaces/location/location-contact.interface';
 import {
@@ -9,8 +12,6 @@ import {
 } from 'rxjs/internal/operators';
 import { ITeamManagement } from '../../interfaces/team/team-management.interface';
 import { ICoord } from '../../interfaces/match/coord.interface';
-import { ICategoryType } from '../../interfaces/category-type.interface';
-import * as moment from 'moment';
 
 @Injectable()
 export class MemberService {

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from 'angularfire2/firestore';
+} from '@angular/fire/firestore';
 import { ICreation } from '../../interfaces/creation.interface';
 import { AuthService } from '../auth/auth.service';
 import { IMediaGallery } from '../../interfaces/media/media-gallery.interface';

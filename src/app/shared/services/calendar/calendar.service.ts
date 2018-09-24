@@ -11,7 +11,6 @@ import { ICalendarEvent } from '../../interfaces/calendar/calendar-event.interfa
 import { MemberService } from '../member/member.service';
 import { Observable } from 'rxjs';
 import { ApplicationService } from '../application/application.service';
-import { IApplication } from '../../interfaces/application.interface';
 
 @Injectable()
 export class CalendarService {

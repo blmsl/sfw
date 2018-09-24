@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { IApplication } from '../../interfaces/application.interface';
-import { IMatch } from '../../interfaces/match/match.interface';
+import { Injectable }       from '@angular/core';
+import { Observable }       from 'rxjs';
+import { IApplication }     from '../../interfaces/application.interface';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from '@angular/fire/firestore';
 
 @Injectable()
 export class ApplicationService {

@@ -21,7 +21,6 @@ import {
 } from '@angular/material';
 import { MediaCenterComponent } from './media-center/media-center.component';
 import { MediaUploaderService } from '../../services/media/media-uploader.service';
-import { AngularFireStorageModule } from 'angularfire2/storage';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MediaItemService } from '../../services/media/media-item.service';
 import { MediaUploaderComponent } from './media-uploader/media-uploader.component';
@@ -46,13 +45,14 @@ import { MediaGalleryFormAssignedObjectsComponent } from './media-gallery-form/m
 import { ArticleService } from '../../services/article/article.service';
 import { ClubService } from '../../services/club/club.service';
 import { LocationService } from '../../services/location/location.service';
-import { MatchService } from '../../services/match/match.service';
-import { MemberService } from '../../services/member/member.service';
-import { SponsorService } from '../../services/sponsor/sponsor.service';
-import { TeamService } from '../../services/team/team.service';
-import { SeasonService } from '../../services/season/season.service';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatchService }              from '../../services/match/match.service';
+import { MemberService }             from '../../services/member/member.service';
+import { SponsorService }            from '../../services/sponsor/sponsor.service';
+import { TeamService }               from '../../services/team/team.service';
+import { SeasonService }             from '../../services/season/season.service';
+import { DragDropModule }            from '@angular/cdk/drag-drop';
 import { MediaGalleryItemComponent } from './media-gallery/media-gallery-item/media-gallery-item.component';
+import { AngularFireStorageModule }  from '@angular/fire/storage';
 
 @NgModule({
   imports: [

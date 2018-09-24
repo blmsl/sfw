@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { AngularFireUploadTask } from 'angularfire2/storage';
+import { Observable }            from 'rxjs';
+import { AngularFireUploadTask } from '@angular/fire/storage';
 
 export class Upload {
 
