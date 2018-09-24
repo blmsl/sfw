@@ -1,20 +1,20 @@
 import {
   Component,
   OnInit
-}                              from '@angular/core';
+} from '@angular/core';
 import { MediaGalleryService } from '../../../services/media/media-gallery.service';
-import { Observable }          from 'rxjs/index';
-import { IMediaGallery }       from '../../../interfaces/media/media-gallery.interface';
+import { Observable } from 'rxjs/index';
+import { IMediaGallery } from '../../../interfaces/media/media-gallery.interface';
 import {
   FormBuilder,
   FormGroup,
   Validators
-}                              from '@angular/forms';
+} from '@angular/forms';
 
 @Component({
   selector: 'media-galleries',
   templateUrl: './media-galleries.component.html',
-  styleUrls: [ './media-galleries.component.scss' ]
+  styleUrls: ['./media-galleries.component.scss']
 })
 export class MediaGalleriesComponent implements OnInit {
 
@@ -22,13 +22,13 @@ export class MediaGalleriesComponent implements OnInit {
   public form: FormGroup;
 
   constructor(private mediaGalleryService: MediaGalleryService,
-              private fb: FormBuilder) {
+    private fb: FormBuilder) {
     this.mediaGalleries$ = mediaGalleryService.mediaGalleries$;
   }
 
   ngOnInit() {
     this.form = this.fb.group({
-      search: [ '', [ Validators.required, Validators.minLength(3) ] ]
+      search: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 

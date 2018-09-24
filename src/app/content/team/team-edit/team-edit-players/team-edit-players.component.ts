@@ -4,22 +4,22 @@ import {
   Input,
   OnInit,
   Output
-}                  from '@angular/core';
-import { ITeam }   from '../../../../shared/interfaces/team/team.interface';
+} from '@angular/core';
+import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import {
   FormBuilder,
   FormGroup
-}                  from '@angular/forms';
+} from '@angular/forms';
 import {
   debounceTime,
   distinctUntilChanged
-}                  from 'rxjs/internal/operators';
+} from 'rxjs/internal/operators';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 
 @Component({
   selector: 'team-edit-players',
   templateUrl: './team-edit-players.component.html',
-  styleUrls: [ './team-edit-players.component.scss' ]
+  styleUrls: ['./team-edit-players.component.scss']
 })
 export class TeamEditPlayersComponent implements OnInit {
 
@@ -34,7 +34,7 @@ export class TeamEditPlayersComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      assignedPlayers: [ this.team.assignedPlayers ]
+      assignedPlayers: [this.team.assignedPlayers]
     });
 
     this.form.valueChanges.pipe(

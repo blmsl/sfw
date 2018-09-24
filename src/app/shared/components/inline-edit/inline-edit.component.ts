@@ -12,7 +12,7 @@ import {
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR
-}                          from '@angular/forms';
+} from '@angular/forms';
 import { OuterSubscriber } from 'rxjs/internal/OuterSubscriber';
 
 const INLINE_EDIT_CONTROL_VALUE_ACCESSOR = {

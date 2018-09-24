@@ -2,7 +2,7 @@ import {
   Component,
   Input,
   OnInit
-}                from '@angular/core';
+} from '@angular/core';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 
 @Component({

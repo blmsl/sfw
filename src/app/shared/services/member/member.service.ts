@@ -1,16 +1,16 @@
-import { Injectable }                                   from '@angular/core';
-import { forkJoin, Observable, of }                     from 'rxjs';
+import { Injectable } from '@angular/core';
+import { forkJoin, Observable, of } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { IMember }                                      from '../../interfaces/member/member.interface';
+import { IMember } from '../../interfaces/member/member.interface';
 import { ILocationContact } from '../../interfaces/location/location-contact.interface';
 import {
   map,
   take
-}                           from 'rxjs/internal/operators';
-import { ITeamManagement }  from '../../interfaces/team/team-management.interface';
-import { ICoord }           from '../../interfaces/match/coord.interface';
-import { ICategoryType }    from '../../interfaces/category-type.interface';
-import * as moment          from 'moment';
+} from 'rxjs/internal/operators';
+import { ITeamManagement } from '../../interfaces/team/team-management.interface';
+import { ICoord } from '../../interfaces/match/coord.interface';
+import { ICategoryType } from '../../interfaces/category-type.interface';
+import * as moment from 'moment';
 
 @Injectable()
 export class MemberService {
@@ -24,8 +24,8 @@ export class MemberService {
     this.collectionRef = this.afs.collection<IMember>(this.path);
     this.members$ = this.collectionRef.valueChanges().pipe(
       map((members: IMember[]) => {
-        for(let i = 0; i <members.length; i++){
-          members[i].title = members[i].mainData.lastName +' '+ members[i].mainData.firstName;
+        for (let i = 0; i < members.length; i++) {
+          members[i].title = members[i].mainData.lastName + ' ' + members[i].mainData.firstName;
         }
         return members;
       })

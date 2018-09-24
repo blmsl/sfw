@@ -2,14 +2,14 @@ import {
   Component,
   Input,
   OnInit
-}                   from '@angular/core';
+} from '@angular/core';
 import { IArticle } from '../../../../shared/interfaces/article.interface';
-import { IUser }    from '../../../../shared/interfaces/user/user.interface';
+import { IUser } from '../../../../shared/interfaces/user/user.interface';
 
 @Component({
   selector: 'article-authors-stats',
   templateUrl: './article-authors-stats.component.html',
-  styleUrls: [ './article-authors-stats.component.scss' ]
+  styleUrls: ['./article-authors-stats.component.scss']
 })
 export class ArticleAuthorsStatsComponent implements OnInit {
 
@@ -50,7 +50,7 @@ export class ArticleAuthorsStatsComponent implements OnInit {
         let author = this.users.find((user: IUser) => {
           return user.id === memberId;
         });
-        const name = author.firstName && author.lastName ? author.firstName +' ' + author.lastName : author.email;
+        const name = author.firstName && author.lastName ? author.firstName + ' ' + author.lastName : author.email;
         this.chartLabels.push(name);
 
         this.chartData.push(value.length);

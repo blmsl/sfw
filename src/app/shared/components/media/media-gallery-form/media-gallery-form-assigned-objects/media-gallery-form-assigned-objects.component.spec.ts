@@ -8,9 +8,9 @@ describe('MediaGalleryFormAssignedObjectsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MediaGalleryFormAssignedObjectsComponent ]
+      declarations: [MediaGalleryFormAssignedObjectsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

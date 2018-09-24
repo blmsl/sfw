@@ -1,13 +1,26 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy
+} from '@angular/core';
 import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
 import { MediaItemService } from '../../../services/media/media-item.service';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
-import { Observable } from 'rxjs/index';
+import {
+  Observable,
+  Subscription
+} from 'rxjs/index';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { AlertService } from '../../../services/alert/alert.service';
 import { IMediaGallery } from '../../../interfaces/media/media-gallery.interface';
 import { MediaGalleryService } from '../../../services/media/media-gallery.service';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'media-center',
@@ -20,11 +33,12 @@ export class MediaCenterComponent implements OnDestroy {
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
 
-  public mediaItems$: Observable<IMediaItem[]>;
+  public mediaItems: IMediaItem[];
   public mediaGalleries$: Observable<IMediaGallery[]>;
   public mobileQuery: MediaQueryList;
 
   readonly _mobileQueryListener: () => void;
+  private mediaItemSubscription: Subscription;
 
   constructor(private mediaItemService: MediaItemService,
     private mediaGalleryService: MediaGalleryService,
@@ -36,18 +50,29 @@ export class MediaCenterComponent implements OnDestroy {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    this.mediaItems$ = mediaItemService.mediaItems$;
-
+    this.mediaItemSubscription = mediaItemService.mediaItems$.subscribe((mediaItems: IMediaItem[]) => {
+      this.mediaItems = mediaItems;
+    });
   }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.mediaItemSubscription.unsubscribe();
   }
 
-  removeMediaItem(mediaItem: IMediaItem): void {
-    this.mediaItemService.removeMediaItem(mediaItem.id)
-      .then(() => this.alertService.showSnackBar('success', 'general.media.uploader.removedFile'))
-      .catch(error => this.alertService.showSnackBar('error', error.message));
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(this.mediaItems, event.previousIndex, event.currentIndex);
+      // this.mediaItemService.updateMediaItems(this.mediaItems).then(() => console.log('ended'));
+    } else {
+      console.log(event);
+      /*transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );*/
+    }
   }
 
 }

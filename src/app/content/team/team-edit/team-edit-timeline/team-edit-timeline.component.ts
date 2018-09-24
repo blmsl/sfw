@@ -4,24 +4,24 @@ import {
   Input,
   OnInit,
   Output
-}                         from '@angular/core';
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   Validators
-}                         from '@angular/forms';
+} from '@angular/forms';
 import {
   debounceTime,
   distinctUntilChanged
-}                         from 'rxjs/internal/operators';
-import { ITeam }          from '../../../../shared/interfaces/team/team.interface';
+} from 'rxjs/internal/operators';
+import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import { ITimeLineEvent } from '../../../../shared/interfaces/time-line-event.interface';
 
 @Component({
   selector: 'team-edit-timeline',
   templateUrl: './team-edit-timeline.component.html',
-  styleUrls: [ './team-edit-timeline.component.scss' ]
+  styleUrls: ['./team-edit-timeline.component.scss']
 })
 export class TeamEditTimelineComponent implements OnInit {
 
@@ -53,7 +53,7 @@ export class TeamEditTimelineComponent implements OnInit {
     const formArray = [];
     if (this.team.assignedEvents) {
       for (let i = 0; i < this.team.assignedEvents.length; i++) {
-        formArray.push(this.initAssignedEvent(this.team.assignedEvents[ i ]));
+        formArray.push(this.initAssignedEvent(this.team.assignedEvents[i]));
       }
     }
     return this.fb.array(formArray);
@@ -61,19 +61,19 @@ export class TeamEditTimelineComponent implements OnInit {
 
   initAssignedEvent(event: ITimeLineEvent): FormGroup {
     return this.fb.group({
-      title: [ event ? event.title : '', [ Validators.required, Validators.maxLength(100) ] ],
-      subTitle: [ event ? event.subTitle : '' ],
-      icon: [ event ? event.icon : '' ],
-      color: [ event ? event.color : '' ],
-      assignedMediaItem: [ event ? event.assignedMediaItem : '' ],
-      assignedArticle: [ event ? event.assignedArticle : '' ],
-      startDate: [ event ? event.startDate : new Date() ],
-      endDate: [ event ? event.endDate : new Date() ]
+      title: [event ? event.title : '', [Validators.required, Validators.maxLength(100)]],
+      subTitle: [event ? event.subTitle : ''],
+      icon: [event ? event.icon : ''],
+      color: [event ? event.color : ''],
+      assignedMediaItem: [event ? event.assignedMediaItem : ''],
+      assignedArticle: [event ? event.assignedArticle : ''],
+      startDate: [event ? event.startDate : new Date()],
+      endDate: [event ? event.endDate : new Date()]
     });
   }
 
   addEvent(): void {
-    const control = this.form.controls[ 'assignedEvents' ] as FormArray;
+    const control = this.form.controls['assignedEvents'] as FormArray;
     control.push(this.initAssignedEvent(null));
     // this.selectedEvent = this.form.controls[ 'assignedEvents' ][ 'controls' ].length - 1;
   }
@@ -88,7 +88,7 @@ export class TeamEditTimelineComponent implements OnInit {
   }
 
   removeEvent($event: number): void {
-    const control = this.form.controls[ 'assignedEvents' ] as FormArray;
+    const control = this.form.controls['assignedEvents'] as FormArray;
     control.removeAt($event);
     // this.selectedEvent = -1;
   }

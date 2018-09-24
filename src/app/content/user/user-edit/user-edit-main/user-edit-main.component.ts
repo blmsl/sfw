@@ -4,16 +4,16 @@ import {
   Input,
   OnInit,
   Output
-}                      from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup
-}                      from '@angular/forms';
-import { IUser }       from '../../../../shared/interfaces/user/user.interface';
+} from '@angular/forms';
+import { IUser } from '../../../../shared/interfaces/user/user.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                      from 'rxjs/operators';
+} from 'rxjs/operators';
 import { AuthService } from '../../../../shared/services/auth/auth.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class UserEditMainComponent implements OnInit {
   public notEditableMessage: boolean = false;
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService) { }
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.form = this.fb.group({

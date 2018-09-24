@@ -8,9 +8,9 @@ describe('MatchEditLinkFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchEditLinkFormComponent ]
+      declarations: [MatchEditLinkFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

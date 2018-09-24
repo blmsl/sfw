@@ -4,21 +4,21 @@ import {
   Input,
   OnInit,
   Output
-}                        from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators
-}                        from '@angular/forms';
+} from '@angular/forms';
 import { ICategoryType } from '../../../../shared/interfaces/category-type.interface';
-import { ICategory }     from '../../../../shared/interfaces/category.interface';
-import { ISeason }       from '../../../../shared/interfaces/season.interface';
-import { IClub }         from '../../../../shared/interfaces/club/club.interface';
-import { ITeam }         from '../../../../shared/interfaces/team/team.interface';
+import { ICategory } from '../../../../shared/interfaces/category.interface';
+import { ISeason } from '../../../../shared/interfaces/season.interface';
+import { IClub } from '../../../../shared/interfaces/club/club.interface';
+import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                        from 'rxjs/internal/operators';
+} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'team-edit-main',
@@ -54,7 +54,7 @@ export class TeamEditMainComponent implements OnInit {
       isMainTeam: this.team.isMainTeam
     });
 
-    if(this.team.isImported){
+    if (this.team.isImported) {
       this.form.disable();
       this.form.get('isMainTeam').enable();
     }

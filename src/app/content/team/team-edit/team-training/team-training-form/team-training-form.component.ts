@@ -5,9 +5,9 @@ import {
   OnInit,
   Output,
   ViewChild
-}                               from '@angular/core';
-import { FormGroup }            from '@angular/forms';
-import { ILocation }            from '../../../../../shared/interfaces/location/location.interface';
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ILocation } from '../../../../../shared/interfaces/location/location.interface';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
 
 @Component({

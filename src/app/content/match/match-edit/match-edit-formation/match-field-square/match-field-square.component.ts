@@ -2,20 +2,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input
-}                            from '@angular/core';
+} from '@angular/core';
 import { SkyhookDndService } from 'angular-skyhook';
-import { ICoord }            from '../../../../../shared/interfaces/match/coord.interface';
-import { MatchService }      from '../../../../../shared/services/match/match.service';
-import { IMatch }            from '../../../../../shared/interfaces/match/match.interface';
-import { map }               from 'rxjs/internal/operators';
-import { AlertService }      from '../../../../../shared/services/alert/alert.service';
+import { ICoord } from '../../../../../shared/interfaces/match/coord.interface';
+import { MatchService } from '../../../../../shared/services/match/match.service';
+import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
+import { map } from 'rxjs/internal/operators';
+import { AlertService } from '../../../../../shared/services/alert/alert.service';
 import { IStartingPosition } from '../../../../../shared/interfaces/match/starting-position.interface';
-import { IMember }           from '../../../../../shared/interfaces/member/member.interface';
+import { IMember } from '../../../../../shared/interfaces/member/member.interface';
 
 @Component({
   selector: 'match-field-square',
   templateUrl: './match-field-square.component.html',
-  styleUrls: [ './match-field-square.component.scss' ],
+  styleUrls: ['./match-field-square.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatchFieldSquareComponent {
@@ -26,8 +26,8 @@ export class MatchFieldSquareComponent {
   @Input() members: IMember[];
 
   constructor(// private dnd: SkyhookDndService,
-              private alertService: AlertService,
-              private matchService: MatchService) {
+    private alertService: AlertService,
+    private matchService: MatchService) {
   }
 
   get isVisible() {
@@ -40,7 +40,7 @@ export class MatchFieldSquareComponent {
     const startingPosition = this.match.startingEleven.find((startingPosition: IStartingPosition) => {
       return startingPosition.position.x === this.position.x && startingPosition.position.y === this.position.y;
     });
-    if(!startingPosition){
+    if (!startingPosition) {
       return false;
     }
 

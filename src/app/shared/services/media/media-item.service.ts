@@ -1,14 +1,16 @@
-import { Injectable }                                   from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Observable,
   of
 } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { IMediaItem }                                   from '../../interfaces/media/media-item.interface';
-import { AuthService }                                  from '../auth/auth.service';
-import { FileType }                                     from '../../interfaces/media/file-type.interface';
-import { map }                                          from 'rxjs/operators';
-import { IMember }                                      from '../../interfaces/member/member.interface';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from 'angularfire2/firestore';
+import { IMediaItem } from '../../interfaces/media/media-item.interface';
+import { AuthService } from '../auth/auth.service';
+import { FileType } from '../../interfaces/media/file-type.interface';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MediaItemService {
@@ -20,7 +22,14 @@ export class MediaItemService {
   constructor(private afs: AngularFirestore,
     private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMediaItem>(this.path);
-    this.mediaItems$ = this.collectionRef.valueChanges();
+    this.mediaItems$ = this.collectionRef.valueChanges().pipe(
+      map((mediaItems: IMediaItem[]) => {
+        mediaItems.sort((a: IMediaItem, b: IMediaItem) => {
+          return a.ordering < b.ordering ? 0 : 1;
+        });
+        return mediaItems;
+      })
+    );
   }
 
   createMediaItem(mediaItem: IMediaItem): Promise<void> {
@@ -34,11 +43,13 @@ export class MediaItemService {
     return this.afs.collection(this.path).doc(mediaItemId).delete();
   }
 
-  updateMediaItems(mediaItems: IMediaItem[]): Observable<void> {
-    const updates = mediaItems.forEach((mediaItem: IMediaItem) => {
-      return this.updateMediaItem(mediaItem);
-    });
-    return of(updates);
+  updateMediaItems(mediaItems: IMediaItem[]): Promise<any> {
+    let updates = [];
+    for (let i = 0; i < mediaItems.length; i++) {
+      mediaItems[i].ordering = i;
+      updates.push(this.updateMediaItem(mediaItems[i]));
+    }
+    return of(updates).toPromise();
   }
 
   updateMediaItem(mediaItem: IMediaItem): Promise<void> {

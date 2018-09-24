@@ -1,6 +1,6 @@
 import { ICoord } from './coord.interface';
 
-export interface IStartingPosition  {
+export interface IStartingPosition {
   memberId: string;
   position: ICoord;
 }

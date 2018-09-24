@@ -4,24 +4,24 @@ import {
   Input,
   OnInit,
   Output
-}                   from '@angular/core';
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   Validators
-}                   from '@angular/forms';
-import { IMember }  from '../../../../shared/interfaces/member/member.interface';
+} from '@angular/forms';
+import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                   from 'rxjs/operators';
+} from 'rxjs/operators';
 import { IProfile } from '../../../../shared/interfaces/member/profile.interface';
 
 @Component({
   selector: 'member-edit-profile',
   templateUrl: './member-edit-profile.component.html',
-  styleUrls: [ './member-edit-profile.component.scss' ]
+  styleUrls: ['./member-edit-profile.component.scss']
 })
 export class MemberEditProfileComponent implements OnInit {
 
@@ -54,7 +54,7 @@ export class MemberEditProfileComponent implements OnInit {
     const formArray = [];
     if (this.member.profile) {
       for (let i = 0; i < this.member.profile.length; i++) {
-        formArray.push(this.initProfileEntry(this.member.profile[ i ]));
+        formArray.push(this.initProfileEntry(this.member.profile[i]));
       }
     }
     return this.fb.array(formArray);
@@ -62,13 +62,13 @@ export class MemberEditProfileComponent implements OnInit {
 
   initProfileEntry(profile: IProfile): FormGroup {
     return this.fb.group({
-      entry: [ profile ? profile.entry : '', [ Validators.required, Validators.maxLength(100) ] ],
-      value: [ profile ? profile.value : '', [ Validators.required, Validators.maxLength(100) ] ]
+      entry: [profile ? profile.entry : '', [Validators.required, Validators.maxLength(100)]],
+      value: [profile ? profile.value : '', [Validators.required, Validators.maxLength(100)]]
     });
   }
 
   addProfileEntry(): void {
-    const control = this.form.controls[ 'profile' ] as FormArray;
+    const control = this.form.controls['profile'] as FormArray;
     const profile: IProfile = {
       entry: '',
       value: ''
@@ -77,7 +77,7 @@ export class MemberEditProfileComponent implements OnInit {
   }
 
   removeProfileEntry($event: number): void {
-    const control = this.form.controls[ 'profile' ] as FormArray;
+    const control = this.form.controls['profile'] as FormArray;
     control.removeAt($event);
   }
 }

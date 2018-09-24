@@ -6,14 +6,14 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { IMember }                             from '../../../../shared/interfaces/member/member.interface';
+import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import {
   FormBuilder,
   FormGroup
-}                                              from '@angular/forms';
-import { QuillEditorComponent }                from 'ngx-quill/src/quill-editor.component';
-import { IUploaderOptions }                    from '../../../../shared/interfaces/media/uploader-options.interface';
-import { IUploaderConfig }                     from '../../../../shared/interfaces/media/uploader-config.interface';
+} from '@angular/forms';
+import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
+import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-options.interface';
+import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
 import {
   debounceTime,
   distinctUntilChanged

@@ -5,22 +5,22 @@ import {
   OnInit,
   Output,
   ViewChild
-}                               from '@angular/core';
-import { ITeam }                from '../../../../shared/interfaces/team/team.interface';
+} from '@angular/core';
+import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import {
   FormBuilder,
   FormGroup
-}                               from '@angular/forms';
+} from '@angular/forms';
 import {
   debounceTime,
   distinctUntilChanged
-}                               from 'rxjs/internal/operators';
+} from 'rxjs/internal/operators';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
 
 @Component({
   selector: 'team-edit-photo-description',
   templateUrl: './team-edit-photo-description.component.html',
-  styleUrls: [ './team-edit-photo-description.component.scss' ]
+  styleUrls: ['./team-edit-photo-description.component.scss']
 })
 export class TeamEditPhotoDescriptionComponent implements OnInit {
 

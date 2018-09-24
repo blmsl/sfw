@@ -4,21 +4,21 @@ import {
   Input,
   OnInit,
   Output
-}                             from '@angular/core';
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   Validators
-}                             from '@angular/forms';
-import { ILocation }          from '../../../../shared/interfaces/location/location.interface';
+} from '@angular/forms';
+import { ILocation } from '../../../../shared/interfaces/location/location.interface';
 import { ApplicationService } from '../../../../shared/services/application/application.service';
-import { ITeam }              from '../../../../shared/interfaces/team/team.interface';
+import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                             from 'rxjs/internal/operators';
-import { ITraining }          from '../../../../shared/interfaces/training.interface';
+} from 'rxjs/internal/operators';
+import { ITraining } from '../../../../shared/interfaces/training.interface';
 
 @Component({
   selector: 'team-training',
@@ -34,7 +34,7 @@ export class TeamTrainingComponent implements OnInit {
   public weekdays: number[];
 
   constructor(private applicationService: ApplicationService,
-              private fb: FormBuilder) {
+    private fb: FormBuilder) {
     this.weekdays = applicationService.getWeekdays();
   }
 
@@ -57,7 +57,7 @@ export class TeamTrainingComponent implements OnInit {
     const formArray = [];
     if (this.team.assignedTrainings) {
       for (let i = 0; i < this.team.assignedTrainings.length; i++) {
-        formArray.push(this.initTraining(this.team.assignedTrainings[ i ]));
+        formArray.push(this.initTraining(this.team.assignedTrainings[i]));
       }
     }
     return this.fb.array(formArray);
@@ -65,21 +65,21 @@ export class TeamTrainingComponent implements OnInit {
 
   initTraining(training: ITraining): FormGroup {
     return this.fb.group({
-      day: [ training ? training.day : new Date().getDay(), [ Validators.required ] ],
-      startTime: [ training ? training.startTime : '', [ Validators.required ] ],
-      endTime: [ training ? training.endTime : '', [ Validators.required ] ],
+      day: [training ? training.day : new Date().getDay(), [Validators.required]],
+      startTime: [training ? training.startTime : '', [Validators.required]],
+      endTime: [training ? training.endTime : '', [Validators.required]],
       comment: training ? training.comment : '',
-      assignedLocation: [ training ? training.assignedLocation : '', [ Validators.required ] ]
+      assignedLocation: [training ? training.assignedLocation : '', [Validators.required]]
     });
   }
 
   addTraining(): void {
-    const control = this.form.controls[ 'assignedTrainings' ] as FormArray;
+    const control = this.form.controls['assignedTrainings'] as FormArray;
     control.push(this.initTraining(null));
   }
 
   removeTraining(i: number) {
-    const control = this.form.controls[ 'assignedTrainings' ] as FormArray;
+    const control = this.form.controls['assignedTrainings'] as FormArray;
     control.removeAt(i);
   }
 

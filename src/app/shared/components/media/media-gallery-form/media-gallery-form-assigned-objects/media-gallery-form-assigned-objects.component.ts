@@ -4,24 +4,24 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges
-}                          from '@angular/core';
-import { ClubService }     from '../../../../services/club/club.service';
-import { Observable }      from 'rxjs/index';
-import { ArticleService }  from '../../../../services/article/article.service';
+} from '@angular/core';
+import { ClubService } from '../../../../services/club/club.service';
+import { Observable } from 'rxjs/index';
+import { ArticleService } from '../../../../services/article/article.service';
 import { LocationService } from '../../../../services/location/location.service';
-import { MatchService }    from '../../../../services/match/match.service';
-import { MemberService }   from '../../../../services/member/member.service';
-import { SponsorService }  from '../../../../services/sponsor/sponsor.service';
-import { TeamService }     from '../../../../services/team/team.service';
-import { FormGroup }       from '@angular/forms';
-import { OrderByPipe }     from 'ngx-pipes';
-import { SeasonService }   from '../../../../services/season/season.service';
-import { ISeason }         from '../../../../interfaces/season.interface';
+import { MatchService } from '../../../../services/match/match.service';
+import { MemberService } from '../../../../services/member/member.service';
+import { SponsorService } from '../../../../services/sponsor/sponsor.service';
+import { TeamService } from '../../../../services/team/team.service';
+import { FormGroup } from '@angular/forms';
+import { OrderByPipe } from 'ngx-pipes';
+import { SeasonService } from '../../../../services/season/season.service';
+import { ISeason } from '../../../../interfaces/season.interface';
 
 @Component({
   selector: 'media-gallery-form-assigned-objects',
   templateUrl: './media-gallery-form-assigned-objects.component.html',
-  styleUrls: [ './media-gallery-form-assigned-objects.component.scss' ]
+  styleUrls: ['./media-gallery-form-assigned-objects.component.scss']
 })
 export class MediaGalleryFormAssignedObjectsComponent implements OnInit, OnChanges {
 
@@ -33,13 +33,13 @@ export class MediaGalleryFormAssignedObjectsComponent implements OnInit, OnChang
   public isLoading: boolean = false;
 
   constructor(private articleService: ArticleService,
-              private clubService: ClubService,
-              private locationService: LocationService,
-              private matchService: MatchService,
-              private memberService: MemberService,
-              private sponsorService: SponsorService,
-              private teamService: TeamService,
-              private seasonService: SeasonService) {
+    private clubService: ClubService,
+    private locationService: LocationService,
+    private matchService: MatchService,
+    private memberService: MemberService,
+    private sponsorService: SponsorService,
+    private teamService: TeamService,
+    private seasonService: SeasonService) {
   }
 
   ngOnChanges(changes: SimpleChanges) {

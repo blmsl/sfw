@@ -3,14 +3,14 @@ import {
   Input,
   OnDestroy,
   OnInit
-}                            from '@angular/core';
-import { IMember }           from '../../../interfaces/member/member.interface';
+} from '@angular/core';
+import { IMember } from '../../../interfaces/member/member.interface';
 import {
   Observable,
   of
-}                            from 'rxjs/index';
-import { IMediaItem }        from '../../../interfaces/media/media-item.interface';
-import { MediaItemService }  from '../../../services/media/media-item.service';
+} from 'rxjs/index';
+import { IMediaItem } from '../../../interfaces/media/media-item.interface';
+import { MediaItemService } from '../../../services/media/media-item.service';
 import { SkyhookDndService } from 'angular-skyhook';
 
 @Component({

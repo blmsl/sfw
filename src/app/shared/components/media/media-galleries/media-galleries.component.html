@@ -2,18 +2,18 @@
      fxLayout.gt-sm="row"
      fxLayoutGap="10px">
 
-  <div fxFlex="50">
+  <div fxFlex="60">
     <media-gallery-list *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
                         [mediaGalleries]="mediaGalleries">
     </media-gallery-list>
   </div>
 
-  <div fxFlex="50">
+  <div fxFlex="40">
     <media-gallery-form></media-gallery-form>
   </div>
 
 </div>
 
 <ng-template #loadingTemplate>
-  <loading-indicator></loading-indicator>   
+  <loading-indicator></loading-indicator>
 </ng-template>

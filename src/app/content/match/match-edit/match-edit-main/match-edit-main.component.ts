@@ -10,11 +10,11 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { ILocation }    from '../../../../shared/interfaces/location/location.interface';
-import { ITeam }        from '../../../../shared/interfaces/team/team.interface';
-import { ICategory }    from '../../../../shared/interfaces/category.interface';
-import { ISeason }      from '../../../../shared/interfaces/season.interface';
-import { IMatch }       from '../../../../shared/interfaces/match/match.interface';
+import { ILocation } from '../../../../shared/interfaces/location/location.interface';
+import { ITeam } from '../../../../shared/interfaces/team/team.interface';
+import { ICategory } from '../../../../shared/interfaces/category.interface';
+import { ISeason } from '../../../../shared/interfaces/season.interface';
+import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 import {
   debounceTime,
   distinctUntilChanged
@@ -49,7 +49,7 @@ export class MatchEditMainComponent implements OnInit {
       isHomeTeam: this.match.isHomeTeam,
       isImported: this.match.isImported,
       isOfficialMatch: this.match.isOfficialMatch,
-      matchEndDate: this.match.matchEndDate ? this.match.matchEndDate.toDate(): null,
+      matchEndDate: this.match.matchEndDate ? this.match.matchEndDate.toDate() : null,
       matchStartDate: this.match.matchStartDate ? this.match.matchStartDate.toDate() : null,
       assignedCategories: [this.match.assignedCategories, [Validators.required]],
       homeTeam: this.initTeam(this.match.homeTeam),

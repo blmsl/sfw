@@ -4,12 +4,12 @@ import {
   Input,
   OnInit,
   Output
-}                 from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators
-}                 from '@angular/forms';
+} from '@angular/forms';
 import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
 
 @Component({
@@ -33,8 +33,8 @@ export class MatchEditLinkFormComponent implements OnInit {
     });
   }
 
-  saveLink(matchLink: {title: string, link: string}) {
-    if(this.match.assignedLinks){
+  saveLink(matchLink: { title: string, link: string }) {
+    if (this.match.assignedLinks) {
       this.match.assignedLinks.push(matchLink);
     } else {
       this.match.assignedLinks = [matchLink];

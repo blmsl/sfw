@@ -49,14 +49,14 @@ import { SidebarLinksDataComponent } from './article-edit/article-edit-sidebar/s
 import { OWL_DATE_TIME_LOCALE, OwlDateTimeIntl, OwlDateTimeModule } from 'ng-pick-datetime';
 import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { ArticleFilterPipe }             from '../../shared/pipes/article-filter.pipe';
-import { TimeagoModule }                 from 'ngx-timeago';
-import { SharedUserModule }              from '../../shared/components/user/shared-user.module';
-import { DeIntl }                        from "../../shared/intl/owl-datetime.i18n";
-import { ArticleAuthorsStatsComponent }  from './article-dashboard/article-authors-stats/article-authors-stats.component';
+import { ArticleFilterPipe } from '../../shared/pipes/article-filter.pipe';
+import { TimeagoModule } from 'ngx-timeago';
+import { SharedUserModule } from '../../shared/components/user/shared-user.module';
+import { DeIntl } from "../../shared/intl/owl-datetime.i18n";
+import { ArticleAuthorsStatsComponent } from './article-dashboard/article-authors-stats/article-authors-stats.component';
 import { ArticleDashboardListComponent } from './article-dashboard/article-dashboard-list/article-dashboard-list.component';
-import { SharedArticleModule }           from '../../shared/components/article/shared-article.module';
-import { ChartsModule }                  from 'ng2-charts';
+import { SharedArticleModule } from '../../shared/components/article/shared-article.module';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [

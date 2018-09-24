@@ -4,12 +4,12 @@ import {
   Input,
   OnInit,
   Output
-}                       from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup
-}                       from '@angular/forms';
-import { IMatch }       from '../../../../shared/interfaces/match/match.interface';
+} from '@angular/forms';
+import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 import {
   debounceTime,
   distinctUntilChanged

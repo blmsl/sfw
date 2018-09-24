@@ -20,9 +20,9 @@ export class MediaGalleryListComponent implements OnInit {
   public step: number;
 
   constructor(private fb: FormBuilder,
-              private mediaGalleryService: MediaGalleryService,
-              private alertService: AlertService,
-              public dialog: MatDialog) {
+    private mediaGalleryService: MediaGalleryService,
+    private alertService: AlertService,
+    public dialog: MatDialog) {
   }
 
   ngOnInit() {

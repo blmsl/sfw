@@ -29,7 +29,7 @@ export class MatchEditArticlesComponent implements OnInit {
     article.assignedMatches.splice(matchIndex, 1);
 
     this.articleService.updateArticle(article.id, article).then(
-      () => this.alertService.showSnackBar('success','general.articles.edit.assignmentDeleted'),
+      () => this.alertService.showSnackBar('success', 'general.articles.edit.assignmentDeleted'),
       (error: any) => this.alertService.showSnackBar('error', error)
     );
   }

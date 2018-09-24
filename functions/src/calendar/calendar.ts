@@ -8,7 +8,7 @@ const GOOGLE_API_KEY = functions.config().google.calendar.key;
 const calendar = google.calendar({ version: 'v3', auth: GOOGLE_API_KEY });
 
 const db = admin.firestore();
-const settings = {timestampsInSnapshots: true};
+const settings = { timestampsInSnapshots: true };
 db.settings(settings);
 
 const currentDate = moment();
@@ -20,37 +20,37 @@ export const getGoogleCalendarEvents = functions
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .https.onRequest(async (req, resp) => {
 
-  const eventList: Promise<any>[] = [];
+    const eventList: Promise<any>[] = [];
 
-  try {
-    const applicationRef = db.collection('applications');
-    const activeAppRef = await applicationRef.where('isCurrentApplication', '==', true).get();
-    if (activeAppRef.size === 0) {
-      resp.send('No current Application found');
+    try {
+      const applicationRef = db.collection('applications');
+      const activeAppRef = await applicationRef.where('isCurrentApplication', '==', true).get();
+      if (activeAppRef.size === 0) {
+        resp.send('No current Application found');
+      }
+
+      const promises: Promise<any>[] = [];
+      promises.push(getEventList(activeAppRef.docs[0].data().assignedCalendars[0]));
+      /*for (const cal of activeAppRef.docs[0].data().assignedCalendars) {
+        console.log(getEventList(cal.link));
+        promises.push(getEventList(cal.link));
+      } */
+
+      const snapshots = await Promise.all(promises);
+
+      snapshots.forEach(snap => {
+        console.log(snap.data());
+        // eventList.push(snap.data().items);
+      });
+
+      return resp.send([]);
+
+    } catch (error) {
+      console.log(error);
+      return resp.status(500).send(error);
     }
 
-    const promises: Promise<any>[] = [];
-    promises.push(getEventList(activeAppRef.docs[0].data().assignedCalendars[0]));
-    /*for (const cal of activeAppRef.docs[0].data().assignedCalendars) {
-      console.log(getEventList(cal.link));
-      promises.push(getEventList(cal.link));
-    } */
-
-    const snapshots = await Promise.all(promises);
-
-    snapshots.forEach(snap => {
-      console.log(snap.data());
-      // eventList.push(snap.data().items);
-    });
-
-    return resp.send([]);
-
-  } catch (error) {
-    console.log(error);
-    return resp.status(500).send(error);
-  }
-
-});
+  });
 
 function getEventList(cal: string): Promise<any> {
   return calendar.events.list({

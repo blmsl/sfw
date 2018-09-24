@@ -2,10 +2,10 @@ import {
   Component,
   Input,
   OnInit
-}                           from '@angular/core';
-import { IUploaderConfig }  from '../../../../shared/interfaces/media/uploader-config.interface';
+} from '@angular/core';
+import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-options.interface';
-import { ITeam }            from '../../../../shared/interfaces/team/team.interface';
+import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 
 @Component({
   selector: 'team-edit-photo',
@@ -25,10 +25,10 @@ export class TeamEditPhotoComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    assignedObjects: [ 'teams', 'profile' ],
+    assignedObjects: ['teams', 'profile'],
     itemId: '',
     queueLimit: 1,
-    allowedMimeType: [ 'image/jpeg', 'image/gif', 'image/png' ]
+    allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
   constructor() { }

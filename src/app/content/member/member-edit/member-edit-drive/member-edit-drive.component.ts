@@ -4,14 +4,14 @@ import {
   Input,
   OnInit,
   Output
-}                               from '@angular/core';
-import { IMember }              from '../../../../shared/interfaces/member/member.interface';
+} from '@angular/core';
+import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import {
   FormBuilder,
   FormGroup
-}                               from '@angular/forms';
-import { MemberStateService }   from '../../../../shared/services/member/member-state.service';
-import { IClub }                from '../../../../shared/interfaces/club/club.interface';
+} from '@angular/forms';
+import { MemberStateService } from '../../../../shared/services/member/member-state.service';
+import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import {
   debounceTime,
   distinctUntilChanged
@@ -32,7 +32,7 @@ export class MemberEditDriveComponent implements OnInit {
   public form: FormGroup;
 
   constructor(private fb: FormBuilder,
-              public memberStateService: MemberStateService) {
+    public memberStateService: MemberStateService) {
   }
 
   ngOnInit() {

@@ -1,24 +1,24 @@
 import {
   Component,
   OnInit
-}                           from '@angular/core';
-import { Observable }       from 'rxjs';
-import { ISponsor }         from '../../../shared/interfaces/sponsor.interface';
-import { CategoryService }  from '../../../shared/services/category/category.service';
-import { SponsorService }   from '../../../shared/services/sponsor/sponsor.service';
-import { ICategory }        from '../../../shared/interfaces/category.interface';
-import { MediaMatcher }     from '@angular/cdk/layout';
+} from '@angular/core';
+import { Observable } from 'rxjs';
+import { ISponsor } from '../../../shared/interfaces/sponsor.interface';
+import { CategoryService } from '../../../shared/services/category/category.service';
+import { SponsorService } from '../../../shared/services/sponsor/sponsor.service';
+import { ICategory } from '../../../shared/interfaces/category.interface';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { MediaItemService } from '../../../shared/services/media/media-item.service';
-import { AlertService }     from '../../../shared/services/alert/alert.service';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 import {
   FormBuilder,
   FormGroup
-}                           from '@angular/forms';
+} from '@angular/forms';
 
 @Component({
   selector: 'sponsors',
   templateUrl: './sponsors.component.html',
-  styleUrls: [ 'sponsors.component.scss' ]
+  styleUrls: ['sponsors.component.scss']
 })
 export class SponsorsComponent implements OnInit {
 
@@ -29,11 +29,11 @@ export class SponsorsComponent implements OnInit {
   public form: FormGroup;
 
   constructor(private alertService: AlertService,
-              private media: MediaMatcher,
-              private fb: FormBuilder,
-              private categoryService: CategoryService,
-              private mediaItemService: MediaItemService,
-              private sponsorService: SponsorService) {
+    private media: MediaMatcher,
+    private fb: FormBuilder,
+    private categoryService: CategoryService,
+    private mediaItemService: MediaItemService,
+    private sponsorService: SponsorService) {
     this.categories$ = categoryService.getCategoriesByCategoryType('sponsor.types');
     this.sponsors$ = sponsorService.sponsors$;
   }

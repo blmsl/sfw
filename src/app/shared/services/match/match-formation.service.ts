@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ICoord }     from '../../interfaces/match/coord.interface';
+import { ICoord } from '../../interfaces/match/coord.interface';
 import { IFormation } from '../../interfaces/match/formation.interface';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class MatchFormationService {
 
   getFormationPositions(formation: IFormation): ICoord[] {
     for (let i = 0; i < formation.positionList.length; i++) {
-      this.playerPositions.push(formation.positionList[ i ]);
+      this.playerPositions.push(formation.positionList[i]);
     }
     return this.playerPositions;
   }

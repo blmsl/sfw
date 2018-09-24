@@ -4,7 +4,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { IArticle }                        from '../../../../shared/interfaces/article.interface';
+import { IArticle } from '../../../../shared/interfaces/article.interface';
 import {
   PerfectScrollbarConfigInterface,
   PerfectScrollbarDirective

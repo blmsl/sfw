@@ -5,16 +5,16 @@ import {
   Input,
   OnInit,
   Output
-}                               from '@angular/core';
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   Validators
-}                               from '@angular/forms';
-import { IMember }              from '../../../../shared/interfaces/member/member.interface';
-import { IOpinion }             from '../../../../shared/interfaces/member/opinion.interface';
-import * as firebase            from 'firebase';
+} from '@angular/forms';
+import { IMember } from '../../../../shared/interfaces/member/member.interface';
+import { IOpinion } from '../../../../shared/interfaces/member/opinion.interface';
+import * as firebase from 'firebase';
 import {
   debounceTime,
   distinctUntilChanged
@@ -35,7 +35,7 @@ export class MemberEditOtherOpinionsComponent implements OnInit {
   public form: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private cdRef: ChangeDetectorRef,) {
+    private cdRef: ChangeDetectorRef, ) {
   }
 
   ngOnInit() {
@@ -57,7 +57,7 @@ export class MemberEditOtherOpinionsComponent implements OnInit {
     const formArray = [];
     if (this.member.opinions) {
       for (let i = 0; i < this.member.opinions.length; i++) {
-        formArray.push(this.initOpinion(this.member.opinions[ i ]));
+        formArray.push(this.initOpinion(this.member.opinions[i]));
         // this.setOpinionValidators(i, 'list');
       }
     }
@@ -68,20 +68,20 @@ export class MemberEditOtherOpinionsComponent implements OnInit {
     return this.fb.group({
       type: opinion ? opinion.type : 'list',
       name: this.fb.group({
-        firstName: [ opinion ? opinion.name.firstName : '' ],
-        lastName: [ opinion ? opinion.name.lastName : '' ]
+        firstName: [opinion ? opinion.name.firstName : ''],
+        lastName: [opinion ? opinion.name.lastName : '']
       }),
       creation: {
         at: opinion && opinion.creation ? opinion.creation.at : new Date(),
         from: opinion && opinion.creation ? opinion.creation.by : '',
       },
-      assignedMember: [ opinion ? opinion.assignedMember : '', [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ] ],
-      comment: [ opinion ? opinion.comment : '', [ Validators.required ] ]
+      assignedMember: [opinion ? opinion.assignedMember : '', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      comment: [opinion ? opinion.comment : '', [Validators.required]]
     });
   }
 
   setOpinionValidators($event: { i: number, type: string }) {
-    const control = <FormArray>this.form.controls[ 'opinions' ][ 'controls' ][ $event.i ];
+    const control = <FormArray>this.form.controls['opinions']['controls'][$event.i];
 
     if (control.get('type').value === 'insert') {
       control.get('type').setValue('list');
@@ -94,19 +94,19 @@ export class MemberEditOtherOpinionsComponent implements OnInit {
       control.get('assignedMember').setValidators([]);
       control.get('assignedMember').setValue('');
 
-      control.get('name').get('firstName').setValidators([ Validators.required, Validators.minLength(3) ]);
-      control.get('name').get('lastName').setValidators([ Validators.required, Validators.minLength(5) ]);
+      control.get('name').get('firstName').setValidators([Validators.required, Validators.minLength(3)]);
+      control.get('name').get('lastName').setValidators([Validators.required, Validators.minLength(5)]);
     }
     this.cdRef.detectChanges();
   }
 
   addOpinion(): void {
-    const control = this.form.controls[ 'opinions' ] as FormArray;
+    const control = this.form.controls['opinions'] as FormArray;
     control.push(this.initOpinion());
   }
 
   removeOpinion($event: number): void {
-    const control = this.form.controls[ 'opinions' ] as FormArray;
+    const control = this.form.controls['opinions'] as FormArray;
     control.removeAt($event);
   }
 

@@ -8,9 +8,9 @@ describe('TeamEditPhotoDescriptionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TeamEditPhotoDescriptionComponent ]
+      declarations: [TeamEditPhotoDescriptionComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

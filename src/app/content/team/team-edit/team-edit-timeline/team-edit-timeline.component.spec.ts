@@ -8,9 +8,9 @@ describe('TeamEditTimelineComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TeamEditTimelineComponent ]
+      declarations: [TeamEditTimelineComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

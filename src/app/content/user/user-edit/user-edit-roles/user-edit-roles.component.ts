@@ -4,13 +4,13 @@ import {
   Input,
   OnInit,
   Output
-}                       from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup
-}                       from '@angular/forms';
-import { IUser }        from '../../../../shared/interfaces/user/user.interface';
-import { AuthService }  from '../../../../shared/services/auth/auth.service';
+} from '@angular/forms';
+import { IUser } from '../../../../shared/interfaces/user/user.interface';
+import { AuthService } from '../../../../shared/services/auth/auth.service';
 import {
   debounceTime,
   distinctUntilChanged
@@ -19,7 +19,7 @@ import {
 @Component({
   selector: 'user-edit-roles',
   templateUrl: './user-edit-roles.component.html',
-  styleUrls: [ './user-edit-roles.component.scss' ]
+  styleUrls: ['./user-edit-roles.component.scss']
 })
 export class UserEditRolesComponent implements OnInit {
 
@@ -30,7 +30,7 @@ export class UserEditRolesComponent implements OnInit {
   public rolesNotEditableMessage: boolean;
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService) {
+    private authService: AuthService) {
   }
 
   ngOnInit() {

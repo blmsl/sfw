@@ -4,29 +4,29 @@ import {
   Input,
   OnInit,
   Output
-}                                from '@angular/core';
-import { IMember }               from '../../../../shared/interfaces/member/member.interface';
-import { IFormation }            from '../../../../shared/interfaces/match/formation.interface';
-import { IMatch }                from '../../../../shared/interfaces/match/match.interface';
+} from '@angular/core';
+import { IMember } from '../../../../shared/interfaces/member/member.interface';
+import { IFormation } from '../../../../shared/interfaces/match/formation.interface';
+import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 import { MatchFormationService } from '../../../../shared/services/match/match-formation.service';
 import {
   FormBuilder,
   FormGroup
-}                                from '@angular/forms';
-import { distinctUntilChanged }  from 'rxjs/internal/operators';
+} from '@angular/forms';
+import { distinctUntilChanged } from 'rxjs/internal/operators';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem
-}                                from '@angular/cdk/drag-drop';
-import { ICoord }                from '../../../../shared/interfaces/match/coord.interface';
-import { Observable }            from 'rxjs/index';
-import { MatSelectChange }       from '@angular/material';
+} from '@angular/cdk/drag-drop';
+import { ICoord } from '../../../../shared/interfaces/match/coord.interface';
+import { Observable } from 'rxjs/index';
+import { MatSelectChange } from '@angular/material';
 
 @Component({
   selector: 'match-edit-formation',
   templateUrl: './match-edit-formation.component.html',
-  styleUrls: [ './match-edit-formation.component.scss' ]
+  styleUrls: ['./match-edit-formation.component.scss']
 })
 export class MatchEditFormationComponent implements OnInit {
 
@@ -41,11 +41,11 @@ export class MatchEditFormationComponent implements OnInit {
   public playerPositions: ICoord[];
   public coordinates = [];
 
-  items = [ 'Zero', 'One', 'Two', 'Three' ];
+  items = ['Zero', 'One', 'Two', 'Three'];
   playerList = [];
 
   constructor(private matchFormationService: MatchFormationService,
-              private fb: FormBuilder) {
+    private fb: FormBuilder) {
     this.tacticalFormations = matchFormationService.getFormations();
   }
 
@@ -74,18 +74,18 @@ export class MatchEditFormationComponent implements OnInit {
     const formation = this.tacticalFormations.filter((formation: IFormation) => {
       return formation.title === formationTitle;
     });
-    this.playerPositions = this.matchFormationService.getFormationPositions(formation[ 0 ]);
+    this.playerPositions = this.matchFormationService.getFormationPositions(formation[0]);
   }
 
   getCoordinates(i): ICoord {
-    if (this.coordinates[ i ]) {
-      return this.coordinates[ i ];
+    if (this.coordinates[i]) {
+      return this.coordinates[i];
     }
     let coords: ICoord = {
       x: i % 6,
       y: Math.floor(i / 6)
     };
-    return this.coordinates[ i ] = coords;
+    return this.coordinates[i] = coords;
   }
 
   addToList(event: CdkDragDrop<string[]>) {

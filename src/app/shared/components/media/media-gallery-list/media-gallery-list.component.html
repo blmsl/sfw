@@ -28,8 +28,9 @@
                              (opened)="setStep(i)"
                              hideToggle>
           <mat-expansion-panel-header>
-            <mat-panel-title fxFlex="20">{{ mediaGallery.title }} ({{mediaGallery.assignedMediaItems.length}})</mat-panel-title>
-            <mat-panel-description>{{mediaGallery.description}}
+            <mat-panel-title>
+              {{ mediaGallery.title }} ({{mediaGallery.assignedMediaItems.length}})</mat-panel-title>
+            <mat-panel-description>
               <span fxFlex></span>
               <span class="text-danger" *ngIf="mediaGallery.publication.status === '0'">offline</span>
               <span class="text-success" *ngIf="mediaGallery.publication.status === '1'">online</span>
@@ -37,7 +38,7 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
 
-
+          <p>{{mediaGallery.description}}</p>
 
           <mat-action-row>
             <button color="warn"
@@ -52,11 +53,8 @@
             </button>
           </mat-action-row>
         </mat-expansion-panel>
-
       </mat-accordion>
-
     </div>
-
   </mat-card-content>
 </mat-card>
 

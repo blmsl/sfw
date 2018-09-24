@@ -849,6 +849,7 @@
         "title": "Sammlungen"
       },
       "list": {
+        "coverText": "Das erste Element der Sammlung wird automatisch das Cover-Bild.",
         "title": "Hochgeladene Dateien"
       },
       "noItemsFound": "Es wurden noch keine Dateien hochgeladen",

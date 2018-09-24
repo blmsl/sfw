@@ -5,12 +5,12 @@ import {
   OnInit,
   Output,
   ViewChild
-}                               from '@angular/core';
-import { ITeam }                from '../../../../shared/interfaces/team/team.interface';
+} from '@angular/core';
+import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import {
   FormBuilder,
   FormGroup
-}                               from '@angular/forms';
+} from '@angular/forms';
 import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
 import {
   debounceTime,
@@ -20,7 +20,7 @@ import {
 @Component({
   selector: 'team-edit-description',
   templateUrl: './team-edit-description.component.html',
-  styleUrls: [ './team-edit-description.component.scss' ]
+  styleUrls: ['./team-edit-description.component.scss']
 })
 export class TeamEditDescriptionComponent implements OnInit {
 

@@ -5,13 +5,13 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { IArticle }                                       from '../../../../shared/interfaces/article.interface';
-import { IMember }                                        from '../../../../shared/interfaces/member/member.interface';
+import { IArticle } from '../../../../shared/interfaces/article.interface';
+import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                                                         from 'rxjs/operators';
-import { IInterview }                                     from '../../../../shared/interfaces/member/interview.interface';
+} from 'rxjs/operators';
+import { IInterview } from '../../../../shared/interfaces/member/interview.interface';
 
 @Component({
   selector: 'member-edit-interviews',
@@ -52,7 +52,7 @@ export class MemberEditInterviewsComponent implements OnInit {
     const formArray = [];
     if (this.member.assignedInterviews) {
       for (let i = 0; i < this.member.assignedInterviews.length; i++) {
-        formArray.push(this.initInterview(this.member.assignedInterviews[ i ]));
+        formArray.push(this.initInterview(this.member.assignedInterviews[i]));
       }
     }
     return this.fb.array(formArray);
@@ -60,12 +60,12 @@ export class MemberEditInterviewsComponent implements OnInit {
 
   initInterview(interview: IInterview): FormGroup {
     return this.fb.group({
-      assignedArticleId: [ interview.assignedArticleId ? interview.assignedArticleId : '', [ Validators.required, Validators.maxLength(100) ] ]
+      assignedArticleId: [interview.assignedArticleId ? interview.assignedArticleId : '', [Validators.required, Validators.maxLength(100)]]
     });
   }
 
   addInterview(): void {
-    const control = this.form.controls[ 'assignedInterviews' ] as FormArray;
+    const control = this.form.controls['assignedInterviews'] as FormArray;
     const interview: IInterview = {
       assignedArticleId: ''
     };
@@ -73,7 +73,7 @@ export class MemberEditInterviewsComponent implements OnInit {
   }
 
   removeInterview($event: number): void {
-    const control = this.form.controls[ 'assignedInterviews' ] as FormArray;
+    const control = this.form.controls['assignedInterviews'] as FormArray;
     control.removeAt($event);
   }
 

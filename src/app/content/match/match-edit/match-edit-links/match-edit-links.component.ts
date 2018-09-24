@@ -22,7 +22,7 @@ export class MatchEditLinksComponent implements OnInit {
   ngOnInit() {
   }
 
-  removeMatchLink(i: number){
+  removeMatchLink(i: number) {
     this.match.assignedLinks.splice(i, 1);
     this.saveMatch.emit(this.match);
   }

@@ -18,7 +18,7 @@ export class FameMemberListComponent implements OnInit {
   ngOnInit() {
   }
 
-  setFameMemberWeek(memberOfTheWeek: IMemberOfTheWeek){
+  setFameMemberWeek(memberOfTheWeek: IMemberOfTheWeek) {
     this.selectedFameMemberWeek = memberOfTheWeek;
   }
 
