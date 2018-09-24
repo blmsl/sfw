@@ -26,7 +26,6 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { MemberEditMainComponent } from './member-edit/member-edit-main/member-edit-main.component';
 import { MemberEditDriveComponent } from './member-edit/member-edit-drive/member-edit-drive.component';
 import { PendingChangesGuard } from '../../shared/guards/pending-changes.guard';
-import { QuillModule } from 'ngx-quill';
 import { FameMemberComponent } from './fame-member/fame-member.component';
 import { MemberEditProfileComponent } from './member-edit/member-edit-profile/member-edit-profile.component';
 import { MemberEditInterviewsComponent } from './member-edit/member-edit-interviews/member-edit-interviews.component';
@@ -72,7 +71,6 @@ import { SharedArticleModule } from '../../shared/components/article/shared-arti
     MediaModule,
     memberRoutingModule,
     PerfectScrollbarModule,
-    QuillModule,
     SharedModule,
     SharedArticleModule
   ],

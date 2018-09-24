@@ -11,7 +11,7 @@ import {
   FormBuilder,
   FormGroup
 } from '@angular/forms';
-import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
+import { QuillEditorComponent } from 'ngx-quill';
 import {
   debounceTime,
   distinctUntilChanged

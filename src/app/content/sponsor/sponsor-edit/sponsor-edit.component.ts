@@ -14,7 +14,7 @@ import {
   ActivatedRoute,
   Router
 } from '@angular/router';
-import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
+import { QuillEditorComponent } from 'ngx-quill';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';

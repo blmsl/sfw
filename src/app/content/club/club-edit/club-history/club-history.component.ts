@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'club-history',

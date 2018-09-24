@@ -29,7 +29,6 @@ import { ArticleService } from '../../shared/services/article/article.service';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { LocationDetailMediaComponent } from './location-detail/location-detail-media/location-detail-media.component';
 import { LocationEditComponent } from './location-edit/location-edit.component';
-import { QuillModule } from 'ngx-quill';
 import { LocationEditAddressComponent } from './location-edit/location-edit-address/location-edit-address.component';
 import { LocationEditContactComponent } from './location-edit/location-edit-contact/location-edit-contact.component';
 import { LocationContactFormComponent } from './location-edit/location-contact-form/location-contact-form.component';
@@ -63,7 +62,6 @@ import { LocationDetailMatchesComponent } from './location-detail/location-detai
     MatInputModule,
     PerfectScrollbarModule,
     PublicationModule,
-    QuillModule,
     SharedCategoryModule,
     SharedModule
   ],

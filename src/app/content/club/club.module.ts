@@ -11,10 +11,8 @@ import { ClubService } from '../../shared/services/club/club.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   MatButtonModule, MatDatepickerModule, MatExpansionModule, MatIconModule, MatInputModule, MatListModule,
-  MatNativeDateModule, MatSelectModule, MatSnackBarModule,
-  MatTabsModule
+  MatNativeDateModule, MatSelectModule,  MatTabsModule
 } from '@angular/material';
-import { QuillModule } from 'ngx-quill';
 import { LocationService } from '../../shared/services/location/location.service';
 import { MemberService } from '../../shared/services/member/member.service';
 import { MediaModule } from '../../shared/components/media/media.module';
@@ -62,7 +60,6 @@ import { ClubEditMediaComponent } from './club-edit/club-edit-media/club-edit-me
     MatTabsModule,
     MediaModule,
     PublicationModule,
-    QuillModule,
     RouterModule.forChild(clubRoutes),
     SharedModule,
     TimeLineModule

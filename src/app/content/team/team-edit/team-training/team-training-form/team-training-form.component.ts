@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ILocation } from '../../../../../shared/interfaces/location/location.interface';
-import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'team-training-form',

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ITask } from '../../../interfaces/task.interface';
 import { AuthService } from '../../../services/auth/auth.service';
 import { TaskService } from '../../../services/task/task.service';
-import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'task-form',

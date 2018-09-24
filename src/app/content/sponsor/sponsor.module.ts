@@ -25,7 +25,6 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-import { QuillModule } from 'ngx-quill';
 import { SponsorItemComponent } from './sponsors/sponsor-item/sponsor-item.component';
 import { SponsorFilterComponent } from './sponsors/sponsor-filter/sponsor-filter.component';
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -52,7 +51,6 @@ import { SharedCategoryModule } from '../../shared/components/category/shared-ca
     MatTooltipModule,
     // MediaModule,
     PerfectScrollbarModule,
-    QuillModule,
     SharedCategoryModule,
     SharedModule
   ],

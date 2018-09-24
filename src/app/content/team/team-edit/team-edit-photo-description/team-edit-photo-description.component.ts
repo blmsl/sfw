@@ -15,7 +15,7 @@ import {
   debounceTime,
   distinctUntilChanged
 } from 'rxjs/internal/operators';
-import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'team-edit-photo-description',

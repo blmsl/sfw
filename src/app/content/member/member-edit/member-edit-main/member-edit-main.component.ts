@@ -11,7 +11,7 @@ import {
   FormBuilder,
   FormGroup
 } from '@angular/forms';
-import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
+import { QuillEditorComponent } from 'ngx-quill';
 import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-options.interface';
 import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
 import {

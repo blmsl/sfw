@@ -19,7 +19,6 @@ import {
 } from '@angular/material';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
 import { TeamEditComponent } from './team-edit/team-edit.component';
-import { QuillModule } from 'ngx-quill';
 import { CategoryService } from '../../shared/services/category/category.service';
 import { ClubService } from '../../shared/services/club/club.service';
 import { MemberService } from '../../shared/services/member/member.service';
@@ -76,7 +75,6 @@ import { TeamEditMediaComponent } from './team-edit/team-edit-media/team-edit-me
     MatSnackBarModule,
     MatTabsModule,
     SharedMatchModule,
-    QuillModule,
     RouterModule.forChild(teamRoutes),
     SharedModule,
     SharedArticleModule,

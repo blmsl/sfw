@@ -16,7 +16,6 @@ import {
 } from '@angular/material';
 import { ApplicationService } from '../../shared/services/application/application.service';
 import { ApplicationResolver } from './application.resolver';
-import { QuillModule } from 'ngx-quill';
 import { StaticPageFormComponent } from './settings/static-pages/static-page-form/static-page-form.component';
 import { CategoryService } from '../../shared/services/category/category.service';
 import { CategoryTypeService } from '../../shared/services/category-type/category-type.service';
@@ -39,7 +38,6 @@ import { SettingsRegistrationComponent } from './settings/settings-registration/
     MatSelectModule,
     MatSnackBarModule,
     MatTabsModule,
-    QuillModule,
     settingsRoutingModule,
     SharedModule,
     TagInputModule

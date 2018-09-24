@@ -20,7 +20,6 @@ import {
   MatTabsModule
 } from '@angular/material';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
-import { QuillModule } from 'ngx-quill';
 import { UserService } from '../../shared/services/user/user.service';
 import { CreationModule } from '../../shared/components/creation/creation.module';
 import { SharedCategoryModule } from '../../shared/components/category/shared-category.module';
@@ -37,7 +36,6 @@ import { CategoryStatisticsComponent } from './category-statistics/category-stat
     MatOptionModule,
     MatSelectModule,
     MatTabsModule,
-    QuillModule,
     RouterModule.forChild(categoryRoutes),
     SharedCategoryModule,
     SharedModule

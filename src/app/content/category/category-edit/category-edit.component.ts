@@ -15,17 +15,17 @@ import {
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
-import { CategoryService } from '../../../shared/services/category/category.service';
-import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
-import { QuillEditorComponent } from 'ngx-quill/src/quill-editor.component';
-import { UserService } from '../../../shared/services/user/user.service';
-import { IUser } from '../../../shared/interfaces/user/user.interface';
-import { MatSnackBar } from '@angular/material';
+import { CategoryService }      from '../../../shared/services/category/category.service';
+import { CategoryTypeService }  from '../../../shared/services/category-type/category-type.service';
+import { UserService }          from '../../../shared/services/user/user.service';
+import { IUser }                from '../../../shared/interfaces/user/user.interface';
+import { MatSnackBar }          from '@angular/material';
 import {
   debounceTime,
   distinctUntilChanged
-} from 'rxjs/operators';
-import { AlertService } from '../../../shared/services/alert/alert.service';
+}                               from 'rxjs/operators';
+import { AlertService }         from '../../../shared/services/alert/alert.service';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'category-edit',
