@@ -11,15 +11,15 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CommonModule } from '@angular/common';
 import { LinkModule } from './components/links/link.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule }    from '@angular/forms';
-import { NgPipesModule }          from 'ngx-pipes';
-import { SnackbarComponent }      from './components/snackbar/snackbar.component';
-import { SanitizeHtmlPipe }       from './pipes/sanitize-html.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgPipesModule } from 'ngx-pipes';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { SubmitIfValidDirective } from './directives/submit/submit-if-valid.directive';
-import { MediaModule }            from './components/media/media.module';
+import { MediaModule } from './components/media/media.module';
 import { LoadingIndicatorModule } from './components/loading-indicator/loading-indicator.module';
-import { AlertService }           from './services/alert/alert.service';
-import { QuillModule }            from 'ngx-quill';
+import { AlertService } from './services/alert/alert.service';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [

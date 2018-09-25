@@ -2,10 +2,10 @@ import {
   Component,
   Input,
   OnInit
-}                           from '@angular/core';
-import { IMediaItem }       from '../../../interfaces/media/media-item.interface';
+} from '@angular/core';
+import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 import { MediaItemService } from '../../../services/media/media-item.service';
-import { AlertService }     from '../../../services/alert/alert.service';
+import { AlertService } from '../../../services/alert/alert.service';
 
 @Component({
   selector: 'media-gallery-item',

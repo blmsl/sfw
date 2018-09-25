@@ -1,16 +1,16 @@
-import { Injectable }           from '@angular/core';
-import { HttpClient }           from '@angular/common/http';
-import * as moment              from 'moment';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment';
 import {
   map,
   switchMap,
   take
-}                               from 'rxjs/operators';
-import { IMember }              from '../../interfaces/member/member.interface';
-import { ICalendarEvent }       from '../../interfaces/calendar/calendar-event.interface';
-import { MemberService }        from '../member/member.service';
-import { Observable }           from 'rxjs';
-import { ApplicationService }   from '../application/application.service';
+} from 'rxjs/operators';
+import { IMember } from '../../interfaces/member/member.interface';
+import { ICalendarEvent } from '../../interfaces/calendar/calendar-event.interface';
+import { MemberService } from '../member/member.service';
+import { Observable } from 'rxjs';
+import { ApplicationService } from '../application/application.service';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
 @Injectable()

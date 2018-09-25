@@ -1,8 +1,8 @@
-import { Injectable }         from '@angular/core';
-import { FileType }           from '../../interfaces/media/file-type.interface';
-import { IUploaderOptions }   from '../../interfaces/media/uploader-options.interface';
-import { Upload }             from './upload.class';
-import { AuthService }        from '../auth/auth.service';
+import { Injectable } from '@angular/core';
+import { FileType } from '../../interfaces/media/file-type.interface';
+import { IUploaderOptions } from '../../interfaces/media/uploader-options.interface';
+import { Upload } from './upload.class';
+import { AuthService } from '../auth/auth.service';
 import {
   AngularFireStorage,
   AngularFireStorageReference,

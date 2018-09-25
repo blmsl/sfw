@@ -1,16 +1,16 @@
 import { Observable, of as observableOf } from 'rxjs';
 
-import { switchMap }             from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { Injectable, OnDestroy } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreDocument
 } from '@angular/fire/firestore';
-import * as firebase             from 'firebase/app';
-import { ICreation }             from '../../interfaces/creation.interface';
-import { IUser }                 from '../../interfaces/user/user.interface';
-import { IPublication }          from '../../interfaces/publication.interface';
-import { AngularFireAuth }       from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
+import { ICreation } from '../../interfaces/creation.interface';
+import { IUser } from '../../interfaces/user/user.interface';
+import { IPublication } from '../../interfaces/publication.interface';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 // Presence System
 // https://www.youtube.com/watch?v=2ZDeT5hLIBQ&feature=push-u&attr_tag=EDwjeHaWKNSWOoZT-6

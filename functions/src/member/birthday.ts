@@ -119,16 +119,13 @@ export const birthdayReminderCron = functions
     return admin.firestore().collection('applications').get().then(
       applications => {
         applications.forEach(function(application) {
-          console.log(application);
-          console.log(application.data());
           if (application.data().isCurrentApplication) {
             currentApplications = application.data();
           }
         });
         return currentApplications;
       }
-    ).then((test) => {
-      console.log(test);
+    ).then(() => {
       console.log(currentApplications);
 
       return admin.firestore()

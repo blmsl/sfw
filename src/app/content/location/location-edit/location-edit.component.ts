@@ -1,34 +1,34 @@
 import {
   Component,
   OnInit
-}                           from '@angular/core';
+} from '@angular/core';
 import {
   ActivatedRoute,
   Router
-}                           from '@angular/router';
-import { LocationService }  from '../../../shared/services/location/location.service';
-import { ILocation }        from '../../../shared/interfaces/location/location.interface';
-import { CategoryService }  from '../../../shared/services/category/category.service';
+} from '@angular/router';
+import { LocationService } from '../../../shared/services/location/location.service';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
+import { CategoryService } from '../../../shared/services/category/category.service';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   Validators
-}                           from '@angular/forms';
-import { Observable }       from 'rxjs';
-import { ICategory }        from '../../../shared/interfaces/category.interface';
+} from '@angular/forms';
+import { Observable } from 'rxjs';
+import { ICategory } from '../../../shared/interfaces/category.interface';
 import { ILocationContact } from '../../../shared/interfaces/location/location-contact.interface';
-import { MemberService }    from '../../../shared/services/member/member.service';
-import { IMember }          from '../../../shared/interfaces/member/member.interface';
-import { MatSnackBar }      from '@angular/material';
+import { MemberService } from '../../../shared/services/member/member.service';
+import { IMember } from '../../../shared/interfaces/member/member.interface';
+import { MatSnackBar } from '@angular/material';
 import {
   debounceTime,
   distinctUntilChanged
-}                           from 'rxjs/operators';
+} from 'rxjs/operators';
 import { IUploaderOptions } from 'src/app/shared/interfaces/media/uploader-options.interface';
 import { MediaItemService } from 'src/app/shared/services/media/media-item.service';
-import { IUploaderConfig }  from '../../../shared/interfaces/media/uploader-config.interface';
-import { AlertService }     from '../../../shared/services/alert/alert.service';
+import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'location-edit',
@@ -52,21 +52,21 @@ export class LocationEditComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    assignedObjects: [ 'locations', 'profile' ],
+    assignedObjects: ['locations', 'profile'],
     itemId: '',
     queueLimit: 1,
-    allowedMimeType: [ 'image/jpeg', 'image/gif', 'image/png' ]
+    allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
   constructor(private router: Router,
-              private alertService: AlertService,
-              private fb: FormBuilder,
-              private snackBar: MatSnackBar,
-              private route: ActivatedRoute,
-              public categoryService: CategoryService,
-              public locationService: LocationService,
-              private mediaItemService: MediaItemService,
-              private memberService: MemberService) {
+    private alertService: AlertService,
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    public categoryService: CategoryService,
+    public locationService: LocationService,
+    private mediaItemService: MediaItemService,
+    private memberService: MemberService) {
     this.categories$ = this.categoryService.getCategoriesByCategoryType('location.types');
     this.members$ = memberService.members$;
   }
@@ -79,9 +79,9 @@ export class LocationEditComponent implements OnInit {
     });
 
     this.form = this.fb.group({
-      title: [ this.location.title, [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ] ],
+      title: [this.location.title, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       fupaLink: this.location.fupaLink,
-      assignedCategory: [ this.location.assignedCategory, [ Validators.required ] ],
+      assignedCategory: [this.location.assignedCategory, [Validators.required]],
       prices: this.location.prices,
       opening: this.location.opening,
       text: this.location.text,
@@ -112,7 +112,7 @@ export class LocationEditComponent implements OnInit {
     const formArray: FormArray = this.fb.array([]);
     if (this.location.assignedContacts) {
       for (let i = 0; i < this.location.assignedContacts.length; i++) {
-        formArray.push(this.initLocationContact(this.location.assignedContacts[ i ]));
+        formArray.push(this.initLocationContact(this.location.assignedContacts[i]));
       }
     }
     return formArray;
@@ -120,11 +120,11 @@ export class LocationEditComponent implements OnInit {
 
   initLocationContact(contact: ILocationContact): FormGroup {
     return this.fb.group({
-      isMember: [ contact ? contact.isMember : false ],
-      description: [ contact ? contact.description : '' ],
-      assignedMember: [ contact ? contact.assignedMember : '' ],
-      firstName: [ contact ? contact.firstName : '' ],
-      lastName: [ contact ? contact.lastName : '' ],
+      isMember: [contact ? contact.isMember : false],
+      description: [contact ? contact.description : ''],
+      assignedMember: [contact ? contact.assignedMember : ''],
+      firstName: [contact ? contact.firstName : ''],
+      lastName: [contact ? contact.lastName : ''],
       contact: this.initContactData(contact),
       address: contact ? contact.address : ''
     });
@@ -135,20 +135,20 @@ export class LocationEditComponent implements OnInit {
       isMember: true,
       description: ''
     };
-    const control = <FormArray>this.form.controls[ 'assignedContacts' ];
+    const control = <FormArray>this.form.controls['assignedContacts'];
     const addCtrl = this.initLocationContact(contact);
     control.push(addCtrl);
   }
 
   removeLocationContact(i: number) {
-    const control = <FormArray>this.form.controls[ 'assignedContacts' ];
+    const control = <FormArray>this.form.controls['assignedContacts'];
     control.removeAt(i);
   }
 
   initContactData(contact: ILocationContact) {
     return this.fb.group({
-      email: [ contact.contact ? contact.contact.email : '' ],
-      phoneMobile: [ contact.contact ? contact.contact.phoneMobile : '' ]
+      email: [contact.contact ? contact.contact.email : ''],
+      phoneMobile: [contact.contact ? contact.contact.phoneMobile : '']
     });
   }
 
@@ -161,11 +161,11 @@ export class LocationEditComponent implements OnInit {
 
   initAddress() {
     return this.fb.group({
-      streetName: [ this.location.address.streetName, [ Validators.required, Validators.minLength(5) ] ],
+      streetName: [this.location.address.streetName, [Validators.required, Validators.minLength(5)]],
       houseNumber: this.location.address.houseNumber === 0 ? '' : this.location.address.houseNumber,
-      zip: [ this.location.address.zip, [ Validators.required ] ],
-      city: [ this.location.address.city, [ Validators.required ] ],
-      county: [ this.location.address.county, [ Validators.required ] ]
+      zip: [this.location.address.zip, [Validators.required]],
+      city: [this.location.address.city, [Validators.required]],
+      county: [this.location.address.county, [Validators.required]]
     });
   }
 
@@ -195,7 +195,7 @@ export class LocationEditComponent implements OnInit {
   }
 
   redirectToList() {
-    this.router.navigate([ '/locations' ]).then();
+    this.router.navigate(['/locations']).then();
   }
 
   uploadCompleted() {

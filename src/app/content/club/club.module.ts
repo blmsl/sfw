@@ -11,7 +11,7 @@ import { ClubService } from '../../shared/services/club/club.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   MatButtonModule, MatDatepickerModule, MatExpansionModule, MatIconModule, MatInputModule, MatListModule,
-  MatNativeDateModule, MatSelectModule,  MatTabsModule
+  MatNativeDateModule, MatSelectModule, MatTabsModule
 } from '@angular/material';
 import { LocationService } from '../../shared/services/location/location.service';
 import { MemberService } from '../../shared/services/member/member.service';

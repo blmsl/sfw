@@ -1,6 +1,6 @@
-import { Injectable }       from '@angular/core';
-import { Observable }       from 'rxjs';
-import { IApplication }     from '../../interfaces/application.interface';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IApplication } from '../../interfaces/application.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection

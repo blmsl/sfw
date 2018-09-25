@@ -1,16 +1,16 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
-import { Upload }               from '../../../services/media/upload.class';
-import { MediaUploaderService }  from '../../../services/media/media-uploader.service';
-import { IUploaderConfig }       from '../../../interfaces/media/uploader-config.interface';
-import { MediaItemService }      from '../../../services/media/media-item.service';
-import { IMediaItem }            from '../../../interfaces/media/media-item.interface';
-import { AlertService }          from '../../../services/alert/alert.service';
+import { Upload } from '../../../services/media/upload.class';
+import { MediaUploaderService } from '../../../services/media/media-uploader.service';
+import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
+import { MediaItemService } from '../../../services/media/media-item.service';
+import { IMediaItem } from '../../../interfaces/media/media-item.interface';
+import { AlertService } from '../../../services/alert/alert.service';
 import {
   Observable,
   of
-}                                from 'rxjs/index';
-import { AngularFirestore }      from '@angular/fire/firestore';
+} from 'rxjs/index';
+import { AngularFirestore } from '@angular/fire/firestore';
 import {
   AngularFireStorageReference,
   AngularFireUploadTask
