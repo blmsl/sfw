@@ -38,17 +38,14 @@ handlers:
 #  script: /php/club/update-club.php
 
 # Member
-#- url: /php/member/birthday-import.php
-#  script: /php/member/birthday-import.php
-
-#- url: /php/member/dfb-import.php
-#  script: /php/member/dfb-import.php
+- url: /php/member/dfb-import.php
+  script: /php/member/dfb-import.php
 
 #- url: /php/member/drive-export.php
 #  script: /php/member/drive-export.php
 
-#- url: /php/member/drive-import.php
-#  script: /php/member/drive-import.php
+- url: /php/member/drive-import.php
+  script: /php/member/drive-import.php
 
 # Other
 #- url: /_ah/.*

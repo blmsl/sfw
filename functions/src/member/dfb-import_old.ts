@@ -106,14 +106,16 @@ export const dfbMemberWriteCron = functions.region('europe-west1')
       });
   });
 
-export const dfbMemberDeleteCron = functions.region('europe-west1')
+export const dfbMemberDeleteCron = functions
+  .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .database.ref('/dfb-members/{userId}').onDelete((snap, context) => {
     fireBaseUserId = context.params.userId;
     return db.collection(memberPath).doc(fireBaseUserId).delete().catch((error: any) => console.error(error));
   });
 
-export const dfbMemberUpdateCron = functions.region('europe-west1')
+export const dfbMemberUpdateCron = functions
+  .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .database.ref('/dfb-members/{userId}').onUpdate((change) => {
     data = change.after.val();

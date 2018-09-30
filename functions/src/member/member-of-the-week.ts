@@ -8,79 +8,84 @@ const sgMail = require('@sendgrid/mail');
 const SENDGRID_API_KEY = functions.config().sendgrid.key;
 sgMail.setApiKey(SENDGRID_API_KEY);
 
-const collectionString = 'member-of-the-week';
+const db = admin.firestore();
 
 const now = moment();
 const docId: string = now.week() + '-' + now.format('YY');
-let data = {};
 
 export const memberOfTheWeekCron = functions
   .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
-  .pubsub.topic('weekly-tick').onPublish(() => {
-    return admin.firestore().collection('members')
-      .get()
-      .then((values) => {
-        const memberList: any = [];
+  .pubsub.topic('weekly-tick').onPublish(async () => {
 
-        values.forEach(function(doc) {
-          const memberData = doc.data();
-          memberList.push(memberData);
-        });
-        return memberList;
-      }).then((memberList) => {
-        if (memberList.length > 0) {
+    const memberSnapshot = await db.collection('members').get();
 
-          const clubList = memberList.filter((member: any) => {
-            return member.clubData && member.clubData.status && member.clubData.status > 0 && member.clubData.status !== 2;
-          });
+    console.log(memberSnapshot.size);
 
-          const ahList = memberList.filter((member: any) => {
-            return member.ahData && member.ahData.status && member.ahData.status > 0;
-          });
+    if(memberSnapshot.size > 0) {
 
-          const playerList = memberList.filter((member: any) => {
-            return member.dfbData && member.dfbData.playerStatus;
-          });
+      console.log(memberSnapshot);
 
-          const honoraryList = memberList.filter((member: any) => {
-            return member.clubData && member.clubData.status && member.clubData.status === 2;
-          });
+      memberSnapshot.docs.forEach((member) => {
+        console.log(member.data().id);
+      });
 
-          data = {
-            ah: {
-              id: docId,
-              type: 'ah',
-              year: now.format('YY'),
-              week: now.week(),
-              assignedMemberId: ahList.length ? clubList[Math.floor(Math.random() * ahList.length)].id : ''
-            },
-            club: {
-              id: docId,
-              type: 'club',
-              year: now.format('YY'),
-              week: now.week(),
-              assignedMemberId: clubList.length ? clubList[Math.floor(Math.random() * clubList.length)].id : ''
-            },
-            honorary: {
-              id: docId,
-              type: 'honorary',
-              year: now.format('YY'),
-              week: now.week(),
-              assignedMemberId: honoraryList.length ? honoraryList[Math.floor(Math.random() * honoraryList.length)].id : ''
-            },
-            player: {
-              id: docId,
-              type: 'player',
-              year: now.format('YY'),
-              week: now.week(),
-              assignedMemberId: playerList.length ? playerList[Math.floor(Math.random() * playerList.length)].id : ''
-            }
-          };
+      /*
+      const clubList = memberSnapshot.docs.filter((member: any) => {
+        return member.clubData && member.clubData.status && member.clubData.status > 0 && member.clubData.status !== 2;
+      });
+      const clubMember = clubList.length ? clubList[Math.floor(Math.random() * clubList.length)] : null;
+
+      const ahList = memberSnapshot.docs.filter((member: any) => {
+        return member.ahData && member.ahData.status && member.ahData.status > 0;
+      });
+      const ahMember = ahList.length ? ahList[Math.floor(Math.random() * ahList.length)] : null;
+
+      const playerList = memberSnapshot.docs.filter((member: any) => {
+        return member.dfbData && member.dfbData.playerStatus;
+      });
+      const playerMember = playerList.length ? playerList[Math.floor(Math.random() * playerList.length)] : null;
+
+      const honoraryList = memberSnapshot.docs.filter((member: any) => {
+        return member.clubData && member.clubData.status && member.clubData.status === 2;
+      });
+      const honoraryMember = honoraryList.length ? honoraryList[Math.floor(Math.random() * honoraryList.length)] : null;
+
+      const data = {
+        ah: {
+          id: docId,
+          type: 'ah',
+          year: now.format('YY'),
+          week: now.week(),
+          assignedMemberId: ahMember ? ahMember.id : null
+        },
+        club: {
+          id: docId,
+          type: 'club',
+          year: now.format('YY'),
+          week: now.week(),
+          assignedMemberId: clubMember ? clubMember.id : null
+        },
+        player: {
+          id: docId,
+          type: 'player',
+          year: now.format('YY'),
+          week: now.week(),
+          assignedMemberId: playerMember ? playerMember.id : null
+        },
+        honorary: {
+          id: docId,
+          type: 'honorary',
+          year: now.format('YY'),
+          week: now.week(),
+          assignedMemberId: honoraryMember ? honoraryMember.id : null
         }
-      }).then(() => {
-        return admin.firestore().collection(collectionString).doc(docId).create(data);
-      }).then(() => {
+      };
+
+
+      if(clubMember && ahMember && playerMember && honoraryMember) {
+
+        await db.collection('member-of-the-week').doc(docId).create(data);
 
         const msg = {
           to: ['thomas.handle@gmail.com'],
@@ -90,15 +95,23 @@ export const memberOfTheWeekCron = functions
           substitutionWrappers: ['{{', '}}'],
           substitutions: {
             adminName: 'Thomas',
-            clubMember: 'Verein: ' + data['club'].assignedMemberId,
-            ahMember: 'AH: ' + data['ah'].assignedMemberId,
-            player: 'Spieler: ' + data['player'].assignedMemberId,
-            honorary: 'Ehrenmitglied: ' + data['honorary'].assignedMemberId,
+            clubMember: 'Verein: ' + clubMember['mainData'] ? clubMember['mainData']['firstName'] + ' ' + clubMember['mainData']['lastName'] : ' ???',
+            ahMember: 'Alte Herren: ' + ahMember['mainData'] ? ahMember['mainData']['firstName'] + ' ' + ahMember['mainData']['lastName'] : ' ???',
+            player: 'Spieler: ' + playerMember['mainData'] ? playerMember['mainData']['firstName'] + ' ' + playerMember['mainData']['lastName'] : ' ???',
+            honorary: 'Ehrenmitglied: ' + honoraryMember['mainData'] ? honoraryMember['mainData']['firstName'] + ' ' + honoraryMember['mainData']['lastName'] : ' ???',
             weekString: now.week(),
             dateString: now.format('LL') + ' bis ' + now.add(6, 'days').format('LL')
           }
         };
         return sgMail.send(msg);
-      });
-  }
-  );
+      } */
+
+      /* console.log(clubMember);
+      console.log(ahMember);
+      console.log(playerMember);
+      console.log(honoraryMember); */
+      return true;
+    }
+    return true;
+
+  });

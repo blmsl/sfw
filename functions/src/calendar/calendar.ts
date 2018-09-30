@@ -17,77 +17,30 @@ const timeMax = currentDate.add(2, 'month').toISOString();
 
 
 export const getGoogleCalendarEvents = functions
-  // .region('europe-west1')
+    // disables because firebase-functions don´t use it correctly
+    // see https://github.com/angular/angularfire2/issues/1874
+    // .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 10 })
   .https.onRequest(async (request, response) => {
 
     try {
-
+      const eventList: any[] = [];
 
       const auth = await google.auth.getClient({ scopes: ['https://www.googleapis.com/auth/calendar'] });
-
       const appSnapshot = await db.collection('applications').where('isCurrentApplication', '==', true).get();
-
-      const calendarList = appSnapshot.docs[0].data().assignedCalendars.filter(cal => {
-        if(cal.isActive) return cal;
-      });
-      console.log(calendarList);
-
-      /*
-      const promises: any[] = [];
 
       for(const cal of appSnapshot.docs[0].data().assignedCalendars){
         if(cal.isActive) {
-          await getCalendarData(cal, auth);
-        }
-      }
-
-      /*appSnapshot.docs[0].data().assignedCalendars.forEach(cal => {
-        if(cal.isActive) {
-          console.log(cal.link);
-          const p = calendar.events.list({
+          const result = await calendar.events.list({
             auth: auth,
             calendarId: cal.link,
-            timeMin: new Date().toISOString(), //timeMin,
+            timeMin: timeMin,
             timeMax: timeMax,
             // maxResults: 100,
             singleEvents: true,
             orderBy: 'startTime'
           });
-          promises.push(p);
-        }
-      });
-
-      const results = await Promise.all(promises);
-      console.log(results);
-      /* const eventList: any[] = [];
-      results.forEach(event => {
-        const data = snap.data()
-        data.city = snap.id
-        results.push(data)
-      }) */
-
-      response.status(200).send([1,2,3,45]);
-
-      /*
-            const eventList: any[] = [];
-
-
-      for(const cal of calendarList){
-        if(cal.isActive) {
-          console.log('loading Data for cal ' + cal.title + ' ' + cal.link);
-          const calendarData = await calendar.events.list({
-            auth: auth,
-            calendarId: cal.link,
-            timeMin: new Date().toISOString(), //timeMin,
-            timeMax: timeMax,
-            // maxResults: 100,
-            singleEvents: true,
-            orderBy: 'startTime'
-          });
-
-          const events = calendarData.data.items;
-          console.log(events);
+          const events = result.data.items;
 
           if (events) {
             for (const event of events) {
@@ -102,7 +55,7 @@ export const getGoogleCalendarEvents = functions
         }
       }
 
-      // response.send(eventList); */
+      response.status(200).send(eventList);
 
     } catch (e) {
       console.error(e);

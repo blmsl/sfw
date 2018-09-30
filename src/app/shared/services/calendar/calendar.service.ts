@@ -27,11 +27,6 @@ export class CalendarService {
     return callable({});
   }
 
-  public getCalendarByTitle(calendarTitle: string): Observable<any> {
-    const callable = this.fns.httpsCallable(calendarTitle);
-    return callable({});
-  }
-
   public getMemberBirthdays(): Observable<ICalendarEvent[]> {
     return this.memberService.members$.pipe(
       switchMap((members: IMember[]) => {
