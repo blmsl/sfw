@@ -128,6 +128,7 @@ export const birthdayReminderCron = functions
     const membersSnapshot = await admin.firestore().collection('members')
       // .where('mainData.birthday.month', '==', month)
       .where('mainData.birthday.day', '==', day)
+
       .get();
 
     console.log(membersSnapshot.size);
