@@ -1,6 +1,6 @@
-import * as admin         from 'firebase-admin';
-import * as functions     from 'firebase-functions';
-import * as moment        from 'moment';
+import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
+import * as moment from 'moment';
 import { birthdayWishes } from './birthday-wishes';
 
 moment.locale('de');
@@ -35,7 +35,7 @@ export const birthdayReminderCron = functions
       const applicationsSnapshot = await admin.firestore().collection('applications')
         .where('isCurrentApplication', '==', true)
         .get();
-      const currentApp = applicationsSnapshot.docs[ 0 ].data();
+      const currentApp = applicationsSnapshot.docs[0].data();
 
       const membersSnapshot = await admin.firestore().collection('members')
         .where('mainData.birthday.monthDay', '==', monthDay)
@@ -43,7 +43,7 @@ export const birthdayReminderCron = functions
 
       let birthdayList = '<ul>';
 
-      membersSnapshot.docs.forEach(function (doc) {
+      membersSnapshot.docs.forEach(function(doc) {
         const memberData = doc.data();
 
         const age = calculateAge(memberData.mainData.birthday.year, memberData.mainData.birthday.month, memberData.mainData.birthday.day);
@@ -73,17 +73,17 @@ export const birthdayReminderCron = functions
 
       if (birthdayMailing && birthdayMailing.length > 0) {
 
-        if(membersSnapshot.size > 0 && (!recipients || recipients.length === 0)) {
+        if (membersSnapshot.size > 0 && (!recipients || recipients.length === 0)) {
           console.warn('Es wurden keine Email Adressen der Geburtstagskinder hinterlegt.');
           return true;
         }
 
         await sgMail.send({
-          to: birthdayMailing[ 0 ].emails,
+          to: birthdayMailing[0].emails,
           from: 'Geburtstage@sfwinterbach.com',
           subject: 'Geburtstage vom ' + moment().format('LL'),
           templateId: '3b21edd6-0c49-40c2-a2e3-68ae679ff440',
-          substitutionWrappers: [ '{{', '}}' ],
+          substitutionWrappers: ['{{', '}}'],
           substitutions: {
             adminName: '',
             birthdayList: birthdayList,
@@ -92,20 +92,20 @@ export const birthdayReminderCron = functions
         });
 
         let bccList: string[] = [];
-        for(const recipient of recipients){
+        for (const recipient of recipients) {
 
-          if(birthdayMailing[ 0 ].emails.indexOf(recipient.email) === -1){
+          if (birthdayMailing[0].emails.indexOf(recipient.email) === -1) {
             bccList.push(recipient.email);
           }
 
-          const birthdaySample = birthdayWishes[ Math.floor(Math.random() * birthdayWishes.length) ];
+          const birthdaySample = birthdayWishes[Math.floor(Math.random() * birthdayWishes.length)];
           const mail = {
             to: recipient.email,
             bcc: bccList,
             from: 'Geburtstage@sfwinterbach.com',
             subject: 'Alles Gute zum Geburtstag!',
             templateId: '780bf24e-b085-4ece-9262-f727c47a3edc',
-            substitutionWrappers: [ '{{', '}}' ],
+            substitutionWrappers: ['{{', '}}'],
             substitutions: {
               firstName: recipient.firstName,
               lastName: recipient.lastName,

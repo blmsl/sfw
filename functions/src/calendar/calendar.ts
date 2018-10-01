@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
-import * as admin     from 'firebase-admin';
-import * as moment    from 'moment';
+import * as admin from 'firebase-admin';
+import * as moment from 'moment';
 
 const { google } = require('googleapis');
 
@@ -17,8 +17,8 @@ const timeMax = currentDate.add(2, 'month').toISOString();
 
 
 export const getGoogleCalendarEvents = functions
-// disables because firebase-functions don´t use it correctly
-// see https://github.com/angular/angularfire2/issues/1874
+  // disables because firebase-functions don´t use it correctly
+  // see https://github.com/angular/angularfire2/issues/1874
   // .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .https.onRequest(async (request, response) => {
@@ -26,10 +26,10 @@ export const getGoogleCalendarEvents = functions
     try {
       const eventList: any[] = [];
 
-      const auth = await google.auth.getClient({ scopes: [ 'https://www.googleapis.com/auth/calendar' ] });
+      const auth = await google.auth.getClient({ scopes: ['https://www.googleapis.com/auth/calendar'] });
       const appSnapshot = await db.collection('applications').where('isCurrentApplication', '==', true).get();
 
-      for (const cal of appSnapshot.docs[ 0 ].data().assignedCalendars) {
+      for (const cal of appSnapshot.docs[0].data().assignedCalendars) {
         if (cal.isActive) {
           const result = await calendar.events.list({
             auth: auth,

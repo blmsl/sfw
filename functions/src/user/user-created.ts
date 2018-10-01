@@ -9,7 +9,7 @@ export const userCreated = functions
   .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .auth.user()
-  .onCreate(async(event: any) => {
+  .onCreate(async (event: any) => {
 
     const firebaseUser = event.data;
 

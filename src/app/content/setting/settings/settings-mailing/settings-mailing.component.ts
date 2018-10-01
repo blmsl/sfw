@@ -4,24 +4,24 @@ import {
   Input,
   OnInit,
   Output
-}                       from '@angular/core';
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   Validators
-}                       from '@angular/forms';
+} from '@angular/forms';
 import { IApplication } from '../../../../shared/interfaces/application.interface';
-import { IMailList }    from '../../../../shared/interfaces/mail-list.interface';
+import { IMailList } from '../../../../shared/interfaces/mail-list.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                       from 'rxjs/operators';
+} from 'rxjs/operators';
 
 @Component({
   selector: 'settings-mailing',
   templateUrl: './settings-mailing.component.html',
-  styleUrls: [ './settings-mailing.component.scss' ]
+  styleUrls: ['./settings-mailing.component.scss']
 })
 export class SettingsMailingComponent implements OnInit {
 
@@ -53,7 +53,7 @@ export class SettingsMailingComponent implements OnInit {
     const formArray = [];
     if (this.application.mailing) {
       for (let i = 0; i < this.application.mailing.length; i++) {
-        formArray.push(this.initMailList(this.application.mailing[ i ]));
+        formArray.push(this.initMailList(this.application.mailing[i]));
       }
     }
     return this.fb.array(formArray);
@@ -61,8 +61,8 @@ export class SettingsMailingComponent implements OnInit {
 
   initMailList(mailList: IMailList): FormGroup {
     return this.fb.group({
-      title: [ mailList.title, [ Validators.required ] ],
-      emails: [ mailList.emails ? mailList.emails : [], [ Validators.required ] ],
+      title: [mailList.title, [Validators.required]],
+      emails: [mailList.emails ? mailList.emails : [], [Validators.required]],
       isActive: mailList.isActive
     });
   }
