@@ -42,7 +42,13 @@ export interface IMemberMainData {
   gender: string;     //
   firstName?: string; //
   lastName?: string;  //
-  birthday: string;   //
+  birthday: {
+    year: string;
+    month: string;
+    day: string;
+    monthDay: string;
+    full: string;
+  };   //
 }
 
 export interface IMemberOtherData {

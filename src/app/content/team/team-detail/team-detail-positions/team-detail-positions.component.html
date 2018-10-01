@@ -15,7 +15,7 @@
           <mat-list-item *ngFor="let member of assignedPlayers; let i = index">
             {{i + 1 }}.&nbsp;
             <a [routerLink]="['/members/detail', member.id]">
-              {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
+              {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday.full.full | date: 'dd.MM.yy'}}
             </a>
           </mat-list-item>
         </mat-list>

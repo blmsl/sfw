@@ -45,8 +45,8 @@
                class="py-1">
             <span class="mat-text-muted">{{'general.members.detail.main.birthday' | translate}}&nbsp;</span>
             <span *ngIf="member.mainData.birthday; else noBirthdayTemplate">
-          {{member.mainData.birthday | date: 'dd.MM.yy' }}
-        ({{ memberService.calculateAge(member.mainData.birthday) }} {{'general.members.detail.main.years' | translate}})
+          {{member.mainData.birthday.full | date: 'dd.MM.yy' }}
+        ({{ memberService.calculateAge(member.mainData.birthday.full) }} {{'general.members.detail.main.years' | translate}})
         </span>
           </div>
 

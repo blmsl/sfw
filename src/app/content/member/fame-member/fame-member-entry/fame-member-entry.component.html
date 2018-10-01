@@ -10,7 +10,7 @@
             {{member.mainData.firstName}} {{member.mainData.lastName}}
           </p>
           <p class="block mt-xs mb-xs">
-            {{member.mainData.birthday ? (member.mainData.birthday | date : 'dd.MM.yy') : ''}}
+            {{member.mainData.birthday ? (member.mainData.birthday.full | date : 'dd.MM.yy') : ''}}
           </p>
           <a [routerLink]="['/members/detail', member.id]"
              mat-raised-button

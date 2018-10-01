@@ -62,11 +62,10 @@ export const memberOfTheWeekCron = functions
           return true;
         }
 
-        const clubMember = clubList[ Math.floor(Math.random() * clubList.length) ];
-        console.log(clubMember);
-        const ahMember = ahList[ Math.floor(Math.random() * ahList.length) ];
-        const playerMember = playerList[ Math.floor(Math.random() * playerList.length) ];
-        const honoraryMember = honoraryList[ Math.floor(Math.random() * honoraryList.length) ];
+        const clubMember = clubList[ Math.floor(Math.random() * clubList.length) ].data();
+        const ahMember = ahList[ Math.floor(Math.random() * ahList.length) ].data();
+        const playerMember = playerList[ Math.floor(Math.random() * playerList.length) ].data();
+        const honoraryMember = honoraryList[ Math.floor(Math.random() * honoraryList.length) ].data();
 
         const data = {
           ah: {

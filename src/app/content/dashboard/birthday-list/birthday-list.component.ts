@@ -31,7 +31,7 @@ export class BirthdayListComponent implements OnInit, AfterViewChecked {
   }
 
   setAge(member: IMember) {
-    this.birthdays[member.id] = this.memberService.calculateAge(member.mainData.birthday);
+    this.birthdays[member.id] = this.memberService.calculateAge(member.mainData.birthday.full);
   }
 
 }

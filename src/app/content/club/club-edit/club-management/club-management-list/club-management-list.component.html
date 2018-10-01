@@ -37,7 +37,7 @@
                [routerLink]="['/members/edit', position.assignedMember]">
               {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.lastName}}
               {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.firstName}}
-              {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.birthday | date:
+              {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.birthday.full | date:
               'dd.MM.yy'}}
             </a>
             <!--<a fxFlex="5" (click)="edit.emit(position)"

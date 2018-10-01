@@ -17,7 +17,7 @@ export class BirthdayFilterPipe implements PipeTransform {
       if (!member.mainData.birthday) {
         return;
       }
-      return member.mainData.birthday.substring(5, 10) === searchString.format('MM-DD');
+      return member.mainData.birthday.full.substring(5, 10) === searchString.format('MM-DD');
     });
   }
 

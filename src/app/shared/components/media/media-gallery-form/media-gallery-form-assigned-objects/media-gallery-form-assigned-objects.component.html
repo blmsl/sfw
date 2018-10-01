@@ -13,7 +13,7 @@
         <!-- Matches -->
         {{item.matchStartDate ? (item.matchStartDate.seconds*1000 | date: 'dd.MM.yy HH:mm') :''}}
         <!-- Members -->
-        {{item.mainData && item.mainData.birthday ? (item.mainData.birthday | date: 'dd.MM.yy') :''}}
+        {{item.mainData && item.mainData.birthday ? (item.mainData.birthday.full | date: 'dd.MM.yy') :''}}
         <!-- Teams -->
         {{item.assignedSeason ? item.assignedSeason : ''}}
       </mat-option>

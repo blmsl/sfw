@@ -91,7 +91,7 @@
                                 <span
                                   [ngStyle]="{ 'font-weight': member.mainData.birthday.substring(5, 10) === today ? 'bold' : ''}">
                                     {{member.mainData.firstName}} {{member.mainData.lastName}}
-                                    {{ member.mainData.birthday | date: 'dd.MM.yy' }}
+                                    {{ member.mainData.birthday.full | date: 'dd.MM.yy' }}
                                 </span>
                 </a>
               </mat-list-item>

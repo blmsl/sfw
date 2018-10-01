@@ -7,14 +7,14 @@
     <a *ngIf="(members | filterBy: ['id'] : assignedPosition[0].memberId)[0] as member"
        [routerLink]="['/members/detail', member.id]">
       <mat-card-title>{{member.mainData.lastName}} {{member.mainData.firstName}}</mat-card-title>
-      <mat-card-subtitle>{{member.mainData.birthday |date :'dd.MM.yy' }}</mat-card-subtitle>
+      <mat-card-subtitle>{{member.mainData.birthday.full |date :'dd.MM.yy' }}</mat-card-subtitle>
     </a>
   </span>
 
   <a *ngIf="member && member.mainData"
      [routerLink]="['/members/detail', member.id]">
     <mat-card-title>{{member.mainData.lastName}} {{member.mainData.firstName}}</mat-card-title>
-    <mat-card-subtitle>{{member.mainData.birthday |date :'dd.MM.yy' }}</mat-card-subtitle>
+    <mat-card-subtitle>{{member.mainData.birthday.full |date :'dd.MM.yy' }}</mat-card-subtitle>
   </a>
 </mat-card>
 
