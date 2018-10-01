@@ -1,6 +1,6 @@
-import * as admin from 'firebase-admin';
+import * as admin     from 'firebase-admin';
 import * as functions from 'firebase-functions';
-import * as moment from 'moment';
+import * as moment    from 'moment';
 
 moment.locale('de');
 
@@ -25,7 +25,7 @@ export const memberOfTheWeekCron = functions
       const applicationsSnapshot = await admin.firestore().collection('applications')
         .where('isCurrentApplication', '==', true)
         .get();
-      const currentApp = applicationsSnapshot.docs[0].data();
+      const currentApp = applicationsSnapshot.docs[ 0 ].data();
 
       const membersOfTheWeekMailing = currentApp.mailing.filter(mailing => {
         return mailing.isActive && mailing.title === 'Mitglieder der Woche';
@@ -62,10 +62,10 @@ export const memberOfTheWeekCron = functions
           return true;
         }
 
-        const clubMember = clubList[Math.floor(Math.random() * clubList.length)].data();
-        const ahMember = ahList[Math.floor(Math.random() * ahList.length)].data();
-        const playerMember = playerList[Math.floor(Math.random() * playerList.length)].data();
-        const honoraryMember = honoraryList[Math.floor(Math.random() * honoraryList.length)].data();
+        const clubMember = clubList[ Math.floor(Math.random() * clubList.length) ].data();
+        const ahMember = ahList[ Math.floor(Math.random() * ahList.length) ].data();
+        const playerMember = playerList[ Math.floor(Math.random() * playerList.length) ].data();
+        const honoraryMember = honoraryList[ Math.floor(Math.random() * honoraryList.length) ].data();
 
         const data = {
           ah: {
@@ -98,27 +98,24 @@ export const memberOfTheWeekCron = functions
           }
         };
 
-        console.log(data);
-        console.log({ clubMember, ahMember, playerMember, honoraryMember });
         await db.collection('member-of-the-week').doc(docId).create(data);
 
         const msg = {
-          to: membersOfTheWeekMailing[0].emails,
+          to: membersOfTheWeekMailing[ 0 ].emails,
           from: 'mitglieder@sfwinterbach.com',
           subject: 'Mitglieder der Woche ' + now.week() + '/' + now.format('YY'),
           templateId: 'fc184c8b-b721-450f-add7-69ef4d20fe10',
-          substitutionWrappers: ['{{', '}}'],
+          substitutionWrappers: [ '{{', '}}' ],
           substitutions: {
             adminName: '',
-            clubMember: 'Verein: ' + clubMember['mainData'] ? clubMember['mainData']['firstName'] + ' ' + clubMember['mainData']['lastName'] : ' ???',
-            ahMember: 'Alte Herren: ' + ahMember['mainData'] ? ahMember['mainData']['firstName'] + ' ' + ahMember['mainData']['lastName'] : ' ???',
-            player: 'Spieler: ' + playerMember['mainData'] ? playerMember['mainData']['firstName'] + ' ' + playerMember['mainData']['lastName'] : ' ???',
-            honorary: 'Ehrenmitglied: ' + honoraryMember['mainData'] ? honoraryMember['mainData']['firstName'] + ' ' + honoraryMember['mainData']['lastName'] : ' ???',
+            clubMember: 'Verein: ' + clubMember[ 'mainData' ] ? clubMember[ 'mainData' ][ 'firstName' ] + ' ' + clubMember[ 'mainData' ][ 'lastName' ] : ' ???',
+            ahMember: 'Alte Herren: ' + ahMember[ 'mainData' ] ? ahMember[ 'mainData' ][ 'firstName' ] + ' ' + ahMember[ 'mainData' ][ 'lastName' ] : ' ???',
+            player: 'Spieler: ' + playerMember[ 'mainData' ] ? playerMember[ 'mainData' ][ 'firstName' ] + ' ' + playerMember[ 'mainData' ][ 'lastName' ] : ' ???',
+            honorary: 'Ehrenmitglied: ' + honoraryMember[ 'mainData' ] ? honoraryMember[ 'mainData' ][ 'firstName' ] + ' ' + honoraryMember[ 'mainData' ][ 'lastName' ] : ' ???',
             weekString: now.week(),
             dateString: now.format('LL') + ' bis ' + now.add(6, 'days').format('LL')
           }
         };
-        console.log(msg);
         return sgMail.send(msg);
 
       } else {
