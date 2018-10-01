@@ -25,8 +25,7 @@
         <div>
           <tag-input placeholder="{{'general.applications.mailing.emails' | translate}}"
                      formControlName="emails"
-                     [identifyBy]="'value'"
-                     [displayBy]="'display'"
+                     [modelAsStrings]="true"
                      [editable]="true">
           </tag-input>
         </div>

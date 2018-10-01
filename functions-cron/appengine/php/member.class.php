@@ -284,7 +284,8 @@ trait sfwMember
         "birthday" => array(
           "year" => $birthday->format('Y'),
           "month" => $birthday->format('m'),
-          "day" => $birthday->format('d')
+          "day" => $birthday->format('d'),
+          "monthDay" => $birthday->format('m-d')
         )
       ),
       "address" => array(
@@ -334,6 +335,7 @@ trait sfwMember
         || $memberList[$id]['doc']['mainData']['birthday']['year'] !== $data['mainData']['birthday']['year']
         || $memberList[$id]['doc']['mainData']['birthday']['month'] !== $data['mainData']['birthday']['month']
         || $memberList[$id]['doc']['mainData']['birthday']['day'] !== $data['mainData']['birthday']['day']
+        || $memberList[$id]['doc']['mainData']['birthday']['monthDay'] !== $data['mainData']['birthday']['monthDay']
         || $memberList[$id]['doc']['mainData']['title'] !== $data['mainData']['title']
 
         || !isset($memberList[$id]['doc']['address']) && isset($data['address'])
@@ -398,7 +400,8 @@ trait sfwMember
         "birthday" => array(
           "year" => $birthday->format('Y'),
           "month" => $birthday->format('m'),
-          "day" => $birthday->format('d')
+          "day" => $birthday->format('d'),
+          "monthDay" =>  $birthday->format('m-d')
         )
       ),
       "dfbData" => array(
@@ -441,6 +444,7 @@ trait sfwMember
         || $memberList[$id]['doc']['mainData']['birthday']['year'] !== $data['mainData']['birthday']['year']
         || $memberList[$id]['doc']['mainData']['birthday']['month'] !== $data['mainData']['birthday']['month']
         || $memberList[$id]['doc']['mainData']['birthday']['day'] !== $data['mainData']['birthday']['day']
+        || $memberList[$id]['doc']['mainData']['birthday']['monthDay'] !== $data['mainData']['birthday']['monthDay']
 
         || !isset($memberList[$id]['doc']['dfbData']) && isset($data['dfbData'])
         || isset($memberList[$id]['doc']['dfbData']) && !isset($data['dfbData'])
@@ -490,7 +494,10 @@ trait sfwMember
       ['path' => 'mainData.gender', 'value' => $member['mainData']['gender']],
       ['path' => 'mainData.firstName', 'value' => $member['mainData']['firstName']],
       ['path' => 'mainData.lastName', 'value' => $member['mainData']['lastName']],
-      ['path' => 'mainData.birthday', 'value' => $member['mainData']['birthday']],
+      ['path' => 'mainData.birthday.year', 'value' => $member['mainData']['birthday']['year']],
+      ['path' => 'mainData.birthday.month', 'value' => $member['mainData']['birthday']['month']],
+      ['path' => 'mainData.birthday.day', 'value' => $member['mainData']['birthday']['day']],
+      ['path' => 'mainData.birthday.monthDay', 'value' => $member['mainData']['birthday']['monthDay']],
       ['path' => 'mainData.title', 'value' => $member['mainData']['title']],
 
       ['path' => 'driveImport', 'value' => true],
@@ -541,7 +548,11 @@ trait sfwMember
       ['path' => 'mainData.gender', 'value' => $member['mainData']['gender']],
       ['path' => 'mainData.firstName', 'value' => $member['mainData']['firstName']],
       ['path' => 'mainData.lastName', 'value' => $member['mainData']['lastName']],
-      ['path' => 'mainData.birthday', 'value' => $member['mainData']['birthday']],
+
+      ['path' => 'mainData.birthday.year', 'value' => $member['mainData']['birthday']['year']],
+      ['path' => 'mainData.birthday.month', 'value' => $member['mainData']['birthday']['month']],
+      ['path' => 'mainData.birthday.day', 'value' => $member['mainData']['birthday']['day']],
+      ['path' => 'mainData.birthday.monthDay', 'value' => $member['mainData']['birthday']['monthDay']],
 
       ['path' => 'dfbImport', 'value' => true],
       ['path' => 'clubData.assignedClub', 'value' => $member['clubData']['assignedClub']],

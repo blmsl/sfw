@@ -1,6 +1,6 @@
-import * as admin from 'firebase-admin';
+import * as admin     from 'firebase-admin';
 import * as functions from 'firebase-functions';
-import * as moment from 'moment';
+import * as moment    from 'moment';
 
 moment.locale('de');
 
@@ -13,17 +13,21 @@ const db = admin.firestore();
 const now = moment();
 const docId: string = now.week() + '-' + now.format('YY');
 
+const collectionName = 'members';
+
 export const memberOfTheWeekCron = functions
   .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .pubsub.topic('weekly-tick').onPublish(async () => {
 
-    const memberSnapshot = await db.collection('members').get();
+    const ref = db.collection(collectionName).doc();
+    console.log(ref.id);
+
+    const memberSnapshot = await db.collection(collectionName).where('id', '>=', ref.id).limit(1).get();
 
     console.log(memberSnapshot.size);
 
     if(memberSnapshot.size > 0) {
-
       console.log(memberSnapshot);
 
       memberSnapshot.docs.forEach((member) => {
