@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-import * as moment from 'moment';
+import * as admin     from 'firebase-admin';
+import * as moment    from 'moment';
 
 const { google } = require('googleapis');
 
@@ -17,20 +17,20 @@ const timeMax = currentDate.add(2, 'month').toISOString();
 
 
 export const getGoogleCalendarEvents = functions
-    // disables because firebase-functions don´t use it correctly
-    // see https://github.com/angular/angularfire2/issues/1874
-    // .region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 10 })
+// disables because firebase-functions don´t use it correctly
+// see https://github.com/angular/angularfire2/issues/1874
+  // .region('europe-west1')
+  .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .https.onRequest(async (request, response) => {
 
     try {
       const eventList: any[] = [];
 
-      const auth = await google.auth.getClient({ scopes: ['https://www.googleapis.com/auth/calendar'] });
+      const auth = await google.auth.getClient({ scopes: [ 'https://www.googleapis.com/auth/calendar' ] });
       const appSnapshot = await db.collection('applications').where('isCurrentApplication', '==', true).get();
 
-      for(const cal of appSnapshot.docs[0].data().assignedCalendars){
-        if(cal.isActive) {
+      for (const cal of appSnapshot.docs[ 0 ].data().assignedCalendars) {
+        if (cal.isActive) {
           const result = await calendar.events.list({
             auth: auth,
             calendarId: cal.link,
@@ -48,7 +48,7 @@ export const getGoogleCalendarEvents = functions
                 summary: event.summary,
                 description: event.description,
                 start: event.start.dateTime || event.start.date,
-                end: event.end.dateTime || event.end.date,
+                end: event.end.dateTime || event.end.date
               });
             }
           }
@@ -57,7 +57,8 @@ export const getGoogleCalendarEvents = functions
 
       response.status(200).send(eventList);
 
-    } catch (e) {
+    }
+    catch (e) {
       console.error(e);
       response.status(e.code).send(e.message);
     }

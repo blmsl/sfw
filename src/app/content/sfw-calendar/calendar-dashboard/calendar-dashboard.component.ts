@@ -22,7 +22,7 @@ export class CalendarDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { events: ICalendarEvent[] }) => this.events$ = data.events);
+    // this.route.data.subscribe((data: { events: ICalendarEvent[] }) => this.events$ = data.events);
 
     /*this.test$ =  this.applicationService.applications$.pipe(
      map((applications: IApplication[]) => {

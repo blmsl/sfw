@@ -8,11 +8,17 @@
            fxLayoutGap="10px"
            [formGroupName]="i">
 
-        <mat-form-field fxFlex="25">
+        <mat-form-field fxFlex="20">
           <input matInput
                  placeholder="{{'general.applications.calendars.fieldTitle' | translate}}"
                  formControlName="title"/>
         </mat-form-field>
+
+       <div fxFlex="10">
+         <mat-checkbox formControlName="isActive">
+           {{'general.applications.calendars.isActive' | translate}}
+         </mat-checkbox>
+       </div>
 
         <mat-form-field fxFlex="50">
           <input matInput

@@ -85,6 +85,7 @@
       "calendars": {
         "addCalendar": "Kalender hinzufügen",
         "deleteCalendar": "Kalender löschen",
+        "isActive": "aktiv",
         "link": "Google Link",
         "fieldTitle": "Name des Kalenders",
         "title": "Verknüpfte Google-Kalender"

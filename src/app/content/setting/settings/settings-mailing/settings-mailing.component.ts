@@ -43,7 +43,6 @@ export class SettingsMailingComponent implements OnInit {
       distinctUntilChanged()
     ).subscribe((changes: IMailList[]) => {
       if (this.form.valid) {
-        console.log(changes);
         this.application = Object.assign({}, this.application, changes);
         this.saveApplication.emit(this.application);
       }
