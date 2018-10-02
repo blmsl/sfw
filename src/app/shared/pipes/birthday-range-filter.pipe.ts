@@ -21,7 +21,7 @@ export class BirthdayRangeFilterPipe implements PipeTransform {
         }
 
         const currentDayOfYear = moment();
-        const birthDayOfYear = moment(member.mainData.birthday);
+        const birthDayOfYear = moment(member.mainData.birthday.full);
 
         if (currentDayOfYear.dayOfYear() <= birthDayOfYear.dayOfYear() && currentDayOfYear.dayOfYear() + afterLimit >= birthDayOfYear.dayOfYear()) {
           return member;
@@ -40,8 +40,8 @@ export class BirthdayRangeFilterPipe implements PipeTransform {
       return null;
 
     const thisYear: any = moment().format('YYYY');
-    let birthdayA: Moment = moment(a.mainData.birthday).set('year', thisYear);
-    let birthdayB: Moment = moment(b.mainData.birthday).set('year', thisYear);
+    let birthdayA: Moment = moment(a.mainData.birthday.full).set('year', thisYear);
+    let birthdayB: Moment = moment(b.mainData.birthday.full).set('year', thisYear);
 
     if (birthdayA.unix() <= birthdayB.unix()) {
       return -1;

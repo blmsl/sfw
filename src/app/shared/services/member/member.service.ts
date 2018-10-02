@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of } from 'rxjs';
+import {
+  forkJoin,
+  Observable,
+  of
+} from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
@@ -17,7 +21,7 @@ import { ICoord } from '../../interfaces/match/coord.interface';
 export class MemberService {
 
   private collectionRef: AngularFirestoreCollection<IMember>;
-  private path = `members`;
+  private path: any = `members`;
 
   members$: Observable<IMember[]>;
 
@@ -48,6 +52,14 @@ export class MemberService {
 
   getMemberById(memberId: string): Observable<IMember> {
     return this.afs.collection(this.path).doc<IMember>(memberId).valueChanges();
+  }
+
+  getMembersByBirthdayRange(start: string, limit: string): Observable<IMember[]> {
+    return this.afs.collection<IMember>(this.path, ref =>
+      ref
+        .where('mainData.birthday.monthDay', '>=', start)
+        .where('mainData.birthday.monthDay', '<=', limit))
+      .valueChanges();
   }
 
   getMembersByIds(memberIds: string[]): Observable<IMember[]> {

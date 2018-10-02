@@ -11,7 +11,6 @@ import {
 } from 'rxjs/index';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 import { MediaItemService } from '../../../services/media/media-item.service';
-import { SkyhookDndService } from 'angular-skyhook';
 
 @Component({
   selector: 'match-player',
@@ -38,8 +37,7 @@ export class MatchPlayerComponent implements OnInit, OnDestroy {
     return m.isDragging();
   });*/
 
-  constructor(private mediaItemService: MediaItemService,
-    /*private dnd: SkyhookDndService*/) {
+  constructor(private mediaItemService: MediaItemService) {
   }
 
   ngOnInit() {

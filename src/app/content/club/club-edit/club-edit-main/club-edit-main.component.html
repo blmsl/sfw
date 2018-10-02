@@ -68,9 +68,9 @@
                     <mat-select placeholder="{{'general.clubs.edit.contact' | translate}}"
                                 formControlName="assignedContact">
                         <mat-option
-                                *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday']"
+                                *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday.full']"
                                 [value]="member.id">
-                            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday |
+                            {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday.full |
                             date: 'dd.MM.yy'}}
                         </mat-option>
                     </mat-select>

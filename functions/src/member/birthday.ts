@@ -1,6 +1,7 @@
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import * as moment from 'moment';
+import { birthdayWishes } from './birthday-wishes';
 
 moment.locale('de');
 
@@ -9,15 +10,14 @@ const sgMail = require('@sendgrid/mail');
 const SENDGRID_API_KEY = functions.config().sendgrid.key;
 sgMail.setApiKey(SENDGRID_API_KEY);
 
-function calculateAge(birthday: string) {
-  const dateOfBirth = new Date(birthday);
+function calculateAge(year: string, month: string, day: string) {
+  const dateOfBirth = new Date(year + '-' + month + '-' + day);
   const ageDifMs = Date.now() - dateOfBirth.getTime();
   const ageDate = new Date(ageDifMs);
   return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
-const month = moment().format('MM');
-const day = moment().format('DD');
+const monthDay = moment().format('MM-DD');
 
 const recipients: {
   email: string,
@@ -25,6 +25,7 @@ const recipients: {
   lastName: string,
   age: number
 }[] = [];
+
 
 const birthdayWishes: {
   message: string,
@@ -111,104 +112,86 @@ const birthdayWishes: {
     }
   ];
 
-
 export const birthdayReminderCron = functions
-  // .region('europe-west1')
+  .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
-  .https.onRequest(async () => {
-    // .pubsub.topic('daily-tick').onPublish(async () => {
+  .pubsub.topic('daily-tick').onPublish(async () => {
 
+    try {
+      const applicationsSnapshot = await admin.firestore().collection('applications')
+        .where('isCurrentApplication', '==', true)
+        .get();
+      const currentApp = applicationsSnapshot.docs[0].data();
 
-    const applicationsSnapshot = await admin.firestore().collection('applications')
-      .where('isCurrentApplication', '==', true)
-      .get();
-    const currentApp = applicationsSnapshot.docs[0].data();
-    console.log(currentApp);
+      const membersSnapshot = await admin.firestore().collection('members')
+        .where('mainData.birthday.monthDay', '==', monthDay)
+        .get();
 
-    const membersSnapshot = await admin.firestore().collection('members')
-      // .where('mainData.birthday.month', '==', month)
-      .where('mainData.birthday.day', '==', day)
+      let birthdayList = '<ul>';
 
-      .get();
+      membersSnapshot.docs.forEach(function(doc) {
+        const memberData = doc.data();
 
-    console.log(membersSnapshot.size);
+        const age = calculateAge(memberData.mainData.birthday.year, memberData.mainData.birthday.month, memberData.mainData.birthday.day);
 
-    /* membersSnapshot.docs.forEach(member => {
-      console.log(member.data().id);
-    }); */
+        if (memberData.contact && memberData.contact.email) {
+          const data = {
+            email: memberData.contact.email,
+            firstName: memberData.mainData.firstName,
+            lastName: memberData.mainData.lastName,
+            age: age
+          };
+          recipients.push(data);
+        }
+        birthdayList += '<li>' + memberData.mainData.firstName + ' ' + memberData.mainData.lastName + ' wird heute ' + age + ' Jahre</li>';
+      });
 
-    return membersSnapshot;
-    /*.then(() => {
-    console.log(currentApplications);
+      // if no there are no birthdays today
+      if (birthdayList === '<ul>') {
+        birthdayList = '<li>Heute hat niemand Geburtstag.</li>';
+      }
 
-    return admin.firestore()
-      .collection('members')
-      .get()
-      .then((value) => {
+      birthdayList += '</ul>';
 
-        let birthdayList = '<ul>';
+      const birthdayMailing = currentApp.mailing.filter(mailing => {
+        return mailing.isActive && mailing.title === 'Geburtstagsgrüße als Kopie';
+      });
 
-        value.forEach(function(doc) {
-          const memberData = doc.data();
-          if (moment(memberData.mainData.birthday).format('MM-DD') === today) {
-            if (memberData.contact && memberData.contact.email) {
-              const data = {
-                email: memberData.contact.email,
-                firstName: memberData.mainData.firstName,
-                lastName: memberData.mainData.lastName,
-                age: calculateAge(memberData.mainData.birthday)
-              };
-              recipients.push(data);
-            }
-            birthdayList += '<li>' + memberData.mainData.firstName + ' ' + memberData.mainData.lastName + ' wird heute ' + calculateAge(memberData.mainData.birthday) + ' Jahre</li>';
-          }
-        });
+      if (birthdayMailing && birthdayMailing.length > 0) {
 
-        // if no there are no birthdays today
-        if (birthdayList === '<ul>') {
-          birthdayList = '<li>Heute hat niemand Geburtstag.</li>';
+        if (membersSnapshot.size > 0 && (!recipients || recipients.length === 0)) {
+          console.warn('Es wurden keine Email Adressen der Geburtstagskinder hinterlegt.');
+          return true;
         }
 
-        birthdayList += '</ul>';
-        return birthdayList;
-      }).then((list) => {
-        return true; /*sgMail.send({
-          to: [
-            'thomas.handle@gmail.com',
-            'mail@r-klein.com',
-            'nathalie.feller@gmx.de',
-            'ronnyhassel@gmail.com'
-          ],
+        await sgMail.send({
+          to: birthdayMailing[0].emails,
           from: 'Geburtstage@sfwinterbach.com',
           subject: 'Geburtstage vom ' + moment().format('LL'),
           templateId: '3b21edd6-0c49-40c2-a2e3-68ae679ff440',
-          substitutionWrappers: [ '{{', '}}' ],
+          substitutionWrappers: ['{{', '}}'],
           substitutions: {
             adminName: '',
-            birthdayList: list,
+            birthdayList: birthdayList,
             dateString: moment().format('LL')
           }
         });
-      }).then(() => {
-        recipients.forEach((recipient: {
-          email: string,
-          firstName: string,
-          lastName: string,
-          age: number
-        }) => {
-          const birthdaySample = birthdayWishes[Math.floor(Math.random() * birthdayWishes.length)];
 
-          return true; /* sgMail.send({
-            to: [ recipient.email ],
-            bcc: [
-              'thomas.handle@gmail.com',
-              'mail@r-klein.com',
-              'ronnyhassel@gmail.com'
-            ],
+        const bccList: string[] = [];
+        for (const recipient of recipients) {
+
+          if (birthdayMailing[0].emails.indexOf(recipient.email) === -1) {
+            bccList.push(recipient.email);
+          }
+
+          const birthdaySample = birthdayWishes[Math.floor(Math.random() * birthdayWishes.length)];
+          const mail = {
+            to: recipient.email,
+            bcc: bccList,
             from: 'Geburtstage@sfwinterbach.com',
-            subject: 'Geburtstagswünsche',
+            subject: 'Alles Gute zum Geburtstag!',
             templateId: '780bf24e-b085-4ece-9262-f727c47a3edc',
-            substitutionWrappers: [ '{{', '}}' ],
+            substitutionWrappers: ['{{', '}}'],
             substitutions: {
               firstName: recipient.firstName,
               lastName: recipient.lastName,
@@ -216,8 +199,21 @@ export const birthdayReminderCron = functions
               message: birthdaySample.message,
               author: birthdaySample.author
             }
-          });
-        }); */
+          };
+          await sgMail.send(mail);
+        }
+        return true;
 
+      }
+      else {
+        console.warn('Kein Mail-Verteiler mit dem Namen "Geburtstagsgrüße als Kopie" gefunden.');
+        return true;
+      }
+    }
+    catch (e) {
+      console.error(e);
+      console.log(e.response.body);
+      return e;
+    }
 
   });

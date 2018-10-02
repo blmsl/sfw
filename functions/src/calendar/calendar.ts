@@ -2,6 +2,10 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as moment from 'moment';
 
+import * as cors from 'cors';
+
+const corsHandler = cors({ origin: true });
+
 const { google } = require('googleapis');
 
 const GOOGLE_API_KEY = functions.config().google.calendar.key;
@@ -15,12 +19,11 @@ const currentDate = moment();
 const timeMin = currentDate.subtract(1, 'month').toISOString();
 const timeMax = currentDate.add(2, 'month').toISOString();
 
-
 export const getGoogleCalendarEvents = functions
   // disables because firebase-functions don´t use it correctly
   // see https://github.com/angular/angularfire2/issues/1874
   // .region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 10 })
+  // .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .https.onRequest(async (request, response) => {
 
     try {
@@ -48,16 +51,19 @@ export const getGoogleCalendarEvents = functions
                 summary: event.summary,
                 description: event.description,
                 start: event.start.dateTime || event.start.date,
-                end: event.end.dateTime || event.end.date,
+                end: event.end.dateTime || event.end.date
               });
             }
           }
         }
       }
 
-      response.status(200).send(eventList);
+      corsHandler(request, response, () => {
+        response.send(eventList);
+      });
 
-    } catch (e) {
+    }
+    catch (e) {
       console.error(e);
       response.status(e.code).send(e.message);
     }

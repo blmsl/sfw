@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import {
-  map,
   switchMap,
   take
 } from 'rxjs/operators';
@@ -22,9 +21,8 @@ export class CalendarService {
     private memberService: MemberService) {
   }
 
-  public getCalendars(): Observable<any> {
-    const callable = this.fns.httpsCallable('googleCalendar');
-    return callable({});
+  public getCalendars() {
+    return this.fns.httpsCallable('googleCalendar')({}).toPromise();
   }
 
   public getMemberBirthdays(): Observable<ICalendarEvent[]> {
@@ -36,8 +34,8 @@ export class CalendarService {
         for (let i = 0; i < members.length; i++) {
           if (members[i].mainData.birthday) {
             const event: ICalendarEvent = {
-              title: 'Geburtstag von ' + members[i].mainData.firstName + ' ' + members[i].mainData.lastName + ' (' + this.memberService.calculateAge(members[i].mainData.birthday) + ' Jahre)',
-              start: moment(members[i].mainData.birthday).set('year', moment().year()).format('YYYY-MM-DD')
+              title: 'Geburtstag von ' + members[i].mainData.firstName + ' ' + members[i].mainData.lastName + ' (' + this.memberService.calculateAge(members[i].mainData.birthday.full) + ' Jahre)',
+              start: moment(members[i].mainData.birthday.full).set('year', moment().year()).format('YYYY-MM-DD')
             };
             events.push(event);
           }

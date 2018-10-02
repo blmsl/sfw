@@ -25,13 +25,12 @@
         <div>
           <tag-input placeholder="{{'general.applications.mailing.emails' | translate}}"
                      formControlName="emails"
-                     [identifyBy]="'value'"
-                     [displayBy]="'display'"
+                     [modelAsStrings]="true"
                      [editable]="true">
           </tag-input>
         </div>
 
-        <div style="margin-top: 25px;">
+        <div style="margin: 25px 0;">
           <button mat-raised-button
                   type="button"
                   color="warn"
@@ -41,6 +40,7 @@
         </div>
 
       </div>
+      <hr style="margin-bottom: 30px"/>
     </div>
   </mat-card-content>
 

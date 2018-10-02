@@ -75,7 +75,7 @@
                   *ngFor="let member of assignedPositions |filterBy: ['id'] : position.assignedMember | orderBy: 'type'">
                   <h3 matLine>{{member.type}}</h3>
                   <a matLine [routerLink]="['/members/detail', member.id]">
-                    {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date:
+                    {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday.full | date:
                     'dd.MM.yy'}}
                   </a>
                 </mat-list-item>

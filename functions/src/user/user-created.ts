@@ -9,7 +9,7 @@ export const userCreated = functions
   .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .auth.user()
-  .onCreate((event: any) => {
+  .onCreate(async (event: any) => {
 
     const firebaseUser = event.data;
 
@@ -26,9 +26,7 @@ export const userCreated = functions
       }
     };
 
-    return sgMail.send(msg)
-      .then(() => {
-        return firebaseUser.sendEmailVerification();
-      });
+    await sgMail.send(msg);
+    return firebaseUser.sendEmailVerification();
 
   });

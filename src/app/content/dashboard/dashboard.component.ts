@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit {
 
   public config: PerfectScrollbarConfigInterface = {};
 
+
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
 
   constructor(private fb: FormBuilder,
@@ -63,8 +64,7 @@ export class DashboardComponent implements OnInit {
     this.angularVersion = VERSION.full;
     this.env = environment;
 
-    // ToDo: Load only the members with current Birthdays
-    this.members$ = memberService.members$;
+    this.members$ = memberService.getMembersByBirthdayRange(this.yesterday.format('MM-DD'), this.tomorrow.format('MM-DD'));
 
     this.latestArticles$ = articleService.getLatestArticles(5);
     this.categories$ = categoryService.getCategoriesByCategoryType('team.types');

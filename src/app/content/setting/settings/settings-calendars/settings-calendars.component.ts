@@ -62,13 +62,14 @@ export class SettingsCalendarsComponent implements OnInit {
   initCalendar(calendar: IGoogleCalendar): FormGroup {
     return this.fb.group({
       link: [calendar.link, [Validators.required]],
-      title: [calendar.title, [Validators.required]]
+      title: [calendar.title, [Validators.required]],
+      isActive: calendar.isActive
     });
   }
 
   addCalendar() {
     const control = this.form.get('assignedCalendars') as FormArray;
-    control.push(this.initCalendar({ title: '', link: '' }));
+    control.push(this.initCalendar({ title: '', link: '', isActive: true }));
   }
 
   deleteCalendar(i: number) {

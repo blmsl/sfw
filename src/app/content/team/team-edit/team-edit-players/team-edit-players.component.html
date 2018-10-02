@@ -17,7 +17,7 @@
           [value]="member.id">
           {{member.mainData.lastName}}
           {{member.mainData.firstName}}
-          {{ member.mainData.birthday | date: 'dd.MM.yy'}}
+          {{ member.mainData.birthday.full | date: 'dd.MM.yy'}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -28,7 +28,7 @@
         <span mat-line>
           {{ (members | filterBy: ['id'] : memberId)[0].mainData.lastName }}
           {{ (members | filterBy: ['id'] : memberId)[0].mainData.firstName }}
-          {{ (members | filterBy: ['id'] : memberId)[0].mainData.birthday | date: 'dd.MM.yy' }}
+          {{ (members | filterBy: ['id'] : memberId)[0].mainData.birthday.full | date: 'dd.MM.yy' }}
         </span>
         <button mat-icon-button (click)="deleteFromTeam(memberId)">
           <mat-icon>delete</mat-icon>

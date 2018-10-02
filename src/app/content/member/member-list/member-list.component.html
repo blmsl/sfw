@@ -74,7 +74,7 @@
 
       <ngx-datatable-column name="{{'general.members.detail.main.birthday' | translate}}">
         <ng-template let-row="row" let-value="mainData.birthday" ngx-datatable-cell-template>
-          <span *ngIf="row.mainData.birthday">{{ row.mainData.birthday | date: 'dd.MM.yy'}}</span>
+          <span *ngIf="row.mainData.birthday">{{ row.mainData.birthday.full | date: 'dd.MM.yy'}}</span>
         </ng-template>
       </ngx-datatable-column>
 

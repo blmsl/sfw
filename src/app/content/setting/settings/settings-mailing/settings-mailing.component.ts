@@ -13,7 +13,6 @@ import {
 } from '@angular/forms';
 import { IApplication } from '../../../../shared/interfaces/application.interface';
 import { IMailList } from '../../../../shared/interfaces/mail-list.interface';
-import { IGoogleCalendar } from '../../../../shared/interfaces/calendar/google-calendar.interface';
 import {
   debounceTime,
   distinctUntilChanged

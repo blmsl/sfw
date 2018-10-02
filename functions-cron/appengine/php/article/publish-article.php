@@ -6,14 +6,14 @@ ini_set('memory_limit', '-1');
 
 header("Content-Type: text/html; charset=utf-8");
 
-
 require "../../vendor/autoload.php";
 require "../base.class.php";
-
 require_once "../utils.global.php";
 
-if(!strpos(gethostname(), 'appspot.com')) {
-  putenv('GOOGLE_APPLICATION_CREDENTIALS=../client_secret.json');
+use Abraham\TwitterOAuth\TwitterOAuth;
+
+if (!strpos(gethostname(), 'appspot.com')) {
+    putenv('GOOGLE_APPLICATION_CREDENTIALS=../client_secret.json');
 }
 
 putenv('TWITTER_APPLICATION_CREDENTIALS=../twitter_secret.json');
@@ -29,10 +29,6 @@ echo $project->generateHeader();
  */
 $storage = $project->storage;
 $bucket = $storage->bucket($project->projectId . ".appspot.com");
-#foreach ($bucket->objects() as $object) {
-#  printf('Object: %s' . PHP_EOL, $object->name());
-#}
-
 
 // get all Articles with publication.datetime within next 15 minutes
 $startDateTime = new DateTime();
@@ -42,25 +38,43 @@ $endDateTime = new DateTime();
 $endDateTime = $project->roundUpToMinuteInterval($endDateTime, 15);
 
 echo "<h1>Lade zu veröffentlichende Artikel</h1>" . PHP_EOL;
-
 echo "<p>Geladen werden alle Artikel, die zwischen dem " . $startDateTime->format('d.m.Y') . ", " . $startDateTime->format('H:i:s') . " Uhr und " . $endDateTime->format('d.m.Y') . ", " . $endDateTime->format('H:i:s') . " Uhr veröffentlich werden sollen.</p>" . PHP_EOL;
 
+$string = file_get_contents(getenv('TWITTER_APPLICATION_CREDENTIALS'));
+$config = json_decode($string, true);
+
+$connection = new TwitterOAuth(
+    $config["consumerKey"],
+    $config["consumerSecret"],
+    $config["accessToken"],
+    $config["accessTokenSecret"]
+);
+$content = $connection->get("account/verify_credentials");
+var_dump($content);
 
 $scheduledArticles = $project->getArticlesByPublishDate($startDateTime, $endDateTime);
 if (count($scheduledArticles) > 0) {
 
-  echo $project->generateArticleTable();
+    echo $project->generateArticleTable();
 
-  $project->twitter = $project->setUpTwitter();
 
-  $i = 1;
-  foreach ($scheduledArticles as $article) {
-    if ($article["publication"]["status"] === 2) {
-      # echo $project->generateArticleRow($i, $article);
+    //$facebook = $project->setUpFacebook();
+    //$facebookAuth = new MartinGeorgiev\SocialPost\SocialNetwork\Facebook\SDK5($facebook, '184670324910855' /*$facebookPageId */);
+
+    $i = 1;
+    foreach ($scheduledArticles as $article) {
+
+
+        $message = new \MartinGeorgiev\SocialPost\Message('your test message');
+        $message->setNetworksToPublishOn([SocialNetwork::LINKEDIN, SocialNetwork::TWITTER]);
+
+
+        //if ($article["publication"]["status"] === 2) {
+        # echo $project->generateArticleRow($i, $article);
+
     }
-  }
 
-  echo $project->generateArticleFooter();
+    echo $project->generateArticleFooter();
 }
 
 echo '<p><span style="font-weight: bold">Ausführungsdauer :</span> ' . (microtime(true) - $time_start) . '</p>' . PHP_EOL;
