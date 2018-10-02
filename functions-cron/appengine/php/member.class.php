@@ -284,7 +284,8 @@ trait sfwMember
         "birthday" => array(
           "year" => $birthday->format('Y'),
           "month" => $birthday->format('m'),
-          "day" => $birthday->format('d')
+          "day" => $birthday->format('d'),
+          "monthDay" => $birthday->format('m-d')
         )
       ),
       "address" => array(
@@ -334,6 +335,7 @@ trait sfwMember
         || $memberList[$id]['doc']['mainData']['birthday']['year'] !== $data['mainData']['birthday']['year']
         || $memberList[$id]['doc']['mainData']['birthday']['month'] !== $data['mainData']['birthday']['month']
         || $memberList[$id]['doc']['mainData']['birthday']['day'] !== $data['mainData']['birthday']['day']
+        || $memberList[$id]['doc']['mainData']['birthday']['monthDay'] !== $data['mainData']['birthday']['monthDay']
         || $memberList[$id]['doc']['mainData']['title'] !== $data['mainData']['title']
 
         || !isset($memberList[$id]['doc']['address']) && isset($data['address'])
@@ -398,7 +400,8 @@ trait sfwMember
         "birthday" => array(
           "year" => $birthday->format('Y'),
           "month" => $birthday->format('m'),
-          "day" => $birthday->format('d')
+          "day" => $birthday->format('d'),
+          "monthDay" =>  $birthday->format('m-d')
         )
       ),
       "dfbData" => array(
@@ -441,6 +444,7 @@ trait sfwMember
         || $memberList[$id]['doc']['mainData']['birthday']['year'] !== $data['mainData']['birthday']['year']
         || $memberList[$id]['doc']['mainData']['birthday']['month'] !== $data['mainData']['birthday']['month']
         || $memberList[$id]['doc']['mainData']['birthday']['day'] !== $data['mainData']['birthday']['day']
+        || $memberList[$id]['doc']['mainData']['birthday']['monthDay'] !== $data['mainData']['birthday']['monthDay']
 
         || !isset($memberList[$id]['doc']['dfbData']) && isset($data['dfbData'])
         || isset($memberList[$id]['doc']['dfbData']) && !isset($data['dfbData'])

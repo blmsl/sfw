@@ -37,7 +37,8 @@
                 "glob": "ngsw-worker.js",
                 "input": "src/assets/fakeSW",
                 "output": "/"
-              }
+              },
+              "src/manifest.json"
             ],
             "styles": [
               "node_modules/quill/dist/quill.snow.css",
@@ -75,7 +76,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "serviceWorker": false
+              "serviceWorker": true
             }
           }
         },
@@ -140,7 +141,8 @@
                 "glob": "manifest.json",
                 "input": "src",
                 "output": "/"
-              }
+              },
+              "src/manifest.json"
             ]
           }
         },

@@ -22,7 +22,7 @@ export const memberOfTheWeekCron = functions
 
     console.log(memberSnapshot.size);
 
-    if(memberSnapshot.size > 0) {
+    if (memberSnapshot.size > 0) {
 
       console.log(memberSnapshot);
 

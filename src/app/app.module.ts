@@ -7,6 +7,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { TimeagoModule } from 'ngx-timeago';
 import { AngularFireModule } from '@angular/fire';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,9 +15,9 @@ import { AngularFireModule } from '@angular/fire';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
     CommonModule,
-    /* ServiceWorkerModule.register("/ngsw-worker.js", {
-     enabled: environment.production
-     }),*/
+    ServiceWorkerModule.register('/ngsw-config.js', {
+      enabled: environment.production
+    }),
     RouterModule.forRoot(appRoutes, {
       enableTracing: environment.routerTracing
     }),
