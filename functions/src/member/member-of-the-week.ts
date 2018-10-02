@@ -27,6 +27,7 @@ export const memberOfTheWeekCron = functions
         .get();
       const currentApp = applicationsSnapshot.docs[0].data();
 
+
       const membersOfTheWeekMailing = currentApp.mailing.filter(mailing => {
         return mailing.isActive && mailing.title === 'Mitglieder der Woche';
       });

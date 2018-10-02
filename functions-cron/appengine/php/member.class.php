@@ -241,6 +241,7 @@ trait sfwMember
         return $returnString;
     }
 
+
     public function saveDriveMember($member, $club, $memberList, $batch)
     {
         $birthday = false;
@@ -306,6 +307,7 @@ trait sfwMember
                 "phoneMobile" => $member[17],
                 "email" => $member[18]
             ),
+
         );
 
         if (!key_exists($id, $memberList)) {
@@ -422,6 +424,7 @@ trait sfwMember
                 "passPrint" => $passPrint,
                 "allowedToPlay" => $member[13]
             )
+
         );
 
         if (!key_exists($id, $memberList)) {

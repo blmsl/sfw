@@ -19,7 +19,6 @@ const currentDate = moment();
 const timeMin = currentDate.subtract(1, 'month').toISOString();
 const timeMax = currentDate.add(2, 'month').toISOString();
 
-
 export const getGoogleCalendarEvents = functions
   // disables because firebase-functions don´t use it correctly
   // see https://github.com/angular/angularfire2/issues/1874
