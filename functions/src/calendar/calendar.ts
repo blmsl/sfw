@@ -2,6 +2,10 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as moment from 'moment';
 
+import * as cors from 'cors';
+
+const corsHandler = cors({ origin: true });
+
 const { google } = require('googleapis');
 
 const GOOGLE_API_KEY = functions.config().google.calendar.key;
@@ -20,7 +24,7 @@ export const getGoogleCalendarEvents = functions
   // disables because firebase-functions don´t use it correctly
   // see https://github.com/angular/angularfire2/issues/1874
   // .region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  // .runWith({ memory: '128MB', timeoutSeconds: 5 })
   .https.onRequest(async (request, response) => {
 
     try {
@@ -55,7 +59,9 @@ export const getGoogleCalendarEvents = functions
         }
       }
 
-      response.status(200).send(eventList);
+      corsHandler(request, response, () => {
+        response.send(eventList);
+      });
 
     }
     catch (e) {

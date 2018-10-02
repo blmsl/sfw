@@ -16,15 +16,11 @@ admin.initializeApp({
   storageBucket: "sf-winterbach.appspot.com"
 });
 
-import * as user from './user/index';
 import * as calendar from './calendar/index';
 import * as media from './media/index';
 import * as member from './member/index';
 import * as team from './team/index';
-
-export const newUserCreation = user.userCreated;
-export const onUserDelete = user.userDeleted;
-export const onUserDisable = user.userDisabled;
+import * as user from './user/index';
 
 export const googleCalendar = calendar.getGoogleCalendarEvents;
 
@@ -34,3 +30,7 @@ export const birthdayReminder = member.birthdayReminderCron;
 export const memberOfTheWeekCron = member.memberOfTheWeekCron;
 
 export const teamOfTheMonthCron = team.teamOfTheMonthCron;
+
+export const newUserCreation = user.userCreated;
+export const onUserDelete = user.userDeleted;
+export const onUserDisable = user.userDisabled;

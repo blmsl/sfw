@@ -22,7 +22,7 @@ export class CalendarService {
   }
 
   public getCalendars() {
-    return this.fns.httpsCallable('googleCalendar')({});
+    return this.fns.httpsCallable('googleCalendar')({}).toPromise();
   }
 
   public getMemberBirthdays(): Observable<ICalendarEvent[]> {

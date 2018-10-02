@@ -20,7 +20,6 @@ import {
   transferArrayItem
 } from '@angular/cdk/drag-drop';
 import { ICoord } from '../../../../shared/interfaces/match/coord.interface';
-import { Observable } from 'rxjs/index';
 import { MatSelectChange } from '@angular/material';
 
 @Component({

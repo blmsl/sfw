@@ -1,6 +1,6 @@
-import * as admin     from 'firebase-admin';
+import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
-import * as moment    from 'moment';
+import * as moment from 'moment';
 
 moment.locale('de');
 
@@ -21,7 +21,7 @@ export const teamOfTheWeekCron = functions
       const applicationsSnapshot = await admin.firestore().collection('applications')
         .where('isCurrentApplication', '==', true)
         .get();
-      const currentApp = applicationsSnapshot.docs[ 0 ].data();
+      const currentApp = applicationsSnapshot.docs[0].data();
 
       const teamOfTheWeekMailing = currentApp.mailing.filter(mailing => {
         return mailing.isActive && mailing.title === 'Mannschaft des Monats';
@@ -31,7 +31,7 @@ export const teamOfTheWeekCron = functions
 
         const teamsSnapshot = await admin.firestore().collection('teams').get();
 
-        const sample = teamsSnapshot.docs[ Math.floor(Math.random() * teamsSnapshot.size) ];
+        const sample = teamsSnapshot.docs[Math.floor(Math.random() * teamsSnapshot.size)];
 
         await admin.firestore().collection(collectionString)
           .doc(now.format('YY') + '-' + now.format('MM'))
@@ -40,12 +40,13 @@ export const teamOfTheWeekCron = functions
             title: now.format('YY') + '-' + now.format('MM')
           });
 
+
         const msg = {
-          to: teamOfTheWeekMailing[ 0 ].emails,
+          to: teamOfTheWeekMailing[0].emails,
           from: 'mitglieder@sfwinterbach.com',
           subject: 'Mannschaft des Monats ' + now.month() + '.' + now.format('YYYY'),
           templateId: 'cd68a992-a76c-4b47-8dda-a7d9c68fd1b3',
-          substitutionWrappers: [ '{{', '}}' ],
+          substitutionWrappers: ['{{', '}}'],
           substitutions: {
             adminName: 'Thomas',
             teamName: sample.data().title + ' (' + sample.data().subTitle + ')',

@@ -18,9 +18,9 @@ trait sfwArticle
   {
     $query = $this->articleCollection
       ->orderBy('publication.dateTime')
-      ->where('publication.status', '=', 2)
-      ->where('publication.dateTime', '>=', $startDate->format('D M d Y H:i'))
-      ->where('publication.dateTime', '<=', $endDate->format('D M d Y H:i'));
+      ->where('publication.status', '=', 2);
+      //->where('publication.dateTime', '>=', $startDate->format('D M d Y H:i'))
+      //->where('publication.dateTime', '<=', $endDate->format('D M d Y H:i'));
 
     $snapshot = $query->documents();
 

@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import 'fullcalendar';
 import { ICalendarEvent } from '../../../shared/interfaces/calendar/calendar-event.interface';
 import { Observable } from 'rxjs/index';
+import { CalendarService } from '../../../shared/services/calendar/calendar.service';
 
 @Component({
   selector: 'calendar-dashboard',
@@ -13,12 +14,12 @@ import { Observable } from 'rxjs/index';
 })
 export class CalendarDashboardComponent implements OnInit {
 
-  public events$: ICalendarEvent[];
-  public test$: Observable<any>;
-
-  constructor(private route: ActivatedRoute
-              /* private calendarService: CalendarService,
-               private applicationService: ApplicationService */) {
+  constructor(public calendarService: CalendarService) {
+    this.calendarService.getCalendars()
+      .then(
+        (success) => console.log(success),
+        (error) => console.log(error))
+      .catch((e) => console.log(e));
   }
 
   ngOnInit() {

@@ -8,7 +8,6 @@ import { RouterModule } from '@angular/router';
 import { MatchResultInputComponent } from './match-result-input/match-result-input.component';
 import { MatchListItemComponent } from './match-list/match-list-item/match-list-item.component';
 import { MatchPlayerComponent } from './match-player/match-player.component';
-import { SkyhookDndModule } from 'angular-skyhook';
 
 @NgModule({
   imports: [
@@ -16,7 +15,6 @@ import { SkyhookDndModule } from 'angular-skyhook';
     MatInputModule,
     MatListModule,
     RouterModule,
-    SkyhookDndModule,
     SharedModule
   ],
   declarations: [

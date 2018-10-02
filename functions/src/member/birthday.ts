@@ -91,7 +91,7 @@ export const birthdayReminderCron = functions
           }
         });
 
-        let bccList: string[] = [];
+        const bccList: string[] = [];
         for (const recipient of recipients) {
 
           if (birthdayMailing[0].emails.indexOf(recipient.email) === -1) {
@@ -117,6 +117,7 @@ export const birthdayReminderCron = functions
           await sgMail.send(mail);
         }
         return true;
+
       }
       else {
         console.warn('Kein Mail-Verteiler mit dem Namen "Geburtstagsgrüße als Kopie" gefunden.');
