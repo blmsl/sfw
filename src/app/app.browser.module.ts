@@ -19,8 +19,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     }),
     BrowserTransferStateModule,
     OverlayModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
-    // environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : []
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ]
 })
 export class AppBrowserModule {

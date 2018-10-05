@@ -16,7 +16,8 @@ export class MemberResolver implements Resolve<IMember> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IMember> {
-    if (route.params['memberId'] === 'new') {
+
+    if (!route.params['memberId']) {
       return this.memberService.setNewMember();
     }
     return this.memberService.getMemberById(route.params['memberId']).pipe(

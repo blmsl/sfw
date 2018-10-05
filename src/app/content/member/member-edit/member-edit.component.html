@@ -8,11 +8,13 @@
   <mat-card-content>
 
     <mat-tab-group [dynamicHeight]="true">
+
       <mat-tab label="{{'general.members.tabs.main' | translate}}">
         <member-edit-main (saveMember)="saveMember($event)"
                           [member]="member">
         </member-edit-main>
       </mat-tab>
+
       <mat-tab label="{{'general.members.tabs.driveAndDFB' | translate}}">
         <member-edit-drive *ngIf="clubs$ | async as clubs; else loadingTemplate"
                            (saveMember)="saveMember($event)"
@@ -62,7 +64,7 @@
       </mat-tab>
 
       <mat-tab label="{{'general.members.tabs.media' | translate}}">
-        <!-- ToDo: Mit dem Mitglied verknüpfte Fotos, Videos etc. -->
+        <!-- ToDo: Mit dem Mitglied verknüpfte Fotos, Videos etc.-->
         <p>Mit dem Mitglied verknüpfte Fotos, Videos etc.</p>
       </mat-tab>
 

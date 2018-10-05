@@ -31,7 +31,7 @@ export interface IMember {
   comment?: string;
 
   assignedInterviews?: IInterview[];
-  opinions: IOpinion[];
+  opinions?: IOpinion[];
   // teamCategory?: ICategory;
   // status?: boolean;
   // assignedImages?: string[];

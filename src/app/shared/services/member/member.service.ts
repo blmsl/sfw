@@ -1,21 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable }       from '@angular/core';
 import {
   forkJoin,
   Observable,
   of
-} from 'rxjs';
+}                           from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from '@angular/fire/firestore';
-import { IMember } from '../../interfaces/member/member.interface';
+}                           from '@angular/fire/firestore';
+import {
+  IMember,
+  IMemberMainData
+}                           from '../../interfaces/member/member.interface';
 import { ILocationContact } from '../../interfaces/location/location-contact.interface';
 import {
   map,
   take
-} from 'rxjs/internal/operators';
-import { ITeamManagement } from '../../interfaces/team/team-management.interface';
-import { ICoord } from '../../interfaces/match/coord.interface';
+}                           from 'rxjs/internal/operators';
+import { ITeamManagement }  from '../../interfaces/team/team-management.interface';
+import { ICoord }           from '../../interfaces/match/coord.interface';
+import * as moment          from 'moment';
+import { AuthService }      from '../auth/auth.service';
 
 @Injectable()
 export class MemberService {
@@ -25,12 +30,13 @@ export class MemberService {
 
   members$: Observable<IMember[]>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore,
+              private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMember>(this.path);
     this.members$ = this.collectionRef.valueChanges().pipe(
       map((members: IMember[]) => {
         for (let i = 0; i < members.length; i++) {
-          members[i].title = members[i].mainData.lastName + ' ' + members[i].mainData.firstName;
+          members[ i ].title = members[ i ].mainData.lastName + ' ' + members[ i ].mainData.firstName;
         }
         return members;
       })
@@ -69,7 +75,7 @@ export class MemberService {
 
     let memberObservables: Observable<IMember>[] = [];
     for (let i = 0; i < memberIds.length; i++) {
-      memberObservables.push(this.getMemberById(memberIds[i]).pipe(
+      memberObservables.push(this.getMemberById(memberIds[ i ]).pipe(
         take(1)
       ));
     }
@@ -86,8 +92,8 @@ export class MemberService {
 
     let observables: Observable<IMember>[] = [];
     for (let i = 0; i < positions.length; i++) {
-      if (positions[i].memberId !== '') {
-        observables.push(this.getMemberById(positions[i].memberId).pipe(
+      if (positions[ i ].memberId !== '') {
+        observables.push(this.getMemberById(positions[ i ].memberId).pipe(
           take(1)
         ));
       }
@@ -102,7 +108,7 @@ export class MemberService {
 
     let observables: Observable<IMember>[] = [];
     for (let i = 0; i < memberIds.length; i++) {
-      observables.push(this.getMemberById(memberIds[i].assignedMember).pipe(
+      observables.push(this.getMemberById(memberIds[ i ].assignedMember).pipe(
         take(1)
       ));
     }
@@ -116,8 +122,8 @@ export class MemberService {
 
     let observables: Observable<IMember>[] = [];
     for (let i = 0; i < locationContacts.length; i++) {
-      if (locationContacts[i].isMember) {
-        observables.push(this.getMemberById(locationContacts[i].assignedMember).pipe(
+      if (locationContacts[ i ].isMember) {
+        observables.push(this.getMemberById(locationContacts[ i ].assignedMember).pipe(
           take(1)
         ));
       }
@@ -145,8 +151,8 @@ export class MemberService {
       'Sagittarius',
       'Capricorn'
     ];
-    const lastDay = [19, 18, 20, 20, 21, 21, 22, 22, 21, 22, 21, 20, 19];
-    return (day > lastDay[month]) ? zodiac[month * 1 + 1] : zodiac[month];
+    const lastDay = [ 19, 18, 20, 20, 21, 21, 22, 22, 21, 22, 21, 20, 19 ];
+    return (day > lastDay[ month ]) ? zodiac[ month * 1 + 1 ] : zodiac[ month ];
   }
 
   calculateAge(birthday): number {
@@ -157,45 +163,26 @@ export class MemberService {
   }
 
   setNewMember(): Observable<IMember> {
-    return of(null);
-    /*
-     const mainData: IMemberMainData = {
-     gender: 'male',
-     birthday: moment().format('YYYY-MM-DD')
-     };
-     const otherData: IMemberOtherData = {};
-     const address: IAddress = {};
-     const contact: IContact = {};
-     const clubData: IMemberData = {
-     assignedMember: '',
-     status: 0
-     };
-     const dfbData: IMemberDFBData = {
-     guestPlayer: null
-     };
-     const profile: IProfile = {
-     playerInfo: {
-     strongFoot: ''
-     },
-     favorites: {}
-     };
-     const ahData: IMemberAHData = {
-     status: 0
-     };
-     const data: IMember = {
-     isImported: false,
-     creation: this.authService.getCreation(),
-     mainData: mainData,
-     otherData: otherData,
-     address: address,
-     contact: contact,
-     clubData: clubData,
-     dfbData: dfbData,
-     ahData: ahData,
-     interview: [],
-     profile: profile
-     };
-     return data;
-     */
+    const now = moment();
+
+    const mainData: IMemberMainData = {
+      gender: 'male',
+      birthday: {
+        day: now.format('DD'),
+        full: now.toISOString(),
+        month: now.format('MM'),
+        monthDay: now.format('MM-DD'),
+        year: now.format('YY')
+      }
+    };
+
+    const data: IMember = {
+      driveImport: false,
+      dfbImport: false,
+      creation: this.authService.getCreation(),
+      mainData: mainData
+    };
+    return of(data);
   }
+
 }

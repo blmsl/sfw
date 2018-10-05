@@ -39,6 +39,19 @@
                    placeholder="{{member.mainData.lastName}}"
                    formControlName="lastName"/>
           </mat-form-field>
+
+          <mat-form-field fxFlex="49"
+                          formGroupName="birthday">
+            <input matInput
+                   formControlName="full"
+                   [matDatepicker]="full"
+                   placeholder="{{'general.users.edit.personal.birthday' | translate}}">
+            <mat-datepicker-toggle matSuffix [for]="full"></mat-datepicker-toggle>
+            <mat-datepicker disabled="false"
+                            touchUi="true"
+                            #full>
+            </mat-datepicker>
+          </mat-form-field>
         </div>
       </mat-card-content>
     </mat-card>
@@ -154,9 +167,9 @@
       <mat-card-subtitle>{{'general.members.detail.main.commentDescription' | translate}}</mat-card-subtitle>
       <hr/>
       <mat-card-content>
-        <quill-editor [style]="{height: '150px'}"
+        <textarea [style]="{height: '150px'}"
                       formControlName="comment">
-        </quill-editor>
+        </textarea>
       </mat-card-content>
     </mat-card>
   </div>

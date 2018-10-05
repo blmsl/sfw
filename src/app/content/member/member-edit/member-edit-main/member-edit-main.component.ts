@@ -5,19 +5,21 @@ import {
   OnInit,
   Output,
   ViewChild
-} from '@angular/core';
-import { IMember } from '../../../../shared/interfaces/member/member.interface';
+}                               from '@angular/core';
+import { IMember }              from '../../../../shared/interfaces/member/member.interface';
 import {
   FormBuilder,
   FormGroup
-} from '@angular/forms';
+}                               from '@angular/forms';
 import { QuillEditorComponent } from 'ngx-quill';
-import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-options.interface';
-import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
+import { IUploaderOptions }     from '../../../../shared/interfaces/media/uploader-options.interface';
+import { IUploaderConfig }      from '../../../../shared/interfaces/media/uploader-config.interface';
 import {
   debounceTime,
   distinctUntilChanged
-} from 'rxjs/operators';
+}                               from 'rxjs/operators';
+import * as moment              from 'moment';
+import { AngularFirestore }     from '@angular/fire/firestore';
 
 @Component({
   selector: 'member-edit-main',
@@ -49,7 +51,8 @@ export class MemberEditMainComponent implements OnInit {
     allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+              private afs: AngularFirestore) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -64,8 +67,13 @@ export class MemberEditMainComponent implements OnInit {
       debounceTime(1000),
       distinctUntilChanged()
     ).subscribe((changes: IMember) => {
-      // this.member = Object.assign({}, this.member, changes);
       if (this.form.valid) {
+        if(changes.mainData.birthday){
+          changes.mainData.birthday.day = moment(changes.mainData.birthday.full).format('DD');
+          changes.mainData.birthday.month = moment(changes.mainData.birthday.full).format('MM');
+          changes.mainData.birthday.monthDay = moment(changes.mainData.birthday.full).format('MM-DD');
+          changes.mainData.birthday.year = moment(changes.mainData.birthday.full).format('YY');
+        }
         this.saveMember.emit(changes);
       }
     });
@@ -112,8 +120,11 @@ export class MemberEditMainComponent implements OnInit {
   }
 
   initMainData(): FormGroup {
+    console.log(this.member.mainData.birthday.full);
     return this.fb.group({
-      birthday: this.member.mainData.birthday,
+      birthday: this.fb.group({
+        full: new Date(this.member.mainData.birthday.full).toISOString(),
+      }),
       firstName: this.member.mainData.firstName,
       gender: this.member.mainData.gender,
       lastName: this.member.mainData.lastName,

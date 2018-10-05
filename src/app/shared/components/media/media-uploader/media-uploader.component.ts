@@ -2,19 +2,20 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
 import { Upload } from '../../../services/media/upload.class';
 import { MediaUploaderService } from '../../../services/media/media-uploader.service';
-import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
+import { IUploaderConfig }  from '../../../interfaces/media/uploader-config.interface';
 import { MediaItemService } from '../../../services/media/media-item.service';
-import { IMediaItem } from '../../../interfaces/media/media-item.interface';
-import { AlertService } from '../../../services/alert/alert.service';
+import { IMediaItem }       from '../../../interfaces/media/media-item.interface';
+import { AlertService }     from '../../../services/alert/alert.service';
 import {
   Observable,
   of
-} from 'rxjs/index';
+}                           from 'rxjs/index';
 import { AngularFirestore } from '@angular/fire/firestore';
 import {
   AngularFireStorageReference,
   AngularFireUploadTask
-} from '@angular/fire/storage';
+}                           from '@angular/fire/storage';
+import { DomSanitizer }     from '@angular/platform-browser';
 
 @Component({
   selector: 'media-uploader',
@@ -35,12 +36,12 @@ export class MediaUploaderComponent implements OnInit {
   public currentUploads: Upload[] = [];
   public isHovering: boolean;
   public canUpload: boolean = true;
-  public env;
   public currentMediaItem: Observable<IMediaItem>;
 
   public savedItemId: string;
 
   constructor(private alertService: AlertService,
+    private sanitizer: DomSanitizer,
     private afs: AngularFirestore,
     private el: ElementRef,
     private mediaItemService: MediaItemService,

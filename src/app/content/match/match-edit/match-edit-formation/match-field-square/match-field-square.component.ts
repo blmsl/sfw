@@ -2,18 +2,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input
-}                            from '@angular/core';
-import { ICoord }            from '../../../../../shared/interfaces/match/coord.interface';
-import { MatchService }      from '../../../../../shared/services/match/match.service';
-import { IMatch }            from '../../../../../shared/interfaces/match/match.interface';
-import { AlertService }      from '../../../../../shared/services/alert/alert.service';
+} from '@angular/core';
+import { ICoord } from '../../../../../shared/interfaces/match/coord.interface';
+import { MatchService } from '../../../../../shared/services/match/match.service';
+import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
+import { AlertService } from '../../../../../shared/services/alert/alert.service';
 import { IStartingPosition } from '../../../../../shared/interfaces/match/starting-position.interface';
-import { IMember }           from '../../../../../shared/interfaces/member/member.interface';
+import { IMember } from '../../../../../shared/interfaces/member/member.interface';
 
 @Component({
   selector: 'match-field-square',
   templateUrl: './match-field-square.component.html',
-  styleUrls: [ './match-field-square.component.scss' ],
+  styleUrls: ['./match-field-square.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatchFieldSquareComponent {
@@ -24,7 +24,7 @@ export class MatchFieldSquareComponent {
   @Input() members: IMember[];
 
   constructor(private alertService: AlertService,
-              private matchService: MatchService) {
+    private matchService: MatchService) {
   }
 
   get isVisible() {

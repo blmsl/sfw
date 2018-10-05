@@ -21,9 +21,8 @@
       </button>
     </span>
 
-
-    <!--<button
-            mat-icon-button
+    <!--
+    <button mat-icon-button
             color="accent"
             (click)="unsplashSidebar.emit()"
             type="button">
@@ -35,7 +34,7 @@
   <mat-card-content>
 
     <div class="dropZone"
-         [style.backgroundImage]="'url('+ (currentMediaItem | async)?.downloadURL +')'"
+         [style.backgroundImage]="sanitizer.bypassSecurityTrustStyle('url('+ (currentMediaItem | async) ? (currentMediaItem | async)?.downloadURL : '' +')')"
          dropZone
          (hovered)="toggleHover($event)"
          (dropped)="handleDrop($event)"
