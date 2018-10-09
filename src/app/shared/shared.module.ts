@@ -19,7 +19,6 @@ import { SubmitIfValidDirective } from './directives/submit/submit-if-valid.dire
 import { MediaModule } from './components/media/media.module';
 import { LoadingIndicatorModule } from './components/loading-indicator/loading-indicator.module';
 import { AlertService } from './services/alert/alert.service';
-import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -42,7 +41,6 @@ import { QuillModule } from 'ngx-quill';
     LinkModule,
     NgPipesModule,
     NgxDatatableModule,
-    QuillModule,
     ReactiveFormsModule,
     SanitizeHtmlPipe,
     TranslateModule

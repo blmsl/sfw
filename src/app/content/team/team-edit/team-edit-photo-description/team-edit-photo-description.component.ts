@@ -15,7 +15,6 @@ import {
   debounceTime,
   distinctUntilChanged
 } from 'rxjs/internal/operators';
-import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'team-edit-photo-description',
@@ -26,8 +25,6 @@ export class TeamEditPhotoDescriptionComponent implements OnInit {
 
   @Input() team: ITeam;
   @Output() saveTeam: EventEmitter<ITeam> = new EventEmitter<ITeam>(false);
-
-  @ViewChild('description') description: QuillEditorComponent;
 
   public form: FormGroup;
 

@@ -4,9 +4,9 @@
   <mat-card-subtitle>{{'general.teams.edit.info' | translate}}</mat-card-subtitle>
   <hr>
   <mat-card-content>
-    <quill-editor [style]="{height: '250px'}"
-                  formControlName="info"
-                  placeholder="{{'general.teams.edit.info' | translate}}">
-    </quill-editor>
+    <!-- ToDo: Add WYSIWYG-Editor -->
+    <textarea style="height: 250px;"
+              formControlName="info"
+              placeholder="{{'general.teams.edit.info' | translate}}"></textarea>
   </mat-card-content>
 </mat-card>

@@ -11,7 +11,6 @@ import {
   FormBuilder,
   FormGroup
 } from '@angular/forms';
-import { QuillEditorComponent } from 'ngx-quill';
 import {
   debounceTime,
   distinctUntilChanged
@@ -26,8 +25,6 @@ export class TeamEditDescriptionComponent implements OnInit {
 
   @Input() team: ITeam;
   @Output() saveTeam: EventEmitter<ITeam> = new EventEmitter<ITeam>(false);
-
-  @ViewChild('info') info: QuillEditorComponent;
 
   public form: FormGroup;
 

@@ -63,16 +63,17 @@
                    fxLayoutGap="10px" style="margin-bottom: 25px">
                 <div fxFlex.gt-sm="50">
                   <label>{{'general.locations.edit.opening' | translate}}</label><br/>
-                  <quill-editor [style]="{height: '150px'}"
-                                formControlName="opening">
-                  </quill-editor>
+                  <!-- ToDo: Add WYSIWYG-Editor -->
+                  <textarea style="height: 150px"
+                            formControlName="opening">
+                  </textarea>
                 </div>
 
                 <div fxFlex.gt-sm="50">
                   <label>{{'general.description' | translate}}</label><br/>
-                  <quill-editor [style]="{height: '150px'}"
-                                formControlName="text">
-                  </quill-editor>
+                  <!-- ToDo: Add WYSIWYG-Editor -->
+                  <textarea style="height: 250px;"
+                            formControlName="text"></textarea>
                 </div>
               </div>
               <creation-form [form]="form"></creation-form>

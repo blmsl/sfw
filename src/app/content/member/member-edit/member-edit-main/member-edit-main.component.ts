@@ -11,7 +11,6 @@ import {
   FormBuilder,
   FormGroup
 }                               from '@angular/forms';
-import { QuillEditorComponent } from 'ngx-quill';
 import { IUploaderOptions }     from '../../../../shared/interfaces/media/uploader-options.interface';
 import { IUploaderConfig }      from '../../../../shared/interfaces/media/uploader-config.interface';
 import {
@@ -33,8 +32,6 @@ export class MemberEditMainComponent implements OnInit {
   public form: FormGroup;
 
   @Output() saveMember: EventEmitter<IMember> = new EventEmitter<IMember>(false);
-
-  @ViewChild('comment') comment: QuillEditorComponent;
 
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,

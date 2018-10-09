@@ -32,10 +32,10 @@
         </div>
         <div fxFlex="100">
           <label>{{'general.tasks.edit.description' | translate}}</label>
-          <quill-editor [style]="{height: '250px'}"
-                        formControlName="description"
-                        placeholder="{{'general.tasks.edit.description' | translate}}">
-          </quill-editor>
+          <!-- ToDo: Add WYSIWYG-Editor -->
+          <textarea style="height: 250px;"
+                    formControlName="description"
+                    placeholder="{{'general.tasks.edit.description' | translate}}"></textarea>
         </div>
 
         <p *ngIf="error">

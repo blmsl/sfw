@@ -9,7 +9,6 @@ import { NgPipesModule } from 'ngx-pipes';
 import { TaskService } from '../../services/task/task.service';
 import { MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatOptionModule, MatSelectModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   imports: [
@@ -22,7 +21,6 @@ import { QuillModule } from 'ngx-quill';
     MatOptionModule,
     MatSelectModule,
     NgPipesModule,
-    QuillModule,
     ReactiveFormsModule,
     TranslateModule
   ],

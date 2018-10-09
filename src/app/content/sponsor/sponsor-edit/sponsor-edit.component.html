@@ -83,17 +83,18 @@
                fxLayoutGap="10px">
             <div fxFlex="50">
               <label>{{'general.sponsors.edit.description' | translate}}</label>
-              <quill-editor [style]="{height: '250px'}"
-                            formControlName="description"
-                            placeholder="{{'general.sponsors.edit.description' | translate}}">
-              </quill-editor>
+              <!-- ToDo: Add WYSIWYG-Editor -->
+              <textarea style="height: 250px;"
+                        formControlName="description"
+                        placeholder="{{'general.sponsors.edit.description' | translate}}"></textarea>
             </div>
             <div fxFlex="50">
               <label>{{'general.sponsors.edit.info' | translate}}</label>
-              <quill-editor [style]="{height: '250px'}"
-                            formControlName="internalInfo"
-                            placeholder="{{'general.sponsors.edit.infoPlaceholder' | translate}}">
-              </quill-editor>
+              <!-- ToDo: Add WYSIWYG-Editor -->
+              <textarea style="height: 150px"
+                        formControlName="internalInfo"
+                        placeholder="{{'general.sponsors.edit.infoPlaceholder' | translate}}">
+              </textarea>
               <mat-hint align="end">{{'general.sponsors.edit.infoPlaceholder' | translate}}</mat-hint>
             </div>
           </div>

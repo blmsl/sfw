@@ -14,7 +14,6 @@ import {
   ActivatedRoute,
   Router
 } from '@angular/router';
-import { QuillEditorComponent } from 'ngx-quill';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
@@ -37,9 +36,6 @@ export class SponsorEditComponent implements OnInit {
   public sponsor: ISponsor;
   public form: FormGroup;
   public categories$: Observable<ICategory[]>;
-
-  @ViewChild('description') description: QuillEditorComponent;
-
   public titleMaxLength: number = 50;
 
   public uploaderConfig: IUploaderConfig = {

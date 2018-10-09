@@ -38,9 +38,9 @@
              fxLayoutGap="10px" style="margin-top: 40px">
           <div fxFlex="100">
             <label>{{'general.applications.static.text' | translate}}</label><br/>
-            <quill-editor [style]="{height: '60vh'}"
-                          formControlName="text">
-            </quill-editor>
+            <!-- ToDo: Add WYSIWYG-Editor -->
+            <textarea style="height: 60vh"
+                      formControlName="text"></textarea>
           </div>
         </div>
 

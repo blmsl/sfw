@@ -25,7 +25,6 @@ import {
   distinctUntilChanged
 } from 'rxjs/operators';
 import { AlertService } from '../../../shared/services/alert/alert.service';
-import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'category-edit',
@@ -38,9 +37,6 @@ export class CategoryEditComponent implements OnInit {
   public categoryTypes$: Observable<ICategoryType[]>;
   public users$: Observable<IUser[]>;
   public form: FormGroup;
-
-  @ViewChild('description') description: QuillEditorComponent;
-
   public titleMaxLength: number = 50;
 
   constructor(private categoryService: CategoryService,

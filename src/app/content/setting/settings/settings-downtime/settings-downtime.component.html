@@ -15,9 +15,9 @@
       <div fxFlex="100" style="margin-top: 25px">
         <label>{{'general.applications.downtime.message' | translate}}</label><br/>
         <p>{{'general.applications.downtime.messageDescription' | translate}}</p>
-        <quill-editor [style]="{height: '150px'}"
-                      formControlName="message">
-        </quill-editor>
+        <!-- ToDo: Add WYSIWYG-Editor -->
+        <textarea style="height: 250px;"
+                  formControlName="message"></textarea>
       </div>
     </div>
 

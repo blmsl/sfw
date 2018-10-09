@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'club-history',
@@ -9,9 +8,7 @@ import { QuillEditorComponent } from 'ngx-quill';
 })
 export class ClubHistoryComponent implements OnInit {
 
-  @Input() form: FormGroup
-
-  @ViewChild('history') history: QuillEditorComponent;
+  @Input() form: FormGroup;
 
   constructor() {
   }

@@ -35,10 +35,10 @@
 
     <div style="margin-top: 25px">
       <label>{{'general.categories.edit.descriptionPlaceHolder' | translate}}</label>
-      <quill-editor [style]="{height: '250px'}"
-                    formControlName="description"
-                    placeholder="{{'general.categories.edit.descriptionPlaceHolder' | translate}}">
-      </quill-editor>
+      <!-- ToDo: Add WYSIWYG-Editor -->
+      <textarea style="height: 250px;"
+                formControlName="description"
+                placeholder="{{'general.categories.edit.descriptionPlaceHolder' | translate}}"></textarea>
     </div>
 
   </mat-card-content>

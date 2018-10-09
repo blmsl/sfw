@@ -66,9 +66,9 @@
         <label style="margin-top: 15px;">
           {{'general.matches.edit.events.inputs.description' | translate}}
         </label><br/>
-        <quill-editor [style]="{height: '150px'}"
-                      formControlName="description">
-        </quill-editor>
+        <!-- ToDo: Add WYSIWYG-Editor -->
+        <textarea style="height: 150px;"
+                  formControlName="description"></textarea>
       </div>
     </div>
   </mat-card-content>

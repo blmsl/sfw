@@ -13,7 +13,6 @@ import {
   MatSelectModule
 } from '@angular/material';
 import { NgPipesModule } from 'ngx-pipes';
-import { QuillModule } from 'ngx-quill';
 import { ArticleService } from '../../services/article/article.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TimeLineComponent } from './time-line.component';
@@ -33,7 +32,6 @@ import { TimeLineComponent } from './time-line.component';
     MatOptionModule,
     MatSelectModule,
     NgPipesModule,
-    QuillModule,
     ReactiveFormsModule,
     TranslateModule
   ],
