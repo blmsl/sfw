@@ -25,10 +25,10 @@
     <mat-list dense
               fxFlex="100">
       <mat-list-item *ngFor="let memberId of team.assignedPlayers">
-        <span mat-line>
-          {{ (members | filterBy: ['id'] : memberId)[0].mainData.lastName }}
-          {{ (members | filterBy: ['id'] : memberId)[0].mainData.firstName }}
-          {{ (members | filterBy: ['id'] : memberId)[0].mainData.birthday.full | date: 'dd.MM.yy' }}
+        <span mat-line *ngIf="(members | filterBy: ['id'] : memberId) as selectedMember">
+          {{ selectedMember ? selectedMember.mainData.lastName : '' }}
+          {{ selectedMember ? selectedMember.mainData.firstName : ''}}
+          {{ selectedMember ? (selectedMember.mainData.birthday.full | date: 'dd.MM.yy') : '' }}
         </span>
         <button mat-icon-button (click)="deleteFromTeam(memberId)">
           <mat-icon>delete</mat-icon>
@@ -38,3 +38,4 @@
 
   </mat-card-content>
 </mat-card>
+

@@ -54,7 +54,10 @@ export class MatchEditFormationComponent implements OnInit {
     });
 
     this.thirty = new Array(30).fill(0).map((_, i) => i);
-    this.setPlayerPositions(this.match.assignedFormation);
+
+    if(this.match.assignedFormation){
+      this.setPlayerPositions(this.match.assignedFormation);
+    }
 
     this.form.valueChanges.pipe(
       distinctUntilChanged()
@@ -70,6 +73,7 @@ export class MatchEditFormationComponent implements OnInit {
   }
 
   setPlayerPositions(formationTitle: string) {
+
     const formation = this.tacticalFormations.filter((formation: IFormation) => {
       return formation.title === formationTitle;
     });
