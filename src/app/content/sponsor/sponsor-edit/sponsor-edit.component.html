@@ -9,10 +9,6 @@
   <mat-card-content>
 
     <div *ngIf="categories$ | async as categories; else loadingTemplate">
-      <!--<mat-tab-group *ngIf="categories$ | async as categories; else loadingTemplate"
-                     [dynamicHeight]="true">
-        <mat-tab label="{{'general.sponsors.edit.mainTitle' | translate}}">-->
-
       <div fxLayout="column"
            fxLayout.gt-sm="row"
            fxLayoutGap="30px">
@@ -78,25 +74,21 @@
             </mat-form-field>
           </div>
 
-          <div fxLayout="column"
-               fxLayout.gt-sm="row"
-               fxLayoutGap="10px">
-            <div fxFlex="50">
-              <label>{{'general.sponsors.edit.description' | translate}}</label>
-              <!-- ToDo: Add WYSIWYG-Editor -->
-              <textarea style="height: 250px;"
-                        formControlName="description"
-                        placeholder="{{'general.sponsors.edit.description' | translate}}"></textarea>
+          <div>
+            <label>{{'general.sponsors.edit.description' | translate}}</label>
+            <div [froalaEditor]
+                 formControlName="description">
+              {{'general.sponsors.edit.description' | translate}}
             </div>
-            <div fxFlex="50">
-              <label>{{'general.sponsors.edit.info' | translate}}</label>
-              <!-- ToDo: Add WYSIWYG-Editor -->
-              <textarea style="height: 150px"
-                        formControlName="internalInfo"
-                        placeholder="{{'general.sponsors.edit.infoPlaceholder' | translate}}">
-              </textarea>
-              <mat-hint align="end">{{'general.sponsors.edit.infoPlaceholder' | translate}}</mat-hint>
+          </div>
+
+          <div style="margin-top: 25px">
+            <label>{{'general.sponsors.edit.info' | translate}}</label>
+            <div [froalaEditor]
+                 formControlName="internalInfo">
+              {{'general.sponsors.edit.infoPlaceholder' | translate}}
             </div>
+            <p>{{'general.sponsors.edit.infoPlaceholder' | translate}}</p>
           </div>
 
         </div>

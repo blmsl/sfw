@@ -101,14 +101,10 @@
            style="margin-top: 25px">
         <div fxFlex="100">
           <label>{{'general.clubs.edit.description' | translate}}</label>
-          <textarea [style]="{height: '150px'}"
-                    formControlName="description">
-          </textarea>
+          <div [froalaEditor]
+               formControlName="description">
+          </div>
         </div>
-      </div>
-      <div fxLayout="column"
-           style="margin-top: 60px;">
-        <creation-form [form]="form.get('creation')"></creation-form>
       </div>
 
     </mat-card-content>
@@ -118,6 +114,9 @@
     <media-uploader [uploaderConfig]="uploaderConfig"
                     [uploaderOptions]="uploaderOptions">
     </media-uploader>
+
+    <creation-form [form]="form.get('creation')"></creation-form>
+
   </div>
 </div>
 

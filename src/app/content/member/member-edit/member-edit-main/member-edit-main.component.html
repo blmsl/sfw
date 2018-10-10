@@ -150,15 +150,15 @@
                     [uploaderOptions]="uploaderOptions">
     </media-uploader>
 
-    <!--<mat-card>
+    <mat-card>
       <mat-card-title>
         {{'general.tables.colTitles.creation' | translate }}
       </mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
       <mat-card-content>
-        <creation-form [form]="form"></creation-form>
+        <creation-form [form]="form.get('creation')"></creation-form>
       </mat-card-content>
-    </mat-card>-->
+    </mat-card>
   </div>
 
   <div fxFlex="100">
@@ -167,9 +167,9 @@
       <mat-card-subtitle>{{'general.members.detail.main.commentDescription' | translate}}</mat-card-subtitle>
       <hr/>
       <mat-card-content>
-        <textarea [style]="{height: '150px'}"
-                      formControlName="comment">
-        </textarea>
+        <div [froalaEditor]
+             formControlName="comment">
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

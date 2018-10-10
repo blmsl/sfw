@@ -62,7 +62,7 @@ export class CategoryEditComponent implements OnInit {
     });
 
     this.form.valueChanges.pipe(
-      debounceTime(1000),
+      debounceTime(1500),
       distinctUntilChanged()
     ).subscribe((changes: ICategory) => {
       this.category = Object.assign({}, this.category, changes);

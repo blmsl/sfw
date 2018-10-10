@@ -30,7 +30,7 @@
             *ngFor="let position of club.management.positions | filterBy: ['assignedPosition'] : category.id | orderBy: '-startDate'">
                 <span fxFlex="35">
                   {{position.startDate.seconds *1000 | date: 'dd.MM.yy' }}
-                  <span *ngIf="position.endDate">&ndash; {{position.endDate *1000 | date: 'dd.MM.yy' }}</span>
+                  <span *ngIf="position.endDate">&ndash; {{position.endDate.seconds *1000 | date: 'dd.MM.yy' }}</span>
                 </span>
             <a fxFlex="50"
                fxFlexOffset="5"

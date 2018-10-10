@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
-import { SponsorsComponent } from './sponsors/sponsors.component';
-import { sponsorRoutes } from './sponsor-routing.module';
+import { NgModule }               from '@angular/core';
+import { SponsorsComponent }      from './sponsors/sponsors.component';
+import { sponsorRoutes }          from './sponsor-routing.module';
 import { RandomSponsorComponent } from './random-sponsor/random-sponsor.component';
-import { SponsorEditComponent } from './sponsor-edit/sponsor-edit.component';
-import { SponsorResolver } from './sponsor.resolver';
-import { SharedModule } from '../../shared/shared.module';
-import { RouterModule } from '@angular/router';
-import { CategoryTypeService } from '../../shared/services/category-type/category-type.service';
-import { CategoryService } from '../../shared/services/category/category.service';
-import { SponsorService } from '../../shared/services/sponsor/sponsor.service';
+import { SponsorEditComponent }   from './sponsor-edit/sponsor-edit.component';
+import { SponsorResolver }        from './sponsor.resolver';
+import { SharedModule }           from '../../shared/shared.module';
+import { RouterModule }           from '@angular/router';
+import { CategoryTypeService }    from '../../shared/services/category-type/category-type.service';
+import { CategoryService }        from '../../shared/services/category/category.service';
+import { SponsorService }         from '../../shared/services/sponsor/sponsor.service';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -20,17 +20,14 @@ import {
   MatSelectModule,
   MatSidenavModule,
   MatSliderModule,
-  MatSnackBarModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule
-} from '@angular/material';
-import { SponsorItemComponent } from './sponsors/sponsor-item/sponsor-item.component';
+  MatToolbarModule
+}                                 from '@angular/material';
+import { SponsorItemComponent }   from './sponsors/sponsor-item/sponsor-item.component';
 import { SponsorFilterComponent } from './sponsors/sponsor-filter/sponsor-filter.component';
-import { MediaMatcher } from '@angular/cdk/layout';
+import { MediaMatcher }           from '@angular/cdk/layout';
 import { SponsorDetailComponent } from './sponsor-detail/sponsor-detail.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { SharedCategoryModule } from '../../shared/components/category/shared-category.module';
+import { SharedCategoryModule }   from '../../shared/components/category/shared-category.module';
 
 @NgModule({
   imports: [
@@ -45,11 +42,7 @@ import { SharedCategoryModule } from '../../shared/components/category/shared-ca
     MatSelectModule,
     MatSidenavModule,
     MatSliderModule,
-    MatSnackBarModule,
-    MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule,
-    // MediaModule,
     PerfectScrollbarModule,
     SharedCategoryModule,
     SharedModule

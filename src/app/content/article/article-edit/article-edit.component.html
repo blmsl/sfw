@@ -56,13 +56,14 @@
                   title="{{'general.articles.edit.publish.menuButton' | translate}}">
             {{'general.articles.edit.publish.menuButton' | translate}} &darr;
           </button>
-          <button *ngIf="!isSmallDevice" mat-raised-button
+          <button mat-raised-button
                   (click)="togglePreview()"
                   [disabled]="!form.get('text').value"
                   [color]="showPreview ? 'warn' : ''"
                   title="{{'general.articles.edit.show.text' | translate}}">
-            {{ showPreview ? ('general.articles.edit.show.text' | translate) : 'general.articles.edit.show.preview' |
-            translate}}
+            {{ showPreview
+            ? ('general.articles.edit.show.text' | translate)
+            : 'general.articles.edit.show.preview' | translate}}
           </button>
           <button *ngIf="isSmallDevice"
                   [title]="sidePanelOpened ? ('general.articles.edit.options.close' | translate) : ('general.articles.edit.options.show' | translate)"
@@ -128,17 +129,16 @@
       </div>
     </div>
 
-    <textarea [placeholder]="'general.articles.edit.textPlaceholder' | translate"
-              formControlName="text"
-              *ngIf="!showPreview"
-              style="height: 60vh">
-    </textarea>
+    <div [froalaEditor]="froalaOptions"
+         [(froalaModel)]="text"
+         *ngIf="!showPreview"
+         style="height: 60vh"
+         formControlName="text">
+      {{'general.articles.edit.textPlaceholder' | translate}}
+    </div>
 
     <div *ngIf="showPreview">
-      <h1>
-        {{form.get('title').value ? form.get('title').value : 'general.articles.edit.titlePlaceholder' | translate}}
-      </h1>
-      <div [innerHtml]="form.get('text').value | sanitizeHtml"></div>
+      <div [froalaView]="text"></div>
     </div>
 
   </mat-sidenav-content>

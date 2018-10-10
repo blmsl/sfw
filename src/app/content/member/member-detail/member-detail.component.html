@@ -38,13 +38,14 @@
       </mat-tab>
       <mat-tab
         label="{{'general.members.tabs.teams' | translate}} & {{'general.members.tabs.functions' | translate}}">
-        <!--<member-edit-functions *ngIf="teams$ | async as teams; else loadingTemplate"
-                               (deleteMemberFromTeam)="deleteMemberFromTeam($event)"
-                               (deleteMemberFromTeamManagement)="deleteMemberFromTeamManagement($event)"
-                               [member]="member"
-                               [clubs]="clubs$ | async"
-                               [teams]="teams">
-        </member-edit-functions>-->
+        <div *ngIf="clubs$ | async as clubs; else loadingTemplate">
+          <member-edit-functions *ngIf="teams$ | async as teams; else loadingTemplate"
+                                 (saveMember)="saveMember($event)"
+                                 [member]="member"
+                                 [clubs]="clubs"
+                                 [teams]="teams">
+          </member-edit-functions>
+        </div>
       </mat-tab>
       <mat-tab label="{{'general.members.tabs.media' | translate}}">
         <p>Mit dem Mitglied verknüpfte Fotos, Videos etc.</p>

@@ -80,9 +80,9 @@
         <div fxLayout="row">
           <div fxFlex="100">
             <h3>{{'general.members.edit.opinions.comment' | translate}}</h3>
-            <!-- ToDo: Add WYSIWYG-Editor -->
-            <textarea style="height: 150px;"
-                      formControlName="comment"></textarea>
+            <div [froalaEditor]
+                 formControlName="comment">
+            </div>
           </div>
         </div>
 

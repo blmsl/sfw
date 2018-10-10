@@ -10,6 +10,10 @@ export class ClubHistoryComponent implements OnInit {
 
   @Input() form: FormGroup;
 
+  public froalaOptions: Object = {
+    height: '75vh'
+  };
+
   constructor() {
   }
 

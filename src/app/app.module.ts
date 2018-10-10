@@ -1,8 +1,8 @@
-import { RouterModule }           from '@angular/router';
-import { NgModule }               from '@angular/core';
-import { appRoutes }              from './app.routing';
-import { AppComponent }           from './app.component';
-import { environment }             from '../environments/environment';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { appRoutes } from './app.routing';
+import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
 import { AngularFirestoreModule }  from '@angular/fire/firestore';
 import { CommonModule }            from '@angular/common';
 import { TimeagoModule }           from 'ngx-timeago';
@@ -15,6 +15,10 @@ import {
 }                                  from '@angular/material';
 import { MomentDateTimeAdapter }   from 'ng-pick-datetime-moment';
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import {
+  FroalaEditorModule,
+  FroalaViewModule
+} from 'angular-froala-wysiwyg';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,16 +32,18 @@ import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
     RouterModule.forRoot(appRoutes, {
       enableTracing: environment.routerTracing
     }),
-    TimeagoModule.forRoot()
+    TimeagoModule.forRoot(),
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
     // GtagModule.forRoot({ trackingId: 'UA-YOUR_TRACKING_ID', trackPageviews: true })
   ],
   bootstrap: [
     AppComponent
   ],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
-    {provide: DateAdapter, useClass: MomentDateTimeAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
+    { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+    { provide: DateAdapter, useClass: MomentDateTimeAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }
   ]
 })
 export class AppModule {

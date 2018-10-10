@@ -32,10 +32,9 @@
         </div>
         <div fxFlex="100">
           <label>{{'general.tasks.edit.description' | translate}}</label>
-          <!-- ToDo: Add WYSIWYG-Editor -->
-          <textarea style="height: 250px;"
-                    formControlName="description"
-                    placeholder="{{'general.tasks.edit.description' | translate}}"></textarea>
+          <div [froalaEditor]
+               formControlName="description">
+          </div>
         </div>
 
         <p *ngIf="error">

@@ -99,36 +99,27 @@
       </mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
       <hr/>
-      <mat-card-content>
+      <mat-card-content *ngIf="categories$ | async as categories; else loadingTemplate">
 
         <p *ngIf="(clubs | isMemberInClubManagementFilter: member).length === 0">
           {{'general.members.detail.functions.noClubManagementPositions' | translate}}
         </p>
 
-        <pre>{{clubs | isMemberInClubManagementFilter: member | json}}</pre>
+        <ul>
+          <li *ngFor="let club of clubs | isMemberInClubManagementFilter: member">
+            {{club.title}}
+            <ul>
+              <li *ngFor="let position of club.management.positions | filterBy: ['assignedMember'] : member.id">
+                <span *ngIf="categories | filterBy: ['id'] :position.assignedPosition">
+                  {{(categories | filterBy: ['id'] :position.assignedPosition)[0].title}}
+                </span>
+                (<span *ngIf="!position.endDate">seit dem </span>{{position.startDate.seconds *1000 | date: 'dd.MM.yy' }}
+                <span *ngIf="position.endDate">&ndash; {{position.endDate.seconds *1000 | date: 'dd.MM.yy' }}</span>)
+              </li>
+            </ul>
+          </li>
+        </ul>
 
-        <!--<div *ngIf="categories$ | async as categories; else loadingTemplate">
-            <div *ngFor="let club of clubs | isMemberInClubManagementFilter: member">
-                <h3>{{club.title}}</h3>
-                <mat-list *ngIf="club.management && club.management.positions"
-                          dense>
-                    <mat-list-item *ngFor="let position of club.management.positions">
-                        <span *ngIf="position.assignedMember === member.id">
-                            <a [routerLink]="['/categories/detail', position.assignedPosition]">
-                                {{(categories | filterBy: ['id'] :position.assignedPosition)[0].title}}
-                            </a>
-                        </span>
-                        <span fxFlex=""></span>
-                        <div>
-                            <span *ngIf="!position.endDate">{{'general.since' | translate}}</span>
-                            <span *ngIf="position.endDate">{{'general.from' | translate}}</span>
-                            {{position.startDate.seconds *1000 | date: 'dd.MM.yy'}}
-                            {{position.endDate ? (' bis ' + position.endDate.seconds *1000 | date: 'dd.MM.yy') : ''}}
-                        </div>
-                    </mat-list-item>
-                </mat-list>
-            </div>
-        </div>-->
       </mat-card-content>
     </mat-card>
   </div>

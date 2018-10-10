@@ -1,32 +1,10 @@
 <mat-card *ngIf="sponsor">
   <div class="media-grid">
-    <figure>
-      <div class="sponsor-badge"><h3>{{ sponsor.title }}</h3></div>
+    <div class="sponsor-badge"><h3>{{ sponsor.title }}</h3></div>
 
-      <img *ngIf="sponsorLogo | async as image; else loadingTemplate"
-           mat-card-image
-           [src]="image.downloadURL">
-
-      <figcaption>
-        <p>
-          <a [routerLink]="['/sponsors/detail', sponsor.id]"
-             matTooltip="{{'general.sponsors.list.view' | translate}}"
-             matTooltipPosition="left">
-            <mat-icon>pageview</mat-icon>
-          </a>
-          <a [routerLink]="['/sponsors/edit', sponsor.id]"
-             matTooltip="{{'general.sponsors.list.edit' | translate}}"
-             matTooltipPosition="left">
-            <mat-icon>build</mat-icon>
-          </a>
-          <a (click)="removeSponsor.emit(sponsor)"
-             matTooltip="{{'general.sponsors.list.delete' | translate}}"
-             matTooltipPosition="left">
-            <mat-icon>delete</mat-icon>
-          </a>
-        </p>
-      </figcaption>
-    </figure>
+    <img *ngIf="sponsorLogo | async as image; else loadingTemplate"
+         mat-card-image
+         [src]="image.downloadURL">
   </div>
   <mat-card-content [perfectScrollbar]="config"
                     style="max-height: 250px">
@@ -37,6 +15,26 @@
       </span>
     </div>
   </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button mat-icon-button
+              [routerLink]="['/sponsors/detail', sponsor.id]">
+        <mat-icon>pageview</mat-icon>
+      </button>
+      <button mat-icon-button
+              [routerLink]="['/sponsors/edit', sponsor.id]">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button
+              (click)="removeSponsor.emit(sponsor)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-card-actions>
 </mat-card>
 
 <ng-template #loadingTemplate>

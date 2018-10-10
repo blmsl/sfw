@@ -55,7 +55,7 @@ export class MatchEditFormationComponent implements OnInit {
 
     this.thirty = new Array(30).fill(0).map((_, i) => i);
 
-    if(this.match.assignedFormation){
+    if (this.match.assignedFormation) {
       this.setPlayerPositions(this.match.assignedFormation);
     }
 

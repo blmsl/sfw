@@ -4,9 +4,8 @@
     </mat-card-title>
     <mat-card-subtitle></mat-card-subtitle>
     <mat-card-content>
-
-      <!-- ToDo: Add WYSIWYG-Editor -->
-      <textarea style="height: 600px;"
-                formControlName="history"></textarea>
+      <div [froalaEditor]="froalaOptions"
+           formControlName="history">
+      </div>
     </mat-card-content>
 </mat-card>

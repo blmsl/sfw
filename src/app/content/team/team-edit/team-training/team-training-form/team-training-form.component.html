@@ -43,10 +43,9 @@
 
     <div>
       <label>{{'general.teams.edit.training.comment' | translate}}</label><br/>
-
-      <!-- ToDo: Add WYSIWYG-Editor -->
-      <textarea style="height: 100px;"
-                formControlName="comment"></textarea>
+      <div [froalaEditor]
+           formControlName="comment">
+      </div>
     </div>
 
   </mat-card-content>

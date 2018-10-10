@@ -1,15 +1,14 @@
 <div fxLayout="column"
-     fxLayout.gt-sm="row"
      fxLayoutGap="10px"
      [formGroup]="form">
 
-  <mat-form-field fxFlex="50">
+  <mat-form-field>
     <input matInput
            placeholder="{{'general.creation.creationDate' | translate}}"
            formControlName="at">
   </mat-form-field>
 
-  <mat-form-field fxFlex="50">
+  <mat-form-field>
     <mat-select placeholder="{{'general.creation.author' | translate}}"
                 formControlName="from">
 

@@ -44,9 +44,9 @@
 
     <div style="margin-top: 40px">
       <label>{{'general.applications.page.descriptionDescription' | translate}}</label><br/>
-      <!-- ToDo: Add WYSIWYG-Editor -->
-      <textarea style="height: 15vh;"
-                formControlName="description"></textarea>
+      <div [froalaEditor]
+           formControlName="description">
+      </div>
     </div>
 
   </mat-card-content>

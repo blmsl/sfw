@@ -3,9 +3,8 @@
   <mat-card-subtitle>{{'general.teams.edit.photo.descriptionText' | translate}}</mat-card-subtitle>
   <hr>
   <mat-card-content>
-    <!-- ToDo: Add WYSIWYG-Editor -->
-    <textarea style="height: 250px;"
-              formControlName="photoDescription"
-              placeholder="{{'general.teams.edit.photo.description' | translate}}"></textarea>
+    <div [froalaEditor]
+         formControlName="photoDescription">
+    </div>
   </mat-card-content>
 </mat-card>

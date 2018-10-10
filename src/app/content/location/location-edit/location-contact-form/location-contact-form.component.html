@@ -74,10 +74,9 @@
       <label style="margin-top: 15px;">
         {{'general.locations.edit.contact.description' | translate}}
       </label><br/>
-      <!-- ToDo: Add WYSIWYG-Editor -->
-      <textarea style="height: 150px;"
-                formControlName="description">
-      </textarea>
+      <div [froalaEditor]
+           formControlName="description">
+      </div>
     </div>
   </div>
 

@@ -56,7 +56,8 @@
                class="py-1"
                *ngIf="member.mainData.birthday">
             <span class="mat-text-muted">{{'general.members.detail.main.zodiac' | translate}}&nbsp;</span>
-            <span>{{ 'general.members.detail.zodiacList.' + memberService.getZodiac(member.mainData.birthday) | translate }}</span>
+            <span>{{ 'general.members.detail.zodiacList.' + memberService.getZodiac(member.mainData.birthday.full) |
+              translate }}</span>
           </div>
 
           <div fxLayout.gt-sm="row"

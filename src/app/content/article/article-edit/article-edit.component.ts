@@ -11,7 +11,7 @@ import { AlertService } from '../../../shared/services/alert/alert.service';
 import * as moment from 'moment';
 import * as firebase from 'firebase';
 
-const SMALL_WIDTH_BREAKPOINT = 960;
+const SMALL_WIDTH_BREAKPOINT = 768;
 
 @Component({
   selector: 'article-edit',
@@ -45,6 +45,11 @@ export class ArticleEditComponent implements OnInit {
     }
   ];
 
+  public froalaOptions: Object = {
+    charCounterCount: true,
+    height: '60vh'
+  };
+
   constructor(private route: ActivatedRoute,
     public breakpointObserver: BreakpointObserver,
     public authService: AuthService,
@@ -67,9 +72,7 @@ export class ArticleEditComponent implements OnInit {
     this.breakpointObserver
       .observe(['(min-width: ' + SMALL_WIDTH_BREAKPOINT + 'px)'])
       .subscribe((state: BreakpointState) => {
-        console.log(state);
         this.isSmallDevice = state.matches;
-        //this.sidePanelOpened = state.matches;
       });
 
     this.form = this.fb.group({
@@ -114,8 +117,6 @@ export class ArticleEditComponent implements OnInit {
       if (changes.publication.status === 1) {
         changes.publication.dateTime = <any>moment();
       }
-
-      console.log(changes.articleDate);
 
       this.article = Object.assign({}, this.article, changes);
 
