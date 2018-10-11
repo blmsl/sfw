@@ -20,10 +20,8 @@ const timeMin = currentDate.subtract(1, 'month').toISOString();
 const timeMax = currentDate.add(2, 'month').toISOString();
 
 export const getGoogleCalendarEvents = functions
-  // disables because firebase-functions don´t use it correctly
-  // see https://github.com/angular/angularfire2/issues/1874
-  // .region('europe-west1')
-  // .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .region('europe-west1')
+  .runWith({ memory: '256MB', timeoutSeconds: 3 })
   .https.onRequest(async (request, response) => {
 
     try {
@@ -58,14 +56,14 @@ export const getGoogleCalendarEvents = functions
         }
       }
 
-      corsHandler(request, response, () => {
+      return corsHandler(request, response, () => {
         response.send(eventList);
       });
 
     }
     catch (e) {
       console.error(e);
-      response.status(e.code).send(e.message);
+      return response.status(e.code).send(e.message);
     }
 
   });
