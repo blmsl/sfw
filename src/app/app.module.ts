@@ -3,17 +3,17 @@ import { NgModule } from '@angular/core';
 import { appRoutes } from './app.routing';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { AngularFirestoreModule }  from '@angular/fire/firestore';
-import { CommonModule }            from '@angular/common';
-import { TimeagoModule }           from 'ngx-timeago';
-import { AngularFireModule }       from '@angular/fire';
-import { ServiceWorkerModule }     from '@angular/service-worker';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { CommonModule } from '@angular/common';
+import { TimeagoModule } from 'ngx-timeago';
+import { AngularFireModule } from '@angular/fire';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
-}                                  from '@angular/material';
-import { MomentDateTimeAdapter }   from 'ng-pick-datetime-moment';
+} from '@angular/material';
+import { MomentDateTimeAdapter } from 'ng-pick-datetime-moment';
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import {
   FroalaEditorModule,

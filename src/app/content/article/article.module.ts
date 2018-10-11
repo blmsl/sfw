@@ -51,13 +51,13 @@ import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ArticleFilterPipe } from '../../shared/pipes/article-filter.pipe';
 import { TimeagoModule } from 'ngx-timeago';
-import { SharedUserModule }              from '../../shared/components/user/shared-user.module';
-import { DeIntl }                        from "../../shared/intl/owl-datetime.i18n";
-import { ArticleAuthorsStatsComponent }  from './article-dashboard/article-authors-stats/article-authors-stats.component';
+import { SharedUserModule } from '../../shared/components/user/shared-user.module';
+import { DeIntl } from "../../shared/intl/owl-datetime.i18n";
+import { ArticleAuthorsStatsComponent } from './article-dashboard/article-authors-stats/article-authors-stats.component';
 import { ArticleDashboardListComponent } from './article-dashboard/article-dashboard-list/article-dashboard-list.component';
-import { SharedArticleModule }           from '../../shared/components/article/shared-article.module';
-import { ChartsModule }                  from 'ng2-charts';
-import { FroalaViewModule }              from 'angular-froala-wysiwyg';
+import { SharedArticleModule } from '../../shared/components/article/shared-article.module';
+import { ChartsModule } from 'ng2-charts';
+import { FroalaViewModule } from 'angular-froala-wysiwyg';
 
 @NgModule({
   imports: [

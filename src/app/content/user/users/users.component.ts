@@ -20,13 +20,13 @@ export class UsersComponent {
 
   removeUser(user: IUser) {
     this.userService.removeUser(user).then(
-      () => this.alertService.showSnackBar('success', 'general.applications.updateMessage'),
+      () => this.alertService.showSnackBar('success', 'general.applications.removedMessage'),
       (error: any) => this.alertService.showSnackBar('error', error.message));
   }
 
   updateUser(user: IUser) {
     this.userService.updateUser(user.id, user).then(
-      () => this.alertService.showSnackBar('success', 'general.applications.removedMessage'),
+      () => this.alertService.showSnackBar('success', 'general.applications.updateMessage'),
       (error: any) => this.alertService.showSnackBar('error', error.message));
   }
 
