@@ -15,7 +15,7 @@ db.settings(settings);
 
 export const getGoogleCalendarEvents = functions
   //.region('europe-west1')
-  .runWith({ memory: '512MB', timeoutSeconds: 5 })
+  .runWith({ memory: '512MB', timeoutSeconds: 10 })
   .https.onRequest(async (request, response) => {
 
     const currentDate = moment();
