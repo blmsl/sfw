@@ -41,7 +41,7 @@ export class MediaUploaderComponent implements OnInit {
   public savedItemId: string;
 
   constructor(private alertService: AlertService,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private afs: AngularFirestore,
     private el: ElementRef,
     private mediaItemService: MediaItemService,
