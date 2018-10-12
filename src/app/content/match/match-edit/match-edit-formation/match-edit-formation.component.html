@@ -61,14 +61,14 @@
       <mat-card-subtitle>{{'general.matches.edit.substituteBench' | translate}}</mat-card-subtitle>
       <div fxLayout="column"
            fxLayout.gt-sm="row">
-        <cdk-drop fxFlex="100"
+        <!--<cdk-drop fxFlex="100"
                   #playerList
                   [connectedTo]="[substitutionList]"
                   class="list-sorted"
                   (dropped)="addToList($event)"
                   [data]="items">
           <match-player *ngFor="let item of items" cdkDrag></match-player>
-        </cdk-drop>
+        </cdk-drop>-->
       </div>
     </div>
   </mat-card-content>
@@ -83,7 +83,7 @@
 
     <div fxLayout="column"
          fxLayout.gt-sm="row">
-      <cdk-drop fxFlex="100"
+      <!--<cdk-drop fxFlex="100"
                 orientation="horizontal"
                 #substitutionList
                 [connectedTo]="[playerList]"
@@ -95,7 +95,7 @@
                       fxFlex="8.25"
                       [member]="item">
         </match-player>
-      </cdk-drop>
+      </cdk-drop>-->
     </div>
   </mat-card-actions>
 
