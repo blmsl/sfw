@@ -17,20 +17,20 @@ admin.initializeApp({
 });
 
 import * as calendar from './calendar/index';
+import * as match from './match/index';
 import * as media from './media/index';
 import * as member from './member/index';
 import * as team from './team/index';
 import * as user from './user/index';
 
 export const googleCalendar = calendar.getGoogleCalendarEvents;
-
+export const matchDeleteCron = match.matchDeleteCron;
 export const removeMediaItemCron = media.deleteMediaCron;
-
 export const birthdayReminder = member.birthdayReminderCron;
+export const memberDeletedCron = member.memberDeletedCron;
 export const memberOfTheWeekCron = member.memberOfTheWeekCron;
-
 export const teamOfTheMonthCron = team.teamOfTheMonthCron;
-
+export const teamDeletedCron = team.teamDeletedCron;
 export const newUserCreation = user.userCreated;
 export const onUserDelete = user.userDeleted;
 export const onUserDisable = user.userDisabled;

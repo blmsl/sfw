@@ -1,11 +1,8 @@
 import {
   Component,
   OnInit
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+}                          from '@angular/core';
 import 'fullcalendar';
-import { ICalendarEvent } from '../../../shared/interfaces/calendar/calendar-event.interface';
-import { Observable } from 'rxjs/index';
 import { CalendarService } from '../../../shared/services/calendar/calendar.service';
 
 @Component({

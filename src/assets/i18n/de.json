@@ -137,6 +137,7 @@
         "title": "Benutzeranmeldung"
       },
       "removeMessage": "Der Eintrag wurde aus der Datenbank gelöscht.",
+      "removedMessage": "Der Eintrag wurde aus der Datenbank gelöscht.",
       "resetForm": "Die ursprünglichen Einstellungen wurden geladen.",
       "social": {
         "addProvider": "Seite hinzufügen",

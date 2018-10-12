@@ -1,11 +1,9 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as moment from 'moment';
-
 import * as cors from 'cors';
 
 const corsHandler = cors({ origin: true });
-
 const { google } = require('googleapis');
 
 const GOOGLE_API_KEY = functions.config().google.calendar.key;
@@ -15,14 +13,14 @@ const db = admin.firestore();
 const settings = { timestampsInSnapshots: true };
 db.settings(settings);
 
-const currentDate = moment();
-const timeMin = currentDate.subtract(1, 'month').toISOString();
-const timeMax = currentDate.add(2, 'month').toISOString();
-
 export const getGoogleCalendarEvents = functions
   //.region('europe-west1')
-  .runWith({ memory: '256MB', timeoutSeconds: 3 })
+  .runWith({ memory: '512MB', timeoutSeconds: 5 })
   .https.onRequest(async (request, response) => {
+
+    const currentDate = moment();
+    const timeMin = currentDate.subtract(1, 'month').toISOString();
+    const timeMax = currentDate.add(2, 'month').toISOString();
 
     try {
       const eventList: any[] = [];

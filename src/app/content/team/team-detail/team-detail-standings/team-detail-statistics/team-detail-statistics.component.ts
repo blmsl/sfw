@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ITeam } from '../../../../shared/interfaces/team/team.interface';
-import { IMatch } from '../../../../shared/interfaces/match/match.interface';
-import { MatchService } from '../../../../shared/services/match/match.service';
+import { ITeam }                    from '../../../../../shared/interfaces/team/team.interface';
+import { IMatch }                   from '../../../../../shared/interfaces/match/match.interface';
+import { MatchService }             from '../../../../../shared/services/match/match.service';
 
 @Component({
   selector: 'team-detail-statistics',
@@ -18,20 +18,21 @@ export class TeamDetailStatisticsComponent implements OnInit {
   public draws: IMatch[] = [];
   public highestDefeat: IMatch;
 
-  public series: string[] = [];
-
   constructor(private matchService: MatchService) { }
 
   ngOnInit() {
-    this.getSeriesForTeam(this.team.id);
     this.getMatchesForTeam(this.team.id);
   }
 
   private getMatchesForTeam(teamId: string) {
     this.matchService.getMatchesWithResult(teamId).subscribe((matches: IMatch[]) => {
 
+      if(!matches || matches.length === 0){
+        return;
+      }
+
       matches.forEach((match: IMatch) => {
-        if (match.result.guestTeamGoals != null && match.result.homeTeamGoals != null) {
+        if (match.result && match.result.guestTeamGoals && match.result.homeTeamGoals) {
           if (match.isHomeTeam) {
             if (match.result.homeTeamGoals < match.result.guestTeamGoals) {
               this.defeats.push(match)
@@ -52,9 +53,14 @@ export class TeamDetailStatisticsComponent implements OnInit {
         }
       });
 
-      this.highestDefeat = this.highestForArray(this.defeats);
-      this.highestWin = this.highestForArray(this.wins);
-    })
+      if(this.defeats.length > 0){
+        this.highestDefeat = this.highestForArray(this.defeats);
+      }
+
+      if(this.wins.length > 0) {
+        this.highestWin = this.highestForArray(this.wins);
+      }
+    });
   }
 
   private highestForArray(array: IMatch[]) {
@@ -68,37 +74,6 @@ export class TeamDetailStatisticsComponent implements OnInit {
       } else {
         return currentValue;
       }
-    });
-  }
-
-  private getSeriesForTeam(teamId: string) {
-
-    this.matchService.getSeriesOfMatches(teamId).subscribe((matches: IMatch[]) => {
-      matches.forEach((match: IMatch) => {
-        // console.log(match);
-        if (match.result.guestTeamGoals && match.result.homeTeamGoals) {
-          // Defeats
-          if (match.isHomeTeam) {
-            if (match.result.homeTeamGoals < match.result.guestTeamGoals) {
-              this.series.push("V")
-            } else if (match.result.homeTeamGoals > match.result.guestTeamGoals) {
-              this.series.push("S")
-            }
-          } else {
-            if (match.result.guestTeamGoals < match.result.homeTeamGoals) {
-              this.series.push("V")
-            } else if (match.result.guestTeamGoals > match.result.homeTeamGoals) {
-              this.series.push("S")
-            }
-          }
-
-          // Draws
-          if (match.result.homeTeamGoals === match.result.guestTeamGoals) {
-            this.series.push("U");
-          }
-        }
-      });
-      console.log(this.series);
     });
   }
 
