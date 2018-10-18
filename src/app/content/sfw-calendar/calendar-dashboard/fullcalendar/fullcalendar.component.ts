@@ -35,7 +35,7 @@ export class FullcalendarComponent implements OnInit {
     events: null,
     eventClick: function (event) {
       // opens events in a popup window
-      // window.open(event.url, 'gcalevent', 'width=700,height=600');
+      window.open(event.url, 'gcalevent', 'width=50,height=50');
       return false;
     },
     eventLimit: true, // allow "more" link when too many events
@@ -65,7 +65,7 @@ export class FullcalendarComponent implements OnInit {
   }
 
   ngOnInit() {
-    // let cal = $('calendar');
+
     this.isInitialized = true;
 
     this.calendarOptions = {
@@ -82,11 +82,10 @@ export class FullcalendarComponent implements OnInit {
       editable: false,
       events: this.events,
       eventClick: function (event) {
-        // opens events in a popup window
-        // window.open(event.url, 'gcalevent', 'width=700,height=600');
+        window.open(event.url, 'gcalevent', 'width=700,height=600');
         return false;
       },
-      eventLimit: true, // allow "more" link when too many events
+      eventLimit: true,
       firstDay: 1,
       fixedWeekCount: true,
       footer: true,

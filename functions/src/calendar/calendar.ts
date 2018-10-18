@@ -51,7 +51,7 @@ export const getGoogleCalendarEvents = functions
             for (const event of events) {
               eventList.push({
                 title: event.summary,
-                // description: event.description,
+                url: '//www.googleapis.com/calendar/v3/calendars/' + cal.link + '/events/' + event.id,
                 start: event.start.dateTime || event.start.date,
                 end: event.end.dateTime || event.end.date,
                 color: cal.cssTitle
