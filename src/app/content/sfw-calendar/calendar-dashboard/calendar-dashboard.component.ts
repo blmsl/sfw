@@ -4,6 +4,7 @@ import {
 }                          from '@angular/core';
 import 'fullcalendar';
 import { CalendarService } from '../../../shared/services/calendar/calendar.service';
+import { Observable }      from 'rxjs/index';
 
 @Component({
   selector: 'calendar-dashboard',
@@ -11,25 +12,13 @@ import { CalendarService } from '../../../shared/services/calendar/calendar.serv
 })
 export class CalendarDashboardComponent implements OnInit {
 
+  public data$: Observable<any>;
+
   constructor(public calendarService: CalendarService) {
-    this.calendarService.getCalendars()
-      .then(
-        (success) => console.log(success),
-        (error) => console.log(error))
-      .catch((e) => console.log(e));
+    this.data$ = this.calendarService.getCalendars();
   }
 
   ngOnInit() {
-    // this.route.data.subscribe((data: { events: ICalendarEvent[] }) => this.events$ = data.events);
-
-    /*this.test$ =  this.applicationService.applications$.pipe(
-     map((applications: IApplication[]) => {
-     return applications[ 0 ];
-     }),
-     switchMap((application: IApplication) => {
-     return this.calendarService.getCalendars(application.assignedCalendars);
-     })
-     );*/
   }
 
 }

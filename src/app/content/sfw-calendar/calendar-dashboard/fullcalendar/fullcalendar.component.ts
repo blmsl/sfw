@@ -1,9 +1,12 @@
-import { Component, ElementRef, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import * as $ from 'jquery';
-import { OptionsInput } from 'fullcalendar';
-import { ICalendarEvent } from '../../../../shared/interfaces/calendar/calendar-event.interface';
-import { ActivatedRoute } from '@angular/router';
-import * as moment from 'moment';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild
+}                            from '@angular/core';
+import { OptionsInput }      from 'fullcalendar';
+import { ICalendarEvent }    from '../../../../shared/interfaces/calendar/calendar-event.interface';
+import * as moment           from 'moment';
 import { CalendarComponent } from 'ap-angular-fullcalendar';
 
 @Component({
@@ -30,7 +33,7 @@ export class FullcalendarComponent implements OnInit {
     displayEventEnd: true,
     editable: false,
     events: null,
-    eventClick: function(event) {
+    eventClick: function (event) {
       // opens events in a popup window
       // window.open(event.url, 'gcalevent', 'width=700,height=600');
       return false;
@@ -51,8 +54,8 @@ export class FullcalendarComponent implements OnInit {
     timeFormat: 'hh:mm',
     timezone: 'local',
     validRange: {
-      start: moment().subtract('6', 'months').format('YYYY-MM-DD'),
-      end: moment().add('1', 'years').endOf('year').format('YYYY-MM-DD')
+      start: moment().subtract('14', 'day').format('YYYY-MM-DD'),
+      end: moment().add('1', 'month').format('YYYY-MM-DD')
     },
     weekNumbers: true,
     weekNumberTitle: 'KW'
@@ -78,7 +81,7 @@ export class FullcalendarComponent implements OnInit {
       displayEventEnd: true,
       editable: false,
       events: this.events,
-      eventClick: function(event) {
+      eventClick: function (event) {
         // opens events in a popup window
         // window.open(event.url, 'gcalevent', 'width=700,height=600');
         return false;
@@ -100,7 +103,7 @@ export class FullcalendarComponent implements OnInit {
       timezone: 'local',
       validRange: {
         start: moment().subtract('1', 'years').startOf('year').format('YYYY-MM-DD'),
-        end: moment().add('1', 'years').endOf('year').format('YYYY-MM-DD'),
+        end: moment().add('1', 'years').endOf('year').format('YYYY-MM-DD')
       },
       weekNumbers: true,
       weekNumberTitle: 'KW'

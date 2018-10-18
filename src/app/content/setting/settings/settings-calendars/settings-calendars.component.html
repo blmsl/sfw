@@ -8,19 +8,25 @@
            fxLayoutGap="10px"
            [formGroupName]="i">
 
-        <mat-form-field fxFlex="20">
+        <mat-form-field fxFlex="15">
           <input matInput
                  placeholder="{{'general.applications.calendars.fieldTitle' | translate}}"
                  formControlName="title"/>
         </mat-form-field>
 
-       <div fxFlex="10">
-         <mat-checkbox formControlName="isActive">
-           {{'general.applications.calendars.isActive' | translate}}
-         </mat-checkbox>
-       </div>
+        <mat-form-field fxFlex="15">
+          <input matInput
+                 placeholder="{{'general.applications.calendars.cssTitle' | translate}}"
+                 formControlName="cssTitle"/>
+        </mat-form-field>
 
-        <mat-form-field fxFlex="50">
+        <div fxFlex="10">
+          <mat-checkbox formControlName="isActive">
+            {{'general.applications.calendars.isActive' | translate}}
+          </mat-checkbox>
+        </div>
+
+        <mat-form-field fxFlex="40">
           <input matInput
                  placeholder="{{'general.applications.calendars.link' | translate}}"
                  formControlName="link"/>

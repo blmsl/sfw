@@ -63,13 +63,14 @@ export class SettingsCalendarsComponent implements OnInit {
     return this.fb.group({
       link: [calendar.link, [Validators.required]],
       title: [calendar.title, [Validators.required]],
-      isActive: calendar.isActive
+      isActive: calendar.isActive,
+      cssTitle: calendar.cssTitle
     });
   }
 
   addCalendar() {
     const control = this.form.get('assignedCalendars') as FormArray;
-    control.push(this.initCalendar({ title: '', link: '', isActive: true }));
+    control.push(this.initCalendar({ title: '', link: '', isActive: true, cssTitle: '' }));
   }
 
   deleteCalendar(i: number) {

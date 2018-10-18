@@ -84,6 +84,7 @@
     "applications": {
       "calendars": {
         "addCalendar": "Kalender hinzufügen",
+        "cssTitle": "CSS-Klasse zur Anzeige",
         "deleteCalendar": "Kalender löschen",
         "isActive": "aktiv",
         "link": "Google Link",

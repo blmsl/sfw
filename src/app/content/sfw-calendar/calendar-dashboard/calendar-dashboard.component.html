@@ -5,10 +5,9 @@
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-    <!--<pre>{{calendarService.getCalendars() | async | json}}</pre>
-    <!--<app-fullcalendar *ngIf="events$; else loadingTemplate"
-                      [events]="events$">
-    </app-fullcalendar>-->
+    <app-fullcalendar *ngIf="data$ | async as data; else loadingTemplate"
+                      [events]="data">
+    </app-fullcalendar>
   </mat-card-content>
 </mat-card>
 
