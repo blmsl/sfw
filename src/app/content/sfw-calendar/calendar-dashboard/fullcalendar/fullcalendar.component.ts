@@ -8,6 +8,7 @@ import { OptionsInput }      from 'fullcalendar';
 import { ICalendarEvent }    from '../../../../shared/interfaces/calendar/calendar-event.interface';
 import * as moment           from 'moment';
 import { CalendarComponent } from 'ap-angular-fullcalendar';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-fullcalendar',
