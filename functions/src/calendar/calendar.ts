@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
-import * as admin     from 'firebase-admin';
-import * as moment    from 'moment';
-import * as cors      from 'cors';
+import * as admin from 'firebase-admin';
+import * as moment from 'moment';
+import * as cors from 'cors';
 
 const corsHandler = cors({ origin: true });
 const { google } = require('googleapis');
@@ -14,7 +14,7 @@ const settings = { timestampsInSnapshots: true };
 db.settings(settings);
 
 export const getGoogleCalendarEvents = functions
-//.region('europe-west1')
+  //.region('europe-west1')
   .runWith({ memory: '1GB', timeoutSeconds: 10 })
   .https.onRequest(async (req, resp) => {
 
@@ -30,10 +30,10 @@ export const getGoogleCalendarEvents = functions
     try {
       const eventList: any[] = [];
 
-      const auth = await google.auth.getClient({ scopes: [ 'https://www.googleapis.com/auth/calendar' ] });
+      const auth = await google.auth.getClient({ scopes: ['https://www.googleapis.com/auth/calendar'] });
       const appSnapshot = await db.collection('applications').where('isCurrentApplication', '==', true).get();
 
-      for (const cal of appSnapshot.docs[ 0 ].data().assignedCalendars) {
+      for (const cal of appSnapshot.docs[0].data().assignedCalendars) {
         if (cal.isActive) {
           // console.log(cal.link);
           const result = await calendar.events.list({

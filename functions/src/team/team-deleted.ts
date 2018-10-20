@@ -8,7 +8,7 @@ export const teamDeleted = functions
 
     console.log(context.params.teamId);
 
-    try{
+    try {
 
       // als Team der Woche Eintrag löschen
       const totWSnapshot = await admin.firestore().collection('team-of-the-month')
@@ -28,7 +28,7 @@ export const teamDeleted = functions
         await admin.firestore().doc('matches/' + doc.data().id).delete();
       });
 
-    }catch (e) {
+    } catch (e) {
       console.log(e);
     }
 

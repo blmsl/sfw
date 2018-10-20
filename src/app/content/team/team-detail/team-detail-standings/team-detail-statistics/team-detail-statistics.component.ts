@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ITeam }                    from '../../../../../shared/interfaces/team/team.interface';
-import { IMatch }                   from '../../../../../shared/interfaces/match/match.interface';
-import { MatchService }             from '../../../../../shared/services/match/match.service';
+import { ITeam } from '../../../../../shared/interfaces/team/team.interface';
+import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
+import { MatchService } from '../../../../../shared/services/match/match.service';
 
 @Component({
   selector: 'team-detail-statistics',
@@ -27,7 +27,7 @@ export class TeamDetailStatisticsComponent implements OnInit {
   private getMatchesForTeam(teamId: string) {
     this.matchService.getMatchesWithResult(teamId).subscribe((matches: IMatch[]) => {
 
-      if(!matches || matches.length === 0){
+      if (!matches || matches.length === 0) {
         return;
       }
 
@@ -53,11 +53,11 @@ export class TeamDetailStatisticsComponent implements OnInit {
         }
       });
 
-      if(this.defeats.length > 0){
+      if (this.defeats.length > 0) {
         this.highestDefeat = this.highestForArray(this.defeats);
       }
 
-      if(this.wins.length > 0) {
+      if (this.wins.length > 0) {
         this.highestWin = this.highestForArray(this.wins);
       }
     });

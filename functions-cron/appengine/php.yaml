@@ -14,35 +14,19 @@ runtime_config:
 #  instances: 3
 
 handlers:
-# Article
+
 - url: /php/article/publish-article.php
   script: /php/article/publish-article.php
 
-# Club
-  #secure: always
-  #login: admin
-
-- url: /php/club/matchplan-calendar.php
-  script: /php/club/matchplan-calendar.php
-
-#- url: /php/club/matchplan-export.php
-#  script: /php/club/matchplan-export.php
+- url: /php/club/matchplan2gcal.php
+  script: /php/club/matchplan2gcal.php
 
 - url: /php/club/matchplan-import.php
   script: /php/club/matchplan-import.php
 
-#- url: /php/club/sfw-calendar.php
-#  script: /php/club/sfw-calendar.php
-
-#- url: /php/club/update-club.php
-#  script: /php/club/update-club.php
-
 # Member
 - url: /php/member/dfb-import.php
   script: /php/member/dfb-import.php
-
-#- url: /php/member/drive-export.php
-#  script: /php/member/drive-export.php
 
 - url: /php/member/drive-import.php
   script: /php/member/drive-import.php

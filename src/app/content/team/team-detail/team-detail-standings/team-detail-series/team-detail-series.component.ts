@@ -2,10 +2,10 @@ import {
   Component,
   Input,
   OnInit
-}                       from '@angular/core';
-import { IMatch }       from '../../../../../shared/interfaces/match/match.interface';
+} from '@angular/core';
+import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
 import { MatchService } from '../../../../../shared/services/match/match.service';
-import { ITeam }        from '../../../../../shared/interfaces/team/team.interface';
+import { ITeam } from '../../../../../shared/interfaces/team/team.interface';
 
 @Component({
   selector: 'team-detail-series',
@@ -27,7 +27,7 @@ export class TeamDetailSeriesComponent implements OnInit {
   private getSeriesForTeam(teamId: string) {
     this.matchService.getSeriesOfMatches(teamId).subscribe((matches: IMatch[]) => {
 
-      if(!matches || matches.length === 0){
+      if (!matches || matches.length === 0) {
         return;
       }
 

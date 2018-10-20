@@ -3,10 +3,10 @@ import {
   Input,
   OnInit,
   ViewChild
-}                            from '@angular/core';
-import { OptionsInput }      from 'fullcalendar';
-import { ICalendarEvent }    from '../../../../shared/interfaces/calendar/calendar-event.interface';
-import * as moment           from 'moment';
+} from '@angular/core';
+import { OptionsInput } from 'fullcalendar';
+import { ICalendarEvent } from '../../../../shared/interfaces/calendar/calendar-event.interface';
+import * as moment from 'moment';
 import { CalendarComponent } from 'ap-angular-fullcalendar';
 import * as $ from 'jquery';
 
@@ -34,7 +34,7 @@ export class FullcalendarComponent implements OnInit {
     displayEventEnd: true,
     editable: false,
     events: null,
-    eventClick: function (event) {
+    eventClick: function(event) {
       // opens events in a popup window
       window.open(event.url, 'gcalevent', 'width=50,height=50');
       return false;
@@ -82,7 +82,7 @@ export class FullcalendarComponent implements OnInit {
       displayEventEnd: true,
       editable: false,
       events: this.events,
-      eventClick: function (event) {
+      eventClick: function(event) {
         window.open(event.url, 'gcalevent', 'width=700,height=600');
         return false;
       },

@@ -1,10 +1,10 @@
 import {
   Component,
   OnInit
-}                          from '@angular/core';
+} from '@angular/core';
 import 'fullcalendar';
 import { CalendarService } from '../../../shared/services/calendar/calendar.service';
-import { Observable }      from 'rxjs/index';
+import { Observable } from 'rxjs/index';
 
 @Component({
   selector: 'calendar-dashboard',

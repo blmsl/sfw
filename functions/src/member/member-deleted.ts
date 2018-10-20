@@ -10,9 +10,9 @@ export const memberDeleted = functions
 
     const groups = ['ah', 'club', 'honorary', 'player'];
 
-    try{
+    try {
 
-      for(const group of groups){
+      for (const group of groups) {
         const motWSnapshot = await admin.firestore().collection('member-of-the-week')
           .where(group + '.assignedMemberId', '==', context.params.teamId)
           .get();
@@ -37,7 +37,7 @@ export const memberDeleted = functions
       // in Aufstellungen löschen
       // in Auswechselungen und Kommentaren löschen
 
-    }catch (e) {
+    } catch (e) {
       console.log(e);
     }
 
