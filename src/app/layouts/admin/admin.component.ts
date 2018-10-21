@@ -20,7 +20,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   private _router: Subscription;
 
   public mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
-  public url: string;
+  public url: any;
   public sidePanelOpened;
   public options = {
     collapsed: false,
@@ -45,17 +45,20 @@ export class AdminComponent implements OnInit, OnDestroy {
     translate.addLangs(['de', 'en', 'fr']);
     translate.setDefaultLang('de');
 
-    const browserLang: string = translate.getBrowserLang();
-    this.currentLang = browserLang.match(/en|fr/) ? browserLang : 'de';
+    const browserLang: any = translate.getBrowserLang();
+    this.currentLang = browserLang.indexOf('/en|fr/') ? browserLang : 'de';
     translate.use(this.currentLang);
 
     if (this.currentLang === 'de') {
       moment.locale('de-de');
     }
 
-    this.mediaMatcher.addListener(mql => zone.run(() => {
-      this.mediaMatcher = mql;
-    }));
+    /* this.mediaMatcher.onchange((matches:MediaQueryListEvent) => {
+       zone.run(() => {
+        // this.mediaMatcher = mql;
+      // })
+      return matches;
+    }); */
   }
 
   ngOnInit(): void {
