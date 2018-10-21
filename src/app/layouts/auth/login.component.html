@@ -5,7 +5,11 @@
         <mat-card-content>
 
           <div class="text-xs-center pb-1">
-            <img src="/assets/sfw/sfw.webp" alt="{{ 'siteTitle' | translate }}"/>
+            <picture>
+              <source srcset="/assets/sfw/sfw.webp" type="image/webp">
+              <source srcset="/assets/sfw/sfw.png" type="image/jpeg">
+              <img src="/assets/sfw/sfw.webp" alt="{{ 'siteTitle' | translate }}">
+            </picture>
           </div>
 
           <sign-in

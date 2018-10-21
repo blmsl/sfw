@@ -38,9 +38,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   public config: PerfectScrollbarConfigInterface = {};
 
   constructor(private router: Router,
-              public translate: TranslateService,
-              public authService: AuthService,
-              private breakpointObserver: BreakpointObserver) {
+    public translate: TranslateService,
+    public authService: AuthService,
+    private breakpointObserver: BreakpointObserver) {
 
     breakpointObserver.observe([
       Breakpoints.HandsetLandscape,
