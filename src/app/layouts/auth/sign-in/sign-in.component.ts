@@ -18,8 +18,7 @@ import { Subscription } from 'rxjs/index';
 
 @Component({
   selector: 'sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  templateUrl: './sign-in.component.html'
 })
 export class SignInComponent implements OnInit, OnDestroy {
 
@@ -69,7 +68,6 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.sub = this.route
       .queryParams
       .subscribe((params: any) => {
-        // Defaults to 0 if no query param provided.
         if (params.message) {
           this.showAlert('signInAlertContainer');
           this.alertService.error(params.message);
@@ -95,9 +93,8 @@ export class SignInComponent implements OnInit, OnDestroy {
       .catch((error: any) => {
         this.isLoading = false;
         this.showDemoLoginMessage = false;
-        console.log(error);
         this.showAlert('signInAlertContainer');
-        this.alertService.error(error.code);
+        this.alertService.error(error.message);
       });
   }
 

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { zoomIn, zoomOut } from 'ng-animate';
 import { state, style, transition, trigger, useAnimation } from '@angular/animations';
-import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute, ParamMap, Params } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -49,7 +48,6 @@ export class LoginComponent implements OnInit {
     const browserLang: string = translate.getBrowserLang();
     this.currentLang = browserLang.match(/en|fr/) ? browserLang : 'de';
     translate.use(this.currentLang);
-
   }
 
   ngOnInit() {

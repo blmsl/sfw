@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { AuthService } from '../../shared/services/auth/auth.service';
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import 'moment/min/locales';
 import * as moment from 'moment';
-
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 const SMALL_WIDTH_BREAKPOINT = 960;
 
@@ -19,7 +19,6 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   private _router: Subscription;
 
-  public mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
   public url: any;
   public sidePanelOpened;
   public options = {
@@ -31,6 +30,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   };
 
   public currentLang = 'en';
+  public mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
 
   @ViewChild('sidemenu') sidemenu;
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
@@ -38,9 +38,19 @@ export class AdminComponent implements OnInit, OnDestroy {
   public config: PerfectScrollbarConfigInterface = {};
 
   constructor(private router: Router,
-    public translate: TranslateService,
-    public authService: AuthService,
-    private zone: NgZone) {
+              public translate: TranslateService,
+              public authService: AuthService,
+              private breakpointObserver: BreakpointObserver) {
+
+    breakpointObserver.observe([
+      Breakpoints.HandsetLandscape,
+      Breakpoints.HandsetPortrait
+    ]).subscribe(result => {
+      console.log(result);
+      /* if (result.matches) {
+        this.mediaMatcher = result.matches;
+      } */
+    });
 
     translate.addLangs(['de', 'en', 'fr']);
     translate.setDefaultLang('de');
@@ -52,13 +62,6 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (this.currentLang === 'de') {
       moment.locale('de-de');
     }
-
-    /* this.mediaMatcher.onchange((matches:MediaQueryListEvent) => {
-       zone.run(() => {
-        // this.mediaMatcher = mql;
-      // })
-      return matches;
-    }); */
   }
 
   ngOnInit(): void {

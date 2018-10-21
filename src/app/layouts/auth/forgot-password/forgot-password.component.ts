@@ -1,5 +1,10 @@
 import {
-  Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild,
+  Component,
+  ComponentFactoryResolver,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
   ViewContainerRef
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,8 +14,7 @@ import { AlertComponent } from '../../../shared/directives/alert/alert.component
 
 @Component({
   selector: 'forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  templateUrl: './forgot-password.component.html'
 })
 export class ForgotPasswordComponent implements OnInit {
 
@@ -23,9 +27,9 @@ export class ForgotPasswordComponent implements OnInit {
   }) forgotPasswordAlertContainer: ViewContainerRef;
 
   constructor(private fb: FormBuilder,
-    private authService: AuthService,
-    private cfr: ComponentFactoryResolver,
-    private alertService: AlertService) {
+              private authService: AuthService,
+              private cfr: ComponentFactoryResolver,
+              private alertService: AlertService) {
   }
 
   ngOnInit() {
@@ -58,18 +62,15 @@ export class ForgotPasswordComponent implements OnInit {
     this.isLoading = true;
     this.authService.sendPasswordResetEmail(this.form.value.email)
       .then(() => {
-        console.log('ok');
         this.showAlert('forgotPasswordAlertContainer');
         this.alertService.success('Cool! Password recovery instruction has been sent to your email.', true);
         this.isLoading = false;
-        // this.toggleSignInForm();
         this.form.reset();
-      }).catch(
-        (error: any) => {
-          this.showAlert('forgotPasswordAlertContainer');
-          this.alertService.error(error);
-          this.isLoading = false;
-        });
+      }).catch((error: any) => {
+        this.showAlert('forgotPasswordAlertContainer');
+        this.alertService.error(error);
+        this.isLoading = false;
+      });
   }
 
   showAlert(target) {
