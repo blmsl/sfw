@@ -14,12 +14,12 @@ trait sfwApplication
    */
   public function getCurrentApplication()
   {
-    $query = $this->applicationCollection->where('isCurrentApplication', '=', 1);
+    $query = $this->applicationCollection->where('isCurrentApplication', '=', true);
 
     $snapshot = $query->documents();
 
     if ($snapshot->isEmpty()) {
-      echo "<div class='alert alert-info'><p>Keine aktuelle Applikationg gefunden.</p></div>";
+      echo "<div class='alert alert-info'><p>Keine aktuelle Applikation gefunden.</p></div>";
     }
 
     #echo $snapshot->size();

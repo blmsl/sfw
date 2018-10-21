@@ -14,11 +14,11 @@ cron:
 
 # PHP
 - description: Import Matches from fussball.de
-  url: /php/club/matchplan-import.php
+  url: /php/match/matchplan-import.php
   schedule: every 60 hours
 
 - description: Google-Calender Export
-  url: /php/club/matchplan2gcal.php
+  url: /php/match/matchplan2gcal.php
   schedule: every 60 hours
 
 #- description: Publish Articles to frontend and to social pages

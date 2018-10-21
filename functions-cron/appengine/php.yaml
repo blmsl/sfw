@@ -18,11 +18,11 @@ handlers:
 - url: /php/article/publish-article.php
   script: /php/article/publish-article.php
 
-- url: /php/club/matchplan2gcal.php
-  script: /php/club/matchplan2gcal.php
+- url: /php/match/matchplan2gcal.php
+  script: /php/match/matchplan2gcal.php
 
-- url: /php/club/matchplan-import.php
-  script: /php/club/matchplan-import.php
+- url: /php/match/matchplan-import.php
+  script: /php/match/matchplan-import.php
 
 # Member
 - url: /php/member/dfb-import.php

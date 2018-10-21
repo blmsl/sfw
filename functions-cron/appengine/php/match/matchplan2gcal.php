@@ -3,16 +3,22 @@ error_reporting(E_ALL);
 ini_set('display_errors', true);
 ini_set('memory_limit', '-1');
 header("Content-Type: text/html; charset=utf-8");
+
 require "../../vendor/autoload.php";
 require "../base.class.php";
 require_once "../utils.global.php"; # by emre isik
+
 if (!strpos(gethostname(), 'appspot.com')) {
   putenv('GOOGLE_APPLICATION_CREDENTIALS=../client_secret.json');
 }
+
 $project = new sfwApp('sf-winterbach', array('calendarService'));
 $time_start = microtime(true);
+
 echo $project->generateHeader();
+
 echo "<h1>Exportiere den Spielplan in den Google-Kalender</h1>";
+
 $jahr = isset($_GET['jahr']) ? DateTime::createFromFormat('Y', $_GET['jahr']) : new DateTime();
 // falls ein Jahr übergeben wurde wird die komplette Saison als Start- und Ende gesetzt,
 // ansonsten die nächsten 4 Monate ab heute
@@ -32,6 +38,7 @@ if (isset($_GET['jahr'])) {
   $seasonEndDate = $seasonStartClone->modify('+1 year')->modify('-1 day');
   echo "<h3>Lade Daten vom " . $seasonStart->format('d.m.Y') . " bis " . $loadingLimit->format('d.m.Y') . " </h3>";
 }
+
 // App aus der DB laden
 $app = $project->getCurrentApplication();
 if (!$app) {
