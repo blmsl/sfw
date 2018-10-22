@@ -1,9 +1,9 @@
 <div fxLayout="column"
      style="padding: 10px; border: 1px dashed #cecece"
      fxHide.xs
-     *ngIf="authService.user$ | async as user">
+     *ngIf="!options.collapsed">
 
-  <mat-card>
+  <mat-card *ngIf="authService.user$ | async as user">
     <mat-card-header>
       <mat-card-title>
         {{'general.menu.hello' | translate}}

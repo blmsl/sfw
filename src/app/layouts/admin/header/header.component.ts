@@ -9,10 +9,11 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-  @Output() toggleSidenav = new EventEmitter<void>();
+  @Output() toggleSidenav: EventEmitter<void> = new EventEmitter<void>();
   @Output() toggleNotificationSidenav = new EventEmitter<void>();
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService,
+              private router: Router) {
   }
 
   fullScreenToggle(): void {
@@ -22,9 +23,7 @@ export class HeaderComponent {
   }
 
   logOut() {
-    this.authService.signOut().then(
-      () => this.router.navigate(['/login'])
-    );
+    this.authService.signOut().then(() => this.router.navigate(['/login']));
   }
 
 }

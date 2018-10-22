@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Input
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItemsService } from '../../../shared/services/menu/menu-items.service';
 import { AuthService } from '../../../shared/services/auth/auth.service';
@@ -13,6 +16,8 @@ import { IUser } from '../../../shared/interfaces/user/user.interface';
   providers: [MenuItemsService]
 })
 export class MenuComponent {
+
+  @Input() options: any;
 
   public memberImage: Observable<IMediaItem>;
   public user$: Observable<IUser>;

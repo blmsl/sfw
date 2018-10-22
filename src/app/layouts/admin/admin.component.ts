@@ -3,25 +3,22 @@ import {
   OnDestroy,
   OnInit,
   ViewChild
-}                           from '@angular/core';
+}                             from '@angular/core';
 import {
   NavigationEnd,
   Router
-}                           from '@angular/router';
+}                             from '@angular/router';
 import {
   PerfectScrollbarConfigInterface,
   PerfectScrollbarDirective
-}                           from 'ngx-perfect-scrollbar';
-import { AuthService }      from '../../shared/services/auth/auth.service';
-import { TranslateService } from '@ngx-translate/core';
-import { Subscription }     from 'rxjs';
-import { tap }              from 'rxjs/operators';
+}                             from 'ngx-perfect-scrollbar';
+import { AuthService }        from '../../shared/services/auth/auth.service';
+import { TranslateService }   from '@ngx-translate/core';
+import { Subscription }       from 'rxjs';
+import { tap }                from 'rxjs/operators';
 import 'moment/min/locales';
-import * as moment          from 'moment';
-import {
-  BreakpointObserver,
-  Breakpoints
-}                           from '@angular/cdk/layout';
+import * as moment            from 'moment';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-admin',
@@ -32,7 +29,6 @@ export class AdminComponent implements OnInit, OnDestroy {
   private _router: Subscription;
 
   public url: any;
-  public sidePanelOpened;
   public options = {
     collapsed: false,
     compact: false,
@@ -54,10 +50,7 @@ export class AdminComponent implements OnInit, OnDestroy {
               public authService: AuthService,
               private breakpointObserver: BreakpointObserver) {
 
-    breakpointObserver.observe([
-      Breakpoints.HandsetLandscape,
-      Breakpoints.HandsetPortrait
-    ]).subscribe(result => {
+    breakpointObserver.observe('(max-width: 1024px)').subscribe(result => {
       if (result.matches) {
         this.mediaMatches = result.matches;
       }
@@ -96,11 +89,12 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   runOnRouteChange(): void {
-    if (this.isOver()) {
+    console.log('routeChange');
+    /* if (this.isOver()) {
       this.sidemenu.close();
     }
 
-    this.updatePS();
+    this.updatePS(); */
   }
 
   receiveOptions($event): void {
@@ -116,6 +110,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (this.url === '/articles/create' || this.url.indexOf('/articles/edit') > -1 || this.url === '/calendar') {
       return true;
     } else {
+      console.log(this.mediaMatches);
       return this.mediaMatches;
     }
   }
