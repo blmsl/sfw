@@ -1,49 +1,48 @@
-import { NgModule } from '@angular/core';
-import { AgmCoreModule } from '@agm/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { BidiModule } from '@angular/cdk/bidi';
-import { FormsModule } from '@angular/forms';
+import { NgModule }                  from '@angular/core';
+import { FlexLayoutModule }          from '@angular/flex-layout';
+import { FormsModule }               from '@angular/forms';
 import {
   MatButtonModule,
-  MatCardModule,
   MatCheckboxModule,
-  MatIconModule,
   MatListModule,
   MatMenuModule,
-  MatProgressBarModule,
   MatSelectModule,
   MatSidenavModule,
-  MatSlideToggleModule,
-  MatTabsModule,
+  MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 import {
   PERFECT_SCROLLBAR_CONFIG,
   PerfectScrollbarConfigInterface,
   PerfectScrollbarModule
-} from 'ngx-perfect-scrollbar';
-import { SharedModule } from '../../shared/shared.module';
-import { RouterModule } from '@angular/router';
-import { AdminComponent } from './admin.component';
-import { CommonModule } from '@angular/common';
-import { adminRoutes } from './admin-routing';
-import { AuthService } from '../../shared/services/auth/auth.service';
-import { googleMapsConfig } from '../../shared/config/google-maps.config';
-import { HeaderComponent } from './header/header.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { NotificationComponent } from './notification/notification.component';
-import { OptionsComponent } from './options/options.component';
-import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-import { MenuComponent } from './menu/menu.component';
+}                                    from 'ngx-perfect-scrollbar';
+import { SharedModule }              from '../../shared/shared.module';
+import { RouterModule }              from '@angular/router';
+import { AdminComponent }            from './admin.component';
+import { CommonModule }              from '@angular/common';
+import { adminRoutes }               from './admin-routing';
+import { AuthService }               from '../../shared/services/auth/auth.service';
+import { HeaderComponent }           from './header/header.component';
+import { SidebarComponent }          from './sidebar/sidebar.component';
+import { NotificationComponent }     from './notification/notification.component';
+import { OptionsComponent }          from './options/options.component';
+import { LoadingBarRouterModule }    from '@ngx-loading-bar/router';
+import { MenuComponent }             from './menu/menu.component';
 import { ToggleFullscreenDirective } from '../../shared/directives/fullscreen/toggle-fullscreen.directive';
 import {
   AccordionAnchorDirective,
   AccordionDirective,
   AccordionLinkDirective
-} from '../../shared/directives/accordion';
-import { BackendGuard } from '../../shared/guards/backend.guard';
-import { AdminGuard } from '../../shared/guards/admin.guard';
+}                                    from '../../shared/directives/accordion';
+import { BackendGuard }              from '../../shared/guards/backend.guard';
+import { AdminGuard }                from '../../shared/guards/admin.guard';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { TimeagoModule }             from 'ngx-timeago';
+import { TranslateModule }           from '@ngx-translate/core';
+import {
+  FroalaEditorModule,
+  FroalaViewModule
+} from 'angular-froala-wysiwyg';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -66,28 +65,25 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ToggleFullscreenDirective
   ],
   imports: [
-    AgmCoreModule.forRoot({ apiKey: googleMapsConfig.apiKey }),
+    //AgmCoreModule.forRoot({ apiKey: googleMapsConfig.apiKey }),
     AngularFireDatabaseModule,
-    BidiModule,
-    CommonModule,
-    FlexLayoutModule,
     FormsModule,
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot(),
     LoadingBarRouterModule,
-    MatSidenavModule,
-    MatCardModule,
+    MatListModule,
     MatMenuModule,
     MatCheckboxModule,
-    MatIconModule,
     MatButtonModule,
-    MatToolbarModule,
-    MatTabsModule,
-    MatListModule,
-    MatSlideToggleModule,
     MatSelectModule,
-    MatProgressBarModule,
+    MatSidenavModule,
+    MatSnackBarModule,
+    MatToolbarModule,
     PerfectScrollbarModule,
     RouterModule.forChild(adminRoutes),
-    SharedModule
+    SharedModule,
+    TimeagoModule.forRoot()
+    // GtagModule.forRoot({ trackingId: 'UA-YOUR_TRACKING_ID', trackPageviews: true }) */
   ],
   providers: [
     AuthService,

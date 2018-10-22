@@ -3,25 +3,29 @@ export const MENUITEMS = [
     state: '/',
     name: 'dashboard',
     type: 'link',
-    icon: 'dashboard'
+    icon: 'dashboard',
+    minRole: 'editor'
   },
   {
     state: 'newsletter',
     name: 'newsletter',
     type: 'link',
-    icon: 'email'
+    icon: 'email',
+    minRole: 'admin'
   },
   {
     state: 'calendar',
     name: 'event',
     type: 'link',
-    icon: 'event'
+    icon: 'event',
+    minRole: 'editor'
   },
   {
     state: 'uploader',
     name: 'uploader',
     type: 'link',
-    icon: 'file_upload'
+    icon: 'file_upload',
+    minRole: 'editor'
   },
   {
     state: 'articles',
@@ -44,7 +48,8 @@ export const MENUITEMS = [
         name: 'create',
         icon: 'wrap_text'
       }
-    ]
+    ],
+    minRole: 'editor'
   },
   {
     state: 'matches',
@@ -67,7 +72,8 @@ export const MENUITEMS = [
         name: 'create',
         icon: 'create'
       }
-    ]
+    ],
+    minRole: 'editor'
   },
   {
     state: 'categories',
@@ -85,13 +91,15 @@ export const MENUITEMS = [
         name: 'statistics',
         icon: 'trending_up'
       }
-    ]
+    ],
+    minRole: 'admin'
   },
   {
     state: 'clubs',
     name: 'club',
     type: 'link',
-    icon: 'business'
+    icon: 'business',
+    minRole: 'admin'
   },
   {
     state: 'locations',
@@ -114,7 +122,8 @@ export const MENUITEMS = [
         name: 'map',
         icon: 'map'
       }
-    ]
+    ],
+    minRole: 'admin'
   },
   {
     state: 'members',
@@ -125,7 +134,7 @@ export const MENUITEMS = [
       {
         state: 'list',
         name: 'main',
-        icon: 'list',
+        icon: 'list'
       },
       {
         state: 'statistics',
@@ -137,13 +146,15 @@ export const MENUITEMS = [
         name: 'fame',
         icon: 'alarm_on'
       }
-    ]
+    ],
+    minRole: 'admin'
   },
   {
     state: 'settings',
     name: 'setting',
     type: 'link',
-    icon: 'settings'
+    icon: 'settings',
+    minRole: 'admin'
   },
   {
     state: 'sponsors',
@@ -154,14 +165,15 @@ export const MENUITEMS = [
       {
         state: 'list',
         name: 'list',
-        icon: 'list',
+        icon: 'list'
       },
       {
         state: 'create',
         name: 'create',
         icon: 'euro_symbol'
       }
-    ]
+    ],
+    minRole: 'admin'
   },
   {
     state: 'teams',
@@ -172,7 +184,7 @@ export const MENUITEMS = [
       {
         state: 'list',
         name: 'main',
-        icon: 'list',
+        icon: 'list'
       },
       {
         state: 'fame',
@@ -189,12 +201,14 @@ export const MENUITEMS = [
         name: 'statistics',
         icon: 'trending_up'
       }
-    ]
+    ],
+    minRole: 'editor'
   },
   {
     state: 'users',
     name: 'user',
     icon: 'people',
-    type: 'link'
+    type: 'link',
+    minRole: 'admin'
   }
 ];

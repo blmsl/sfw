@@ -1,57 +1,52 @@
-import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { NgModule }               from '@angular/core';
+import { TranslateModule }        from '@ngx-translate/core';
 import {
   MatCardModule,
   MatIconModule,
   MatProgressSpinnerModule,
-  MatSnackBarModule,
   MatTabsModule
-} from '@angular/material';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { CommonModule } from '@angular/common';
-import { LinkModule } from './components/links/link.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NgPipesModule } from 'ngx-pipes';
-import { SnackbarComponent } from './components/snackbar/snackbar.component';
-import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
-import { SubmitIfValidDirective } from './directives/submit/submit-if-valid.directive';
-import { MediaModule } from './components/media/media.module';
+}                                 from '@angular/material';
+import { CommonModule }           from '@angular/common';
+import { FlexLayoutModule }       from '@angular/flex-layout';
+import { ReactiveFormsModule }    from '@angular/forms';
+import { NgPipesModule }          from 'ngx-pipes';
+import { SnackbarComponent }      from './components/snackbar/snackbar.component';
+import { SanitizeHtmlPipe }       from './pipes/sanitize-html.pipe';
+import { MediaModule }            from './components/media/media.module';
 import { LoadingIndicatorModule } from './components/loading-indicator/loading-indicator.module';
-import { AlertService } from './services/alert/alert.service';
-import { FroalaEditorModule } from 'angular-froala-wysiwyg';
+import { AlertService }           from './services/alert/alert.service';
+import { SfwEditorModule }        from './components/editor/sfw-editor.module';
+import { NgxDatatableModule }     from '@swimlane/ngx-datatable';
+import { LinkModule }             from './components/links/link.module';
 
 @NgModule({
   declarations: [
     SanitizeHtmlPipe,
-    SnackbarComponent,
-    SubmitIfValidDirective
+    SnackbarComponent
   ],
   entryComponents: [
     SnackbarComponent
   ],
   exports: [
     CommonModule,
-    FroalaEditorModule,
-    MatCardModule,
-    MatIconModule,
-    MatTabsModule,
-    MatSnackBarModule,
-    MediaModule,
     FlexLayoutModule,
     LoadingIndicatorModule,
-    LinkModule,
+    MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MediaModule,
     NgPipesModule,
-    NgxDatatableModule,
     ReactiveFormsModule,
+    // MatSnackBarModule,
+    // MediaModule,
+    LinkModule,
+    NgxDatatableModule,
     SanitizeHtmlPipe,
+    SfwEditorModule,
     TranslateModule
   ],
-  imports: [
-    CommonModule,
-    MatProgressSpinnerModule,
-    MediaModule
-  ],
+  imports: [],
   providers: [
     AlertService
   ]

@@ -129,13 +129,12 @@
       </div>
     </div>
 
-    <div [froalaEditor]="froalaOptions"
-         [(froalaModel)]="text"
-         *ngIf="!showPreview"
-         style="height: 60vh"
-         formControlName="text">
+    <textarea [froalaEditor]="froalaOptions"
+              [(froalaModel)]="text"
+              *ngIf="!showPreview"
+              formControlName="text">
       {{'general.articles.edit.textPlaceholder' | translate}}
-    </div>
+    </textarea>
 
     <div *ngIf="showPreview">
       <div [froalaView]="text"></div>

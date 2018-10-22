@@ -12,7 +12,10 @@ import * as $ from 'jquery';
 
 @Component({
   selector: 'app-fullcalendar',
-  templateUrl: './fullcalendar.component.html'
+  templateUrl: './fullcalendar.component.html',
+  styleUrls: [
+    './fullcalendar.component.scss'
+  ]
 })
 export class FullcalendarComponent implements OnInit {
 

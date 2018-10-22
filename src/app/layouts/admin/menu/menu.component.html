@@ -1,8 +1,9 @@
 <div fxLayout="column"
      style="padding: 10px; border: 1px dashed #cecece"
-     fxHide.xs>
+     fxHide.xs
+     *ngIf="authService.user$ | async as user">
 
-  <mat-card *ngIf="authService.user$ | async as user">
+  <mat-card>
     <mat-card-header>
       <mat-card-title>
         {{'general.menu.hello' | translate}}
@@ -26,9 +27,13 @@
 
 </div>
 
-<mat-nav-list appAccordion class="navigation">
+<mat-nav-list *ngIf="authService.user$ | async as user"
+              appAccordion
+              class="navigation">
   <mat-list-item appAccordionLink *ngFor="let menuItem of menuService.getAll()" group="{{menuItem.state}}">
-    <a appAccordionToggle class="relative" [routerLink]="['/', menuItem.state]" *ngIf="menuItem.type === 'link'">
+    <a appAccordionToggle class="relative"
+       [routerLink]="['/', menuItem.state]"
+       *ngIf="menuItem.type === 'link' && user.assignedRoles[menuItem.minRole]">
       <mat-icon>{{ menuItem.icon }}</mat-icon>
       <span>{{ 'general.menu.' + menuItem.name + '.main' | translate }}</span>
       <span fxFlex></span>
@@ -47,7 +52,10 @@
       <span fxFlex></span>
       <span class="menu-badge mat-{{ badge.type }}" *ngFor="let badge of menuItem.badge">{{ badge.value }}</span>
     </a>
-    <a appAccordionToggle class="relative" href="javascript:;" *ngIf="menuItem.type === 'sub'">
+    <a appAccordionToggle
+       class="relative"
+       href="javascript:;"
+       *ngIf="menuItem.type === 'sub' && user.assignedRoles[menuItem.minRole]">
       <mat-icon>{{ menuItem.icon }}</mat-icon>
       <span>{{ 'general.menu.' + menuItem.name + '.main' | translate }}</span>
       <span fxFlex></span>
@@ -55,10 +63,10 @@
       <mat-icon class="menu-caret">arrow_drop_down</mat-icon>
     </a>
     <mat-nav-list class="sub-menu" *ngIf="menuItem.type === 'sub'">
-      <mat-list-item *ngFor="let childitem of menuItem.children" routerLinkActive="open">
-        <a [routerLink]="['/', menuItem.state, childitem.state ]" class="relative">
-          <mat-icon>{{ childitem.icon }}</mat-icon>
-          {{ 'general.menu.' + menuItem.name + '.' + childitem.name | translate}}
+      <mat-list-item *ngFor="let childItem of menuItem.children" routerLinkActive="open">
+        <a [routerLink]="['/', menuItem.state, childItem.state ]" class="relative">
+          <mat-icon>{{ childItem.icon }}</mat-icon>
+          {{ 'general.menu.' + menuItem.name + '.' + childItem.name | translate}}
         </a>
       </mat-list-item>
     </mat-nav-list>

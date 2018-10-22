@@ -1,16 +1,22 @@
-import { Observable, of as observableOf } from 'rxjs';
+import {
+  Observable,
+  of
+} from 'rxjs';
 
-import { switchMap } from 'rxjs/operators';
-import { Injectable, OnDestroy } from '@angular/core';
+import { switchMap }       from 'rxjs/operators';
+import {
+  Injectable,
+  OnDestroy
+}                          from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreDocument
-} from '@angular/fire/firestore';
-import * as firebase from 'firebase/app';
-import { ICreation } from '../../interfaces/creation.interface';
-import { IUser } from '../../interfaces/user/user.interface';
-import { IPublication } from '../../interfaces/publication.interface';
+}                          from '@angular/fire/firestore';
+import { ICreation }       from '../../interfaces/creation.interface';
+import { IUser }           from '../../interfaces/user/user.interface';
+import { IPublication }    from '../../interfaces/publication.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase       from 'firebase/app';
 
 // Presence System
 // https://www.youtube.com/watch?v=2ZDeT5hLIBQ&feature=push-u&attr_tag=EDwjeHaWKNSWOoZT-6
@@ -24,14 +30,14 @@ export class AuthService implements OnDestroy {
   public userId: string;
 
   constructor(private afAuth: AngularFireAuth,
-    private afs: AngularFirestore) {
+              private afs: AngularFirestore) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
         if (user) {
           this.userId = user.uid;
           return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
         } else {
-          return observableOf(null);
+          return of(null);
         }
       })
     );
@@ -40,49 +46,44 @@ export class AuthService implements OnDestroy {
   ngOnDestroy() {
   }
 
-  signIn(credentials): Promise<void> {
-    return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password).then(() => {
-      return this.updateUser({
-        id: firebase.auth().currentUser.uid,
-        emailVerified: firebase.auth().currentUser.emailVerified,
-        email: firebase.auth().currentUser.email
-      });
-    }
-    );
+  public async signIn(credentials): Promise<void> {
+    const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
+    return this.updateUser({
+      id: signInAction.user.uid,
+      emailVerified: signInAction.user.emailVerified,
+      email: signInAction.user.email,
+      creationTime: signInAction.user.metadata.creationTime,
+      lastSignInTime: signInAction.user.metadata.lastSignInTime
+    });
   }
 
-  register(values: IUser): Promise<void> {
-    return this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password)
-      .then(() => {
-        return this.updateUser({
-          id: firebase.auth().currentUser.uid,
-          firstName: values.firstName,
-          lastName: values.lastName,
-          emailVerified: firebase.auth().currentUser.emailVerified,
-          email: firebase.auth().currentUser.email
-        });
-      }).then(() => {
-        let user: any = firebase.auth().currentUser;
-        return user.sendEmailVerification();
-      });
+  public async register(values: IUser): Promise<void> {
+    const registerAction = await this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password);
+    await this.updateUser({
+      id: registerAction.user.uid,
+      emailVerified: registerAction.user.emailVerified,
+      email: registerAction.user.email,
+      creationTime: registerAction.user.metadata.creationTime,
+      lastSignInTime: registerAction.user.metadata.lastSignInTime
+    });
+    return registerAction.user.sendEmailVerification();
   }
 
-  private oAuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider).then((credential) => {
+  private async oAuthLogin(provider) {
+    const loginAction = await this.afAuth.auth.signInWithPopup(provider);
 
-      const data = {
-        id: firebase.auth().currentUser.uid,
-        displayName: credential.user.displayName,
-        email: credential.user.email,
-        emailVerified: true,
-        assignedRoles: {
-          subscriber: true,
-          editor: false,
-          admin: false
-        }
-      };
-
-      return this.updateUser(data);
+    return this.updateUser({
+      id: loginAction.user.uid,
+      displayName: loginAction.user.displayName,
+      emailVerified: true,
+      email: loginAction.user.email,
+      creationTime: loginAction.user.metadata.creationTime,
+      lastSignInTime: loginAction.user.metadata.lastSignInTime,
+      assignedRoles: {
+        subscriber: true,
+        editor: false,
+        admin: false
+      }
     });
   }
 
@@ -101,9 +102,9 @@ export class AuthService implements OnDestroy {
     return this.oAuthLogin(provider);
   }
 
-  /* resendVerificationMail(): Promise<any> {
-   return this.afAuth.auth.currentUser.sendEmailVerification();
-   } */
+  /*resendVerificationMail(): Promise<any> {
+    return this.afAuth.auth.currentUser.sendEmailVerification();
+  }*/
 
   sendPasswordResetEmail(email: string): Promise<any> {
     return this.afAuth.auth.sendPasswordResetEmail(email);
@@ -123,7 +124,7 @@ export class AuthService implements OnDestroy {
 
   public getCreation(): ICreation {
     return {
-      at: <any>firebase.firestore.FieldValue.serverTimestamp(),
+      at: firebase.firestore.FieldValue.serverTimestamp(),
       by: this.userId
     };
   }
@@ -136,30 +137,30 @@ export class AuthService implements OnDestroy {
   }
 
   canRead(user: IUser): boolean {
-    const allowed = ['admin', 'editor', 'subscriber'];
+    const allowed = [ 'admin', 'editor', 'subscriber' ];
     return this.checkAuthorization(user, allowed);
   }
 
   canWrite(user: any): boolean {
-    const allowed = ['admin', 'editor'];
+    const allowed = [ 'admin', 'editor' ];
     return this.checkAuthorization(user, allowed);
   }
 
   canEdit(user: IUser): boolean {
-    const allowed = ['admin', 'editor'];
+    const allowed = [ 'admin', 'editor' ];
     return this.checkAuthorization(user, allowed);
   }
 
   canDelete(user: IUser): boolean {
-    const allowed = ['admin'];
+    const allowed = [ 'admin' ];
     return this.checkAuthorization(user, allowed);
   }
 
   private checkAuthorization(user: IUser, allowedRoles: string[]): boolean {
     if (!user) return false;
     for (const role of allowedRoles) {
-      if (user.assignedRoles[role]) {
-        return true
+      if (user.assignedRoles[ role ]) {
+        return true;
       }
     }
     return false;

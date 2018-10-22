@@ -1,13 +1,7 @@
 .session {
+  background: transparent url('/assets/sfw/background.jpg') no-repeat center center;
   background-size: cover;
-}
-
-.no-webp .session {
-  background: transparent url('/assets/sfw/background.webp') no-repeat center center;
-}
-
-.webp .session{
-  background: transparent url('/assets/sfw/background.webp') no-repeat center center;
+  z-index: 0;
 }
 
 

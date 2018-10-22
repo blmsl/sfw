@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { ForbiddenComponent } from '../auth/forbidden/forbidden.component';
 import { BackendGuard } from '../../shared/guards/backend.guard';
 import { AdminGuard } from '../../shared/guards/admin.guard';
 

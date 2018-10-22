@@ -1,15 +1,27 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
-import { AuthService } from '../../shared/services/auth/auth.service';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild
+}                           from '@angular/core';
+import {
+  NavigationEnd,
+  Router
+}                           from '@angular/router';
+import {
+  PerfectScrollbarConfigInterface,
+  PerfectScrollbarDirective
+}                           from 'ngx-perfect-scrollbar';
+import { AuthService }      from '../../shared/services/auth/auth.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Subscription }     from 'rxjs';
+import { tap }              from 'rxjs/operators';
 import 'moment/min/locales';
-import * as moment from 'moment';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-
-const SMALL_WIDTH_BREAKPOINT = 960;
+import * as moment          from 'moment';
+import {
+  BreakpointObserver,
+  Breakpoints
+}                           from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-admin',
@@ -30,7 +42,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   };
 
   public currentLang = 'en';
-  public mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
+  public mediaMatches: boolean;
 
   @ViewChild('sidemenu') sidemenu;
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
@@ -38,21 +50,20 @@ export class AdminComponent implements OnInit, OnDestroy {
   public config: PerfectScrollbarConfigInterface = {};
 
   constructor(private router: Router,
-    public translate: TranslateService,
-    public authService: AuthService,
-    private breakpointObserver: BreakpointObserver) {
+              public translate: TranslateService,
+              public authService: AuthService,
+              private breakpointObserver: BreakpointObserver) {
 
     breakpointObserver.observe([
       Breakpoints.HandsetLandscape,
       Breakpoints.HandsetPortrait
     ]).subscribe(result => {
-      console.log(result);
-      /* if (result.matches) {
-        this.mediaMatcher = result.matches;
-      } */
+      if (result.matches) {
+        this.mediaMatches = result.matches;
+      }
     });
 
-    translate.addLangs(['de', 'en', 'fr']);
+    translate.addLangs([ 'de', 'en', 'fr' ]);
     translate.setDefaultLang('de');
 
     const browserLang: any = translate.getBrowserLang();
@@ -105,24 +116,24 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (this.url === '/articles/create' || this.url.indexOf('/articles/edit') > -1 || this.url === '/calendar') {
       return true;
     } else {
-      return this.mediaMatcher.matches;
+      return this.mediaMatches;
     }
   }
 
   menuMouseOver(): void {
-    if (this.mediaMatcher.matches && this.options.collapsed) {
+    if (this.mediaMatches && this.options.collapsed) {
       this.sidemenu.mode = 'over';
     }
   }
 
   menuMouseOut(): void {
-    if (this.mediaMatcher.matches && this.options.collapsed) {
+    if (this.mediaMatches && this.options.collapsed) {
       this.sidemenu.mode = 'side';
     }
   }
 
   updatePS(): void {
-    if (!this.mediaMatcher.matches && !this.options.compact) {
+    if (!this.mediaMatches && !this.options.compact) {
       setTimeout(() => {
         this.directiveScroll.update();
       }, 350);

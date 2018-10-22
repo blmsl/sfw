@@ -1,28 +1,20 @@
-import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { NgModule }              from '@angular/core';
 import {
-  MatButtonModule,
-  MatDialogModule,
-  MatIconModule
-} from '@angular/material';
-import { CommonModule } from '@angular/common';
-import { MarkdownHelpComponent } from './markdown-help/markdown-help.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+  FroalaEditorModule,
+  FroalaViewModule
+} from 'angular-froala-wysiwyg';
+import { MatDialogModule }       from '@angular/material';
 
 @NgModule({
   declarations: [
-    MarkdownHelpComponent
   ],
   imports: [
-    CommonModule,
-    MatDialogModule,
-    MatIconModule,
-    MatButtonModule,
-    TranslateModule,
-    FlexLayoutModule
+    FroalaViewModule,
+    MatDialogModule
   ],
-  entryComponents: [
-    MarkdownHelpComponent
+  exports: [
+    FroalaEditorModule,
+    FroalaViewModule
   ]
 })
 export class SfwEditorModule {

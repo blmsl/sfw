@@ -594,7 +594,7 @@
       }
     },
     "forbidden": {
-      "text": "<p>Du hast nur einen Gastzugang und Dir fehlen deshalb die Berechtigungen um die Administrationsoberfläche zu laden.</p><p>Bitte wende Dich an einen Administrator um die Berechtiungen zu erhalten.</p>",
+      "text": "Dir fehlen die Berechtigungen um die Administrationsoberfläche zu laden. Bitte wende Dich an einen Administrator um die Berechtigungen zu erhalten.",
       "title": "Zugriff verboten"
     },
     "home": "Startseite",

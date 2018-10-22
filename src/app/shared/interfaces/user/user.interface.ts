@@ -15,4 +15,7 @@ export interface IUser {
   displayName?: string;
 
   assignedRoles?: IRole;
+
+  creationTime?: string;
+  lastSignInTime?: string;
 }

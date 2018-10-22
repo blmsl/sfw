@@ -6,6 +6,8 @@
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
 
+    <h1>Service worker is <u *ngIf="!swPush.isEnabled">not</u> enabled.</h1>
+
     <div fxLayout="column"
          fxLayoutAlign="space-around stretch"
          fxLayout.gt-sm="row"

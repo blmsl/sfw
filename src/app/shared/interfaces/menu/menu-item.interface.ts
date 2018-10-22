@@ -8,4 +8,5 @@ export interface IMenuItem {
   icon: string;
   badge?: IBadgeItem[];
   children?: IChildrenItems[];
+  minRole?: string;
 }

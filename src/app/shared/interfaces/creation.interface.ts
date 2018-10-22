@@ -1,6 +1,6 @@
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 
 export interface ICreation {
-  at: firebase.firestore.Timestamp;
+  at: any;
   by: string;
 }

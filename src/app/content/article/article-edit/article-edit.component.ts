@@ -46,8 +46,9 @@ export class ArticleEditComponent implements OnInit {
   ];
 
   public froalaOptions: Object = {
+    placeholderText: 'Schreib Deine Geschichte ...',
     charCounterCount: true,
-    height: '60vh'
+    height: '70vh'
   };
 
   constructor(private route: ActivatedRoute,

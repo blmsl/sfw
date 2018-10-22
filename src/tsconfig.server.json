@@ -1,8 +1,7 @@
 {
-  "extends": "./tsconfig.app.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../dist/out-tsc/app/server",
-    "moduleResolution": "node",
     "module": "commonjs",
     "types": [
       "jasmine",
@@ -11,13 +10,5 @@
   },
   "angularCompilerOptions": {
     "entryModule": "./app/app.server.module#AppServerModule"
-  },
-  "files": [
-    "test.ts",
-    "polyfills.ts"
-  ],
-  "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts"
-  ]
+  }
 }

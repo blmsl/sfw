@@ -24,6 +24,7 @@ import { CategoryService } from '../../shared/services/category/category.service
 import { ICategory } from '../../shared/interfaces/category.interface';
 import { ArticleService } from '../../shared/services/article/article.service';
 import { IArticle } from '../../shared/interfaces/article.interface';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-dashboard',
@@ -59,6 +60,7 @@ export class DashboardComponent implements OnInit {
     private articleService: ArticleService,
     private categoryService: CategoryService,
     public memberService: MemberService,
+    public swPush: SwPush,
     public matchService: MatchService) {
 
     this.angularVersion = VERSION.full;

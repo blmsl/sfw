@@ -1,14 +1,15 @@
+// import { NgtPwaMockModule } from '@ng-toolkit/pwa';
 import { NgModule } from '@angular/core';
 import { ServerModule, ServerTransferStateModule } from '@angular/platform-server';
 import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
 
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-// import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-// import * as fs                              from 'fs';
+/*import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+ import * as fs                              from 'fs';
 import { BrowserModule } from '@angular/platform-browser';
-// import { Observable, Observer }             from 'rxjs/index';
+ import { Observable, Observer }             from 'rxjs/index';
 import { environment } from '../environments/environment';
 
 /*
@@ -25,12 +26,13 @@ export function universalLoader(): TranslateLoader {
 
 @NgModule({
   imports: [
+    /* NgtPwaMockModule,
     BrowserModule.withServerTransition({
       appId: environment.appId
-    }),
+    }),*/
     AppModule,
     ServerModule,
-    NoopAnimationsModule,
+    // NoopAnimationsModule,
     ModuleMapLoaderModule,
     ServerTransferStateModule,
     /*TranslateModule.forRoot({
@@ -38,6 +40,8 @@ export function universalLoader(): TranslateLoader {
     }),*/
     // ServiceWorkerModuleMock
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [
+    AppComponent
+  ],
 })
 export class AppServerModule { }
