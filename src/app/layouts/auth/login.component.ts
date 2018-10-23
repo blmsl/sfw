@@ -1,24 +1,24 @@
 import {
   Component,
   OnInit
-}                           from '@angular/core';
+} from '@angular/core';
 import {
   zoomIn,
   zoomOut
-}                           from 'ng-animate';
+} from 'ng-animate';
 import {
   state,
   style,
   transition,
   trigger,
   useAnimation
-}                           from '@angular/animations';
+} from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute }   from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
-  styles: [ ':host .mat-drawer-content {padding: 0;} .mat-drawer-container {z-index: 1000}' ],
+  styles: [':host .mat-drawer-content {padding: 0;} .mat-drawer-container {z-index: 1000}'],
   styleUrls: [
     'login.component.scss'
   ],
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
   public currentLang = 'en';
 
   constructor(private route: ActivatedRoute, private translate: TranslateService) {
-    translate.addLangs([ 'de', 'en', 'fr' ]);
+    translate.addLangs(['de', 'en', 'fr']);
     translate.setDefaultLang('de');
 
     const browserLang: string = translate.getBrowserLang();
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
 
   toggleFormVisibility($event: any[]) {
     for (const key in $event) {
-      this[ key ] = $event[ key ];
+      this[key] = $event[key];
     }
   }
 

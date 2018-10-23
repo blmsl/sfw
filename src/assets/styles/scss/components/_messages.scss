@@ -44,10 +44,10 @@
 }
 
 [dir="rtl"] :host ::ng-deep {
-  .side-panel-opened > .mat-drawer-content {
+  /*.side-panel-opened > .mat-drawer-content {
     margin-left: 0!important;
     margin-right: 200px!important;
-  }
+  }*/
   .messages-nav mat-icon {
     margin-right: 0;
     margin-left: 16px;

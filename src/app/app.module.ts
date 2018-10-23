@@ -1,10 +1,10 @@
-import { NgModule }                from '@angular/core';
-import { AppComponent }            from './app.component';
-import { environment }             from '../environments/environment';
-import { BrowserModule }           from '@angular/platform-browser';
-import { RouterModule }            from '@angular/router';
-import { appRoutes }               from './app.routing';
-import { ServiceWorkerModule }     from '@angular/service-worker';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './app.routing';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { TransferHttpCacheModule } from '@nguniversal/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 

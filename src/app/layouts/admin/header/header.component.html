@@ -1,6 +1,6 @@
 <mat-toolbar class="main-header"
              color="primary">
-  <button (click)="toggleSidenav.emit()"
+  <button (click)="toggleSideNav.emit()"
           mat-icon-button>
     <mat-icon>menu</mat-icon>
   </button>
@@ -23,7 +23,7 @@
     <mat-icon>fullscreen</mat-icon>
   </button>
 
-  <!--<button (click)="toggleNotificationSidenav.emit()" mat-icon-button class="ml-xs overflow-visible">
+  <!--<button (click)="toggleNotificationSideNav.emit()" mat-icon-button class="ml-xs overflow-visible">
     <mat-icon>notifications</mat-icon>
     <span class="notification-label">5</span>
   </button>-->
@@ -32,18 +32,22 @@
     <mat-icon>person</mat-icon>
   </button>
   <mat-menu #user="matMenu" x-position="before">
+
     <!--<button mat-menu-item>
       <mat-icon>settings</mat-icon>
       Settings
     </button>
+
     <button mat-menu-item>
       <mat-icon>account_box</mat-icon>
       Profile
     </button>
+
     <button mat-menu-item>
       <mat-icon>notifications_off</mat-icon>
       Disable notifications
     </button>-->
+
     <button mat-menu-item (click)="logOut()">
       <mat-icon>exit_to_app</mat-icon>
       Sign Out

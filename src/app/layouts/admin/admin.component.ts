@@ -3,21 +3,21 @@ import {
   OnDestroy,
   OnInit,
   ViewChild
-}                             from '@angular/core';
+} from '@angular/core';
 import {
   NavigationEnd,
   Router
-}                             from '@angular/router';
+} from '@angular/router';
 import {
   PerfectScrollbarConfigInterface,
   PerfectScrollbarDirective
-}                             from 'ngx-perfect-scrollbar';
-import { AuthService }        from '../../shared/services/auth/auth.service';
-import { TranslateService }   from '@ngx-translate/core';
-import { Subscription }       from 'rxjs';
-import { tap }                from 'rxjs/operators';
+} from 'ngx-perfect-scrollbar';
+import { AuthService } from '../../shared/services/auth/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import 'moment/min/locales';
-import * as moment            from 'moment';
+import * as moment from 'moment';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
@@ -46,9 +46,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   public config: PerfectScrollbarConfigInterface = {};
 
   constructor(private router: Router,
-              public translate: TranslateService,
-              public authService: AuthService,
-              private breakpointObserver: BreakpointObserver) {
+    public translate: TranslateService,
+    public authService: AuthService,
+    private breakpointObserver: BreakpointObserver) {
 
     breakpointObserver.observe('(max-width: 1024px)').subscribe(result => {
       if (result.matches) {
@@ -56,7 +56,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       }
     });
 
-    translate.addLangs([ 'de', 'en', 'fr' ]);
+    translate.addLangs(['de', 'en', 'fr']);
     translate.setDefaultLang('de');
 
     const browserLang: any = translate.getBrowserLang();
@@ -89,12 +89,11 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   runOnRouteChange(): void {
-    console.log('routeChange');
-    /* if (this.isOver()) {
+     if (this.isOver()) {
       this.sidemenu.close();
     }
 
-    this.updatePS(); */
+    this.updatePS();
   }
 
   receiveOptions($event): void {
@@ -102,6 +101,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   changeTranslation(currentLang: string) {
+    console.log(currentLang);
     this.currentLang = currentLang;
     this.translate.use(currentLang);
   }
@@ -110,7 +110,6 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (this.url === '/articles/create' || this.url.indexOf('/articles/edit') > -1 || this.url === '/calendar') {
       return true;
     } else {
-      console.log(this.mediaMatches);
       return this.mediaMatches;
     }
   }

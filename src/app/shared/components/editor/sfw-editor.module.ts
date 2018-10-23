@@ -1,9 +1,9 @@
-import { NgModule }              from '@angular/core';
+import { NgModule } from '@angular/core';
 import {
   FroalaEditorModule,
   FroalaViewModule
 } from 'angular-froala-wysiwyg';
-import { MatDialogModule }       from '@angular/material';
+import { MatDialogModule } from '@angular/material';
 
 @NgModule({
   declarations: [

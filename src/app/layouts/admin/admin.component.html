@@ -4,18 +4,21 @@
      'app-dark': options.dark,
      'boxed': options.boxed,
      'collapsed-sidebar': options.collapsed,
-     'compact-sidebar': options.compact,
-     'side-panel-opened': sidemenu.opened,
-     'side-panel-closed': !sidemenu.opened
+     'compact-sidebar': options.compact
      }">
+  <!--
+  'side-panel-opened': sidemenu.opened,
+     'side-panel-closed': !sidemenu.opened
+     -->
   <ngx-loading-bar color="#009688"></ngx-loading-bar>
-  <app-header (toggleSidenav)="sidemenu.toggle()"></app-header>
+
+  <app-header (toggleSideNav)="sidemenu.toggle()"></app-header>
 
   <mat-sidenav-container class="app-inner">
     <mat-sidenav #sidemenu
                  class="sidebar-panel"
                  id="sidebar-panel"
-                 [opened]="true"
+                 [opened]="isOver() || true"
                  [mode]="isOver() ? 'over' : 'side'"
                  (open)="sidemenu.open()"
                  (close)="sidemenu.close()"

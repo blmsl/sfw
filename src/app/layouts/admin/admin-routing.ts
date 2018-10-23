@@ -16,6 +16,7 @@ export const adminRoutes: Routes = [
       {
         path: 'articles',
         loadChildren: '../../content/article/article.module#ArticleModule',
+        canActivate: [BackendGuard]
       },
       {
         path: 'categories',

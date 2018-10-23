@@ -50,10 +50,10 @@ import { MatchTableComponent } from './match-table/match-table.component';
 import { MatchTableFilterComponent } from './match-table/match-table-filter/match-table-filter.component';
 import { MatchTableListComponent } from './match-table/match-table-list/match-table-list.component';
 import { MatchEditFormationComponent } from './match-edit/match-edit-formation/match-edit-formation.component';
-import { MatchFormationService }      from '../../shared/services/match/match-formation.service';
-import { MatchFieldSquareComponent }  from './match-edit/match-edit-formation/match-field-square/match-field-square.component';
-import { DragDropModule }             from '@angular/cdk/drag-drop';
-import { MatchEditLinksComponent }    from './match-edit/match-edit-links/match-edit-links.component';
+import { MatchFormationService } from '../../shared/services/match/match-formation.service';
+import { MatchFieldSquareComponent } from './match-edit/match-edit-formation/match-field-square/match-field-square.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatchEditLinksComponent } from './match-edit/match-edit-links/match-edit-links.component';
 import { MatchEditLinkFormComponent } from './match-edit/match-edit-links/match-edit-link-form/match-edit-link-form.component';
 
 @NgModule({

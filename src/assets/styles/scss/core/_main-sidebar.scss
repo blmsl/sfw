@@ -153,7 +153,7 @@ mat-sidenav.sidebar-panel {
     > .app-inner {
       display: table;
       border-collapse: separate;
-      margin-top: $mat-toolbar-height-desktop;
+      margin-top: 0; /*$mat-toolbar-height-desktop; */
       height: auto;
       .mat-drawer-content > .ps.ps--theme_default {
         overflow: visible!important;
@@ -209,7 +209,7 @@ mat-sidenav.sidebar-panel {
         text-align: center;
         box-sizing: content-box!important;
         -ms-flex-direction: column!important;
-        flex-direction: column!important,;
+        flex-direction: column!important;
         height: 42px;
       }
       .navigation > .mat-list-item > .mat-list-item-content > a > span:not(.menu-badge):not(.menu-caret) {
@@ -231,7 +231,7 @@ mat-sidenav.sidebar-panel {
       }
 
       .mat-list-item > .mat-list-item-content > a > .menu-caret,
-      .mat-list-item > .mat-list-item-content > a > [fxflex], {
+      .mat-list-item > .mat-list-item-content > a > [fxflex] {
         display: none;
       }
 

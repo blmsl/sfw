@@ -1,7 +1,7 @@
 <div fxLayout="column"
-     style="padding: 10px; border: 1px dashed #cecece"
+     style="padding: 10px;"
      fxHide.xs
-     *ngIf="!options.collapsed">
+     [style.display]="options.collapsed || options.compact ? 'none' : ''">
 
   <mat-card *ngIf="authService.user$ | async as user">
     <mat-card-header>
@@ -31,6 +31,7 @@
               appAccordion
               class="navigation">
   <mat-list-item appAccordionLink *ngFor="let menuItem of menuService.getAll()" group="{{menuItem.state}}">
+
     <a appAccordionToggle class="relative"
        [routerLink]="['/', menuItem.state]"
        *ngIf="menuItem.type === 'link' && user.assignedRoles[menuItem.minRole]">
@@ -39,12 +40,14 @@
       <span fxFlex></span>
       <span class="menu-badge mat-{{ badge.type }}" *ngFor="let badge of menuItem.badge">{{ badge.value }}</span>
     </a>
+
     <a appAccordionToggle class="relative" href="{{menuItem.state}}" *ngIf="menuItem.type === 'extLink'">
       <mat-icon>{{ menuItem.icon }}</mat-icon>
       <span>{{ 'general.menu.' + menuItem.name + '.main' | translate }}</span>
       <span fxFlex></span>
       <span class="menu-badge mat-{{ badge.type }}" *ngFor="let badge of menuItem.badge">{{ badge.value }}</span>
     </a>
+
     <a appAccordionToggle class="relative" href="{{menuItem.state}}" target="_blank"
        *ngIf="menuItem.type === 'extTabLink'">
       <mat-icon>{{ menuItem.icon }}</mat-icon>
@@ -52,6 +55,7 @@
       <span fxFlex></span>
       <span class="menu-badge mat-{{ badge.type }}" *ngFor="let badge of menuItem.badge">{{ badge.value }}</span>
     </a>
+
     <a appAccordionToggle
        class="relative"
        href="javascript:;"
@@ -62,6 +66,7 @@
       <span class="menu-badge mat-{{ badge.type }}" *ngFor="let badge of menuItem.badge">{{ badge.value }}</span>
       <mat-icon class="menu-caret">arrow_drop_down</mat-icon>
     </a>
+
     <mat-nav-list class="sub-menu" *ngIf="menuItem.type === 'sub'">
       <mat-list-item *ngFor="let childItem of menuItem.children" routerLinkActive="open">
         <a [routerLink]="['/', menuItem.state, childItem.state ]" class="relative">
@@ -70,6 +75,7 @@
         </a>
       </mat-list-item>
     </mat-nav-list>
+
   </mat-list-item>
 </mat-nav-list>
 

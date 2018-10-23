@@ -1,6 +1,6 @@
 export const MENUITEMS = [
   {
-    state: '/',
+    state: 'dashboard',
     name: 'dashboard',
     type: 'link',
     icon: 'dashboard',

@@ -84,9 +84,10 @@ $mat-toolbar-height-mobile-landscape: 48px !default;
   background-color: rgba(53, 53, 53, 1.00);
 }
 
+/*
 @include media-breakpoint-up(md) {
   .side-panel-opened[dir="rtl"] .mat-drawer-content {
     margin-left: 0!important;
     margin-right: $sidebar-width!important;
   }
-}
+}*/
