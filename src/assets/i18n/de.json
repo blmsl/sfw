@@ -308,6 +308,7 @@
           "isMatch": "Spielbericht?"
         },
         "createArticle": "Artikel erstellen",
+        "endMessage": "Das Ende der Liste wurden erreicht - alle Artikel wurden geladen.",
         "filterByAuthor": "Vom Author",
         "filterByStatus": "Mit dem Status",
         "filterByTags": "Mit den Schlagwort",

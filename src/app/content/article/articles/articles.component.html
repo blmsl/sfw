@@ -12,22 +12,26 @@
   </mat-card-title>
   <mat-card-content>
 
-    <div fxLayout="direction"
-         fxLayoutAlign="center center"
-         style="margin-bottom: 25px;">
-      <article-list-filter fxFlex.gt-sm="80"
-                           fxFlex="100"
-                           [form]="form">
-      </article-list-filter>
-    </div>
+    <article-list-filter></article-list-filter>
 
-    <article-list *ngIf="categories$ | async as categories; else loadingTemplate"
-                  [categories]="categories"
-                  [filters]="filters"
-                  [users]="users$ | async"
-                  (remove)="removeArticle($event)"
-                  (update)="updateArticle($event)">
-    </article-list>
+    <ng-container *ngIf="infinite | async as articles">
+      <cdk-virtual-scroll-viewport [itemSize]="itemSize"
+                                   (scrolledIndexChange)="nextBatch($event, (articles[articles.length - 1].title))">
+
+        <article-card *cdkVirtualFor="let article of articles; let i = index; trackBy: trackByIdx"
+                      [showDeleteButton]="true"
+                      [showText]="true"
+                      [itemSize]="itemSize"
+                      [article]="article">
+        </article-card>
+
+        <div class="alert alert-warning" *ngIf="theEnd">
+          {{'general.articles.list.endMessage' | translate}}
+        </div>
+
+      </cdk-virtual-scroll-viewport>
+    </ng-container>
+
   </mat-card-content>
 </mat-card>
 

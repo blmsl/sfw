@@ -106,7 +106,7 @@ export class ArticleEditComponent implements OnInit {
       debounceTime(1500),
       distinctUntilChanged()
     ).subscribe((changes: any) => {
-
+      console.log(changes);
       this.articleStatus = 'saving';
 
       if (!changes.isMatch) {

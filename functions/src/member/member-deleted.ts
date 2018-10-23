@@ -14,7 +14,7 @@ export const memberDeleted = functions
 
       for (const group of groups) {
         const motWSnapshot = await admin.firestore().collection('member-of-the-week')
-          .where(group + '.assignedMemberId', '==', context.params.teamId)
+          .where(group + '.assignedMemberId', '==', context.params.memberId)
           .get();
 
         motWSnapshot.forEach(async (doc) => {
@@ -22,16 +22,24 @@ export const memberDeleted = functions
         });
       }
 
+      // als Ehrenmitglied löschen
+
       // als Vorstandsmitglied löschen
+
       // als Trainer, Betreuer etc. löschen
-      /* als Spieler einer Mannschaft löschen
+
+      // als Spieler einer Mannschaft löschen
       const teamsSnapshot = await admin.firestore().collection('teams')
-        .where('assignedTeam', '==', context.params.teamId)
+        .where('assignedPlayers', 'array-contains', context.params.memberId)
         .get();
 
-      matchesSnapshot.docs.forEach(async (doc) => {
-        await admin.firestore().doc('matches/' + doc.data().id).delete();
-      });*/
+      teamsSnapshot.docs.forEach(async (doc) => {
+        const data = doc.data();
+        console.log(data.assignedPlayers);
+        data.assignedPlayers.splice(data.assignedPlayers.indexOf(context.params.memberId), 1);
+        console.log(data.assignedPlayers);
+        await admin.firestore().doc('teams/' + doc.data().id + '').update(data);
+      });
 
 
       // in Aufstellungen löschen

@@ -7,8 +7,10 @@
 
   <mat-card-content>
 
-    <mat-tab-group *ngIf="members$ | async as members"
-                   [dynamicHeight]="true">
+    <ng-container *ngIf="members$ | async as members">
+
+      <mat-tab-group
+      [dynamicHeight]="true">
       <mat-tab label="{{'general.clubs.edit.mainTitle' | translate}}">
         <club-detail-main [locations]="locations$ | async"
                           [members]="members"
@@ -68,7 +70,8 @@
         </ul>
       </mat-tab>
 
-    </mat-tab-group>
+      </mat-tab-group>
+    </ng-container>
   </mat-card-content>
 
   <mat-card-actions fxLayout="column"

@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ArticleService } from '../../../shared/services/article/article.service';
-import { CategoryService } from '../../../shared/services/category/category.service';
-import { IArticle } from '../../../shared/interfaces/article.interface';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
 import { ICategory } from '../../../shared/interfaces/category.interface';
-import { UserService } from '../../../shared/services/user/user.service';
-import { AlertService } from '../../../shared/services/alert/alert.service';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { debounceTime } from 'rxjs/internal/operators';
-import { FormBuilder, FormGroup } from '@angular/forms';
+
 import { IUser } from '../../../shared/interfaces/user/user.interface';
 
 @Component({
@@ -19,11 +19,73 @@ import { IUser } from '../../../shared/interfaces/user/user.interface';
 
 export class ArticlesComponent implements OnInit {
 
-  public articles$: Observable<IArticle[]>;
+  // public articles$: Observable<IArticle[]>;
   public categories$: Observable<ICategory[]>;
   public users$: Observable<IUser[]>;
 
-  public form: FormGroup;
+  @ViewChild(CdkVirtualScrollViewport)
+  viewport: CdkVirtualScrollViewport;
+
+  public batch = 20;
+  public theEnd = false;
+
+  public offset = new BehaviorSubject(null);
+  public infinite: Observable<any[]>;
+  public itemSize: number = 400;
+
+  public order: string = 'title';
+
+  constructor(private db: AngularFirestore) {
+    const batchMap = this.offset.pipe(
+      throttleTime(500),
+      mergeMap(n => this.getBatch(n)),
+      scan((acc, batch) => {
+        return { ...acc, ...batch };
+      }, {})
+    );
+
+    this.infinite = batchMap.pipe(map(v => Object.values(v)));
+  }
+
+  getBatch(offset) {
+    return this.db
+      .collection('articles', ref =>
+        ref
+          .orderBy(this.order)
+          .startAfter(offset)
+          .limit(this.batch)
+      )
+      .snapshotChanges()
+      .pipe(
+        tap(arr => (arr.length ? null : (this.theEnd = true))),
+        map(arr => {
+          return arr.reduce((acc, cur) => {
+            const id = cur.payload.doc.id;
+            const data = cur.payload.doc.data();
+            return { ...acc, [id]: data };
+          }, {});
+        })
+      );
+  }
+
+  nextBatch(e, offset) {
+    if (this.theEnd) {
+      return;
+    }
+
+    const end = this.viewport.getRenderedRange().end;
+    const total = this.viewport.getDataLength();
+    console.log(`${end}, '>=', ${total}`);
+    if (end === total) {
+      this.offset.next(offset);
+    }
+  }
+
+  trackByIdx(i) {
+    return i;
+  }
+
+  /* public form: FormGroup;
   public filters: {
     author?: string,
     sorting?: string,
@@ -36,13 +98,17 @@ export class ArticlesComponent implements OnInit {
     private alertService: AlertService,
     private fb: FormBuilder,
     private categoryService: CategoryService) {
-    this.articles$ = articleService.articles$;
+    // this.articles$ = articleService.articles$;
     this.users$ = this.userService.users$;
     this.categories$ = categoryService.categories$;
   }
 
+  trackByIdx(i) {
+    return i;
+  }*/
+
   ngOnInit() {
-    this.form = this.fb.group({
+    /* this.form = this.fb.group({
       assignedTags: undefined,
       creation: this.fb.group({
         'by': undefined,
@@ -63,10 +129,10 @@ export class ArticlesComponent implements OnInit {
       tags: string[]
     }) => {
       this.filters = changes;
-    });
+    }); */
   }
 
-  removeArticle($event) {
+  /*removeArticle($event) {
     this.articleService.removeArticle($event).then(
       () => this.alertService.showSnackBar('success', 'general.articles.edit.deleteSuccess'),
       (error: any) => this.alertService.showSnackBar('error', error.message));
@@ -76,5 +142,5 @@ export class ArticlesComponent implements OnInit {
     this.articleService.updateArticle($event.article.id, $event.article).then(
       () => this.alertService.showSnackBar('success', 'general.articles.edit.updateSuccess'),
       (error: any) => this.alertService.showSnackBar('error', error.message));
-  }
+  }*/
 }

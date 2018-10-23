@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup
+} from '@angular/forms';
 import { IUser } from '../../../../shared/interfaces/user/user.interface';
 import { UserService } from '../../../../shared/services/user/user.service';
 import { Observable } from 'rxjs/index';
@@ -12,9 +15,8 @@ import { ArticleService } from '../../../../shared/services/article/article.serv
 })
 export class ArticleListFilterComponent implements OnInit {
 
-  @Input() form: FormGroup;
-
   public users$: Observable<IUser[]>;
+  public form: FormGroup;
 
   public publicationStatuses: {
     value: number,
@@ -22,12 +24,19 @@ export class ArticleListFilterComponent implements OnInit {
   }[];
 
   constructor(private userService: UserService,
+    private fb: FormBuilder,
     private articleService: ArticleService) {
     this.users$ = userService.users$;
     this.publicationStatuses = articleService.publicationStatuses;
   }
 
   ngOnInit() {
+    this.form = this.fb.group({
+      publication: [''],
+      by: [''],
+      assignedTags: [''],
+      sorting: ['desc']
+    });
   }
 
 }

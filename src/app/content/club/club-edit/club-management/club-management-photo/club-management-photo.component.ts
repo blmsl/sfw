@@ -29,6 +29,12 @@ export class ClubManagementPhotoComponent implements OnInit {
     allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
+  public froalaOptions: Object = {
+    placeholderText: 'Wer ist auf dem Bild zu sehen?',
+    charCounterCount: true,
+    height: '25vh'
+  };
+
   constructor() {
   }
 

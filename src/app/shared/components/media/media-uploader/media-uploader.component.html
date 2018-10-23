@@ -34,7 +34,7 @@
   <mat-card-content>
 
     <div class="dropZone"
-         [style.backgroundImage]="sanitizer.bypassSecurityTrustStyle('url('+ (currentMediaItem | async) ? (currentMediaItem | async)?.downloadURL : '' +')')"
+         [style.backgroundImage]="sanitizer.bypassSecurityTrustStyle('url('+ (currentMediaItem | async)?.downloadURL +')')"
          dropZone
          (hovered)="toggleHover($event)"
          (dropped)="handleDrop($event)"

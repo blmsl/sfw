@@ -3,22 +3,26 @@ import {
   OnDestroy,
   OnInit,
   ViewChild
-} from '@angular/core';
+}                             from '@angular/core';
 import {
   NavigationEnd,
   Router
-} from '@angular/router';
+}                             from '@angular/router';
 import {
   PerfectScrollbarConfigInterface,
   PerfectScrollbarDirective
-} from 'ngx-perfect-scrollbar';
-import { AuthService } from '../../shared/services/auth/auth.service';
-import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+}                             from 'ngx-perfect-scrollbar';
+import { AuthService }        from '../../shared/services/auth/auth.service';
+import { TranslateService }   from '@ngx-translate/core';
+import { Subscription }       from 'rxjs';
+import { tap }                from 'rxjs/operators';
 import 'moment/min/locales';
-import * as moment from 'moment';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import * as moment            from 'moment';
+import {
+  BreakpointObserver,
+  BreakpointState,
+  MediaMatcher
+} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-admin',
@@ -46,17 +50,11 @@ export class AdminComponent implements OnInit, OnDestroy {
   public config: PerfectScrollbarConfigInterface = {};
 
   constructor(private router: Router,
-    public translate: TranslateService,
-    public authService: AuthService,
-    private breakpointObserver: BreakpointObserver) {
+              public translate: TranslateService,
+              public breakpointObserver: BreakpointObserver,
+              public authService: AuthService) {
 
-    breakpointObserver.observe('(max-width: 1024px)').subscribe(result => {
-      if (result.matches) {
-        this.mediaMatches = result.matches;
-      }
-    });
-
-    translate.addLangs(['de', 'en', 'fr']);
+    translate.addLangs([ 'de', 'en', 'fr' ]);
     translate.setDefaultLang('de');
 
     const browserLang: any = translate.getBrowserLang();
@@ -82,6 +80,17 @@ export class AdminComponent implements OnInit, OnDestroy {
       }
       this.runOnRouteChange();
     });
+
+    this.breakpointObserver
+      .observe(['(min-width: 960px)'])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          console.log('Viewport is 960px or over!');
+        } else {
+          console.log('Viewport is getting smaller!');
+        }
+        this.mediaMatches = state.matches;
+      });
   }
 
   ngOnDestroy(): void {
@@ -89,9 +98,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   runOnRouteChange(): void {
-     if (this.isOver()) {
+    /*if (this.isOver()) {
       this.sidemenu.close();
-    }
+    }*/
 
     this.updatePS();
   }
@@ -108,9 +117,13 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   isOver(): boolean {
     if (this.url === '/articles/create' || this.url.indexOf('/articles/edit') > -1 || this.url === '/calendar') {
-      return true;
-    } else {
+      return false;
+    }
+    else if(this.mediaMatches){
       return this.mediaMatches;
+    }
+    else {
+      return false;
     }
   }
 

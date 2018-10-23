@@ -12,7 +12,7 @@
 
       <mat-tab label="{{'general.media.list.title' | translate}} {{'(' + mediaItems.length + ')' }}">
 
-        <div class="example-container"
+        <!--<div class="example-container"
              *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
              [class.example-is-mobile]="mobileQuery.matches">
 
@@ -50,7 +50,7 @@
                                           cdkDrag>
                         <img *cdkDragPreview src="https://via.placeholder.com/150x90" [alt]="mediaItem.title">
                       </media-gallery-item>
-                    </cdk-drop>-->
+                    </cdk-drop>
                   </mat-card-content>
                 </mat-card>
 
@@ -134,12 +134,12 @@
                   </mat-card-actions>
                 </mat-card>
 
-              <!--</cdk-drop>-->
+              <!--</cdk-drop>
 
 
             </mat-sidenav-content>
           </mat-sidenav-container>
-        </div>
+        </div>-->
       </mat-tab>
       <mat-tab label="{{'general.media.uploader.title' | translate}}">
         <media-uploader [uploaderConfig]="uploaderConfig"

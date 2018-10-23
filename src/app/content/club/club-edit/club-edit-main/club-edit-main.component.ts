@@ -32,6 +32,12 @@ export class ClubEditMainComponent implements OnInit {
     allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
+  public froalaOptions: Object = {
+    placeholderText: 'Eine Kurzinfo zum Verein ...',
+    charCounterCount: true,
+    height: '30vh'
+  };
+
   constructor() {
   }
 

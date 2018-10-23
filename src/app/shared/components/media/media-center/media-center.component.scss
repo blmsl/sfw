@@ -54,8 +54,9 @@ mat-sidenav {
 }
 
 .cdk-drag-placeholder {
-  opacity: 0.3;
-  background-color: #a3a3a3;
+  opacity: 0;
+  /*opacity: 0.3;
+  background-color: #a3a3a3; */
 }
 
 .cdk-drag-animating {
