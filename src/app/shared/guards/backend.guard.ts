@@ -30,7 +30,7 @@ export class BackendGuard implements CanActivate {
     return this.authService.user$.pipe(
       take(1),
       map((user: IUser) => {
-        console.log(user);
+        console.log(user.assignedRoles);
         return !!(user && (user.assignedRoles.admin || user.assignedRoles.editor));
       }),
       tap((isAllowed: boolean) => {

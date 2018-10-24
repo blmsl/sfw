@@ -1,5 +1,5 @@
 export interface IRole {
-  admin: boolean;
-  editor: boolean;
+  admin?: boolean;
+  editor?: boolean;
   subscriber: boolean;
 }

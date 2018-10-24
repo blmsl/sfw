@@ -53,7 +53,10 @@ export class AuthService implements OnDestroy {
       emailVerified: signInAction.user.emailVerified,
       email: signInAction.user.email,
       creationTime: signInAction.user.metadata.creationTime,
-      lastSignInTime: signInAction.user.metadata.lastSignInTime
+      lastSignInTime: signInAction.user.metadata.lastSignInTime,
+      assignedRoles: {
+        subscriber: true
+      }
     });
   }
 
@@ -64,7 +67,10 @@ export class AuthService implements OnDestroy {
       emailVerified: registerAction.user.emailVerified,
       email: registerAction.user.email,
       creationTime: registerAction.user.metadata.creationTime,
-      lastSignInTime: registerAction.user.metadata.lastSignInTime
+      lastSignInTime: registerAction.user.metadata.lastSignInTime,
+      assignedRoles: {
+        subscriber: true
+      }
     });
     return registerAction.user.sendEmailVerification();
   }
