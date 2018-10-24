@@ -4,7 +4,7 @@
 // npm run deploy (update functions)
 // firebase login:ci
 // add cronJobs via gcloud console:
-// gcloud app deploy app.yaml cron.yaml php.yaml --version=2
+// gcloud app deploy app.yaml cron.yaml php.yaml --version=1
 // https://console.cloud.google.com/logs
 // gcloud app browse
 // https://console.cloud.google.com/functions/list?project=sf-winterbach

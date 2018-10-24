@@ -34,6 +34,7 @@ export class BackendGuard implements CanActivate {
         return !!(user && (user.assignedRoles.admin || user.assignedRoles.editor));
       }),
       tap((isAllowed: boolean) => {
+        console.log(isAllowed);
         if (!isAllowed) {
           this.authService.signOut().then(() => {
             this.alertService.showSnackBar('error', 'general.forbidden.text', 15000);
