@@ -8,13 +8,20 @@ import {
   Output,
   ViewChild,
   ViewContainerRef
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../shared/services/auth/auth.service';
-import { AlertService } from '../../../shared/services/alert/alert.service';
+}                         from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+}                         from '@angular/forms';
+import {
+  ActivatedRoute,
+  Router
+}                         from '@angular/router';
+import { AuthService }    from '../../../shared/services/auth/auth.service';
+import { AlertService }   from '../../../shared/services/alert/alert.service';
 import { AlertComponent } from '../../../shared/directives/alert/alert.component';
-import { Subscription } from 'rxjs/index';
+import { Subscription }   from 'rxjs/index';
 
 @Component({
   selector: 'sign-in',
@@ -41,22 +48,24 @@ export class SignInComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   constructor(private alertService: AlertService,
-    public authService: AuthService,
-    private cfr: ComponentFactoryResolver,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router) {
+              public authService: AuthService,
+              private cfr: ComponentFactoryResolver,
+              private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams[ 'returnUrl' ] || '/';
     this.form = this.fb.group({
-      email: ['',
+      email: [
+        '',
         [
           Validators.email
         ]
       ],
-      password: ['',
+      password: [
+        '',
         [
           Validators.required,
           Validators.minLength(this.passwordMinLength),
@@ -88,7 +97,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.authService.signIn(credentials)
       .then(() => {
         this.isLoading = false;
-        this.router.navigate([this.returnUrl]).then();
+        this.router.navigate([ this.returnUrl ]).then();
       })
       .catch((error: any) => {
         this.isLoading = false;
@@ -119,13 +128,13 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   showAlert(target) {
-    this[target].clear();
+    this[ target ].clear();
     const factory = this.cfr.resolveComponentFactory(AlertComponent);
-    const ref = this[target].createComponent(factory);
+    const ref = this[ target ].createComponent(factory);
     ref.changeDetectorRef.detectChanges();
   }
 
-  socialLogin(provider: string): Promise<any> {
+  /* socialLogin(provider: string): Promise<any> {
     const _that = this;
     this.isLoading = true;
     let loginAction;
@@ -145,7 +154,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       .then(() => {
         console.log('finished social login');
         console.log(this.returnUrl);
-        return this.router.navigate([this.returnUrl])
+        return this.router.navigate([ this.returnUrl ]);
       })
       .catch((error: any) => {
         console.log(error);
@@ -154,6 +163,6 @@ export class SignInComponent implements OnInit, OnDestroy {
         _that.showAlert('signInAlertContainer');
         _that.alertService.error(error.code);
       });
-  }
+  } */
 
 }

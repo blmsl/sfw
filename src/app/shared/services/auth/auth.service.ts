@@ -45,14 +45,7 @@ export class AuthService {
   public async signIn(credentials): Promise<void> {
     const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
     return this.updateUser({
-      id: signInAction.user.uid,
-      emailVerified: signInAction.user.emailVerified,
-      email: signInAction.user.email,
-      creationTime: signInAction.user.metadata.creationTime,
-      lastSignInTime: signInAction.user.metadata.lastSignInTime,
-      assignedRoles: {
-        subscriber: true
-      }
+      lastSignInTime: signInAction.user.metadata.lastSignInTime
     });
   }
 
@@ -71,40 +64,40 @@ export class AuthService {
     return registerAction.user.sendEmailVerification();
   }
 
-  private async oAuthLogin(provider) {
-    const loginAction = await this.afAuth.auth.signInWithPopup(provider);
+  /* private async oAuthLogin(provider) {
+   const loginAction = await this.afAuth.auth.signInWithPopup(provider);
 
-    return this.updateUser({
-      id: loginAction.user.uid,
-      displayName: loginAction.user.displayName,
-      emailVerified: true,
-      email: loginAction.user.email,
-      creationTime: loginAction.user.metadata.creationTime,
-      lastSignInTime: loginAction.user.metadata.lastSignInTime,
-      assignedRoles: {
-        subscriber: true,
-        editor: false,
-        admin: false
-      }
-    });
-  }
+   return this.updateUser({
+   id: loginAction.user.uid,
+   displayName: loginAction.user.displayName,
+   emailVerified: true,
+   email: loginAction.user.email,
+   creationTime: loginAction.user.metadata.creationTime,
+   lastSignInTime: loginAction.user.metadata.lastSignInTime,
+   assignedRoles: {
+   subscriber: true,
+   editor: false,
+   admin: false
+   }
+   });
+   }
 
-  googleLogin(): Promise<any> {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider);
-  }
+   googleLogin(): Promise<any> {
+   const provider = new firebase.auth.GoogleAuthProvider();
+   return this.oAuthLogin(provider);
+   }
 
-  facebookLogin(): Promise<any> {
-    const provider = new firebase.auth.FacebookAuthProvider();
-    return this.oAuthLogin(provider);
-  }
+   facebookLogin(): Promise<any> {
+   const provider = new firebase.auth.FacebookAuthProvider();
+   return this.oAuthLogin(provider);
+   }
 
-  twitterLogin(): Promise<any> {
-    const provider = new firebase.auth.TwitterAuthProvider();
-    return this.oAuthLogin(provider);
-  }
+   twitterLogin(): Promise<any> {
+   const provider = new firebase.auth.TwitterAuthProvider();
+   return this.oAuthLogin(provider);
+   }
 
-  /*resendVerificationMail(): Promise<any> {
+   resendVerificationMail(): Promise<any> {
    return this.afAuth.auth.currentUser.sendEmailVerification();
    }*/
 
@@ -116,8 +109,7 @@ export class AuthService {
     return this.afAuth.auth.signOut();
   }
 
-  private updateUser(data: IUser): Promise<void> {
-    console.log('update user');
+  private updateUser(data: any): Promise<void> {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${data.id}`);
     data.assignedRoles = {
       subscriber: true
