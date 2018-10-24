@@ -4,23 +4,23 @@ import {
   Input,
   OnInit,
   Output
-}                       from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup
-}                       from '@angular/forms';
-import { IUser }        from '../../../../shared/interfaces/user/user.interface';
+} from '@angular/forms';
+import { IUser } from '../../../../shared/interfaces/user/user.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                       from 'rxjs/operators';
-import { AuthService }  from '../../../../shared/services/auth/auth.service';
+} from 'rxjs/operators';
+import { AuthService } from '../../../../shared/services/auth/auth.service';
 import { AlertService } from '../../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'user-edit-main',
   templateUrl: './user-edit-main.component.html',
-  styleUrls: [ './user-edit-main.component.scss' ]
+  styleUrls: ['./user-edit-main.component.scss']
 })
 export class UserEditMainComponent implements OnInit {
 
@@ -32,8 +32,8 @@ export class UserEditMainComponent implements OnInit {
   public notEditableMessage: boolean = false;
 
   constructor(private fb: FormBuilder,
-              private alertService: AlertService,
-              private authService: AuthService) {
+    private alertService: AlertService,
+    private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -47,7 +47,7 @@ export class UserEditMainComponent implements OnInit {
     });
 
     this.authService.isCurrentUser(this.user.id).then((isCurrentUser) => {
-      if(isCurrentUser) {
+      if (isCurrentUser) {
         this.form.get('isDisabled').disable();
         this.notEditableMessage = true;
       }

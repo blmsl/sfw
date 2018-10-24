@@ -33,11 +33,11 @@
                 "input": "src",
                 "output": "/"
               },
-              {
-                "glob": "ngsw-worker.js",
-                "input": "src/assets/fakeSW",
-                "output": "/"
-              },
+              // {
+              //   "glob": "ngsw-worker.js",
+              //   "input": "src/assets/fakeSW",
+              //   "output": "/"
+              // },
               "src/manifest.json"
             ],
             "styles": [

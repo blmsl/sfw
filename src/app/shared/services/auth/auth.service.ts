@@ -7,17 +7,17 @@ import {
   first,
   map,
   switchMap
-}                          from 'rxjs/operators';
-import { Injectable }      from '@angular/core';
+} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreDocument
-}                          from '@angular/fire/firestore';
-import { ICreation }       from '../../interfaces/creation.interface';
-import { IUser }           from '../../interfaces/user/user.interface';
-import { IPublication }    from '../../interfaces/publication.interface';
+} from '@angular/fire/firestore';
+import { ICreation } from '../../interfaces/creation.interface';
+import { IUser } from '../../interfaces/user/user.interface';
+import { IPublication } from '../../interfaces/publication.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
-import * as firebase       from 'firebase/app';
+import * as firebase from 'firebase/app';
 
 // Presence System
 // https://www.youtube.com/watch?v=2ZDeT5hLIBQ&feature=push-u&attr_tag=EDwjeHaWKNSWOoZT-6
@@ -31,7 +31,7 @@ export class AuthService {
   public userId: string;
 
   constructor(private afAuth: AngularFireAuth,
-              private afs: AngularFirestore) {
+    private afs: AngularFirestore) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
         if (user) {
@@ -150,29 +150,29 @@ export class AuthService {
   }
 
   canRead(user: IUser): boolean {
-    const allowed = [ 'admin', 'editor', 'subscriber' ];
+    const allowed = ['admin', 'editor', 'subscriber'];
     return this.checkAuthorization(user, allowed);
   }
 
   canWrite(user: any): boolean {
-    const allowed = [ 'admin', 'editor' ];
+    const allowed = ['admin', 'editor'];
     return this.checkAuthorization(user, allowed);
   }
 
   canEdit(user: IUser): boolean {
-    const allowed = [ 'admin', 'editor' ];
+    const allowed = ['admin', 'editor'];
     return this.checkAuthorization(user, allowed);
   }
 
   canDelete(user: IUser): boolean {
-    const allowed = [ 'admin' ];
+    const allowed = ['admin'];
     return this.checkAuthorization(user, allowed);
   }
 
   private checkAuthorization(user: IUser, allowedRoles: string[]): boolean {
     if (!user) return false;
     for (const role of allowedRoles) {
-      if (user.assignedRoles[ role ]) {
+      if (user.assignedRoles[role]) {
         return true;
       }
     }

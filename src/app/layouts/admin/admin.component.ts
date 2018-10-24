@@ -3,21 +3,21 @@ import {
   OnDestroy,
   OnInit,
   ViewChild
-}                             from '@angular/core';
+} from '@angular/core';
 import {
   NavigationEnd,
   Router
-}                             from '@angular/router';
+} from '@angular/router';
 import {
   PerfectScrollbarConfigInterface,
   PerfectScrollbarDirective
-}                             from 'ngx-perfect-scrollbar';
-import { AuthService }        from '../../shared/services/auth/auth.service';
-import { TranslateService }   from '@ngx-translate/core';
-import { Subscription }       from 'rxjs';
-import { tap }                from 'rxjs/operators';
+} from 'ngx-perfect-scrollbar';
+import { AuthService } from '../../shared/services/auth/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import 'moment/min/locales';
-import * as moment            from 'moment';
+import * as moment from 'moment';
 import {
   BreakpointObserver,
   BreakpointState,
@@ -50,11 +50,11 @@ export class AdminComponent implements OnInit, OnDestroy {
   public config: PerfectScrollbarConfigInterface = {};
 
   constructor(private router: Router,
-              public translate: TranslateService,
-              public breakpointObserver: BreakpointObserver,
-              public authService: AuthService) {
+    public translate: TranslateService,
+    public breakpointObserver: BreakpointObserver,
+    public authService: AuthService) {
 
-    translate.addLangs([ 'de', 'en', 'fr' ]);
+    translate.addLangs(['de', 'en', 'fr']);
     translate.setDefaultLang('de');
 
     const browserLang: any = translate.getBrowserLang();
@@ -119,7 +119,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (this.url === '/articles/create' || this.url.indexOf('/articles/edit') > -1 || this.url === '/calendar') {
       return false;
     }
-    else if(this.mediaMatches){
+    else if (this.mediaMatches) {
       return this.mediaMatches;
     }
     else {

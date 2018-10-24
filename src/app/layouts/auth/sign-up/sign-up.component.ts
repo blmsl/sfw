@@ -7,22 +7,22 @@ import {
   Output,
   ViewChild,
   ViewContainerRef
-}                         from '@angular/core';
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators
-}                         from '@angular/forms';
-import { IUser }          from '../../../shared/interfaces/user/user.interface';
-import { AuthService }    from '../../../shared/services/auth/auth.service';
-import { AlertService }   from '../../../shared/services/alert/alert.service';
+} from '@angular/forms';
+import { IUser } from '../../../shared/interfaces/user/user.interface';
+import { AuthService } from '../../../shared/services/auth/auth.service';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 import { AlertComponent } from '../../../shared/directives/alert/alert.component';
 
 @Component({
   selector: 'sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: [ './sign-up.component.scss' ]
+  styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
 
@@ -40,16 +40,16 @@ export class SignUpComponent implements OnInit {
   }) signUpAlertContainer: ViewContainerRef;
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService,
-              private alertService: AlertService,
-              private cfr: ComponentFactoryResolver) {
+    private authService: AuthService,
+    private alertService: AlertService,
+    private cfr: ComponentFactoryResolver) {
   }
 
   ngOnInit() {
     this.form = this.fb.group({
-      firstName: [ '', [ Validators.required, Validators.minLength(this.nameMinLength) ] ],
-      lastName: [ '', [ Validators.required ] ],
-      email: [ '', [ Validators.email ] ],
+      firstName: ['', [Validators.required, Validators.minLength(this.nameMinLength)]],
+      lastName: ['', [Validators.required]],
+      email: ['', [Validators.email]],
       passwords: this.fb.group({
         password: [
           '', [
@@ -66,9 +66,9 @@ export class SignUpComponent implements OnInit {
           ]
         ]
       }, {
-        validator: this.passwordConfirming
-      }),
-      agree: [ false, [ Validators.required, this.validateAgreement ] ]
+          validator: this.passwordConfirming
+        }),
+      agree: [false, [Validators.required, this.validateAgreement]]
     });
   }
 
@@ -128,9 +128,9 @@ export class SignUpComponent implements OnInit {
   }
 
   showAlert(target) {
-    this[ target ].clear();
+    this[target].clear();
     const factory = this.cfr.resolveComponentFactory(AlertComponent);
-    const ref = this[ target ].createComponent(factory);
+    const ref = this[target].createComponent(factory);
     ref.changeDetectorRef.detectChanges();
   }
 
