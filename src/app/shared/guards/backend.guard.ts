@@ -28,7 +28,7 @@ export class BackendGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.user$.pipe(
-      take(1),
+      // take(1),
       map((user: IUser) => {
         console.log(user.assignedRoles);
         return !!(user && (user.assignedRoles.admin || user.assignedRoles.editor));

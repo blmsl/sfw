@@ -67,7 +67,10 @@ export class SignUpComponent implements OnInit {
       firstName: this.form.value.firstName,
       lastName: this.form.value.lastName,
       email: this.form.value.email,
-      password: this.form.value.passwords.password
+      password: this.form.value.passwords.password,
+      assignedRoles: {
+        subscriber: true
+      }
     };
     this.authService.register(user).then(() => {
       this.isLoading = false;
