@@ -7,10 +7,11 @@ import {
 }                      from '@angular/router';
 import { Observable }  from 'rxjs';
 import {
+  first,
   map,
   take,
   tap
-}                      from 'rxjs/operators';
+} from 'rxjs/operators';
 import { IUser }       from '../interfaces/user/user.interface';
 import { AuthService } from '../services/auth/auth.service';
 
@@ -22,8 +23,9 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+
     return this.authService.user$.pipe(
-      take(1),
+      first(),
       map((user: IUser) => {
         if (user && !user.emailVerified) {
           this.authService.signOut().then(() => {

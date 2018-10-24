@@ -4,22 +4,23 @@ import {
   Input,
   OnInit,
   Output
-} from '@angular/core';
+}                       from '@angular/core';
 import {
   FormBuilder,
   FormGroup
-} from '@angular/forms';
-import { IUser } from '../../../../shared/interfaces/user/user.interface';
-import { AuthService } from '../../../../shared/services/auth/auth.service';
+}                       from '@angular/forms';
+import { IUser }        from '../../../../shared/interfaces/user/user.interface';
+import { AuthService }  from '../../../../shared/services/auth/auth.service';
 import {
   debounceTime,
   distinctUntilChanged
-} from 'rxjs/operators';
+}                       from 'rxjs/operators';
+import { AlertService } from '../../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'user-edit-roles',
   templateUrl: './user-edit-roles.component.html',
-  styleUrls: ['./user-edit-roles.component.scss']
+  styleUrls: [ './user-edit-roles.component.scss' ]
 })
 export class UserEditRolesComponent implements OnInit {
 
@@ -30,7 +31,8 @@ export class UserEditRolesComponent implements OnInit {
   public rolesNotEditableMessage: boolean;
 
   constructor(private fb: FormBuilder,
-    private authService: AuthService) {
+              private alertService: AlertService,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -42,10 +44,12 @@ export class UserEditRolesComponent implements OnInit {
       })
     });
 
-    if (this.authService.userId === this.user.id) {
-      this.form.get('assignedRoles').disable();
-      this.rolesNotEditableMessage = true;
-    }
+    this.authService.isCurrentUser(this.user.id).then((isCurrentUser) => {
+      if(isCurrentUser) {
+        this.form.get('assignedRoles').disable();
+        this.rolesNotEditableMessage = true;
+      }
+    });
 
     this.form.valueChanges.pipe(
       debounceTime(1000),
@@ -55,7 +59,6 @@ export class UserEditRolesComponent implements OnInit {
         this.saveUser.emit(changes);
       }
     });
-
   }
 
 }

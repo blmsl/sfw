@@ -36,7 +36,7 @@ export class MediaUploaderComponent implements OnInit {
   public currentUploads: Upload[] = [];
   public isHovering: boolean;
   public canUpload: boolean = true;
-  public currentMediaItem: Observable<IMediaItem>;
+  public currentMediaItem$: Observable<IMediaItem>;
 
   public savedItemId: string;
 
@@ -52,12 +52,13 @@ export class MediaUploaderComponent implements OnInit {
     this.savedItemId = this.uploaderOptions.itemId;
 
     if (this.uploaderOptions.queueLimit === 1) {
-      this.currentMediaItem = this.mediaItemService.getCurrentImage(
+      this.currentMediaItem$ = this.mediaItemService.getCurrentImage(
         this.uploaderOptions.assignedObjects,
-        this.uploaderOptions.itemId ? this.uploaderOptions.itemId : ''
+        this.uploaderOptions.itemId ? this.uploaderOptions.itemId : '',
+        this.uploaderConfig.placeHolderImage
       );
     } else {
-      this.currentMediaItem = of(null);
+      this.currentMediaItem$ = of(null);
     }
   }
 
@@ -151,7 +152,7 @@ export class MediaUploaderComponent implements OnInit {
           this.alertService.showSnackBar('success', 'general.uploader.singleFinished');
 
           if (this.uploaderOptions.queueLimit === 1) {
-            this.currentMediaItem = this.mediaItemService.getCurrentImage(
+            this.currentMediaItem$ = this.mediaItemService.getCurrentImage(
               this.uploaderOptions.assignedObjects,
               mediaItem.itemId
             );
@@ -173,6 +174,7 @@ export class MediaUploaderComponent implements OnInit {
   }
 
   uploadSingleFile(fileUpload: Upload, itemId?: string) {
+    console.log('Todo');
     if (!itemId) {
       itemId = this.uploaderOptions.itemId;
     }

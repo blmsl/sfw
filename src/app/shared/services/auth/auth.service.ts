@@ -3,7 +3,11 @@ import {
   of
 } from 'rxjs';
 
-import { switchMap }       from 'rxjs/operators';
+import {
+  first,
+  map,
+  switchMap
+}                          from 'rxjs/operators';
 import { Injectable }      from '@angular/core';
 import {
   AngularFirestore,
@@ -31,8 +35,6 @@ export class AuthService {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
         if (user) {
-          console.log(user);
-
           this.userId = user.uid;
           return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
         } else {
@@ -58,6 +60,8 @@ export class AuthService {
       creationTime: registerAction.user.metadata.creationTime,
       lastSignInTime: registerAction.user.metadata.lastSignInTime,
       assignedRoles: {
+        admin: false,
+        editor: false,
         subscriber: true
       }
     });
@@ -106,6 +110,7 @@ export class AuthService {
   }
 
   signOut(): Promise<any> {
+    delete this.userId;
     return this.afAuth.auth.signOut();
   }
 
@@ -117,14 +122,30 @@ export class AuthService {
   public getCreation(): ICreation {
     return {
       at: firebase.firestore.FieldValue.serverTimestamp(),
-      by: this.userId
+      by: 'this.userId'
     };
+  }
+
+  public getUserId(): Promise<string> {
+    return this.afAuth.authState.pipe(
+      first(),
+      map(user => {
+        console.log(user.uid);
+        if (user)
+          return user.uid;
+      })
+    ).toPromise();
+  }
+
+  public async isCurrentUser(userId: string): Promise<boolean> {
+    const id = await this.getUserId();
+    return userId === id;
   }
 
   public getPublication(): IPublication {
     return {
       status: 0,
-      from: this.userId
+      from: 'this.userId'
     };
   }
 

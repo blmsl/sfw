@@ -5,4 +5,5 @@ export interface IUploaderConfig {
   showQueue?: boolean;
   headerTitle?: string;
   showHeader?: boolean;
+  placeHolderImage?: string;
 }

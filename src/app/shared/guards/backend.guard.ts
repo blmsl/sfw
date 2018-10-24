@@ -9,10 +9,11 @@ import {
 import { AuthService }  from '../services/auth/auth.service';
 import { Observable }   from 'rxjs';
 import {
+  first,
   map,
   take,
   tap
-}                       from 'rxjs/operators';
+} from 'rxjs/operators';
 import { IUser }        from '../interfaces/user/user.interface';
 import { AlertService } from '../services/alert/alert.service';
 
@@ -28,11 +29,13 @@ export class BackendGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.user$.pipe(
-      take(1),
+      first(),
       map((user: IUser) => {
-        return !!(user && (user.assignedRoles.admin || user.assignedRoles.editor));
+        console.log(user.assignedRoles);
+        return user && (user.assignedRoles.admin || user.assignedRoles.editor);
       }),
       tap((isAllowed: boolean) => {
+        console.log(isAllowed);
         if (!isAllowed) {
           this.authService.signOut().then(() => {
             this.alertService.showSnackBar('error', 'general.forbidden.text', 15000);

@@ -19,6 +19,13 @@
       <mat-form-field>
         <input matInput formControlName="displayName" [placeholder]="'general.users.edit.displayName' | translate" />
       </mat-form-field>
+      <mat-form-field>
+        <mat-select formControlName="gender"
+                    [placeholder]="'general.users.edit.gender.placeholder' | translate">
+          <mat-option value="male">{{'general.users.edit.gender.male' | translate}}</mat-option>
+          <mat-option value="female">{{'general.users.edit.gender.female' | translate}}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </mat-card-content>
 </mat-card>

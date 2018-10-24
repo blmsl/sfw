@@ -11,11 +11,11 @@
 
     <span fxFlex></span>
 
-    <span *ngIf="currentMediaItem | async  as currentMediaItem">
+    <span *ngIf="currentMediaItem$ | async  as currentMediaItem">
       <button mat-icon-button
               color="warn"
               (click)="removeMediaItem(currentMediaItem.id)"
-              *ngIf="uploaderOptions.queueLimit === 1 && currentMediaItem.downloadURL !== '/assets/sfw/placeholder/no-image-found.jpg'"
+              *ngIf="uploaderOptions.queueLimit === 1 && currentMediaItem.downloadURL !== ''"
               type="button">
         <mat-icon>delete</mat-icon>
       </button>
@@ -33,27 +33,29 @@
 
   <mat-card-content>
 
-    <div class="dropZone"
-         [style.backgroundImage]="sanitizer.bypassSecurityTrustStyle('url('+ (currentMediaItem | async)?.downloadURL +')')"
-         dropZone
-         (hovered)="toggleHover($event)"
-         (dropped)="handleDrop($event)"
-         [class.hovering]="isHovering">
+    <ng-container *ngIf="currentMediaItem$ | async  as currentMediaItem">
 
-      <label class="file-label">
-        <input type="file"
-               style="display: none;"
-               #fileInput
-               (change)="onFileChange($event)"
-               [multiple]="uploaderOptions.queueLimit > 1"/>
-        <button type="button"
-                mat-raised-button
-                (click)="changeFileInput()">
-          {{'general.media.uploader.browse' | translate}}
-        </button>
-        <br/><br/>
+      <div class="dropZone"
+           [style.backgroundImage]="sanitizer.bypassSecurityTrustStyle('url('+currentMediaItem.downloadURL +')')"
+           dropZone
+           (hovered)="toggleHover($event)"
+           (dropped)="handleDrop($event)"
+           [class.hovering]="isHovering">
 
-        <span *ngIf="currentUploads.length > 0 && !(currentUploads[0].percentage | async)">
+        <label class="file-label">
+          <input type="file"
+                 style="display: none;"
+                 #fileInput
+                 (change)="onFileChange($event)"
+                 [multiple]="uploaderOptions.queueLimit > 1"/>
+          <button type="button"
+                  mat-raised-button
+                  (click)="changeFileInput()">
+            {{'general.media.uploader.browse' | translate}}
+          </button>
+          <br/><br/>
+
+          <span *ngIf="currentUploads.length > 0 && !(currentUploads[0].percentage | async)">
           <button *ngIf="!uploaderConfig.autoUpload"
                   type="button"
                   mat-raised-button
@@ -76,9 +78,9 @@
           </button>
         </span>
 
-        <!-- Upload: Show Percentage and Transfer Stats-->
-        <span style="display: block"
-              *ngIf="currentUploads.length === 1">
+          <!-- Upload: Show Percentage and Transfer Stats-->
+          <span style="display: block"
+                *ngIf="currentUploads.length === 1">
 
           <mat-progress-bar *ngIf="currentUploads[0].percentage | async as pct"
                             style="margin-top: 15px;"
@@ -94,125 +96,127 @@
           </span>
         </span>
 
-      </label>
+        </label>
 
-    </div>
+      </div>
 
-    <div fxLayout="row">
 
-      <mat-list fxFlex="100"
-                *ngIf="uploaderConfig.showQueue && currentUploads.length > 0">
-        <h3 matSubheader>{{'general.media.uploader.queue' | translate}}</h3>
+      <div fxLayout="row">
 
-        <mat-list-item>
-          <div fxFlex="15">{{'general.media.upload.name' | translate}}</div>
-          <div fxFlex="19" fxFlexOffset="1">{{'general.media.upload.preview' | translate}}</div>
-          <div fxFlex="4" fxFlexOffset="1">{{'general.media.upload.size' | translate}}</div>
-          <div fxFlex="7" fxFlexOffset="1">{{'general.media.upload.percentage' | translate}}</div>
-          <div fxFlex="14" fxFlexOffset="1">{{'general.media.upload.progress' | translate}}</div>
-          <div fxFlex="14" fxFlexOffset="1">{{'general.media.upload.status' | translate}}</div>
-          <div fxFlex="19" fxFlexOffset="1">{{'general.media.upload.actions' | translate}}</div>
-        </mat-list-item>
+        <mat-list fxFlex="100"
+                  *ngIf="uploaderConfig.showQueue && currentUploads.length > 0">
+          <h3 matSubheader>{{'general.media.uploader.queue' | translate}}</h3>
 
-        <mat-list-item *ngFor="let upload of currentUploads; let i = index">
-          <div fxFlex="15">{{upload.file.name}}</div>
+          <mat-list-item>
+            <div fxFlex="15">{{'general.media.upload.name' | translate}}</div>
+            <div fxFlex="19" fxFlexOffset="1">{{'general.media.upload.preview' | translate}}</div>
+            <div fxFlex="4" fxFlexOffset="1">{{'general.media.upload.size' | translate}}</div>
+            <div fxFlex="7" fxFlexOffset="1">{{'general.media.upload.percentage' | translate}}</div>
+            <div fxFlex="14" fxFlexOffset="1">{{'general.media.upload.progress' | translate}}</div>
+            <div fxFlex="14" fxFlexOffset="1">{{'general.media.upload.status' | translate}}</div>
+            <div fxFlex="19" fxFlexOffset="1">{{'general.media.upload.actions' | translate}}</div>
+          </mat-list-item>
 
-          <div fxFlex="19" fxFlexOffset="1">
-            <a *ngIf="upload.downloadURL"
-               target="_blank"
-               [href]="url">
-              {{'general.media.upload.preview' | translate }}
-            </a>
-          </div>
+          <mat-list-item *ngFor="let upload of currentUploads; let i = index">
+            <div fxFlex="15">{{upload.file.name}}</div>
 
-          <div fxFlex="4" fxFlexOffset="1">{{upload.file.size | fileSize}}</div>
-          <div fxFlex="7" fxFlexOffset="1">
-            <span *ngIf="upload.percentage | async as pct">{{pct | percent}}</span>
-            <span *ngIf="!(upload.percentage | async)">0 %</span>
-          </div>
+            <div fxFlex="19" fxFlexOffset="1">
+              <a *ngIf="upload.downloadURL"
+                 target="_blank"
+                 [href]="url">
+                {{'general.media.upload.preview' | translate }}
+              </a>
+            </div>
 
-          <div fxFlex="14" fxFlexOffset="1">
-            <mat-progress-bar
-              mode="determinate"
-              [value]="(upload.percentage | async) ? (upload.percentage | async) : 0">
-            </mat-progress-bar>
-          </div>
+            <div fxFlex="4" fxFlexOffset="1">{{upload.file.size | fileSize}}</div>
+            <div fxFlex="7" fxFlexOffset="1">
+              <span *ngIf="upload.percentage | async as pct">{{pct | percent}}</span>
+              <span *ngIf="!(upload.percentage | async)">0 %</span>
+            </div>
 
-          <div fxFlex="14" fxFlexOffset="1">
-            <span *ngIf="!(upload.percentage | async)">{{'general.media.uploader.notStarted' | translate}}</span>
+            <div fxFlex="14" fxFlexOffset="1">
+              <mat-progress-bar
+                mode="determinate"
+                [value]="(upload.percentage | async) ? (upload.percentage | async) : 0">
+              </mat-progress-bar>
+            </div>
 
-            <span *ngIf="(upload.percentage | async) === 100" style="color: green">
+            <div fxFlex="14" fxFlexOffset="1">
+              <span *ngIf="!(upload.percentage | async)">{{'general.media.uploader.notStarted' | translate}}</span>
+
+              <span *ngIf="(upload.percentage | async) === 100" style="color: green">
               {{'general.media.uploader.finished' | translate }}
             </span>
 
-            <span *ngIf="upload.status === 'running' && (upload.percentage | async) !== 100">
+              <span *ngIf="upload.status === 'running' && (upload.percentage | async) !== 100">
               {{'general.media.uploader.running' | translate }}
             </span>
 
-            <span *ngIf="upload.status === 'paused'" style="color: orange">
+              <span *ngIf="upload.status === 'paused'" style="color: orange">
               {{'general.media.uploader.paused' | translate}}
             </span>
 
-            <span *ngIf="upload.status === 'canceled' && (upload.percentage | async) !== 100" style="color: red">
+              <span *ngIf="upload.status === 'canceled' && (upload.percentage | async) !== 100" style="color: red">
               {{'general.media.uploader.canceled' | translate}}
             </span>
-          </div>
+            </div>
 
-          <div fxFlex="21" fxFlexOffset="1">
+            <div fxFlex="21" fxFlexOffset="1">
 
-            <!-- Start -->
-            <button *ngIf="!(upload.percentage | async)"
-                    (click)="uploadSingleFile(upload)"
-                    [disabled]="i > uploaderOptions.queueLimit"
-                    type="button"
-                    mat-raised-button
-                    color="primary">
-              {{ 'general.media.uploader.start' | translate }}
-            </button>
+              <!-- Start -->
+              <button *ngIf="!(upload.percentage | async)"
+                      (click)="uploadSingleFile(upload)"
+                      [disabled]="i > uploaderOptions.queueLimit"
+                      type="button"
+                      mat-raised-button
+                      color="primary">
+                {{ 'general.media.uploader.start' | translate }}
+              </button>
 
-            <!-- Resume -->
-            <button *ngIf="upload.status === 'paused'"
-                    (click)="resumeUpload(upload)"
-                    type="button"
-                    mat-raised-button
-                    color="primary">
-              {{'general.media.uploader.resume' | translate}}
-            </button>
+              <!-- Resume -->
+              <button *ngIf="upload.status === 'paused'"
+                      (click)="resumeUpload(upload)"
+                      type="button"
+                      mat-raised-button
+                      color="primary">
+                {{'general.media.uploader.resume' | translate}}
+              </button>
 
-            <!-- Pause -->
-            <button
-              *ngIf="(upload.percentage | async) && (upload.percentage | async) !== 100 && upload.status !== 'paused' && upload.status !== 'canceled'"
-              (click)="pauseUpload(upload)"
-              type="button"
-              mat-raised-button
-              color="primary">
-              {{'general.media.uploader.pause' | translate}}
-            </button>
+              <!-- Pause -->
+              <button
+                *ngIf="(upload.percentage | async) && (upload.percentage | async) !== 100 && upload.status !== 'paused' && upload.status !== 'canceled'"
+                (click)="pauseUpload(upload)"
+                type="button"
+                mat-raised-button
+                color="primary">
+                {{'general.media.uploader.pause' | translate}}
+              </button>
 
-            <button
-              *ngIf="(upload.percentage | async) && (upload.percentage | async) !== 100 && upload.status !== 'canceled'"
-              (click)="cancelUpload(upload)"
-              type="button"
-              mat-raised-button
-              color="warn">
-              {{'general.media.uploader.cancel' | translate}}
-            </button>
+              <button
+                *ngIf="(upload.percentage | async) && (upload.percentage | async) !== 100 && upload.status !== 'canceled'"
+                (click)="cancelUpload(upload)"
+                type="button"
+                mat-raised-button
+                color="warn">
+                {{'general.media.uploader.cancel' | translate}}
+              </button>
 
-            <button *ngIf="upload.status === 'canceled'"
-                    (click)="deleteUpload(upload)"
-                    type="button"
-                    mat-raised-button
-                    color="primary">
-              {{'general.media.uploader.delete' | translate}}
-            </button>
-          </div>
+              <button *ngIf="upload.status === 'canceled'"
+                      (click)="deleteUpload(upload)"
+                      type="button"
+                      mat-raised-button
+                      color="primary">
+                {{'general.media.uploader.delete' | translate}}
+              </button>
+            </div>
 
-          <mat-divider></mat-divider>
-        </mat-list-item>
+            <mat-divider></mat-divider>
+          </mat-list-item>
 
-      </mat-list>
+        </mat-list>
 
-    </div>
+      </div>
+    </ng-container>
 
   </mat-card-content>
 </mat-card>
