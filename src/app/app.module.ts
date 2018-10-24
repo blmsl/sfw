@@ -17,9 +17,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule.withServerTransition({
       appId: environment.appId
     }),
-    ServiceWorkerModule.register('/ngsw-config.js', {
+    /* ServiceWorkerModule.register('/ngsw-config.js', {
       enabled: environment.production
-    }),
+    }), */
     RouterModule.forRoot(appRoutes, {
       enableTracing: environment.routerTracing
     }),

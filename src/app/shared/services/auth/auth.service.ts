@@ -111,9 +111,6 @@ export class AuthService {
 
   private updateUser(data: any): Promise<void> {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${data.id}`);
-    data.assignedRoles = {
-      subscriber: true
-    };
     return userRef.set(data, { merge: true });
   }
 
