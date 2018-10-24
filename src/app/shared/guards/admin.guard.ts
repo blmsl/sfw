@@ -27,6 +27,7 @@ export class AdminGuard implements CanActivate {
       take(1),
       map((user: IUser) => !!(user && user.assignedRoles.admin)),
       tap((isAdmin: boolean) => {
+        console.log(isAdmin);
         if (!isAdmin) {
           this.alertService.showSnackBar('error', 'general.forbidden.page', 15000);
         }
