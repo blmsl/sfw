@@ -1,17 +1,13 @@
 <mat-card>
   <mat-card-title>
     <mat-icon>file_upload</mat-icon>
-    {{ 'general.media.centerTitle' | translate }}
+    {{ 'general.media.list.title' | translate }}
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
 
   <mat-card-content>
 
-    <mat-tab-group *ngIf="mediaItems; else loadingTemplate"
-                   [dynamicHeight]="true">
-
-      <mat-tab label="{{'general.media.list.title' | translate}} {{'(' + mediaItems.length + ')' }}">
-
+    <div *ngIf="mediaItems; else loadingTemplate" fxLayout='row wrap'>
         <!--<div class="example-container"
              *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
              [class.example-is-mobile]="mobileQuery.matches">
@@ -118,12 +114,12 @@
                         <i class="fa fa-info"></i>
                       </button>
 
-                      <button color="primary"
+                      <!--<button color="primary"
                               mat-mini-fab
                               class="handle"
                               cdkDragHandle>
                         <i class="fa fa-arrows"></i>
-                      </button>
+                      </button> -->
 
                       <button color="warn"
                               mat-mini-fab
@@ -140,18 +136,7 @@
             </mat-sidenav-content>
           </mat-sidenav-container>
         </div>-->
-      </mat-tab>
-      <mat-tab label="{{'general.media.uploader.title' | translate}}">
-        <media-uploader [uploaderConfig]="uploaderConfig"
-                        [uploaderOptions]="uploaderOptions">
-        </media-uploader>
-      </mat-tab>
-      <mat-tab label="{{'general.media.gallery.title' | translate}}">
-        <media-galleries></media-galleries>
-      </mat-tab>
-    </mat-tab-group>
-
-
+      </div>
   </mat-card-content>
 </mat-card>
 

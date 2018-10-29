@@ -5,6 +5,9 @@ import { uploaderRoutes } from './uploader-routing.module';
 import { RouterModule } from '@angular/router';
 import { MediaModule } from '../../shared/components/media/media.module';
 import { SharedModule } from '../../shared/shared.module';
+import { GalleryListComponent } from './gallery-list/gallery-list.component';
+import { GalleryEditComponent } from './gallery-edit/gallery-edit.component';
+import { MediaGalleryService } from '../../shared/services/media/media-gallery.service';
 
 @NgModule({
   imports: [
@@ -14,7 +17,12 @@ import { SharedModule } from '../../shared/shared.module';
     SharedModule
   ],
   declarations: [
-    UploaderComponent
+    UploaderComponent,
+    GalleryListComponent,
+    GalleryEditComponent
+  ],
+  providers: [
+    MediaGalleryService
   ]
 })
 export class UploaderModule {

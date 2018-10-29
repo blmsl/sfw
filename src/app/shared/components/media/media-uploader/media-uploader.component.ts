@@ -49,6 +49,7 @@ export class MediaUploaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('init uploader')
     this.savedItemId = this.uploaderOptions.itemId;
 
     if (this.uploaderOptions.queueLimit === 1) {

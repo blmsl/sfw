@@ -1230,7 +1230,10 @@
         "main": "Positionen einer Mannschaft"
       },
       "uploader": {
-        "main": "Media-Uploader"
+        "main": "Media-Uploader",
+        "create": "Sammlung erstellen",
+        "list": "Alle Sammlungen",
+        "uploadedData": "Hochgeladene Dateien"
       },
       "user": {
         "detail": "Benutzerdetails",

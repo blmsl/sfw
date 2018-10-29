@@ -23,8 +23,25 @@ export const MENUITEMS = [
   {
     state: 'uploader',
     name: 'uploader',
-    type: 'link',
+    type: 'sub',
     icon: 'file_upload',
+    children: [
+      {
+        state: 'create',
+        name: 'create',
+        icon: 'add_photo_alternate'
+      },
+      {
+        state: 'list',
+        name: 'list',
+        icon: 'perm_media'
+      },
+      {
+        state: '',
+        name: 'uploadedData',
+        icon: 'view_list'
+      }
+    ],
     minRole: 'editor'
   },
   {
