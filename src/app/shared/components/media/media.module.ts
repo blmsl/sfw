@@ -53,6 +53,7 @@ import { SeasonService } from '../../services/season/season.service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MediaGalleryItemComponent } from './media-gallery-item/media-gallery-item.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { MediaItemsListModalComponent } from './media-gallery-form/media-items-list-modal/media-items-list-modal.component';
 
 @NgModule({
   imports: [
@@ -97,7 +98,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     MediaItemInfoComponent,
     MediaGalleriesComponent,
     MediaGalleryFormAssignedObjectsComponent,
-    MediaGalleryItemComponent
+    MediaGalleryItemComponent,
+    MediaItemsListModalComponent
   ],
   exports: [
     MediaAvatarComponent,
@@ -108,7 +110,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
   ],
   entryComponents: [
     MediaGalleryListComponent,
-    MediaItemInfoComponent
+    MediaItemInfoComponent,
+    MediaItemsListModalComponent
   ],
   providers: [
     OrderByPipe,

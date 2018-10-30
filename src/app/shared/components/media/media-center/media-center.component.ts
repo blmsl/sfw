@@ -1,8 +1,9 @@
 import {
   ChangeDetectorRef,
-  Component,
+  Component, EventEmitter,
   Input,
-  OnDestroy
+  OnDestroy,
+  Output
 } from '@angular/core';
 import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
@@ -33,6 +34,8 @@ export class MediaCenterComponent implements OnDestroy {
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
 
+  @Output() mediaItemClick = new EventEmitter<IMediaItem>();
+
   public mediaItems: IMediaItem[];
   public mediaGalleries$: Observable<IMediaGallery[]>;
   public mobileQuery: MediaQueryList;
@@ -58,6 +61,10 @@ export class MediaCenterComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
     this.mediaItemSubscription.unsubscribe();
+  }
+
+  handleMediaItemClick(mediaItem): void {
+    this.mediaItemClick.emit(mediaItem);
   }
 
   drop(event: CdkDragDrop<string[]>) {

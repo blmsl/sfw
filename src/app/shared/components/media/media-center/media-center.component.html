@@ -70,7 +70,8 @@
                 <mat-card class="box"
                           fxFlex="24"
                           *ngFor="let mediaItem of mediaItems"
-                          cdkDrag>
+                          cdkDrag
+                          (click)="handleMediaItemClick(mediaItem)">
 
                   <mat-card-title>{{mediaItem.file.name}}</mat-card-title>
 

@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Hochgeldene Dateien</h1>
+<button mat-button> Neue Dateien Hochladen</button>
+<div mat-dialog-content>
+  <media-center [uploaderConfig]="uploaderConfig"
+                [uploaderOptions]="uploaderOptions"
+                (mediaItemClick)="onMediaItemClick($event)">
+  </media-center>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Abbrechen</button>
+  <button mat-button [mat-dialog-close]="" cdkFocusInitial (click)="onConfirmClick()">Ok</button>
+</div>

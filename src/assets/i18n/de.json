@@ -843,7 +843,8 @@
             "planned": "Veröffentlichung planen",
             "show": "Jetzt veröffentlichen"
           },
-          "title": "Titel der Sammlung"
+          "title": "Titel der Sammlung",
+          "uploadFiles": "Dateien zu der Sammlung hinzufügen"
         },
         "list": {
           "description": "Dateien können in Sammlungen / Gallerien angeordnet werden, um sie einfach mit einem Objekt zu verbinden.",
