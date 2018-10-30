@@ -35,6 +35,10 @@ export class MediaGalleryService {
     return this.afs.collection(this.path).doc(mediaGallery.id).delete();
   }
 
+  updateMediaGallery(mediaGallery: IMediaGallery): Promise<any> {
+    return this.afs.collection(this.path).doc(mediaGallery.id).update(mediaGallery);
+  }
+
   getMediaGalleryTypes(): string[] {
     return this.galleryTypes;
   }
