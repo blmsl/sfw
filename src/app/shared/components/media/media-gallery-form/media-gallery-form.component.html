@@ -45,11 +45,12 @@
       </media-gallery-form-assigned-objects>
     </div>
 
-    <mat-list *ngIf="assignedMediaItems.length > 0">
-      <mat-list-item *ngFor="let item of assignedMediaItems">
+    <mat-list>
+      <mat-list-item *ngFor="let item of mediaItemsNames">
         <mat-icon mat-list-icon>attachment</mat-icon>
-        <h4 mat-line>{{item.file.name}}</h4>
-        <p mat-line> {{item.file.type}} </p>
+        <h5 mat-line>
+          {{item}}
+        </h5>
       </mat-list-item>
     </mat-list>
 

@@ -10,7 +10,7 @@ export interface IMediaGallery {
   assignedItem: string;
   assignedItemType: string;
 
-  assignedMediaItems?: IMediaItem[];
+  assignedMediaItems?: string[];
 
   creation: ICreation;
   publication?: IPublication;

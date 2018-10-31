@@ -11,7 +11,6 @@ import { Observable } from 'rxjs/index';
 import { ISeason } from '../../../interfaces/season.interface';
 import { AlertService } from '../../../services/alert/alert.service';
 import { MediaItemsListModalComponent } from './media-items-list-modal/media-items-list-modal.component';
-import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 
 @Component({
   selector: 'media-gallery-form',
@@ -26,7 +25,7 @@ export class MediaGalleryFormComponent implements OnInit {
   public gallery: IMediaGallery;
   public seasons$: Observable<ISeason[]>;
 
-  public assignedMediaItems: IMediaItem[];
+  public mediaItemsNames: string[];
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -35,7 +34,8 @@ export class MediaGalleryFormComponent implements OnInit {
               public mediaGalleryService: MediaGalleryService,
               public dialog: MatDialog) {
     this.seasons$ = seasonService.seasons$;
-    this.assignedMediaItems = [];
+    this.gallery = { ...this.gallery, assignedMediaItems: [] };
+    this.mediaItemsNames = [];
   }
 
 
@@ -62,30 +62,36 @@ export class MediaGalleryFormComponent implements OnInit {
   }
 
   openDialog(): void {
+
     const dialogRef = this.dialog.open(MediaItemsListModalComponent, {
-      data: this.assignedMediaItems.map(item => item.id)
+      data: [...this.gallery.assignedMediaItems]
     });
 
     const assignedMediaItemSubscribtion = dialogRef.componentInstance.assignedMediaItem.subscribe((mediaItem) => {
-      if (this.assignedMediaItems.indexOf(mediaItem) == -1) {
-        this.assignedMediaItems.push(mediaItem);
+      const id = mediaItem.id;
+      const fileName = mediaItem.file.name;
+
+      if (this.gallery.assignedMediaItems.indexOf(id) === -1) {
+        this.gallery = { ...this.gallery, assignedMediaItems: [...this.gallery.assignedMediaItems, id] };
+        this.mediaItemsNames = [...this.mediaItemsNames, fileName];
       } else {
-        this.assignedMediaItems = this.assignedMediaItems.filter(item => item.id !== mediaItem.id);
+        this.gallery = { ...this.gallery, assignedMediaItems: this.gallery.assignedMediaItems.filter(item => item !== id) };
+        this.mediaItemsNames = this.mediaItemsNames.filter(name => name !== fileName);
       }
 
-      dialogRef.componentInstance.data = this.assignedMediaItems.map(item => item.id);
+      dialogRef.componentInstance.data = [...this.gallery.assignedMediaItems];
     });
 
     dialogRef.afterClosed().subscribe((selectionConfirmed) => {
       assignedMediaItemSubscribtion.unsubscribe();
       if (!selectionConfirmed) {
-        this.assignedMediaItems = [];
+        this.gallery = { ...this.gallery, assignedMediaItems: [] };
       }
     });
   }
 
   saveMediaGallery() {
-    const newGallery = Object.assign({}, this.gallery, {assignedMediaItems: this.assignedMediaItems });
+    const newGallery = Object.assign({}, this.gallery);
     this.mediaGalleryService.createMediaGallery(newGallery)
       .then(() => this.alertService.showSnackBar('success', 'general.media.gallery.saved'),
         (error: any) => this.alertService.showSnackBar('error', error.message)
