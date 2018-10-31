@@ -25,6 +25,12 @@ mat-sidenav {
   flex: 1 0 auto;
 }
 
+.mat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 
 .list {
   width: 100%;
@@ -71,14 +77,34 @@ mat-sidenav {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-
-img, .audio-file, .video-file, .other-file-type {
-  height: 15vh;
-  vertical-align: middle;
+.selected {
+  border: 5px #dcdcdc solid;
 }
 
-.preview-video, .preview-image {
-  height: 80px;
+.selectable {
+  cursor: pointer;
+}
+
+.image-file, .audio-file, .video-file, .other-file-type {
+  vertical-align: middle;
+  max-height: 12vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-video {
+  width: auto;
+  max-height: 10vh;
+}
+
+.preview-audio {
+  width: 100%;
+  height: auto;
+}
+
+.other-file-type, .mat-card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .box:active {
