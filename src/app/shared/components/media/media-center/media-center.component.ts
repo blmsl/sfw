@@ -33,6 +33,7 @@ export class MediaCenterComponent implements OnDestroy {
 
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
+  @Input() data: string[];
 
   @Output() mediaItemClick = new EventEmitter<IMediaItem>();
 

@@ -3,7 +3,8 @@
 <div mat-dialog-content>
   <media-center [uploaderConfig]="uploaderConfig"
                 [uploaderOptions]="uploaderOptions"
-                (mediaItemClick)="onMediaItemClick($event)">
+                (mediaItemClick)="onMediaItemClick($event)"
+                [data]="data">
   </media-center>
 </div>
 <div mat-dialog-actions>

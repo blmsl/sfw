@@ -1,5 +1,6 @@
 import { ICreation } from '../creation.interface';
 import { IPublication } from '../publication.interface';
+import { IMediaItem } from './media-item.interface';
 
 export interface IMediaGallery {
 
@@ -9,7 +10,7 @@ export interface IMediaGallery {
   assignedItem: string;
   assignedItemType: string;
 
-  assignedMediaItems?: string[];
+  assignedMediaItems?: IMediaItem[];
 
   creation: ICreation;
   publication?: IPublication;

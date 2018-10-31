@@ -8,76 +8,78 @@
   <mat-card-content>
 
     <div *ngIf="mediaItems; else loadingTemplate" fxLayout='row wrap'>
-        <!--<div class="example-container"
-             *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
-             [class.example-is-mobile]="mobileQuery.matches">
+      <!--<div class="example-container"
+           *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
+           [class.example-is-mobile]="mobileQuery.matches">
 
-          <mat-toolbar class="example-toolbar">
-            <button mat-icon-button (click)="snav.toggle()">
-              <mat-icon>folder_special</mat-icon>
-            </button>
-            {{'general.media.gallery.list.title' | translate}}
-          </mat-toolbar>
+        <mat-toolbar class="example-toolbar">
+          <button mat-icon-button (click)="snav.toggle()">
+            <mat-icon>folder_special</mat-icon>
+          </button>
+          {{'general.media.gallery.list.title' | translate}}
+        </mat-toolbar>
 
-          <mat-sidenav-container class="example-sidenav-container"
-                                 [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-            <mat-sidenav #snav
-                         position="end"
-                         [opened]="false"
-                         [mode]="mobileQuery.matches ? 'over' : 'side'"
-                         [fixedInViewport]="mobileQuery.matches"
-                         fixedTopGap="56">
+        <mat-sidenav-container class="example-sidenav-container"
+                               [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+          <mat-sidenav #snav
+                       position="end"
+                       [opened]="false"
+                       [mode]="mobileQuery.matches ? 'over' : 'side'"
+                       [fixedInViewport]="mobileQuery.matches"
+                       fixedTopGap="56">
 
-              <div fxLayout="column"
-                   fxLayoutGap="10px">
+            <div fxLayout="column"
+                 fxLayoutGap="10px">
 
-                <mat-card *ngFor="let gallery of mediaGalleries | orderBy: ['title']">
-                  <mat-card-title>{{gallery.title}}</mat-card-title>
-                  <mat-card-content fxLayout="column"
-                                    fxLayoutGap="10px">
+              <mat-card *ngFor="let gallery of mediaGalleries | orderBy: ['title']">
+                <mat-card-title>{{gallery.title}}</mat-card-title>
+                <mat-card-content fxLayout="column"
+                                  fxLayoutGap="10px">
 
-                    <!--<cdk-drop id="{{gallery.id}}"
-                              [connectedTo]="['media-gallery']"
-                              (dropped)="drop($event)"
-                              style="min-height: 90px; border: 1px solid red;">
-                      <media-gallery-item class="box"
-                                          *ngFor="let mediaItem of gallery.assignedMediaItems | orderBy: ['ordering']"
-                                          [mediaItem]="mediaItem"
-                                          cdkDrag>
-                        <img *cdkDragPreview src="https://via.placeholder.com/150x90" [alt]="mediaItem.title">
-                      </media-gallery-item>
-                    </cdk-drop>
-                  </mat-card-content>
-                </mat-card>
+                  <!--<cdk-drop id="{{gallery.id}}"
+                            [connectedTo]="['media-gallery']"
+                            (dropped)="drop($event)"
+                            style="min-height: 90px; border: 1px solid red;">
+                    <media-gallery-item class="box"
+                                        *ngFor="let mediaItem of gallery.assignedMediaItems | orderBy: ['ordering']"
+                                        [mediaItem]="mediaItem"
+                                        cdkDrag>
+                      <img *cdkDragPreview src="https://via.placeholder.com/150x90" [alt]="mediaItem.title">
+                    </media-gallery-item>
+                  </cdk-drop>
+                </mat-card-content>
+              </mat-card>
 
-              </div>
-            </mat-sidenav>
+            </div>
+          </mat-sidenav>
 
-            <mat-sidenav-content>
+          <mat-sidenav-content>
 
-              <div class="alert alert-info">{{'general.media.list.coverText' | translate}}</div>
+            <div class="alert alert-info">{{'general.media.list.coverText' | translate}}</div>
 
-              <div class="alert alert-warning" *ngIf="mediaItems.length === 0">
-                <strong>{{ 'general.info' | translate }}</strong> {{ 'general.media.noItemsFound' | translate}}
-              </div>
+            <div class="alert alert-warning" *ngIf="mediaItems.length === 0">
+              <strong>{{ 'general.info' | translate }}</strong> {{ 'general.media.noItemsFound' | translate}}
+            </div>
 
-              <!-- [connectedTo]="['Hh1JA4PJ9731jJlcCMf7', 'Ppwn5ARWqVeCvOJlu4p6']"
-              <cdk-drop orientation="horizontal"
-                        class="list"
-                        id="media-gallery"
-                        (dropped)="drop($event)">-->
+            <!-- [connectedTo]="['Hh1JA4PJ9731jJlcCMf7', 'Ppwn5ARWqVeCvOJlu4p6']"
+            <cdk-drop orientation="horizontal"
+                      class="list"
+                      id="media-gallery"
+                      (dropped)="drop($event)">-->
 
-                <mat-card class="box"
-                          fxFlex="24"
-                          *ngFor="let mediaItem of mediaItems"
-                          cdkDrag
-                          (click)="handleMediaItemClick(mediaItem)">
+      <mat-card class="box"
+                fxFlex="14"
+                *ngFor="let mediaItem of mediaItems"
+                cdkDrag
+                (click)="handleMediaItemClick(mediaItem)"
+                [ngClass]="{'selected': data && data.indexOf(mediaItem.id) !== -1, 'selectable': data !== undefined }"
+                >
 
                   <mat-card-title>{{mediaItem.file.name}}</mat-card-title>
 
-                  <mat-card-content class="text-center">
+        <mat-card-content class="text-center">
 
-                    <img *cdkDragPreview src="https://via.placeholder.com/90x90" [alt]="mediaItem.title">
+          <img *cdkDragPreview src="https://via.placeholder.com/90x90" [alt]="mediaItem.title">
 
                     <img *ngIf="mediaItem.file.type.indexOf('image') > -1"
                          [src]="mediaItem.downloadURL"

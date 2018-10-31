@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/index';
 import { ISeason } from '../../../interfaces/season.interface';
 import { AlertService } from '../../../services/alert/alert.service';
 import { MediaItemsListModalComponent } from './media-items-list-modal/media-items-list-modal.component';
+import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 
 @Component({
   selector: 'media-gallery-form',
@@ -25,7 +26,7 @@ export class MediaGalleryFormComponent implements OnInit {
   public gallery: IMediaGallery;
   public seasons$: Observable<ISeason[]>;
 
-  public assignedMediaItems: string[];
+  public assignedMediaItems: IMediaItem[];
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -62,15 +63,17 @@ export class MediaGalleryFormComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(MediaItemsListModalComponent, {
-      data: this.assignedMediaItems
+      data: this.assignedMediaItems.map(item => item.id)
     });
 
     const assignedMediaItemSubscribtion = dialogRef.componentInstance.assignedMediaItem.subscribe((mediaItem) => {
-      if (this.assignedMediaItems.indexOf(mediaItem.id) == -1) {
-        this.assignedMediaItems.push(mediaItem.id);
+      if (this.assignedMediaItems.indexOf(mediaItem) == -1) {
+        this.assignedMediaItems.push(mediaItem);
       } else {
-        this.assignedMediaItems = this.assignedMediaItems.filter(id => id !== mediaItem.id);
+        this.assignedMediaItems = this.assignedMediaItems.filter(item => item.id !== mediaItem.id);
       }
+
+      dialogRef.componentInstance.data = this.assignedMediaItems.map(item => item.id);
     });
 
     dialogRef.afterClosed().subscribe((selectionConfirmed) => {
