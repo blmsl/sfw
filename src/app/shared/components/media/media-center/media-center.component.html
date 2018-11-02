@@ -72,7 +72,7 @@
                 *ngFor="let mediaItem of mediaItems"
                 cdkDrag
                 (click)="handleMediaItemClick(mediaItem)"
-                [ngClass]="{'selected': data && data.indexOf(mediaItem.id) !== -1, 'selectable': data !== undefined }"
+                [ngClass]="{'selected': selectedItemsIds && selectedItemsIds.indexOf(mediaItem.id) !== -1, 'selectable': selectedItemsIds !== undefined }"
                 >
 
         <mat-card-title> <span>{{mediaItem.file.name}}</span> </mat-card-title>

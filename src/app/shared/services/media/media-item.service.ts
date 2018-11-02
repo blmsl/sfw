@@ -49,6 +49,9 @@ export class MediaItemService {
   }
 
   getMediaItemsById(mediaItemIds: string[]): Promise<IMediaItem[]> {
+    if (mediaItemIds.length === 0) {
+      return of([]).toPromise();
+    }
     const items = [];
     for (let i = 0; i < mediaItemIds.length; i++) {
       items.push(this.getMediaItemById(mediaItemIds[i]).pipe(

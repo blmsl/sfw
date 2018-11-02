@@ -11,6 +11,8 @@ import { Observable } from 'rxjs/index';
 import { ISeason } from '../../../interfaces/season.interface';
 import { AlertService } from '../../../services/alert/alert.service';
 import { MediaItemsListModalComponent } from './media-items-list-modal/media-items-list-modal.component';
+import { MediaItemService } from '../../../services/media/media-item.service';
+import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 
 @Component({
   selector: 'media-gallery-form',
@@ -32,6 +34,7 @@ export class MediaGalleryFormComponent implements OnInit {
               private alertService: AlertService,
               private seasonService: SeasonService,
               public mediaGalleryService: MediaGalleryService,
+              public mediaItemService: MediaItemService,
               public dialog: MatDialog) {
     this.seasons$ = seasonService.seasons$;
     this.gallery = { ...this.gallery, assignedMediaItems: [] };
@@ -67,19 +70,10 @@ export class MediaGalleryFormComponent implements OnInit {
       data: [...this.gallery.assignedMediaItems]
     });
 
-    const assignedMediaItemSubscribtion = dialogRef.componentInstance.assignedMediaItem.subscribe((mediaItem) => {
-      const id = mediaItem.id;
-      const fileName = mediaItem.file.name;
-
-      if (this.gallery.assignedMediaItems.indexOf(id) === -1) {
-        this.gallery = { ...this.gallery, assignedMediaItems: [...this.gallery.assignedMediaItems, id] };
-        this.mediaItemsNames = [...this.mediaItemsNames, fileName];
-      } else {
-        this.gallery = { ...this.gallery, assignedMediaItems: this.gallery.assignedMediaItems.filter(item => item !== id) };
-        this.mediaItemsNames = this.mediaItemsNames.filter(name => name !== fileName);
-      }
-
-      dialogRef.componentInstance.data = [...this.gallery.assignedMediaItems];
+    const assignedMediaItemSubscribtion = dialogRef.componentInstance.assignedMediaItem
+      .subscribe((mediaItems: IMediaItem[]) => {
+        this.gallery = Object.assign({}, this.gallery, { assignedMediaItems: mediaItems.map(item => item.id) });
+        this.mediaItemsNames = mediaItems.map(item => item.file.name);
     });
 
     dialogRef.afterClosed().subscribe((selectionConfirmed) => {

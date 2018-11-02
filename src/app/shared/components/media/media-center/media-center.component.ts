@@ -3,7 +3,7 @@ import {
   Component, EventEmitter,
   Input,
   OnDestroy,
-  Output
+  Output, SimpleChanges, SimpleChange, OnChanges
 } from '@angular/core';
 import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
@@ -29,11 +29,11 @@ import {
   styleUrls: ['media-center.component.scss']
 })
 
-export class MediaCenterComponent implements OnDestroy {
+export class MediaCenterComponent implements OnDestroy, OnChanges {
 
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
-  @Input() data: string[];
+  @Input() selectedMediaItems: IMediaItem[];
 
   @Output() mediaItemClick = new EventEmitter<IMediaItem>();
 
@@ -43,6 +43,7 @@ export class MediaCenterComponent implements OnDestroy {
 
   readonly _mobileQueryListener: () => void;
   private mediaItemSubscription: Subscription;
+  public selectedItemsIds: string[];
 
   constructor(private mediaItemService: MediaItemService,
     private mediaGalleryService: MediaGalleryService,
@@ -57,6 +58,13 @@ export class MediaCenterComponent implements OnDestroy {
     this.mediaItemSubscription = mediaItemService.mediaItems$.subscribe((mediaItems: IMediaItem[]) => {
       this.mediaItems = mediaItems;
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const items: SimpleChange = changes.selectedMediaItems;
+    if (items){
+      this.selectedItemsIds = items.currentValue.map(item => item.id);
+    }
   }
 
   ngOnDestroy(): void {
@@ -75,8 +83,8 @@ export class MediaCenterComponent implements OnDestroy {
     } else {
       console.log(event);
       /*transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
+        event.previousContainer.selectedMediaItems,
+        event.container.selectedMediaItems,
         event.previousIndex,
         event.currentIndex
       );*/

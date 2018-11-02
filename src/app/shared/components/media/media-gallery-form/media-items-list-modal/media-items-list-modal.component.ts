@@ -1,8 +1,10 @@
-import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Inject, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { IUploaderConfig } from '../../../../interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../../interfaces/media/uploader-options.interface';
 import { IMediaItem } from '../../../../interfaces/media/media-item.interface';
+import { MediaItemService } from '../../../../services/media/media-item.service';
+import { AlertService } from '../../../../services/alert/alert.service';
 
 
 @Component({
@@ -12,7 +14,7 @@ import { IMediaItem } from '../../../../interfaces/media/media-item.interface';
 })
 export class MediaItemsListModalComponent implements OnInit {
 
-  @Output() assignedMediaItem = new EventEmitter<IMediaItem>();
+  @Output() assignedMediaItem = new EventEmitter<IMediaItem[]>();
 
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,
@@ -28,11 +30,25 @@ export class MediaItemsListModalComponent implements OnInit {
     queueLimit: 5,
   };
 
-  constructor(public dialogRef: MatDialogRef<MediaItemsListModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string[]) {
+  public selectedMediaItems: IMediaItem[];
+
+  constructor(private alertService: AlertService,
+              private mediaItemService: MediaItemService,
+              public dialogRef: MatDialogRef<MediaItemsListModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: string[]
+  ) {
+    this.selectedMediaItems = [];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.mediaItemService.getMediaItemsById(this.data)
+      .then((items: IMediaItem[]) => {
+        this.selectedMediaItems = items;
+      })
+      .catch((error: any) => {
+        this.alertService.showSnackBar('error', error.message);
+      });
+  }
 
   onCancelClick(): void {
     this.dialogRef.close(false);
@@ -43,6 +59,12 @@ export class MediaItemsListModalComponent implements OnInit {
   }
 
   onMediaItemClick(mediaItem: IMediaItem): void {
-    this.assignedMediaItem.emit(mediaItem);
+    const findMediaItem = item => item.id !== mediaItem.id;
+    if (this.selectedMediaItems.every(findMediaItem)) {
+      this.selectedMediaItems = [...this.selectedMediaItems, mediaItem];
+    } else {
+      this.selectedMediaItems = this.selectedMediaItems.filter(findMediaItem);
+    }
+    this.assignedMediaItem.emit(this.selectedMediaItems);
   }
 }
