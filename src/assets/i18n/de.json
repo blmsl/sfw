@@ -1639,6 +1639,7 @@
       "showUploader": "Uploader anzeigen",
       "successfulUpload": "Die Datei wurde übertragen",
       "uploaderTitle": "Datei hochladen",
+      "uploadMultiple": "Dateien hochladen",
       "uploadViaLinkTitle": "Datei von einer URL speichern",
       "viewFullSize": "Großansicht",
       "wrongFileType": "Falscher Dateityp ausgewählt."

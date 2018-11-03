@@ -31,8 +31,6 @@ import {
 
 export class MediaCenterComponent implements OnDestroy, OnChanges {
 
-  @Input() uploaderOptions: IUploaderOptions;
-  @Input() uploaderConfig: IUploaderConfig;
   @Input() selectedMediaItems: IMediaItem[];
 
   @Output() mediaItemClick = new EventEmitter<IMediaItem>();
@@ -40,6 +38,21 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
   public mediaItems: IMediaItem[];
   public mediaGalleries$: Observable<IMediaGallery[]>;
   public mobileQuery: MediaQueryList;
+  public showMediaUploader = false;
+
+  public uploaderConfig: IUploaderConfig = {
+    autoUpload: true,
+    showDropZone: true,
+    removeAfterUpload: true,
+    showQueue: true,
+  };
+
+  public uploaderOptions: IUploaderOptions = {
+    assignedObjects: [],
+    itemId: '',
+    queueLimit: 25,
+  };
+
 
   readonly _mobileQueryListener: () => void;
   private mediaItemSubscription: Subscription;
@@ -74,6 +87,10 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
 
   handleMediaItemClick(mediaItem): void {
     this.mediaItemClick.emit(mediaItem);
+  }
+
+  showUploader() {
+    this.showMediaUploader = true;
   }
 
   drop(event: CdkDragDrop<string[]>) {

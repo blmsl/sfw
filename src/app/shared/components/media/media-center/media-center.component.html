@@ -6,6 +6,12 @@
   <mat-card-subtitle></mat-card-subtitle>
 
   <mat-card-content>
+    <button mat-flat-button color="primary" (click)="showUploader()">{{'general.uploader.uploadMultiple' |
+      translate}}
+    </button>
+    <media-uploader *ngIf="showMediaUploader" [uploaderConfig]="uploaderConfig"
+                    [uploaderOptions]="uploaderOptions">
+    </media-uploader>
 
     <div *ngIf="mediaItems; else loadingTemplate" fxLayout='row wrap'>
       <!--<div class="example-container"

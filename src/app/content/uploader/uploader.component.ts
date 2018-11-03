@@ -8,19 +8,6 @@ import { IUploaderOptions } from '../../shared/interfaces/media/uploader-options
 })
 export class UploaderComponent implements OnInit {
 
-  public uploaderConfig: IUploaderConfig = {
-    autoUpload: false,
-    showDropZone: true,
-    removeAfterUpload: true,
-    showQueue: true
-  };
-
-  public uploaderOptions: IUploaderOptions = {
-    assignedObjects: [],
-    itemId: '',
-    queueLimit: 25
-  };
-
   constructor() {
   }
 

@@ -16,19 +16,6 @@ export class MediaItemsListModalComponent implements OnInit {
 
   @Output() assignedMediaItem = new EventEmitter<IMediaItem[]>();
 
-  public uploaderConfig: IUploaderConfig = {
-    autoUpload: true,
-    showDropZone: true,
-    removeAfterUpload: true,
-    showQueue: false,
-    showHeader: false
-  };
-
-  public uploaderOptions: IUploaderOptions = {
-    assignedObjects: [],
-    itemId: '',
-    queueLimit: 5,
-  };
 
   public selectedMediaItems: IMediaItem[];
 

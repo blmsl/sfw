@@ -59,7 +59,7 @@ export class MediaUploaderComponent implements OnInit {
         this.uploaderConfig.placeHolderImage
       );
     } else {
-      this.currentMediaItem$ = of(null);
+      this.currentMediaItem$ = of(this.mediaItemService.getImagePlaceHolder(''));
     }
   }
 
