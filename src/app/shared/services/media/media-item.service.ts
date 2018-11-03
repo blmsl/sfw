@@ -48,9 +48,9 @@ export class MediaItemService {
     return this.afs.doc<IMediaItem>(this.path + '/' + id).valueChanges();
   }
 
-  getMediaItemsById(mediaItemIds: string[]): Promise<IMediaItem[]> {
+  getMediaItemsById(mediaItemIds: string[]): Observable<IMediaItem[]> {
     if (mediaItemIds.length === 0) {
-      return of([]).toPromise();
+      return of([]);
     }
     const items = [];
     for (let i = 0; i < mediaItemIds.length; i++) {
@@ -58,7 +58,7 @@ export class MediaItemService {
         take(1)
       ));
     }
-    return forkJoin(...items).toPromise();
+    return forkJoin(...items);
   }
 
   updateMediaItems(mediaItems: IMediaItem[]): Promise<any> {

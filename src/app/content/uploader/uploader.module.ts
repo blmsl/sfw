@@ -8,6 +8,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { GalleryListComponent } from './gallery-list/gallery-list.component';
 import { GalleryEditComponent } from './gallery-edit/gallery-edit.component';
 import { MediaGalleryService } from '../../shared/services/media/media-gallery.service';
+import { UploaderResolver } from './uploader.resolver';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { MediaGalleryService } from '../../shared/services/media/media-gallery.s
     GalleryEditComponent
   ],
   providers: [
-    MediaGalleryService
+    MediaGalleryService,
+    UploaderResolver
   ]
 })
 export class UploaderModule {

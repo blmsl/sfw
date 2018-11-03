@@ -46,10 +46,10 @@
     </div>
 
     <mat-list>
-      <mat-list-item *ngFor="let item of mediaItemsNames">
+      <mat-list-item *ngFor="let item of mediaItems">
         <mat-icon mat-list-icon>attachment</mat-icon>
         <h5 mat-line>
-          {{item}}
+          {{item.file.name}}
         </h5>
       </mat-list-item>
     </mat-list>

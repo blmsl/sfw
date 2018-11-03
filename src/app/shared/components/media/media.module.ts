@@ -54,6 +54,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MediaGalleryItemComponent } from './media-gallery-item/media-gallery-item.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { MediaItemsListModalComponent } from './media-gallery-form/media-items-list-modal/media-items-list-modal.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -84,7 +85,8 @@ import { MediaItemsListModalComponent } from './media-gallery-form/media-items-l
     MatTabsModule,
     NgPipesModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    RouterModule
   ],
   declarations: [
     MediaAvatarComponent,

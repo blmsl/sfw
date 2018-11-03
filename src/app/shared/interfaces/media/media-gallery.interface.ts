@@ -6,6 +6,7 @@ export interface IMediaGallery {
 
   id?: string;
   title: string;
+  description?: string;
 
   assignedItem: string;
   assignedItemType: string;

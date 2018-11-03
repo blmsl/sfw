@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from '@angular/fire/firestore';
-import { ICreation } from '../../interfaces/creation.interface';
+import { Observable, of } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
 import { IMediaGallery } from '../../interfaces/media/media-gallery.interface';
 
@@ -18,7 +14,7 @@ export class MediaGalleryService {
   private galleryTypes: string[] = ['article', 'club', 'location', 'match', 'member', 'sponsor', 'team'];
 
   constructor(private afs: AngularFirestore,
-    private authService: AuthService) {
+              private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMediaGallery>(this.path);
     this.mediaGalleries$ = this.collectionRef.valueChanges();
   }
@@ -26,8 +22,6 @@ export class MediaGalleryService {
   createMediaGallery(mediaGallery: IMediaGallery): Promise<void> {
     console.log(mediaGallery);
     mediaGallery.id = this.afs.createId();
-    const creation: ICreation = this.authService.getCreation();
-    mediaGallery.creation = creation;
     return this.afs.collection(this.path).doc(mediaGallery.id).set(mediaGallery);
   }
 
@@ -43,4 +37,19 @@ export class MediaGalleryService {
     return this.galleryTypes;
   }
 
+  getMediaGalleryById(galleryId: string): Observable<IMediaGallery> {
+    return this.afs.doc<IMediaGallery>(this.path + '/' + galleryId).valueChanges();
+  }
+
+  setNewGallery(): Observable<IMediaGallery> {
+    const gallery: IMediaGallery = {
+      title: '',
+      assignedItemType: '',
+      assignedItem: '',
+      assignedMediaItems: [],
+      creation: this.authService.getCreation()
+    };
+
+    return of(gallery);
+  }
 }

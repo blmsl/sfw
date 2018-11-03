@@ -35,19 +35,12 @@ export class MediaItemsListModalComponent implements OnInit {
   constructor(private alertService: AlertService,
               private mediaItemService: MediaItemService,
               public dialogRef: MatDialogRef<MediaItemsListModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string[]
+              @Inject(MAT_DIALOG_DATA) public data: IMediaItem[]
   ) {
-    this.selectedMediaItems = [];
+    this.selectedMediaItems = this.data;
   }
 
   ngOnInit() {
-    this.mediaItemService.getMediaItemsById(this.data)
-      .then((items: IMediaItem[]) => {
-        this.selectedMediaItems = items;
-      })
-      .catch((error: any) => {
-        this.alertService.showSnackBar('error', error.message);
-      });
   }
 
   onCancelClick(): void {

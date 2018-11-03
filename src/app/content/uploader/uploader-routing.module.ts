@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { UploaderComponent } from './uploader.component';
 import { GalleryListComponent } from './gallery-list/gallery-list.component';
 import { GalleryEditComponent } from './gallery-edit/gallery-edit.component';
+import { UploaderResolver } from './uploader.resolver';
 
 export const uploaderRoutes: Routes = [
   {
@@ -16,10 +17,16 @@ export const uploaderRoutes: Routes = [
   {
     path: 'create',
     component: GalleryEditComponent,
+    resolve: {
+      gallery: UploaderResolver
+    }
   },
   {
     path: 'edit/:galleryId',
     component: GalleryEditComponent,
+    resolve: {
+      gallery: UploaderResolver
+    }
   },
   {
     path: '**',
