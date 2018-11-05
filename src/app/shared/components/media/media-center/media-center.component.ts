@@ -1,27 +1,16 @@
-import {
-  ChangeDetectorRef,
-  Component, EventEmitter,
-  Input,
-  OnDestroy,
-  Output, SimpleChanges, SimpleChange, OnChanges
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { IUploaderConfig } from '../../../interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../interfaces/media/uploader-options.interface';
 import { MediaItemService } from '../../../services/media/media-item.service';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
-import {
-  Observable,
-  Subscription
-} from 'rxjs/index';
+import { Observable, Subscription } from 'rxjs/index';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { AlertService } from '../../../services/alert/alert.service';
 import { IMediaGallery } from '../../../interfaces/media/media-gallery.interface';
 import { MediaGalleryService } from '../../../services/media/media-gallery.service';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MediaItemInfoComponent } from '../media-item-info/media-item-info.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'media-center',
@@ -59,10 +48,11 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
   public selectedItemsIds: string[];
 
   constructor(private mediaItemService: MediaItemService,
-    private mediaGalleryService: MediaGalleryService,
-    private alertService: AlertService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private media: MediaMatcher) {
+              private mediaGalleryService: MediaGalleryService,
+              private alertService: AlertService,
+              private changeDetectorRef: ChangeDetectorRef,
+              private media: MediaMatcher,
+              public dialog: MatDialog) {
 
     this.mediaGalleries$ = mediaGalleryService.mediaGalleries$;
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -75,7 +65,7 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const items: SimpleChange = changes.selectedMediaItems;
-    if (items){
+    if (items) {
       this.selectedItemsIds = items.currentValue.map(item => item.id);
     }
   }
@@ -91,6 +81,16 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
 
   showUploader() {
     this.showMediaUploader = true;
+  }
+
+  showInfoDialog(mediaItem: IMediaItem): void {
+    const dialogRef = this.dialog.open(MediaItemInfoComponent, {
+      data: { mediaItem }
+    });
+    
+    dialogRef.afterClosed().subscribe((updatedMediaItem: IMediaItem) => {
+
+    });
   }
 
   drop(event: CdkDragDrop<string[]>) {

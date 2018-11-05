@@ -23,6 +23,6 @@ export class IMediaItem {
   isExternal?: boolean;
   creation?: ICreation;
 
-  assignedItemGallery?: string;
+  assignedItemGalleries?: string[];
   // publication?: IPublication;
 }

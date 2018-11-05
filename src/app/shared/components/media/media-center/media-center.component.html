@@ -118,12 +118,14 @@
         <mat-card-actions class="text-right">
           <button color="warn"
                   (click)="removeMediaItem(mediaItem)"
-                  mat-icon-button>
+                  mat-icon-button
+                  appStopPropagation>
             <mat-icon>delete</mat-icon>
           </button>
           <button color="primary"
                   (click)="showInfoDialog(mediaItem)"
-                  mat-icon-button>
+                  mat-icon-button
+                  appStopPropagation>
             <mat-icon>info</mat-icon>
           </button>
           <!--<div fxLayout="column"-->

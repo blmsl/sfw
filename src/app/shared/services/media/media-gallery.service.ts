@@ -20,7 +20,6 @@ export class MediaGalleryService {
   }
 
   createMediaGallery(mediaGallery: IMediaGallery): Promise<void> {
-    console.log(mediaGallery);
     mediaGallery.id = this.afs.createId();
     return this.afs.collection(this.path).doc(mediaGallery.id).set(mediaGallery);
   }

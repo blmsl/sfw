@@ -55,6 +55,7 @@ import { MediaGalleryItemComponent } from './media-gallery-item/media-gallery-it
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { MediaItemsListModalComponent } from './media-gallery-form/media-items-list-modal/media-items-list-modal.component';
 import { RouterModule } from '@angular/router';
+import { StopPropagationDirective } from '../../directives/stop-propagation/stop-propagation.directive';
 
 @NgModule({
   imports: [
@@ -101,7 +102,8 @@ import { RouterModule } from '@angular/router';
     MediaGalleriesComponent,
     MediaGalleryFormAssignedObjectsComponent,
     MediaGalleryItemComponent,
-    MediaItemsListModalComponent
+    MediaItemsListModalComponent,
+    StopPropagationDirective
   ],
   exports: [
     MediaAvatarComponent,
