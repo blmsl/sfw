@@ -41,9 +41,4 @@ export class MediaGalleryListComponent implements OnInit {
         (error: any) => this.alertService.showSnackBar('error', error.message));
   }
 
-  editMediaGallery(mediaGallery: IMediaGallery) {
-    console.log(mediaGallery);
-    alert('ToDo');
-  }
-
 }

@@ -13,7 +13,7 @@ import { AlertService } from '../../../services/alert/alert.service';
 import { MediaItemsListModalComponent } from './media-items-list-modal/media-items-list-modal.component';
 import { MediaItemService } from '../../../services/media/media-item.service';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/internal/operators';
 
 @Component({
@@ -38,6 +38,7 @@ export class MediaGalleryFormComponent implements OnInit, OnDestroy {
               private alertService: AlertService,
               private seasonService: SeasonService,
               private route: ActivatedRoute,
+              private router: Router,
               public mediaGalleryService: MediaGalleryService,
               public mediaItemService: MediaItemService,
               public dialog: MatDialog) {
@@ -101,6 +102,10 @@ export class MediaGalleryFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  redirectToList() {
+    this.router.navigate(['/uploader/list']).then();
+  }
+
   saveMediaGallery(): void {
     const newGallery: any = Object.assign({}, this.gallery);
     let action: Promise<any>;
@@ -110,7 +115,10 @@ export class MediaGalleryFormComponent implements OnInit, OnDestroy {
       action = this.mediaGalleryService.updateMediaGallery(newGallery);
     }
 
-      action.then(() => this.alertService.showSnackBar('success', 'general.media.gallery.saved'),
+      action.then(() => {
+        this.alertService.showSnackBar('success', 'general.media.gallery.saved')
+        this.redirectToList();
+        },
         (error: any) => this.alertService.showSnackBar('error', error.message)
       ).catch((error: any) => {
       this.alertService.showSnackBar('error', error.message);
