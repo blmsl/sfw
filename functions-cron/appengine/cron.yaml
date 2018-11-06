@@ -19,7 +19,7 @@ cron:
 
 - description: Google-Calender Export
   url: /php/match/matchplan2gcal.php
-  schedule: every 60 hours
+  schedule: every 61 hours
 
 #- description: Publish Articles to frontend and to social pages
 #  url: /php/article/publish-article.php
