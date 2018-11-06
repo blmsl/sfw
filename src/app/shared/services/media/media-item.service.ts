@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  forkJoin,
   Observable,
   of
 } from 'rxjs';
@@ -10,7 +11,7 @@ import {
 import { IMediaItem } from '../../interfaces/media/media-item.interface';
 import { AuthService } from '../auth/auth.service';
 import { FileType } from '../../interfaces/media/file-type.interface';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Injectable()
 export class MediaItemService {
@@ -41,6 +42,23 @@ export class MediaItemService {
 
   removeMediaItem(mediaItemId: string): Promise<void> {
     return this.afs.collection(this.path).doc(mediaItemId).delete();
+  }
+
+  getMediaItemById(id: string): Observable<IMediaItem> {
+    return this.afs.doc<IMediaItem>(this.path + '/' + id).valueChanges();
+  }
+
+  getMediaItemsById(mediaItemIds: string[]): Observable<IMediaItem[]> {
+    if (mediaItemIds.length === 0) {
+      return of([]);
+    }
+    const items = [];
+    for (let i = 0; i < mediaItemIds.length; i++) {
+      items.push(this.getMediaItemById(mediaItemIds[i]).pipe(
+        take(1)
+      ));
+    }
+    return forkJoin(...items);
   }
 
   updateMediaItems(mediaItems: IMediaItem[]): Promise<any> {

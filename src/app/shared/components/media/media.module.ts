@@ -53,6 +53,9 @@ import { SeasonService } from '../../services/season/season.service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MediaGalleryItemComponent } from './media-gallery-item/media-gallery-item.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { MediaItemsListModalComponent } from './media-gallery-form/media-items-list-modal/media-items-list-modal.component';
+import { RouterModule } from '@angular/router';
+import { StopPropagationDirective } from '../../directives/stop-propagation/stop-propagation.directive';
 
 @NgModule({
   imports: [
@@ -83,7 +86,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     MatTabsModule,
     NgPipesModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    RouterModule
   ],
   declarations: [
     MediaAvatarComponent,
@@ -97,7 +101,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     MediaItemInfoComponent,
     MediaGalleriesComponent,
     MediaGalleryFormAssignedObjectsComponent,
-    MediaGalleryItemComponent
+    MediaGalleryItemComponent,
+    MediaItemsListModalComponent,
+    StopPropagationDirective
   ],
   exports: [
     MediaAvatarComponent,
@@ -108,7 +114,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
   ],
   entryComponents: [
     MediaGalleryListComponent,
-    MediaItemInfoComponent
+    MediaItemInfoComponent,
+    MediaItemsListModalComponent
   ],
   providers: [
     OrderByPipe,

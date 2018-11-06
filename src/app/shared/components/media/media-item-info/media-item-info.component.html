@@ -1,5 +1,6 @@
-<h3>{{'general.media.upload.file.info' | translate}}</h3>
 
+<h3 mat-dialog-title>{{'general.media.upload.file.info' | translate}}</h3>
+<div mat-dialog-content>
 <table *ngIf="data.mediaItem as mediaItem">
   <tr>
     <th>{{'general.media.upload.author' | translate}}</th>
@@ -26,3 +27,8 @@
     <td><a target="_blank" [href]="mediaItem.downloadURL">{{'general.media.upload.file.link' | translate}}</a></td>
   </tr>
 </table>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">{{'general.media.upload.file.edit.cancel' | translate }}</button>
+  <button mat-button [mat-dialog-close]="data.animal">{{'general.media.upload.file.edit.confirm' | translate }}</button>
+</div>

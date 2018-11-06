@@ -1,157 +1,166 @@
 <mat-card>
   <mat-card-title>
     <mat-icon>file_upload</mat-icon>
-    {{ 'general.media.centerTitle' | translate }}
+    {{ 'general.media.list.title' | translate }}
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
 
   <mat-card-content>
+    <button mat-flat-button color="primary" (click)="showUploader()">{{'general.uploader.uploadMultiple' |
+      translate}}
+    </button>
+    <media-uploader *ngIf="showMediaUploader" [uploaderConfig]="uploaderConfig"
+                    [uploaderOptions]="uploaderOptions">
+    </media-uploader>
 
-    <mat-tab-group *ngIf="mediaItems; else loadingTemplate"
-                   [dynamicHeight]="true">
+    <div *ngIf="mediaItems; else loadingTemplate" fxLayout='row wrap'>
+      <!--<div class="example-container"
+           *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
+           [class.example-is-mobile]="mobileQuery.matches">
 
-      <mat-tab label="{{'general.media.list.title' | translate}} {{'(' + mediaItems.length + ')' }}">
+        <mat-toolbar class="example-toolbar">
+          <button mat-icon-button (click)="snav.toggle()">
+            <mat-icon>folder_special</mat-icon>
+          </button>
+          {{'general.media.gallery.list.title' | translate}}
+        </mat-toolbar>
 
-        <!--<div class="example-container"
-             *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
-             [class.example-is-mobile]="mobileQuery.matches">
+        <mat-sidenav-container class="example-sidenav-container"
+                               [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+          <mat-sidenav #snav
+                       position="end"
+                       [opened]="false"
+                       [mode]="mobileQuery.matches ? 'over' : 'side'"
+                       [fixedInViewport]="mobileQuery.matches"
+                       fixedTopGap="56">
 
-          <mat-toolbar class="example-toolbar">
-            <button mat-icon-button (click)="snav.toggle()">
-              <mat-icon>folder_special</mat-icon>
-            </button>
-            {{'general.media.gallery.list.title' | translate}}
-          </mat-toolbar>
+            <div fxLayout="column"
+                 fxLayoutGap="10px">
 
-          <mat-sidenav-container class="example-sidenav-container"
-                                 [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-            <mat-sidenav #snav
-                         position="end"
-                         [opened]="false"
-                         [mode]="mobileQuery.matches ? 'over' : 'side'"
-                         [fixedInViewport]="mobileQuery.matches"
-                         fixedTopGap="56">
+              <mat-card *ngFor="let gallery of mediaGalleries | orderBy: ['title']">
+                <mat-card-title>{{gallery.title}}</mat-card-title>
+                <mat-card-content fxLayout="column"
+                                  fxLayoutGap="10px">
 
-              <div fxLayout="column"
-                   fxLayoutGap="10px">
+                  <!--<cdk-drop id="{{gallery.id}}"
+                            [connectedTo]="['media-gallery']"
+                            (dropped)="drop($event)"
+                            style="min-height: 90px; border: 1px solid red;">
+                    <media-gallery-item class="box"
+                                        *ngFor="let mediaItem of gallery.assignedMediaItems | orderBy: ['ordering']"
+                                        [mediaItem]="mediaItem"
+                                        cdkDrag>
+                      <img *cdkDragPreview src="https://via.placeholder.com/150x90" [alt]="mediaItem.title">
+                    </media-gallery-item>
+                  </cdk-drop>
+                </mat-card-content>
+              </mat-card>
 
-                <mat-card *ngFor="let gallery of mediaGalleries | orderBy: ['title']">
-                  <mat-card-title>{{gallery.title}}</mat-card-title>
-                  <mat-card-content fxLayout="column"
-                                    fxLayoutGap="10px">
+            </div>
+          </mat-sidenav>
 
-                    <!--<cdk-drop id="{{gallery.id}}"
-                              [connectedTo]="['media-gallery']"
-                              (dropped)="drop($event)"
-                              style="min-height: 90px; border: 1px solid red;">
-                      <media-gallery-item class="box"
-                                          *ngFor="let mediaItem of gallery.assignedMediaItems | orderBy: ['ordering']"
-                                          [mediaItem]="mediaItem"
-                                          cdkDrag>
-                        <img *cdkDragPreview src="https://via.placeholder.com/150x90" [alt]="mediaItem.title">
-                      </media-gallery-item>
-                    </cdk-drop>
-                  </mat-card-content>
-                </mat-card>
+          <mat-sidenav-content>
 
-              </div>
-            </mat-sidenav>
+            <div class="alert alert-info">{{'general.media.list.coverText' | translate}}</div>
 
-            <mat-sidenav-content>
+            <div class="alert alert-warning" *ngIf="mediaItems.length === 0">
+              <strong>{{ 'general.info' | translate }}</strong> {{ 'general.media.noItemsFound' | translate}}
+            </div>
 
-              <div class="alert alert-info">{{'general.media.list.coverText' | translate}}</div>
+            <!-- [connectedTo]="['Hh1JA4PJ9731jJlcCMf7', 'Ppwn5ARWqVeCvOJlu4p6']"
+            <cdk-drop orientation="horizontal"
+                      class="list"
+                      id="media-gallery"
+                      (dropped)="drop($event)">-->
 
-              <div class="alert alert-warning" *ngIf="mediaItems.length === 0">
-                <strong>{{ 'general.info' | translate }}</strong> {{ 'general.media.noItemsFound' | translate}}
-              </div>
+      <mat-card class="box"
+                fxFlex="14"
+                *ngFor="let mediaItem of mediaItems"
+                cdkDrag
+                (click)="handleMediaItemClick(mediaItem)"
+                [ngClass]="{'selected': selectedItemsIds && selectedItemsIds.indexOf(mediaItem.id) !== -1, 'selectable': selectedItemsIds !== undefined }"
+                >
 
-              <!-- [connectedTo]="['Hh1JA4PJ9731jJlcCMf7', 'Ppwn5ARWqVeCvOJlu4p6']"
-              <cdk-drop orientation="horizontal"
-                        class="list"
-                        id="media-gallery"
-                        (dropped)="drop($event)">-->
+        <mat-card-title> <span>{{mediaItem.file.name}}</span> </mat-card-title>
 
-                <mat-card class="box"
-                          fxFlex="24"
-                          *ngFor="let mediaItem of mediaItems"
-                          cdkDrag>
+        <mat-card-content class="text-center">
 
-                  <mat-card-title>{{mediaItem.file.name}}</mat-card-title>
+          <img *cdkDragPreview src="https://via.placeholder.com/90x90" [alt]="mediaItem.title">
 
-                  <mat-card-content class="text-center">
+          <div class="image-file">
+            <img mat-card-image *ngIf="mediaItem.file.type.indexOf('image') > -1"
+                 [src]="mediaItem.downloadURL"
+                 alt="{{mediaItem.file.name}}"
+                  />
+          </div>
 
-                    <img *cdkDragPreview src="https://via.placeholder.com/90x90" [alt]="mediaItem.title">
+          <div class="audio-file" *ngIf="mediaItem.file.type.indexOf('audio') > -1">
+            <audio controls class="preview-audio">
+              <source [src]="mediaItem.downloadURL" type="audio/ogg">
+              <source [src]="mediaItem.downloadURL" type="audio/mpeg">
+              Your browser does not support the audio tag.
+            </audio>
+          </div>
 
-                    <img *ngIf="mediaItem.file.type.indexOf('image') > -1"
-                         [src]="mediaItem.downloadURL"
-                         alt="{{mediaItem.file.name}}"/>
+          <div class="video-file" *ngIf="mediaItem.file.type.indexOf('video') > -1">
+            <video class="preview-video" controls>
+              <source [src]="mediaItem.downloadURL" type="video/mp4">
+              <source [src]="mediaItem.downloadURL" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+          </div>
 
-                    <div class="audio-file" *ngIf="mediaItem.file.type.indexOf('audio') > -1">
-                      <audio controls>
-                        <source [src]="mediaItem.downloadURL" type="audio/ogg">
-                        <source [src]="mediaItem.downloadURL" type="audio/mpeg">
-                        Your browser does not support the audio tag.
-                      </audio>
-                    </div>
+          <div class="other-file-type"
+               *ngIf="mediaItem.file.type.indexOf('video') === -1  && mediaItem.file.type.indexOf('audio') === -1 && mediaItem.file.type.indexOf('image') === -1">
+            <span class="preview-text">{{mediaItem.file.type}}</span>
+          </div>
+        </mat-card-content>
+        <mat-card-actions class="text-right">
+          <button color="warn"
+                  (click)="removeMediaItem(mediaItem)"
+                  mat-icon-button
+                  appStopPropagation>
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button color="primary"
+                  (click)="showInfoDialog(mediaItem)"
+                  mat-icon-button
+                  appStopPropagation>
+            <mat-icon>info</mat-icon>
+          </button>
+          <!--<div fxLayout="column"-->
+          <!--fxLayoutGap="15px"-->
+          <!--fxLayout.gt-sm="row">-->
+          <!--<button color="accent"-->
+          <!--mat-mini-fab-->
+          <!--type="button"-->
+          <!--(click)="showInfoDialog(mediaItem)">-->
+          <!--<i class="fa fa-info"></i>-->
+          <!--</button>-->
 
-                    <div class="video-file" *ngIf="mediaItem.file.type.indexOf('video') > -1">
-                      <video class="preview-video" controls>
-                        <source [src]="mediaItem.downloadURL" type="video/mp4">
-                        <source [src]="mediaItem.downloadURL" type="video/ogg">
-                        Your browser does not support the video tag.
-                      </video>
-                    </div>
+          <!--&lt;!&ndash;<button color="primary"-->
+          <!--mat-mini-fab-->
+          <!--class="handle"-->
+          <!--cdkDragHandle>-->
+          <!--<i class="fa fa-arrows"></i>-->
+          <!--</button> &ndash;&gt;-->
 
-                    <div class="other-file-type"
-                         *ngIf="mediaItem.file.type.indexOf('video') === -1  && mediaItem.file.type.indexOf('audio') === -1 && mediaItem.file.type.indexOf('image') === -1">
-                      <h5>{{mediaItem.file.type}}</h5>
-                    </div>
-                  </mat-card-content>
-                  <mat-card-actions class="text-right">
-                    <div fxLayout="column"
-                         fxLayoutGap="15px"
-                         fxLayout.gt-sm="row">
-                      <button color="accent"
-                              mat-mini-fab
-                              type="button"
-                              (click)="showInfoDialog(mediaItem)">
-                        <i class="fa fa-info"></i>
-                      </button>
+          <!--<button color="warn"-->
+          <!--mat-mini-fab-->
+          <!--(click)="removeMediaItem(mediaItem)">-->
+          <!--<i class="fa fa-remove"></i>-->
+          <!--</button>-->
+          <!--</div>-->
+        </mat-card-actions>
+      </mat-card>
 
-                      <button color="primary"
-                              mat-mini-fab
-                              class="handle"
-                              cdkDragHandle>
-                        <i class="fa fa-arrows"></i>
-                      </button>
-
-                      <button color="warn"
-                              mat-mini-fab
-                              (click)="removeMediaItem(mediaItem)">
-                        <i class="fa fa-remove"></i>
-                      </button>
-                    </div>
-                  </mat-card-actions>
-                </mat-card>
-
-              <!--</cdk-drop>
-
-
-            </mat-sidenav-content>
-          </mat-sidenav-container>
-        </div>-->
-      </mat-tab>
-      <mat-tab label="{{'general.media.uploader.title' | translate}}">
-        <media-uploader [uploaderConfig]="uploaderConfig"
-                        [uploaderOptions]="uploaderOptions">
-        </media-uploader>
-      </mat-tab>
-      <mat-tab label="{{'general.media.gallery.title' | translate}}">
-        <media-galleries></media-galleries>
-      </mat-tab>
-    </mat-tab-group>
+      <!--</cdk-drop>
 
 
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>-->
+    </div>
   </mat-card-content>
 </mat-card>
 

@@ -821,6 +821,8 @@
       "gallery": {
         "close": "Schließen",
         "create": "Neue Sammlung",
+        "cancel": "Abbrechen",
+        "confirm": "Bestätigen",
         "form": {
           "assignedItem": {
             "title": "Bitte wähle nun, zu welchem Element die Gallerie gehört."
@@ -843,7 +845,8 @@
             "planned": "Veröffentlichung planen",
             "show": "Jetzt veröffentlichen"
           },
-          "title": "Titel der Sammlung"
+          "title": "Titel der Sammlung",
+          "uploadFiles": "Dateien zu der Sammlung hinzufügen"
         },
         "list": {
           "description": "Dateien können in Sammlungen / Gallerien angeordnet werden, um sie einfach mit einem Objekt zu verbinden.",
@@ -863,6 +866,10 @@
         "author": "Hochgeladen von",
         "date": "Datum",
         "file": {
+          "edit": {
+            "cancel": "Abbrechen",
+            "confirm": "Speichern"
+          },
           "info": "Dateiinformationen",
           "link": "Link zur Datei",
           "name": "Dateiname",
@@ -1230,7 +1237,10 @@
         "main": "Positionen einer Mannschaft"
       },
       "uploader": {
-        "main": "Media-Uploader"
+        "main": "Media-Uploader",
+        "create": "Sammlung erstellen",
+        "list": "Alle Sammlungen",
+        "uploadedData": "Hochgeladene Dateien"
       },
       "user": {
         "detail": "Benutzerdetails",
@@ -1635,6 +1645,7 @@
       "showUploader": "Uploader anzeigen",
       "successfulUpload": "Die Datei wurde übertragen",
       "uploaderTitle": "Datei hochladen",
+      "uploadMultiple": "Dateien hochladen",
       "uploadViaLinkTitle": "Datei von einer URL speichern",
       "viewFullSize": "Großansicht",
       "wrongFileType": "Falscher Dateityp ausgewählt."

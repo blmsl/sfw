@@ -47,7 +47,7 @@
               <mat-icon>delete</mat-icon>
             </button>
             <button color="primary"
-                    (click)="editMediaGallery(mediaGallery)"
+                    [routerLink]="['/uploader/edit', mediaGallery.id]"
                     mat-icon-button>
               <mat-icon>edit</mat-icon>
             </button>
