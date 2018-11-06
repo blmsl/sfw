@@ -1,10 +1,13 @@
 import {
-  Component,
-  OnInit
+  Component, Input,
+  OnInit, ViewChild
 } from '@angular/core';
 import 'fullcalendar';
 import { CalendarService } from '../../../shared/services/calendar/calendar.service';
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
+import { CalendarComponent } from 'ng-fullcalendar';
+import { ICalendarEvent } from '../../../shared/interfaces/calendar/calendar-event.interface';
+import * as moment from 'moment';
 
 @Component({
   selector: 'calendar-dashboard',
@@ -21,11 +24,10 @@ export class CalendarDashboardComponent implements OnInit {
     this.data$ = this.calendarService.getCalendars();
   }
 
-  /* calendarOptions: OptionsInput;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
   @Input() events: ICalendarEvent[];
 
-  /*public calendarOptions: OptionsInput = {
+  public calendarOptions: any = {
     allDayText: 'ganztägig',
     buttonText: {
       today: 'Heute',
@@ -34,7 +36,7 @@ export class CalendarDashboardComponent implements OnInit {
       day: 'Tag',
       list: 'Liste'
     },
-    defaultDate: moment().toISOString(),
+    defaultDate: new Date(),
     displayEventEnd: true,
     editable: false,
     events: null,
@@ -64,7 +66,7 @@ export class CalendarDashboardComponent implements OnInit {
     },
     weekNumbers: true,
     weekNumberTitle: 'KW'
-  };*/
+  };
 
   ngOnInit() {
     /*
