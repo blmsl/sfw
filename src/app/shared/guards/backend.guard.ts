@@ -21,21 +21,19 @@ import { AlertService } from '../services/alert/alert.service';
 export class BackendGuard implements CanActivate {
 
   constructor(private authService: AuthService,
-    private route: ActivatedRoute,
-    private alertService: AlertService,
-    private router: Router) {
+              private route: ActivatedRoute,
+              private alertService: AlertService,
+              private router: Router) {
   }
 
   canActivate(next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> {
+              state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.user$.pipe(
       first(),
       map((user: IUser) => {
-        console.log(user.assignedRoles);
         return user && (user.assignedRoles.admin || user.assignedRoles.editor);
       }),
       tap((isAllowed: boolean) => {
-        console.log(isAllowed);
         if (!isAllowed) {
           this.authService.signOut().then(() => {
             this.alertService.showSnackBar('error', 'general.forbidden.text', 15000);

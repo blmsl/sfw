@@ -18,6 +18,7 @@ import { AlertService } from './services/alert/alert.service';
 import { SfwEditorModule } from './components/editor/sfw-editor.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { LinkModule } from './components/links/link.module';
+import { InfiniteScrollModule } from './components/infinite-scroll/infinite-scroll.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { LinkModule } from './components/links/link.module';
   exports: [
     CommonModule,
     FlexLayoutModule,
+    InfiniteScrollModule,
     LoadingIndicatorModule,
     MatCardModule,
     MatIconModule,

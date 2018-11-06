@@ -1,27 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DetailLinkComponent } from './detail-link/detail-link.component';
-import { EditLinkComponent } from './edit-link/edit-link.component';
-import { RouterModule } from '@angular/router';
-import { MatButtonModule, MatIconModule } from '@angular/material';
+import { InfiniteScrollComponent } from './infinite-scroll.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
-    DetailLinkComponent,
-    EditLinkComponent
+    InfiniteScrollComponent
   ],
   imports: [
     CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    RouterModule,
+    ScrollingModule,
     TranslateModule
   ],
   exports: [
-    DetailLinkComponent,
-    EditLinkComponent
+    InfiniteScrollComponent
   ]
 })
-export class LinkModule {
+export class InfiniteScrollModule {
 }

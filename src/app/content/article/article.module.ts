@@ -6,7 +6,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { ArticleService } from '../../shared/services/article/article.service';
 import { CategoryService } from '../../shared/services/category/category.service';
 import { RouterModule } from '@angular/router';
-// import { ArticleListComponent }      from './article-list/article-list.component.tsOLD';
 import { CategoryTypeService } from '../../shared/services/category-type/category-type.service';
 import {
   MatButtonModule,
