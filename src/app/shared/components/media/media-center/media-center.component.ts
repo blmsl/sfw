@@ -87,7 +87,7 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
     const dialogRef = this.dialog.open(MediaItemInfoComponent, {
       data: { mediaItem }
     });
-    
+
     dialogRef.afterClosed().subscribe((updatedMediaItem: IMediaItem) => {
 
     });
