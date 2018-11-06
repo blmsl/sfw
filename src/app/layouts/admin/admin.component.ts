@@ -90,6 +90,7 @@ export class AdminComponent implements OnInit, OnDestroy {
           console.log('Viewport is getting smaller!');
         }
         this.mediaMatches = state.matches;
+        this.isOver();
       });
   }
 
@@ -98,9 +99,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   runOnRouteChange(): void {
-    /*if (this.isOver()) {
+    if (this.isOver()) {
       this.sidemenu.close();
-    }*/
+    }
 
     this.updatePS();
   }
