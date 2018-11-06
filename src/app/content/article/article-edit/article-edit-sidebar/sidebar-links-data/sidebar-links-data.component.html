@@ -49,6 +49,7 @@
 
   <mat-checkbox fxFlex="49"
                 style="margin-top: 25px;"
+                [attr.checked] = "article.assignedMatches ? 'checked' : null"
                 formControlName="isMatch">
     {{'general.articles.edit.sidebar.links.isArticleAMatch' | translate}}
   </mat-checkbox>

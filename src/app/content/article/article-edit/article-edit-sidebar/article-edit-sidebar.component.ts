@@ -24,7 +24,7 @@ import { IArticle } from '../../../../shared/interfaces/article.interface';
 })
 export class ArticleEditSidebarComponent {
 
-  @Input() form: FormGroup;
+  // @Input() form: FormGroup;
   @Input() article: IArticle;
 
   public applications$: Observable<IApplication[]>;
@@ -36,6 +36,7 @@ export class ArticleEditSidebarComponent {
   public users$: Observable<IUser[]>;
 
   @Output() removeArticle: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() changeArticle: EventEmitter<IArticle> = new EventEmitter<IArticle>(false);
   @Output() uploadCompleted: EventEmitter<string> = new EventEmitter<string>(false);
 
   public selectedTab: number;

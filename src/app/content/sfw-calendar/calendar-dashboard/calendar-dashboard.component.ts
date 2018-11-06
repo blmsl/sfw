@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/index';
   selector: 'calendar-dashboard',
   templateUrl: './calendar-dashboard.component.html',
   styles: [
-    `@import "../../../../../node_modules/fullcalendar/dist/fullcalendar.css";`
+    // `@import "../../../../../node_modules/fullcalendar/dist/fullcalendar.css";`
   ]
 })
 export class CalendarDashboardComponent implements OnInit {

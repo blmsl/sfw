@@ -48,11 +48,11 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
   public selectedItemsIds: string[];
 
   constructor(private mediaItemService: MediaItemService,
-              private mediaGalleryService: MediaGalleryService,
-              private alertService: AlertService,
-              private changeDetectorRef: ChangeDetectorRef,
-              private media: MediaMatcher,
-              public dialog: MatDialog) {
+    private mediaGalleryService: MediaGalleryService,
+    private alertService: AlertService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private media: MediaMatcher,
+    public dialog: MatDialog) {
 
     this.mediaGalleries$ = mediaGalleryService.mediaGalleries$;
     this.mobileQuery = media.matchMedia('(max-width: 600px)');

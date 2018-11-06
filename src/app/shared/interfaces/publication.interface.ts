@@ -2,6 +2,6 @@ import { IUser } from './user/user.interface';
 
 export interface IPublication {
   status: number;
-  dateTime?: string;
+  dateTime?: any;
   from?: IUser | string;
 }

@@ -48,7 +48,7 @@ export class ArticleEditComponent implements OnInit {
   public froalaOptions: Object = {
     placeholderText: 'Schreib Deine Geschichte ...',
     charCounterCount: true,
-    height: '70vh'
+    height: '60vh'
   };
 
   constructor(private route: ActivatedRoute,
@@ -79,92 +79,55 @@ export class ArticleEditComponent implements OnInit {
     this.form = this.fb.group({
       title: [this.article.title, [Validators.required, Validators.minLength(10)]],
       text: [this.article.text, [Validators.required, Validators.minLength(10)]],
-      publication: this.initPublication(),
-
-      // Main-Data
-      excerpt: this.article.excerpt,
-      subTitle: this.article.subTitle,
-      postURL: this.article.postURL,
-      articleDate: this.article.articleDate ? this.article.articleDate : new Date(),
-      isFeaturedPost: this.article.isFeaturedPost,
-      creation: this.initCreation(),
-      assignedTags: [this.article.assignedTags],
-
-      // Links
-      assignedLocation: this.article.assignedLocation,
-      assignedTeams: [this.article.assignedTeams],
-      assignedMatches: [this.article.assignedMatches],
-      assignedCategories: [this.article.assignedCategories],
-      isMatch: !!this.article.assignedMatches,
-      soccerWatchLink: this.article.soccerWatchLink,
-
-      // Meta
-      meta: this.initMetaData()
+      publication: this.initPublication()
     });
 
     this.form.valueChanges.pipe(
-      debounceTime(1500),
+      debounceTime(1000),
       distinctUntilChanged()
     ).subscribe((changes: any) => {
-      console.log(changes);
       this.articleStatus = 'saving';
-
-      if (!changes.isMatch) {
-        changes.assignedMatches = null;
-      }
-      changes.isMatch = null;
 
       // set publication date to now if status is "publish now"
       if (changes.publication.status === 1) {
-        changes.publication.dateTime = <any>moment();
+        changes.publication.dateTime = new Date();
       }
 
       this.article = Object.assign({}, this.article, changes);
 
       if (this.form.valid) {
-        this.saveArticle(this.article);
+        this.saveArticle();
       } else {
         this.articleStatus = 'error';
       }
     });
+  }
 
+  changeArticle(changes: any) {
+    this.article = Object.assign({}, this.article, changes);
+    this.saveArticle();
+  }
+
+  changePublicationStatus($event: any) {
+    $event.stopPropagation();
+
+    if (this.article.publication.status === 2) {
+      this.article.publication.dateTime = new Date();
+    }
   }
 
   togglePreview(): void {
     this.showPreview = !this.showPreview;
   }
 
-  initMetaData(): FormGroup {
-    return this.fb.group({
-      main: this.fb.group({
-        title: this.article.meta && this.article.meta.main ? this.article.meta.main.title : '',
-        description: this.article.meta && this.article.meta.main ? this.article.meta.main.description : '',
-      }),
-      facebook: this.fb.group({
-        title: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.title : '',
-        description: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.description : '',
-        scheduled: this.article.meta && this.article.meta.facebook ? this.article.meta.facebook.scheduled : false
-      }),
-      twitter: this.fb.group({
-        title: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.title : '',
-        description: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.description : '',
-        scheduled: this.article.meta && this.article.meta.twitter ? this.article.meta.twitter.scheduled : false
-      })
-    });
-  }
-
   initPublication(): FormGroup {
     return this.fb.group({
       by: this.article.publication && this.article.publication.from ? this.article.publication.from : this.authService.userId,
-      dateTime: [this.article.publication && this.article.publication.dateTime ? new Date(this.article.publication.dateTime) : new Date(), Validators.compose([Validators.required])],
+      dateTime: [this.article.publication && this.article.publication.dateTime
+        ? new Date(this.article.publication.dateTime.seconds * 1000)
+        : new Date(),
+      Validators.compose([Validators.required])],
       status: this.article.publication ? this.article.publication.status : 0
-    });
-  }
-
-  initCreation(): FormGroup {
-    return this.fb.group({
-      by: this.article.creation.by,
-      at: this.article.creation.at
     });
   }
 
@@ -194,12 +157,12 @@ export class ArticleEditComponent implements OnInit {
     }
   }
 
-  saveArticle(article: IArticle) {
+  saveArticle() {
     let action;
     if (this.article.id) {
-      action = this.articleService.updateArticle(article.id, article);
+      action = this.articleService.updateArticle(this.article.id, this.article);
     } else {
-      action = this.articleService.createArticle(article);
+      action = this.articleService.createArticle(this.article);
     }
     action
       .then(() => {

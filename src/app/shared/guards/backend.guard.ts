@@ -21,13 +21,13 @@ import { AlertService } from '../services/alert/alert.service';
 export class BackendGuard implements CanActivate {
 
   constructor(private authService: AuthService,
-              private route: ActivatedRoute,
-              private alertService: AlertService,
-              private router: Router) {
+    private route: ActivatedRoute,
+    private alertService: AlertService,
+    private router: Router) {
   }
 
   canActivate(next: ActivatedRouteSnapshot,
-              state: RouterStateSnapshot): Observable<boolean> {
+    state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.user$.pipe(
       first(),
       map((user: IUser) => {

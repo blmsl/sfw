@@ -9,7 +9,7 @@ import { map, take } from 'rxjs/internal/operators';
 export class UploaderResolver implements Resolve<IMediaGallery> {
 
   constructor(private mediaGalleryService: MediaGalleryService,
-              private router: Router) {
+    private router: Router) {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<IMediaGallery> {

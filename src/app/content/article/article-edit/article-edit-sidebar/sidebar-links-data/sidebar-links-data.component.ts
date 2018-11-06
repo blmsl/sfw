@@ -1,6 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs/index';
+import { Observable, Subscription } from 'rxjs';
 import { ILocation } from '../../../../../shared/interfaces/location/location.interface';
 import { ITeam } from '../../../../../shared/interfaces/team/team.interface';
 import { ICategory } from '../../../../../shared/interfaces/category.interface';
@@ -8,6 +8,8 @@ import { ICategoryType } from '../../../../../shared/interfaces/category-type.in
 import { ISeason } from '../../../../../shared/interfaces/season.interface';
 import { MatchService } from '../../../../../shared/services/match/match.service';
 import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
+import { IArticle } from '../../../../../shared/interfaces/article.interface';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'sidebar-links-data',
@@ -16,16 +18,18 @@ import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
 })
 export class SidebarLinksDataComponent implements OnInit, OnDestroy {
 
-  @Input() form: FormGroup;
-
+  @Input() article: IArticle;
   @Input() categories: Observable<ICategory[]>;
   @Input() categoryTypes: Observable<ICategoryType[]>;
   @Input() locations: Observable<ILocation[]>;
   @Input() teams: Observable<ITeam[]>;
   @Input() seasons: Observable<ISeason[]>;
 
+  @Output() changeArticle: EventEmitter<IArticle> = new EventEmitter<IArticle>(false);
+
   public matches: IMatch[];
   public matchesListReady: boolean = false;
+  public form: FormGroup;
 
   private matchSubscription: Subscription;
 
@@ -34,15 +38,25 @@ export class SidebarLinksDataComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.form.get('isMatch').value && !this.matches) {
+    this.form = this.fb.group({
+      assignedLocation: this.article.assignedLocation,
+      assignedTeams: [this.article.assignedTeams],
+      assignedMatches: [this.article.assignedMatches],
+      assignedCategories: [this.article.assignedCategories],
+      isMatch: !!this.article.assignedMatches,
+      soccerWatchLink: this.article.soccerWatchLink,
+    });
+
+    if (this.article.assignedMatches && !this.matches) {
       this.loadMatches();
     }
 
-    this.form.valueChanges.subscribe((changes: any) => {
-      console.log(changes.isMatch);
+    this.form.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    ).subscribe((changes: any) => {
       if (changes.isMatch) {
         if (!this.matches) {
-          console.log('load');
           this.loadMatches();
         } else {
           this.matchesListReady = true;
@@ -50,6 +64,12 @@ export class SidebarLinksDataComponent implements OnInit, OnDestroy {
       } else {
         this.matchesListReady = false;
       }
+
+      // Update parent-cmp
+      if (!changes.isMatch) {
+        changes.assignedMatches = null;
+      }
+      this.changeArticle.emit(changes);
     });
   }
 
@@ -60,7 +80,7 @@ export class SidebarLinksDataComponent implements OnInit, OnDestroy {
   }
 
   loadMatches() {
-    this.matchSubscription = this.matchService.matches$.subscribe((matches: IMatch[]) => {
+    this.matchSubscription = this.matchService.getOrderedMatchList().subscribe((matches: IMatch[]) => {
       this.matches = matches;
       this.matchesListReady = true;
     });

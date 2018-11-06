@@ -50,9 +50,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   public config: PerfectScrollbarConfigInterface = {};
 
   constructor(private router: Router,
-              public translate: TranslateService,
-              public breakpointObserver: BreakpointObserver,
-              public authService: AuthService) {
+    public translate: TranslateService,
+    public breakpointObserver: BreakpointObserver,
+    public authService: AuthService) {
 
     translate.addLangs(['de', 'en', 'fr']);
     translate.setDefaultLang('de');

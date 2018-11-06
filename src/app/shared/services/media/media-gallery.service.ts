@@ -14,7 +14,7 @@ export class MediaGalleryService {
   private galleryTypes: string[] = ['article', 'club', 'location', 'match', 'member', 'sponsor', 'team'];
 
   constructor(private afs: AngularFirestore,
-              private authService: AuthService) {
+    private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMediaGallery>(this.path);
     this.mediaGalleries$ = this.collectionRef.valueChanges();
   }

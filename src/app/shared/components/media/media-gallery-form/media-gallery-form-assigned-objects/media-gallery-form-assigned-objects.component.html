@@ -8,7 +8,7 @@
                   [value]="item.id">
         {{item.title}}
         <!-- Articles -->
-        {{item.articleDate ? (item.articleDate | date: 'dd.MM.yy')  : ''}}
+        {{item.articleDate ? (item.articleDate.seconds * 1000 | date: 'dd.MM.yy') : ''}}
         {{item.subTitle ? '(' +item.subTitle+')' : ''}}
         <!-- Matches -->
         {{item.matchStartDate ? (item.matchStartDate.seconds*1000 | date: 'dd.MM.yy HH:mm') :''}}

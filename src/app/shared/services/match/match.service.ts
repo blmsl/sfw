@@ -58,7 +58,11 @@ export class MatchService {
     ).valueChanges();
   }
 
-  getPastMatches(timeLimit: Date) {
+  getOrderedMatchList(): Observable<IMatch[]> {
+    return this.afs.collection<IMatch>(this.path, ref => ref.orderBy('matchStartDate')).valueChanges();
+  }
+
+  getPastMatches(timeLimit: Date): Observable<IMatch[]> {
     let now = new Date();
     return this.afs.collection<IMatch>(this.path, ref =>
       ref

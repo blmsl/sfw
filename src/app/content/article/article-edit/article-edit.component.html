@@ -6,13 +6,12 @@
   <mat-sidenav #settings
                position="end"
                class="chat-panel"
-               [mode]="'side'"
+               [mode]="'over'"
                [opened]="sidePanelOpened"
                (open)="sidePanelOpened = true"
                (close)="sidePanelOpened = false">
 
-    <div fxLayout.gt-sm="row"
-         fxLayout="column"
+    <div fxLayout="row"
          fxLayoutAlign="space-between center">
       <span style="font-weight: bold; font-size: larger">{{ 'general.articles.edit.sidebar.title' | translate }}</span>
       <span class="space"></span>
@@ -21,14 +20,13 @@
       </button>
     </div>
 
-    <article-edit-sidebar [form]="form"
-                          [article]="article"
+    <article-edit-sidebar [article]="article"
                           (uploadCompleted)="uploadCompleted($event)"
+                          (changeArticle)="changeArticle($event)"
                           (removeArticle)="removeArticle()">
     </article-edit-sidebar>
 
   </mat-sidenav>
-
   <mat-sidenav-content>
 
     <div class="header">
@@ -38,7 +36,7 @@
         </span>
       </h2>
 
-      <div fxLayout.gt-sm="row"
+      <div fxLayout.gt-xs="row"
            fxLayout="column"
            fxLayoutAlign="space-between center">
 
@@ -87,7 +85,7 @@
             <h5>{{'general.articles.edit.publish.question' | translate}}</h5>
             <mat-radio-group class="radio-group"
                              formControlName="status">
-              <mat-radio-button (click)="$event.stopPropagation()"
+              <mat-radio-button (click)="changePublicationStatus($event)"
                                 class="radio-button"
                                 *ngFor="let publication of publicationOptions"
                                 [value]="publication.value"
@@ -137,7 +135,7 @@
     </textarea>
 
     <div *ngIf="showPreview">
-      <div [froalaView]="text"></div>
+      <div [froalaView]="article.text"></div>
     </div>
 
   </mat-sidenav-content>

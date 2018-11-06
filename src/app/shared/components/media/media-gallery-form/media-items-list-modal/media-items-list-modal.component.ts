@@ -20,9 +20,9 @@ export class MediaItemsListModalComponent implements OnInit {
   public selectedMediaItems: IMediaItem[];
 
   constructor(private alertService: AlertService,
-              private mediaItemService: MediaItemService,
-              public dialogRef: MatDialogRef<MediaItemsListModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: IMediaItem[]
+    private mediaItemService: MediaItemService,
+    public dialogRef: MatDialogRef<MediaItemsListModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: IMediaItem[]
   ) {
     this.selectedMediaItems = this.data;
   }

@@ -1,9 +1,8 @@
-<mat-tab-group [formGroup]="form"
-               (selectedTabChange)="onTabChange($event)"
+<mat-tab-group (selectedTabChange)="onTabChange($event)"
                [dynamicHeight]="true">
 
   <mat-tab label="{{ 'general.articles.edit.sidebar.main.title' | translate }}">
-    <sidebar-main-data [form]="form"
+    <sidebar-main-data (changeArticle)="changeArticle.emit($event)"
                        [article]="article"
                        [users]="users$ | async">
     </sidebar-main-data>
@@ -20,12 +19,13 @@
 
   <mat-tab label="{{ 'general.articles.edit.sidebar.links.title' | translate }}">
     <sidebar-links-data *ngIf="selectedTab === 1"
+                        [article]="article"
+                        (changeArticle)="changeArticle.emit($event)"
                         [categoryTypes]="categoryTypes$ | async | categoryFilter : 'link' : ['article.types', 'team.types']"
                         [categories]="categories$ | async"
                         [locations]="locations$ | async"
                         [seasons]="seasons$ | async"
-                        [teams]="teams$ | async"
-                        [form]="form">
+                        [teams]="teams$ | async">
     </sidebar-links-data>
   </mat-tab>
 
@@ -33,7 +33,7 @@
     <sidebar-meta-data *ngIf="selectedTab === 2"
                        (uploadCompleted)="uploadCompleted.emit($event)"
                        [article]="article"
-                       [form]="form">
+                       (changeArticle)="changeArticle.emit($event)">
     </sidebar-meta-data>
   </mat-tab>
 

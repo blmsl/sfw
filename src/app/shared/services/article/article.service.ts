@@ -41,12 +41,12 @@ export class ArticleService {
 
   createArticle(article: IArticle): Promise<void> {
     article.id = this.afs.createId();
-    if (article.articleDate) {
+    /*if (article.articleDate) {
       article.articleDate = article.articleDate.toString();
     }
     if (article.publication.dateTime) {
       article.publication.dateTime = article.publication.dateTime.toString();
-    }
+    } */
     return this.afs.collection(this.path).doc(article.id).set(article);
   }
 
@@ -55,12 +55,12 @@ export class ArticleService {
   }
 
   updateArticle(articleId: string, article: IArticle): Promise<any> {
-    if (article.articleDate) {
+    /*if (article.articleDate) {
       article.articleDate = article.articleDate.toString();
     }
     if (article.publication.dateTime) {
       article.publication.dateTime = article.publication.dateTime.toString();
-    }
+    }*/
     return this.afs.collection(this.path).doc(articleId).update(article);
   }
 
@@ -88,7 +88,7 @@ export class ArticleService {
     if (!interviews || interviews.length === 0) {
       return of([]);
     }
-    let observables = [];
+    const observables = [];
     for (let i = 0; i < interviews.length; i++) {
       observables.push(this.getArticleById(interviews[i].assignedArticleId).pipe(
         take(1)
@@ -106,13 +106,15 @@ export class ArticleService {
           }
         });
       })
-    )
+    );
   }
 
   assignMatchToArticles(matchId: string, articles: IArticle[]): Observable<IArticle> {
-    if (!matchId || !articles || articles.length === 0) return;
+    if (!matchId || !articles || articles.length === 0) {
+      return;
+    }
 
-    let observables = [];
+    const observables = [];
 
     for (let i = 0; i < articles.length; i++) {
       articles[i].assignedMatches ? articles[i].assignedMatches.push(matchId) : articles[i].assignedMatches = [matchId];

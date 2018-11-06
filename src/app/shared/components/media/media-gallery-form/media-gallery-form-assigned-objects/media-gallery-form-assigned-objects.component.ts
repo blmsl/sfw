@@ -14,9 +14,9 @@ import { MemberService } from '../../../../services/member/member.service';
 import { SponsorService } from '../../../../services/sponsor/sponsor.service';
 import { TeamService } from '../../../../services/team/team.service';
 import { FormGroup } from '@angular/forms';
-import { OrderByPipe } from 'ngx-pipes';
 import { SeasonService } from '../../../../services/season/season.service';
 import { ISeason } from '../../../../interfaces/season.interface';
+import * as moment from 'moment';
 
 @Component({
   selector: 'media-gallery-form-assigned-objects',
@@ -31,6 +31,7 @@ export class MediaGalleryFormAssignedObjectsComponent implements OnInit, OnChang
 
   public assignedItems$: Observable<any[]>;
   public isLoading: boolean = false;
+  public moment: any;
 
   constructor(private articleService: ArticleService,
     private clubService: ClubService,
@@ -40,6 +41,7 @@ export class MediaGalleryFormAssignedObjectsComponent implements OnInit, OnChang
     private sponsorService: SponsorService,
     private teamService: TeamService,
     private seasonService: SeasonService) {
+    this.moment = moment;
   }
 
   ngOnChanges(changes: SimpleChanges) {

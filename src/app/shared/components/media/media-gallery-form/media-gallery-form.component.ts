@@ -34,14 +34,14 @@ export class MediaGalleryFormComponent implements OnInit, OnDestroy {
   private mediaItemsSubscription: Subscription;
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService,
-              private alertService: AlertService,
-              private seasonService: SeasonService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public mediaGalleryService: MediaGalleryService,
-              public mediaItemService: MediaItemService,
-              public dialog: MatDialog) {
+    private authService: AuthService,
+    private alertService: AlertService,
+    private seasonService: SeasonService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public mediaGalleryService: MediaGalleryService,
+    public mediaItemService: MediaItemService,
+    public dialog: MatDialog) {
     this.seasons$ = seasonService.seasons$;
     this.mediaItems = [];
   }
@@ -97,7 +97,7 @@ export class MediaGalleryFormComponent implements OnInit, OnDestroy {
       if (!selectionConfirmed) {
         this.mediaItems = initialData;
       } else {
-        this.gallery = Object.assign({}, this.gallery, {assignedMediaItems: this.mediaItems.map(item => item.id)})
+        this.gallery = Object.assign({}, this.gallery, { assignedMediaItems: this.mediaItems.map(item => item.id) })
       }
     });
   }
@@ -115,12 +115,12 @@ export class MediaGalleryFormComponent implements OnInit, OnDestroy {
       action = this.mediaGalleryService.updateMediaGallery(newGallery);
     }
 
-      action.then(() => {
-        this.alertService.showSnackBar('success', 'general.media.gallery.saved')
-        this.redirectToList();
-        },
-        (error: any) => this.alertService.showSnackBar('error', error.message)
-      ).catch((error: any) => {
+    action.then(() => {
+      this.alertService.showSnackBar('success', 'general.media.gallery.saved')
+      this.redirectToList();
+    },
+      (error: any) => this.alertService.showSnackBar('error', error.message)
+    ).catch((error: any) => {
       this.alertService.showSnackBar('error', error.message);
     });
   }

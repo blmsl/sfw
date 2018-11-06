@@ -17,7 +17,7 @@ export interface IArticle {
 
   text?: string;
 
-  articleDate?: string;
+  articleDate?: any;
 
   creation: ICreation;
   publication?: IPublication;

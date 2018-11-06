@@ -7,7 +7,7 @@ import { MemberService } from '../../shared/services/member/member.service';
 import { CalendarDashboardComponent } from './calendar-dashboard/calendar-dashboard.component';
 import { CalendarService } from '../../shared/services/calendar/calendar.service';
 import { ApplicationService } from '../../shared/services/application/application.service';
-import { AngularFireFunctionsModule } from '@angular/fire/functions';
+import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/functions';
 import { FullCalendarModule } from 'ng-fullcalendar';
 
 @NgModule({
@@ -24,7 +24,11 @@ import { FullCalendarModule } from 'ng-fullcalendar';
   providers: [
     ApplicationService,
     CalendarService,
-    MemberService
+    MemberService,
+    {
+      provide: FunctionsRegionToken,
+      useValue: 'europe-west1'
+    }
   ]
 })
 
