@@ -1,0 +1,29 @@
+<ng-container *ngIf="infinite | async as items">
+
+  <cdk-virtual-scroll-viewport  *ngIf="viewPortHeight && itemSize"
+                                [style.height]="viewPortHeight"
+                                [itemSize]="itemSize"><!--
+                                (scrolledIndexChange)="nextBatch($event, (items[items.length - 1][sortOrder]))" -->
+
+    <!--"abraham/twitteroauth": "^0.7.4",
+    "paragonie/random_compat": "2.0.17",
+    "duzun/hquery": "^2.1",
+    "facebook/graph-sdk": "^5.6",
+    "martin-georgiev/social-post": "^1.0"-->
+
+    <ng-container *ngIf="assignedObjectType === 'article'">
+      <li *cdkVirtualFor="let item of items; let i = index; trackBy: trackByIdx">
+        <h3>{{ item.title }}</h3>
+        <p *ngIf="item.creation.at.seconds * 1000 as creation">
+          {{ moment(creation).fromNow() }}
+          ({{moment(creation).format('L') }},
+          {{moment(creation).format('LT') }}
+          {{'general.oClock' | translate}})</p>
+      </li>
+    </ng-container>
+
+    <p *ngIf="theEnd">{{'general.endOfList' | translate}}</p>
+
+  </cdk-virtual-scroll-viewport>
+
+</ng-container>

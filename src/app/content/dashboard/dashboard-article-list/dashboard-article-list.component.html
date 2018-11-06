@@ -3,32 +3,13 @@
     <h2 mat-card-widget-title>{{'general.dashboard.lastArticles' | translate}}</h2>
     <hr>
   </mat-card-title>
-  <mat-card-content style="padding: 0 1rem">
-
-    <div *ngIf="articles$ | async as articles; else loadingTemplate">
-
-      <p *ngIf="!articles.length">{{'general.articles.list.noResult' | translate}}</p>
-
-      <div *ngIf="users$ | async as users; else loadingTemplate">
-        <mat-card *ngFor="let article of articles; let last = last">
-          <mat-card-header>
-            <mat-card-title><a [routerLink]="['/articles/edit', article.id]">{{article.title}}</a></mat-card-title>
-            <mat-card-subtitle>
-              {{article.creation.at.toDate() | timeago:live}} -
-              <user-avatar [userId]="article.creation.by"
-                           [users]="users">
-              </user-avatar>
-            </mat-card-subtitle>
-          </mat-card-header>
-          <hr />
-          <!--<media-avatar [assignedObjects]="assignedObjects"
-                        [itemId]="article.id">
-          </media-avatar>
-          <mat-card-content [innerHTML]="article.excerpt ? article.excerpt : article.text"></mat-card-content>-->
-        </mat-card>
-      </div>
-
-    </div>
+  <mat-card-content>
+    <infinite-scroll [assignedObjectType]="'article'"
+                     [viewPortHeight]="itemSize * maxItems + 'px'"
+                     [itemSize]="itemSize"
+                     [maxItems]="maxItems"
+                     [sortOrder]="sortOrder">
+    </infinite-scroll>
   </mat-card-content>
 </mat-card>
 

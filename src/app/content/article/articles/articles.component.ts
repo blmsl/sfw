@@ -9,8 +9,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 
-import { IUser } from '../../../shared/interfaces/user/user.interface';
-
 @Component({
   selector: 'articles',
   templateUrl: './articles.component.html',
@@ -18,10 +16,7 @@ import { IUser } from '../../../shared/interfaces/user/user.interface';
 })
 
 export class ArticlesComponent implements OnInit {
-
-  // public articles$: Observable<IArticle[]>;
   public categories$: Observable<ICategory[]>;
-  public users$: Observable<IUser[]>;
 
   @ViewChild(CdkVirtualScrollViewport)
   viewport: CdkVirtualScrollViewport;
@@ -85,51 +80,7 @@ export class ArticlesComponent implements OnInit {
     return i;
   }
 
-  /* public form: FormGroup;
-  public filters: {
-    author?: string,
-    sorting?: string,
-    status?: number,
-    tags?: string[]
-  };
-
-  constructor(private articleService: ArticleService,
-    private userService: UserService,
-    private alertService: AlertService,
-    private fb: FormBuilder,
-    private categoryService: CategoryService) {
-    // this.articles$ = articleService.articles$;
-    this.users$ = this.userService.users$;
-    this.categories$ = categoryService.categories$;
-  }
-
-  trackByIdx(i) {
-    return i;
-  }*/
-
   ngOnInit() {
-    /* this.form = this.fb.group({
-      assignedTags: undefined,
-      creation: this.fb.group({
-        'by': undefined,
-      }),
-      publication: this.fb.group({
-        status: undefined
-      }),
-      sorting: 'desc'
-    });
-
-    this.form.valueChanges.pipe(
-      debounceTime(1000),
-      distinctUntilChanged()
-    ).subscribe((changes: {
-      author: string,
-      sorting: string,
-      status: number,
-      tags: string[]
-    }) => {
-      this.filters = changes;
-    }); */
   }
 
   /*removeArticle($event) {

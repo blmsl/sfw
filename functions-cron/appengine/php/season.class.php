@@ -9,14 +9,13 @@ trait sfwSeason
   private $seasons = array();
 
   /**
-   * @param $seasonStartYear DateTime
-   * @param $seasonEndYear DateTime
+   * @param $seasonStartYear DateTimeImmutable
    * @param $batch \Google\Cloud\Firestore\WriteBatch
    * @return array
    */
-  public function getSeasonByDate($seasonStartYear, $seasonEndYear, $batch)
+  public function getSeasonByDate($seasonStartYear, $batch)
   {
-    $title = 'Saison ' . $seasonStartYear->format('Y') . '/' . $seasonEndYear->format('Y');
+    $title = 'Saison ' . $seasonStartYear->format('Y') . '/' . $seasonStartYear->modify('+1 year')->format('Y');
     $query = $this->seasonCollection->where('title', '=', $title);
     $snapshot = $query->documents();
 

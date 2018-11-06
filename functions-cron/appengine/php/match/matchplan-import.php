@@ -11,7 +11,7 @@ require "../base.class.php";
 
 require_once "../utils.global.php"; # by emre isik
 
-if(!strpos(gethostname(), 'appspot.com')) {
+if (!strpos(gethostname(), 'appspot.com')) {
   putenv('GOOGLE_APPLICATION_CREDENTIALS=../client_secret.json');
 }
 
@@ -26,48 +26,39 @@ echo "<h1>Importiere den Spielplan von fussball.de</h1>";
 $batch = $project->db->batch();
 $batch2 = $project->db->batch();
 
-$jahr = isset($_GET['jahr']) ? DateTime::createFromFormat('Y', $_GET['jahr']) : new DateTime();
+$seasonStart = isset($_GET['jahr']) ? DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $_GET['jahr'] . '-07-01 00:00:00') : new DateTimeImmutable();
 
 // falls ein Jahr übergeben wurde wird die komplette Saison als Start- und Ende gesetzt,
 // ansonsten die nächsten 4 Monate ab heute
-$loadingLimit = null;
 if (isset($_GET['jahr'])) {
-    $seasonStart = $project->getSeasonStartDate($jahr);
-    $seasonStartClone = clone($seasonStart);
-    $loadingLimit = $seasonStartClone->modify('+1 year')->modify('-1 day');
-    $seasonEndDate = $loadingLimit;
-    echo "<h3>Lade Daten vom " . $seasonStart->format('d.m.Y') . " bis " . $loadingLimit->format('d.m.Y') . " </h3>";
+  $loadingLimit = $seasonStart->add(new DateInterval('P1Y'))->sub(new DateInterval('P1D'));
+  echo "<h3>Lade Daten vom " . $seasonStart->format('d.m.Y') . " bis " . $loadingLimit->format('d.m.Y') . " </h3>";
 } else {
-    // load data for the next 4 months
-    $seasonStart = $jahr;
-    $seasonStartClone = clone($seasonStart);
-    $loadingLimit = $seasonStartClone->modify('+4 month');
-    $seasonEnd = clone($seasonStart);
-    $seasonEndDate = $seasonStartClone->modify('+1 year')->modify('-1 day');
-    echo "<h3>Lade Daten vom " . $seasonStart->format('d.m.Y') . " bis " . $loadingLimit->format('d.m.Y') . " </h3>";
+  $loadingLimit = $seasonStart->add(new DateInterval('P4M'));
+  echo "<h3>Lade Daten vom " . $seasonStart->format('d.m.Y') . " bis " . $loadingLimit->format('d.m.Y') . " </h3>";
 }
 
 // nur definierte Vereine zulassen
 $clubData = isset($_GET['club']) ? $project->getClubDataByTitle($_GET['club']) : $project->getClubDataByTitle('SF Winterbach');
 if (!$clubData) {
-    echo "Kein Verein mit diesen Daten im Skript hinterlegt (vgl. club.class.php).";
-    exit();
+  echo "Kein Verein mit diesen Daten im Skript hinterlegt (vgl. club.class.php).";
+  exit();
 }
 
 // Verein aus der DB laden
 $club = $project->getClubByTitle($clubData["title"]);
 if (!$club) {
-    echo "Kein Verein mit diesen Daten in der Datenbank vorhanden. Bitte den Verein " . $clubData["title"] . " erst in der Datenbank anlegen";
-    exit();
+  echo "Kein Verein mit diesen Daten in der Datenbank vorhanden. Bitte den Verein " . $clubData["title"] . " erst in der Datenbank anlegen";
+  exit();
 }
 
-if(!$club["fussballde"]["clubId"]){
-    echo "Bei dem Verein " . $clubData["title"] . " fehlt die Fussball.de-Id.";
-    exit();
+if (!$club["fussballde"]["clubId"]) {
+  echo "Bei dem Verein " . $clubData["title"] . " fehlt die Fussball.de-Id.";
+  exit();
 }
 
 // Laden der aktuellen Saison
-$assignedSeason = $project->getSeasonByDate($seasonStart, $seasonEndDate, $batch);
+$assignedSeason = $project->getSeasonByDate($seasonStart, $batch);
 
 // die Spielplan-URL anhand des Saison-Startes und -Endes ODER des aktuellen Datums und des Limits laden
 $matchPlanUrl = $project->generateMatchPlanUrl($club["fussballde"]["clubId"], $seasonStart, $loadingLimit);
@@ -87,59 +78,62 @@ $teamList = $project->getTeamsByClubAndSeason($club, $assignedSeason);
 $matchList = $project->getMatchesBetweenStartAndEndDate($seasonStart, $loadingLimit);
 
 $i = 0;
-foreach ($matchPlan as $match){
+foreach ($matchPlan as $match) {
 
-    if(!key_exists('dontShowThis', $match)) {
+  if (!key_exists('dontShowThis', $match)) {
 
-        $location = null;
+    $location = null;
 
-        if(key_exists('assignedLocation', $match)) {
-            $locationCategoryName = $match["assignedLocation"]["assignedLocationCategory"];
-            if (!key_exists($locationCategoryName, $categories) && $locationCategoryName !== '') {
-                $categories[$locationCategoryName] = $project->getCategoryByTitleAndCategoryType($locationCategoryName, $locationCategoryType, $i < 450 ? $batch : $batch2);
-                $i++;
-            }
-            $locationCategory = $categories[$match["assignedLocation"]["assignedLocationCategory"]];
+    if (key_exists('assignedLocation', $match)) {
+      $locationCategoryName = $match["assignedLocation"]["assignedLocationCategory"];
+      if (!key_exists($locationCategoryName, $categories) && $locationCategoryName !== '') {
+        $categories[$locationCategoryName] = $project->getCategoryByTitleAndCategoryType($locationCategoryName, $locationCategoryType, $i < 450 ? $batch : $batch2);
+        $i++;
+      }
+      $locationCategory = $categories[$match["assignedLocation"]["assignedLocationCategory"]];
 
-            $locationTitle = $match["assignedLocation"]["type"] . " " . $match["assignedLocation"]["address"]["streetName"] . ", " . $match["assignedLocation"]["address"]["city"];
-            if (!key_exists($locationTitle, $locationList) && $locationTitle !== ' ,') {
-                $locationList[$locationTitle] = $project->getLocationByLocationDataAndCategory($match["assignedLocation"], $locationCategory, $i < 450 ? $batch : $batch2);
-                $i++;
-            }
-            $location = $locationList[$locationTitle];
-        }
-
-        // Mannschaftskategorien
-        $teamCategoryName = $match["assignedCategories"]["assignedCategory"];
-        if (!key_exists($teamCategoryName, $categories)) {
-            $categories[$teamCategoryName] = $project->getCategoryByTitleAndCategoryType($match["assignedCategories"]["assignedCategory"], $teamCategoryType, $i < 450 ? $batch : $batch2);
-            $i++;
-        }
-        $teamCategory = $categories[$teamCategoryName];
-
-        $teamMainCategoryName = $match["assignedCategories"]["assignedMainCategory"];
-        if (!key_exists($teamMainCategoryName, $categories)) {
-            $categories[$teamMainCategoryName] = $project->getCategoryByTitleAndCategoryType($match["assignedCategories"]["assignedMainCategory"], $teamCategoryType, $i < 450 ? $batch : $batch2);
-            $i++;
-        }
-        $teamMainCategory = $categories[$teamMainCategoryName];
-
-        // Dazugehörige Mannschaft
-        $assignedTeam = $match["isHomeTeam"] ? $match["homeTeam"] : $match["guestTeam"];
-        $teamName = $teamCategory["title"] ."-". $assignedTeam["title"];
-        if (!key_exists($teamName, $teamList)) {
-            $teamList[$teamName] = $project->getTeamByTeamData($assignedTeam, $assignedSeason, $club, $teamCategory, $teamMainCategory, $i < 450 ? $batch : $batch2);
-            $i++;
-        }
-        $team = $teamList[$teamName];
-
-        // save Match
-        $matchName = $match['assignedCategories']["assignedCategory"] . ': ' . $match['homeTeam']['title'] . ' – ' . $match['guestTeam']['title'] . "-" . $match["matchLink"];
-        if (!key_exists($matchName, $matchList)) {
-            $project->saveMatch($match, $team, $location, $teamCategory, $teamMainCategory, $i < 450 ? $batch : $batch2);
-            $i++;
-        }
+      $locationTitle = $match["assignedLocation"]["type"] . " " . $match["assignedLocation"]["address"]["streetName"] . ", " . $match["assignedLocation"]["address"]["city"];
+      if (!key_exists($locationTitle, $locationList) && $locationTitle !== ' ,') {
+        $locationList[$locationTitle] = $project->getLocationByLocationDataAndCategory($match["assignedLocation"], $locationCategory, $i < 450 ? $batch : $batch2);
+        $i++;
+      }
+      $location = $locationList[$locationTitle];
     }
+
+    // Mannschaftskategorien
+    $teamCategoryName = $match["assignedCategories"]["assignedCategory"];
+    if (!key_exists($teamCategoryName, $categories)) {
+      $categories[$teamCategoryName] = $project->getCategoryByTitleAndCategoryType($match["assignedCategories"]["assignedCategory"], $teamCategoryType, $i < 450 ? $batch : $batch2);
+      $i++;
+    }
+    $teamCategory = $categories[$teamCategoryName];
+
+    $teamMainCategoryName = $match["assignedCategories"]["assignedMainCategory"];
+    if (!key_exists($teamMainCategoryName, $categories)) {
+      $categories[$teamMainCategoryName] = $project->getCategoryByTitleAndCategoryType($match["assignedCategories"]["assignedMainCategory"], $teamCategoryType, $i < 450 ? $batch : $batch2);
+      $i++;
+    }
+    $teamMainCategory = $categories[$teamMainCategoryName];
+
+    // Dazugehörige Mannschaft
+    $assignedTeam = $match["isHomeTeam"] ? $match["homeTeam"] : $match["guestTeam"];
+    $teamName = $teamCategory["title"] . "-" . $assignedTeam["title"];
+    if (!key_exists($teamName, $teamList)) {
+      $teamList[$teamName] = $project->getTeamByTeamData($assignedTeam, $assignedSeason, $club, $teamCategory, $teamMainCategory, $i < 450 ? $batch : $batch2);
+      $i++;
+    }
+    $team = $teamList[$teamName];
+
+    // save Match
+    $matchName = $match['assignedCategories']["assignedCategory"] . ': ' . $match['homeTeam']['title'] . ' – ' . $match['guestTeam']['title'] . "-" . $match["matchLink"];
+    if (!key_exists($matchName, $matchList) && array_key_exists("assignedLocation", $match)) {
+      $project->saveMatch($match, $team, $location, $teamCategory, $teamMainCategory, $i < 450 ? $batch : $batch2);
+      $i++;
+    } else {
+      // no assignedLocation => matchDate has changed or is canceled => so check if match exists in db and delete it
+      // toDo: Delete canceled matches
+    }
+  }
 }
 
 // Scrape Competitions and Standings
@@ -155,8 +149,8 @@ foreach ($assignedTeams as $team) {
 // End Competitions and Standings
 
 $batch->commit();
-if($i >= 450){
-    $batch2->commit();
+if ($i >= 450) {
+  $batch2->commit();
 }
 
 tk_print_counts();

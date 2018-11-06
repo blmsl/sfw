@@ -54,8 +54,8 @@ trait sfwMatch
   }
 
   /**
-   * @param $startDate DateTime
-   * @param $endDate DateTime
+   * @param $startDate DateTimeImmutable
+   * @param $endDate DateTimeImmutable
    * @return array
    */
   public function getMatchesBetweenStartAndEndDate($startDate, $endDate)
@@ -83,8 +83,8 @@ trait sfwMatch
 
   /**
    * @param $clubId string
-   * @param $startDate DateTime
-   * @param $endDate DateTime
+   * @param $startDate DateTimeImmutable
+   * @param $endDate DateTimeImmutable
    * @return mixed
    */
   public function generateMatchPlanUrl($clubId, $startDate, $endDate)
@@ -172,7 +172,6 @@ trait sfwMatch
             'assignedLocationCategory' => $this->getLocationCategoryName(trim($parts[0])),
             'address' => $this->generateAddressArray($parts),
           );
-
 
         } else {
 

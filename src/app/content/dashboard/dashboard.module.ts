@@ -17,6 +17,7 @@ import { UserService } from '../../shared/services/user/user.service';
 import { SharedUserModule } from '../../shared/components/user/shared-user.module';
 import { DashboardArticleListComponent } from './dashboard-article-list/dashboard-article-list.component';
 import { TimeagoModule } from 'ngx-timeago';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   imports: [

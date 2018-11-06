@@ -105,34 +105,8 @@
          fxLayout.gt-sm="row"
          fxLayoutAlign.gt-sm="center start">
 
-      <!--<mat-card class="profile-post" fxFlex>
-        <form fxLayout="row"
-              [formGroup]="mindForm">
-           <textarea formControlName="comment"
-                     placeholder="{{'general.dashboard.mindText' | translate}}"
-                     rows="6">
-           </textarea>
-        </form>
-        <hr>
-        <mat-card-actions>
-          <div fxLayout="row">
-            <button mat-icon-button>
-              <mat-icon>insert_photo</mat-icon>
-            </button>
-            <button mat-icon-button>
-              <mat-icon>insert_link</mat-icon>
-            </button>
-            <button mat-icon-button>
-              <mat-icon>location_on</mat-icon>
-            </button>
-            <span fxFlex></span>
-            <button mat-raised-button color="primary">Post</button>
-          </div>
-        </mat-card-actions>
-      </mat-card>-->
-
       <div fxFlex="40">
-        <dashboard-article-list [articles$]="latestArticles$"></dashboard-article-list>
+        <dashboard-article-list></dashboard-article-list>
       </div>
 
       <mat-card fxFlex.gt-sm="15">
