@@ -14,7 +14,7 @@ const settings = { timestampsInSnapshots: true };
 db.settings(settings);
 
 export const getGoogleCalendarEvents = functions
-  //.region('europe-west1')
+  .region('europe-west1')
   .runWith({ memory: '1GB', timeoutSeconds: 10 })
   .https.onRequest(async (req, resp) => {
 
