@@ -4,6 +4,6 @@
   </media-center>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onCancelClick()">Abbrechen</button>
-  <button mat-button [mat-dialog-close]="" cdkFocusInitial (click)="onConfirmClick()">Ok</button>
+  <button mat-button (click)="onCancelClick()">{{ 'general.media.gallery.cancel' | translate }}</button>
+  <button mat-button [mat-dialog-close]="" cdkFocusInitial (click)="onConfirmClick()">{{ 'general.media.gallery.confirm' | translate }}</button>
 </div>

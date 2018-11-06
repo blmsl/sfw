@@ -821,6 +821,8 @@
       "gallery": {
         "close": "Schließen",
         "create": "Neue Sammlung",
+        "cancel": "Abbrechen",
+        "confirm": "Bestätigen",
         "form": {
           "assignedItem": {
             "title": "Bitte wähle nun, zu welchem Element die Gallerie gehört."
@@ -864,6 +866,10 @@
         "author": "Hochgeladen von",
         "date": "Datum",
         "file": {
+          "edit": {
+            "cancel": "Abbrechen",
+            "confirm": "Speichern"
+          },
           "info": "Dateiinformationen",
           "link": "Link zur Datei",
           "name": "Dateiname",
