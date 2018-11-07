@@ -122,7 +122,7 @@ export class AuthService {
   public getCreation(): ICreation {
     return {
       at: firebase.firestore.FieldValue.serverTimestamp(),
-      by: 'this.userId'
+      by: this.userId
     };
   }
 
@@ -130,9 +130,9 @@ export class AuthService {
     return this.afAuth.authState.pipe(
       first(),
       map(user => {
-        console.log(user.uid);
-        if (user)
+        if (user) {
           return user.uid;
+        }
       })
     ).toPromise();
   }
@@ -145,7 +145,7 @@ export class AuthService {
   public getPublication(): IPublication {
     return {
       status: 0,
-      from: 'this.userId'
+      from: this.userId
     };
   }
 
@@ -170,7 +170,9 @@ export class AuthService {
   }
 
   private checkAuthorization(user: IUser, allowedRoles: string[]): boolean {
-    if (!user) return false;
+    if (!user) {
+      return false;
+    }
     for (const role of allowedRoles) {
       if (user.assignedRoles[role]) {
         return true;
