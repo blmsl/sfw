@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { MediaGalleryService } from '../../../services/media/media-gallery.service';
 import { AlertService } from '../../../services/alert/alert.service';
+import { MediaItemService } from '../../../services/media/media-item.service';
 
 @Component({
   selector: 'media-gallery-list',
@@ -21,6 +22,7 @@ export class MediaGalleryListComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private mediaGalleryService: MediaGalleryService,
+    public mediaItemService: MediaItemService,
     private alertService: AlertService,
     public dialog: MatDialog) {
   }

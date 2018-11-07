@@ -1,4 +1,5 @@
-<mat-card style="height: 100%">
+<mat-card *ngIf="mediaItem"
+          style="height: 100%">
   <mat-card-title>{{mediaItem.file.name}}</mat-card-title>
 
   <mat-card-content class="text-center">

@@ -16,7 +16,7 @@
 
     <ng-container *ngIf="infinite | async as articles">
       <cdk-virtual-scroll-viewport [itemSize]="itemSize"
-                                   (scrolledIndexChange)="nextBatch($event, (articles[articles.length - 1].title))">
+                                   (scrolledIndexChange)="nextBatch($event, (articles[articles.length - 1].creation.at))">
 
         <article-card *cdkVirtualFor="let article of articles; let i = index; trackBy: trackByIdx"
                       [showDeleteButton]="true"

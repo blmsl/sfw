@@ -28,7 +28,7 @@ export class ArticlesComponent implements OnInit {
   public infinite: Observable<any[]>;
   public itemSize: number = 400;
 
-  public order: string = 'title';
+  public order: string = 'creation.at';
 
   constructor(private db: AngularFirestore) {
     const batchMap = this.offset.pipe(

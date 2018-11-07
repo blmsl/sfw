@@ -8,15 +8,28 @@ const bucket = admin.storage().bucket();
 export const deleteMediaItemCron = functions
   .region('europe-west1')
   .runWith({ memory: '128MB', timeoutSeconds: 5 })
-  .firestore.document('files/{mediaItemId}').onDelete((snap) => {
+  .firestore.document('files/{mediaItemId}').onDelete(async (snap) => {
     data = snap.data();
 
-    let path: string = '';
+    let path: string = '/';
     if ('assignedObjects' in data) {
-      Object.keys(data.assignedObjects).forEach(function(key) {
+      data.assignedObjects.forEach((key: string) => {
         path = path + '/' + key;
       });
     }
 
-    return bucket.file(path ? path + '/' + data.itemId : data.itemId).delete();
+    // find galeries where this item is member of
+    const galleriesSnapshot = await admin.firestore().collection('galleries')
+      .where('assignedMediaItems', 'array-contains', data.id)
+      .get();
+
+    galleriesSnapshot.docs.forEach(async (doc) => {
+      const galleryData = doc.data();
+      const newItemList = galleryData.assignedMediaItems.splice(galleryData.assignedMediaItems.indexOf(data.id),1);
+      await doc.ref.update({
+        assignedMediaItems: newItemList
+      });
+    });
+
+    return await bucket.file(path + '/' + data.itemId).delete();
   });

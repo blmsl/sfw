@@ -11,7 +11,7 @@ import {
 import { IMediaItem } from '../../interfaces/media/media-item.interface';
 import { AuthService } from '../auth/auth.service';
 import { FileType } from '../../interfaces/media/file-type.interface';
-import { map, take } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 
 @Injectable()
 export class MediaItemService {
@@ -23,14 +23,7 @@ export class MediaItemService {
   constructor(private afs: AngularFirestore,
     private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMediaItem>(this.path);
-    this.mediaItems$ = this.collectionRef.valueChanges().pipe(
-      map((mediaItems: IMediaItem[]) => {
-        mediaItems.sort((a: IMediaItem, b: IMediaItem) => {
-          return a.ordering < b.ordering ? 0 : 1;
-        });
-        return mediaItems;
-      })
-    );
+    this.mediaItems$ = this.collectionRef.valueChanges();
   }
 
   createMediaItem(mediaItem: IMediaItem): Promise<void> {
@@ -44,8 +37,8 @@ export class MediaItemService {
     return this.afs.collection(this.path).doc(mediaItemId).delete();
   }
 
-  getMediaItemById(id: string): Observable<IMediaItem> {
-    return this.afs.doc<IMediaItem>(this.path + '/' + id).valueChanges();
+  getMediaItemById(mediaItemId: string): Observable<IMediaItem> {
+    return this.afs.collection(this.path).doc<IMediaItem>(mediaItemId).valueChanges();
   }
 
   getMediaItemsById(mediaItemIds: string[]): Observable<IMediaItem[]> {
@@ -53,16 +46,17 @@ export class MediaItemService {
       return of([]);
     }
     const items = [];
-    for (let i = 0; i < mediaItemIds.length; i++) {
-      items.push(this.getMediaItemById(mediaItemIds[i]).pipe(
+    mediaItemIds.forEach((mediaItemId) => {
+      items.push(this.getMediaItemById(mediaItemId).pipe(
+        tap(mediaItem => console.log(mediaItem.id)),
         take(1)
       ));
-    }
+    });
     return forkJoin(...items);
   }
 
   updateMediaItems(mediaItems: IMediaItem[]): Promise<any> {
-    let updates = [];
+    const updates = [];
     for (let i = 0; i < mediaItems.length; i++) {
       mediaItems[i].ordering = i;
       updates.push(this.updateMediaItem(mediaItems[i]));
@@ -77,25 +71,12 @@ export class MediaItemService {
   getMediaItems(assignedObjects: any, itemId: string): Observable<IMediaItem[]> {
     return this.afs.collection<IMediaItem>('files', ref => {
       if (!assignedObjects) {
-        console.log(itemId);
         return ref
           .where('itemId', '==', itemId);
-      }
-      if (assignedObjects.length === 1) {
+      } else {
         return ref
           .where('itemId', '==', itemId)
-          .where('assignedObjects.' + assignedObjects[0], '==', true);
-      } else if (assignedObjects.length === 2) {
-        return ref
-          .where('itemId', '==', itemId)
-          .where('assignedObjects.' + assignedObjects[0], '==', true)
-          .where('assignedObjects.' + assignedObjects[1], '==', true);
-      } else if (assignedObjects.length === 3) {
-        return ref
-          .where('itemId', '==', itemId)
-          .where('assignedObjects.' + assignedObjects[0], '==', true)
-          .where('assignedObjects.' + assignedObjects[1], '==', true)
-          .where('assignedObjects.' + assignedObjects[2], '==', true);
+          .where('assignedObjects', '==', assignedObjects);
       }
     }).valueChanges();
   }
@@ -109,6 +90,7 @@ export class MediaItemService {
   }
 
   getCurrentImage(assignedObjects: any, itemId: string, placeholderImage: string = ''): Observable<IMediaItem> {
+    console.log(assignedObjects);
     return this.getMediaItems(assignedObjects, itemId).pipe(
       map((mediaItems: IMediaItem[]) => {
         let foundFile: IMediaItem;

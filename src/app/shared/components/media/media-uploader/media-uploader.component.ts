@@ -49,7 +49,6 @@ export class MediaUploaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('init uploader')
     this.savedItemId = this.uploaderOptions.itemId;
 
     if (this.uploaderOptions.queueLimit === 1) {
@@ -133,14 +132,8 @@ export class MediaUploaderComponent implements OnInit {
 
       upload.fileRef.getDownloadURL().subscribe((downloadURL: string) => {
 
-        let assignedObjects = {};
-        let toArray = Object.values(this.uploaderOptions.assignedObjects);
-        for (let i = 0; i < toArray.length; i++) {
-          assignedObjects[<string>toArray[i]] = true;
-        }
-
         const mediaItem: IMediaItem = {
-          assignedObjects: assignedObjects,
+          assignedObjects: this.uploaderOptions.assignedObjects,
           file: {
             size: fileUpload.file.size,
             name: fileUpload.file.name,

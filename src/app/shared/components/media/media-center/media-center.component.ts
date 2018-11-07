@@ -27,7 +27,6 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
 
   public mediaItems: IMediaItem[];
   public mediaGalleries$: Observable<IMediaGallery[]>;
-  public mobileQuery: MediaQueryList;
   public showMediaUploader = false;
 
   public uploaderConfig: IUploaderConfig = {
@@ -43,22 +42,15 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
     queueLimit: 25,
   };
 
-
-  readonly _mobileQueryListener: () => void;
   private mediaItemSubscription: Subscription;
   public selectedItemsIds: string[];
 
   constructor(private mediaItemService: MediaItemService,
               private mediaGalleryService: MediaGalleryService,
               private alertService: AlertService,
-              private changeDetectorRef: ChangeDetectorRef,
-              private media: MediaMatcher,
               public dialog: MatDialog) {
 
     this.mediaGalleries$ = mediaGalleryService.mediaGalleries$;
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
     this.mediaItemSubscription = mediaItemService.mediaItems$.subscribe((mediaItems: IMediaItem[]) => {
       this.mediaItems = mediaItems;
     });
@@ -72,12 +64,7 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
     this.mediaItemSubscription.unsubscribe();
-  }
-
-  handleMediaItemClick(mediaItem): void {
-    this.mediaItemClick.emit(mediaItem);
   }
 
   showUploader() {
@@ -99,24 +86,12 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
         ).catch((error: any) => {
           this.alertService.showSnackBar('error', error.message);
         });
-
       }
     });
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(this.mediaItems, event.previousIndex, event.currentIndex);
-      // this.mediaItemService.updateMediaItems(this.mediaItems).then(() => console.log('ended'));
-    } else {
-      console.log(event);
-      /*transferArrayItem(
-        event.previousContainer.selectedMediaItems,
-        event.container.selectedMediaItems,
-        event.previousIndex,
-        event.currentIndex
-      );*/
-    }
+  removeMediaItem(mediaItem: IMediaItem){
+    this.mediaItemService.removeMediaItem(mediaItem.id).then(() => console.log('deleted'));
   }
 
 }
