@@ -3,8 +3,7 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output,
-  ViewChild
+  Output
 } from '@angular/core';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import {
@@ -18,7 +17,6 @@ import {
   distinctUntilChanged
 } from 'rxjs/operators';
 import * as moment from 'moment';
-import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'member-edit-main',
@@ -48,8 +46,8 @@ export class MemberEditMainComponent implements OnInit {
     allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
-  constructor(private fb: FormBuilder,
-    private afs: AngularFirestore) { }
+  constructor(private fb: FormBuilder) {
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
