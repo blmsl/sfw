@@ -865,10 +865,12 @@
         "actions": "Aktionen",
         "author": "Hochgeladen von",
         "date": "Datum",
+        "description": "Beschreibung",
         "file": {
           "edit": {
             "cancel": "Abbrechen",
-            "confirm": "Speichern"
+            "confirm": "Speichern",
+            "saved": "Die Änderungen an der Datei wurden gespeichert"
           },
           "info": "Dateiinformationen",
           "link": "Link zur Datei",

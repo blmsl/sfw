@@ -31,11 +31,11 @@ export class MediaItemsListModalComponent implements OnInit {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close(false);
+    this.dialogRef.close();
   }
 
   onConfirmClick(): void {
-    this.dialogRef.close(true);
+    this.dialogRef.close(this.selectedMediaItems);
   }
 
   onMediaItemClick(mediaItem: IMediaItem): void {
@@ -45,6 +45,10 @@ export class MediaItemsListModalComponent implements OnInit {
     } else {
       this.selectedMediaItems = this.selectedMediaItems.filter(findMediaItem);
     }
-    this.assignedMediaItem.emit(this.selectedMediaItems);
+  }
+
+  onMediaItemEdit(mediaItem: IMediaItem): void {
+    console.log()
+    this.selectedMediaItems = this.selectedMediaItems.map(item => item.id === mediaItem.id ? mediaItem : item);
   }
 }
