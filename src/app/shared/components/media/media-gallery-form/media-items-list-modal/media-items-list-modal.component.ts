@@ -46,4 +46,9 @@ export class MediaItemsListModalComponent implements OnInit {
       this.selectedMediaItems = this.selectedMediaItems.filter(findMediaItem);
     }
   }
+
+  onMediaItemEdit(mediaItem: IMediaItem): void {
+    console.log()
+    this.selectedMediaItems = this.selectedMediaItems.map(item => item.id === mediaItem.id ? mediaItem : item);
+  }
 }

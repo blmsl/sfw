@@ -109,7 +109,7 @@ export class MediaGalleryFormComponent implements OnInit, OnDestroy {
     }
 
     action.then(() => {
-      this.alertService.showSnackBar('success', 'general.media.gallery.saved')
+      this.alertService.showSnackBar('success', 'general.media.gallery.saved');
       this.redirectToList();
     },
       (error: any) => this.alertService.showSnackBar('error', error.message)

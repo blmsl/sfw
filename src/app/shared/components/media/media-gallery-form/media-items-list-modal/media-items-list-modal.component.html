@@ -1,5 +1,6 @@
 <div mat-dialog-content>
   <media-center (mediaItemClick)="onMediaItemClick($event)"
+                (mediaItemEdit)="onMediaItemEdit($event)"
                 [selectedMediaItems]="selectedMediaItems">
   </media-center>
 </div>
