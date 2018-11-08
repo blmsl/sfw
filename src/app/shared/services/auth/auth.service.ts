@@ -13,9 +13,7 @@ import {
   AngularFirestore,
   AngularFirestoreDocument
 } from '@angular/fire/firestore';
-import { ICreation } from '../../interfaces/creation.interface';
 import { IUser } from '../../interfaces/user/user.interface';
-import { IPublication } from '../../interfaces/publication.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 
@@ -119,11 +117,12 @@ export class AuthService {
     return userRef.set(data, { merge: true });
   }
 
-  public getCreation(): ICreation {
-    return {
-      at: firebase.firestore.FieldValue.serverTimestamp(),
-      by: this.userId
-    };
+  public getCreationBy(): string {
+    return this.userId;
+  }
+
+  public getCreationAt(): any {
+    return firebase.firestore.FieldValue.serverTimestamp();
   }
 
   public getUserId(): Promise<string> {
@@ -142,11 +141,16 @@ export class AuthService {
     return userId === id;
   }
 
-  public getPublication(): IPublication {
-    return {
-      status: 0,
-      from: this.userId
-    };
+  public getPublicationStatus(): number {
+    return 0;
+  }
+
+  public getPublicationBy(): string {
+    return this.userId;
+  }
+
+  public getPublicationAt(): any {
+    return firebase.firestore.FieldValue.serverTimestamp();
   }
 
   canRead(user: IUser): boolean {

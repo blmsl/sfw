@@ -12,7 +12,7 @@
       <div fxFlex="30">
         <article-authors-stats *ngIf="users$ | async as users"
                                [users]="users"
-                               [articles]="articles | groupBy: 'creation.by'">
+                               [articles]="articles | groupBy: 'creationBy'">
         </article-authors-stats>
       </div>
     </div>

@@ -10,6 +10,7 @@ import { IMatchEventCategory } from '../../interfaces/match/match-event-category
 import { ILocation } from '../../interfaces/location/location.interface';
 import { ITeam } from '../../interfaces/team/team.interface';
 import { ICoord } from '../../interfaces/match/coord.interface';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class MatchService {
@@ -19,7 +20,8 @@ export class MatchService {
 
   matches$: Observable<IMatch[]>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore,
+              private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMatch>(this.path);
     this.matches$ = this.collectionRef.valueChanges();
   }
@@ -50,7 +52,7 @@ export class MatchService {
   }
 
   getUpcomingMatches(timeLimit: Date): Observable<IMatch[]> {
-    let now = new Date();
+    const now = new Date();
     return this.afs.collection<IMatch>(this.path, ref =>
       ref
         .where('matchEndDate', '>=', now)
@@ -63,7 +65,7 @@ export class MatchService {
   }
 
   getPastMatches(timeLimit: Date): Observable<IMatch[]> {
-    let now = new Date();
+    const now = new Date();
     return this.afs.collection<IMatch>(this.path, ref =>
       ref
         .where('matchEndDate', '<=', now)
@@ -72,7 +74,7 @@ export class MatchService {
   }
 
   getMatchesWithoutResult(): Observable<IMatch[]> {
-    let now = new Date();
+    const now = new Date();
     return this.afs.collection<IMatch>(this.path, ref =>
       ref
         .where('matchEndDate', '<=', now)
@@ -88,7 +90,7 @@ export class MatchService {
   }
 
   getSeriesOfMatches(teamId: string): Observable<IMatch[]> {
-    let now = new Date();
+    const now = new Date();
 
     return this.afs.collection<IMatch>(this.path, ref =>
       ref.where('assignedTeam', '==', teamId)
@@ -103,6 +105,8 @@ export class MatchService {
       assignedCategories: [],
       assignedLocation: '',
       assignedTeam: '',
+      creationAt: this.authService.getCreationAt(),
+      creationBy: this.authService.getCreationBy(),
       homeTeam: {
         title: ''
       },

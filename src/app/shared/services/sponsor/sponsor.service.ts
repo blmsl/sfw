@@ -46,7 +46,8 @@ export class SponsorService {
       internalInfo: '',
       description: '',
       assignedCategories: [],
-      creation: this.authService.getCreation()
+      creationAt: this.authService.getCreationAt(),
+      creationBy: this.authService.getCreationBy()
     });
   }
 

@@ -53,7 +53,7 @@ export class MatchPlayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.playerSource.unsubscribe();
+    // this.playerSource.unsubscribe();
   }
 
 }

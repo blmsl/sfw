@@ -20,14 +20,14 @@
           </a>
           <span fxFlex=""></span>
           <span>{{'general.members.detail.opinionDate' | translate}}
-            {{opinion.creation.at.seconds * 1000 | date: 'dd.MM.yy'}}</span>
+            {{opinion.creationAt.seconds * 1000 | date: 'dd.MM.yy'}}</span>
         </h3>
 
         <h3 matLine *ngIf="opinion.type === 'insert'">
           {{opinion.name.firstName}} {{opinion.name.lastName}}´s
           <span fxFlex=""></span>
           <span>{{'general.members.detail.opinionDate' | translate}}
-            {{opinion.creation.at.seconds * 1000 | date: 'dd.MM.yy'}}</span>
+            {{opinion.creationAt.seconds * 1000 | date: 'dd.MM.yy'}}</span>
         </h3>
 
         <p matLine [innerHTML]="opinion.comment"></p>

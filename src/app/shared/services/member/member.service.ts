@@ -73,7 +73,7 @@ export class MemberService {
       return of([]);
     }
 
-    let memberObservables: Observable<IMember>[] = [];
+    const memberObservables: Observable<IMember>[] = [];
     for (let i = 0; i < memberIds.length; i++) {
       memberObservables.push(this.getMemberById(memberIds[i]).pipe(
         take(1)
@@ -90,7 +90,7 @@ export class MemberService {
       return of([]);
     }
 
-    let observables: Observable<IMember>[] = [];
+    const observables: Observable<IMember>[] = [];
     for (let i = 0; i < positions.length; i++) {
       if (positions[i].memberId !== '') {
         observables.push(this.getMemberById(positions[i].memberId).pipe(
@@ -106,7 +106,7 @@ export class MemberService {
       return of([]);
     }
 
-    let observables: Observable<IMember>[] = [];
+    const observables: Observable<IMember>[] = [];
     for (let i = 0; i < memberIds.length; i++) {
       observables.push(this.getMemberById(memberIds[i].assignedMember).pipe(
         take(1)
@@ -120,7 +120,7 @@ export class MemberService {
       return of([]);
     }
 
-    let observables: Observable<IMember>[] = [];
+    const observables: Observable<IMember>[] = [];
     for (let i = 0; i < locationContacts.length; i++) {
       if (locationContacts[i].isMember) {
         observables.push(this.getMemberById(locationContacts[i].assignedMember).pipe(
@@ -179,7 +179,8 @@ export class MemberService {
     const data: IMember = {
       driveImport: false,
       dfbImport: false,
-      creation: this.authService.getCreation(),
+      creationAt: this.authService.getCreationAt(),
+      creationBy: this.authService.getCreationBy(),
       mainData: mainData
     };
     return of(data);

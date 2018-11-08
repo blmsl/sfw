@@ -1,3 +1,0 @@
-interface IDraggedItemInterface {
-  id: string;
-}

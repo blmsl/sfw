@@ -44,11 +44,11 @@ export class ArticleFilterPipe implements PipeTransform {
       const sorting = filters["sorting"];
       if (sorting == "asc") {
         retItems = retItems.sort((a, b) => {
-          return b.creation.at.seconds - a.creation.at.seconds;
+          return b.creationAt.seconds - a.creationAt.seconds;
         });
       } else if (sorting == "desc") {
         retItems = retItems.sort((a, b) => {
-          return a.creation.at.seconds - b.creation.at.seconds;
+          return a.creationAt.seconds - b.creationAt.seconds;
         });
       }
     }

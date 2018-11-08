@@ -110,8 +110,8 @@ export class MatchEditComponent implements OnInit, OnDestroy, OnChanges {
   /*
    initCreation(): FormGroup {
    return this.fb.group({
-   at: this.match.creation.at.toDate(),
-   from: this.match.creation.by
+   at: this.match.creationAt.toDate(),
+   from: this.match.creationBy
    });
    }
 

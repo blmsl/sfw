@@ -134,7 +134,8 @@
       {{'general.articles.edit.textPlaceholder' | translate}}
     </textarea>
 
-    <div *ngIf="showPreview">
+    <div *ngIf="showPreview" >
+      <div style="font-weight: bolder; margin: 25px 0" [froalaView]="article.excerpt"></div>
       <div [froalaView]="article.text"></div>
     </div>
 

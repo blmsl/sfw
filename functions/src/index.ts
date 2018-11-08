@@ -24,7 +24,7 @@ import * as team from './team/index';
 import * as user from './user/index';
 
 export const googleCalendar = calendar.getGoogleCalendarEvents;
-export const matchDeleted = match.matchDeleteCron;
+// export const matchDeleted = match.matchDeleteCron;
 export const removeMediaItem = media.deleteMediaCron;
 export const birthdayReminder = member.birthdayReminderCron;
 export const memberDeleted = member.memberDeletedCron;

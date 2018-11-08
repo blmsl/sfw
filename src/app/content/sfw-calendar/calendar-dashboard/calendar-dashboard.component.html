@@ -5,18 +5,12 @@
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-    <div *ngIf="calendarOptions; else loadingTemplate">
-      <ng-fullcalendar #ucCalendar
-                       [options]="calendarOptions"
-                       (eventClick)="eventClick($event.detail)"
-                       (eventDrop)="updateEvent($event.detail)"
-                       (eventResize)="updateEvent($event.detail)"
-                       (clickButton)="clickButton($event.detail)">
-      </ng-fullcalendar>
-    </div>
-    <!--<app-fullcalendar *ngIf="data$ | async as data; else loadingTemplate"
-                      [events]="data">
-    </app-fullcalendar>-->
+    <ng-fullcalendar *ngIf="calendarOptions; else loadingTemplate"
+                     #ucCalendar
+                     [options]="calendarOptions"
+                     (eventClick)="openDialog($event)"
+                     (clickButton)="openDialog($event)">
+    </ng-fullcalendar>
   </mat-card-content>
 </mat-card>
 

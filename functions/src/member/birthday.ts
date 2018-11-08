@@ -28,7 +28,7 @@ const recipients: {
 
 export const birthdayReminderCron = functions
   .region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .runWith({ memory: '1GB', timeoutSeconds: 15 })
   .pubsub.topic('daily-tick').onPublish(async () => {
 
     try {
@@ -124,7 +124,6 @@ export const birthdayReminderCron = functions
     }
     catch (e) {
       console.error(e);
-      console.log(e.response.body);
       return e;
     }
 

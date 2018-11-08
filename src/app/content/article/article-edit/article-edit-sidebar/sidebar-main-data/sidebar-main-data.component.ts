@@ -45,9 +45,9 @@ export class SidebarMainDataComponent implements OnInit {
       excerpt: this.article.excerpt,
       subTitle: this.article.subTitle,
       postURL: this.article.postURL,
-      articleDate: this.article.articleDate.seconds * 1000,
+      articleDate: this.article.articleDate ? this.article.articleDate.seconds * 1000 : undefined,
       isFeaturedPost: this.article.isFeaturedPost,
-      creation: this.initCreation(),
+      creationBy: this.article.creationBy,
       assignedTags: [this.article.assignedTags],
     });
 
@@ -60,13 +60,6 @@ export class SidebarMainDataComponent implements OnInit {
       console.log(changes.articleDate);
       changes.articleDate = changes.articleDate ? changes.articleDate.toDate() : new Date();
       this.changeArticle.emit(changes);
-    });
-  }
-
-  initCreation(): FormGroup {
-    return this.fb.group({
-      by: this.article.creation.by,
-      at: this.article.creation.at
     });
   }
 

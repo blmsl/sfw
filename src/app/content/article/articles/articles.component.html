@@ -11,27 +11,13 @@
 
   </mat-card-title>
   <mat-card-content>
-
-    <!--<article-list-filter></article-list-filter>-->
-
-    <ng-container *ngIf="infinite | async as articles">
-      <cdk-virtual-scroll-viewport [itemSize]="itemSize"
-                                   (scrolledIndexChange)="nextBatch($event, (articles[articles.length - 1].creation.at))">
-
-        <article-card *cdkVirtualFor="let article of articles; let i = index; trackBy: trackByIdx"
-                      [showDeleteButton]="true"
-                      [showText]="true"
-                      [itemSize]="itemSize"
-                      [article]="article">
-        </article-card>
-
-        <div class="alert alert-warning" *ngIf="theEnd">
-          {{'general.articles.list.endMessage' | translate}}
-        </div>
-
-      </cdk-virtual-scroll-viewport>
-    </ng-container>
-
+    <infinite-scroll [listType]="listType"
+                     [viewPortHeight]="viewPortHeight"
+                     [itemSize]="itemSize"
+                     [maxItems]="maxItems"
+                     [sortOrder]="sortOrder"
+                     [sortField]="sortField">
+    </infinite-scroll>
   </mat-card-content>
 </mat-card>
 

@@ -13,7 +13,7 @@ const now = moment();
 
 export const teamOfTheWeekCron = functions
   .region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .runWith({ memory: '1GB', timeoutSeconds: 5 })
   .pubsub.topic('monthly-tick').onPublish(async () => {
 
     try {

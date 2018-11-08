@@ -4,11 +4,12 @@
     <hr>
   </mat-card-title>
   <mat-card-content>
-    <infinite-scroll [assignedObjectType]="'article'"
-                     [viewPortHeight]="itemSize * maxItems + 'px'"
+    <infinite-scroll [listType]="listType"
+                     [viewPortHeight]="viewPortHeight"
                      [itemSize]="itemSize"
                      [maxItems]="maxItems"
-                     [sortOrder]="sortOrder">
+                     [sortOrder]="sortOrder"
+                     [sortField]="sortField">
     </infinite-scroll>
   </mat-card-content>
 </mat-card>

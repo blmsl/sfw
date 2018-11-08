@@ -5,7 +5,7 @@ export interface ICalendarEvent {
   creator?: {
     email: string;
     displayName: string;
-  }
+  };
   end?: string;
   etag?: string;
   htmlLink?: string;

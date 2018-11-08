@@ -2,8 +2,8 @@
 
   <cdk-virtual-scroll-viewport  *ngIf="viewPortHeight && itemSize"
                                 [style.height]="viewPortHeight"
-                                [itemSize]="itemSize"><!--
-                                (scrolledIndexChange)="nextBatch($event, (items[items.length - 1][sortOrder]))" -->
+                                [itemSize]="itemSize"
+                                (scrolledIndexChange)="nextBatch($event, (items[items.length - 1][sortField]))">
 
     <!--"abraham/twitteroauth": "^0.7.4",
     "paragonie/random_compat": "2.0.17",
@@ -11,10 +11,11 @@
     "facebook/graph-sdk": "^5.6",
     "martin-georgiev/social-post": "^1.0"-->
 
-    <ng-container *ngIf="assignedObjectType === 'article'">
+    <ng-container *ngIf="listType === 'articles'">
       <li *cdkVirtualFor="let item of items; let i = index; trackBy: trackByIdx">
-        <h3>{{ item.title }}</h3>
-        <p *ngIf="item.creation.at.seconds * 1000 as creation">
+        <h3><a [routerLink]="['/' + listType + '/edit', item.id]">{{ item.title }}</a></h3>
+        <div [innerHTML]="item.text"></div>
+        <p *ngIf="item.creationAt.seconds * 1000 as creation" style="color: red">
           {{ moment(creation).fromNow() }}
           ({{moment(creation).format('L') }},
           {{moment(creation).format('LT') }}
@@ -22,7 +23,13 @@
       </li>
     </ng-container>
 
-    <p *ngIf="theEnd">{{'general.endOfList' | translate}}</p>
+    <div class="alert alert-info" *ngIf="items.length > 0&& theEnd">
+      {{'general.endOfList' | translate}}
+    </div>
+
+    <div class="alert alert-info" *ngIf="!items.length">
+      {{'general.noItemsInList' | translate}}
+    </div>
 
   </cdk-virtual-scroll-viewport>
 

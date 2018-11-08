@@ -44,8 +44,10 @@ export class TeamService {
   }
 
   getPlayerStats(assignedPlayers: IMember[]) {
-    if (!assignedPlayers || assignedPlayers.length === 0) return of(null);
-    let memberObservables: Observable<IMember>[] = [];
+    if (!assignedPlayers || assignedPlayers.length === 0){
+      return of(null);
+    }
+    const memberObservables: Observable<IMember>[] = [];
     for (let i = 0; i < assignedPlayers.length; i++) {
       memberObservables.push(this.getPlayerStatisticById(assignedPlayers[i]).pipe(
         take(1)
@@ -64,7 +66,8 @@ export class TeamService {
       title: '',
       subTitle: '',
       isOfficialTeam: true,
-      creation: this.authService.getCreation(),
+      creationAt: this.authService.getCreationAt(),
+      creationBy: this.authService.getCreationBy(),
       assignedTeamCategories: [],
       assignedClub: null,
       assignedSeason: null,

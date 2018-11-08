@@ -1,5 +1,3 @@
-import { ICreation } from '../creation.interface';
-
 export class IMediaItem {
 
   id?: string;
@@ -21,8 +19,7 @@ export class IMediaItem {
   description?: string;
   fileCredits?: string;
   isExternal?: boolean;
-  creation?: ICreation;
 
-  assignedItemGalleries?: string[];
-  // publication?: IPublication;
+  creationAt?: any;
+  creationBy?: string;
 }

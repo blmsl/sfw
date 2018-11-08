@@ -42,7 +42,6 @@ import { SharedCategoryModule } from '../../shared/components/category/shared-ca
 import { SidebarMetaDataComponent } from './article-edit/article-edit-sidebar/sidebar-meta-data/sidebar-meta-data.component';
 import { ApplicationService } from '../../shared/services/application/application.service';
 import { SidebarMainDataComponent } from './article-edit/article-edit-sidebar/sidebar-main-data/sidebar-main-data.component';
-import { ArticleListFilterComponent } from './article-list/article-list-filter/article-list-filter.component';
 import { SidebarLinksDataComponent } from './article-edit/article-edit-sidebar/sidebar-links-data/sidebar-links-data.component';
 import {
   OWL_DATE_TIME_LOCALE,
@@ -97,13 +96,11 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ArticleDetailComponent,
     ArticleEditComponent,
     ArticleEditSidebarComponent,
-    // ArticleListComponent,
     ArticleMatchesComponent,
     ArticlesComponent,
     ScrollableDirective,
     SidebarMetaDataComponent,
     SidebarMainDataComponent,
-    ArticleListFilterComponent,
     SidebarLinksDataComponent,
     ArticleAuthorsStatsComponent,
     ArticleDashboardListComponent

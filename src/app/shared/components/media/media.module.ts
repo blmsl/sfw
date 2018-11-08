@@ -57,6 +57,7 @@ import { MediaItemsListModalComponent } from './media-gallery-form/media-items-l
 import { RouterModule } from '@angular/router';
 import { StopPropagationDirective } from '../../directives/stop-propagation/stop-propagation.directive';
 import { MediaGalleryListItemsComponent } from './media-gallery-list/media-gallery-list-item/media-gallery-list-items.component';
+import { SharedUserModule } from '../user/shared-user.module';
 
 @NgModule({
   imports: [
@@ -88,6 +89,7 @@ import { MediaGalleryListItemsComponent } from './media-gallery-list/media-galle
     NgPipesModule,
     ReactiveFormsModule,
     TranslateModule,
+    SharedUserModule,
     RouterModule
   ],
   declarations: [

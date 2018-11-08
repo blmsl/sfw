@@ -73,7 +73,8 @@ export class TaskService {
       description: '',
       type: '',
       progress: 0,
-      creation: this.authService.getCreation()
+      creationAt: this.authService.getCreationAt(),
+      creationBy: this.authService.getCreationBy()
     };
   }
 

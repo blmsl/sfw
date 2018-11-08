@@ -89,8 +89,8 @@ export class ArticleEditComponent implements OnInit {
       this.articleStatus = 'saving';
 
       // set publication date to now if status is "publish now"
-      if (changes.publication.status === 1) {
-        changes.publication.dateTime = new Date();
+      if (changes.publicationStatus === 1) {
+        changes.publicationAt = new Date();
       }
 
       this.article = Object.assign({}, this.article, changes);
@@ -111,8 +111,8 @@ export class ArticleEditComponent implements OnInit {
   changePublicationStatus($event: any) {
     $event.stopPropagation();
 
-    if (this.article.publication.status === 2) {
-      this.article.publication.dateTime = new Date();
+    if (this.article.publicationStatus === 2) {
+      this.article.publicationAt = new Date();
     }
   }
 
@@ -122,18 +122,15 @@ export class ArticleEditComponent implements OnInit {
 
   initPublication(): FormGroup {
     return this.fb.group({
-      by: this.article.publication && this.article.publication.from ? this.article.publication.from : this.authService.userId,
-      dateTime: [this.article.publication && this.article.publication.dateTime
-        ? new Date(this.article.publication.dateTime.seconds * 1000)
-        : new Date(),
-      Validators.compose([Validators.required])],
-      status: this.article.publication ? this.article.publication.status : 0
+      by: this.article.publicationBy ? this.article.publicationBy : this.authService.userId,
+      at: [this.article.publicationAt ? new Date(this.article.publicationAt.seconds * 1000) : new Date(), [Validators.compose([Validators.required])]],
+      status: this.article.publicationStatus ? this.article.publicationStatus : 0
     });
   }
 
   resetPublication(): void {
-    this.article.publication.status = 0;
-    this.article.publication.dateTime = null;
+    this.article.publicationStatus = 0;
+    this.article.publicationAt = null;
   }
 
   removeArticle(): void {

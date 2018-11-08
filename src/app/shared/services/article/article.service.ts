@@ -77,7 +77,7 @@ export class ArticleService {
   }
 
   getLatestArticles(limit: number): Observable<IArticle[]> {
-    return this.afs.collection<IArticle>(this.path, ref => ref.orderBy('creation.at', 'desc').limit(limit)).valueChanges();
+    return this.afs.collection<IArticle>(this.path, ref => ref.orderBy('creationAt', 'desc').limit(limit)).valueChanges();
   }
 
   getArticlesForTeam(team: ITeam): Observable<IArticle[]> {
@@ -126,8 +126,11 @@ export class ArticleService {
   setNewArticle(): Observable<IArticle> {
     const article: IArticle = {
       title: '',
-      publication: this.authService.getPublication(),
-      creation: this.authService.getCreation()
+      publicationAt: this.authService.getPublicationAt(),
+      publicationBy: this.authService.getPublicationBy(),
+      publicationStatus: this.authService.getPublicationStatus(),
+      creationAt: this.authService.getCreationAt(),
+      creationBy: this.authService.getCreationBy()
     };
     return of(article);
   }

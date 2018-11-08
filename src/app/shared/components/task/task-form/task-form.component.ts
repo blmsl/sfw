@@ -39,7 +39,8 @@ export class TaskFormComponent implements OnInit {
         description: changes.description,
         priority: changes.priority,
         progress: 0,
-        creation: this.authService.getCreation()
+        creationAt: this.authService.getCreationAt(),
+        creationBy: this.authService.getCreationBy()
       };
     });
   }

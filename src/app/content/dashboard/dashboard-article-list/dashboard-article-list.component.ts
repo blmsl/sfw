@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import OrderByDirection = firebase.firestore.OrderByDirection;
 
 @Component({
   selector: 'dashboard-article-list',
@@ -7,9 +8,13 @@ import { Component } from '@angular/core';
 })
 export class DashboardArticleListComponent {
 
-  public itemSize = 80;
-  public sortOrder = 'title';
-  public maxItems = 2;
+  public itemSize:number = 120;
+  public maxItems:number = 4;
+
+  public sortOrder: OrderByDirection = 'desc';
+  public sortField: string = 'creationAt';
+  public listType: string = 'articles';
+  public viewPortHeight: string = '50vh';
 
   constructor() {
   }

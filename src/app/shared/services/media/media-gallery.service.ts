@@ -46,7 +46,8 @@ export class MediaGalleryService {
       assignedItemType: '',
       assignedItem: '',
       assignedMediaItems: [],
-      creation: this.authService.getCreation()
+      creationAt: this.authService.getCreationAt(),
+      creationBy: this.authService.getCreationBy()
     };
 
     return of(gallery);

@@ -53,14 +53,17 @@ export class CategoryService {
       title: '',
       description: ' ',
       assignedCategoryType: '',
-      creation: this.authService.getCreation()
+      creationAt: this.authService.getCreationAt(),
+      creationBy: this.authService.getCreationBy()
     });
   }
 
   getCategoriesByCategoryType(linkType: string): Observable<ICategory[]> {
     return this.categoryTypeService.getCategoryTypeByLink(linkType).pipe(
       switchMap((categoryType: ICategoryType) => {
-        if (!categoryType) return of([]);
+        if (!categoryType) {
+          return of([]);
+        }
         return this.afs.collection<ICategory>(this.path, ref => ref.where('assignedCategoryType', '==', categoryType.id)).valueChanges();
       })
     );
@@ -71,7 +74,7 @@ export class CategoryService {
       return of([]);
     }
 
-    let categoryObservables = [];
+    const categoryObservables = [];
     for (let i = 0; i < categoryIds.length; i++) {
       categoryObservables.push(this.getCategoryById(categoryIds[i]).pipe(
         take(1)

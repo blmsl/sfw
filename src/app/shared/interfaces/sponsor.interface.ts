@@ -1,4 +1,3 @@
-import { ICreation } from './creation.interface';
 import * as firebase from 'firebase';
 
 export interface ISponsor {
@@ -14,5 +13,7 @@ export interface ISponsor {
   endDate?: firebase.firestore.Timestamp;
 
   assignedCategories: string[];
-  creation?: ICreation;
+
+  creationAt: any;
+  creationBy: string;
 }

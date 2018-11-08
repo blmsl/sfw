@@ -4,7 +4,7 @@
       <mat-tab label="{{'general.articles.dashboard.articles.latest' | translate}}">
         <div style="max-height: 70vh"
              [perfectScrollbar]="config">
-          <article-card *ngFor="let article of articles | orderBy: ['-creation.at.seconds'] | slice : 0 : 10"
+          <article-card *ngFor="let article of articles | orderBy: ['-creationAt.seconds'] | slice : 0 : 10"
                         [article]="article">
           </article-card>
         </div>

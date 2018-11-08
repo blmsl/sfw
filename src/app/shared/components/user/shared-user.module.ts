@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { UserAvatarComponent } from './user-avatar/user-avatar.component';
-import { NgPipesModule } from 'ngx-pipes';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { UserService } from '../../services/user/user.service';
 
 @NgModule({
   imports: [
     CommonModule,
-    NgPipesModule,
     RouterModule
   ],
   declarations: [
@@ -16,7 +15,9 @@ import { RouterModule } from '@angular/router';
   exports: [
     UserAvatarComponent
   ],
-  providers: []
+  providers: [
+    UserService
+  ]
 })
 export class SharedUserModule {
 }

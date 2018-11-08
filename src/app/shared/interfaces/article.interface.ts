@@ -1,9 +1,6 @@
 import { ILocation } from './location/location.interface';
 import { ITeam } from './team/team.interface';
 import { ICategory } from './category.interface';
-import * as firebase from 'firebase';
-import { ICreation } from './creation.interface';
-import { IPublication } from './publication.interface';
 
 export interface IArticle {
 
@@ -19,8 +16,12 @@ export interface IArticle {
 
   articleDate?: any;
 
-  creation: ICreation;
-  publication?: IPublication;
+  creationAt: any;
+  creationBy: string;
+
+  publicationAt: any;
+  publicationStatus: number;
+  publicationBy: string;
 
   assignedCategories?: ICategory[];
 

@@ -72,8 +72,8 @@ export class MemberEditOtherOpinionsComponent implements OnInit {
         lastName: [opinion ? opinion.name.lastName : '']
       }),
       creation: {
-        at: opinion && opinion.creation ? opinion.creation.at : new Date(),
-        from: opinion && opinion.creation ? opinion.creation.by : '',
+        at: opinion ? opinion.creationAt : new Date(),
+        from: opinion ? opinion.creationBy : '',
       },
       assignedMember: [opinion ? opinion.assignedMember : '', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       comment: [opinion ? opinion.comment : '', [Validators.required]]
@@ -88,8 +88,7 @@ export class MemberEditOtherOpinionsComponent implements OnInit {
       control.get('name').get('firstName').setValue('');
       control.get('name').get('lastName').setValue('');
       control.get('assignedMember').setValidators(Validators.required);
-    }
-    else {
+    } else {
       control.get('type').setValue('insert');
       control.get('assignedMember').setValidators([]);
       control.get('assignedMember').setValue('');

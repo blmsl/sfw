@@ -2,7 +2,6 @@ import { IClubManagement } from './club-management.interface';
 import { IClubHonorary } from './club-honorary.interface';
 import { IAddress } from '../location/address.interface';
 import { ITimeLineEvent } from '../time-line-event.interface';
-import { ICreation } from '../creation.interface';
 
 export interface IClub {
 
@@ -39,5 +38,6 @@ export interface IClub {
     timeLine: ITimeLineEvent[];
   };
 
-  creation: ICreation;
+  creationAt: any;
+  creationBy: string;
 }

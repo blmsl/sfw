@@ -17,7 +17,7 @@ const collectionName = 'members';
 
 export const memberOfTheWeekCron = functions
   .region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .runWith({ memory: '1GB', timeoutSeconds: 15 })
   .pubsub.topic('weekly-tick').onPublish(async () => {
 
     try {

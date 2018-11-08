@@ -1,4 +1,4 @@
-<a *ngFor="let user of users | filterBy: ['id'] : userId"
+<a *ngIf="user$ | async as user"
    [routerLink]="['/users/detail', user.id]">
   {{user.firstName ? user.firstName + ' ' + user.lastName : user.displayName}}
 </a>

@@ -1,7 +1,3 @@
-import { ICreation } from '../creation.interface';
-import { IPublication } from '../publication.interface';
-import { IMediaItem } from './media-item.interface';
-
 export interface IMediaGallery {
 
   id?: string;
@@ -13,7 +9,10 @@ export interface IMediaGallery {
 
   assignedMediaItems?: string[];
 
-  creation: ICreation;
-  publication?: IPublication;
+  creationAt: any;
+  creationBy: string;
+  publicationAt?: any;
+  publicationStatus?: number;
+  publicationBy?: string;
 
 }

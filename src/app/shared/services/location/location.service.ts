@@ -48,7 +48,7 @@ export class LocationService {
       return of([]);
     }
 
-    let observables: Observable<ILocation>[] = [];
+    const observables: Observable<ILocation>[] = [];
     for (let i = 0; i < trainings.length; i++) {
       observables.push(this.getLocationById(trainings[i].assignedLocation).pipe(
         take(1)
@@ -66,7 +66,8 @@ export class LocationService {
       address: {},
       assignedImages: [],
       assignedMediaGalleries: [],
-      creation: this.authService.getCreation()
+      creationAt: this.authService.getCreationAt(),
+      creationBy: this.authService.getCreationBy()
     });
   }
 

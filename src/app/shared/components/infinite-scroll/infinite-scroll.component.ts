@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map, mergeMap, scan, tap, throttleTime } from 'rxjs/operators';
 import * as moment from 'moment';
+import OrderByDirection = firebase.firestore.OrderByDirection;
 
 @Component({
   selector: 'infinite-scroll',
@@ -15,10 +16,12 @@ export class InfiniteScrollComponent {
   @ViewChild(CdkVirtualScrollViewport)
   viewport: CdkVirtualScrollViewport;
 
-  @Input() sortOrder: string;
+  @Input() sortOrder: OrderByDirection;
+  @Input() sortField: string;
+
   @Input() itemSize: number;
   @Input() maxItems: number;
-  @Input() assignedObjectType: string;
+  @Input() listType: string;
   @Input() viewPortHeight: string;
 
   public theEnd = false;
@@ -44,13 +47,11 @@ export class InfiniteScrollComponent {
   }
 
   getBatch(offset) {
-    console.log(offset);
     return this.db
-      .collection('articles', ref =>
-        ref
-          .orderBy(this.sortOrder)
-          .startAfter(offset)
-          .limit(this.maxItems)
+      .collection(this.listType, ref =>
+        offset
+          ? ref.orderBy(this.sortField, this.sortOrder).startAfter(offset).limit(this.maxItems)
+          : ref.orderBy(this.sortField, this.sortOrder).limit(this.maxItems)
       )
       .snapshotChanges()
       .pipe(

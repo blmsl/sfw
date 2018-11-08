@@ -25,10 +25,10 @@
       <mat-card-header>
         <mat-card-subtitle>{{'general.tables.colTitles.creation' | translate}}</mat-card-subtitle>
         <mat-card-title>
-              <span *ngIf="category.creation.by === 'system'" translate>
+              <span *ngIf="category.creationBy === 'system'" translate>
                   {{'general.tables.importedViaScript'}}
                 </span>
-          <creation-date [creation]="category.creation.at"></creation-date>
+          <creation-date [creation]="category.creationAt"></creation-date>
         </mat-card-title>
       </mat-card-header>
 

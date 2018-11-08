@@ -27,7 +27,8 @@ export class MediaItemService {
   }
 
   createMediaItem(mediaItem: IMediaItem): Promise<void> {
-    mediaItem.creation = this.authService.getCreation();
+    mediaItem.creationAt = this.authService.getCreationAt();
+    mediaItem.creationBy = this.authService.getCreationBy();
     mediaItem.id = this.afs.createId();
     mediaItem.ordering = 0;
     return this.afs.collection(this.path).doc(mediaItem.id).set(mediaItem, { merge: true });
@@ -48,7 +49,6 @@ export class MediaItemService {
     const items = [];
     mediaItemIds.forEach((mediaItemId) => {
       items.push(this.getMediaItemById(mediaItemId).pipe(
-        tap(mediaItem => console.log(mediaItem.id)),
         take(1)
       ));
     });
@@ -90,7 +90,6 @@ export class MediaItemService {
   }
 
   getCurrentImage(assignedObjects: any, itemId: string, placeholderImage: string = ''): Observable<IMediaItem> {
-    console.log(assignedObjects);
     return this.getMediaItems(assignedObjects, itemId).pipe(
       map((mediaItems: IMediaItem[]) => {
         let foundFile: IMediaItem;

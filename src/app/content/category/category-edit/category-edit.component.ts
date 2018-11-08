@@ -80,8 +80,8 @@ export class CategoryEditComponent implements OnInit {
 
   initCreation() {
     return this.fb.group({
-      at: this.category.creation.at,
-      from: this.category.creation.by
+      at: this.category.creationAt,
+      from: this.category.creationBy
     });
   }
 

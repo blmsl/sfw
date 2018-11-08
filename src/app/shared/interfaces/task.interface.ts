@@ -1,4 +1,3 @@
-import { ICreation } from './creation.interface';
 import { IUser } from './user/user.interface';
 
 export interface ITask {
@@ -13,6 +12,8 @@ export interface ITask {
 
   progress: number;
 
-  creation: ICreation;
+  creationAt: any;
+  creationBy: string;
+
   assignedUser?: IUser | IUser[];
 }

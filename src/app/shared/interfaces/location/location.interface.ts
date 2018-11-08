@@ -1,8 +1,5 @@
-import { ICreation } from '../creation.interface';
-import { ICategory } from '../category.interface';
 import { ILocationContact } from './location-contact.interface';
 import { IAddress } from './address.interface';
-import { IPublication } from '../publication.interface';
 
 export interface ILocation {
   id?: string;
@@ -18,8 +15,11 @@ export interface ILocation {
   opening?: string;
   prices?: string;
 
-  creation: ICreation;
-  publication?: IPublication;
+  creationAt: any;
+  creationBy: string;
+  publicationAt?: any;
+  publicationStatus?: number;
+  publicationBy?: string;
 
   address?: IAddress;
 }

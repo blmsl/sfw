@@ -3,11 +3,16 @@
   <table *ngIf="data.mediaItem as mediaItem" >
     <tr>
       <th>{{'general.media.upload.author' | translate}}</th>
-      <td></td>
+      <td><user-avatar [userId]="mediaItem.creationBy"></user-avatar></td>
     </tr>
-    <tr>
+    <tr *ngIf="mediaItem.creationAt.seconds * 1000 as creation">
       <th>{{'general.media.upload.date' | translate}}</th>
-      <td></td>
+      <td>
+        {{ moment(creation).fromNow() }}
+        ({{moment(creation).format('L') }},
+        {{moment(creation).format('LT') }}
+        {{'general.oClock' | translate}})
+      </td>
     </tr>
     <tr>
       <th>{{'general.media.upload.file.name' | translate}}</th>
@@ -20,8 +25,16 @@
     <tr>
       <th>{{'general.media.upload.description' | translate}}</th>
       <td>
-        <mat-form-field><input matInput
-                               formControlName="description">
+        <mat-form-field>
+          <input matInput formControlName="description">
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr *ngIf="mediaItem.file.type.indexOf('image') > -1">
+      <th>{{'general.media.upload.credits' | translate}}</th>
+      <td>
+        <mat-form-field>
+          <input matInput formControlName="fileCredits">
         </mat-form-field>
       </td>
     </tr>

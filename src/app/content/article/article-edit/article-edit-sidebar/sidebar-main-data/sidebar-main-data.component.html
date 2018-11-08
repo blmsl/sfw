@@ -51,10 +51,9 @@
       <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
     </mat-form-field>
 
-    <mat-form-field fxFlex="49"
-                    formGroupName="creation">
+    <mat-form-field fxFlex="49">
       <mat-select placeholder="{{'general.articles.edit.sidebar.main.author' | translate}}"
-                  formControlName="by">
+                  formControlName="creationBy">
         <mat-option *ngFor="let user of users | orderBy: ['firstName', 'lastName']"
                     [value]="user.id">
           {{user.firstName}} {{user.lastName}}

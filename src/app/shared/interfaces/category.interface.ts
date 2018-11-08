@@ -1,4 +1,3 @@
-import { ICreation } from './creation.interface';
 import { ICategoryType } from './category-type.interface';
 
 export interface ICategory {
@@ -7,6 +6,6 @@ export interface ICategory {
   description: string;
   isImported: boolean;
   assignedCategoryType?: ICategoryType | string;
-  creation: ICreation;
-  // modification?: IModification[];
+  creationAt: any;
+  creationBy: string;
 }

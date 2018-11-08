@@ -1,4 +1,4 @@
 export interface ILocationFilter {
-  titleFilter: string,
-  categoriesFilter: string[]
+  titleFilter: string;
+  categoriesFilter: string[];
 }
