@@ -25,7 +25,7 @@ export const deleteMediaItemCron = functions
 
     galleriesSnapshot.docs.forEach(async (doc) => {
       const galleryData = doc.data();
-      const newItemList = galleryData.assignedMediaItems.splice(galleryData.assignedMediaItems.indexOf(data.id),1);
+      const newItemList = galleryData.assignedMediaItems.splice(galleryData.assignedMediaItems.indexOf(data.id), 1);
       await doc.ref.update({
         assignedMediaItems: newItemList
       });

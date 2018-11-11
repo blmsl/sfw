@@ -44,9 +44,9 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
   public selectedItemsIds: string[];
 
   constructor(private mediaItemService: MediaItemService,
-              private mediaGalleryService: MediaGalleryService,
-              private alertService: AlertService,
-              public dialog: MatDialog) {
+    private mediaGalleryService: MediaGalleryService,
+    private alertService: AlertService,
+    public dialog: MatDialog) {
 
     this.mediaGalleries$ = mediaGalleryService.mediaGalleries$;
     this.mediaItemSubscription = mediaItemService.mediaItems$.subscribe((mediaItems: IMediaItem[]) => {
@@ -77,9 +77,9 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
     dialogRef.afterClosed().subscribe((updatedMediaItem: IMediaItem) => {
       if (updatedMediaItem) {
         this.mediaItemService.updateMediaItem(updatedMediaItem).then(() => {
-            this.mediaItemEdit.emit(updatedMediaItem);
-            this.alertService.showSnackBar('success', 'general.media.upload.file.edit.saved');
-          },
+          this.mediaItemEdit.emit(updatedMediaItem);
+          this.alertService.showSnackBar('success', 'general.media.upload.file.edit.saved');
+        },
           (error: any) => this.alertService.showSnackBar('error', error.message)
         ).catch((error: any) => {
           this.alertService.showSnackBar('error', error.message);
@@ -88,7 +88,7 @@ export class MediaCenterComponent implements OnDestroy, OnChanges {
     });
   }
 
-  removeMediaItem(mediaItem: IMediaItem){
+  removeMediaItem(mediaItem: IMediaItem) {
     this.mediaItemService.removeMediaItem(mediaItem.id).then(() => console.log('deleted'));
   }
 

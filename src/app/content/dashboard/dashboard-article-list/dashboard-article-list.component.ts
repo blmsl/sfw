@@ -8,8 +8,8 @@ import OrderByDirection = firebase.firestore.OrderByDirection;
 })
 export class DashboardArticleListComponent {
 
-  public itemSize:number = 120;
-  public maxItems:number = 4;
+  public itemSize: number = 120;
+  public maxItems: number = 4;
 
   public sortOrder: OrderByDirection = 'desc';
   public sortField: string = 'creationAt';

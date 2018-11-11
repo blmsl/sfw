@@ -14,9 +14,9 @@
       <span>{{'general.articles.detail.writtenAt' | translate}}
         <span style="font-weight: bold">{{article.creationAt.seconds*1000 | date: 'dd.MM.yy HH:mm' }}
           {{'general.oClock' | translate}}</span><br />
-        <span *ngIf="showPublication && article.publication && article.publication.dateTime">
+        <span *ngIf="showPublication && article.publicationAt">
           {{'general.articles.detail.plannedFor' | translate}}
-          <span style="font-weight: bold">{{article.publication.dateTime | date:'dd.MM.yy HH:mm' }}</span>
+          <span style="font-weight: bold">{{article.publicationAt | date:'dd.MM.yy HH:mm' }}</span>
             {{'general.oClock' | translate}}
         </span>
       </span>

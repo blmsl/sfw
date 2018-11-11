@@ -8,7 +8,6 @@ import { CalendarService } from '../../../shared/services/calendar/calendar.serv
 import { ICalendarEvent } from '../../../shared/interfaces/calendar/calendar-event.interface';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material';
-import { EventDetailComponent } from '../event-detail/event-detail.component';
 
 @Component({
   selector: 'calendar-dashboard',
@@ -21,7 +20,7 @@ import { EventDetailComponent } from '../event-detail/event-detail.component';
 export class CalendarDashboardComponent implements OnInit {
 
   constructor(public calendarService: CalendarService,
-              public dialog: MatDialog) {
+    public dialog: MatDialog) {
   }
 
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
@@ -29,7 +28,6 @@ export class CalendarDashboardComponent implements OnInit {
   calendarOptions: Options;
 
   ngOnInit() {
-    const _that = this;
     this.calendarService.getCalendars().subscribe(data => {
       this.calendarOptions = {
         editable: false,
@@ -51,12 +49,6 @@ export class CalendarDashboardComponent implements OnInit {
         },
         defaultDate: new Date(),
         displayEventEnd: true,
-        clickButton: (event) => {
-          console.log(event);
-        },
-        eventMouseOver: (event) => {
-          console.log(event);
-        },
         firstDay: 1,
         fixedWeekCount: true,
         footer: true,

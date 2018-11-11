@@ -15,8 +15,8 @@ export class MediaItemInfoComponent implements OnInit {
   public moment: any;
 
   constructor(private fb: FormBuilder,
-              public dialogRef: MatDialogRef<MediaItemInfoComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+    public dialogRef: MatDialogRef<MediaItemInfoComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
     this.moment = moment;
   }
 

@@ -44,7 +44,7 @@ export class TeamService {
   }
 
   getPlayerStats(assignedPlayers: IMember[]) {
-    if (!assignedPlayers || assignedPlayers.length === 0){
+    if (!assignedPlayers || assignedPlayers.length === 0) {
       return of(null);
     }
     const memberObservables: Observable<IMember>[] = [];

@@ -88,10 +88,10 @@ export class MediaGalleryFormComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((mediaItems: IMediaItem[]) => {
-        if (mediaItems) {
-          this.mediaItems = mediaItems;
-          this.gallery = Object.assign({}, this.gallery, { assignedMediaItems: this.mediaItems.map(item => item.id) });
-        }
+      if (mediaItems) {
+        this.mediaItems = mediaItems;
+        this.gallery = Object.assign({}, this.gallery, { assignedMediaItems: this.mediaItems.map(item => item.id) });
+      }
     });
   }
 

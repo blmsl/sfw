@@ -21,7 +21,7 @@ export class MatchService {
   matches$: Observable<IMatch[]>;
 
   constructor(private afs: AngularFirestore,
-              private authService: AuthService) {
+    private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMatch>(this.path);
     this.matches$ = this.collectionRef.valueChanges();
   }
