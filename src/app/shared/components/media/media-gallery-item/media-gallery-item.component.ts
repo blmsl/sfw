@@ -6,6 +6,8 @@ import {
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 import { MediaItemService } from '../../../services/media/media-item.service';
 import { AlertService } from '../../../services/alert/alert.service';
+import { MediaItemInfoComponent } from '../media-item-info/media-item-info.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'media-gallery-item',
@@ -15,22 +17,36 @@ import { AlertService } from '../../../services/alert/alert.service';
 export class MediaGalleryItemComponent implements OnInit {
 
   @Input() mediaItem: IMediaItem;
+  @Input() selected: boolean;
 
   constructor(private mediaItemService: MediaItemService,
-    private alertService: AlertService) { }
+              private alertService: AlertService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
   }
 
-  removeMediaItem(mediaItem: IMediaItem): void {
-    this.mediaItemService.removeMediaItem(mediaItem.id)
-      .then(() => this.alertService.showSnackBar('success', 'general.media.uploader.removedFile'))
-      .catch(error => this.alertService.showSnackBar('error', error.message));
+  showInfoDialog(mediaItem: IMediaItem): void {
+    const dialogRef = this.dialog.open(MediaItemInfoComponent, {
+      data: { mediaItem }
+    });
+
+    dialogRef.afterClosed().subscribe((updatedMediaItem: IMediaItem) => {
+      if (updatedMediaItem) {
+        this.mediaItemService.updateMediaItem(updatedMediaItem).then(() => {
+            // this.mediaItemEdit.emit(updatedMediaItem);
+            this.alertService.showSnackBar('success', 'general.media.upload.file.edit.saved');
+          },
+          (error: any) => this.alertService.showSnackBar('error', error.message)
+        ).catch((error: any) => {
+          this.alertService.showSnackBar('error', error.message);
+        });
+      }
+    });
   }
 
-  showInfoDialog(mediaItem: IMediaItem): void {
-    console.log(mediaItem.id);
-    alert('ToDo');
+  removeMediaItem(mediaItem: IMediaItem) {
+    this.mediaItemService.removeMediaItem(mediaItem.id).then(() => console.log('deleted'));
   }
 
 }

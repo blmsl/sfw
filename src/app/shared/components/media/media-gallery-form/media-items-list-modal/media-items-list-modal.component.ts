@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Inject, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { IUploaderConfig } from '../../../../interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../../interfaces/media/uploader-options.interface';
 import { IMediaItem } from '../../../../interfaces/media/media-item.interface';
 import { MediaItemService } from '../../../../services/media/media-item.service';
-import { AlertService } from '../../../../services/alert/alert.service';
+import { MediaItemsSelectionService } from '../../../../services/media/media-items-selection.service';
+import { Observable, Subscription } from 'rxjs/index';
 
 
 @Component({
@@ -14,41 +15,58 @@ import { AlertService } from '../../../../services/alert/alert.service';
 })
 export class MediaItemsListModalComponent implements OnInit {
 
-  @Output() assignedMediaItem = new EventEmitter<IMediaItem[]>();
-
-
+  private selectedMediaItemsSubscription: Subscription;
   public selectedMediaItems: IMediaItem[];
+  public selectedItemsIds: string[];
+  public mediaItems$: Observable<IMediaItem[]>;
 
-  constructor(private alertService: AlertService,
+  public uploaderConfig: IUploaderConfig = {
+    autoUpload: true,
+    showDropZone: true,
+    removeAfterUpload: true,
+    showQueue: true,
+  };
+
+  public uploaderOptions: IUploaderOptions = {
+    assignedObjects: [],
+    itemId: '',
+    queueLimit: 25,
+  };
+
+  constructor(
+    private mediaItemsSelectionService: MediaItemsSelectionService,
     private mediaItemService: MediaItemService,
     public dialogRef: MatDialogRef<MediaItemsListModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IMediaItem[]
   ) {
-    this.selectedMediaItems = this.data;
+    this.mediaItems$ = this.mediaItemService.mediaItems$;
+    this.selectedMediaItemsSubscription = this.mediaItemsSelectionService.selectedMediaItems$
+      .subscribe((items) => {
+        this.selectedMediaItems = items;
+        this.selectedItemsIds = items.map(item => item.id);
+      });
   }
 
   ngOnInit() {
+    console.log(this.data);
+    this.mediaItemsSelectionService.initializeItemSelection(this.data);
+  }
+
+  onMediaItemClick(item: IMediaItem): void {
+    this.mediaItemsSelectionService.updateMediaItemSelection(item);
   }
 
   onCancelClick(): void {
-    this.dialogRef.close();
+    this.mediaItemsSelectionService.refreshSelection();
+    this.dialogRef.close(this.selectedMediaItems);
   }
 
   onConfirmClick(): void {
     this.dialogRef.close(this.selectedMediaItems);
   }
 
-  onMediaItemClick(mediaItem: IMediaItem): void {
-    const findMediaItem = item => item.id !== mediaItem.id;
-    if (this.selectedMediaItems.every(findMediaItem)) {
-      this.selectedMediaItems = [...this.selectedMediaItems, mediaItem];
-    } else {
-      this.selectedMediaItems = this.selectedMediaItems.filter(findMediaItem);
-    }
-  }
-
-  onMediaItemEdit(mediaItem: IMediaItem): void {
-    console.log()
-    this.selectedMediaItems = this.selectedMediaItems.map(item => item.id === mediaItem.id ? mediaItem : item);
+  ngOnDestroy(): void {
+    this.selectedMediaItemsSubscription.unsubscribe();
+    this.mediaItemsSelectionService.finalizeItemSelection();
   }
 }
