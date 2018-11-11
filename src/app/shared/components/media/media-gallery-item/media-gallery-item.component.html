@@ -1,15 +1,17 @@
-<mat-card *ngIf="mediaItem"
-          style="height: 100%">
-  <mat-card-title>{{mediaItem.file.name}}</mat-card-title>
+<mat-card style="height: 100%" [ngClass]="{'selected': selected}">
+
+  <mat-card-title> <span>{{mediaItem.file.name}}</span> </mat-card-title>
 
   <mat-card-content class="text-center">
 
-    <img *ngIf="mediaItem.file.type.indexOf('image') > -1"
-         [src]="mediaItem.downloadURL"
-         alt="{{mediaItem.file.name}}"/>
+    <div class="image-file">
+      <img mat-card-image *ngIf="mediaItem.file.type.indexOf('image') > -1"
+           [src]="mediaItem.downloadURL"
+           alt="{{mediaItem.file.name}}" />
+    </div>
 
     <div class="audio-file" *ngIf="mediaItem.file.type.indexOf('audio') > -1">
-      <audio controls>
+      <audio controls class="preview-audio">
         <source [src]="mediaItem.downloadURL" type="audio/ogg">
         <source [src]="mediaItem.downloadURL" type="audio/mpeg">
         Your browser does not support the audio tag.
@@ -25,35 +27,23 @@
     </div>
 
     <div class="other-file-type"
-         *ngIf="mediaItem.file.type.indexOf('video') === -1
-       && mediaItem.file.type.indexOf('audio') === -1
-       && mediaItem.file.type.indexOf('image') === -1">
-      <h5>{{mediaItem.file.type}}</h5>
+         *ngIf="mediaItem.file.type.indexOf('video') === -1  && mediaItem.file.type.indexOf('audio') === -1 && mediaItem.file.type.indexOf('image') === -1">
+      <span class="preview-text">{{mediaItem.file.type}}</span>
     </div>
   </mat-card-content>
   <mat-card-actions class="text-right">
-    <div fxLayout="column"
-         fxLayoutGap="15px"
-         fxLayout.gt-sm="row">
-      <button color="accent"
-              mat-mini-fab
-              (click)="showInfoDialog(mediaItem)">
-        <i class="fa fa-info"></i>
-      </button>
-
-      <button color="primary"
-              mat-mini-fab
-              class="drag-handle"
-              cdkDragHandle>
-        <i class="fa fa-arrows"></i>
-      </button>
-
-      <button color="warn"
-              mat-mini-fab
-              (click)="removeMediaItem(mediaItem)">
-        <i class="fa fa-remove"></i>
-      </button>
-    </div>
+    <button color="warn"
+            (click)="removeMediaItem(mediaItem)"
+            mat-icon-button
+            appStopPropagation>
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button color="primary"
+            (click)="showInfoDialog(mediaItem)"
+            mat-icon-button
+            appStopPropagation>
+      <mat-icon>info</mat-icon>
+    </button>
   </mat-card-actions>
 </mat-card>
 

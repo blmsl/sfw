@@ -23,7 +23,7 @@ import { InfiniteScrollModule } from './components/infinite-scroll/infinite-scro
 @NgModule({
   declarations: [
     SanitizeHtmlPipe,
-    SnackbarComponent
+    SnackbarComponent,
   ],
   entryComponents: [
     SnackbarComponent

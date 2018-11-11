@@ -58,6 +58,8 @@ import { RouterModule } from '@angular/router';
 import { StopPropagationDirective } from '../../directives/stop-propagation/stop-propagation.directive';
 import { MediaGalleryListItemsComponent } from './media-gallery-list/media-gallery-list-item/media-gallery-list-items.component';
 import { SharedUserModule } from '../user/shared-user.module';
+import { MediaItemsListComponent } from './media-center/media-items-list/media-items-list.component';
+import { MediaItemsSelectionService } from '../../services/media/media-items-selection.service';
 
 @NgModule({
   imports: [
@@ -107,7 +109,8 @@ import { SharedUserModule } from '../user/shared-user.module';
     MediaGalleryItemComponent,
     MediaItemsListModalComponent,
     StopPropagationDirective,
-    MediaGalleryListItemsComponent
+    MediaGalleryListItemsComponent,
+    MediaItemsListComponent,
   ],
   exports: [
     MediaAvatarComponent,
@@ -133,7 +136,8 @@ import { SharedUserModule } from '../user/shared-user.module';
     TeamService,
     MediaGalleryService,
     MediaUploaderService,
-    MediaItemService
+    MediaItemService,
+    MediaItemsSelectionService
   ]
 })
 

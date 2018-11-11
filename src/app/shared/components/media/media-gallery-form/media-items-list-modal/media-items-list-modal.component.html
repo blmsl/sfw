@@ -1,10 +1,32 @@
 <div mat-dialog-content>
-  <media-center (mediaItemClick)="onMediaItemClick($event)"
-                (mediaItemEdit)="onMediaItemEdit($event)"
-                [selectedMediaItems]="selectedMediaItems">
-  </media-center>
+  <mat-card>
+    <mat-card-title>
+      <mat-icon>file_upload</mat-icon>
+      {{ 'general.media.list.title' | translate }}
+    </mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+
+    <mat-card-content>
+      <button mat-flat-button color="primary" (click)="showUploader()">{{'general.uploader.uploadMultiple' |
+        translate}}
+      </button>
+      <media-uploader [uploaderConfig]="uploaderConfig"
+                      [uploaderOptions]="uploaderOptions">
+      </media-uploader>
+
+      <div *ngIf="mediaItems$ | async as mediaItems; else loadingTemplate" fxLayout='row wrap'>
+        <media-gallery-item *ngFor="let mediaItem of mediaItems" [mediaItem]="mediaItem" class="box"
+                            fxFlex="14" (click)="onMediaItemClick(mediaItem)"
+                            [selected]="selectedItemsIds.includes(mediaItem.id)"></media-gallery-item>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <ng-template #loadingTemplate>
+    <loading-indicator></loading-indicator>
+  </ng-template>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onCancelClick()">{{ 'general.media.gallery.cancel' | translate }}</button>
-  <button mat-button [mat-dialog-close]="" cdkFocusInitial (click)="onConfirmClick()">{{ 'general.media.gallery.confirm' | translate }}</button>
+  <button mat-button (click)="onConfirmClick()">{{ 'general.media.gallery.confirm' | translate }}</button>
 </div>
