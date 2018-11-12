@@ -1,24 +1,24 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { IUploaderConfig } from '../../../../interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../../interfaces/media/uploader-options.interface';
 import { IMediaItem } from '../../../../interfaces/media/media-item.interface';
 import { MediaItemService } from '../../../../services/media/media-item.service';
 import { MediaItemsSelectionService } from '../../../../services/media/media-items-selection.service';
-import { Observable, Subscription } from 'rxjs/index';
-
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-media-items-list-modal',
+  selector: 'media-items-list-modal',
   templateUrl: './media-items-list-modal.component.html',
   styleUrls: ['./media-items-list-modal.component.scss']
 })
-export class MediaItemsListModalComponent implements OnInit {
+export class MediaItemsListModalComponent implements OnInit, OnDestroy {
 
   private selectedMediaItemsSubscription: Subscription;
   public selectedMediaItems: IMediaItem[];
   public selectedItemsIds: string[];
   public mediaItems$: Observable<IMediaItem[]>;
+  public showUploader: boolean = false;
 
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,
@@ -63,6 +63,10 @@ export class MediaItemsListModalComponent implements OnInit {
 
   onConfirmClick(): void {
     this.dialogRef.close(this.selectedMediaItems);
+  }
+
+  toggleUploader(): void {
+    this.showUploader = !this.showUploader;
   }
 
   ngOnDestroy(): void {

@@ -40,7 +40,9 @@
 
           <p>{{mediaGallery.description}}</p>
 
-          <media-gallery-list-items [mediaItemIds]="mediaGallery.assignedMediaItems"></media-gallery-list-items>
+          <media-gallery-list-items [showCoverBtn]="showCoverBtn"
+                                    [mediaGallery]="mediaGallery">
+          </media-gallery-list-items>
 
           <mat-action-row>
             <button color="warn"

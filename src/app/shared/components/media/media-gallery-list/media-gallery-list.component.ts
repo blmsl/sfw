@@ -2,10 +2,12 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { IMediaGallery } from '../../../interfaces/media/media-gallery.interface';
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, first, map } from 'rxjs/operators';
 import { MediaGalleryService } from '../../../services/media/media-gallery.service';
 import { AlertService } from '../../../services/alert/alert.service';
 import { MediaItemService } from '../../../services/media/media-item.service';
+import { Observable } from 'rxjs';
+import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 
 @Component({
   selector: 'media-gallery-list',
@@ -19,12 +21,13 @@ export class MediaGalleryListComponent implements OnInit {
 
   public form: FormGroup;
   public step: number;
+  public showCoverBtn = true;
 
   constructor(private fb: FormBuilder,
-    private mediaGalleryService: MediaGalleryService,
-    public mediaItemService: MediaItemService,
-    private alertService: AlertService,
-    public dialog: MatDialog) {
+              private mediaGalleryService: MediaGalleryService,
+              public mediaItemService: MediaItemService,
+              private alertService: AlertService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -42,5 +45,4 @@ export class MediaGalleryListComponent implements OnInit {
       .then(() => this.alertService.showSnackBar('success', 'general.media.gallery.deleted'),
         (error: any) => this.alertService.showSnackBar('error', error.message));
   }
-
 }

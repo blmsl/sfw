@@ -3,6 +3,7 @@ import { UploaderComponent } from './uploader.component';
 import { GalleryListComponent } from './gallery-list/gallery-list.component';
 import { GalleryEditComponent } from './gallery-edit/gallery-edit.component';
 import { UploaderResolver } from './uploader.resolver';
+import { MediaGalleryFormComponent } from '../../shared/components/media/media-gallery-form/media-gallery-form.component';
 
 export const uploaderRoutes: Routes = [
   {
@@ -23,7 +24,7 @@ export const uploaderRoutes: Routes = [
   },
   {
     path: 'edit/:galleryId',
-    component: GalleryEditComponent,
+    component: MediaGalleryFormComponent,
     resolve: {
       gallery: UploaderResolver
     }

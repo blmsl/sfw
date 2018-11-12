@@ -7,17 +7,22 @@
     <mat-card-subtitle></mat-card-subtitle>
 
     <mat-card-content>
-      <button mat-flat-button color="primary" (click)="showUploader()">{{'general.uploader.uploadMultiple' |
-        translate}}
+      <button mat-flat-button color="primary" (click)="toggleUploader()">
+        {{'general.uploader.uploadMultiple' | translate}}
       </button>
-      <media-uploader [uploaderConfig]="uploaderConfig"
+      <media-uploader *ngIf="showUploader"
+                      [uploaderConfig]="uploaderConfig"
                       [uploaderOptions]="uploaderOptions">
       </media-uploader>
 
-      <div *ngIf="mediaItems$ | async as mediaItems; else loadingTemplate" fxLayout='row wrap'>
-        <media-gallery-item *ngFor="let mediaItem of mediaItems" [mediaItem]="mediaItem" class="box"
-                            fxFlex="14" (click)="onMediaItemClick(mediaItem)"
-                            [selected]="selectedItemsIds.includes(mediaItem.id)"></media-gallery-item>
+      <div *ngIf="mediaItems$ | async as mediaItems; else loadingTemplate"
+           fxLayout='row wrap'>
+        <media-item *ngFor="let mediaItem of mediaItems"
+                    [mediaItem]="mediaItem" class="box"
+                    fxFlex="14"
+                    (click)="onMediaItemClick(mediaItem)"
+                    [selected]="selectedItemsIds.includes(mediaItem.id)">
+        </media-item>
       </div>
     </mat-card-content>
   </mat-card>

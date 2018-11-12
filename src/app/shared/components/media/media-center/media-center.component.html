@@ -6,10 +6,14 @@
   <mat-card-subtitle></mat-card-subtitle>
 
   <mat-card-content>
-    <button mat-flat-button color="primary" (click)="showUploader()">{{'general.uploader.uploadMultiple' |
-      translate}}
+    <button mat-flat-button
+            color="primary"
+            (click)="toggleUploader()">
+      {{ showMediaUploader ? ('general.uploader.hideUploader' | translate) : ('general.uploader.uploadMultiple' | translate)}}
     </button>
-    <media-uploader *ngIf="showMediaUploader" [uploaderConfig]="uploaderConfig"
+
+    <media-uploader *ngIf="showMediaUploader"
+                    [uploaderConfig]="uploaderConfig"
                     [uploaderOptions]="uploaderOptions">
     </media-uploader>
 

@@ -12,7 +12,7 @@ import { FullCalendarModule } from 'ng-fullcalendar';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { MatDialogModule } from '@angular/material';
 import { MediaGalleryListComponent } from '../../shared/components/media/media-gallery-list/media-gallery-list.component';
-import { MediaItemInfoComponent } from '../../shared/components/media/media-item-info/media-item-info.component';
+import { MediaItemInfoComponent } from '../../shared/components/media/media-center/media-item-info/media-item-info.component';
 import { MediaItemsListModalComponent } from '../../shared/components/media/media-gallery-form/media-items-list-modal/media-items-list-modal.component';
 
 @NgModule({

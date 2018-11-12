@@ -1,6 +1,8 @@
 <div fxLayout="row wrap">
-  <media-gallery-item fxFlex="20"
-                      *ngFor="let mediaItem of mediaItems"
-                      [mediaItem]="mediaItem">
-  </media-gallery-item>
+  <media-item fxFlex="20"
+              [showCoverBtn]="showCoverBtn"
+              *ngFor="let mediaItem of mediaItems"
+              [mediaGallery]="mediaGallery"
+              [mediaItem]="mediaItem">
+  </media-item>
 </div>

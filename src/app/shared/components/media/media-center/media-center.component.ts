@@ -4,7 +4,6 @@ import { IUploaderOptions } from '../../../interfaces/media/uploader-options.int
 import { MediaItemService } from '../../../services/media/media-item.service';
 import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 import { Observable, Subscription } from 'rxjs';
-import { AlertService } from '../../../services/alert/alert.service';
 import { IMediaGallery } from '../../../interfaces/media/media-gallery.interface';
 import { MediaGalleryService } from '../../../services/media/media-gallery.service';
 import { MatDialog } from '@angular/material';
@@ -28,7 +27,6 @@ export class MediaCenterComponent implements OnDestroy {
 
   constructor(private mediaItemService: MediaItemService,
               private mediaGalleryService: MediaGalleryService,
-              private alertService: AlertService,
               public dialog: MatDialog) {
 
     this.mediaGalleries$ = mediaGalleryService.mediaGalleries$;
@@ -41,7 +39,7 @@ export class MediaCenterComponent implements OnDestroy {
     this.mediaItemSubscription.unsubscribe();
   }
 
-  showUploader() {
-    this.showMediaUploader = true;
+  toggleUploader() {
+    this.showMediaUploader = !this.showMediaUploader;
   }
 }

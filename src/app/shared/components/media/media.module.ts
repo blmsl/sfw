@@ -24,14 +24,14 @@ import { MediaCenterComponent } from './media-center/media-center.component';
 import { MediaUploaderService } from '../../services/media/media-uploader.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MediaItemService } from '../../services/media/media-item.service';
-import { MediaUploaderComponent } from './media-uploader/media-uploader.component';
+import { MediaUploaderComponent } from './media-center/media-uploader/media-uploader.component';
 import { DropZoneDirective } from '../../directives/media/drop-zone.directive';
 import { FileSelectDirective } from '../../directives/media/file-select.directive';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
 import { MediaGalleryListComponent } from './media-gallery-list/media-gallery-list.component';
 import { LoadingIndicatorModule } from '../loading-indicator/loading-indicator.module';
 import { InlineEditModule } from '../inline-edit/inline-edit.module';
-import { MediaItemInfoComponent } from './media-item-info/media-item-info.component';
+import { MediaItemInfoComponent } from './media-center/media-item-info/media-item-info.component';
 import { MediaGalleriesComponent } from './media-galleries/media-galleries.component';
 import {
   NgPipesModule,
@@ -50,8 +50,7 @@ import { MemberService } from '../../services/member/member.service';
 import { SponsorService } from '../../services/sponsor/sponsor.service';
 import { TeamService } from '../../services/team/team.service';
 import { SeasonService } from '../../services/season/season.service';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MediaGalleryItemComponent } from './media-gallery-item/media-gallery-item.component';
+import { MediaItemComponent } from './media-center/media-item/media-item.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { MediaItemsListModalComponent } from './media-gallery-form/media-items-list-modal/media-items-list-modal.component';
 import { RouterModule } from '@angular/router';
@@ -63,7 +62,6 @@ import { MediaItemsSelectionService } from '../../services/media/media-items-sel
 
 @NgModule({
   imports: [
-    DragDropModule,
     MatExpansionModule,
     MatProgressBarModule,
     AngularFireStorageModule,
@@ -106,7 +104,7 @@ import { MediaItemsSelectionService } from '../../services/media/media-items-sel
     MediaItemInfoComponent,
     MediaGalleriesComponent,
     MediaGalleryFormAssignedObjectsComponent,
-    MediaGalleryItemComponent,
+    MediaItemComponent,
     MediaItemsListModalComponent,
     StopPropagationDirective,
     MediaGalleryListItemsComponent,

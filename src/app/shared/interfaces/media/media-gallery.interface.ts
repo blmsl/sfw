@@ -7,6 +7,8 @@ export interface IMediaGallery {
   assignedItem: string;
   assignedItemType: string;
 
+  coverImage?: string;
+
   assignedMediaItems?: string[];
 
   creationAt: any;

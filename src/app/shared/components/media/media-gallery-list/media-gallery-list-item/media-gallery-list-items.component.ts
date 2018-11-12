@@ -3,6 +3,7 @@ import { MediaItemService } from '../../../../services/media/media-item.service'
 import { first } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { IMediaItem } from '../../../../interfaces/media/media-item.interface';
+import { IMediaGallery } from '../../../../interfaces/media/media-gallery.interface';
 
 @Component({
   selector: 'media-gallery-list-items',
@@ -11,7 +12,8 @@ import { IMediaItem } from '../../../../interfaces/media/media-item.interface';
 })
 export class MediaGalleryListItemsComponent implements OnInit, OnDestroy {
 
-  @Input() mediaItemIds: string[];
+  @Input() mediaGallery: IMediaGallery;
+  @Input() showCoverBtn: boolean;
   public mediaItems: IMediaItem[];
   private mediaItemsSubscription: Subscription;
 
@@ -19,9 +21,11 @@ export class MediaGalleryListItemsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.mediaItemsSubscription = this.mediaItemService.getMediaItemsById(this.mediaItemIds)
-      .pipe(first())
-      .subscribe(mediaItems => this.mediaItems = mediaItems);
+    if(this.mediaGallery.assignedMediaItems) {
+      this.mediaItemsSubscription = this.mediaItemService.getMediaItemsById(this.mediaGallery.assignedMediaItems)
+        .pipe(first())
+        .subscribe(mediaItems => this.mediaItems = mediaItems);
+    }
   }
 
   ngOnDestroy() {

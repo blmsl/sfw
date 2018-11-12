@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IMediaItem } from '../../../../interfaces/media/media-item.interface';
+import { IMediaGallery } from '../../../../interfaces/media/media-gallery.interface';
 
 @Component({
   selector: 'media-items-list',
@@ -9,12 +10,12 @@ import { IMediaItem } from '../../../../interfaces/media/media-item.interface';
 export class MediaItemsListComponent implements OnInit {
 
   @Input() mediaItems: IMediaItem[];
+  @Input() mediaGallery: IMediaGallery;
 
   constructor() {
   }
 
   ngOnInit() {
-
   }
 
 }

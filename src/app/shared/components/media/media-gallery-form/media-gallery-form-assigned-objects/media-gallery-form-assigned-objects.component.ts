@@ -6,7 +6,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { ClubService } from '../../../../services/club/club.service';
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
 import { ArticleService } from '../../../../services/article/article.service';
 import { LocationService } from '../../../../services/location/location.service';
 import { MatchService } from '../../../../services/match/match.service';

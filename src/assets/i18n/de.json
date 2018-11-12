@@ -840,6 +840,7 @@
           "author": "Author",
           "description": "Beschreibung der Sammlung",
           "save": "Sammlung anlegen",
+          "saved": "Die Änderungen an der Sammlung wurde gespeichert.",
           "visibility": {
             "hide": "Nicht veröffentlichen",
             "planned": "Veröffentlichung planen",
@@ -864,6 +865,7 @@
       "upload": {
         "actions": "Aktionen",
         "author": "Hochgeladen von",
+        "credits": "Dateicredits",
         "date": "Datum",
         "description": "Beschreibung",
         "file": {
@@ -1635,6 +1637,7 @@
       "fileCredits": "Rechteinhaber?",
       "fileInput": "Link zur Datei",
       "fileTitle": "Titel der Datei",
+      "hideUploader": "Uploader schließen",
       "moveItemToGallery": "In Galerie verschieben?",
       "noGallery": "Keiner Galerie zuordnen",
       "overallProgress": "Gesamtfortschritt",
