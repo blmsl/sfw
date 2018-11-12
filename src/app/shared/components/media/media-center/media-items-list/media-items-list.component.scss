@@ -1,0 +1,16 @@
+.box {
+  min-width: 200px;
+  margin-top: 5px;
+  //display: flex;
+  //flex-direction: row;
+  //align-items: center;
+  //justify-content: space-between;
+  box-sizing: border-box;
+  // cursor: move;
+  //flex-grow: 1;
+  //flex-basis: 0;
+}
+
+.selected {
+  border: 2px solid #cdcdcd;
+}
