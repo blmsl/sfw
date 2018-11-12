@@ -4,7 +4,7 @@
 // npm run deploy (update functions)
 // firebase login:ci
 // add cronJobs via gcloud console:
-// gcloud app deploy app.yaml cron.yaml php.yaml --version=1
+// gcloud app deploy app.yamlOLD cron.yaml php.yaml --version=1
 // https://console.cloud.google.com/logs
 // gcloud app browse
 // https://console.cloud.google.com/functions/list?project=sf-winterbach
@@ -17,11 +17,15 @@ admin.initializeApp({
 });
 
 import * as calendar from './calendar/index';
+import * as article from './article/index';
 import * as match from './match/index';
 import * as media from './media/index';
 import * as member from './member/index';
 import * as team from './team/index';
 import * as user from './user/index';
+
+export const articleToFacebookPublishing = article.facebookArticlePublish;
+export const articleToTwitterPublishing = article.twitterArticlePublish;
 
 export const googleCalendar = calendar.getGoogleCalendarEvents;
 // export const matchDeleted = match.matchDeleteCron;

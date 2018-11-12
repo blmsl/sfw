@@ -7,7 +7,7 @@ const bucket = admin.storage().bucket();
 
 export const deleteMediaItemCron = functions
   .region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .runWith({ memory: '512MB', timeoutSeconds: 15 })
   .firestore.document('files/{mediaItemId}').onDelete(async (snap) => {
     data = snap.data();
 

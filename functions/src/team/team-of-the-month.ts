@@ -13,11 +13,11 @@ const now = moment();
 
 export const teamOfTheWeekCron = functions
   .region('europe-west1')
-  .runWith({ memory: '1GB', timeoutSeconds: 5 })
-  .pubsub.topic('monthly-tick').onPublish(async () => {
+  .runWith({ memory: '512MB', timeoutSeconds: 15 })
+  .pubsub.topic('team-of-the-month')
+  .onPublish(async () => {
 
     try {
-
       const applicationsSnapshot = await admin.firestore().collection('applications')
         .where('isCurrentApplication', '==', true)
         .get();

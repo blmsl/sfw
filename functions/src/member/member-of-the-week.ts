@@ -17,8 +17,9 @@ const collectionName = 'members';
 
 export const memberOfTheWeekCron = functions
   .region('europe-west1')
-  .runWith({ memory: '1GB', timeoutSeconds: 15 })
-  .pubsub.topic('weekly-tick').onPublish(async () => {
+  .runWith({ memory: '512MB', timeoutSeconds: 7 })
+  .pubsub.topic('members-of-the-week')
+  .onPublish(async () => {
 
     try {
 
@@ -27,7 +28,6 @@ export const memberOfTheWeekCron = functions
         .get();
       const currentApp = applicationsSnapshot.docs[0].data();
 
-
       const membersOfTheWeekMailing = currentApp.mailing.filter(mailing => {
         return mailing.isActive && mailing.title === 'Mitglieder der Woche';
       });
@@ -35,8 +35,6 @@ export const memberOfTheWeekCron = functions
       if (membersOfTheWeekMailing && membersOfTheWeekMailing.length > 0) {
 
         const memberSnapshot = await db.collection(collectionName).get();
-
-        console.log(memberSnapshot.docs);
 
         const clubList = memberSnapshot.docs.filter((doc) => {
           const member = doc.data();

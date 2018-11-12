@@ -28,10 +28,14 @@ const recipients: {
 
 export const birthdayReminderCron = functions
   .region('europe-west1')
-  .runWith({ memory: '1GB', timeoutSeconds: 15 })
-  .pubsub.topic('daily-tick').onPublish(async () => {
+  .runWith({ memory: '512MB', timeoutSeconds: 12 })
+  .pubsub.topic('birthday-reminder')
+  .onPublish(async () => {
 
     try {
+
+      const mailArray:any = [];
+
       const applicationsSnapshot = await admin.firestore().collection('applications')
         .where('isCurrentApplication', '==', true)
         .get();
@@ -92,14 +96,15 @@ export const birthdayReminderCron = functions
         });
 
         const bccList: string[] = [];
-        for (const recipient of recipients) {
+        recipients.forEach(recipient => {
 
           if (birthdayMailing[0].emails.indexOf(recipient.email) === -1) {
             bccList.push(recipient.email);
           }
 
           const birthdaySample = birthdayWishes[Math.floor(Math.random() * birthdayWishes.length)];
-          const mail = {
+
+          const mail: any = {
             to: recipient.email,
             bcc: bccList,
             from: 'Geburtstage@sfwinterbach.com',
@@ -114,13 +119,11 @@ export const birthdayReminderCron = functions
               author: birthdaySample.author
             }
           };
-          await sgMail.send(mail);
-        }
+          mailArray.push(sgMail.send(mail));
+        });
       }
-      else {
-        console.warn('Kein Mail-Verteiler mit dem Namen "Geburtstagsgrüße als Kopie" gefunden.');
-      }
-      return true;
+
+      return await Promise.all(mailArray);
     }
     catch (e) {
       console.error(e);

@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin';
 
 export const userDisabled = functions
   .region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .runWith({ memory: '512MB', timeoutSeconds: 15 })
   .firestore.document('/users/{userId}').onUpdate((change, context) => {
 
     // console.log(change.after.data());

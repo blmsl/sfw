@@ -15,21 +15,29 @@ runtime_config:
 
 handlers:
 
-- url: /php/article/publish-article.php
-  script: /php/article/publish-article.php
+#- url: /php/article/publish-article.php
+#  script: /php/article/publish-article.php
 
 - url: /php/match/matchplan2gcal.php
   script: /php/match/matchplan2gcal.php
+  #secure: always
+  #login: admin
 
 - url: /php/match/matchplan-import.php
   script: /php/match/matchplan-import.php
+  secure: always
+  login: admin
 
 # Member
 - url: /php/member/dfb-import.php
   script: /php/member/dfb-import.php
+  secure: always
+  login: admin
 
 - url: /php/member/drive-import.php
   script: /php/member/drive-import.php
+  secure: always
+  login: admin
 
 # Other
 #- url: /_ah/.*

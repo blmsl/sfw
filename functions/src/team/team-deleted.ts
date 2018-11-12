@@ -3,7 +3,7 @@ import * as functions from 'firebase-functions';
 
 export const teamDeleted = functions
   .region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .runWith({ memory: '512MB', timeoutSeconds: 15 })
   .firestore.document('/teams/{teamId}').onDelete(async (change, context) => {
 
     console.log(context.params.teamId);

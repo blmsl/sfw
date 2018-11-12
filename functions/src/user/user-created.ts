@@ -7,7 +7,7 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 
 export const userCreated = functions
   .region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 5 })
+  .runWith({ memory: '512MB', timeoutSeconds: 15 })
   .auth.user()
   .onCreate(async (event: any) => {
 
