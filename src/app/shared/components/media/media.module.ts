@@ -55,7 +55,6 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { MediaItemsListModalComponent } from './media-gallery-form/media-items-list-modal/media-items-list-modal.component';
 import { RouterModule } from '@angular/router';
 import { StopPropagationDirective } from '../../directives/stop-propagation/stop-propagation.directive';
-import { MediaGalleryListItemsComponent } from './media-gallery-list/media-gallery-list-item/media-gallery-list-items.component';
 import { SharedUserModule } from '../user/shared-user.module';
 import { MediaItemsListComponent } from './media-center/media-items-list/media-items-list.component';
 import { MediaItemsSelectionService } from '../../services/media/media-items-selection.service';
@@ -107,7 +106,6 @@ import { MediaItemsSelectionService } from '../../services/media/media-items-sel
     MediaItemComponent,
     MediaItemsListModalComponent,
     StopPropagationDirective,
-    MediaGalleryListItemsComponent,
     MediaItemsListComponent,
   ],
   exports: [
