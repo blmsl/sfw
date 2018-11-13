@@ -820,6 +820,7 @@
       },
       "gallery": {
         "close": "Schließen",
+        "coverSaved": "Das Coverbild für diese Sammlung wurde gespeichert.",
         "create": "Neue Sammlung",
         "cancel": "Abbrechen",
         "confirm": "Bestätigen",
@@ -1506,6 +1507,7 @@
           "matches": "Spiele",
           "minutesPlayed": "Spielminuten",
           "name": "Name",
+          "noAssignedPlayers": "Der Mannschaft wurden noch keine Spieler zugeordnet",
           "redCard": "Rote Karten",
           "replacements": "Auswechselungen",
           "substitutions": "Einwechselungen",
@@ -1564,6 +1566,7 @@
         "mainTitle": "Daten",
         "management": "Mannschaftsbetreuung",
         "noPhoto": "Es wurde noch kein Mannschaftsfoto hochgeladen",
+        "noPlayers": "Es wurden noch keiner Spieler zu dieser Mannschaft hinzugefügt",
         "playerList": "Spielerliste",
         "players": "Spieler",
         "photoDescription": "Bild-Beschreibung",

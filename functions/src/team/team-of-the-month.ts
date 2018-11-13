@@ -34,23 +34,24 @@ export const teamOfTheWeekCron = functions
         const sample = teamsSnapshot.docs[Math.floor(Math.random() * teamsSnapshot.size)];
 
         await admin.firestore().collection(collectionString)
-          .doc(now.format('YY') + '-' + now.format('MM'))
+          .doc(now.format('YYYY') + '-' + now.format('MM'))
           .create({
             assignedTeamId: sample.data().id,
-            title: now.format('YY') + '-' + now.format('MM')
+            title: now.format('YYYY') + '-' + now.format('MM')
           });
 
+        const current = moment().add(1, 'month');
 
         const msg = {
           to: teamOfTheWeekMailing[0].emails,
           from: 'mitglieder@sfwinterbach.com',
-          subject: 'Mannschaft des Monats ' + now.month() + '.' + now.format('YYYY'),
+          subject: 'Mannschaft des Monats ' + current.month() + '.' + now.format('YYYY'),
           templateId: 'cd68a992-a76c-4b47-8dda-a7d9c68fd1b3',
           substitutionWrappers: ['{{', '}}'],
           substitutions: {
             adminName: 'Thomas',
             teamName: sample.data().title + ' (' + sample.data().subTitle + ')',
-            monthString: now.month() + '.' + now.format('YYYY')
+            monthString: current.month() + '.' + now.format('YYYY')
           }
         };
         return sgMail.send(msg);

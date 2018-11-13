@@ -79,7 +79,18 @@ export const birthdayReminderCron = functions
 
         if (membersSnapshot.size > 0 && (!recipients || recipients.length === 0)) {
           console.warn('Es wurden keine Email Adressen der Geburtstagskinder hinterlegt.');
-          return true;
+          const mail: any = {
+            to: birthdayMailing[0].emails,
+            from: 'Geburtstage@sfwinterbach.com',
+            subject: 'Geburtstage vom ' + moment().format('LL'),
+            templateId: '3b21edd6-0c49-40c2-a2e3-68ae679ff440',
+            substitutionWrappers: ['{{', '}}'],
+            substitutions: {
+              adminName: '',
+              birthdayList: 'Es wurden keine Email Adressen der Geburtstagskinder hinterlegt.'
+            }
+          };
+          return sgMail.send(mail);
         }
 
         await sgMail.send({

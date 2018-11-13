@@ -33,29 +33,32 @@ export class FameTeamComponent implements OnInit, OnDestroy {
   private teamSubscription: Subscription;
 
   constructor(private seasonService: SeasonService,
-    private categoryService: CategoryService,
-    private memberService: MemberService,
-    private mediaItemService: MediaItemService,
-    private teamOfTheMonthService: TeamOfTheMonthService) {
+              private categoryService: CategoryService,
+              private memberService: MemberService,
+              private mediaItemService: MediaItemService,
+              private teamOfTheMonthService: TeamOfTheMonthService) {
   }
 
   ngOnInit() {
-    this.currentMonth = moment().format('YY') + '-' + moment().format('MM');
-    this.teamSubscription = this.teamOfTheMonthService.getTeamOfTheMonthByTitle(this.currentMonth).subscribe((team: ITeam) => {
-      this.teamOfTheMonth = team;
+    const currentYear = moment().format('YYYY');
+    const currentMonth = moment().add('1', 'month').month();
 
-      if (this.teamOfTheMonth) {
-        this.assignedSeason$ = this.seasonService.getSeasonById(this.teamOfTheMonth.assignedSeason);
-        this.assignedCategories$ = this.categoryService.getCategoriesByIds(this.teamOfTheMonth.assignedTeamCategories);
-        this.assignedPlayers$ = this.memberService.getMembersByIds(this.teamOfTheMonth.assignedPlayers);
-        this.assignedPositions$ = this.memberService.getMembersByTeamPosition(this.teamOfTheMonth.assignedPositions);
+    this.teamSubscription = this.teamOfTheMonthService.getTeamOfTheMonthByTitle(currentYear + '-' + currentMonth)
+      .subscribe((team: ITeam) => {
+        this.teamOfTheMonth = team;
 
-        if (!this.teamImage) {
-          this.teamImage = this.mediaItemService.getCurrentImage(['teams', 'profile'], this.teamOfTheMonth.id);
+        if (this.teamOfTheMonth) {
+          this.assignedSeason$ = this.seasonService.getSeasonById(this.teamOfTheMonth.assignedSeason);
+          this.assignedCategories$ = this.categoryService.getCategoriesByIds(this.teamOfTheMonth.assignedTeamCategories);
+          this.assignedPlayers$ = this.memberService.getMembersByIds(this.teamOfTheMonth.assignedPlayers);
+          this.assignedPositions$ = this.memberService.getMembersByTeamPosition(this.teamOfTheMonth.assignedPositions);
+
+          if (!this.teamImage) {
+            this.teamImage = this.mediaItemService.getCurrentImage(['teams', 'profile'], this.teamOfTheMonth.id);
+          }
+
         }
-
-      }
-    });
+      });
 
     this.title = moment.localeData().months(moment()) + ' ' + moment().format('YYYY');
   }

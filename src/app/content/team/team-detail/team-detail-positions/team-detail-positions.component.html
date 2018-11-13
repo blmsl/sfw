@@ -24,23 +24,28 @@
   </div>
 
   <div fxFlex.gt-sm="50">
-    <h3>{{'general.teams.edit.management.title' | translate}}</h3>
-
-    <p *ngIf="!team.assignedPositions || !team.assignedPositions.length">
-      {{'general.teams.edit.position.noPosition' |
-      translate}}</p>
-
-    <mat-card *ngFor="let position of team.assignedPositions">
-      <mat-card-title>{{position.position}}</mat-card-title>
+    <mat-card>
+      <mat-card-title>{{'general.teams.edit.management.title' | translate}}</mat-card-title>
       <mat-card-content>
-        <mat-list>
-          <mat-list-item *ngFor="let member of assignedPositions |filterBy: ['id'] : position.assignedMember | orderBy: 'type'">
-            <h3 matLine>{{member.type}}</h3>
-            <a matLine [routerLink]="['/members/detail', member.id]">
-              {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
-            </a>
-          </mat-list-item>
-        </mat-list>
+
+        <p *ngIf="!team.assignedPositions || !team.assignedPositions.length">
+          {{'general.teams.edit.position.noPosition' |
+          translate}}</p>
+
+        <mat-card *ngFor="let position of team.assignedPositions">
+          <mat-card-title>{{position.position}}</mat-card-title>
+          <mat-card-content>
+            <mat-list dense>
+              <mat-list-item *ngFor="let member of assignedPositions |filterBy: ['id'] : position.assignedMember | orderBy: 'type'">
+                <h3 matLine>{{member.type}}</h3>
+                <a matLine [routerLink]="['/members/detail', member.id]">
+                  {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
+                </a>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+
       </mat-card-content>
     </mat-card>
 
