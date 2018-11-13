@@ -40,9 +40,14 @@
 
           <p>{{mediaGallery.description}}</p>
 
-          <media-gallery-list-items [showCoverBtn]="showCoverBtn"
-                                    [mediaGallery]="mediaGallery">
-          </media-gallery-list-items>
+          <div fxLayout="row wrap">
+            <media-item fxFlex="20"
+                        [showCoverBtn]="showCoverBtn"
+                        *ngFor="let mediaItem of mediaItems[i]"
+                        [mediaGallery]="mediaGallery"
+                        [mediaItem]="mediaItem">
+            </media-item>
+          </div>
 
           <mat-action-row>
             <button color="warn"
