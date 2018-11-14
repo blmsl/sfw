@@ -19,13 +19,11 @@ import { SfwEditorModule } from './components/editor/sfw-editor.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { LinkModule } from './components/links/link.module';
 import { InfiniteScrollModule } from './components/infinite-scroll/infinite-scroll.module';
-import { DeleteConfirmDialogComponent } from './components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @NgModule({
   declarations: [
     SanitizeHtmlPipe,
     SnackbarComponent,
-    DeleteConfirmDialogComponent,
   ],
   entryComponents: [
     SnackbarComponent
@@ -42,8 +40,6 @@ import { DeleteConfirmDialogComponent } from './components/dialogs/delete-confir
     MediaModule,
     NgPipesModule,
     ReactiveFormsModule,
-    // MatSnackBarModule,
-    // MediaModule,
     LinkModule,
     NgxDatatableModule,
     SanitizeHtmlPipe,
