@@ -870,6 +870,7 @@
         "date": "Datum",
         "description": "Beschreibung",
         "file": {
+          "deleted": "Die Datei wurde gelöscht.",
           "edit": {
             "cancel": "Abbrechen",
             "confirm": "Speichern",

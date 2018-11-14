@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material';
 import { OutputContext } from '@angular/compiler/src/util';
 import { IMediaGallery } from '../../../../interfaces/media/media-gallery.interface';
 import { MediaGalleryService } from '../../../../services/media/media-gallery.service';
+import { DeleteConfirmDialogComponent } from '../../../dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
   selector: 'media-item',
@@ -33,6 +34,27 @@ export class MediaItemComponent implements OnInit {
   ngOnInit() {
   }
 
+  showRemoveDialog(mediaItem: IMediaItem): void {
+    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+      data: {
+        mediaItem
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((updatedMediaItem: IMediaItem) => {
+      if (updatedMediaItem) {
+        this.mediaItemService.removeMediaItem(updatedMediaItem.id).then(() => {
+            // this.mediaItemEdit.emit(updatedMediaItem);
+            this.alertService.showSnackBar('success', 'general.media.upload.file.deleted');
+          },
+          (error: any) => this.alertService.showSnackBar('error', error.message)
+        ).catch((error: any) => {
+          this.alertService.showSnackBar('error', error.message);
+        });
+      }
+    });
+  }
+
   showInfoDialog(mediaItem: IMediaItem): void {
     const dialogRef = this.dialog.open(MediaItemInfoComponent, {
       data: {
@@ -52,11 +74,6 @@ export class MediaItemComponent implements OnInit {
         });
       }
     });
-  }
-
-  removeMediaItem(mediaItem: IMediaItem): void {
-    console.log(mediaItem);
-    // this.mediaItemService.removeMediaItem(mediaItem.id).then(() => console.log('deleted'));
   }
 
   showFileDialog(mediaItem: IMediaItem): void {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { IUploaderConfig } from '../../../../interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../../interfaces/media/uploader-options.interface';
@@ -33,6 +33,11 @@ export class MediaItemsListModalComponent implements OnInit, OnDestroy {
     queueLimit: 25,
   };
 
+  @HostListener('keydown.esc')
+  public onEsc() {
+    this.onCancelClick();
+  }
+
   constructor(
     private mediaItemsSelectionService: MediaItemsSelectionService,
     private mediaItemService: MediaItemService,
@@ -48,7 +53,6 @@ export class MediaItemsListModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.data);
     this.mediaItemsSelectionService.initializeItemSelection(this.data);
   }
 

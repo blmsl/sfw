@@ -33,10 +33,11 @@
                   {{position.startDate.seconds *1000 | date: 'dd.MM.yy' }}
                   <span *ngIf="position.endDate">&ndash; {{position.endDate.seconds *1000 | date: 'dd.MM.yy' }}</span>
                 </span>
-                <a [routerLink]="['/members/edit', position.assignedMember]">
-                  {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.lastName}}
-                  {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.firstName}}
-                  {{ (members | filterBy: ['id'] : position.assignedMember)[0].mainData.birthday.full | date: 'dd.MM.yy'}}
+                <a [routerLink]="['/members/edit', position.assignedMember]"
+                   *ngIf="members | filterBy: ['id'] : position.assignedMember as assignedMember">
+                  {{ assignedMember[0].mainData.lastName}}
+                  {{ assignedMember[0].mainData.firstName}}
+                  {{ assignedMember[0].mainData.birthday.full | date: 'dd.MM.yy'}}
                 </a>
               </mat-list-item>
             </mat-list>

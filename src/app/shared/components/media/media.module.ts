@@ -58,9 +58,11 @@ import { StopPropagationDirective } from '../../directives/stop-propagation/stop
 import { SharedUserModule } from '../user/shared-user.module';
 import { MediaItemsListComponent } from './media-center/media-items-list/media-items-list.component';
 import { MediaItemsSelectionService } from '../../services/media/media-items-selection.service';
+import { DialogModule } from '../dialogs/dialog.module';
 
 @NgModule({
   imports: [
+    DialogModule,
     MatExpansionModule,
     MatProgressBarModule,
     AngularFireStorageModule,
