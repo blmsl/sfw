@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
+import { MatDialogModule, MatIconModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -10,6 +11,8 @@ import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-con
   ],
   imports: [
     CommonModule,
+    MatDialogModule,
+    MatIconModule,
     RouterModule,
     TranslateModule
   ],
