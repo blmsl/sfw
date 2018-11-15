@@ -1,0 +1,25 @@
+<div fxLayout="row">
+  <span mat-dialog-title style="color: #cecece">{{data.mediaItem.file.name}}</span>
+  <span fxFlex=""></span>
+  <button mat-icon-button (click)="onCloseClick()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content
+     class="text-center"
+     style="padding-top: 25px;">
+
+  <img *ngIf="data.mediaItem.file.type.indexOf('image') > -1"
+       [src]="data.mediaItem.downloadURL"
+       alt="{{data.mediaItem.file.name}}"/>
+</div>
+
+<pre class="text-right"
+     *ngIf="data.mediaItem.fileCredits"
+     style="color: darkgray; padding-bottom: 40px">&copy; {{data.mediaItem.fileCredits}}
+</pre>
+
+<mat-dialog-actions>
+  <p>{{data.mediaItem.description}}</p>
+</mat-dialog-actions>

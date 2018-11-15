@@ -59,12 +59,15 @@ import { SharedUserModule } from '../user/shared-user.module';
 import { MediaItemsListComponent } from './media-center/media-items-list/media-items-list.component';
 import { MediaItemsSelectionService } from '../../services/media/media-items-selection.service';
 import { DialogModule } from '../dialogs/dialog.module';
+import { AngularFireFunctions, AngularFireFunctionsModule } from '@angular/fire/functions';
+import { MediaShowItemComponent } from './media-center/media-show-item/media-show-item.component';
 
 @NgModule({
   imports: [
     DialogModule,
     MatExpansionModule,
     MatProgressBarModule,
+    AngularFireFunctionsModule,
     AngularFireStorageModule,
     CommonModule,
     InlineEditModule,
@@ -109,6 +112,7 @@ import { DialogModule } from '../dialogs/dialog.module';
     MediaItemsListModalComponent,
     StopPropagationDirective,
     MediaItemsListComponent,
+    MediaShowItemComponent,
   ],
   exports: [
     MediaAvatarComponent,
@@ -120,7 +124,8 @@ import { DialogModule } from '../dialogs/dialog.module';
   entryComponents: [
     MediaGalleryListComponent,
     MediaItemInfoComponent,
-    MediaItemsListModalComponent
+    MediaItemsListModalComponent,
+    MediaShowItemComponent,
   ],
   providers: [
     OrderByPipe,

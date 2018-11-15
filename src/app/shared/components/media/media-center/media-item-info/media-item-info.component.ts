@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -13,6 +13,11 @@ export class MediaItemInfoComponent implements OnInit {
 
   public form: FormGroup;
   public moment: any;
+
+  @HostListener('keydown.esc')
+  public onEsc() {
+    this.onNoClick();
+  }
 
   constructor(private fb: FormBuilder,
     public dialogRef: MatDialogRef<MediaItemInfoComponent>,

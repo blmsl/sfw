@@ -1634,6 +1634,10 @@
       "changeImage": "Foto ändern",
       "chooseFileType": "Den Dateityp wählen",
       "deleteItem": "Datei löschen",
+      "deleteFromGalleryQuestion": "Soll die Datei '{{fileName}}' wirklich aus der Sammlung gelöscht werden?",
+      "deleteFromFileSystemQuestion": "Soll die Datei '{{fileName}}' unwiderruflich gelöscht werden?",
+      "deleteFromFileSystemCheckbox": "Auch aus dem Dateisystem löschen?",
+      "deleteFromFileSystemInfo": "Die Datei kann dann auch nicht mehr in anderen Sammlungen genutzt werden und muss neu hochgeladen werden",
       "errors": {
         "fileType": "Du hast eine Datei mit einem falschen File-Type ausgewählt",
         "mimeType": "Du hast eine Datei mit einem falschen Mime-Type ausgewählt"

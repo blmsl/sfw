@@ -1,28 +1,30 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  HostListener,
-  Inject
-} from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { ChangeDetectionStrategy, Component, HostListener, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatCheckboxChange, MatDialogRef } from '@angular/material';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-delete-confirm-dialog',
+  selector: 'delete-confirm-dialog',
   templateUrl: './delete-confirm-dialog.component.html',
   styleUrls: ['./delete-confirm-dialog.component.scss']
 })
-export class DeleteConfirmDialogComponent {
+export class DeleteConfirmDialogComponent implements OnInit {
 
   @HostListener('keydown.esc')
   public onEsc() {
     this.onCancelClick();
   }
 
-  constructor(
-    private dialogRef: MatDialogRef<DeleteConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
+  public deleteFromFS: boolean = false;
+  public showDeleteCheckbox: boolean = false;
+
+  constructor(private dialogRef: MatDialogRef<DeleteConfirmDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+
+  ngOnInit() {
+    if(this.data.mediaGallery){
+      this.showDeleteCheckbox = true;
+    }
   }
 
   onCancelClick(): void {
@@ -30,13 +32,15 @@ export class DeleteConfirmDialogComponent {
   }
 
   onConfirmClick(): void {
-    this.delete();
-    this.dialogRef.close();
+    this.dialogRef.close({
+      removedMediaItem: this.data.mediaItem,
+      deleteFromFS: this.showDeleteCheckbox ? this.deleteFromFS : true
+    });
   }
 
-
-  public delete() {
-    console.log(this.data);
+  setDeleteFromFS($event: MatCheckboxChange): void {
+    this.deleteFromFS = $event.checked;
   }
+
 
 }

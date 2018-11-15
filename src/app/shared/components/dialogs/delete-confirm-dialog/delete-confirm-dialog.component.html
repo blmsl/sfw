@@ -1,13 +1,39 @@
-<div class="header">
-  <button mat-dialog-close mat-icon-button>
-    <mat-icon>close</mat-icon>
-  </button>
-  <h1 mat-dialog-title>{{ data.title }}</h1>
+<h1 mat-dialog-title style="color: #cecece">{{'general.uploader.deleteItem' | translate}}</h1>
+
+<div mat-dialog-content
+     formGroup="form"
+     style="padding-top: 25px; padding-bottom: 40px">
+
+  <div class="alert alert-info"
+       *ngIf="showDeleteCheckbox">
+    {{ 'general.uploader.deleteFromGalleryQuestion' | translate: { fileName : data.mediaItem.file.name } }}
+  </div>
+
+  <p class="alert alert-warning"
+     *ngIf="!showDeleteCheckbox">
+    {{'general.uploader.deleteFromFileSystemQuestion' | translate: { fileName : data.mediaItem.file.name } }}
+  </p>
+
+  <div *ngIf="showDeleteCheckbox">
+    <mat-checkbox [checked]="deleteFromFS" (change)="setDeleteFromFS($event)">
+    <span aria-describedby="footnote-label"
+          id="footnotes-ref">
+      {{'general.uploader.deleteFromFileSystemCheckbox' | translate}}
+    </span>
+    </mat-checkbox>
+  </div>
+
 </div>
-<mat-dialog-content>
-  <p [innerHTML]="data.text"></p>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-raised-button (click)="cancel()">{{'general.cancel' | translate}}</button>
-  <button mat-raised-button (click)="delete()" color="warn">{{'general.delete' | translate}}</button>
-</mat-dialog-actions>
+
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onCancelClick()">{{'general.cancel' | translate}}</button>
+  <button mat-raised-button (click)="onConfirmClick()" color="warn">{{'general.delete' | translate}}</button>
+</div>
+
+<footer>
+  <ol>
+    <li>
+      <mat-hint id="footnotes">{{'general.uploader.deleteFromFileSystemInfo' | translate}}</mat-hint>
+    </li>
+  </ol>
+</footer>

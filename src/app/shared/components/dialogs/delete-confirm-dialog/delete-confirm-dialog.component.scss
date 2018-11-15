@@ -1,21 +1,32 @@
-:host {
-  .header {
-    position: relative;
+mat-dialog-content {
+  counter-reset: footnotes;
+}
 
-    button[mat-dialog-close] {
-      position: absolute;
-      top: -16px;
-      right: -16px;
-    }
-  }
+[aria-describedby="footnote-label"] {
+  counter-increment: footnotes;
+  text-decoration: none;
+  color: inherit;
+  cursor: default;
+  outline: none;
+}
 
-  mat-dialog-actions {
-    button {
-      margin-left: 16px;
+[aria-describedby="footnote-label"]::after {
+  content: '[' counter(footnotes) ']';
+  vertical-align: super;
+  font-size: 0.5em;
+  margin-left: 2px;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
 
-      &:first-child {
-        margin-left: 0;
-      }
-    }
-  }
+[aria-describedby="footnote-label"]:focus::after {
+  outline: thin dotted;
+  outline-offset: 2px;
+}
+
+footer {
+  margin-top: 50px;
+  border-top: 1px solid silver;
+  font-size: 0.8em;
 }
