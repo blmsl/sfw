@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+/* const functions = require('firebase-functions');
 const gcs = require('@google-cloud/storage')();
 const sharp = require('sharp');
 const _ = require('lodash');
@@ -59,3 +59,4 @@ export const generateThumbnailCron = functions
       })
     })
   });
+*/

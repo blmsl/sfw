@@ -29,7 +29,7 @@ export const articleToTwitterPublishing = article.twitterArticlePublish;
 
 export const googleCalendar = calendar.getGoogleCalendarEvents;
 // export const matchDeleted = match.matchDeleteCron;
-export const removeMediaItem = media.deleteMediaCron;
+export const deleteMediaItem = media.deleteMediaCron;
 export const birthdayReminder = member.birthdayReminderCron;
 export const memberDeleted = member.memberDeletedCron;
 export const memberOfTheWeek = member.memberOfTheWeekCron;

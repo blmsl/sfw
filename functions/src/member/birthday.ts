@@ -17,15 +17,6 @@ function calculateAge(year: string, month: string, day: string) {
   return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
-const monthDay = moment().format('MM-DD');
-
-const recipients: {
-  email: string,
-  firstName: string,
-  lastName: string,
-  age: number
-}[] = [];
-
 export const birthdayReminderCron = functions
   .region('europe-west1')
   .runWith({ memory: '512MB', timeoutSeconds: 12 })
@@ -34,7 +25,15 @@ export const birthdayReminderCron = functions
 
     try {
 
+      const monthDay = moment().format('MM-DD');
       const mailArray:any = [];
+
+      const recipients: {
+        email: string,
+        firstName: string,
+        lastName: string,
+        age: number
+      }[] = [];
 
       const applicationsSnapshot = await admin.firestore().collection('applications')
         .where('isCurrentApplication', '==', true)
@@ -77,8 +76,10 @@ export const birthdayReminderCron = functions
 
       if (birthdayMailing && birthdayMailing.length > 0) {
 
-        if (membersSnapshot.size > 0 && (!recipients || recipients.length === 0)) {
-          console.warn('Es wurden keine Email Adressen der Geburtstagskinder hinterlegt.');
+        if (membersSnapshot.size > 0 && recipients.length === 0) {
+          const text = 'Es wurden keine Email Adressen der Geburtstagskinder hinterlegt.';
+          console.warn(text);
+          birthdayList += '<p>' + text+'</p>';
           const mail: any = {
             to: birthdayMailing[0].emails,
             from: 'Geburtstage@sfwinterbach.com',
@@ -87,7 +88,8 @@ export const birthdayReminderCron = functions
             substitutionWrappers: ['{{', '}}'],
             substitutions: {
               adminName: '',
-              birthdayList: 'Es wurden keine Email Adressen der Geburtstagskinder hinterlegt.'
+              birthdayList: birthdayList,
+              dateString: moment().format('LL')
             }
           };
           return sgMail.send(mail);
@@ -107,6 +109,7 @@ export const birthdayReminderCron = functions
         });
 
         const bccList: string[] = [];
+        console.log(recipients);
         recipients.forEach(recipient => {
 
           if (birthdayMailing[0].emails.indexOf(recipient.email) === -1) {
@@ -133,7 +136,6 @@ export const birthdayReminderCron = functions
           mailArray.push(sgMail.send(mail));
         });
       }
-
       return await Promise.all(mailArray);
     }
     catch (e) {

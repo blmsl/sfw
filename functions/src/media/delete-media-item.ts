@@ -1,17 +1,16 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-let data;
-
-const bucket = admin.storage().bucket();
+// const bucket = admin.storage().bucket();
 
 export const deleteMediaItemCron = functions
   .region('europe-west1')
   .runWith({ memory: '512MB', timeoutSeconds: 15 })
   .firestore.document('files/{mediaItemId}').onDelete(async (snap) => {
-    data = snap.data();
 
-    console.log(data.id);
+    const data = snap.data() || {};
+
+    console.log(data);
 
     let path: string = '/';
     if ('assignedObjects' in data) {
@@ -19,9 +18,7 @@ export const deleteMediaItemCron = functions
         path = path + '/' + key;
       });
     }
-    console.log(path);
 
-    // find galeries where this item is member of
     const galleriesSnapshot = await admin.firestore().collection('galleries')
       .where('assignedMediaItems', 'array-contains', data.id)
       .get();
@@ -35,5 +32,7 @@ export const deleteMediaItemCron = functions
       });
     });
 
-    return await bucket.file(path + '/' + data.itemId).delete();
+    const storage = admin.storage();
+    console.log(path + data.itemId);
+    return storage.bucket().file(path + data.itemId).delete();
   });
