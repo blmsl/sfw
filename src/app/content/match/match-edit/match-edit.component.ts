@@ -32,6 +32,13 @@ import { ArticleService } from '../../../shared/services/article/article.service
 import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
 import { MemberService } from '../../../shared/services/member/member.service';
 import { IMember } from '../../../shared/interfaces/member/member.interface';
+import { IUsePropertyDecoratorConfig } from 'codelyzer/propertyDecoratorBase';
+import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
+import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
+import { IMediaItem } from '../../../shared/interfaces/media/media-item.interface';
+import { MediaItemService } from '../../../shared/services/media/media-item.service';
+import { MediaGalleryService } from '../../../shared/services/media/media-gallery.service';
+import { IMediaGallery } from '../../../shared/interfaces/media/media-gallery.interface';
 
 @Component({
   selector: 'match-edit',
@@ -59,6 +66,22 @@ export class MatchEditComponent implements OnInit, OnDestroy, OnChanges {
     title: string;
   }[];
 
+  public uploaderConfig: IUploaderConfig = {
+    autoUpload: true,
+    showDropZone: true,
+    removeAfterUpload: true,
+    showQueue: true,
+  };
+
+  public uploaderOptions: IUploaderOptions = {
+    assignedObjects: [],
+    itemId: '',
+    queueLimit: 5,
+  };
+
+  public mediaItems$: Observable<IMediaItem[]>;
+  public mediaGalleries$: Observable<IMediaGallery[]>;
+
   private teamSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
@@ -72,6 +95,8 @@ export class MatchEditComponent implements OnInit, OnDestroy, OnChanges {
     private seasonService: SeasonService,
     private articleService: ArticleService,
     private memberService: MemberService,
+    private mediaItemService: MediaItemService,
+    private mediaGalleryService: MediaGalleryService,
     private router: Router) {
     this.categories$ = this.categoryService.getCategoriesByCategoryType('team.types');
     this.locations$ = locationService.locations$;
@@ -86,6 +111,9 @@ export class MatchEditComponent implements OnInit, OnDestroy, OnChanges {
     this.route.data.subscribe((data: { match: IMatch }) => {
       this.match = data.match;
       this.getAssignedPlayers();
+      this.uploaderOptions.itemId = this.match.id;
+      this.mediaItems$ = this.mediaItemService.getMediaItems([], this.match.id);
+      this.mediaGalleries$ = this.mediaGalleryService.getAssignedGalleries(this.match.id);
     });
   }
 

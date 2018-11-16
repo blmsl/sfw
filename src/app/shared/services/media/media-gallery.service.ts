@@ -14,7 +14,7 @@ export class MediaGalleryService {
   private galleryTypes: string[] = ['article', 'club', 'location', 'match', 'member', 'sponsor', 'team'];
 
   constructor(private afs: AngularFirestore,
-    private authService: AuthService) {
+              private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMediaGallery>(this.path);
     this.mediaGalleries$ = this.collectionRef.valueChanges();
   }
@@ -22,6 +22,13 @@ export class MediaGalleryService {
   createMediaGallery(mediaGallery: IMediaGallery): Promise<void> {
     mediaGallery.id = this.afs.createId();
     return this.afs.collection(this.path).doc(mediaGallery.id).set(mediaGallery);
+  }
+
+  getAssignedGalleries(id: string): Observable<IMediaGallery[]> {
+    return this.afs.collection<IMediaGallery>(this.path, ref => {
+      return ref
+        .where('assignedItem', '==', id);
+    }).valueChanges();
   }
 
   removeMediaGallery(mediaGallery: IMediaGallery): Promise<void> {
