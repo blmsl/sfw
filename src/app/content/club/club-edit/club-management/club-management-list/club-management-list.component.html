@@ -14,12 +14,12 @@
     <mat-tab-group *ngIf="step === i"
                    [dynamicHeight]="true">
       <mat-tab label="{{'general.clubs.edit.management.positions.timeLineTitle' | translate}}">
-        <p *ngIf="!club.management.positions || (club.management.positions | filterBy: ['assignedPosition'] : category.id)">
+        <p *ngIf="!club.positions || (club.positions | filterBy: ['assignedPosition'] : category.id)">
           {{'general.clubs.edit.management.positions.noPersons' | translate}}
         </p>
         <mat-list>
           <mat-list-item
-            *ngFor="let position of club.management.positions  | filterBy: ['assignedPosition'] : category.id | orderBy: '-startDate'">
+            *ngFor="let position of club.positions  | filterBy: ['assignedPosition'] : category.id | orderBy: '-startDate'">
             <span fxFlex="40">
               {{position.startDate.seconds *1000 | date: 'dd.MM.yy' }}
               <span *ngIf="position.endDate">&ndash; {{position.endDate.seconds *1000 | date: 'dd.MM.yy' }}</span>

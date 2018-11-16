@@ -1,6 +1,7 @@
 <mat-card>
-  <mat-card-title>{{ selectedClubManagementPosition === -1 ?
-    ('general.clubs.edit.management.positions.title' | translate)
+  <mat-card-title>
+    {{ show
+    ? ('general.clubs.edit.management.positions.title' | translate)
     : 'general.clubs.edit.management.list.title' | translate
     }}
   </mat-card-title>
@@ -20,8 +21,7 @@
     </button>
 
     <div *ngIf="!showForm && positions.length > 0">
-      <club-management-list [club]="club"
-                            [members]="members"
+      <club-management-list [members]="members"
                             [positions]="positions"
                             [showLinks]="showLinks"
                             (saveClub)="saveClub.emit($event)">
@@ -29,8 +29,7 @@
     </div>
 
     <div *ngIf="showForm">
-      <club-management-form [club]="club"
-                            [members]="members"
+      <club-management-form [members]="members"
                             [positions]="positions"
                             (hideForm)="this.showForm = !this.showForm"
                             (saveClub)="saveClub.emit($event)">

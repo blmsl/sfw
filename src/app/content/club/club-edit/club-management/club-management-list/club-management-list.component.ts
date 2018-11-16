@@ -9,6 +9,7 @@ import { ICategory }       from '../../../../../shared/interfaces/category.inter
 import { IMember }         from '../../../../../shared/interfaces/member/member.interface';
 import { IClub }           from '../../../../../shared/interfaces/club/club.interface';
 import { IClubManagement } from '../../../../../shared/interfaces/club/club-management.interface';
+import { ActivatedRoute }  from '@angular/router';
 
 @Component({
   selector: 'club-management-list',
@@ -17,7 +18,6 @@ import { IClubManagement } from '../../../../../shared/interfaces/club/club-mana
 })
 export class ClubManagementListComponent implements OnInit {
 
-  @Input() club: IClub;
   @Input() members: IMember[];
   @Input() positions: ICategory[];
   @Input() showLinks: boolean;
@@ -25,11 +25,15 @@ export class ClubManagementListComponent implements OnInit {
   @Output() saveClub: EventEmitter<IClub> = new EventEmitter<IClub>(false);
 
   public step = -1;
+  public club: IClub;
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.route.data.subscribe((data: { club: IClub }) => {
+      this.club = data.club;
+    });
   }
 
   setStep(i: number) {
@@ -37,7 +41,7 @@ export class ClubManagementListComponent implements OnInit {
   }
 
   removeManagementPosition(position: IClubManagement) {
-    this.club.management.positions.splice(this.club.management.positions.indexOf(position), 1);
+    this.club.positions.splice(this.club.positions.indexOf(position), 1);
     this.saveClub.emit(this.club);
   }
 

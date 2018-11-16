@@ -4,10 +4,11 @@ import {
   Input,
   OnInit,
   Output
-}                    from '@angular/core';
-import { ICategory } from '../../../../shared/interfaces/category.interface';
-import { IMember }   from '../../../../shared/interfaces/member/member.interface';
-import { IClub }     from '../../../../shared/interfaces/club/club.interface';
+}                         from '@angular/core';
+import { ICategory }      from '../../../../shared/interfaces/category.interface';
+import { IMember }        from '../../../../shared/interfaces/member/member.interface';
+import { IClub }          from '../../../../shared/interfaces/club/club.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'club-management',
@@ -16,7 +17,6 @@ import { IClub }     from '../../../../shared/interfaces/club/club.interface';
 })
 export class ClubManagementComponent implements OnInit {
 
-  @Input() club: IClub;
   @Input() members: IMember[];
   @Input() positions: ICategory[];
   @Input() showLinks: boolean;

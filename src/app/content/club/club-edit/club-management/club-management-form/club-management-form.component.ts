@@ -4,15 +4,16 @@ import {
   Input,
   OnInit,
   Output
-}                    from '@angular/core';
+}                         from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators
-}                    from '@angular/forms';
-import { IMember }   from '../../../../../shared/interfaces/member/member.interface';
-import { ICategory } from '../../../../../shared/interfaces/category.interface';
-import { IClub }     from '../../../../../shared/interfaces/club/club.interface';
+}                         from '@angular/forms';
+import { IMember }        from '../../../../../shared/interfaces/member/member.interface';
+import { ICategory }      from '../../../../../shared/interfaces/category.interface';
+import { IClub }          from '../../../../../shared/interfaces/club/club.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'club-management-form',
@@ -29,10 +30,16 @@ export class ClubManagementFormComponent implements OnInit {
 
   public form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute,
+              private fb: FormBuilder) {
   }
 
+
   ngOnInit() {
+    this.route.data.subscribe((data: { club: IClub }) => {
+      this.club = data.club;
+    });
+
     this.form = this.fb.group({
       assignedMember: [ '', [ Validators.required ] ],
       assignedPosition: [ '', [ Validators.required ] ],
@@ -47,10 +54,10 @@ export class ClubManagementFormComponent implements OnInit {
   }
 
   save() {
-    if (this.club.management && this.club.management.positions) {
-      this.club.management.positions.push(this.form.value);
+    if (this.club && this.club.positions) {
+      this.club.positions.push(this.form.value);
     } else {
-      this.club.management.positions = [ this.form.value ];
+      this.club.positions = [ this.form.value ];
     }
     this.saveClub.emit(this.club);
     this.hideForm.emit();

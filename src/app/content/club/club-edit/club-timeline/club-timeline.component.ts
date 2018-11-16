@@ -13,6 +13,7 @@ import { IArticle }       from '../../../../shared/interfaces/article.interface'
 import { IClub }          from '../../../../shared/interfaces/club/club.interface';
 import { ITimeLineEvent } from '../../../../shared/interfaces/time-line-event.interface';
 import * as moment        from 'moment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'club-timeline',
@@ -21,29 +22,24 @@ import * as moment        from 'moment';
 })
 export class ClubTimelineComponent implements OnInit {
 
-  @Input() club: IClub;
   @Input() articles: IArticle[];
 
+  public club: IClub;
   public form: FormGroup;
   public selectedClubTimeLineEvent: number = -1;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute,
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      timeLine: this.initClubTimeLine()
+    this.route.data.subscribe((data: { club: IClub }) => {
+      this.club = data.club;
     });
-  }
 
-  initClubTimeLine(): FormArray {
-    const formArray = [];
-    if (this.club.timeLine) {
-      for (let i = 0; i < this.club.timeLine.length; i++) {
-        formArray.push(this.initTimeLineEvent(this.club.timeLine[ i ]));
-      }
-    }
-    return this.fb.array(formArray);
+    this.form = this.fb.group({
+      timeLine: this.club.timeLine ? this.club.timeLine : []
+    });
   }
 
   initTimeLineEvent(event: ITimeLineEvent): FormGroup {

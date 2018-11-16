@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import * as admin     from 'firebase-admin';
 
 // const bucket = admin.storage().bucket();
 
@@ -34,5 +34,5 @@ export const deleteMediaItemCron = functions
 
     const storage = admin.storage();
     console.log(path + data.itemId);
-    return storage.bucket().file(path + data.itemId).delete();
+    return storage.bucket().file(path + '/' + data.itemId).delete();
   });

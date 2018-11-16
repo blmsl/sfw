@@ -11,8 +11,7 @@
                    *ngIf="members$ | async as members; else loadingTemplate">
 
       <mat-tab label="{{'general.clubs.edit.mainTitle' | translate}}">
-        <club-edit-main [club]="club"
-                        [locations]="locations$ | async"
+        <club-edit-main [locations]="locations$ | async"
                         [members]="members"
                         (saveClub)="saveClub($event)">
         </club-edit-main>
@@ -23,13 +22,10 @@
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
           <div fxFlex.gt-sm="50">
-            <club-history [club]="club"
-                          (saveClub)="saveClub($event)">
-            </club-history>
+            <club-history (saveClub)="saveClub($event)"></club-history>
           </div>
           <div fxFlex.gt-sm="50">
-            <club-timeline [club]="club"
-                           [articles]="articles$ | async"
+            <club-timeline [articles]="articles$ | async"
                            (saveClub)="saveClub($event)">
             </club-timeline>
           </div>
@@ -41,16 +37,13 @@
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
           <div fxFlex.gt-sm="50">
-            <club-management-photo [club]="club"
-                                   (saveClub)="saveClub($event)">
-            </club-management-photo>
+            <club-management-photo (saveClub)="saveClub($event)"></club-management-photo>
           </div>
 
           <div fxFlex.gt-sm="50">
             <club-management *ngIf="positions$ | async as positions; else loadingTemplate"
                              [members]="members"
                              [showLinks]="true"
-                             [club]="club"
                              [positions]="positions"
                              (saveClub)="saveClub($event)">
             </club-management>
@@ -71,17 +64,8 @@
         </club-honoraries>
       </mat-tab>-->
 
-
       <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
-        <media-items-list *ngIf="mediaItems; else loadingTemplate"
-                          [mediaItems]="mediaItems">
-        </media-items-list>
-      </mat-tab>
-
-      <mat-tab label="{{ 'general.clubs.edit.uploaderTitle' | translate }}">
-        <media-uploader [uploaderConfig]="uploaderConfig"
-                        [uploaderOptions]="uploaderOptions">
-        </media-uploader>
+        <club-edit-media></club-edit-media>
       </mat-tab>
 
     </mat-tab-group>

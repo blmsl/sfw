@@ -19,6 +19,7 @@ import {
   debounceTime,
   distinctUntilChanged
 }                           from 'rxjs/internal/operators';
+import { ActivatedRoute }   from '@angular/router';
 
 @Component({
   selector: 'club-edit-main',
@@ -26,12 +27,12 @@ import {
 })
 export class ClubEditMainComponent implements OnInit {
 
-  @Input() club: IClub;
   @Input() locations: ILocation[];
   @Input() members: IMember[];
 
   @Output() saveClub: EventEmitter<IClub> = new EventEmitter<IClub>(false);
 
+  public club: IClub;
   public form: FormGroup;
 
   public uploaderConfig: IUploaderConfig = {
@@ -55,10 +56,15 @@ export class ClubEditMainComponent implements OnInit {
     height: '30vh'
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute,
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {
+    this.route.data.subscribe((data: { club: IClub }) => {
+      this.club = data.club;
+    });
+
     this.form = this.fb.group({
       title: [ this.club.title, [ Validators.required, Validators.minLength(10) ] ],
       description: this.club.description,

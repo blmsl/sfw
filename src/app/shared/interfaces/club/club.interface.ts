@@ -18,9 +18,9 @@ export interface IClub {
     clubUrl?: string;
   };
 
-  assignedLocation: string;
+  assignedLocation?: string;
 
-  timeLine: ITimeLineEvent[];
+  timeLine?: ITimeLineEvent[];
 
   info: {
     founding?: string;
@@ -29,14 +29,11 @@ export interface IClub {
     website?: string;
   };
 
-  honoraries: IClubHonorary[];
+  honoraries?: IClubHonorary[];
 
-  management: {
-    positions: IClubManagement[];
-    photoUrl?: string;
-    photoDescription?: string;
-    timeLine: ITimeLineEvent[];
-  };
+  photoDescription?: string;
+  positions?: IClubManagement[];
+  managementTimeLine?: ITimeLineEvent[];
 
   creationAt: any;
   creationBy: string;

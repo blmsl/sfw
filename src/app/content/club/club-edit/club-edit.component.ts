@@ -2,26 +2,24 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit
-}                            from '@angular/core';
-import { FormBuilder }       from '@angular/forms';
+}                          from '@angular/core';
+import { FormBuilder }     from '@angular/forms';
 import {
   ActivatedRoute,
   Router
-}                            from '@angular/router';
-import { Observable }        from 'rxjs';
-import { IClub }             from '../../../shared/interfaces/club/club.interface';
-import { ILocation }         from '../../../shared/interfaces/location/location.interface';
-import { IMember }           from '../../../shared/interfaces/member/member.interface';
-import { ClubService }       from '../../../shared/services/club/club.service';
-import { LocationService }   from '../../../shared/services/location/location.service';
-import { MemberService }     from '../../../shared/services/member/member.service';
-import { CategoryService }   from '../../../shared/services/category/category.service';
-import { ICategory }         from '../../../shared/interfaces/category.interface';
-import { SnackbarComponent } from '../../../shared/components/snackbar/snackbar.component';
-import { MatSnackBar }       from '@angular/material';
-import { ArticleService }    from '../../../shared/services/article/article.service';
-import { IArticle }          from '../../../shared/interfaces/article.interface';
-import { AlertService }      from '../../../shared/services/alert/alert.service';
+}                          from '@angular/router';
+import { Observable }      from 'rxjs';
+import { IClub }           from '../../../shared/interfaces/club/club.interface';
+import { ILocation }       from '../../../shared/interfaces/location/location.interface';
+import { IMember }         from '../../../shared/interfaces/member/member.interface';
+import { ClubService }     from '../../../shared/services/club/club.service';
+import { LocationService } from '../../../shared/services/location/location.service';
+import { MemberService }   from '../../../shared/services/member/member.service';
+import { CategoryService } from '../../../shared/services/category/category.service';
+import { ICategory }       from '../../../shared/interfaces/category.interface';
+import { ArticleService }  from '../../../shared/services/article/article.service';
+import { IArticle }        from '../../../shared/interfaces/article.interface';
+import { AlertService }    from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'club-edit',
@@ -39,21 +37,7 @@ export class ClubEditComponent implements OnInit {
 
    public selectedClubManagementPosition: number = -1;
    public selectedHonorary: number = -1;
-
-   public uploaderConfig: IUploaderConfig = {
-   autoUpload: true,
-   showDropZone: true,
-   removeAfterUpload: true,
-   showQueue: true,
-   headerTitle: 'general.clubs.edit.uploader.title'
-   };
-
-   public uploaderOptions: IUploaderOptions = {
-   assignedObjects: ['clubs'],
-   itemId: '',
-   queueLimit: 99,
-   // allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
-   }; */
+   */
 
   constructor(public clubService: ClubService,
               private alertService: AlertService,
@@ -64,13 +48,11 @@ export class ClubEditComponent implements OnInit {
               private fb: FormBuilder,
               private cd: ChangeDetectorRef,
               private route: ActivatedRoute,
-              public snackBar: MatSnackBar,
               private router: Router) {
     this.locations$ = locationService.locations$;
     this.members$ = memberService.members$;
     this.articles$ = articleService.articles$;
     this.positions$ = categoryService.getCategoriesByCategoryType('club.position.types');
-    // this.showForm = false;
   }
 
   ngOnInit() {
@@ -129,7 +111,7 @@ export class ClubEditComponent implements OnInit {
    control.removeAt($event);
    this.selectedHonorary = -1;
    }
-    */
+   */
 
   removeClub(club: IClub) {
     this.clubService.removeClub(club)
@@ -139,7 +121,6 @@ export class ClubEditComponent implements OnInit {
   }
 
   saveClub($event: IClub): void {
-
     let action;
     this.club = Object.assign({}, this.club, $event);
 

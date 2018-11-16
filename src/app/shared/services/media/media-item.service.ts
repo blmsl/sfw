@@ -62,7 +62,7 @@ export class MediaItemService {
     return this.afs.collection(this.path).doc(mediaItem.id).update(mediaItem);
   }
 
-  getMediaItems(assignedObjects: any, itemId: string): Observable<IMediaItem[]> {
+  getMediaItems(assignedObjects: any[], itemId: string): Observable<IMediaItem[]> {
     return this.afs.collection<IMediaItem>('files', ref => {
       if (!assignedObjects) {
         return ref

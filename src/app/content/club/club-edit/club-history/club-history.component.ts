@@ -1,45 +1,45 @@
 import {
   Component,
   EventEmitter,
-  Input,
   OnInit,
-  Output,
-  ViewChild
-}                               from '@angular/core';
+  Output
+}                         from '@angular/core';
 import {
-  FormArray,
   FormBuilder,
-  FormGroup,
-  Validators
-}                               from '@angular/forms';
-import { ITimeLineEvent }       from '../../../../shared/interfaces/time-line-event.interface';
-import * as moment              from 'moment';
-import { IClub }                from '../../../../shared/interfaces/club/club.interface';
+  FormGroup
+}                         from '@angular/forms';
+import { IClub }          from '../../../../shared/interfaces/club/club.interface';
 import {
   debounceTime,
   distinctUntilChanged
-} from 'rxjs/internal/operators';
+}                         from 'rxjs/internal/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'club-history',
   templateUrl: './club-history.component.html',
-  styleUrls: ['./club-history.component.scss']
+  styleUrls: [ './club-history.component.scss' ]
 })
 export class ClubHistoryComponent implements OnInit {
 
-  @Input() club: IClub;
   @Output() saveClub: EventEmitter<IClub> = new EventEmitter<IClub>(false);
 
   public form: FormGroup;
+  public club: IClub;
 
   public froalaOptions: Object = {
     height: '55vh'
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute,
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {
+    this.route.data.subscribe((data: { club: IClub }) => {
+      this.club = data.club;
+    });
+
     this.form = this.fb.group({
       history: this.club.history
     });

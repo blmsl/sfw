@@ -16,10 +16,10 @@ export class IsMemberInClubManagementFilterPipe implements PipeTransform {
 
     let result = clubs.filter((club: IClub) => {
 
-      if (!club.management || !club.management.positions) return false;
+      if (!club.positions) return false;
 
-      for (let i = 0; i < club.management.positions.length; i++) {
-        if (club.management.positions[i].assignedMember === member.id) {
+      for (let i = 0; i < club.positions.length; i++) {
+        if (club.positions[i].assignedMember === member.id) {
           return true;
         }
       }
