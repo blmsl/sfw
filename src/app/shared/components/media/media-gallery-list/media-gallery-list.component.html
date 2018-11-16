@@ -43,7 +43,7 @@
           <div fxLayout="row wrap" *ngIf="mediaItems && mediaItems.length > i">
             <media-item fxFlex="20"
                         [showCoverBtn]="showCoverBtn"
-                        *ngFor="let mediaItem of mediaItems[i]"
+                        *ngFor="let mediaItem of mediaItems[mediaGalleries.indexOf(mediaGallery)]"
                         [mediaGallery]="mediaGallery"
                         [mediaItem]="mediaItem">
             </media-item>
