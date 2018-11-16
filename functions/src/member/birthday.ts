@@ -26,7 +26,7 @@ export const birthdayReminderCron = functions
     try {
 
       const monthDay = moment().format('MM-DD');
-      const mailArray:any = [];
+      const mailArray: any = [];
 
       const recipients: {
         email: string,
@@ -79,7 +79,7 @@ export const birthdayReminderCron = functions
         if (membersSnapshot.size > 0 && recipients.length === 0) {
           const text = 'Es wurden keine Email Adressen der Geburtstagskinder hinterlegt.';
           console.warn(text);
-          birthdayList += '<p>' + text+'</p>';
+          birthdayList += '<p>' + text + '</p>';
           const mail: any = {
             to: birthdayMailing[0].emails,
             from: 'Geburtstage@sfwinterbach.com',

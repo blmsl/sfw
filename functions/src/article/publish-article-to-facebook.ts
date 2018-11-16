@@ -5,7 +5,7 @@ const FACEBOOK_API = functions.config().facebook;
 
 export const publishArticleToFacebook = functions
   .region('europe-west1')
-  .runWith({memory: '512MB', timeoutSeconds: 7})
+  .runWith({ memory: '512MB', timeoutSeconds: 7 })
   .pubsub.topic('article-publish')
   .onPublish(async () => {
 
@@ -16,10 +16,10 @@ export const publishArticleToFacebook = functions
         qs: {
           access_token: FACEBOOK_API.accesstoken,
           message: 'Hello world!',
-          scope:'manage_pages,publish_stream'
+          scope: 'manage_pages,publish_stream'
         },
       };
-      request(postTextOptions, {scope:'manage_pages,publish_stream'});
+      request(postTextOptions, { scope: 'manage_pages,publish_stream' });
 
     } catch (e) {
       console.log(e);

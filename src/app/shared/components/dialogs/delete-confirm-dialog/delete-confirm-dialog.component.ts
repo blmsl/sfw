@@ -18,11 +18,11 @@ export class DeleteConfirmDialogComponent implements OnInit {
   public showDeleteCheckbox: boolean = false;
 
   constructor(private dialogRef: MatDialogRef<DeleteConfirmDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   ngOnInit() {
-    if(this.data.mediaGallery){
+    if (this.data.mediaGallery) {
       this.showDeleteCheckbox = true;
     }
   }

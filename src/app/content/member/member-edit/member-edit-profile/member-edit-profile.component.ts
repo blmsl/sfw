@@ -43,7 +43,6 @@ export class MemberEditProfileComponent implements OnInit {
       debounceTime(1000),
       distinctUntilChanged()
     ).subscribe((changes: IMember) => {
-      // this.member = Object.assign({}, this.member, changes);
       if (this.form.valid) {
         this.saveMember.emit(changes);
       }

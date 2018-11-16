@@ -33,10 +33,10 @@ export class FameTeamComponent implements OnInit, OnDestroy {
   private teamSubscription: Subscription;
 
   constructor(private seasonService: SeasonService,
-              private categoryService: CategoryService,
-              private memberService: MemberService,
-              private mediaItemService: MediaItemService,
-              private teamOfTheMonthService: TeamOfTheMonthService) {
+    private categoryService: CategoryService,
+    private memberService: MemberService,
+    private mediaItemService: MediaItemService,
+    private teamOfTheMonthService: TeamOfTheMonthService) {
   }
 
   ngOnInit() {

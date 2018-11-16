@@ -15,7 +15,7 @@ export class MediaItemService {
   public mediaItems$: Observable<IMediaItem[]>;
 
   constructor(private afs: AngularFirestore,
-              private authService: AuthService) {
+    private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMediaItem>(this.path);
     this.mediaItems$ = this.collectionRef.valueChanges();
   }
@@ -25,7 +25,7 @@ export class MediaItemService {
     mediaItem.creationBy = this.authService.getCreationBy();
     mediaItem.id = this.afs.createId();
     mediaItem.ordering = 0;
-    return this.afs.collection(this.path).doc(mediaItem.id).set(mediaItem, {merge: true});
+    return this.afs.collection(this.path).doc(mediaItem.id).set(mediaItem, { merge: true });
   }
 
   removeMediaItem(mediaItemId: string): Promise<void> {

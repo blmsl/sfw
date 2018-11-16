@@ -9,7 +9,6 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
 import { ApplicationService } from '../../../shared/services/application/application.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 import * as moment from 'moment';
-import * as firebase from 'firebase';
 
 const SMALL_WIDTH_BREAKPOINT = 768;
 
@@ -22,7 +21,6 @@ export class ArticleEditComponent implements OnInit {
 
   @ViewChild('settings') settings;
 
-  public sidePanelOpened: boolean = false;
   public isSmallDevice: boolean = false;
 
   public article: IArticle;
@@ -88,7 +86,6 @@ export class ArticleEditComponent implements OnInit {
     ).subscribe((changes: any) => {
       this.articleStatus = 'saving';
 
-      // set publication date to now if status is "publish now"
       if (changes.publicationStatus === 1) {
         changes.publicationAt = new Date();
       }

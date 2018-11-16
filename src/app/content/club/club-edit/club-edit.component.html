@@ -1,4 +1,4 @@
-<mat-card [formGroup]="form">
+<mat-card>
   <mat-card-title>
     <mat-icon>mode_edit</mat-icon>
     {{ club.id ? ('general.menu.club.edit' | translate) : 'general.menu.club.create' | translate }}
@@ -14,7 +14,7 @@
         <club-edit-main [club]="club"
                         [locations]="locations$ | async"
                         [members]="members"
-                        [form]="form">
+                        (saveClub)="saveClub($event)">
         </club-edit-main>
       </mat-tab>
 
@@ -23,15 +23,14 @@
              fxLayout.gt-sm="row"
              fxLayoutGap="10px">
           <div fxFlex.gt-sm="50">
-            <club-history [form]="form"></club-history>
+            <club-history [club]="club"
+                          (saveClub)="saveClub($event)">
+            </club-history>
           </div>
           <div fxFlex.gt-sm="50">
-            <club-timeline (add)="addTimeLineEvent()"
-                           (delete)="removeTimeLineEvent($event)"
-                           (edit)="editTimeLineEvent($event)"
-                           (save)="saveTimeLineEvent()"
-                           [selectedTimeLineEvent]="selectedClubTimeLineEvent"
-                           [form]="form">
+            <club-timeline [club]="club"
+                           [articles]="articles$ | async"
+                           (saveClub)="saveClub($event)">
             </club-timeline>
           </div>
         </div>
@@ -43,28 +42,23 @@
              fxLayoutGap="10px">
           <div fxFlex.gt-sm="50">
             <club-management-photo [club]="club"
-                                   [form]="form">
+                                   (saveClub)="saveClub($event)">
             </club-management-photo>
           </div>
 
           <div fxFlex.gt-sm="50">
             <club-management *ngIf="positions$ | async as positions; else loadingTemplate"
-                             (add)="addClubManagementPosition()"
-                             (delete)="removeClubManagementPosition($event)"
-                             (edit)="editClubManagementPosition($event)"
-                             (save)="saveClubManagementPosition()"
-                             (cancel)="cancelClubManagementPosition()"
-                             [selectedClubManagementPosition]="selectedClubManagementPosition"
                              [members]="members"
                              [showLinks]="true"
                              [club]="club"
                              [positions]="positions"
-                             [form]="form">
+                             (saveClub)="saveClub($event)">
             </club-management>
           </div>
         </div>
       </mat-tab>
 
+      <!--
       <mat-tab label="{{ 'general.clubs.edit.honoraries.title' | translate}}">
         <club-honoraries (add)="addHonorary()"
                          (delete)="removeHonorary($event)"
@@ -75,10 +69,13 @@
                          [club]="club"
                          [form]="form.get('honoraries')">
         </club-honoraries>
-      </mat-tab>
+      </mat-tab>-->
+
 
       <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
-        <club-edit-media [club]="club"></club-edit-media>
+        <media-items-list *ngIf="mediaItems; else loadingTemplate"
+                          [mediaItems]="mediaItems">
+        </media-items-list>
       </mat-tab>
 
       <mat-tab label="{{ 'general.clubs.edit.uploaderTitle' | translate }}">

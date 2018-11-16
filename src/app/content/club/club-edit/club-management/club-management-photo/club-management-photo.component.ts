@@ -1,8 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { IClub } from '../../../../../shared/interfaces/club/club.interface';
-import { IUploaderConfig } from '../../../../../shared/interfaces/media/uploader-config.interface';
-import { IUploaderOptions } from '../../../../../shared/interfaces/media/uploader-options.interface';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+}                               from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup
+}                               from '@angular/forms';
+import { IClub }                from '../../../../../shared/interfaces/club/club.interface';
+import { IUploaderConfig }      from '../../../../../shared/interfaces/media/uploader-config.interface';
+import { IUploaderOptions }     from '../../../../../shared/interfaces/media/uploader-options.interface';
+import {
+  debounceTime,
+  distinctUntilChanged
+} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'club-management-photo',
@@ -11,8 +24,10 @@ import { IUploaderOptions } from '../../../../../shared/interfaces/media/uploade
 })
 export class ClubManagementPhotoComponent implements OnInit {
 
-  @Input() form: FormGroup;
   @Input() club: IClub;
+  @Output() saveClub: EventEmitter<IClub> = new EventEmitter<IClub>(false);
+
+  public form: FormGroup;
 
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,
@@ -35,11 +50,30 @@ export class ClubManagementPhotoComponent implements OnInit {
     height: '25vh'
   };
 
-  constructor() {
+  constructor(private fb: FormBuilder) {
   }
 
   ngOnInit() {
+    this.form = this.fb.group({
+      management: this.initManagement()
+    });
+
     this.uploaderOptions.itemId = this.club.id;
+
+    this.form.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()
+    ).subscribe((changes: IClub) => {
+      if (this.form.valid) {
+        this.saveClub.emit(changes);
+      }
+    });
+  }
+
+  initManagement(): FormGroup {
+    return this.fb.group({
+      photoDescription: this.club.management ? this.club.management.photoDescription : ''
+    });
   }
 
 }

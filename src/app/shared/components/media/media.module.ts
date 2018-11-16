@@ -115,6 +115,7 @@ import { MediaShowItemComponent } from './media-center/media-show-item/media-sho
     MediaShowItemComponent,
   ],
   exports: [
+    MediaItemsListComponent,
     MediaAvatarComponent,
     MediaCenterComponent,
     MediaGalleryFormComponent,

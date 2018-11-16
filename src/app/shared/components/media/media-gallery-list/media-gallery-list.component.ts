@@ -26,10 +26,10 @@ export class MediaGalleryListComponent implements OnInit, OnDestroy {
   public mediaItems: Array<IMediaItem[]>;
 
   constructor(private fb: FormBuilder,
-              private mediaGalleryService: MediaGalleryService,
-              public mediaItemService: MediaItemService,
-              private alertService: AlertService,
-              public dialog: MatDialog) {
+    private mediaGalleryService: MediaGalleryService,
+    public mediaItemService: MediaItemService,
+    private alertService: AlertService,
+    public dialog: MatDialog) {
   }
 
   ngOnInit() {

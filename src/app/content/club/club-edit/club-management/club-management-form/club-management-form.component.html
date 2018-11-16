@@ -1,85 +1,68 @@
-<div [formGroup]="form">
+<mat-card [formGroup]="form">
+  <mat-card-header></mat-card-header>
+  <mat-card-content fxLayout.gt-sm="row wrap"
+                    fxLayoutGap="2%"
+                    fxLayout="column">
 
-  <div *ngFor="let control of form.controls['management']['controls']['positions']['controls']; let i = index">
+    <mat-form-field fxFlex.gt-sm="48">
+      <mat-select placeholder="{{ 'general.clubs.edit.management.positions.assignedCategory' | translate}}"
+                  formControlName="assignedPosition">
+        <mat-option *ngFor="let category of positions | orderBy: ['title']"
+                    [value]="category.id">{{category.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <div formGroupName="management">
+    <mat-form-field fxFlex.gt-sm="48">
+      <mat-select placeholder="{{ 'general.clubs.edit.management.positions.assignedMember' | translate}}"
+                  formControlName="assignedMember">
+        <mat-option
+          *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday.full']"
+          [value]="member.id">
+          {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday.full | date:
+          'dd.MM.yy'}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <div *ngIf="i === selectedClubManagementPosition && members && positions"
-           formArrayName="positions">
+    <mat-form-field fxFlex.gt-sm="49">
+      <input matInput
+             readonly="readonly"
+             [matDatepicker]="dp3"
+             formControlName="startDate"
+             placeholder="{{'general.clubs.edit.management.positions.startDate' | translate}}">
+      <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+      <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+    </mat-form-field>
 
-        <div [formGroupName]="i">
+    <mat-form-field fxFlex.gt-sm="49">
+      <input matInput
+             readonly
+             [matDatepicker]="dp4"
+             formControlName="endDate"
+             placeholder="{{'general.clubs.edit.management.positions.endDate' | translate}}">
+      <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+      <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+    </mat-form-field>
 
-          <div fxLayout.gt-sm="row"
-               fxLayout="column"
-               fxLayoutGap="10px">
-            <mat-form-field fxFlex.gt-sm="50">
-              <mat-select placeholder="{{ 'general.clubs.edit.management.positions.assignedCategory' | translate}}"
-                          formControlName="assignedPosition">
-                <mat-option *ngFor="let category of positions | orderBy: ['title']"
-                            [value]="category.id">{{category.title}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+  </mat-card-content>
 
-            <mat-form-field fxFlex.gt-sm="50">
-              <mat-select placeholder="{{ 'general.clubs.edit.management.positions.assignedMember' | translate}}"
-                          formControlName="assignedMember">
-                <mat-option
-                  *ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday.full']"
-                  [value]="member.id">
-                  {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday.full | date:
-                  'dd.MM.yy'}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+  <mat-card-actions fxLayout.gt-sm="row"
+                    fxLayout="column"
+                    fxLayoutGap="10px">
+    <button mat-raised-button
+            [disabled]="!form.valid"
+            color="primary"
+            type="button"
+            (click)="save()">
+      {{ 'general.clubs.edit.management.positions.savePosition' | translate}}
+    </button>
+    <button type="button"
+            mat-raised-button
+            color="accent"
+            (click)="cancelForm()">
+      {{'general.cancel' | translate}}
+    </button>
+  </mat-card-actions>
 
-          <div fxLayout.gt-sm="row"
-               fxLayout="column"
-               fxLayoutGap="10px">
-            <mat-form-field fxFlex.gt-sm="33">
-              <input matInput
-                     readonly="readonly"
-                     [matDatepicker]="dp3"
-                     formControlName="startDate"
-                     placeholder="{{'general.clubs.edit.management.positions.startDate' | translate}}">
-              <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-              <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field fxFlex.gt-sm="33">
-              <input matInput
-                     readonly
-                     [matDatepicker]="dp4"
-                     formControlName="endDate"
-                     placeholder="{{'general.clubs.edit.management.positions.endDate' | translate}}">
-              <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
-              <mat-datepicker #dp4 disabled="false"></mat-datepicker>
-            </mat-form-field>
-
-          </div>
-
-        </div>
-
-        <div fxLayout.gt-sm="row"
-             fxLayout="column"
-             fxLayoutGap="10px">
-          <button mat-raised-button
-                  [disabled]="!form.get('management.positions').valid"
-                  color="primary"
-                  type="button"
-                  (click)="save.emit(i)">
-            {{ 'general.clubs.edit.management.positions.savePosition' | translate}}
-          </button>
-          <button type="button"
-                  mat-raised-button
-                  color="accent"
-                  (click)="delete.emit(i)">
-            {{'general.clubs.edit.management.positions.deletePosition' | translate}}
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
+</mat-card>

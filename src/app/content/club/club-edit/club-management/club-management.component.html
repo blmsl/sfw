@@ -4,47 +4,38 @@
     : 'general.clubs.edit.management.list.title' | translate
     }}
   </mat-card-title>
-  <mat-card-content [formGroup]="form">
+  <mat-card-content>
 
     <p *ngIf="positions.length === 0">
       {{'general.clubs.edit.management.positions.noManagementPositions' | translate}}
     </p>
 
-    <div *ngIf="selectedClubManagementPosition === -1 && positions.length > 0">
-      <button mat-raised-button
-              style="margin-bottom: 25px"
-              type="button"
-              color="primary"
-              (click)="add.emit()">
-        {{'general.clubs.edit.management.positions.addMember' | translate}}
-      </button>
-      <club-management-list [form]="form"
+    <button mat-raised-button
+            style="margin-bottom: 25px"
+            *ngIf="!showForm"
+            type="button"
+            color="primary"
+            (click)="toggleForm()">
+      {{ 'general.clubs.edit.management.positions.addMember' | translate }}
+    </button>
+
+    <div *ngIf="!showForm && positions.length > 0">
+      <club-management-list [club]="club"
                             [members]="members"
                             [positions]="positions"
                             [showLinks]="showLinks"
-                            [club]="club"
-                            [selectedClubManagementPosition]="selectedClubManagementPosition"
-                            (add)="add.emit()"
-                            (delete)="delete.emit($event)"
-                            (edit)="edit.emit($event)">
+                            (saveClub)="saveClub.emit($event)">
       </club-management-list>
     </div>
 
-    <div *ngIf="selectedClubManagementPosition !== -1">
-      <club-management-form [form]="form"
+    <div *ngIf="showForm">
+      <club-management-form [club]="club"
                             [members]="members"
                             [positions]="positions"
-                            [selectedClubManagementPosition]="selectedClubManagementPosition"
-                            (delete)="delete.emit($event)"
-                            (save)="save.emit($event)">
+                            (hideForm)="this.showForm = !this.showForm"
+                            (saveClub)="saveClub.emit($event)">
       </club-management-form>
     </div>
 
   </mat-card-content>
 </mat-card>
-
-
-<ng-template #loadingTemplate>
-  <loading-indicator></loading-indicator>
-</ng-template>
-

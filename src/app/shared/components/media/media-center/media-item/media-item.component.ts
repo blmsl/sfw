@@ -22,9 +22,9 @@ export class MediaItemComponent implements OnInit {
   @Input() showCoverBtn: boolean;
 
   constructor(private mediaItemService: MediaItemService,
-              private mediaGalleryService: MediaGalleryService,
-              private alertService: AlertService,
-              public dialog: MatDialog) {
+    private mediaGalleryService: MediaGalleryService,
+    private alertService: AlertService,
+    public dialog: MatDialog) {
   }
 
   ngOnInit() {
