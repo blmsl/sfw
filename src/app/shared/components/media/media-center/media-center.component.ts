@@ -14,12 +14,13 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['media-center.component.scss']
 })
 
-export class MediaCenterComponent implements OnDestroy {
+export class MediaCenterComponent {
 
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
 
-  public mediaItems: IMediaItem[];
+  @Input() mediaItems: IMediaItem[];
+
   public mediaGalleries$: Observable<IMediaGallery[]>;
   public showMediaUploader = false;
 
@@ -30,13 +31,7 @@ export class MediaCenterComponent implements OnDestroy {
               public dialog: MatDialog) {
 
     this.mediaGalleries$ = mediaGalleryService.mediaGalleries$;
-    this.mediaItemSubscription = mediaItemService.mediaItems$.subscribe((mediaItems: IMediaItem[]) => {
-      this.mediaItems = mediaItems;
-    });
-  }
 
-  ngOnDestroy(): void {
-    this.mediaItemSubscription.unsubscribe();
   }
 
   toggleUploader() {

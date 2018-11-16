@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IUploaderConfig } from '../../shared/interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../shared/interfaces/media/uploader-options.interface';
+import { IMediaItem } from '../../shared/interfaces/media/media-item.interface';
+import { MediaItemService } from '../../shared/services/media/media-item.service';
+import { Subscription } from 'rxjs/index';
 
 @Component({
   selector: 'uploader',
   templateUrl: './uploader.component.html'
 })
-export class UploaderComponent implements OnInit {
+export class UploaderComponent implements OnDestroy {
 
+  private mediaItemSubscription: Subscription;
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,
     showDropZone: true,
@@ -21,10 +25,16 @@ export class UploaderComponent implements OnInit {
     queueLimit: 25,
   };
 
-  constructor() {
+  public mediaItems: IMediaItem[];
+
+  constructor(private mediaItemService: MediaItemService) {
+    this.mediaItemSubscription = mediaItemService.mediaItems$.subscribe((mediaItems: IMediaItem[]) => {
+      this.mediaItems = mediaItems;
+    });
   }
 
-  ngOnInit() {
+  ngOnDestroy(): void {
+    this.mediaItemSubscription.unsubscribe();
   }
 
 }
