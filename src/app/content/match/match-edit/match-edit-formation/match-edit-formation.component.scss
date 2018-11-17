@@ -45,24 +45,66 @@ mat-card-content {
 
 .soccer-field {
   background: transparent url('/assets/sfw/match/soccer-field.jpg') center center / cover no-repeat;
-  min-height: 888px;
+  min-height: 550px;
   height: 100%;
   width: 100%;
   border: 1px solid black;
   display: grid;
   grid-template-columns: repeat(6, 12%);
-  grid-template-rows: repeat(5, 20%);
   color: white;
 }
 
-//.soccer-field-list {
-//  display: flex;
-//  flex-direction: column;
-//  justify-content: space-around;
-//  align-items: center;
-//}
+.cdk-drag-placeholder {
+  opacity: 0;
+}
 
-.position {
+.playerList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
 
+.player {
+  margin-top: 5px;
+  padding: 10px;
+  border: solid 1px #ccc;
+  min-width: 100px;
+  margin-left: 5px;
+  margin-right: 5px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: #539260;
+  font-size: 14px;
+  border-radius: 10px;
+
+}
+
+.soccer-field-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.soccer-field-list-item {
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.placeholder {
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  border-radius: 50%;
 }
 
