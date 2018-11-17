@@ -1,22 +1,10 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { IFormation } from '../../../../shared/interfaces/match/formation.interface';
 import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 import { MatchFormationService } from '../../../../shared/services/match/match-formation.service';
-import {
-  FormBuilder,
-  FormGroup
-} from '@angular/forms';
-import {
-  distinctUntilChanged,
-  first
-} from 'rxjs/internal/operators';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { distinctUntilChanged, first } from 'rxjs/internal/operators';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ICoord } from '../../../../shared/interfaces/match/coord.interface';
 import { MatSelectChange } from '@angular/material';
@@ -33,6 +21,8 @@ export class MatchEditFormationComponent implements OnInit {
   @Input() match: IMatch;
   @Output() saveMatch: EventEmitter<IMatch> = new EventEmitter<IMatch>(false);
 
+  private emptyMember: IMember;
+
   public tacticalFormations: IFormation[];
   public form: FormGroup;
 
@@ -41,12 +31,15 @@ export class MatchEditFormationComponent implements OnInit {
   public coordinates = [];
 
   items = ['Zero', 'One', 'Two', 'Three'];
+  dropListIds = ['0', '1', '2', '3', '4', '5'];
   playerList = [];
 
   constructor(private matchFormationService: MatchFormationService,
-    private memberService: MemberService,
-    private fb: FormBuilder) {
+              private memberService: MemberService,
+              private fb: FormBuilder) {
     this.tacticalFormations = matchFormationService.getFormations();
+    this.memberService.setNewMember().pipe(first()).subscribe((member: IMember) =>
+      this.emptyMember = Object.assign({}, member));
   }
 
   ngOnInit() {
@@ -953,11 +946,12 @@ export class MatchEditFormationComponent implements OnInit {
       }
     ];
 
-    this.initializeFieldPositions();
 
     if (this.match.assignedFormation) {
       this.setPlayerPositions(this.match.assignedFormation);
+      this.initializeFieldPositions();
     }
+
 
     this.form.valueChanges.pipe(
       distinctUntilChanged()
@@ -979,7 +973,6 @@ export class MatchEditFormationComponent implements OnInit {
       return detailFormation.title === formationTitle;
     });
     this.playerPositions = this.matchFormationService.getFormationPositions(formation);
-    console.log(this.playerPositions);
   }
 
   initializeFieldPositions() {
@@ -988,8 +981,12 @@ export class MatchEditFormationComponent implements OnInit {
     for (const i of [...Array(6)]) {
       const row: IMember[] = [];
       for (const j of [...Array(5)]) {
+
         this.memberService.setNewMember().pipe(first()).subscribe((member: IMember) =>
           row.push(member));
+
+        row.push(Object.assign({}, this.emptyMember));
+
       }
       this.thirty.push(row);
     }
@@ -1016,34 +1013,61 @@ export class MatchEditFormationComponent implements OnInit {
     return false;
   }
 
-  addToList(event: CdkDragDrop<string[]>) {
-    console.log(event);
-    if (event.previousContainer.id !== event.container.id) {
-      if (['0', '1', '2', '3', '4', '5'].includes(event.container.id)) {
-        const x = Number.parseInt(event.container.id, 10);
-        this.thirty = this.thirty.map((element: IMember[], index: number) => {
-          if (index === x) {
-            console.log(index);
-            return element.map((member: IMember, memberIndex: number) => {
-              if (memberIndex === event.currentIndex) {
-                const position: ICoord = { x, y: memberIndex };
-                console.log(position);
-                for (const p of this.playerPositions) {
-                  if (p.x === position.x && Math.abs(p.y - 4) === position.y) {
-                    console.log('correct');
-                    return event.item.data;
-                  }
-                }
-                return member;
-              }
-              return member;
-            });
-          }
-          return element;
-        });
+  updatePositionList(x: number, y: number, newMember: IMember, list: IMember[]) {
+    return list.map((member: IMember, memberIndex: number) => {
+      if (memberIndex === y) {
+        if (this.checkCoordinates(x, memberIndex)) {
+          return newMember;
+        }
       }
+      return member;
+    });
+  }
 
+
+  addToStartingEleven(event: CdkDragDrop<string[]>) {
+    const x = Number.parseInt(event.container.id, 10);
+    return this.thirty.map((element: IMember[], index: number) => {
+      if (index === x) {
+        return this.updatePositionList(x, event.currentIndex, event.item.data, element);
+      }
+      return element;
+    });
+  }
+
+  replaceInStartingEleven(event: CdkDragDrop<string[]>) {
+    const x = Number.parseInt(event.container.id, 10);
+    const prevX = Number.parseInt(event.previousContainer.id, 10);
+    return this.thirty.map((element: IMember[], index: number) => {
+      if (index === x) {
+        return this.updatePositionList(x, event.currentIndex, event.item.data, element);
+      } else if (index === prevX) {
+        return this.updatePositionList(prevX, event.previousIndex, Object.assign({}, this.emptyMember), element);
+      }
+      return element;
+    });
+
+  }
+
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (this.dropListIds.includes(event.container.id) && this.dropListIds.includes(event.previousContainer.id)) {
+      this.thirty = this.replaceInStartingEleven(event);
+    } else if (event.previousContainer.id !== event.container.id) {
+      if (this.dropListIds.includes(event.container.id)) {
+        this.thirty = this.addToStartingEleven(event);
+      }
     }
   }
 
+  /*
+   getMaxSubstitutes(assignedFormationTitle: string, substitutionList: string[]) {
+   const substitutionListLength = substitutionList ? substitutionList.length : 0;
+   const maxSubstitutes = this.tacticalFormations.filter((formation: IFormation) => {
+   return formation.title === assignedFormationTitle;
+   });
+   return maxSubstitutes.length === 0
+   ? []
+   : new Array(maxSubstitutes[ 0 ].maxSubstitutes - substitutionListLength).fill(0).map((_, i) => i);
+   } */
 }

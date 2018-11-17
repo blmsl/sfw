@@ -35,10 +35,10 @@
       <div fxFlex="100"
            cdkDropList
            id="playerList"
-           [cdkDropListConnectedTo]="['0','1','2', '3', '4', '5']"
+           [cdkDropListConnectedTo]="dropListIds"
            class="playerList"
            [cdkDropListData]="assignedTeamPlayers"
-           (cdkDropListDropped)="addToList($event)">
+           >
         <div *ngFor="let item of assignedTeamPlayers"
              cdkDrag
              [cdkDragData]="item"
@@ -49,104 +49,18 @@
     </div>
 
     <div class="soccer-field">
-      <div
-        cdkDropList
-        id="0"
-        [cdkDropListConnectedTo]="['playerList', '1', '2', '3', '4', '5']"
-        [cdkDropListData]="thirty[0]"
-        (cdkDropListDropped)="addToList($event)"
-        class="soccer-field-list">
-        <div *ngFor="let item of thirty[0]; let i = index" cdkDrag>
+      <div *ngFor="let list of dropListIds; let i = index"
+           cdkDropList
+           [id]="dropListIds[i]"
+           [cdkDropListConnectedTo]="dropListIds"
+           [cdkDropListData]="thirty[i]"
+           (cdkDropListDropped)="drop($event)"
+           class="soccer-field-list">
+        <div *ngFor="let item of thirty[i]; let j = index" cdkDrag [cdkDragData]="item">
           <div class="soccer-field-list-item">
             <div
-              [ngClass]="{placeholder: checkCoordinates(0, i) && !item.mainData.firstName, 'player': !!item.mainData.firstName}">
-              <p *ngIf="!item.mainData.firstName">&nbsp;</p>
-              {{item.mainData.firstName}} {{item.mainData.lastName}}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        cdkDropList
-        id="1"
-        [cdkDropListConnectedTo]="['playerList', '0', '2', '3', '4', '5']"
-        [cdkDropListData]="thirty[1]"
-        (cdkDropListDropped)="addToList($event)"
-        class="soccer-field-list">
-        <div class="box" *ngFor="let item of thirty[1]; let i = index" cdkDrag>
-          <div class="soccer-field-list-item">
-            <div
-              [ngClass]="{placeholder: checkCoordinates(1, i) && !item.mainData.firstName, 'player': !!item.mainData.firstName}">
-              <p *ngIf="!item.mainData.firstName">&nbsp;</p>
-              {{item.mainData.firstName}} {{item.mainData.lastName}}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        cdkDropList
-        id="2"
-        [cdkDropListConnectedTo]="['playerList', '0', '1', '3', '4', '5']"
-        [cdkDropListData]="thirty[2]"
-        (cdkDropListDropped)="addToList($event)"
-        class="soccer-field-list"
-      >
-        <div class="box" *ngFor="let item of thirty[2]; let i = index" cdkDrag>
-          <div class="soccer-field-list-item">
-            <div
-              [ngClass]="{placeholder: checkCoordinates(2, i) && !item.mainData.firstName, 'player': !!item.mainData.firstName}">
-              <p *ngIf="!item.mainData.firstName">&nbsp;</p>
-              {{item.mainData.firstName}} {{item.mainData.lastName}}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        cdkDropList
-        id="3"
-        [cdkDropListConnectedTo]="['playerList', '0', '1', '2', '4', '5']"
-        [cdkDropListData]="thirty[3]"
-        (cdkDropListDropped)="addToList($event)"
-        class="soccer-field-list">
-        <div class="box" *ngFor="let item of thirty[3]; let i = index" cdkDrag>
-          <div class="soccer-field-list-item">
-            <div
-              [ngClass]="{placeholder: checkCoordinates(3, i) && !item.mainData.firstName, 'player': !!item.mainData.firstName}">
-              <p *ngIf="!item.mainData.firstName">&nbsp;</p>
-              {{item.mainData.firstName}} {{item.mainData.lastName}}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        cdkDropList
-        id="4"
-        [cdkDropListConnectedTo]="['playerList', '0', '1', '2', '3', '5']"
-        [cdkDropListData]="thirty[4]"
-        (cdkDropListDropped)="addToList($event)"
-        class="soccer-field-list">
-        <div class="box" *ngFor="let item of thirty[4]; let i = index" cdkDrag>
-          <div class="soccer-field-list-item">
-            <div
-              [ngClass]="{placeholder: checkCoordinates(4, i) && !item.mainData.firstName, 'player': !!item.mainData.firstName}">
-              <p *ngIf="!item.mainData.firstName">&nbsp;</p>
-              {{item.mainData.firstName}} {{item.mainData.lastName}}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        cdkDropList
-        id="5"
-        [cdkDropListConnectedTo]="['playerList', '0', '1', '2', '3', '4']"
-        [cdkDropListData]="thirty[5]"
-        (cdkDropListDropped)="addToList($event)"
-        class="soccer-field-list">
-        <div class="box" *ngFor="let item of thirty[5]; let i = index" cdkDrag>
-          <div class="soccer-field-list-item">
-            <div
-              [ngClass]="{placeholder: checkCoordinates(5, i) && !item.mainData.firstName, 'player': !!item.mainData.firstName}">
-              <p *ngIf="!item.mainData.firstName">&nbsp;</p>
+              [ngClass]="{placeholder: checkCoordinates(i, j) && !item.id, 'player': !!item.id}">
+              <p *ngIf="!item.id">&nbsp;</p>
               {{item.mainData.firstName}} {{item.mainData.lastName}}
             </div>
           </div>
