@@ -15,7 +15,6 @@ export class UploaderResolver implements Resolve<IMediaGallery> {
   resolve(route: ActivatedRouteSnapshot): Observable<IMediaGallery> {
 
     if (Object.keys(route.params).length === 0) {
-      console.log('resolved');
       return this.mediaGalleryService.setNewGallery();
     }
 

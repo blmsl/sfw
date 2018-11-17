@@ -11,10 +11,12 @@ export class MatchFormationService {
   }
 
   getFormationPositions(formation: IFormation): ICoord[] {
-    for (let i = 0; i < formation.positionList.length; i++) {
-      this.playerPositions.push(formation.positionList[i]);
-    }
-    return this.playerPositions;
+    // for (let i = 0; i < formation.positionList.length; i++) {
+    //   this.playerPositions.push(formation.positionList[i]);
+    // }
+    // return this.playerPositions;
+
+    return this.formations.find((f: IFormation) => f.title === formation.title).positionList;
   }
 
   getFormations(): IFormation[] {

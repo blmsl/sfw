@@ -78,7 +78,7 @@ import { MatchEditLinkFormComponent } from './match-edit/match-edit-links/match-
     SharedModule,
     SharedArticleModule,
     SharedMatchModule,
-    matchRoutingModule
+    matchRoutingModule,
   ],
   declarations: [
     IsMemberInSubstitutesListFilterPipe,
