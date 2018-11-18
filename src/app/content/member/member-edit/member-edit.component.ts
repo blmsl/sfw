@@ -2,33 +2,33 @@ import {
   Component,
   HostListener,
   OnInit
-}                           from '@angular/core';
-import { MemberService }    from '../../../shared/services/member/member.service';
-import { IMember }          from '../../../shared/interfaces/member/member.interface';
+} from '@angular/core';
+import { MemberService } from '../../../shared/services/member/member.service';
+import { IMember } from '../../../shared/interfaces/member/member.interface';
 import {
   ActivatedRoute,
   Router
-}                           from '@angular/router';
+} from '@angular/router';
 import {
   FormBuilder,
   FormGroup
-}                           from '@angular/forms';
-import { Observable }       from 'rxjs';
+} from '@angular/forms';
+import { Observable } from 'rxjs';
 import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
-import { IUploaderConfig }  from '../../../shared/interfaces/media/uploader-config.interface';
-import { AlertService }     from '../../../shared/services/alert/alert.service';
-import { AuthService }      from '../../../shared/services/auth/auth.service';
-import { ITeam }            from '../../../shared/interfaces/team/team.interface';
-import { TeamService }      from '../../../shared/services/team/team.service';
-import { ClubService }      from '../../../shared/services/club/club.service';
-import { IClub }            from '../../../shared/interfaces/club/club.interface';
-import { ArticleService }   from '../../../shared/services/article/article.service';
-import { IArticle }         from '../../../shared/interfaces/article.interface';
+import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
+import { AlertService } from '../../../shared/services/alert/alert.service';
+import { AuthService } from '../../../shared/services/auth/auth.service';
+import { ITeam } from '../../../shared/interfaces/team/team.interface';
+import { TeamService } from '../../../shared/services/team/team.service';
+import { ClubService } from '../../../shared/services/club/club.service';
+import { IClub } from '../../../shared/interfaces/club/club.interface';
+import { ArticleService } from '../../../shared/services/article/article.service';
+import { IArticle } from '../../../shared/interfaces/article.interface';
 
 @Component({
   selector: 'member-edit',
   templateUrl: './member-edit.component.html',
-  styleUrls: [ './member-edit.component.scss' ]
+  styleUrls: ['./member-edit.component.scss']
 })
 export class MemberEditComponent implements OnInit {
 
@@ -53,20 +53,20 @@ export class MemberEditComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    assignedObjects: [ 'members', 'profile' ],
+    assignedObjects: ['members', 'profile'],
     itemId: '',
     queueLimit: 1
   };
 
   constructor(public route: ActivatedRoute,
-              private fb: FormBuilder,
-              private clubService: ClubService,
-              private authService: AuthService,
-              private alertService: AlertService,
-              public memberService: MemberService,
-              private teamService: TeamService,
-              private articleService: ArticleService,
-              private router: Router) {
+    private fb: FormBuilder,
+    private clubService: ClubService,
+    private authService: AuthService,
+    private alertService: AlertService,
+    public memberService: MemberService,
+    private teamService: TeamService,
+    private articleService: ArticleService,
+    private router: Router) {
     this.members$ = memberService.members$;
     this.clubs$ = clubService.clubs$;
     this.teams$ = teamService.teams$;
@@ -86,7 +86,7 @@ export class MemberEditComponent implements OnInit {
     let action;
 
     if (this.member.id) {
-      action = this.memberService.updateMember(this.member.id, this.member);
+      action = this.memberService.updateMember(this.member);
     } else {
       action = this.memberService.createMember(this.member);
     }
@@ -98,7 +98,7 @@ export class MemberEditComponent implements OnInit {
   }
 
   redirectToList() {
-    this.router.navigate([ '/members' ]).then();
+    this.router.navigate(['/members']).then();
   }
 
   removeMember(member) {

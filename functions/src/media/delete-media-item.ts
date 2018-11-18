@@ -1,7 +1,5 @@
 import * as functions from 'firebase-functions';
-import * as admin     from 'firebase-admin';
-
-// const bucket = admin.storage().bucket();
+import * as admin from 'firebase-admin';
 
 export const deleteMediaItemCron = functions
   .region('europe-west1')
@@ -9,8 +7,6 @@ export const deleteMediaItemCron = functions
   .firestore.document('files/{mediaItemId}').onDelete(async (snap) => {
 
     const data = snap.data() || {};
-
-    console.log(data);
 
     let path: string = '/';
     if ('assignedObjects' in data) {
@@ -25,7 +21,6 @@ export const deleteMediaItemCron = functions
 
     galleriesSnapshot.docs.forEach(async (doc) => {
       const galleryData = doc.data();
-      console.log('Gal' + galleryData.id);
       const newItemList = galleryData.assignedMediaItems.splice(galleryData.assignedMediaItems.indexOf(data.id), 1);
       await doc.ref.update({
         assignedMediaItems: newItemList
@@ -33,6 +28,5 @@ export const deleteMediaItemCron = functions
     });
 
     const storage = admin.storage();
-    console.log(path + data.itemId);
     return storage.bucket().file(path + '/' + data.itemId).delete();
   });

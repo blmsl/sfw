@@ -1,19 +1,13 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-}                         from '@angular/core';
-import { ICategory }      from '../../../../shared/interfaces/category.interface';
-import { IMember }        from '../../../../shared/interfaces/member/member.interface';
-import { IClub }          from '../../../../shared/interfaces/club/club.interface';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ICategory } from '../../../../shared/interfaces/category.interface';
+import { IMember } from '../../../../shared/interfaces/member/member.interface';
+import { IClub } from '../../../../shared/interfaces/club/club.interface';
+import { IClubManagement } from '../../../../shared/interfaces/club/club-management.interface';
 
 @Component({
   selector: 'club-management',
   templateUrl: './club-management.component.html',
-  styleUrls: [ 'club-management.component.scss' ]
+  styleUrls: ['club-management.component.scss']
 })
 export class ClubManagementComponent implements OnInit {
 
@@ -23,6 +17,7 @@ export class ClubManagementComponent implements OnInit {
   @Output() saveClub: EventEmitter<IClub> = new EventEmitter<IClub>(false);
 
   public showForm: boolean = false;
+  public selectedPosition: IClubManagement;
 
   constructor() {
   }
@@ -34,10 +29,14 @@ export class ClubManagementComponent implements OnInit {
     this.showForm = !this.showForm;
   }
 
-  /* removeClubManagementPosition($event: number): void {
-   const control = <FormArray>this.form.controls['management']['controls']['positions'];
-   control.removeAt($event);
-   this.selectedClubManagementPosition = -1;
-   } */
+  editManagementPosition($event: IClubManagement) {
+    this.showForm = true;
+    this.selectedPosition = $event;
+  }
+
+  cancel() {
+    this.selectedPosition = null;
+    this.toggleForm();
+  }
 
 }

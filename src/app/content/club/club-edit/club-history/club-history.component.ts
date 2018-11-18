@@ -3,22 +3,22 @@ import {
   EventEmitter,
   OnInit,
   Output
-}                         from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup
-}                         from '@angular/forms';
-import { IClub }          from '../../../../shared/interfaces/club/club.interface';
+} from '@angular/forms';
+import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                         from 'rxjs/internal/operators';
+} from 'rxjs/internal/operators';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'club-history',
   templateUrl: './club-history.component.html',
-  styleUrls: [ './club-history.component.scss' ]
+  styleUrls: ['./club-history.component.scss']
 })
 export class ClubHistoryComponent implements OnInit {
 
@@ -32,7 +32,7 @@ export class ClubHistoryComponent implements OnInit {
   };
 
   constructor(private route: ActivatedRoute,
-              private fb: FormBuilder) {
+    private fb: FormBuilder) {
   }
 
   ngOnInit() {

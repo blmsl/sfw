@@ -3,24 +3,24 @@ import {
   EventEmitter,
   OnInit,
   Output
-}                           from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup
-}                           from '@angular/forms';
-import { IClub }            from '../../../../../shared/interfaces/club/club.interface';
-import { IUploaderConfig }  from '../../../../../shared/interfaces/media/uploader-config.interface';
+} from '@angular/forms';
+import { IClub } from '../../../../../shared/interfaces/club/club.interface';
+import { IUploaderConfig } from '../../../../../shared/interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../../../shared/interfaces/media/uploader-options.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                           from 'rxjs/internal/operators';
-import { ActivatedRoute }   from '@angular/router';
+} from 'rxjs/internal/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'club-management-photo',
   templateUrl: './club-management-photo.component.html',
-  styleUrls: [ './club-management-photo.component.scss' ]
+  styleUrls: ['./club-management-photo.component.scss']
 })
 export class ClubManagementPhotoComponent implements OnInit {
 
@@ -39,10 +39,10 @@ export class ClubManagementPhotoComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    assignedObjects: [ 'clubs', 'management' ],
+    assignedObjects: ['clubs', 'management'],
     itemId: '',
     queueLimit: 1,
-    allowedMimeType: [ 'image/jpeg', 'image/gif', 'image/png' ]
+    allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
   public froalaOptions: Object = {
@@ -52,7 +52,7 @@ export class ClubManagementPhotoComponent implements OnInit {
   };
 
   constructor(private route: ActivatedRoute,
-              private fb: FormBuilder) {
+    private fb: FormBuilder) {
   }
 
   ngOnInit() {

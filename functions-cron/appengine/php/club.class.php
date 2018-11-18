@@ -25,17 +25,21 @@ trait sfwClub
 
     public function getClubByTitle($title)
     {
-        $query = $this->clubCollection->where('title', '=', $title);
+        var_dump($this->clubCollection);
+        $query = $this->clubCollection->where('title', '==', $title);
         $snapshot = $query->documents();
+        var_dump($query);
+        echo $snapshot->size();
 
         if ($snapshot->isEmpty()) {
             // create club or exit with error?!
+          return null;
         }
 
-        // return first season with that title
+        /* return first season with that title
         if ($snapshot->size() === 1) {
             foreach ($snapshot as $doc) {
-                return $this->clubss[$doc["title"]] = array(
+                return $this->clubs[$doc["title"]] = array(
                     'id' => $doc["id"],
                     'title' => $doc["title"],
                     'fussballde' => array(
@@ -44,7 +48,7 @@ trait sfwClub
                     )
                 );
             }
-        }
+        } */
     }
 
 }

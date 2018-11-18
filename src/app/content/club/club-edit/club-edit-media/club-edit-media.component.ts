@@ -2,15 +2,15 @@ import {
   Component,
   Input,
   OnInit
-}                           from '@angular/core';
-import { IClub }            from '../../../../shared/interfaces/club/club.interface';
-import { MediaItemService }    from '../../../../shared/services/media/media-item.service';
-import { Observable }          from 'rxjs/index';
-import { IMediaItem }          from '../../../../shared/interfaces/media/media-item.interface';
-import { IUploaderOptions }    from '../../../../shared/interfaces/media/uploader-options.interface';
-import { IUploaderConfig }     from '../../../../shared/interfaces/media/uploader-config.interface';
-import { IMediaGallery }       from '../../../../shared/interfaces/media/media-gallery.interface';
-import { ActivatedRoute }      from '@angular/router';
+} from '@angular/core';
+import { IClub } from '../../../../shared/interfaces/club/club.interface';
+import { MediaItemService } from '../../../../shared/services/media/media-item.service';
+import { Observable } from 'rxjs/index';
+import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
+import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-options.interface';
+import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
+import { IMediaGallery } from '../../../../shared/interfaces/media/media-gallery.interface';
+import { ActivatedRoute } from '@angular/router';
 import { MediaGalleryService } from '../../../../shared/services/media/media-gallery.service';
 
 @Component({
@@ -40,8 +40,8 @@ export class ClubEditMediaComponent implements OnInit {
   };
 
   constructor(private route: ActivatedRoute,
-              private mediaGalleryService: MediaGalleryService,
-              private mediaItemService: MediaItemService) {
+    private mediaGalleryService: MediaGalleryService,
+    private mediaItemService: MediaItemService) {
   }
 
   ngOnInit() {

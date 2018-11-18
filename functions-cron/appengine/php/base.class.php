@@ -91,21 +91,26 @@ trait sfwBase
 
   public function getGoogleClient($projectId)
   {
-    $client = new Google_Client([
-      'projectId' => $projectId
-    ]);
-    $client->useApplicationDefaultCredentials();
+    try {
+      $client = new Google_Client([
+        'projectId' => $projectId
+      ]);
+      $client->useApplicationDefaultCredentials();
 
-    $client->setApplicationName("SFW via FlexEngine");
-    $client->setScopes([
-        Google_Service_Drive::DRIVE,
-        Google_Service_Drive::DRIVE_FILE,
-        Google_Service_Sheets::DRIVE,
-        Google_Service_Sheets::DRIVE_FILE,
-        Google_Service_Sheets::SPREADSHEETS,
-        Google_Service_Calendar::CALENDAR
-      ]
-    );
+      $client->setApplicationName("SFW via FlexEngine");
+      $client->setScopes([
+          Google_Service_Drive::DRIVE,
+          Google_Service_Drive::DRIVE_FILE,
+          Google_Service_Sheets::DRIVE,
+          Google_Service_Sheets::DRIVE_FILE,
+          Google_Service_Sheets::SPREADSHEETS,
+          Google_Service_Calendar::CALENDAR
+        ]
+      );
+    } catch (Exception $e) {
+      var_dump($e);
+      exit();
+    }
     return $client;
   }
 
@@ -301,104 +306,3 @@ trait sfwBase
   }
 
 }
-
-/*
-function saveDriveMember($id, $data, $dbMembers, $members)
-{
-  $docRef = $dbMembers->document($id);
-  if (array_key_exists($id, $members)) {
-
-    $docRef->update([
-      ['path' => 'driveImport', 'value' => true]
-    ]);
-
-    printf('Member edited ' . $id . '<br />' . PHP_EOL);
-  } else {
-    $data["creation"] = generateCreation();
-    printf('New Member created ' . $id . '<br />' . PHP_EOL);
-  }
-}
-
-function saveDFBMember($id, $data, $dbMembers, $members)
-{
-  $docRef = $dbMembers->document($id);
-  if (array_key_exists($id, $members)) {
-
-    $docRef->update([
-      ['path' => 'dfbImport', 'value' => true],
-      ['path' => 'clubData.assignedClub', 'value' => $data["clubData"]["assignedClub"]],
-      ['path' => 'dfbData.passNumber', 'value' => $data["dfbData"]["passNumber"]],
-      ['path' => 'dfbData.ageGroup', 'value' => $data["dfbData"]["ageGroup"]],
-      ['path' => 'dfbData.eligibleForOfficialMatches', 'value' => $data["dfbData"]["eligibleForOfficialMatches"]],
-      ['path' => 'dfbData.eligibleForFriendlyMatches', 'value' => $data["dfbData"]["eligibleForFriendlyMatches"]],
-      ['path' => 'dfbData.signOut', 'value' => $data["dfbData"]["signOut"]],
-      ['path' => 'dfbData.playerStatus', 'value' => $data["dfbData"]["playerStatus"]],
-      ['path' => 'dfbData.guestPlayer.guestRight', 'value' => $data["dfbData"]["guestPlayer"]["guestRight"]],
-      ['path' => 'dfbData.guestPlayer.season', 'value' => $data["dfbData"]["guestPlayer"]["season"]],
-      ['path' => 'dfbData.guestPlayer.type', 'value' => $data["dfbData"]["guestPlayer"]["type"]],
-      ['path' => 'dfbData.passPrint', 'value' => $data["dfbData"]["passPrint"]],
-      ['path' => 'dfbData.allowedToPlay', 'value' => $data["dfbData"]["allowedToPlay"]]
-    ]);
-
-    printf('Member edited ' . $id . '<br />' . PHP_EOL);
-  } else {
-    $data["creation"] = generateCreation();
-    printf('New Member created ' . $id . '<br />' . PHP_EOL);
-  }
-}
-
-function generateCompetitionTable($competitions)
-{
-  $returnString = '';
-  $returnString .= '<table class="table table-striped table-bordered table-hover table-sm">';
-  $returnString .= '<thead class="thead-light">';
-  $returnString .= '<tr>';
-  $returnString .= '<th>Nr.</th>';
-  $returnString .= '<th>Title</th>';
-  $returnString .= '<th>Type</th>';
-  $returnString .= '<th>Link</th>';
-  $returnString .= '</tr>';
-  $returnString .= '</thead>';
-  $returnString .= '<tbody>';
-
-  $i = 1;
-  foreach ($competitions AS $competition) {
-    $returnString .= generateCompetitionRow($competition, $i);
-    $i++;
-  }
-
-  $returnString .= '</tbody>';
-  $returnString .= '</table>';
-
-  return $returnString;
-}
-
-function generateCompetitionRow($competition, $i)
-{
-  $returnString = '<tr>';
-  $returnString .= '<td scope="row">' . $i . '</td>';
-  $returnString .= '<td>' . $competition["title"] . '</td>';
-  $returnString .= '<td>' . $competition["competitionType"] . '</td>';
-  $returnString .= '<td><a target="_blank" href="' . $competition["link"] . '">Link</a></td>';
-  return $returnString;
-}
-
-function generateSpreadsheetFromOutput($match, $locations)
-{
-
-  $assignedLocation = '';
-  foreach ($locations as $title => $id) {
-    if ($id === $match["assignedLocation"]) {
-      $assignedLocation = $title;
-    }
-  }
-
-  return array(
-    $match["title"],
-    $match["matchStartDate"]->format('d.m.Y H:i:s'),
-    $match["matchEndDate"]->format('d.m.Y H:i:s'),
-    '',
-    $assignedLocation
-  );
-}
- */

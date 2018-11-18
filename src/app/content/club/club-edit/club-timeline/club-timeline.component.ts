@@ -2,23 +2,23 @@ import {
   Component,
   Input,
   OnInit
-}                         from '@angular/core';
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   Validators
-}                         from '@angular/forms';
-import { IArticle }       from '../../../../shared/interfaces/article.interface';
-import { IClub }          from '../../../../shared/interfaces/club/club.interface';
+} from '@angular/forms';
+import { IArticle } from '../../../../shared/interfaces/article.interface';
+import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import { ITimeLineEvent } from '../../../../shared/interfaces/time-line-event.interface';
-import * as moment        from 'moment';
+import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'club-timeline',
   templateUrl: './club-timeline.component.html',
-  styleUrls: [ './club-timeline.component.scss' ]
+  styleUrls: ['./club-timeline.component.scss']
 })
 export class ClubTimelineComponent implements OnInit {
 
@@ -29,7 +29,7 @@ export class ClubTimelineComponent implements OnInit {
   public selectedClubTimeLineEvent: number = -1;
 
   constructor(private route: ActivatedRoute,
-              private fb: FormBuilder) {
+    private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -44,19 +44,19 @@ export class ClubTimelineComponent implements OnInit {
 
   initTimeLineEvent(event: ITimeLineEvent): FormGroup {
     return this.fb.group({
-      title: [ event.title, [ Validators.required, Validators.maxLength(100) ] ],
+      title: [event.title, [Validators.required, Validators.maxLength(100)]],
       subTitle: event.subTitle,
       icon: event.icon,
       color: event.color,
       assignedMediaItem: event.assignedMediaItem,
       assignedArticle: event.assignedArticle,
-      startDate: [ event.startDate ? new Date(event.startDate.seconds * 1000) : new Date() ],
-      endDate: [ event.endDate ? new Date(event.endDate.seconds * 1000) : null ]
+      startDate: [event.startDate ? new Date(event.startDate.seconds * 1000) : new Date()],
+      endDate: [event.endDate ? new Date(event.endDate.seconds * 1000) : null]
     });
   }
 
   addTimeLineEvent(): void {
-    const control = <FormArray>this.form.controls[ 'timeLine' ];
+    const control = <FormArray>this.form.controls['timeLine'];
     const event: ITimeLineEvent = {
       title: '',
       startDate: {
@@ -66,7 +66,7 @@ export class ClubTimelineComponent implements OnInit {
     };
     const addCtrl = this.initTimeLineEvent(event);
     control.push(addCtrl);
-    this.selectedClubTimeLineEvent = this.form.controls[ 'timeLine' ][ 'controls' ].length - 1;
+    this.selectedClubTimeLineEvent = this.form.controls['timeLine']['controls'].length - 1;
   }
 
   editTimeLineEvent($event: number): void {
@@ -78,12 +78,12 @@ export class ClubTimelineComponent implements OnInit {
   }
 
   removeTimeLineEvent($event: number): void {
-    const control = <FormArray>this.form.controls[ 'timeLine' ];
+    const control = <FormArray>this.form.controls['timeLine'];
     control.removeAt($event);
     this.selectedClubTimeLineEvent = -1;
   }
 
-  cancel(){
+  cancel() {
     this.selectedClubTimeLineEvent = -1;
   }
 

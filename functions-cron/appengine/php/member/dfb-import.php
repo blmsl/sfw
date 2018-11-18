@@ -23,6 +23,9 @@ echo $project->generateHeader();
 
 echo "<h1>Importiere Mitglieder des DFB.net</h1>";
 
+$batch = $project->db->batch();
+$batch2 = $project->db->batch();
+
 // nur definierte Vereine zulassen
 $clubData = isset($_GET['club']) ? $project->getClubDataByTitle($_GET['club']) : $project->getClubDataByTitle('SF Winterbach');
 if (!$clubData) {
@@ -36,10 +39,9 @@ if (!$club) {
   echo "Kein Verein mit diesen Daten in der Datenbank vorhanden. Bitte den Verein " . $clubData["title"] . " erst in der Datenbank anlegen";
   exit();
 }
+var_dump($club);
 
-$batch = $project->db->batch();
-$batch2 = $project->db->batch();
-
+/*
 echo "<h3>Datei: Export-DFBnet " . $club["title"] . "</h3>";
 
 $startAt = isset($_GET['startAt']) ? $_GET['startAt'] : 'A10';
@@ -67,7 +69,7 @@ if (count($driveFileList) > 0) {
         $batching = true;
       }
 
-      echo $project->generateDFBMemberRow($member, $club, $saveStatus);
+      echo $project->generateDFBMemberRow($member, $club, $saveStatus = true);
 
       if($i === 499){
         $batching = false;
@@ -92,7 +94,7 @@ if (count($driveFileList) > 0) {
 } else {
   echo "<p>Die Datei Export-DFBnet " . $club["title"] . " wurde nicht im GoogleDrive gefunden oder wurde nicht für den Service Account freigegeben.</p>";
 }
-
+*/
 
 echo '<p><b>Ausführungsdauer :</b> ' . (microtime(true) - $time_start) . '</p>';
 echo $project->generateFooter();

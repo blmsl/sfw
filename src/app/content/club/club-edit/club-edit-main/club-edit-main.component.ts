@@ -4,22 +4,22 @@ import {
   Input,
   OnInit,
   Output
-}                           from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators
-}                           from '@angular/forms';
-import { ILocation }        from '../../../../shared/interfaces/location/location.interface';
-import { IMember }          from '../../../../shared/interfaces/member/member.interface';
-import { IUploaderConfig }  from '../../../../shared/interfaces/media/uploader-config.interface';
+} from '@angular/forms';
+import { ILocation } from '../../../../shared/interfaces/location/location.interface';
+import { IMember } from '../../../../shared/interfaces/member/member.interface';
+import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-options.interface';
-import { IClub }            from '../../../../shared/interfaces/club/club.interface';
+import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import {
   debounceTime,
   distinctUntilChanged
-}                           from 'rxjs/internal/operators';
-import { ActivatedRoute }   from '@angular/router';
+} from 'rxjs/internal/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'club-edit-main',
@@ -44,10 +44,10 @@ export class ClubEditMainComponent implements OnInit {
   };
 
   public uploaderOptions: IUploaderOptions = {
-    assignedObjects: [ 'clubs', 'profile' ],
+    assignedObjects: ['clubs', 'profile'],
     itemId: '',
     queueLimit: 1,
-    allowedMimeType: [ 'image/jpeg', 'image/gif', 'image/png' ]
+    allowedMimeType: ['image/jpeg', 'image/gif', 'image/png']
   };
 
   public froalaOptions: Object = {
@@ -57,7 +57,7 @@ export class ClubEditMainComponent implements OnInit {
   };
 
   constructor(private route: ActivatedRoute,
-              private fb: FormBuilder) {
+    private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -66,7 +66,7 @@ export class ClubEditMainComponent implements OnInit {
     });
 
     this.form = this.fb.group({
-      title: [ this.club.title, [ Validators.required, Validators.minLength(10) ] ],
+      title: [this.club.title, [Validators.required, Validators.minLength(10)]],
       description: this.club.description,
       assignedLocation: this.club.assignedLocation,
       creation: this.initCreation(),

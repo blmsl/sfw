@@ -25,14 +25,12 @@ import { ClubHonorariesComponent } from './club-edit/club-honoraries/club-honora
 import { CategoryService } from '../../shared/services/category/category.service';
 import { CategoryTypeService } from '../../shared/services/category-type/category-type.service';
 import { ClubManagementFormComponent } from './club-edit/club-management/club-management-form/club-management-form.component';
-import { ClubHonoraryFormComponent } from './club-edit/club-honoraries/club-honorary-form/club-honorary-form.component';
 import { PublicationModule } from '../../shared/components/publication/publication.module';
 import { ClubDetailMainComponent } from './club-detail/club-detail-main/club-detail-main.component';
 import { ClubDetailHistoryComponent } from './club-detail/club-detail-history/club-detail-history.component';
 import { ClubDetailManagementComponent } from './club-detail/club-detail-management/club-detail-management.component';
 import { ClubDetailHonorariesComponent } from './club-detail/club-detail-honoraries/club-detail-honoraries.component';
 import { ClubManagementListComponent } from './club-edit/club-management/club-management-list/club-management-list.component';
-import { ClubHonoraryListComponent } from './club-edit/club-honoraries/club-honorary-list/club-honorary-list.component';
 import { ClubDetailStatisticsComponent } from './club-detail/club-detail-statistics/club-detail-statistics.component';
 import { MemberStateService } from '../../shared/services/member/member-state.service';
 import { SeasonService } from '../../shared/services/season/season.service';
@@ -75,8 +73,6 @@ import { ClubEditMediaComponent } from './club-edit/club-edit-media/club-edit-me
     ClubEditMainComponent,
     ClubHistoryComponent,
     ClubHonorariesComponent,
-    ClubHonoraryFormComponent,
-    ClubHonoraryListComponent,
     ClubListComponent,
     ClubManagementComponent,
     ClubManagementFormComponent,

@@ -2,24 +2,24 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit
-}                          from '@angular/core';
-import { FormBuilder }     from '@angular/forms';
+} from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import {
   ActivatedRoute,
   Router
-}                          from '@angular/router';
-import { Observable }      from 'rxjs';
-import { IClub }           from '../../../shared/interfaces/club/club.interface';
-import { ILocation }       from '../../../shared/interfaces/location/location.interface';
-import { IMember }         from '../../../shared/interfaces/member/member.interface';
-import { ClubService }     from '../../../shared/services/club/club.service';
+} from '@angular/router';
+import { Observable } from 'rxjs';
+import { IClub } from '../../../shared/interfaces/club/club.interface';
+import { ILocation } from '../../../shared/interfaces/location/location.interface';
+import { IMember } from '../../../shared/interfaces/member/member.interface';
+import { ClubService } from '../../../shared/services/club/club.service';
 import { LocationService } from '../../../shared/services/location/location.service';
-import { MemberService }   from '../../../shared/services/member/member.service';
+import { MemberService } from '../../../shared/services/member/member.service';
 import { CategoryService } from '../../../shared/services/category/category.service';
-import { ICategory }       from '../../../shared/interfaces/category.interface';
-import { ArticleService }  from '../../../shared/services/article/article.service';
-import { IArticle }        from '../../../shared/interfaces/article.interface';
-import { AlertService }    from '../../../shared/services/alert/alert.service';
+import { ICategory } from '../../../shared/interfaces/category.interface';
+import { ArticleService } from '../../../shared/services/article/article.service';
+import { IArticle } from '../../../shared/interfaces/article.interface';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'club-edit',
@@ -40,15 +40,15 @@ export class ClubEditComponent implements OnInit {
    */
 
   constructor(public clubService: ClubService,
-              private alertService: AlertService,
-              private articleService: ArticleService,
-              private locationService: LocationService,
-              private memberService: MemberService,
-              private categoryService: CategoryService,
-              private fb: FormBuilder,
-              private cd: ChangeDetectorRef,
-              private route: ActivatedRoute,
-              private router: Router) {
+    private alertService: AlertService,
+    private articleService: ArticleService,
+    private locationService: LocationService,
+    private memberService: MemberService,
+    private categoryService: CategoryService,
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private router: Router) {
     this.locations$ = locationService.locations$;
     this.members$ = memberService.members$;
     this.articles$ = articleService.articles$;
@@ -141,7 +141,7 @@ export class ClubEditComponent implements OnInit {
   }
 
   redirectToList() {
-    this.router.navigate([ '/clubs' ]).then();
+    this.router.navigate(['/clubs']).then();
   }
 
 }

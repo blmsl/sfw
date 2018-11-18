@@ -1,13 +1,13 @@
-import { Injectable }  from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Observable,
   of
-}                      from 'rxjs';
-import { IClub }       from '../../interfaces/club/club.interface';
+} from 'rxjs';
+import { IClub } from '../../interfaces/club/club.interface';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-}                      from '@angular/fire/firestore';
+} from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable()

@@ -31,6 +31,12 @@ export interface IMember {
   comment?: string;
 
   assignedInterviews?: IInterview[];
+  honoraryDate?: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  honoraryArticle?: string;
+
   opinions?: IOpinion[];
 }
 

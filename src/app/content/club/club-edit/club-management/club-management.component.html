@@ -20,21 +20,24 @@
       {{ 'general.clubs.edit.management.positions.addMember' | translate }}
     </button>
 
+    <div *ngIf="showForm && positions.length > 0">
+      <club-management-form [members]="members"
+                            [selectedPosition]="selectedPosition"
+                            [positions]="positions"
+                            (cancel)="cancel()"
+                            (saveClub)="saveClub.emit($event)">
+      </club-management-form>
+    </div>
+
     <div *ngIf="!showForm && positions.length > 0">
       <club-management-list [members]="members"
                             [positions]="positions"
                             [showLinks]="showLinks"
+                            (editManagementPosition)="editManagementPosition($event)"
                             (saveClub)="saveClub.emit($event)">
       </club-management-list>
     </div>
 
-    <div *ngIf="showForm">
-      <club-management-form [members]="members"
-                            [positions]="positions"
-                            (hideForm)="this.showForm = !this.showForm"
-                            (saveClub)="saveClub.emit($event)">
-      </club-management-form>
-    </div>
 
   </mat-card-content>
 </mat-card>

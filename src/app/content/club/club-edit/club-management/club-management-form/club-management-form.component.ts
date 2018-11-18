@@ -4,16 +4,17 @@ import {
   Input,
   OnInit,
   Output
-}                         from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators
-}                         from '@angular/forms';
-import { IMember }        from '../../../../../shared/interfaces/member/member.interface';
-import { ICategory }      from '../../../../../shared/interfaces/category.interface';
-import { IClub }          from '../../../../../shared/interfaces/club/club.interface';
+} from '@angular/forms';
+import { IMember } from '../../../../../shared/interfaces/member/member.interface';
+import { ICategory } from '../../../../../shared/interfaces/category.interface';
+import { IClub } from '../../../../../shared/interfaces/club/club.interface';
 import { ActivatedRoute } from '@angular/router';
+import { IClubManagement } from '../../../../../shared/interfaces/club/club-management.interface';
 
 @Component({
   selector: 'club-management-form',
@@ -24,14 +25,15 @@ export class ClubManagementFormComponent implements OnInit {
   @Input() club: IClub;
   @Input() positions: ICategory[];
   @Input() members: IMember[];
+  @Input() selectedPosition: IClubManagement;
 
   @Output() saveClub: EventEmitter<IClub> = new EventEmitter<IClub>(false);
-  @Output() hideForm: EventEmitter<void> = new EventEmitter<void>(false);
+  @Output() cancel: EventEmitter<void> = new EventEmitter<void>(false);
 
   public form: FormGroup;
 
   constructor(private route: ActivatedRoute,
-              private fb: FormBuilder) {
+    private fb: FormBuilder) {
   }
 
 
@@ -40,27 +42,31 @@ export class ClubManagementFormComponent implements OnInit {
       this.club = data.club;
     });
 
+    if (this.selectedPosition) {
+      console.log(this.selectedPosition.startDate);
+    }
+
     this.form = this.fb.group({
-      assignedMember: [ '', [ Validators.required ] ],
-      assignedPosition: [ '', [ Validators.required ] ],
-      startDate: [ new Date(), [ Validators.required ] ],
-      endDate: [ '' ]
+      assignedMember: [this.selectedPosition ? this.selectedPosition.assignedMember : '', [Validators.required]],
+      assignedPosition: [this.selectedPosition ? this.selectedPosition.assignedPosition : '', [Validators.required]],
+      startDate: [this.selectedPosition ? new Date(this.selectedPosition.startDate.seconds * 1000) : new Date(), [Validators.required]],
+      endDate: [this.selectedPosition ? this.selectedPosition.endDate : '']
     });
   }
 
   cancelForm() {
     this.form.reset();
-    this.hideForm.emit();
+    this.cancel.emit();
   }
 
   save() {
     if (this.club && this.club.positions) {
       this.club.positions.push(this.form.value);
     } else {
-      this.club.positions = [ this.form.value ];
+      this.club.positions = [this.form.value];
     }
     this.saveClub.emit(this.club);
-    this.hideForm.emit();
+    this.cancel.emit();
   }
 
   /* initClubManagementPositions(): FormArray {

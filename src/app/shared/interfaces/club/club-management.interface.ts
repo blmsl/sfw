@@ -1,7 +1,12 @@
 export interface IClubManagement {
   assignedMember?: string;
   assignedPosition?: string;
-  // ordering: number;
-  startDate: Date;
-  endDate?: Date | '';
+  startDate: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  endDate?: {
+    seconds: number;
+    nanoseconds: number;
+  };
 }

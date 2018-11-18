@@ -52,8 +52,8 @@ export class MemberService {
     return this.afs.collection(this.path).doc(member.id).delete();
   }
 
-  updateMember(memberId: string, member: IMember): Promise<void> {
-    return this.afs.collection(this.path).doc(memberId).update(member);
+  updateMember(member: IMember): Promise<void> {
+    return this.afs.collection(this.path).doc(member.id).update(member);
   }
 
   getMemberById(memberId: string): Observable<IMember> {
@@ -66,6 +66,12 @@ export class MemberService {
         .where('mainData.birthday.monthDay', '>=', start)
         .where('mainData.birthday.monthDay', '<=', limit))
       .valueChanges();
+  }
+
+  getHonoraryList(): Observable<IMember[]> {
+    return this.afs.collection<IMember>(this.path, ref =>
+      ref.where('clubData.status', '==', '2')
+    ).valueChanges();
   }
 
   getMembersByIds(memberIds: string[]): Observable<IMember[]> {

@@ -51,18 +51,12 @@
         </div>
       </mat-tab>
 
-      <!--
+
       <mat-tab label="{{ 'general.clubs.edit.honoraries.title' | translate}}">
-        <club-honoraries (add)="addHonorary()"
-                         (delete)="removeHonorary($event)"
-                         (edit)="editHonorary($event)"
-                         (save)="saveHonorary()"
-                         [members]="members | filterBy: ['clubData.status'] : '2'"
-                         [selectedHonorary]="selectedHonorary"
-                         [club]="club"
-                         [form]="form.get('honoraries')">
+        <club-honoraries [articles]="articles$ | async"
+                         (saveClub)="saveClub($event)">
         </club-honoraries>
-      </mat-tab>-->
+      </mat-tab>
 
       <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
         <club-edit-media></club-edit-media>
