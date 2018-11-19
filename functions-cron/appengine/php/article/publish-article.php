@@ -1,5 +1,6 @@
 <?php
 
+/*
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 ini_set('memory_limit', '-1');
@@ -26,7 +27,7 @@ echo $project->generateHeader();
 
 /**
  * @var $storage Google\Cloud\Storage\StorageClient
- */
+ *
 $storage = $project->storage;
 $bucket = $storage->bucket($project->projectId . ".appspot.com");
 
@@ -59,7 +60,7 @@ if (count($scheduledArticles) > 0) {
 
 
     //$facebook = $project->setUpFacebook();
-    //$facebookAuth = new MartinGeorgiev\SocialPost\SocialNetwork\Facebook\SDK5($facebook, '184670324910855' /*$facebookPageId */);
+    //$facebookAuth = new MartinGeorgiev\SocialPost\SocialNetwork\Facebook\SDK5($facebook, '184670324910855' /*$facebookPageId );
 
     $i = 1;
     foreach ($scheduledArticles as $article) {
@@ -78,4 +79,4 @@ if (count($scheduledArticles) > 0) {
 }
 
 echo '<p><span style="font-weight: bold">Ausführungsdauer :</span> ' . (microtime(true) - $time_start) . '</p>' . PHP_EOL;
-echo $project->generateFooter();
+echo $project->generateFooter();*/

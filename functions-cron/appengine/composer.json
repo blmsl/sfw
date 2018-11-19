@@ -1,10 +1,11 @@
 {
   "require": {
-    "google/cloud": "^0.84.1",
+    "google/cloud": "^0.86.0",
     "google/apiclient": "^2.2",
-    "google/cloud-firestore": "^0.12.0",
-    "paragonie/random_compat": "2.0.17",
-    "duzun/hquery": "^2.1",
-    "google/cloud-storage": "^1.7"
+    "google/gax": "^0.37.0",
+    "google/cloud-firestore": "^0.15.5",
+    "google/cloud-storage": "^1.9",
+    "duzun/hquery": "^2.2",
+    "paragonie/random_compat": "^9.99"
   }
 }

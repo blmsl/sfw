@@ -3,8 +3,8 @@
 use Google\Cloud\Firestore\FieldValue;
 use Google\Cloud\Firestore\FirestoreClient;
 use Google\Cloud\Storage\StorageClient;
-use Abraham\TwitterOAuth\TwitterOAuth;
-use Facebook\Facebook;
+// use Abraham\TwitterOAuth\TwitterOAuth;
+// use Facebook\Facebook;
 
 use duzun\hQuery;
 
@@ -114,6 +114,7 @@ trait sfwBase
     return $client;
   }
 
+  /*
   public function setUpFacebook()
   {
     /*if (!getenv('FACEBOOK_APP_ID') || !file_get_contents(getenv('FACEBOOK_APP_SECRET'))) {
@@ -121,7 +122,7 @@ trait sfwBase
     }
 
     $string = file_get_contents(getenv('FACEBOOK_APP_CREDENTIALS'));
-    $config = json_decode($string, true); */
+    $config = json_decode($string, true); *
     $config = array(
       'app_id' => '431939683855219',
       'app_secret' => '578ec9e8836c3a216cc3ed52b6d90bec'
@@ -149,7 +150,7 @@ trait sfwBase
       $config["accessToken"],
       $config["accessTokenSecret"]
     );
-  }
+  } */
 
   public function getStorageConnection($projectId)
   {
@@ -197,7 +198,7 @@ trait sfwBase
     $data["isImported"] = true;
     $data["publicationAt"] = $this->generatePublicationAt();
     $data["publicationFrom"] = $this->generatePublicationFrom();
-    $data["publicationStatzs"] = $this->generatePublicationStatus();
+    $data["publicationStatus"] = $this->generatePublicationStatus();
 
 
     $batch->create($addedDocRef, $data);

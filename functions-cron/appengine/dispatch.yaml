@@ -1,6 +1,0 @@
-#dispatch:
-#- url: "*/php/*"
-#  module: default
-
-#- url: "*/python/*"
-#  module: pymodule

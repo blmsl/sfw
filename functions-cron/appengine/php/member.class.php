@@ -12,11 +12,11 @@ trait sfwMember
     return $this->memberCollection->document($memberId);
   }
 
-  public function getMembers($club = null)
+  public function getMembers($club)
   {
     $memberList = array();
     if ($club) {
-      foreach ($this->memberCollection->where('clubData.assignedClub', '=', $club["id"])->documents() as $doc) {
+      foreach ($this->memberCollection->where('assignedClub', '=', $club["id"])->documents() as $doc) {
         $memberList[$doc["mainData"]["lastName"] . '-' . $doc["mainData"]["firstName"] . '-' . $doc["mainData"]['birthday']['year'] . '-' . $doc["mainData"]['birthday']['month'] . '-' . $doc["mainData"]['birthday']['day']] = array(
           'id' => $doc["id"],
           'firstName' => $doc["mainData"]["firstName"],
@@ -311,7 +311,7 @@ trait sfwMember
     );
 
     if (!key_exists($id, $memberList)) {
-      return array(
+        return array(
         'data' => $this->saveFireStoreObject($this->memberCollection, $data, $batch),
         'newEntry' => true,
         'updateStatus' => false

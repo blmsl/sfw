@@ -12,7 +12,7 @@ require "../base.class.php";
 require_once "../utils.global.php"; # by emre isik
 
 if (!strpos(gethostname(), 'appspot.com')) {
-  putenv('GOOGLE_APPLICATION_CREDENTIALS=../client_secret.json');
+  putenv('GOOGLE_APPLICATION_CREDENTIALS=../../client_secret.json');
 }
 
 $time_start = microtime(true);

@@ -9,7 +9,7 @@ require "../base.class.php";
 require_once "../utils.global.php"; # by emre isik
 
 if (!strpos(gethostname(), 'appspot.com')) {
-  putenv('GOOGLE_APPLICATION_CREDENTIALS=../client_secret.json');
+    putenv('GOOGLE_APPLICATION_CREDENTIALS=../../client_secret.json');
 }
 
 $project = new sfwApp('sf-winterbach', array('calendarService'));
@@ -93,7 +93,6 @@ foreach ($app[0]["assignedCalendars"] as $calendar) {
       }
 
       $result = $batch->execute();
-      var_dump($result);
     }
 
   }
