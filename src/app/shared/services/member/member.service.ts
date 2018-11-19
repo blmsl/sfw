@@ -7,20 +7,21 @@ import {
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from '@angular/fire/firestore';
+}                           from '@angular/fire/firestore';
 import {
   IMember,
   IMemberMainData
-} from '../../interfaces/member/member.interface';
+}                           from '../../interfaces/member/member.interface';
 import { ILocationContact } from '../../interfaces/location/location-contact.interface';
 import {
   map,
   take
-} from 'rxjs/internal/operators';
-import { ITeamManagement } from '../../interfaces/team/team-management.interface';
-import { ICoord } from '../../interfaces/match/coord.interface';
-import * as moment from 'moment';
-import { AuthService } from '../auth/auth.service';
+}                           from 'rxjs/internal/operators';
+import { ITeamManagement }  from '../../interfaces/team/team-management.interface';
+import { ICoord }           from '../../interfaces/match/coord.interface';
+import * as moment          from 'moment';
+import { AuthService }      from '../auth/auth.service';
+import { IClub }            from '../../interfaces/club/club.interface';
 
 @Injectable()
 export class MemberService {
@@ -68,9 +69,11 @@ export class MemberService {
       .valueChanges();
   }
 
-  getHonoraryList(): Observable<IMember[]> {
+  getHonoraryList(club: IClub): Observable<IMember[]> {
     return this.afs.collection<IMember>(this.path, ref =>
-      ref.where('clubData.status', '==', '2')
+      ref
+        .where('clubStatus', '==', 2)
+        .where('assignedClub', '==', club.id)
     ).valueChanges();
   }
 

@@ -90,6 +90,7 @@ COPYING
 *.bat
 
 *.dist
+client_secret.json
 
 README
 LICENSE

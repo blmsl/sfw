@@ -55,6 +55,7 @@ import { MatchFieldSquareComponent } from './match-edit/match-edit-formation/mat
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatchEditLinksComponent } from './match-edit/match-edit-links/match-edit-links.component';
 import { MatchEditLinkFormComponent } from './match-edit/match-edit-links/match-edit-link-form/match-edit-link-form.component';
+import { MatchEditMediaComponent } from './match-edit/match-edit-media/match-edit-media.component';
 
 @NgModule({
   imports: [
@@ -103,7 +104,8 @@ import { MatchEditLinkFormComponent } from './match-edit/match-edit-links/match-
     MatchEditFormationComponent,
     MatchFieldSquareComponent,
     MatchEditLinksComponent,
-    MatchEditLinkFormComponent
+    MatchEditLinkFormComponent,
+    MatchEditMediaComponent
   ],
   providers: [
     ArticleService,

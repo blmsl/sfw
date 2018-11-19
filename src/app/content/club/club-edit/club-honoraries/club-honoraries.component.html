@@ -1,53 +1,18 @@
 <mat-card>
   <mat-card-title>{{'general.clubs.edit.honoraries.title' | translate}}</mat-card-title>
   <mat-card-content>
+    <ng-container *ngIf="members$ | async as members; else loadingTemplate">
 
-    <table class="table table-condensed table-bordered" *ngIf="honoraries$ | async as honoraries; else loadingTemplate">
-      <thead>
-      <tr>
-        <th>{{ 'general.clubs.edit.honoraries.assignedMember' | translate}}</th>
-        <th>{{ 'general.clubs.edit.honoraries.assignedArticle' | translate}}</th>
-        <th>{{'general.clubs.edit.honoraries.startDate' | translate}}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let member of honoraries">
-        <td>{{member.mainData.firstName}} {{member.mainData.lastName}}
-          ({{member.mainData.birthday.full | date: 'dd.MM.yyyy'}})
-        </td>
-        <td>
-          <mat-form-field fxFlex="100">
-            <mat-select placeholder="{{ 'general.clubs.edit.honoraries.assignedArticle' | translate}}">
-              <mat-option *ngFor="let article of articles | orderBy: ['title']"
-                          (onSelectionChange)="setHonoraryArticle($event, member)"
-                          [value]="article.id">
-                {{article.title}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </td>
-        <td>
-          <mat-form-field>
-            <input matInput
-                   readonly="readonly"
-                   [matDatepicker]="dp3"
-                   formControlName="startDate"
-                   placeholder="{{'general.clubs.edit.honoraries.startDate' | translate}}">
-            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-          </mat-form-field>
-        </td>
-      </tr>
-      </tbody>
-      <tfoot>
-      <tr>
-        <th>{{ 'general.clubs.edit.honoraries.assignedMember' | translate}}</th>
-        <th>{{ 'general.clubs.edit.honoraries.assignedArticle' | translate}}</th>
-        <th>{{'general.clubs.edit.honoraries.startDate' | translate}}</th>
-      </tr>
-      </tfoot>
-    </table>
+      <div class="alert alert-info" *ngIf="members.length === 0">
+        {{'general.clubs.edit.honoraries.noHonoraries' | translate}}
+      </div>
 
+      <club-honorary-table [articles]="articles"
+                           [members]="members | orderBy: ['mainData.firstName', 'mainData.lastName', 'mainData.birthday']"
+                           *ngIf="members.length > 0">
+      </club-honorary-table>
+
+    </ng-container>
   </mat-card-content>
 </mat-card>
 

@@ -42,6 +42,7 @@ import { ClubDetailTimelineComponent } from './club-detail/club-detail-timeline/
 import { ClubDetailManagementFotoComponent } from './club-detail/club-detail-management/club-detail-management-foto/club-detail-management-foto.component';
 import { ClubDetailManagementPositionsComponent } from './club-detail/club-detail-management/club-detail-management-positions/club-detail-management-positions.component';
 import { ClubEditMediaComponent } from './club-edit/club-edit-media/club-edit-media.component';
+import { ClubHonoraryTableComponent } from './club-edit/club-honoraries/club-honorary-table/club-honorary-table.component';
 
 @NgModule({
   imports: [
@@ -84,6 +85,7 @@ import { ClubEditMediaComponent } from './club-edit/club-edit-media/club-edit-me
     ClubDetailManagementFotoComponent,
     ClubDetailManagementPositionsComponent,
     ClubEditMediaComponent,
+    ClubHonoraryTableComponent,
   ],
   exports: [],
   providers: [

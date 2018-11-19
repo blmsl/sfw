@@ -4,6 +4,14 @@ cdk-virtual-scroll-viewport {
     border-bottom: 1px dashed #cecece;
   }
 
+  h3 {
+    color: #ff6600;
+  }
+
+  h3:hover {
+    color: #ff6600;
+  }
+
   // Bonus points
   &::-webkit-scrollbar {
     width: 1em;

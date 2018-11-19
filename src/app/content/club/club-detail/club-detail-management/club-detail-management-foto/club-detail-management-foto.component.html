@@ -4,7 +4,7 @@
     <img *ngIf="clubManagementImage | async as image; else loadingTemplate"
          mat-card-image
          [src]="image.downloadURL">
-    <p [innerHTML]="club.management.photoDescription"></p>
+    <p [innerHTML]="club.photoDescription"></p>
   </mat-card-content>
 </mat-card>
 

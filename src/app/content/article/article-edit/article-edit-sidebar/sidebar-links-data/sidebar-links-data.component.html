@@ -18,8 +18,9 @@
                 multiple>
       <mat-optgroup *ngFor="let season of seasons | orderBy: ['-title']"
                     [label]="season.title">
-        <mat-option *ngFor="let team of teams | filterBy: ['assignedSeason'] : season.id | orderBy: ['title', 'subTitle']"
-                    [value]="team.id">
+        <mat-option
+          *ngFor="let team of teams | filterBy: ['assignedSeason'] : season.id | orderBy: ['title', 'subTitle']"
+          [value]="team.id">
           {{team.title}} {{team.subTitle}}
         </mat-option>
       </mat-optgroup>
@@ -49,7 +50,7 @@
 
   <mat-checkbox fxFlex="49"
                 style="margin-top: 25px;"
-                [attr.checked] = "article.assignedMatches ? 'checked' : null"
+                [attr.checked]="article.assignedMatches ? 'checked' : null"
                 formControlName="isMatch">
     {{'general.articles.edit.sidebar.links.isArticleAMatch' | translate}}
   </mat-checkbox>

@@ -81,15 +81,7 @@
       </mat-tab>
       <mat-tab [disabled]="!match.id"
                [label]="'general.matches.edit.media' | translate">
-        <media-center *ngIf="mediaItems$ | async as mediaItems"
-                      [mediaItems]="mediaItems"
-                      [uploaderConfig]="uploaderConfig"
-                      [uploaderOptions]="uploaderOptions">
-        </media-center>
-        <media-gallery-list *ngIf="mediaGalleries$ | async as mediaGalleries"
-                            [mediaGalleries]="mediaGalleries">
-
-        </media-gallery-list>
+        <match-edit-media></match-edit-media>
       </mat-tab>
     </mat-tab-group>
 

@@ -1,9 +1,6 @@
-import {
-  Component,
-  Input,
-  OnInit
-}                           from '@angular/core';
-import { ITeam }            from '../../../../shared/interfaces/team/team.interface';
+import { Component, OnInit } from '@angular/core';
+import { IMatch }           from '../../../../shared/interfaces/match/match.interface';
+import { ActivatedRoute }   from '@angular/router';
 import { IMediaGallery }       from '../../../../shared/interfaces/media/media-gallery.interface';
 import { IUploaderOptions }    from '../../../../shared/interfaces/media/uploader-options.interface';
 import { IMediaItem }          from '../../../../shared/interfaces/media/media-item.interface';
@@ -11,17 +8,15 @@ import { Observable }          from 'rxjs/index';
 import { IUploaderConfig }     from '../../../../shared/interfaces/media/uploader-config.interface';
 import { MediaItemService }    from '../../../../shared/services/media/media-item.service';
 import { MediaGalleryService } from '../../../../shared/services/media/media-gallery.service';
-import { IMatch }              from '../../../../shared/interfaces/match/match.interface';
-import { ActivatedRoute }      from '@angular/router';
 
 @Component({
-  selector: 'team-edit-media',
-  templateUrl: './team-edit-media.component.html',
-  styleUrls: ['./team-edit-media.component.scss']
+  selector: 'match-edit-media',
+  templateUrl: './match-edit-media.component.html',
+  styleUrls: ['./match-edit-media.component.scss']
 })
-export class TeamEditMediaComponent implements OnInit {
+export class MatchEditMediaComponent implements OnInit {
 
-  public team: ITeam;
+  public match: IMatch;
 
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,
@@ -44,11 +39,11 @@ export class TeamEditMediaComponent implements OnInit {
               private mediaGalleryService: MediaGalleryService) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { team: ITeam }) => {
-      this.team = data.team;
-      this.uploaderOptions.itemId = this.team.id;
-      this.mediaItems$ = this.mediaItemService.getMediaItems([], this.team.id);
-      this.mediaGalleries$ = this.mediaGalleryService.getAssignedGalleries(this.team.id);
+    this.route.data.subscribe((data: { match: IMatch }) => {
+      this.match = data.match;
+      this.uploaderOptions.itemId = this.match.id;
+      this.mediaItems$ = this.mediaItemService.getMediaItems([], this.match.id);
+      this.mediaGalleries$ = this.mediaGalleryService.getAssignedGalleries(this.match.id);
     });
   }
 

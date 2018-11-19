@@ -1,20 +1,31 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IMember } from '../../../../shared/interfaces/member/member.interface';
-import { IFormation } from '../../../../shared/interfaces/match/formation.interface';
-import { IMatch } from '../../../../shared/interfaces/match/match.interface';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+}                                from '@angular/core';
+import { IMember }               from '../../../../shared/interfaces/member/member.interface';
+import { IFormation }            from '../../../../shared/interfaces/match/formation.interface';
+import { IMatch }                from '../../../../shared/interfaces/match/match.interface';
 import { MatchFormationService } from '../../../../shared/services/match/match-formation.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { distinctUntilChanged, first } from 'rxjs/internal/operators';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { ICoord } from '../../../../shared/interfaces/match/coord.interface';
-import { MatSelectChange } from '@angular/material';
-import { MemberService } from '../../../../shared/services/member/member.service';
-import { number } from 'ng2-validation/dist/number';
+import {
+  FormBuilder,
+  FormGroup
+}                                from '@angular/forms';
+import {
+  distinctUntilChanged,
+  first
+}                                from 'rxjs/internal/operators';
+import { CdkDragDrop }           from '@angular/cdk/drag-drop';
+import { ICoord }                from '../../../../shared/interfaces/match/coord.interface';
+import { MatSelectChange }       from '@angular/material';
+import { MemberService }         from '../../../../shared/services/member/member.service';
 
 @Component({
   selector: 'match-edit-formation',
   templateUrl: './match-edit-formation.component.html',
-  styleUrls: ['./match-edit-formation.component.scss']
+  styleUrls: [ './match-edit-formation.component.scss' ]
 })
 export class MatchEditFormationComponent implements OnInit {
 
@@ -29,7 +40,7 @@ export class MatchEditFormationComponent implements OnInit {
   public playerPositions: ICoord[];
   public coordinates = [];
 
-  items = ['Zero', 'One', 'Two', 'Three'];
+  items = [ 'Zero', 'One', 'Two', 'Three' ];
   playerList = [];
 
   constructor(private matchFormationService: MatchFormationService,
@@ -43,68 +54,69 @@ export class MatchEditFormationComponent implements OnInit {
       assignedFormation: this.match.assignedFormation
     });
 
-    this.assignedTeamPlayers = [{
-      'address': {
-        'city': 'St. Wendel',
-        'streetName': 'Fichtenstraße',
-      },
-      'ahData': {
-        'joined': '',
-        'left': '',
-        'status': 0
-      },
-      'clubData': {
-        'assignedClub': '23f95e43c79f4bdba8de',
-        'joined': '2017-07-03',
-        'left': '',
-
-        'positionsInClub': '',
-        'status': 4
-      },
-      'contact': {
-        'email': '',
-        'phoneHome': '',
-        'phoneMobile': ''
-      },
-      'creationAt': {
-        'seconds': 1541710411,
-        'nanoseconds': 339000000
-      },
-      'creationBy': 'system',
-      'dfbData': {
-        'ageGroup': 'C-Junioren (U14/U15)',
-        'allowedToPlay': 'einsetzbar',
-        'eligibleForFriendlyMatches': '2017-08-16',
-        'eligibleForOfficialMatches': '2017-08-16',
-        'guestPlayer': {
-          'guestRight': '',
-          'season': '',
-          'type': ''
+    this.assignedTeamPlayers = [
+      {
+        'address': {
+          'city': 'St. Wendel',
+          'streetName': 'Fichtenstraße'
         },
-        'passNumber': '0490-9334',
-        'passPrint': '2017-08-21',
-
-        'signOut': ''
-      },
-      'dfbImport': true,
-      'driveImport': true,
-      'id': 'fe6d02927590482d84f7',
-
-      'mainData': {
-        'birthday': {
-          'day': '10',
-          'full': '2004-02-10',
-          'month': '02',
-          'monthDay': '02-10',
-          'year': '2004'
+        'ahData': {
+          'joined': '',
+          'left': '',
+          'status': 0
         },
-        'firstName': 'Daniil',
-        'gender': 'male',
-        'lastName': 'Avram',
-        'title': ''
+        'clubData': {
+          'assignedClub': '23f95e43c79f4bdba8de',
+          'joined': '2017-07-03',
+          'left': '',
+
+          'positionsInClub': '',
+          'status': 4
+        },
+        'contact': {
+          'email': '',
+          'phoneHome': '',
+          'phoneMobile': ''
+        },
+        'creationAt': {
+          'seconds': 1541710411,
+          'nanoseconds': 339000000
+        },
+        'creationBy': 'system',
+        'dfbData': {
+          'ageGroup': 'C-Junioren (U14/U15)',
+          'allowedToPlay': 'einsetzbar',
+          'eligibleForFriendlyMatches': '2017-08-16',
+          'eligibleForOfficialMatches': '2017-08-16',
+          'guestPlayer': {
+            'guestRight': '',
+            'season': '',
+            'type': ''
+          },
+          'passNumber': '0490-9334',
+          'passPrint': '2017-08-21',
+
+          'signOut': ''
+        },
+        'dfbImport': true,
+        'driveImport': true,
+        'id': 'fe6d02927590482d84f7',
+
+        'mainData': {
+          'birthday': {
+            'day': '10',
+            'full': '2004-02-10',
+            'month': '02',
+            'monthDay': '02-10',
+            'year': '2004'
+          },
+          'firstName': 'Daniil',
+          'gender': 'male',
+          'lastName': 'Avram',
+          'title': ''
+        },
+        'title': 'Avram Daniil'
       },
-      'title': 'Avram Daniil',
-    },
       {
         'clubData': {
           'assignedClub': '23f95e43c79f4bdba8de'
@@ -150,7 +162,7 @@ export class MatchEditFormationComponent implements OnInit {
       {
         'address': {
           'city': 'Oberthal',
-          'streetName': 'Neunkirchenerstraße',
+          'streetName': 'Neunkirchenerstraße'
         },
         'ahData': {
           'joined': '',
@@ -199,7 +211,7 @@ export class MatchEditFormationComponent implements OnInit {
         'address': {
           'city': 'St. Wendel',
           'houseNumber': 17,
-          'streetName': 'Mechersstraße',
+          'streetName': 'Mechersstraße'
         },
         'ahData': {
           'joined': '',
@@ -262,7 +274,7 @@ export class MatchEditFormationComponent implements OnInit {
       {
         'address': {
           'city': 'Tholey - Hasborn',
-          'streetName': 'Parkstraße',
+          'streetName': 'Parkstraße'
         },
         'ahData': {
           'joined': '',
@@ -367,7 +379,7 @@ export class MatchEditFormationComponent implements OnInit {
       {
         'address': {
           'city': 'St. Wendel',
-          'streetName': 'Frankenstraße',
+          'streetName': 'Frankenstraße'
         },
         'ahData': {
           'joined': '',
@@ -469,7 +481,7 @@ export class MatchEditFormationComponent implements OnInit {
           'city': 'St. Wendel',
           'houseNumber': 6,
           'streetName': 'Am Zwinger',
-          'zip': 66606,
+          'zip': 66606
         },
         'ahData': {
           'joined': '',
@@ -529,7 +541,7 @@ export class MatchEditFormationComponent implements OnInit {
         'address': {
           'city': 'St. Wendel',
 
-          'streetName': 'Wellwiesstraße',
+          'streetName': 'Wellwiesstraße'
 
         },
         'ahData': {
@@ -637,7 +649,7 @@ export class MatchEditFormationComponent implements OnInit {
         'address': {
           'city': 'Winterbach',
 
-          'streetName': 'Seitersstraße',
+          'streetName': 'Seitersstraße'
 
         },
         'ahData': {
@@ -688,7 +700,7 @@ export class MatchEditFormationComponent implements OnInit {
         'address': {
           'city': 'St. Wendel',
 
-          'streetName': 'Zum Domweiher',
+          'streetName': 'Zum Domweiher'
 
         },
         'ahData': {
@@ -739,7 +751,7 @@ export class MatchEditFormationComponent implements OnInit {
         'address': {
           'city': 'St. Wendel',
 
-          'streetName': 'Zum Domweiher',
+          'streetName': 'Zum Domweiher'
 
         },
         'ahData': {
@@ -790,7 +802,7 @@ export class MatchEditFormationComponent implements OnInit {
         'address': {
           'city': 'St. Wendel',
 
-          'streetName': 'Zum Domweiher',
+          'streetName': 'Zum Domweiher'
 
         },
         'ahData': {
@@ -841,7 +853,7 @@ export class MatchEditFormationComponent implements OnInit {
         'address': {
           'city': 'St. Wendel',
 
-          'streetName': 'Zum Domweiher',
+          'streetName': 'Zum Domweiher'
 
         },
         'ahData': {
@@ -892,7 +904,7 @@ export class MatchEditFormationComponent implements OnInit {
         'address': {
           'city': 'St. Wendel',
 
-          'streetName': 'Zum Domweiher',
+          'streetName': 'Zum Domweiher'
 
         },
         'ahData': {
@@ -938,7 +950,8 @@ export class MatchEditFormationComponent implements OnInit {
         },
 
         'title': 'Wolferstedter Bernd'
-      }];
+      }
+    ];
 
     this.initializeFieldPositions();
 
@@ -972,9 +985,9 @@ export class MatchEditFormationComponent implements OnInit {
   initializeFieldPositions() {
     this.thirty = [];
 
-    for (const i of [...Array(6)]) {
+    for (const i of [ ...Array(6) ]) {
       const row: IMember[] = [];
-      for (const j of [...Array(5)]){
+      for (const j of [ ...Array(5) ]) {
         this.memberService.setNewMember().pipe(first()).subscribe((member: IMember) =>
           row.push(member));
       }
@@ -983,14 +996,14 @@ export class MatchEditFormationComponent implements OnInit {
   }
 
   getCoordinates(i): ICoord {
-    if (this.coordinates[i]) {
-      return this.coordinates[i];
+    if (this.coordinates[ i ]) {
+      return this.coordinates[ i ];
     }
     let coords: ICoord = {
       x: i % 6,
       y: Math.floor(i / 6)
     };
-    return this.coordinates[i] = coords;
+    return this.coordinates[ i ] = coords;
   }
 
   checkCoordinates(x: number, y: number): boolean {
@@ -1006,14 +1019,14 @@ export class MatchEditFormationComponent implements OnInit {
   addToList(event: CdkDragDrop<string[]>) {
     console.log(event);
     if (event.previousContainer.id !== event.container.id) {
-      if (['0', '1', '2', '3', '4', '5'].includes(event.container.id)) {
+      if ([ '0', '1', '2', '3', '4', '5' ].includes(event.container.id)) {
         const x = Number.parseInt(event.container.id, 10);
         this.thirty = this.thirty.map((element: IMember[], index: number) => {
           if (index === x) {
             console.log(index);
             return element.map((member: IMember, memberIndex: number) => {
               if (memberIndex === event.currentIndex) {
-                const position: ICoord = { x, y: memberIndex } ;
+                const position: ICoord = { x, y: memberIndex };
                 console.log(position);
                 for (const p of this.playerPositions) {
                   if (p.x === position.x && Math.abs(p.y - 4) === position.y) {
@@ -1030,18 +1043,7 @@ export class MatchEditFormationComponent implements OnInit {
         });
       }
 
-      }
     }
-
-  /*
-   getMaxSubstitutes(assignedFormationTitle: string, substitutionList: string[]) {
-   const substitutionListLength = substitutionList ? substitutionList.length : 0;
-   const maxSubstitutes = this.tacticalFormations.filter((formation: IFormation) => {
-   return formation.title === assignedFormationTitle;
-   });
-   return maxSubstitutes.length === 0
-   ? []
-   : new Array(maxSubstitutes[ 0 ].maxSubstitutes - substitutionListLength).fill(0).map((_, i) => i);
-   } */
+  }
 
 }

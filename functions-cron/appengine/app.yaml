@@ -40,14 +40,14 @@ handlers:
   login: admin
 
 # Other
-- url: /_ah/.*
-  script: /php/index.php
+#- url: /_ah/.*
+#  script: /php/index.php
 
-- url: /php/.*
-  script: /php/index.php
+#- url: /php/.*
+#  script: /php/index.php
 
-- url: /.*
-  script: /php/index.php
+#- url: /.*
+#  script: /php/index.php
 #  secure: always
 #  login: admin
 

@@ -1,0 +1,48 @@
+<ng-container [formGroup]="form">
+  <table formArrayName="honoraries"
+         class="table table-condensed table-bordered">
+  <thead>
+  <tr>
+    <th>{{ 'general.clubs.edit.honoraries.assignedMember' | translate}}</th>
+    <th>{{ 'general.clubs.edit.honoraries.assignedArticle' | translate}}</th>
+    <th>{{'general.clubs.edit.honoraries.startDate' | translate}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let control of form.get('honoraries')['controls']; let i = index"
+      [formGroupName]="i">
+    <td>{{members[i].mainData.firstName}} {{members[i].mainData.lastName}}
+      ({{members[i].mainData.birthday.full | date: 'dd.MM.yyyy'}})
+    </td>
+    <td>
+      <mat-form-field fxFlex="100">
+        <mat-select formControlName="honoraryArticle"
+                    placeholder="{{ 'general.clubs.edit.honoraries.assignedArticle' | translate}}">
+          <mat-option *ngFor="let article of articles | orderBy: ['title']"
+                      [value]="article.id">
+            {{article.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field>
+        <input matInput
+               [matDatepicker]="dp3"
+               formControlName="honoraryDate"
+               placeholder="{{'general.clubs.edit.honoraries.startDate' | translate}}">
+        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <th>{{ 'general.clubs.edit.honoraries.assignedMember' | translate}}</th>
+    <th>{{ 'general.clubs.edit.honoraries.assignedArticle' | translate}}</th>
+    <th>{{'general.clubs.edit.honoraries.startDate' | translate}}</th>
+  </tr>
+  </tfoot>
+</table>
+</ng-container>

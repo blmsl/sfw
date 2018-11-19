@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { ILocation } from '../../../../../shared/interfaces/location/location.interface';
 import { ITeam } from '../../../../../shared/interfaces/team/team.interface';
-import { ICategory } from '../../../../../shared/interfaces/category.interface';
-import { ICategoryType } from '../../../../../shared/interfaces/category-type.interface';
-import { ISeason } from '../../../../../shared/interfaces/season.interface';
-import { MatchService } from '../../../../../shared/services/match/match.service';
-import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
-import { IArticle } from '../../../../../shared/interfaces/article.interface';
+import { ICategory }                          from '../../../../../shared/interfaces/category.interface';
+import { ICategoryType }                      from '../../../../../shared/interfaces/category-type.interface';
+import { ISeason }                            from '../../../../../shared/interfaces/season.interface';
+import { MatchService }                       from '../../../../../shared/services/match/match.service';
+import { IMatch }                             from '../../../../../shared/interfaces/match/match.interface';
+import { IArticle }                           from '../../../../../shared/interfaces/article.interface';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { IMediaGallery }                      from '../../../../../shared/interfaces/media/media-gallery.interface';
 
 @Component({
   selector: 'sidebar-links-data',
@@ -19,11 +20,11 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class SidebarLinksDataComponent implements OnInit, OnDestroy {
 
   @Input() article: IArticle;
-  @Input() categories: Observable<ICategory[]>;
-  @Input() categoryTypes: Observable<ICategoryType[]>;
-  @Input() locations: Observable<ILocation[]>;
-  @Input() teams: Observable<ITeam[]>;
-  @Input() seasons: Observable<ISeason[]>;
+  @Input() categories: ICategory[];
+  @Input() categoryTypes: ICategoryType[];
+  @Input() locations: ILocation[];
+  @Input() teams: ITeam[];
+  @Input() seasons: ISeason[];
 
   @Output() changeArticle: EventEmitter<IArticle> = new EventEmitter<IArticle>(false);
 
@@ -55,6 +56,7 @@ export class SidebarLinksDataComponent implements OnInit, OnDestroy {
       debounceTime(500),
       distinctUntilChanged()
     ).subscribe((changes: any) => {
+      console.log(changes);
       if (changes.isMatch) {
         if (!this.matches) {
           this.loadMatches();
@@ -65,7 +67,6 @@ export class SidebarLinksDataComponent implements OnInit, OnDestroy {
         this.matchesListReady = false;
       }
 
-      // Update parent-cmp
       if (!changes.isMatch) {
         changes.assignedMatches = null;
       }

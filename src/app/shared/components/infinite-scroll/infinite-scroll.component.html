@@ -5,12 +5,6 @@
                                 [itemSize]="itemSize"
                                 (scrolledIndexChange)="nextBatch($event, (items[items.length - 1][sortField]))">
 
-    <!--"abraham/twitteroauth": "^0.7.4",
-    "paragonie/random_compat": "2.0.17",
-    "duzun/hquery": "^2.1",
-    "facebook/graph-sdk": "^5.6",
-    "martin-georgiev/social-post": "^1.0"-->
-
     <ng-container *ngIf="listType === 'articles'">
       <li *cdkVirtualFor="let item of items; let i = index; trackBy: trackByIdx">
         <h3><a [routerLink]="['/' + listType + '/edit', item.id]">{{ item.title }}</a></h3>

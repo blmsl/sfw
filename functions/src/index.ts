@@ -24,8 +24,8 @@ import * as member from './member/index';
 import * as team from './team/index';
 import * as user from './user/index';
 
-export const articleToFacebookPublishing = article.facebookArticlePublish;
-export const articleToTwitterPublishing = article.twitterArticlePublish;
+// export const articleToFacebookPublishing = article.facebookArticlePublish;
+// export const articleToTwitterPublishing = article.twitterArticlePublish;
 
 export const googleCalendar = calendar.getGoogleCalendarEvents;
 // export const matchDeleted = match.matchDeleteCron;

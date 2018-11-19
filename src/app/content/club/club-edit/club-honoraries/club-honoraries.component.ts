@@ -1,11 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IMember } from '../../../../shared/interfaces/member/member.interface';
-import { IArticle } from '../../../../shared/interfaces/article.interface';
-import { IClub } from '../../../../shared/interfaces/club/club.interface';
-import { MatOptionSelectionChange } from '@angular/material';
-import { MemberService } from '../../../../shared/services/member/member.service';
-import { AlertService } from '../../../../shared/services/alert/alert.service';
-import { Observable } from 'rxjs/index';
+import {
+  Component,
+  Input,
+  OnInit
+}                         from '@angular/core';
+import { IMember }        from '../../../../shared/interfaces/member/member.interface';
+import { IArticle }       from '../../../../shared/interfaces/article.interface';
+import { IClub }          from '../../../../shared/interfaces/club/club.interface';
+import { MemberService }  from '../../../../shared/services/member/member.service';
+import { Observable }     from 'rxjs/index';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'club-honoraries',
@@ -15,26 +18,17 @@ export class ClubHonorariesComponent implements OnInit {
 
   @Input() club: IClub;
   @Input() articles: IArticle;
-  @Input() honoraries$: Observable<IMember[]>;
+  @Input() members$: Observable<IMember[]>;
 
   constructor(private memberService: MemberService,
-    private alertService: AlertService) {
-    this.honoraries$ = this.memberService.getHonoraryList();
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.route.data.subscribe((data: { club: IClub }) => {
+      this.club = data.club;
+      this.members$ = this.memberService.getHonoraryList(this.club);
+    });
   }
-
-  setHonoraryArticle($event: MatOptionSelectionChange, member: IMember) {
-    member.honoraryArticle = $event.source.value;
-
-    /* this.memberService.updateMember(member).then(
-      () => this.alertService.showSnackBar('success', 'general.applications.updateMessage'),
-      (error: any) => this.alertService.showSnackBar('error', error.message)
-    ).catch((error: any) => {
-      this.alertService.showSnackBar('error', error.message);
-    }); */
-  }
-
 
 }
