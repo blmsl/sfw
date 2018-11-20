@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-const request = require('request-promise');
+// const request = require('request-promise');
 
 const TWITTER_API = functions.config().twitter;
 console.log(TWITTER_API);

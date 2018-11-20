@@ -1,23 +1,8 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-  ViewContainerRef
-} from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUser } from '../../../shared/interfaces/user/user.interface';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
-import { AlertComponent } from '../../../shared/directives/alert/alert.component';
 
 @Component({
   selector: 'sign-up',
@@ -35,14 +20,9 @@ export class SignUpComponent implements OnInit {
   public form: FormGroup;
   public isLoading: boolean = false;
 
-  @ViewChild('signUpAlertContainer', {
-    read: ViewContainerRef
-  }) signUpAlertContainer: ViewContainerRef;
-
   constructor(private fb: FormBuilder,
     private authService: AuthService,
-    private alertService: AlertService,
-    private cfr: ComponentFactoryResolver) {
+    private alertService: AlertService) {
   }
 
   ngOnInit() {
@@ -87,11 +67,10 @@ export class SignUpComponent implements OnInit {
       this.isLoading = false;
       this.form.reset();
       this.toggleSignUpForm();
-      this.alertService.success('global.registration.successful');
+      this.alertService.showSnackBar('success', 'Global.Register.successful');
     }).catch((error: any) => {
-      this.showAlert('signUpAlertContainer');
-      this.alertService.error(error);
       this.isLoading = false;
+      this.alertService.showSnackBar('success', error);
     });
   }
 
@@ -125,13 +104,6 @@ export class SignUpComponent implements OnInit {
         invalid: true
       };
     }
-  }
-
-  showAlert(target) {
-    this[target].clear();
-    const factory = this.cfr.resolveComponentFactory(AlertComponent);
-    const ref = this[target].createComponent(factory);
-    ref.changeDetectorRef.detectChanges();
   }
 
 }

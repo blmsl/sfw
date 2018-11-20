@@ -17,8 +17,8 @@ admin.initializeApp({
 });
 
 import * as calendar from './calendar/index';
-import * as article from './article/index';
-import * as match from './match/index';
+// import * as article from './article/index';
+// import * as match from './match/index';
 import * as media from './media/index';
 import * as member from './member/index';
 import * as team from './team/index';
@@ -35,6 +35,6 @@ export const memberDeleted = member.memberDeletedCron;
 export const memberOfTheWeek = member.memberOfTheWeekCron;
 export const teamOfTheMonth = team.teamOfTheMonthCron;
 export const teamDeleted = team.teamDeletedCron;
-export const newUserCreation = user.userCreated;
+export const onUserCreate = user.userCreated;
 export const onUserDelete = user.userDeleted;
 export const onUserDisable = user.userDisabled;

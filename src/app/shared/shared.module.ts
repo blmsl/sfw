@@ -10,11 +10,9 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgPipesModule } from 'ngx-pipes';
-import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { MediaModule } from './components/media/media.module';
 import { LoadingIndicatorModule } from './components/loading-indicator/loading-indicator.module';
-import { AlertService } from './services/alert/alert.service';
 import { SfwEditorModule } from './components/editor/sfw-editor.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { LinkModule } from './components/links/link.module';
@@ -23,10 +21,6 @@ import { InfiniteScrollModule } from './components/infinite-scroll/infinite-scro
 @NgModule({
   declarations: [
     SanitizeHtmlPipe,
-    SnackbarComponent,
-  ],
-  entryComponents: [
-    SnackbarComponent
   ],
   exports: [
     CommonModule,
@@ -46,10 +40,8 @@ import { InfiniteScrollModule } from './components/infinite-scroll/infinite-scro
     SfwEditorModule,
     TranslateModule
   ],
-  imports: [],
-  providers: [
-    AlertService
-  ]
+  imports: [
+  ],
 })
 export class SharedModule {
 }

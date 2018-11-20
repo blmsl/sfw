@@ -1,26 +1,11 @@
-import {
-  Observable,
-  of
-} from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-import {
-  first,
-  map,
-  switchMap
-} from 'rxjs/operators';
+import { first, map, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument
-} from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { IUser } from '../../interfaces/user/user.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
-
-// Presence System
-// https://www.youtube.com/watch?v=2ZDeT5hLIBQ&feature=push-u&attr_tag=EDwjeHaWKNSWOoZT-6
-// Role Management
-// https://www.youtube.com/watch?v=3qODuvp1Zp8&feature=push-u&attr_tag=Kh7QBh7gxiT8VfyW-6
 
 @Injectable()
 export class AuthService {
@@ -29,7 +14,8 @@ export class AuthService {
   public userId: string;
 
   constructor(private afAuth: AngularFireAuth,
-    private afs: AngularFirestore) {
+              private afs: AngularFirestore) {
+
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
         if (user) {
@@ -42,16 +28,21 @@ export class AuthService {
     );
   }
 
-  public async signIn(credentials): Promise<void> {
+  public async signIn(credentials): Promise<any> {
     const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
-    return this.updateUser({
-      lastSignInTime: signInAction.user.metadata.lastSignInTime
-    });
+    if (signInAction.user) {
+      return this.updateUser({
+        id: signInAction.user.uid,
+        lastSignInTime: signInAction.user.metadata.lastSignInTime,
+        emailVerified: signInAction.user.emailVerified
+      });
+    }
   }
 
-  public async register(values: IUser): Promise<void> {
+  public async register(values: IUser): Promise<any> {
     const registerAction = await this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password);
-    await this.updateUser({
+    const sendVerificationMail = await this.sendVerificationMail();
+    const updateUser = this.updateUser({
       id: registerAction.user.uid,
       emailVerified: registerAction.user.emailVerified,
       email: registerAction.user.email,
@@ -63,51 +54,50 @@ export class AuthService {
         subscriber: true
       }
     });
-    return registerAction.user.sendEmailVerification();
+    return Promise.all([registerAction, sendVerificationMail, updateUser]);
   }
 
-  /* private async oAuthLogin(provider) {
-   const loginAction = await this.afAuth.auth.signInWithPopup(provider);
+  private async oAuthLogin(provider) {
+    const loginAction = await this.afAuth.auth.signInWithPopup(provider);
+    return this.updateUser({
+      id: loginAction.user.uid,
+      displayName: loginAction.user.displayName,
+      emailVerified: true,
+      email: loginAction.user.email,
+      creationTime: loginAction.user.metadata.creationTime,
+      lastSignInTime: loginAction.user.metadata.lastSignInTime,
+      assignedRoles: {
+        subscriber: true,
+        editor: false,
+        admin: false
+      }
+    });
+  }
 
-   return this.updateUser({
-   id: loginAction.user.uid,
-   displayName: loginAction.user.displayName,
-   emailVerified: true,
-   email: loginAction.user.email,
-   creationTime: loginAction.user.metadata.creationTime,
-   lastSignInTime: loginAction.user.metadata.lastSignInTime,
-   assignedRoles: {
-   subscriber: true,
-   editor: false,
-   admin: false
-   }
-   });
-   }
+  googleLogin(): Promise<void> {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return this.oAuthLogin(provider);
+  }
 
-   googleLogin(): Promise<any> {
-   const provider = new firebase.auth.GoogleAuthProvider();
-   return this.oAuthLogin(provider);
-   }
+  facebookLogin(): Promise<void> {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    return this.oAuthLogin(provider);
+  }
 
-   facebookLogin(): Promise<any> {
-   const provider = new firebase.auth.FacebookAuthProvider();
-   return this.oAuthLogin(provider);
-   }
+  twitterLogin(): Promise<void> {
+    const provider = new firebase.auth.TwitterAuthProvider();
+    return this.oAuthLogin(provider);
+  }
 
-   twitterLogin(): Promise<any> {
-   const provider = new firebase.auth.TwitterAuthProvider();
-   return this.oAuthLogin(provider);
-   }
+  sendVerificationMail(): Promise<void> {
+    return this.afAuth.auth.currentUser.sendEmailVerification();
+  }
 
-   resendVerificationMail(): Promise<any> {
-   return this.afAuth.auth.currentUser.sendEmailVerification();
-   }*/
-
-  sendPasswordResetEmail(email: string): Promise<any> {
+  sendPasswordResetEmail(email: string): Promise<void> {
     return this.afAuth.auth.sendPasswordResetEmail(email);
   }
 
-  signOut(): Promise<any> {
+  signOut(): Promise<void> {
     delete this.userId;
     return this.afAuth.auth.signOut();
   }

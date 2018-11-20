@@ -12,7 +12,7 @@ if (!strpos(gethostname(), 'appspot.com')) {
     putenv('GOOGLE_APPLICATION_CREDENTIALS=../../client_secret.json');
 }
 
-$project = new sfwApp('sf-winterbach', array('calendarService'));
+$project = new sfwApp('sportfreunde-winterbach', array('calendarService'));
 $time_start = microtime(true);
 
 echo $project->generateHeader();

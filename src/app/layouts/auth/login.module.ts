@@ -19,15 +19,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { AlertService } from '../../shared/services/alert/alert.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { TermsOfUseComponent } from '../../shared/components/terms-of-use/terms-of-use.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 /**/
 
 @NgModule({
   declarations: [
-    AlertComponent,
     ForgotPasswordComponent,
     LoginComponent,
     SignInComponent,
@@ -45,20 +43,11 @@ import { TermsOfUseComponent } from '../../shared/components/terms-of-use/terms-
     MatSnackBarModule,
     ReactiveFormsModule,
     RouterModule.forChild(loginRoutes),
-    /*
-     MatIconModule,
-     MatDialogModule,
-     MatToolbarModule,
-     FlexLayoutModule,*/
     TranslateModule
   ],
   providers: [
-    AlertService,
     AuthService,
     UnAuthGuard
-  ],
-  entryComponents: [
-    AlertComponent
   ]
 })
 

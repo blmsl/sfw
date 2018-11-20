@@ -19,6 +19,8 @@ import { AuthService } from '../../shared/services/auth/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UnAuthGuard } from '../../shared/guards/unauth.guard';
 import { AlertService } from '../../shared/services/alert/alert.service';
+import { MatSnackBarModule } from '@angular/material';
+import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -31,6 +33,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CommonModule,
     HttpClientModule,
     RouterModule.forChild(mainRoutes),
+    MatSnackBarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -39,13 +42,18 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
   ],
-  declarations: [],
+  declarations: [
+    SnackbarComponent
+  ],
   providers: [
     AlertService,
     AngularFireAuth,
     AuthGuard,
     AuthService,
     UnAuthGuard
+  ],
+  entryComponents: [
+    SnackbarComponent
   ]
 })
 export class MainModule {

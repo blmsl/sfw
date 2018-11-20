@@ -14,12 +14,14 @@ import {
 } from 'rxjs/operators';
 import { IUser } from '../interfaces/user/user.interface';
 import { AuthService } from '../services/auth/auth.service';
+import { AlertService } from '../services/alert/alert.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
   constructor(private router: Router,
-    private authService: AuthService) {
+    private authService: AuthService,
+              private alertService: AlertService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
@@ -28,9 +30,8 @@ export class AuthGuard implements CanActivate {
       first(),
       map((user: IUser) => {
         if (user && !user.emailVerified) {
-          this.authService.signOut().then(() => {
-            return this.router.navigate(['login'], { queryParams: { message: 'Global.Login.notVerified' } });
-          });
+          this.alertService.showSnackBar('error', 'Global.Login.notVerified');
+          return this.authService.signOut();
         }
         return !!user;
       }),

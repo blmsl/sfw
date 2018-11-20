@@ -25,7 +25,6 @@ export class UnAuthGuard implements CanActivate {
     return this.authService.user$.pipe(
       first(),
       map((user: IUser) => {
-        console.log(user);
         return !user;
       }),
       tap((isLoggedOut: boolean) => {

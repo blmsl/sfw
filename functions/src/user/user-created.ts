@@ -9,9 +9,7 @@ export const userCreated = functions
   .region('europe-west1')
   .runWith({ memory: '512MB', timeoutSeconds: 15 })
   .auth.user()
-  .onCreate(async (event: any) => {
-
-    const firebaseUser = event.data;
+  .onCreate((event: any) => {
 
     const msg = {
       to: 'Thomas.handle@gmail.com',
@@ -20,13 +18,11 @@ export const userCreated = functions
       templateId: '758f452a-aa4d-4664-8088-5a5ce2a814ac',
       substitutionWrappers: ['{{', '}}'],
       substitutions: {
-        email: firebaseUser.email,
+        email: event.email,
         name: 'Thomas',
         siteName: 'sfwinterbach.com'
       }
     };
 
-    await sgMail.send(msg);
-    return firebaseUser.sendEmailVerification();
-
+    return true // sgMail.send(msg);
   });

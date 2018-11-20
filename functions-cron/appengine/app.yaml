@@ -3,7 +3,7 @@ runtime: php55
 
 api_version: 1
 service: default
-threadsafe: yes
+threadsafe: true
 
 instance_class: F4_1G
 
@@ -43,8 +43,11 @@ handlers:
 #- url: /_ah/.*
 #  script: /php/index.php
 
-#- url: /php/.*
-#  script: /php/index.php
+- url: /.*
+  script: /index.php
+
+- url: /php/.*
+  script: /php/index.php
 
 #- url: /.*
 #  script: /php/index.php

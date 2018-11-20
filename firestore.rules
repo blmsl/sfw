@@ -1,0 +1,54 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    match /{document=**}{
+    	allow read, write;
+    }
+    
+    function getRole(role){
+    	return getUserData().assignedRoles[role] == true;
+    }
+    
+    function getUserData() {
+  		return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+		}
+    
+    function incomingData() {
+      return request.resource.data
+    }
+    
+    function isSignedIn() {
+  		return request.auth != null && emailVerified();
+		}
+    
+    function isAdmin(){
+    	return getRole('admin');
+    }
+    
+    function isEditor(){
+    	return getRole('editor');
+    }
+    
+    function isOwner(userId) {
+  		return request.auth.uid == userId;
+		}
+    
+    //match /articles/{document}{
+    //  allow read;
+    //  allow delete: if isAdmin();
+    //  allow write, update: if isAdmin() || isEditor();
+   // }
+    
+    //match /users/{document}{
+     // allow create: if incomingData().assignedRoles.keys().hasAny(['admin', 'editor']) == false;
+    	//allow read: if isAdmin() || request.auth.uid == resource.data.creation.by;
+      //allow update, delete: if isAdmin();
+    //}
+      
+    //match /applications/{document=**}{
+    //	allow read;
+     // allow write, update, delete: if isAdmin();
+    // }
+    
+  }
+}

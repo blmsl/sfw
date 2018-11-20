@@ -1,33 +1,14 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-  ViewContainerRef
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
+import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
-import { AlertComponent } from '../../../shared/directives/alert/alert.component';
-import { Subscription } from 'rxjs/index';
 
 @Component({
   selector: 'sign-in',
   templateUrl: './sign-in.component.html'
 })
-export class SignInComponent implements OnInit, OnDestroy {
+export class SignInComponent implements OnInit {
 
   @Input() passwordMinLength: number;
   @Input() passwordMaxLength: number;
@@ -36,23 +17,18 @@ export class SignInComponent implements OnInit, OnDestroy {
   @Input() showDemoLoginMessage: boolean;
 
   @Output() toggleFormVisibility: EventEmitter<any> = new EventEmitter(false);
-  @ViewChild('signInAlertContainer', {
-    read: ViewContainerRef
-  }) signInAlertContainer: ViewContainerRef;
 
   public form: FormGroup;
   public returnUrl: string = '/dashboard';
   public isLoading: boolean = false;
   public error: string;
 
-  private sub: Subscription;
-
   constructor(private alertService: AlertService,
-    public authService: AuthService,
-    private cfr: ComponentFactoryResolver,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router) {
+              public authService: AuthService,
+              private cfr: ComponentFactoryResolver,
+              private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -73,20 +49,8 @@ export class SignInComponent implements OnInit, OnDestroy {
         ]
       ]
     });
-
-    this.sub = this.route
-      .queryParams
-      .subscribe((params: any) => {
-        if (params.message) {
-          this.showAlert('signInAlertContainer');
-          this.alertService.error(params.message);
-        }
-      });
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
 
   onSubmit() {
     this.isLoading = true;
@@ -94,17 +58,13 @@ export class SignInComponent implements OnInit, OnDestroy {
       email: this.form.value.email,
       password: this.form.value.password
     };
-    this.authService.signIn(credentials)
-      .then(() => {
-        this.isLoading = false;
-        this.router.navigate([this.returnUrl]).then();
-      })
-      .catch((error: any) => {
-        this.isLoading = false;
-        this.showDemoLoginMessage = false;
-        this.showAlert('signInAlertContainer');
-        this.alertService.error(error.message);
-      });
+    this.authService.signIn(credentials).then((status) => {
+      this.isLoading = false;
+      return this.router.navigate([this.returnUrl]);
+    }).catch((error: any) => {
+      this.isLoading = false;
+      this.alertService.showSnackBar('error', error.code);
+    });
   }
 
   togglePasswordForm() {
@@ -127,14 +87,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     );
   }
 
-  showAlert(target) {
-    this[target].clear();
-    const factory = this.cfr.resolveComponentFactory(AlertComponent);
-    const ref = this[target].createComponent(factory);
-    ref.changeDetectorRef.detectChanges();
-  }
-
-  /* socialLogin(provider: string): Promise<any> {
+  socialLogin(provider: string): Promise<any> {
     const _that = this;
     this.isLoading = true;
     let loginAction;
@@ -152,17 +105,14 @@ export class SignInComponent implements OnInit, OnDestroy {
     }
     return loginAction
       .then(() => {
-        console.log('finished social login');
-        console.log(this.returnUrl);
-        return this.router.navigate([ this.returnUrl ]);
+        this.alertService.showSnackBar('success', 'successful.social.login');
+        return this.router.navigate([this.returnUrl]);
       })
       .catch((error: any) => {
-        console.log(error);
-        _that.isLoading = false;
-        _that.showDemoLoginMessage = false;
-        _that.showAlert('signInAlertContainer');
-        _that.alertService.error(error.code);
+        this.isLoading = false;
+        this.showDemoLoginMessage = false;
+        this.alertService.showSnackBar('error', error.message);
       });
-  } */
+  }
 
 }

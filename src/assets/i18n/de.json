@@ -45,7 +45,8 @@
       "resendVerificationMailMessage": "An die von Dir angegebene Email-Adresse wurde eine Bestätigungsmail gesendet. Bitte klicke auf den Link in der Email zum Bestätigen Deines Accounts. Falls Du keine Mail erhalten hast klicke bitte auf den folgenden Link:",
       "InputEmail": {
         "Required": "Du musst eine E-Mail Adresse eingeben."
-      }
+      },
+      "successful": "Deine Anmeldung war erfolgreich"
     },
     "NotFound": {
       "HeaderText": "404 - Seite nicht gefunden",
@@ -65,6 +66,7 @@
       "Hint": "Gib Deine Daten in das nachfolgende Formular ein. Die Registrierung ist natürlich völlig kostenlos.",
       "RegisterLinkText": "Registrieren",
       "iAgree": "Ich bestätige die ",
+      "successful": "Deine Registrierung war erfolgreich. Du erhälst gleich eine E-Mail zum Bestätigen Deines Accounts.",
       "termsAndConditions": "Nutzungsbedinungen"
     },
     "SocialLogin": {

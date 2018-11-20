@@ -9,7 +9,6 @@ import {
 import { AuthService } from '../services/auth/auth.service';
 import { Observable } from 'rxjs';
 import {
-  first,
   map,
   take,
   tap
@@ -29,9 +28,10 @@ export class BackendGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.user$.pipe(
-      first(),
+      take(1),
       map((user: IUser) => {
-        return user && (user.assignedRoles.admin || user.assignedRoles.editor);
+        console.log(user);
+        return !!(user && (user.assignedRoles.admin || user.assignedRoles.editor));
       }),
       tap((isAllowed: boolean) => {
         if (!isAllowed) {

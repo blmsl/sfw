@@ -17,7 +17,7 @@ if(!strpos(gethostname(), 'appspot.com')) {
 
 $time_start = microtime(true);
 
-$project = new sfwApp('sf-winterbach', array('driveService', 'sheetService'));
+$project = new sfwApp('sportfreunde-winterbach', array('driveService', 'sheetService'));
 
 echo $project->generateHeader();
 
