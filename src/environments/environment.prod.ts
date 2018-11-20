@@ -6,12 +6,12 @@ export const environment = {
   gaTrackingCode: 'UA-109145893-2',
   googleAnalytics: true,
   firebaseConfig: {
-    apiKey: "AIzaSyC-zdeN919zhzqA1uTRn1tHotunLaLR7P8",
-    authDomain: "sf-winterbach.firebaseapp.com",
-    databaseURL: "https://sf-winterbach.firebaseio.com",
-    projectId: "sf-winterbach",
-    storageBucket: "sf-winterbach.appspot.com",
-    messagingSenderId: "85800088059",
+    apiKey: "AIzaSyApjtaFJJyp7UBipZ8Iks8fXRvNvt8uuto",
+    authDomain: "sportfreunde-winterbach.firebaseapp.com",
+    databaseURL: "https://sportfreunde-winterbach.firebaseio.com",
+    projectId: "sportfreunde-winterbach",
+    storageBucket: "",
+    messagingSenderId: "693126399443",
     timestampsInSnapshots: true
   },
   routerTracing: false
