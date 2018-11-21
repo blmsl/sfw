@@ -49,7 +49,7 @@ functions/firebase-debug.log
 functions-cron/appengine/vendor
 functions-cron/appengine/composer.lock
 functions-cron/appengine/lib
-functions-cron/appengine/sf-winterbach-6c45b5d78ed6.json
+functions-cron/appengine/client_secret.json
 
 functions-cron/node_modules
 functions-cron/package-lock.json
