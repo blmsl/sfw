@@ -18,7 +18,8 @@ export class TeamDetailStatisticsComponent implements OnInit {
   public draws: IMatch[] = [];
   public highestDefeat: IMatch;
 
-  constructor(private matchService: MatchService) { }
+  constructor(private matchService: MatchService) {
+  }
 
   ngOnInit() {
     this.getMatchesForTeam(this.team.id);
@@ -35,20 +36,20 @@ export class TeamDetailStatisticsComponent implements OnInit {
         if (match.result && match.result.guestTeamGoals && match.result.homeTeamGoals) {
           if (match.isHomeTeam) {
             if (match.result.homeTeamGoals < match.result.guestTeamGoals) {
-              this.defeats.push(match)
+              this.defeats.push(match);
             } else if (match.result.homeTeamGoals > match.result.guestTeamGoals) {
-              this.wins.push(match)
+              this.wins.push(match);
             }
           } else {
             if (match.result.guestTeamGoals < match.result.homeTeamGoals) {
-              this.defeats.push(match)
+              this.defeats.push(match);
             } else if (match.result.guestTeamGoals > match.result.homeTeamGoals) {
-              this.wins.push(match)
+              this.wins.push(match);
             }
           }
 
           if (match.result.homeTeamGoals === match.result.guestTeamGoals) {
-            this.draws.push(match)
+            this.draws.push(match);
           }
         }
       });

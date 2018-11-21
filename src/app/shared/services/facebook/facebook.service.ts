@@ -14,7 +14,7 @@ export class FacebookService {
   constructor(private http: HttpClient) { }
 
   getPosts(pageName: string): Observable<any> {
-    let url = this.graphUrl + pageName + this.graphQuery;
+    const url = this.graphUrl + pageName + this.graphQuery;
 
     return this.http
       .get(url)

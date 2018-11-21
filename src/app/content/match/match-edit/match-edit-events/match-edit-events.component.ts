@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { IMatchEventCategory } from '../../../../shared/interfaces/match/match-event-category.interface';
 import { IMatchEvent } from 'src/app/shared/interfaces/match/match-event.interface';
 import { IMatch } from '../../../../shared/interfaces/match/match.interface';
@@ -32,7 +25,14 @@ export class MatchEditEventsComponent implements OnInit, OnChanges {
   }
 
   changeOrder($event: { sourceIndex: number, destinationIndex: number }) {
-    [this.match.assignedMatchEvents[$event.sourceIndex].ordering, this.match.assignedMatchEvents[$event.destinationIndex].ordering] = [this.match.assignedMatchEvents[$event.destinationIndex].ordering, this.match.assignedMatchEvents[$event.sourceIndex].ordering];
+    [
+      this.match.assignedMatchEvents[$event.sourceIndex].ordering,
+      this.match.assignedMatchEvents[$event.destinationIndex].ordering
+    ] =
+      [
+        this.match.assignedMatchEvents[$event.destinationIndex].ordering,
+        this.match.assignedMatchEvents[$event.sourceIndex].ordering
+      ];
     this.orderMatchEvents();
     this.saveMatch.emit(this.match);
   }

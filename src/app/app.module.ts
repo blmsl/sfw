@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './app.routing';
 import { TransferHttpCacheModule } from '@nguniversal/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -13,16 +14,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule.withServerTransition({
-      appId: environment.appId
-    }),
-    /* ServiceWorkerModule.register('/ngsw-config.js', {
-      enabled: environment.production
-    }), */
-    RouterModule.forRoot(appRoutes, {
-      enableTracing: environment.routerTracing
-    }),
-    TransferHttpCacheModule
+    BrowserModule.withServerTransition({ appId: environment.appId }),
+    RouterModule.forRoot(appRoutes, { enableTracing: environment.routerTracing }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    TransferHttpCacheModule,
   ],
   bootstrap: [
     AppComponent

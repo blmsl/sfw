@@ -1,14 +1,5 @@
-import {
-  Component,
-  Input,
-  OnInit
-} from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IArticle } from '../../../../shared/interfaces/article.interface';
 import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import { ITimeLineEvent } from '../../../../shared/interfaces/time-line-event.interface';
@@ -26,7 +17,7 @@ export class ClubTimelineComponent implements OnInit {
 
   public club: IClub;
   public form: FormGroup;
-  public selectedClubTimeLineEvent: number = -1;
+  public selectedClubTimeLineEvent = -1;
 
   constructor(private route: ActivatedRoute,
     private fb: FormBuilder) {

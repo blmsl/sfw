@@ -1,20 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import {
-  debounceTime,
-  distinctUntilChanged
-} from 'rxjs/internal/operators';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import { ITimeLineEvent } from '../../../../shared/interfaces/time-line-event.interface';
 
@@ -29,7 +15,7 @@ export class TeamEditTimelineComponent implements OnInit {
   @Output() saveTeam: EventEmitter<ITeam> = new EventEmitter<ITeam>(false);
 
   public form: FormGroup;
-  public selectedEvent: number = -1;
+  public selectedEvent = -1;
 
   constructor(private fb: FormBuilder) {
   }
@@ -79,12 +65,12 @@ export class TeamEditTimelineComponent implements OnInit {
   }
 
   editEvent($event: number): void {
-    //this.selectedEvent = $event;
-    //this.cd.detectChanges();
+    // this.selectedEvent = $event;
+    // this.cd.detectChanges();
   }
 
   saveEvent(): void {
-    //this.selectedEvent = -1;
+    // this.selectedEvent = -1;
   }
 
   removeEvent($event: number): void {

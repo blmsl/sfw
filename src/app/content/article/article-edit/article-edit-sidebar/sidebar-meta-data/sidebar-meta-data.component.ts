@@ -81,7 +81,7 @@ export class SidebarMetaDataComponent implements OnInit, OnChanges {
     }
   }
 
-  public step: number = 0;
+  public step = 0;
 
   setStep(index: number) {
     this.step = index;

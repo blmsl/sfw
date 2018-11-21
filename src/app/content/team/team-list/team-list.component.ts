@@ -1,17 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { ISeason } from '../../../shared/interfaces/season.interface';
 import { IClub } from '../../../shared/interfaces/club/club.interface';
-import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
 
 @Component({
   selector: 'team-list',
-  templateUrl: 'team-list.component.html',
+  templateUrl: 'team-list.component.html'
 })
 
-export class TeamListComponent {
+export class TeamListComponent implements OnInit {
 
   @Input() teams: ITeam[];
   @Input() categories: ICategory[];

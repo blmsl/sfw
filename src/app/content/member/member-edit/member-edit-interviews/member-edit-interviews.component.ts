@@ -22,7 +22,7 @@ export class MemberEditInterviewsComponent implements OnInit {
 
   @Input() articles: IArticle[];
   @Input() member: IMember;
-  @Input() showForm: boolean = false;
+  @Input() showForm = false;
 
   @Output() saveMember: EventEmitter<IMember> = new EventEmitter<IMember>(false);
 

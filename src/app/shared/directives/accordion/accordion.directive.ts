@@ -1,17 +1,11 @@
-import {
-  AfterContentChecked,
-  Directive
-} from '@angular/core';
-import {
-  NavigationEnd,
-  Router
-} from '@angular/router';
+import { AfterContentChecked, Directive } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 import { AccordionLinkDirective } from './accordionlink.directive';
-import { map, filter, scan } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 @Directive({
-  selector: '[appAccordion]'
+  selector: '[ngaAccordion]'
 })
 export class AccordionDirective implements AfterContentChecked {
 
@@ -52,9 +46,9 @@ export class AccordionDirective implements AfterContentChecked {
   ngAfterContentChecked(): void {
     this.router.events.pipe(
       filter((event: any) => {
-        return event instanceof NavigationEnd
+        return event instanceof NavigationEnd;
       })
-    ).subscribe((e: any) => this.checkOpenLinks());
+    ).subscribe(() => this.checkOpenLinks());
   }
 
   constructor(private router: Router) {

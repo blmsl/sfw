@@ -29,7 +29,7 @@ export class UserEditMainComponent implements OnInit {
   @Output() saveUser: EventEmitter<IUser> = new EventEmitter<IUser>(false);
 
   public form: FormGroup;
-  public notEditableMessage: boolean = false;
+  public notEditableMessage = false;
 
   constructor(private fb: FormBuilder,
     private alertService: AlertService,

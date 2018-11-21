@@ -46,10 +46,10 @@ import { MediaItemService } from '../../shared/services/media/media-item.service
 import { SeasonService } from '../../shared/services/season/season.service';
 import { IsTeamMemberFilterPipe } from '../../shared/pipes/is-team-member-filter.pipe';
 import { SeasonsWithTeamsFilterPipe } from '../../shared/pipes/seasons-with-teams-filter.pipe';
-import { MemberEditFunctionsComponent } from "./member-edit/member-edit-functions/member-edit-functions.component";
-import { IsTeamManagementFilterPipe } from "../../shared/pipes/is-team-management-filter.pipe";
-import { CreationModule } from "../../shared/components/creation/creation.module";
-import { IsMemberInClubManagementFilterPipe } from "../../shared/pipes/is-member-in-club-management-filter.pipe";
+import { MemberEditFunctionsComponent } from './member-edit/member-edit-functions/member-edit-functions.component';
+import { IsTeamManagementFilterPipe } from '../../shared/pipes/is-team-management-filter.pipe';
+import { CreationModule } from '../../shared/components/creation/creation.module';
+import { IsMemberInClubManagementFilterPipe } from '../../shared/pipes/is-member-in-club-management-filter.pipe';
 import { MemberMatchStatisticsComponent } from './member-match-statistics/member-match-statistics.component';
 import { FameMemberListComponent } from './fame-member/fame-member-list/fame-member-list.component';
 import { FameMemberEntryComponent } from './fame-member/fame-member-entry/fame-member-entry.component';

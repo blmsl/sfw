@@ -1,7 +1,7 @@
 import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
 
 @Directive({
-  selector: '[fileSelect]'
+  selector: '[ngaFileSelect]'
 })
 export class FileSelectDirective {
 
@@ -12,7 +12,6 @@ export class FileSelectDirective {
 
   @HostListener('change', ['$event'])
   onChange($event) {
-    console.log($event);
     this.selectedFiles.emit($event.target.files);
   }
 

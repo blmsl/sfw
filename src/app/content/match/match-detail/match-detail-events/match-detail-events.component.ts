@@ -12,7 +12,7 @@ export class MatchDetailEventsComponent implements OnInit {
   @Input() matchEvents: IMatchEvent[];
   @Input() eventCategories: IMatchEventCategory[];
 
-  public stacked: boolean = false;
+  public stacked = false;
 
   constructor() {
   }

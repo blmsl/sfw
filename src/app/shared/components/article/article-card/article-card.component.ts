@@ -9,9 +9,9 @@ import { IArticle } from '../../../interfaces/article.interface';
 export class ArticleCardComponent implements OnInit {
 
   @Input() article: IArticle;
-  @Input() showDeleteButton: boolean = false;
-  @Input() showPublication: boolean = false;
-  @Input() showText: boolean = true;
+  @Input() showDeleteButton = false;
+  @Input() showPublication = false;
+  @Input() showText = true;
 
   @Input() itemSize: number;
 

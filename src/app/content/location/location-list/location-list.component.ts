@@ -38,7 +38,7 @@ export class LocationListComponent implements OnInit {
 
   removeLocation(location: ILocation) {
     this.locationService.removeLocation(location).then(() => {
-      //this.form.controls['searchFor'].reset()
+      // this.form.controls['searchFor'].reset()
     }
     );
   }

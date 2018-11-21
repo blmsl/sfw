@@ -21,12 +21,12 @@ export class ArticleEditComponent implements OnInit {
 
   @ViewChild('settings') settings;
 
-  public isSmallDevice: boolean = false;
+  public isSmallDevice = false;
 
   public article: IArticle;
-  public articleStatus: string = 'new';
+  public articleStatus = 'new';
   public form: FormGroup;
-  public showPreview: boolean = false;
+  public showPreview = false;
 
   public items: any = [];
 

@@ -1,25 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IApplication } from '../../../../shared/interfaces/application.interface';
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../../shared/interfaces/category.interface';
 import { IStaticPage } from '../../../../shared/interfaces/static-page.interface';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  debounceTime,
-  distinctUntilChanged
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'static-pages',
@@ -33,7 +19,7 @@ export class StaticPagesComponent implements OnInit {
   @Output() saveApplication: EventEmitter<IApplication> = new EventEmitter<IApplication>(false);
 
   public form: FormGroup;
-  public selectedStaticPage: number = -1;
+  public selectedStaticPage = -1;
 
   constructor(private translateService: TranslateService,
     private fb: FormBuilder) {

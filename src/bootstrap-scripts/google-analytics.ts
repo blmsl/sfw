@@ -1,8 +1,9 @@
 import { environment } from '../environments/environment';
 
 export const googleAnalytics = () => {
-  if (!environment.googleAnalytics || environment.gaTrackingCode.length == 0)
+  if (!environment.googleAnalytics || environment.gaTrackingCode.length == 0) {
     return;
+  }
 
   const script = document.createElement('script');
   const scriptGA = document.createElement('script');

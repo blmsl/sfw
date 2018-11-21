@@ -16,7 +16,7 @@ export class ClubManagementComponent implements OnInit {
   @Input() showLinks: boolean;
   @Output() saveClub: EventEmitter<IClub> = new EventEmitter<IClub>(false);
 
-  public showForm: boolean = false;
+  public showForm = false;
   public selectedPosition: IClubManagement;
 
   constructor() {

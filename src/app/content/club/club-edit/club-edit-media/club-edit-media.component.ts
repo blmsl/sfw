@@ -47,7 +47,7 @@ export class ClubEditMediaComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: { club: IClub }) => {
       this.club = data.club;
-      this.uploaderOptions.itemId
+      this.uploaderOptions.itemId = this.club.id;
       this.mediaItems$ = this.mediaItemService.getMediaItems([], this.club.id);
       this.mediaGalleries$ = this.mediaGalleryService.getAssignedGalleries(this.club.id);
     });

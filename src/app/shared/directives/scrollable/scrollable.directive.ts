@@ -1,30 +1,33 @@
-import { Directive, HostListener, EventEmitter, Output, ElementRef, Input } from '@angular/core';
+import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
-export type ScrollEvent = {
-  isReachingBottom: boolean,
-  isReachingTop: boolean,
-  originalEvent: Event,
-  isWindowEvent: boolean
-};
+export interface ScrollEvent {
+  isReachingBottom: boolean;
+  isReachingTop: boolean;
+  originalEvent: Event;
+  isWindowEvent: boolean;
+}
 
 @Directive({
-  selector: '[scrollable]'
+  selector: '[ngaScrollable]'
 })
 export class ScrollableDirective {
 
-  @Input() public bottomOffset: number = 100;
-  @Input() public topOffset: number = 100;
-  @Output() public onScroll = new EventEmitter<ScrollEvent>();
+  @Input() public bottomOffset = 100;
+  @Input() public topOffset = 100;
+  @Output() public onScroll: EventEmitter<ScrollEvent> = new EventEmitter<ScrollEvent>(false);
 
-  constructor() { }
+  constructor() {
+  }
 
   // handle host scroll
-  @HostListener('scroll', ['$event']) public scrolled($event: Event) {
+  @HostListener('scroll', ['$event'])
+  public scrolled($event: Event) {
     this.elementScrollEvent($event);
   }
 
   // handle window scroll
-  @HostListener('window:scroll', ['$event']) public windowScrolled($event: Event) {
+  @HostListener('window:scroll', ['$event'])
+  public windowScrolled($event: Event) {
     this.windowScrollEvent($event);
   }
 

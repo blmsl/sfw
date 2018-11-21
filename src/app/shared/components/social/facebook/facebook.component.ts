@@ -27,17 +27,18 @@ export class FacebookComponent {
       message: post.message,
       photos: this.getPhotos(post)
     };
-  };
+  }
 
   getPhotos = (post) => {
-    if (!post.attachments)
+    if (!post.attachments) {
       return [];
+    }
 
-    let attachments = post.attachments.data[0].subattachments ||
+    const attachments = post.attachments.data[0].subattachments ||
       post.attachments;
 
     return attachments.data
-      .filter(x => x.type == "photo")
+      .filter(x => x.type == 'photo')
       .map(x => x.media.image);
   }
 

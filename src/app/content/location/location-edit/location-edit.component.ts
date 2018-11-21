@@ -169,7 +169,7 @@ export class LocationEditComponent implements OnInit {
     });
   }
 
-  saveLocation(redirect: boolean = false) {
+  saveLocation(redirect = false) {
     let action;
     if (this.location.id) {
       action = this.locationService.updateLocation(this.location.id, this.location);

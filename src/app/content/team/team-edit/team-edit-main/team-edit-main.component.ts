@@ -1,24 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ICategoryType } from '../../../../shared/interfaces/category-type.interface';
 import { ICategory } from '../../../../shared/interfaces/category.interface';
 import { ISeason } from '../../../../shared/interfaces/season.interface';
 import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
-import {
-  debounceTime,
-  distinctUntilChanged
-} from 'rxjs/internal/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'team-edit-main',
@@ -35,14 +22,13 @@ export class TeamEditMainComponent implements OnInit {
   @Output() saveTeam: EventEmitter<ITeam> = new EventEmitter<ITeam>(false);
 
   public form: FormGroup;
-  public titleMaxLength: number = 50;
-  public shortTitleMaxLength: number = 25;
+  public titleMaxLength = 50;
+  public shortTitleMaxLength = 25;
 
   constructor(private fb: FormBuilder) {
   }
 
   ngOnInit() {
-
     this.form = this.fb.group({
       title: [this.team.title, [Validators.required, Validators.minLength(5), Validators.maxLength(this.titleMaxLength)]],
       subTitle: this.team.subTitle,

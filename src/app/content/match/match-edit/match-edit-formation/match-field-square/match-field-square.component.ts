@@ -1,8 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
 import { ICoord } from '../../../../../shared/interfaces/match/coord.interface';
 import { MatchService } from '../../../../../shared/services/match/match.service';
 import { IMatch } from '../../../../../shared/interfaces/match/match.interface';
@@ -16,7 +12,7 @@ import { IMember } from '../../../../../shared/interfaces/member/member.interfac
   styleUrls: ['./match-field-square.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MatchFieldSquareComponent {
+export class MatchFieldSquareComponent implements OnDestroy {
 
   @Input() position: ICoord;
   @Input() kp: ICoord[];
@@ -34,8 +30,8 @@ export class MatchFieldSquareComponent {
   }
 
   get selectedPlayer() {
-    const startingPosition = this.match.startingEleven.find((startingPosition: IStartingPosition) => {
-      return startingPosition.position.x === this.position.x && startingPosition.position.y === this.position.y;
+    const startingPosition = this.match.startingEleven.find((detailStartingPosition: IStartingPosition) => {
+      return detailStartingPosition.position.x === this.position.x && startingPosition.position.y === this.position.y;
     });
     if (!startingPosition) {
       return false;

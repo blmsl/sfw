@@ -5,7 +5,7 @@ import {
 import { AccordionDirective } from './accordion.directive';
 
 @Directive({
-  selector: '[appAccordionLink]'
+  selector: '[ngaAccordionLink]'
 })
 export class AccordionLinkDirective implements OnInit, OnDestroy {
 

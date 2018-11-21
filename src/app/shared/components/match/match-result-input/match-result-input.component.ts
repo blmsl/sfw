@@ -16,8 +16,8 @@ export class MatchResultInputComponent implements OnInit {
 
   public form: FormGroup;
 
-  public cssClass: string = '';
-  public isSaving: boolean = false;
+  public cssClass = '';
+  public isSaving = false;
 
   constructor(private fb: FormBuilder,
     private matchService: MatchService) {

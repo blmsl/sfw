@@ -16,7 +16,7 @@ export class LocationsByCategoryComponent implements OnChanges {
   @Input() categories: ICategory[];
   @Input() locations: ILocation[];
 
-  public isDataAvailable: boolean = false;
+  public isDataAvailable = false;
 
   globalChartOptions: any = {
     responsive: true,
@@ -44,7 +44,7 @@ export class LocationsByCategoryComponent implements OnChanges {
     if (this.categories && this.locations) {
       for (let i = 0; i < this.categories.length; i++) {
 
-        let locationCounter: number = 0;
+        let locationCounter = 0;
         for (let j = 0; j < this.locations.length; j++) {
           if (this.locations[j].assignedCategory === this.categories[i].id) {
             locationCounter++;

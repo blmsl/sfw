@@ -19,7 +19,7 @@ export class MemberStatisticsComponent implements OnInit {
   public ahStates: IMemberState[];
   public config: PerfectScrollbarConfigInterface = {};
   public today: any;
-  public currentYear: any
+  public currentYear: any;
 
   constructor(private memberService: MemberService, private memberStateService: MemberStateService) {
     this.members$ = memberService.members$;

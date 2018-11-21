@@ -6,7 +6,6 @@ import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
 import { MediaItemService } from '../../../../shared/services/media/media-item.service';
 import { Observable } from 'rxjs/index';
-import { MatchService } from "src/app/shared/services/match/match.service";
 
 @Component({
   selector: 'team-detail-main',
@@ -24,7 +23,7 @@ export class TeamDetailMainComponent implements OnInit {
   public teamLogo: Observable<IMediaItem>;
   public teamImage: Observable<IMediaItem>;
 
-  constructor(private mediaItemService: MediaItemService, private matchService: MatchService) {
+  constructor(private mediaItemService: MediaItemService) {
   }
 
   ngOnInit() {

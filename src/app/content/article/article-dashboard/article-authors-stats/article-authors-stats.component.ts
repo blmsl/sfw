@@ -16,7 +16,7 @@ export class ArticleAuthorsStatsComponent implements OnInit {
   @Input() articles: {};
   @Input() users: IUser[];
 
-  public isDataAvailable: boolean = false;
+  public isDataAvailable = false;
 
   globalChartOptions: any = {
     responsive: true,
@@ -44,10 +44,10 @@ export class ArticleAuthorsStatsComponent implements OnInit {
 
     if (this.articles) {
 
-      for (let memberId in this.articles) {
+      for (const memberId in this.articles) {
         const value: IArticle[] = this.articles[memberId];
 
-        let author = this.users.find((user: IUser) => {
+        const author = this.users.find((user: IUser) => {
           return user.id === memberId;
         });
         const name = author.firstName && author.lastName ? author.firstName + ' ' + author.lastName : author.email;

@@ -25,7 +25,7 @@ export class MatchEditArticlesComponent implements OnInit {
   }
 
   deleteArticleToMatchAssignment(article: IArticle): void {
-    let matchIndex = article.assignedMatches.indexOf(this.match.id);
+    const matchIndex = article.assignedMatches.indexOf(this.match.id);
     article.assignedMatches.splice(matchIndex, 1);
 
     this.articleService.updateArticle(article.id, article).then(

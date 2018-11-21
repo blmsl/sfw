@@ -4,28 +4,28 @@ import {
   Input,
   OnInit,
   Output
-}                                from '@angular/core';
-import { IMember }               from '../../../../shared/interfaces/member/member.interface';
-import { IFormation }            from '../../../../shared/interfaces/match/formation.interface';
-import { IMatch }                from '../../../../shared/interfaces/match/match.interface';
+} from '@angular/core';
+import { IMember } from '../../../../shared/interfaces/member/member.interface';
+import { IFormation } from '../../../../shared/interfaces/match/formation.interface';
+import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 import { MatchFormationService } from '../../../../shared/services/match/match-formation.service';
 import {
   FormBuilder,
   FormGroup
-}                                from '@angular/forms';
+} from '@angular/forms';
 import {
   distinctUntilChanged,
   first
-}                                from 'rxjs/internal/operators';
-import { CdkDragDrop }           from '@angular/cdk/drag-drop';
-import { ICoord }                from '../../../../shared/interfaces/match/coord.interface';
-import { MatSelectChange }       from '@angular/material';
-import { MemberService }         from '../../../../shared/services/member/member.service';
+} from 'rxjs/internal/operators';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { ICoord } from '../../../../shared/interfaces/match/coord.interface';
+import { MatSelectChange } from '@angular/material';
+import { MemberService } from '../../../../shared/services/member/member.service';
 
 @Component({
   selector: 'match-edit-formation',
   templateUrl: './match-edit-formation.component.html',
-  styleUrls: [ './match-edit-formation.component.scss' ]
+  styleUrls: ['./match-edit-formation.component.scss']
 })
 export class MatchEditFormationComponent implements OnInit {
 
@@ -40,12 +40,12 @@ export class MatchEditFormationComponent implements OnInit {
   public playerPositions: ICoord[];
   public coordinates = [];
 
-  items = [ 'Zero', 'One', 'Two', 'Three' ];
+  items = ['Zero', 'One', 'Two', 'Three'];
   playerList = [];
 
   constructor(private matchFormationService: MatchFormationService,
-              private memberService: MemberService,
-              private fb: FormBuilder) {
+    private memberService: MemberService,
+    private fb: FormBuilder) {
     this.tacticalFormations = matchFormationService.getFormations();
   }
 
@@ -975,8 +975,8 @@ export class MatchEditFormationComponent implements OnInit {
 
   setPlayerPositions(formationTitle: string) {
 
-    const formation = this.tacticalFormations.find((formation: IFormation) => {
-      return formation.title === formationTitle;
+    const formation = this.tacticalFormations.find((detailFormation: IFormation) => {
+      return detailFormation.title === formationTitle;
     });
     this.playerPositions = this.matchFormationService.getFormationPositions(formation);
     console.log(this.playerPositions);
@@ -985,9 +985,9 @@ export class MatchEditFormationComponent implements OnInit {
   initializeFieldPositions() {
     this.thirty = [];
 
-    for (const i of [ ...Array(6) ]) {
+    for (const i of [...Array(6)]) {
       const row: IMember[] = [];
-      for (const j of [ ...Array(5) ]) {
+      for (const j of [...Array(5)]) {
         this.memberService.setNewMember().pipe(first()).subscribe((member: IMember) =>
           row.push(member));
       }
@@ -996,14 +996,14 @@ export class MatchEditFormationComponent implements OnInit {
   }
 
   getCoordinates(i): ICoord {
-    if (this.coordinates[ i ]) {
-      return this.coordinates[ i ];
+    if (this.coordinates[i]) {
+      return this.coordinates[i];
     }
-    let coords: ICoord = {
+    const coords: ICoord = {
       x: i % 6,
       y: Math.floor(i / 6)
     };
-    return this.coordinates[ i ] = coords;
+    return this.coordinates[i] = coords;
   }
 
   checkCoordinates(x: number, y: number): boolean {
@@ -1019,7 +1019,7 @@ export class MatchEditFormationComponent implements OnInit {
   addToList(event: CdkDragDrop<string[]>) {
     console.log(event);
     if (event.previousContainer.id !== event.container.id) {
-      if ([ '0', '1', '2', '3', '4', '5' ].includes(event.container.id)) {
+      if (['0', '1', '2', '3', '4', '5'].includes(event.container.id)) {
         const x = Number.parseInt(event.container.id, 10);
         this.thirty = this.thirty.map((element: IMember[], index: number) => {
           if (index === x) {

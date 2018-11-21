@@ -6,15 +6,9 @@ import { IUploaderConfig } from '../../../../interfaces/media/uploader-config.in
 import { MediaItemService } from '../../../../services/media/media-item.service';
 import { IMediaItem } from '../../../../interfaces/media/media-item.interface';
 import { AlertService } from '../../../../services/alert/alert.service';
-import {
-  Observable,
-  of
-} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import {
-  AngularFireStorageReference,
-  AngularFireUploadTask
-} from '@angular/fire/storage';
+import { AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -27,7 +21,6 @@ export class MediaUploaderComponent implements OnInit {
   @Input() uploaderOptions: IUploaderOptions;
   @Input() uploaderConfig: IUploaderConfig;
 
-  // return created ID
   @Output() uploadCompleted: EventEmitter<string> = new EventEmitter<string>(false);
   // @Output() unsplashSidebar: EventEmitter<void> = new EventEmitter<void>(false);
 
@@ -35,13 +28,12 @@ export class MediaUploaderComponent implements OnInit {
 
   public currentUploads: Upload[] = [];
   public isHovering: boolean;
-  public canUpload: boolean = true;
+  public canUpload = true;
   public currentMediaItem$: Observable<IMediaItem>;
 
   public savedItemId: string;
 
   constructor(private alertService: AlertService,
-    public sanitizer: DomSanitizer,
     private afs: AngularFirestore,
     private el: ElementRef,
     private mediaItemService: MediaItemService,
@@ -137,10 +129,10 @@ export class MediaUploaderComponent implements OnInit {
           file: {
             size: fileUpload.file.size,
             name: fileUpload.file.name,
-            type: fileUpload.file.type,
+            type: fileUpload.file.type
           },
           itemId: this.uploaderOptions.itemId,
-          downloadURL: downloadURL,
+          downloadURL: downloadURL
         };
         this.mediaItemService.createMediaItem(mediaItem).then(() => {
           this.alertService.showSnackBar('success', 'general.uploader.singleFinished');

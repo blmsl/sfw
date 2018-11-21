@@ -1,4 +1,4 @@
 export interface ILineChartData {
-  data: number[],
-  label: string
+  data: number[];
+  label: string;
 }

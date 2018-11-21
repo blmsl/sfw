@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IClub } from '../../../shared/interfaces/club/club.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClubService } from '../../../shared/services/club/club.service';
@@ -21,7 +21,7 @@ import { ITeam } from '../../../shared/interfaces/team/team.interface';
   templateUrl: 'club-detail.component.html'
 })
 
-export class ClubDetailComponent {
+export class ClubDetailComponent implements OnInit {
 
   public club: IClub;
   public members$: Observable<IMember[]>;

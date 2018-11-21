@@ -18,7 +18,7 @@ import { combineLatest } from 'rxjs';
 })
 export class TeamStatisticsComponent implements OnInit {
 
-  public isLoaded: boolean = false;
+  public isLoaded = false;
 
   public lineChartData: ILineChartData[] = [];
   public lineChartOptions: any = {
@@ -39,7 +39,7 @@ export class TeamStatisticsComponent implements OnInit {
 
       results[1].forEach((category: ICategory, index: number) => {
 
-        let teamCountArray: number[] = [];
+        const teamCountArray: number[] = [];
 
         results[0].forEach((season: ISeason) => {
 
@@ -47,7 +47,7 @@ export class TeamStatisticsComponent implements OnInit {
             this.lineChartLabels.push(season.title);
           }
 
-          let test = results[2].filter((team: ITeam) => {
+          const test = results[2].filter((team: ITeam) => {
             return team.assignedSeason === season.id && team.assignedTeamCategories.indexOf(category.id) > -1;
           });
           teamCountArray.push(test.length);

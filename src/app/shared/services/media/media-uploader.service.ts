@@ -9,10 +9,10 @@ import {
   AngularFireUploadTask
 } from '@angular/fire/storage';
 
-export type FilterFunction = {
-  name: string,
-  fn: (upload?: Upload, options?: IUploaderOptions) => boolean
-};
+export interface FilterFunction {
+  name: string;
+  fn: (upload?: Upload, options?: IUploaderOptions) => boolean;
+}
 
 @Injectable()
 export class MediaUploaderService {

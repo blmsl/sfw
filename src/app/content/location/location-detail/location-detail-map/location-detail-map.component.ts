@@ -18,7 +18,7 @@ export class LocationDetailMapComponent implements OnInit {
   public errorMessage: any;
   public formattedAddress: string;
 
-  public zoom: number = 13;
+  public zoom = 13;
 
   public lat: number;
   public lng: number;

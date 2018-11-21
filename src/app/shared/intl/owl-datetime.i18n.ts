@@ -1,4 +1,4 @@
-import { OwlDateTimeIntl } from "ng-pick-datetime";
+import { OwlDateTimeIntl } from 'ng-pick-datetime';
 
 export class DeIntl extends OwlDateTimeIntl {
   /** A label for the up second button (used by screen readers).  */
@@ -60,4 +60,4 @@ export class DeIntl extends OwlDateTimeIntl {
 
   /** A label for the hour12 button (PM) */
   hour12PMLabel = 'nachmittags';
-};
+}

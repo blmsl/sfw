@@ -56,7 +56,7 @@ export class ApplicationService {
   }
 
   getWeekdays(): number[] {
-    let weekdays = [];
+    const weekdays = [];
     for (let i = 0; i < 7; i++) {
       weekdays.push(i);
     }

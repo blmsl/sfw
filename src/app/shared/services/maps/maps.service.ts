@@ -46,7 +46,7 @@ export class MapsService {
 
     return Observable.create(observer => {
       this.mapsAPILoader.load().then(() => {
-        let geocoder = new google.maps.Geocoder();
+        const geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': locationString }, (results, status) => {
           if (status == google.maps.GeocoderStatus.OK) {
             observer.next(results[0].geometry.location);
@@ -58,7 +58,7 @@ export class MapsService {
       }).catch((err: any) => {
         observer.error(err);
       });
-    })
+    });
   }
 
 }

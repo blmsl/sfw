@@ -15,4 +15,4 @@ document.addEventListener('DOMContentLoaded', () => {
   platformBrowserDynamic().bootstrapModule(AppModule).then();
 });
 // });
-//googleAnalytics();
+// googleAnalytics();

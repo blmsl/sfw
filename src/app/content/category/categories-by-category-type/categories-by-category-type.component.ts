@@ -12,7 +12,7 @@ export class CategoriesByCategoryTypeComponent implements OnChanges {
   @Input() categories: ICategory[];
   @Input() categoryTypes: ICategoryType[];
 
-  public isDataAvailable: boolean = false;
+  public isDataAvailable = false;
 
   globalChartOptions: any = {
     responsive: true,
@@ -39,7 +39,7 @@ export class CategoriesByCategoryTypeComponent implements OnChanges {
   ngOnChanges() {
     if (this.categories && this.categoryTypes) {
       for (let i = 0; i < this.categoryTypes.length; i++) {
-        let categoryCounter: number = 0;
+        let categoryCounter = 0;
         for (let j = 0; j < this.categories.length; j++) {
           if (this.categories[j].assignedCategoryType === this.categoryTypes[i].id) {
             categoryCounter++;

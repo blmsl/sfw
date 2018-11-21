@@ -18,7 +18,7 @@ export class SignUpComponent implements OnInit {
   @Output() toggleFormVisibility: EventEmitter<any> = new EventEmitter(false);
 
   public form: FormGroup;
-  public isLoading: boolean = false;
+  public isLoading = false;
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,

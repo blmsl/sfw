@@ -1,4 +1,7 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {
+  Pipe,
+  PipeTransform
+} from '@angular/core';
 
 @Pipe({
   name: 'isMemberInStartingElevenFilter'
@@ -10,15 +13,17 @@ export class IsMemberInStartingElevenFilterPipe implements PipeTransform {
     position: string
   }[]): string[] {
 
-    if (!memberIds && !assignedPositions)
+    if (!memberIds && !assignedPositions) {
       return;
+    }
 
-    if (!assignedPositions)
+    if (!assignedPositions) {
       return memberIds;
+    }
 
     return memberIds.filter((memberId: string) => {
 
-      let foundMember: boolean = false;
+      let foundMember = false;
 
       assignedPositions.filter((assignedPosition: {
         memberId: string,

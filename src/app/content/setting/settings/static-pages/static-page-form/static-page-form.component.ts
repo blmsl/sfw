@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ICategory } from '../../../../../shared/interfaces/category.interface';
 
@@ -20,7 +14,7 @@ export class StaticPageFormComponent implements OnInit {
   @Input() categories: ICategory[];
   @Output() setSelectedPage: EventEmitter<number> = new EventEmitter<number>(false);
 
-  public titleMaxLength: number = 100;
+  public titleMaxLength = 100;
 
   constructor() {
   }

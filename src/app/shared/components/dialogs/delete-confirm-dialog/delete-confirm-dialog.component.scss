@@ -2,7 +2,7 @@ mat-dialog-content {
   counter-reset: footnotes;
 }
 
-[aria-describedby="footnote-label"] {
+[aria-describedby='footnote-label'] {
   counter-increment: footnotes;
   text-decoration: none;
   color: inherit;
@@ -10,7 +10,7 @@ mat-dialog-content {
   outline: none;
 }
 
-[aria-describedby="footnote-label"]::after {
+[aria-describedby='footnote-label']::after {
   content: '[' counter(footnotes) ']';
   vertical-align: super;
   font-size: 0.5em;
@@ -20,7 +20,7 @@ mat-dialog-content {
   cursor: pointer;
 }
 
-[aria-describedby="footnote-label"]:focus::after {
+[aria-describedby='footnote-label']:focus::after {
   outline: thin dotted;
   outline-offset: 2px;
 }

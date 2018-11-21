@@ -16,7 +16,7 @@ export class UserListComponent implements OnInit {
   @Output() update: EventEmitter<IUser> = new EventEmitter<IUser>(false);
 
   public form: FormGroup;
-  public searchFor: string = '';
+  public searchFor = '';
 
   public itemsPerPageOptions = [
     1, 5, 10, 25, 50, 100

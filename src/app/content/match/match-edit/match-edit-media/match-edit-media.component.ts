@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { IMatch }           from '../../../../shared/interfaces/match/match.interface';
-import { ActivatedRoute }   from '@angular/router';
-import { IMediaGallery }       from '../../../../shared/interfaces/media/media-gallery.interface';
-import { IUploaderOptions }    from '../../../../shared/interfaces/media/uploader-options.interface';
-import { IMediaItem }          from '../../../../shared/interfaces/media/media-item.interface';
-import { Observable }          from 'rxjs/index';
-import { IUploaderConfig }     from '../../../../shared/interfaces/media/uploader-config.interface';
-import { MediaItemService }    from '../../../../shared/services/media/media-item.service';
+import { IMatch } from '../../../../shared/interfaces/match/match.interface';
+import { ActivatedRoute } from '@angular/router';
+import { IMediaGallery } from '../../../../shared/interfaces/media/media-gallery.interface';
+import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-options.interface';
+import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
+import { Observable } from 'rxjs/index';
+import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
+import { MediaItemService } from '../../../../shared/services/media/media-item.service';
 import { MediaGalleryService } from '../../../../shared/services/media/media-gallery.service';
 
 @Component({
@@ -35,8 +35,8 @@ export class MatchEditMediaComponent implements OnInit {
   public mediaGalleries$: Observable<IMediaGallery[]>;
 
   constructor(private mediaItemService: MediaItemService,
-              private route: ActivatedRoute,
-              private mediaGalleryService: MediaGalleryService) { }
+    private route: ActivatedRoute,
+    private mediaGalleryService: MediaGalleryService) { }
 
   ngOnInit() {
     this.route.data.subscribe((data: { match: IMatch }) => {

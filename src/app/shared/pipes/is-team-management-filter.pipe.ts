@@ -13,9 +13,11 @@ export class IsTeamManagementFilterPipe implements PipeTransform {
       return teams;
     }
 
-    let result = teams.filter((team: ITeam) => {
+    const result = teams.filter((team: ITeam) => {
 
-      if (!team.assignedPositions) return false;
+      if (!team.assignedPositions) {
+        return false;
+      }
 
       for (let i = 0; i < team.assignedPositions.length; i++) {
         if (team.assignedPositions[i].assignedMember === member.id) {

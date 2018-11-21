@@ -13,7 +13,7 @@ export class IsTeamMemberFilterPipe implements PipeTransform {
       return teams;
     }
 
-    let result = teams.filter((team: ITeam) => {
+    const result = teams.filter((team: ITeam) => {
       return team[field] && team[field].indexOf(member.id) > -1;
     });
 

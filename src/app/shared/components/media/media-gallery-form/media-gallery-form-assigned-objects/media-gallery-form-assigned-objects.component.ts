@@ -30,7 +30,7 @@ export class MediaGalleryFormAssignedObjectsComponent implements OnInit, OnChang
   @Input() seasons: ISeason[];
 
   public assignedItems$: Observable<any[]>;
-  public isLoading: boolean = false;
+  public isLoading = false;
   public moment: any;
 
   constructor(private articleService: ArticleService,

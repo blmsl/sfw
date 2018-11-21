@@ -22,7 +22,7 @@ export class YoutubeComponent {
   }
 
   openPlaylist(id) {
-    //this.navCtrl.push(PlaylistPage, {id:id});
+    // this.navCtrl.push(PlaylistPage, {id:id});
   }
 
   infiniteScroll(ev) {
@@ -38,7 +38,7 @@ export class YoutubeComponent {
         } else {
           this.nextPageToken = data.json().nextPageToken;
         }*/
-      })
+      });
     } else {
       ev.complete();
     }

@@ -37,21 +37,21 @@ export class TeamDetailSeriesComponent implements OnInit {
           // Defeats
           if (match.isHomeTeam) {
             if (match.result.homeTeamGoals < match.result.guestTeamGoals) {
-              this.series.push("V")
+              this.series.push('V');
             } else if (match.result.homeTeamGoals > match.result.guestTeamGoals) {
-              this.series.push("S")
+              this.series.push('S');
             }
           } else {
             if (match.result.guestTeamGoals < match.result.homeTeamGoals) {
-              this.series.push("V")
+              this.series.push('V');
             } else if (match.result.guestTeamGoals > match.result.homeTeamGoals) {
-              this.series.push("S")
+              this.series.push('S');
             }
           }
 
           // Draws
           if (match.result.homeTeamGoals === match.result.guestTeamGoals) {
-            this.series.push("U");
+            this.series.push('U');
           }
         }
       });

@@ -10,7 +10,7 @@ export class LocationDetailContactComponent {
 
   @Input() location: ILocation;
   @Input() assignedMembers: IMember[];
-  @Input() showLinks: boolean = false;
+  @Input() showLinks = false;
 
   constructor() {
   }

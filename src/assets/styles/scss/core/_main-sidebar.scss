@@ -80,7 +80,7 @@ mat-sidenav.sidebar-panel {
       @include margin-left(.3125rem);
       text-align: center;
     }
-    .open > .mat-list-item-content > [appAccordionToggle] > .menu-caret {
+    .open > .mat-list-item-content > [ngaAccordionToggle] > .menu-caret {
       @include rotate(-180deg);
     }
     .menu-badge {
