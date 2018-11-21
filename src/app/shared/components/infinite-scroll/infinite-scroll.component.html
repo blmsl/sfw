@@ -1,6 +1,6 @@
-<ng-container *ngIf="infinite | async as items">
+<ng-container *ngIf="infinite$ | async as items">
 
-  <cdk-virtual-scroll-viewport  *ngIf="viewPortHeight && itemSize"
+  <cdk-virtual-scroll-viewport  *ngIf="viewPortHeight && itemSize && items.length > 0"
                                 [style.height]="viewPortHeight"
                                 [itemSize]="itemSize"
                                 (scrolledIndexChange)="nextBatch($event, (items[items.length - 1][sortField]))">

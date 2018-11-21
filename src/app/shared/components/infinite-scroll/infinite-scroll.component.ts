@@ -27,7 +27,7 @@ export class InfiniteScrollComponent {
   public theEnd = false;
 
   public offset = new BehaviorSubject(null);
-  public infinite: Observable<any[]>;
+  public infinite$: Observable<any[]>;
   public moment: any;
 
   constructor(private db: AngularFirestore) {
@@ -43,7 +43,7 @@ export class InfiniteScrollComponent {
       }, {})
     );
 
-    this.infinite = batchMap.pipe(map(v => Object.values(v)));
+    this.infinite$ = batchMap.pipe(map(v => Object.values(v)));
   }
 
   getBatch(offset) {

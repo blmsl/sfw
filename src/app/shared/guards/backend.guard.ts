@@ -14,7 +14,7 @@ import {
 } from 'rxjs/operators';
 import { IUser } from '../interfaces/user/user.interface';
 import { AlertService } from '../services/alert/alert.service';
-import { first } from 'rxjs/internal/operators';
+import { first, take } from 'rxjs/internal/operators';
 
 @Injectable()
 export class BackendGuard implements CanActivate {
@@ -28,13 +28,13 @@ export class BackendGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.user$.pipe(
-      first(),
+      take(1),
       map((user: IUser) => {
-        console.log(user);
-        return !!(user && (user.assignedRoles.admin || user.assignedRoles.editor));
+        return user && (user.assignedRoles.admin || user.assignedRoles.editor);
       }),
       tap((isAllowed: boolean) => {
         if (!isAllowed) {
+          console.log(isAllowed);
           this.authService.signOut().then(() => {
             this.alertService.showSnackBar('error', 'general.forbidden.text', 15000);
             return this.router.navigate(['login']);
