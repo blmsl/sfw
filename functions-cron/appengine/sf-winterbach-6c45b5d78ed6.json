@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "sf-winterbach",
+  "private_key_id": "6c45b5d78ed66ad96c71e6ae8d48157c95407d84",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDQ13Q3zqHWDrHo\nyL+QEqWzafzsd/kgOUVltqguPykXMELch7NufC1EyveRdXFz6L4YJQHLTACeEEc6\nHaTtZq9KKwnEkxE50D+w4ZGSTf6HUlOdVKaE2pv2dD2aNFKAj4euBj8RQ0RD7OEj\nFITlbhqLZO9iDvTg2BFtDZKpv2ulMxJ+2MmFR9MX6dmuL/nKUc28BgQXOtteHbvO\n4CXq4kyHKqKX8XDw/pe16DT0QoKF2I5tNBJyHCy/f0s4faWhydC7ZClbT3iOwNAX\neKlDA0mTkOPsHeEkpb4xrPQKPxPhRZkFCvqfniMr+c8HznDw0YNFTUm9BReptkqW\niPir4ngJAgMBAAECggEAB/GF/2Bp6e8tp63JEYUQDeq0XtcyX94lzFhd/cJTwQjK\nJkK4GbX579GriHoX2mGKJ3dy4cVuiZSTbPu3K/t5o9/Os44ne9Q2s/bkd1Tln0aL\nnSKc4dVB1OY3eJ/QWoj7D2y35eNx24aNSq0LYAGn21D3xPpOKKY3RXdccn3wLXyZ\n6iOsmRb3bf9FQiY0Uc7xsLzv/G2Cc2/S66AUJreQ/6HgqATAKyehQpB+IXhNKzxH\neYUkE4cabRWUMtNsBRNL2Uo5kb+AzaukAgweETGtbG/hgJpg3V8yn0LGLccFrtAm\nCvoNElR1QUdTLN3mK/aiuIujLYeIp0GCf1PvAMXYDQKBgQD7+0+jLDXMvEaIAD/y\n1uyLYfGnJyqP5ysTxWxOMdavA1GTnkA/tUy/BLzGMWzVOTzWooovPVxip2XP1wUG\nbtcro2S+V/YhsErXeu5vXkmH/UnH9DmX7nvHGytOFDHPgRJXaKbagCbhXrJ9dzFB\nJROjqGOEYDux5TDDYiELbPKejQKBgQDULAcv3ylV0vpa2nyShAtFNW3QxOEx0kT1\nKw96foLMtb7+tVs3C5n6W2QaEJwMmVrEAfRb9hxZv8dluKY1uocgyM9lQ8jQAkhN\nuopeUbbXyJ6qVbfsgEeYGMAyjJYQjlQvjIPAXpIUAADLrbig9RJZZNrOM/fgDQ+U\nULti1t5ObQKBgE2e0J1XFQuIQ8HJMenAQwV8mk//RKEneKGSgxZjS9qFjy+F5Ay7\n8HQ3JV94Aip8gz0qvJ5orHjHUBmCBs5Afo+2uWXY+rzN7YALIj+0L7pwT7YEiWk/\n0Wk3+VMH7YAaJmg+mIdeSpvJ6/myKb4DidU0HdO9QSY/j5HgPIWkfehRAoGBALWI\nainKbWpyFiRv9c/CTIZNnYTXPrpK5xdBXX/4CF+wTRdPAhlJwtfTJAWtGmcpOuCj\nr3iTTVR44tkksIkd7Anf5psE8ScQHN7scQEcNy3PB/pDVxdx9k+rNZ7KbIcD0AHS\n3tNT1vZnvkaGf4avyKBVy2RMUJQReLf0jy+VGiXNAoGAJoROl78Hap9MhtkCQHsM\n69UGrrDRlp7gKgwfn0Rnu7aQs+56jaadhdsK+afRI+VTIMUr/oDIDSWSX3rw0FwV\n3azAuWdSLIDkLWMP62Vp02JVjzg48WeRf4EBRKpW1oJuVBq29ILB57XicgDUipDL\nP0H21fJArmVptnv0hxHq7p0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "sf-winterbach@appspot.gserviceaccount.com",
+  "client_id": "102339149695770080967",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sf-winterbach%40appspot.gserviceaccount.com"
+}
