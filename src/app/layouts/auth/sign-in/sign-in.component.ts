@@ -1,7 +1,21 @@
-import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../shared/services/auth/auth.service';
+import {
+  Component,
+  ComponentFactoryResolver,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+}                       from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+}                       from '@angular/forms';
+import {
+  ActivatedRoute,
+  Router
+}                       from '@angular/router';
+import { AuthService }  from '../../../shared/services/auth/auth.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
@@ -32,22 +46,10 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams[ 'returnUrl' ] || '/';
     this.form = this.fb.group({
-      email: [
-        '',
-        [
-          Validators.email
-        ]
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(this.passwordMinLength),
-          Validators.maxLength(this.passwordMaxLength)
-        ]
-      ]
+      email: [ '', [ Validators.email ] ],
+      password: [ '', [ Validators.required, Validators.minLength(this.passwordMinLength), Validators.maxLength(this.passwordMaxLength) ] ]
     });
   }
 
@@ -58,9 +60,9 @@ export class SignInComponent implements OnInit {
       email: this.form.value.email,
       password: this.form.value.password
     };
-    this.authService.signIn(credentials).then((status) => {
+    this.authService.signIn(credentials).then(() => {
       this.isLoading = false;
-      return this.router.navigate([this.returnUrl]);
+      return this.router.navigate([ this.returnUrl ]);
     }).catch((error: any) => {
       this.isLoading = false;
       this.alertService.showSnackBar('error', error.code);
@@ -106,7 +108,7 @@ export class SignInComponent implements OnInit {
     return loginAction
       .then(() => {
         this.alertService.showSnackBar('success', 'successful.social.login');
-        return this.router.navigate([this.returnUrl]);
+        return this.router.navigate([ this.returnUrl ]);
       })
       .catch((error: any) => {
         this.isLoading = false;
