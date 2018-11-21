@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IMember } from "../../../../shared/interfaces/member/member.interface";
-import { IMemberOfTheWeek } from "../../../../shared/interfaces/member/member-of-the-week.interface";
+import { IMemberOfTheWeek } from '../../../../shared/interfaces/member/member-of-the-week.interface';
 
 @Component({
   selector: 'fame-member-list',
@@ -13,7 +12,8 @@ export class FameMemberListComponent implements OnInit {
 
   public selectedFameMemberWeek: IMemberOfTheWeek;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

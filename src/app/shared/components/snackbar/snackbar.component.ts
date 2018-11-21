@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class SnackbarComponent implements OnInit {
 
-  public message: string = '';
+  public message = '';
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: {
     message: string,

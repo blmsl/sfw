@@ -15,7 +15,7 @@ export class DetailLinkComponent {
   @Input() buttonColor: string = '';
   @Input() showIcon: boolean;
   @Input() showText: boolean;
-  @Input() buttonDisabledStatus: boolean = false; */
+  @Input() buttonDisabledStatus = false; */
 
   constructor() {
   }

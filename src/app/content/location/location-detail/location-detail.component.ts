@@ -1,11 +1,5 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 import { IArticle } from '../../../shared/interfaces/article.interface';

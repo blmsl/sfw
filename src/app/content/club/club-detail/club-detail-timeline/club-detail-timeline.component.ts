@@ -14,7 +14,7 @@ import { ArticleService } from '../../../../shared/services/article/article.serv
 export class ClubDetailTimelineComponent implements OnInit {
 
   @Input() club: IClub;
-  @Input() showLinks: boolean = false;
+  @Input() showLinks = false;
 
   public form: FormGroup;
   public articles$: Observable<IArticle[]>;

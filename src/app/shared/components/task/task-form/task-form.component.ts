@@ -11,10 +11,10 @@ import { TaskService } from '../../../services/task/task.service';
 export class TaskFormComponent implements OnInit {
 
   @Input() type: string;
-  @Input() redirectAfterSave: boolean = true;
+  @Input() redirectAfterSave = true;
   @Output() toggleForm: EventEmitter<boolean> = new EventEmitter(false);
 
-  public titleMaxLength: number = 30;
+  public titleMaxLength = 30;
   public form: FormGroup;
   public task: ITask;
   public error: any;

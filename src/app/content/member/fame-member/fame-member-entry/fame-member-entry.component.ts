@@ -1,17 +1,7 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
-import { IMemberOfTheWeek } from "../../../../shared/interfaces/member/member-of-the-week.interface";
-import {
-  Observable,
-  Subscription
-} from 'rxjs/index';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs/index';
 import { IMember } from '../../../../shared/interfaces/member/member.interface';
 import { MemberService } from '../../../../shared/services/member/member.service';
-import OnDisconnect = firebase.database.OnDisconnect;
 import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
 import { MediaItemService } from '../../../../shared/services/media/media-item.service';
 

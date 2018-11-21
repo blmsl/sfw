@@ -36,12 +36,13 @@ export class BirthdayRangeFilterPipe implements PipeTransform {
 
   sortByBirthday(a: IMember, b: IMember) {
 
-    if (!a.mainData.birthday || !b.mainData.birthday)
+    if (!a.mainData.birthday || !b.mainData.birthday) {
       return null;
+    }
 
     const thisYear: any = moment().format('YYYY');
-    let birthdayA: Moment = moment(a.mainData.birthday.full).set('year', thisYear);
-    let birthdayB: Moment = moment(b.mainData.birthday.full).set('year', thisYear);
+    const birthdayA: Moment = moment(a.mainData.birthday.full).set('year', thisYear);
+    const birthdayB: Moment = moment(b.mainData.birthday.full).set('year', thisYear);
 
     if (birthdayA.unix() <= birthdayB.unix()) {
       return -1;

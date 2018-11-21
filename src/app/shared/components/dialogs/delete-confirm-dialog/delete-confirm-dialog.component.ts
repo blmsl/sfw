@@ -14,8 +14,8 @@ export class DeleteConfirmDialogComponent implements OnInit {
     this.onCancelClick();
   }
 
-  public deleteFromFS: boolean = false;
-  public showDeleteCheckbox: boolean = false;
+  public deleteFromFS = false;
+  public showDeleteCheckbox = false;
 
   constructor(private dialogRef: MatDialogRef<DeleteConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {

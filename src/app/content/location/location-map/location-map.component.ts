@@ -26,7 +26,7 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   public locations$: Observable<ILocation[]>;
   public categories$: Observable<ICategory[]>;
 
-  public zoom: number = 10;
+  public zoom = 10;
   public latitude: number;
   public longitude: number;
   public markers: IMarker[] = [];
@@ -35,7 +35,7 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   public config: PerfectScrollbarConfigInterface = {};
 
   public categoriesFilter: string[] = [];
-  public titleFilter: string = '';
+  public titleFilter = '';
 
   @ViewChild(PerfectScrollbarDirective) directiveScroll: PerfectScrollbarDirective;
   @ViewChild(MatSelectionList) selectedLocations: MatSelectionList;
@@ -65,14 +65,14 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   }
 
   toggleLocationsMarker(): void {
-    let selectedLocations = this.selectedLocations.selectedOptions.selected;
+    const selectedLocations = this.selectedLocations.selectedOptions.selected;
     selectedLocations.forEach((option: MatListOption) => {
       this.getLatLng(option.value);
     });
   }
 
   getLatLng(location): void {
-    let subscription = this.mapsService.getLatLngFromAddress(location.address).subscribe(
+    const subscription = this.mapsService.getLatLngFromAddress(location.address).subscribe(
       (response: any) => this.setMarker(location, response.lat(), response.lng()),
       (error: any) => this.alertService.showSnackBar('error', 'general.locations.map.' + error)
     );

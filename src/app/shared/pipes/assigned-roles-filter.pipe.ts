@@ -8,7 +8,9 @@ export class AssignedRolesFilterPipe implements PipeTransform {
 
   transform(users: IUser[], roles: string[]): IUser[] {
 
-    if (!roles || roles.length === 0) return users;
+    if (!roles || roles.length === 0) {
+      return users;
+    }
 
     return users.filter((user: IUser) => {
       for (let i = 0; i < roles.length; i++) {

@@ -1,19 +1,5 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  forwardRef,
-  Input,
-  OnInit,
-  Output,
-  Renderer2,
-  ViewChild
-} from '@angular/core';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR
-} from '@angular/forms';
-import { OuterSubscriber } from 'rxjs/internal/OuterSubscriber';
+import { Component, ElementRef, forwardRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 const INLINE_EDIT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -32,18 +18,17 @@ export class InlineEditComponent implements ControlValueAccessor, OnInit {
 
   @ViewChild('inlineEditControl') inlineEditControl: ElementRef;
 
-  @Input() title: string = '';
-  @Input() type: string = 'text';
-  @Input() required: boolean = false;
-  @Input() disabled: boolean = false;
+  @Input() title = '';
+  @Input() type = 'text';
+  @Input() required = false;
+  @Input() disabled = false;
 
-  private _value: string = '';
-  private preValue: string = '';
-  public editing: boolean = false;
+  private _value = '';
+  private preValue = '';
+  public editing = false;
 
   public onChange: any = Function.prototype;
   public onTouched: any = Function.prototype;
-
 
   get value(): any {
     return this._value;

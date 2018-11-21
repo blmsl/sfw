@@ -14,7 +14,7 @@ export class AuthService {
   public userId: string;
 
   constructor(private afAuth: AngularFireAuth,
-              private afs: AngularFirestore) {
+    private afs: AngularFirestore) {
 
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {

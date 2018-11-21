@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IMember } from "../../../shared/interfaces/member/member.interface";
+import { IMember } from '../../../shared/interfaces/member/member.interface';
 import { ISeason } from '../../../shared/interfaces/season.interface';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
 

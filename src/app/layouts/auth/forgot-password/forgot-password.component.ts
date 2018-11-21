@@ -1,16 +1,16 @@
 import {
   Component,
-  ComponentFactoryResolver,
   EventEmitter,
   OnInit,
-  Output,
-  ViewChild,
-  ViewContainerRef
+  Output
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
-import { AlertComponent } from '../../../shared/directives/alert/alert.component';
 
 @Component({
   selector: 'forgot-password',
@@ -19,16 +19,12 @@ import { AlertComponent } from '../../../shared/directives/alert/alert.component
 export class ForgotPasswordComponent implements OnInit {
 
   public form: FormGroup;
-  public isLoading: boolean = false;
+  public isLoading = false;
 
   @Output() toggleFormVisibility: EventEmitter<any> = new EventEmitter(false);
-  @ViewChild('forgotPasswordAlertContainer', {
-    read: ViewContainerRef
-  }) forgotPasswordAlertContainer: ViewContainerRef;
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
-    private cfr: ComponentFactoryResolver,
     private alertService: AlertService) {
   }
 
@@ -60,24 +56,15 @@ export class ForgotPasswordComponent implements OnInit {
 
   forgotPassword() {
     this.isLoading = true;
-    this.authService.sendPasswordResetEmail(this.form.value.email)
-      .then(() => {
-        this.showAlert('forgotPasswordAlertContainer');
-        this.alertService.success('Cool! Password recovery instruction has been sent to your email.', true);
-        this.isLoading = false;
-        this.form.reset();
-      }).catch((error: any) => {
-        this.showAlert('forgotPasswordAlertContainer');
-        this.alertService.error(error);
-        this.isLoading = false;
-      });
-  }
-
-  showAlert(target) {
-    this[target].clear();
-    const factory = this.cfr.resolveComponentFactory(AlertComponent);
-    const ref = this[target].createComponent(factory);
-    ref.changeDetectorRef.detectChanges();
+    this.authService.sendPasswordResetEmail(this.form.value.email).then(() => {
+      this.alertService.showSnackBar('success', 'auth/sendPwReminder');
+      this.isLoading = false;
+      this.form.reset();
+    }).catch((error: any) => {
+      this.alertService.showSnackBar('error', error.code);
+      this.alertService.error(error);
+      this.isLoading = false;
+    });
   }
 
 }

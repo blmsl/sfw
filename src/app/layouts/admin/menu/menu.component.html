@@ -27,11 +27,11 @@
 </div>
 
 <mat-nav-list *ngIf="authService.user$ | async as user"
-              appAccordion
+              ngaAccordion
               class="navigation">
-  <mat-list-item appAccordionLink *ngFor="let menuItem of menuService.getAll()" group="{{menuItem.state}}">
+  <mat-list-item ngaAccordionLink *ngFor="let menuItem of menuService.getAll()" group="{{menuItem.state}}">
 
-    <a appAccordionToggle class="relative"
+    <a ngaAccordionToggle class="relative"
        [routerLink]="['/', menuItem.state]"
        *ngIf="menuItem.type === 'link' && user.assignedRoles[menuItem.minRole]">
       <mat-icon>{{ menuItem.icon }}</mat-icon>
@@ -40,14 +40,14 @@
       <span class="menu-badge mat-{{ badge.type }}" *ngFor="let badge of menuItem.badge">{{ badge.value }}</span>
     </a>
 
-    <a appAccordionToggle class="relative" href="{{menuItem.state}}" *ngIf="menuItem.type === 'extLink'">
+    <a ngaAccordionToggle class="relative" href="{{menuItem.state}}" *ngIf="menuItem.type === 'extLink'">
       <mat-icon>{{ menuItem.icon }}</mat-icon>
       <span>{{ 'general.menu.' + menuItem.name + '.main' | translate }}</span>
       <span fxFlex></span>
       <span class="menu-badge mat-{{ badge.type }}" *ngFor="let badge of menuItem.badge">{{ badge.value }}</span>
     </a>
 
-    <a appAccordionToggle class="relative" href="{{menuItem.state}}" target="_blank"
+    <a ngaAccordionToggle class="relative" href="{{menuItem.state}}" target="_blank"
        *ngIf="menuItem.type === 'extTabLink'">
       <mat-icon>{{ menuItem.icon }}</mat-icon>
       <span>{{ 'general.menu.' + menuItem.name + '.main' | translate }}</span>
@@ -55,7 +55,7 @@
       <span class="menu-badge mat-{{ badge.type }}" *ngFor="let badge of menuItem.badge">{{ badge.value }}</span>
     </a>
 
-    <a appAccordionToggle
+    <a ngaAccordionToggle
        class="relative"
        href="javascript:;"
        *ngIf="menuItem.type === 'sub' && user.assignedRoles[menuItem.minRole]">

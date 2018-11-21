@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { loginRoutes } from './login.routing';
 import { LoginComponent } from './login.component';
 import { UnAuthGuard } from '../../shared/guards/unauth.guard';
-import { AlertComponent } from '../../shared/directives/alert/alert.component';
 import { AuthService } from '../../shared/services/auth/auth.service';
 import { CommonModule } from '@angular/common';
 import {

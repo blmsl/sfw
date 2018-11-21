@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from '@angular/fire/firestore';
+import { Observable, of } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { IMatch } from '../../interfaces/match/match.interface';
-import { of } from 'rxjs';
 import { IMatchEventCategory } from '../../interfaces/match/match-event-category.interface';
 import { ILocation } from '../../interfaces/location/location.interface';
 import { ITeam } from '../../interfaces/team/team.interface';
@@ -151,7 +147,9 @@ export class MatchService {
   }
 
   setPlayerToStartingEleven(memberId: string, match: IMatch, position: ICoord) {
-    if (!match.startingEleven) match.startingEleven = [];
+    if (!match.startingEleven) {
+      match.startingEleven = [];
+    }
     match.startingEleven.push({
       position: position,
       memberId: memberId

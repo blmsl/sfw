@@ -13,8 +13,8 @@ export class MatchListComponent implements OnInit, AfterViewChecked {
 
   @Input() matches: IMatch[];
   @Input() categories: ICategory[];
-  @Input() showResultInputs: boolean = false;
-  @Input() showResult: boolean = false;
+  @Input() showResultInputs = false;
+  @Input() showResult = false;
 
   public otherEvents: { id: number, title: string }[];
 

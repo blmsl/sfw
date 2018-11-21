@@ -56,7 +56,7 @@ export class AlertService {
       horizontalPosition: horizontalPosition ? horizontalPosition : 'right',
       verticalPosition: verticalPosition ? verticalPosition : 'top'
     };
-    this.snackBar.openFromComponent(SnackbarComponent, config)
+    this.snackBar.openFromComponent(SnackbarComponent, config);
   }
 
   getMessage(): Observable<any> {

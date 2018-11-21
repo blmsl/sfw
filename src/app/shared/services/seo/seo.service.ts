@@ -16,7 +16,7 @@ export class SeoService {
       image: '',
       slug: '',
       ...tags
-    }
+    };
 
     this.titleService.setTitle(tags.title);
 

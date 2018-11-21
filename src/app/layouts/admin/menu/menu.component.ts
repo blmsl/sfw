@@ -1,6 +1,6 @@
 import {
   Component,
-  Input
+  Input, OnInit
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItemsService } from '../../../shared/services/menu/menu-items.service';
@@ -15,7 +15,7 @@ import { IUser } from '../../../shared/interfaces/user/user.interface';
   templateUrl: './menu.component.html',
   providers: [MenuItemsService]
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
 
   @Input() options: any;
 

@@ -1,6 +1,6 @@
-import { ILocation }     from './location/location.interface';
-import { ITeam }         from './team/team.interface';
-import { ICategory }     from './category.interface';
+import { ILocation } from './location/location.interface';
+import { ITeam } from './team/team.interface';
+import { ICategory } from './category.interface';
 import { IMediaGallery } from './media/media-gallery.interface';
 
 export interface IArticle {

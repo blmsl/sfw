@@ -1,17 +1,6 @@
-import {
-  Component,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
@@ -20,10 +9,7 @@ import { CategoryTypeService } from '../../../shared/services/category-type/cate
 import { UserService } from '../../../shared/services/user/user.service';
 import { IUser } from '../../../shared/interfaces/user/user.interface';
 import { MatSnackBar } from '@angular/material';
-import {
-  debounceTime,
-  distinctUntilChanged
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
@@ -37,7 +23,7 @@ export class CategoryEditComponent implements OnInit {
   public categoryTypes$: Observable<ICategoryType[]>;
   public users$: Observable<IUser[]>;
   public form: FormGroup;
-  public titleMaxLength: number = 50;
+  public titleMaxLength = 50;
 
   constructor(private categoryService: CategoryService,
     private snackBar: MatSnackBar,
@@ -85,7 +71,7 @@ export class CategoryEditComponent implements OnInit {
     });
   }
 
-  saveCategory(redirect: boolean = false) {
+  saveCategory(redirect = false) {
     let action;
     if (this.category.id) {
       action = this.categoryService.updateCategory(this.category.id, this.category);
@@ -94,7 +80,9 @@ export class CategoryEditComponent implements OnInit {
     }
     action.then(() => {
       this.alertService.showSnackBar('success', 'general.applications.updateMessage');
-      if (redirect) this.redirectToList();
+      if (redirect) {
+        this.redirectToList();
+      }
     },
       (error: any) => this.alertService.showSnackBar('error', error.message));
   }

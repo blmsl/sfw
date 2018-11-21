@@ -1,26 +1,12 @@
-import {
-  Component,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ISponsor } from '../../../shared/interfaces/sponsor.interface';
 import { SponsorService } from '../../../shared/services/sponsor/sponsor.service';
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../shared/services/category/category.service';
 import { Observable } from 'rxjs';
 import { ICategory } from '../../../shared/interfaces/category.interface';
-import {
-  debounceTime,
-  distinctUntilChanged
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
 import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
 import { MediaItemService } from '../../../shared/services/media/media-item.service';
@@ -36,7 +22,7 @@ export class SponsorEditComponent implements OnInit {
   public sponsor: ISponsor;
   public form: FormGroup;
   public categories$: Observable<ICategory[]>;
-  public titleMaxLength: number = 50;
+  public titleMaxLength = 50;
 
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,
@@ -87,14 +73,13 @@ export class SponsorEditComponent implements OnInit {
     ).subscribe((changes: ISponsor) => {
       console.log(this.form);
       if (this.form.valid) {
-        console.log('ok');
         this.sponsor = Object.assign({}, this.sponsor, changes);
         this.saveSponsor();
       }
     });
   }
 
-  saveSponsor(redirect: boolean = false): void {
+  saveSponsor(redirect = false): void {
     let action;
     if (this.sponsor.id) {
       action = this.sponsorService.updateSponsor(this.sponsor.id, this.sponsor);
@@ -103,7 +88,9 @@ export class SponsorEditComponent implements OnInit {
     }
     action.then(() => {
       this.alertService.showSnackBar('success', 'general.applications.updateMessage');
-      if (redirect) this.redirectToList();
+      if (redirect) {
+        this.redirectToList();
+      }
     },
       (error: any) => this.alertService.showSnackBar('error', error.message)
     );

@@ -18,7 +18,7 @@ export class MediaItemsListModalComponent implements OnInit, OnDestroy {
   public selectedMediaItems: IMediaItem[];
   public selectedItemsIds: string[];
   public mediaItems$: Observable<IMediaItem[]>;
-  public showUploader: boolean = false;
+  public showUploader = false;
 
   public uploaderConfig: IUploaderConfig = {
     autoUpload: true,

@@ -49,19 +49,19 @@
               (click)="setAsCover(mediaItem, mediaGallery)"
               *ngIf="mediaItem.file.type.indexOf('image') > -1 && showCoverBtn"
               mat-icon-button
-              appStopPropagation>
+              ngaStopPropagation>
         <mat-icon>panorama</mat-icon>
       </button>
       <button color="warn"
               (click)="showRemoveDialog(mediaItem, mediaGallery)"
               mat-icon-button
-              appStopPropagation>
+              ngaStopPropagation>
         <mat-icon>delete</mat-icon>
       </button>
       <button color="primary"
               (click)="showInfoDialog(mediaItem)"
               mat-icon-button
-              appStopPropagation>
+              ngaStopPropagation>
         <mat-icon>info</mat-icon>
       </button>
     </div>

@@ -10,13 +10,13 @@ import { ICategoryType } from '../../../../shared/interfaces/category-type.inter
 import { ISeason } from '../../../../shared/interfaces/season.interface';
 import { CategoryService } from '../../../../shared/services/category/category.service';
 import { CategoryTypeService } from '../../../../shared/services/category-type/category-type.service';
-import { LocationService }    from '../../../../shared/services/location/location.service';
-import { SeasonService }       from '../../../../shared/services/season/season.service';
-import { TeamService }         from '../../../../shared/services/team/team.service';
-import { ApplicationService }  from '../../../../shared/services/application/application.service';
-import { IApplication }        from '../../../../shared/interfaces/application.interface';
-import { IArticle }            from '../../../../shared/interfaces/article.interface';
-import { IMediaGallery }       from '../../../../shared/interfaces/media/media-gallery.interface';
+import { LocationService } from '../../../../shared/services/location/location.service';
+import { SeasonService } from '../../../../shared/services/season/season.service';
+import { TeamService } from '../../../../shared/services/team/team.service';
+import { ApplicationService } from '../../../../shared/services/application/application.service';
+import { IApplication } from '../../../../shared/interfaces/application.interface';
+import { IArticle } from '../../../../shared/interfaces/article.interface';
+import { IMediaGallery } from '../../../../shared/interfaces/media/media-gallery.interface';
 import { MediaGalleryService } from '../../../../shared/services/media/media-gallery.service';
 
 @Component({

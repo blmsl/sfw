@@ -23,16 +23,16 @@ export class ArticleFilterPipe implements PipeTransform {
       return articles;
     }
     retItems = articles.filter(item => {
-      let notMatchingField = Object.keys(filters).find(key => {
+      const notMatchingField = Object.keys(filters).find(key => {
 
         let value: any;
-        if (key == "creation" && filters[key].by) {
+        if (key == 'creation' && filters[key].by) {
           value = item[key].by;
-          return value !== filters[key].by
+          return value !== filters[key].by;
         }
-        if (key == "publication" && filters[key].status) {
+        if (key == 'publication' && filters[key].status) {
           value = item[key].status;
-          return value !== filters[key].status
+          return value !== filters[key].status;
         }
       });
 
@@ -40,13 +40,13 @@ export class ArticleFilterPipe implements PipeTransform {
     });
 
 
-    if (filters["sorting"]) {
-      const sorting = filters["sorting"];
-      if (sorting == "asc") {
+    if (filters['sorting']) {
+      const sorting = filters['sorting'];
+      if (sorting == 'asc') {
         retItems = retItems.sort((a, b) => {
           return b.creationAt.seconds - a.creationAt.seconds;
         });
-      } else if (sorting == "desc") {
+      } else if (sorting == 'desc') {
         retItems = retItems.sort((a, b) => {
           return a.creationAt.seconds - b.creationAt.seconds;
         });

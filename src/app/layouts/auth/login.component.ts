@@ -1,18 +1,6 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  zoomIn,
-  zoomOut
-} from 'ng-animate';
-import {
-  state,
-  style,
-  transition,
-  trigger,
-  useAnimation
-} from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
+import { zoomIn, zoomOut } from 'ng-animate';
+import { state, style, transition, trigger, useAnimation } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -40,14 +28,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  public loading: boolean = false;
-  public nameMinLength: number = 5;
-  public passwordMinLength: number = 5;
-  public passwordMaxLength: number = 25;
+  public loading = false;
+  public nameMinLength = 5;
+  public passwordMinLength = 5;
+  public passwordMaxLength = 25;
 
-  public showSignInForm: boolean = true;
-  public showSignUpForm: boolean = false;
-  public showPasswordForm: boolean = false;
+  public showSignInForm = true;
+  public showSignUpForm = false;
+  public showPasswordForm = false;
 
   public signUpStatus;
   public currentLang = 'en';

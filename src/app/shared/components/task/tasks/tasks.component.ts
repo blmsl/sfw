@@ -14,12 +14,12 @@ import { IUser } from '../../../interfaces/user/user.interface';
 })
 export class TasksComponent implements OnInit, OnDestroy {
 
-  @Input() type: string = '';
+  @Input() type = '';
 
   tasks$: Observable<ITask[]>;
   user: IUser;
 
-  public showForm: boolean = false;
+  public showForm = false;
   private userSubscription: Subscription;
 
   constructor(private taskService: TaskService, private authService: AuthService) {

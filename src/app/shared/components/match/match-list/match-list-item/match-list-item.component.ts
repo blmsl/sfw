@@ -1,13 +1,7 @@
-import {
-  Component,
-  HostBinding,
-  Input,
-  OnInit
-} from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { IMatch } from '../../../../interfaces/match/match.interface';
 import { ICategory } from '../../../../interfaces/category.interface';
 import { fadeOutAnimation } from '../../../../animations/fade-out.animations';
-import { IMatchEvent } from '../../../../interfaces/match/match-event.interface';
 
 @Component({
   selector: 'match-list-item',
@@ -19,13 +13,13 @@ export class MatchListItemComponent implements OnInit {
 
   @Input() match: IMatch;
   @Input() categories: ICategory[];
-  @Input() showResultInputs: boolean = false;
-  @Input() showResult: boolean = false;
+  @Input() showResultInputs = false;
+  @Input() showResult = false;
   @Input() otherEvents: { id: number, title: string }[];
 
-  @HostBinding('@visibilityChanged') visibilityChanged: boolean = false;
+  @HostBinding('@visibilityChanged') visibilityChanged = false;
 
-  public cssClass: string = '';
+  public cssClass = '';
 
   constructor() {
   }

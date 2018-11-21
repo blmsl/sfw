@@ -8,11 +8,11 @@ import { BehaviorSubject, Observable } from 'rxjs/index';
 
 // Options to reproduce firestore queries consistently
 interface QueryConfig {
-  path: string, // path to collection
-  field: string, // field to orderBy
-  limit?: number, // limit per query
-  reverse?: boolean, // reverse order?
-  prepend?: boolean // prepend to source?
+  path: string; // path to collection
+  field: string; // field to orderBy
+  limit?: number; // limit per query
+  reverse?: boolean; // reverse order?
+  prepend?: boolean; // prepend to source?
 }
 
 
@@ -107,7 +107,7 @@ export class PaginationService {
     return col.valueChanges().pipe(
       map(arr => {
         // If prepending, reverse array
-        let values = this.query.prepend ? arr.reverse() : arr;
+        const values = this.query.prepend ? arr.reverse() : arr;
         // update source with new values, done loading
         this._data.next(values);
         this.tempValues = this.tempValues.concat(values);

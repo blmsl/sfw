@@ -1,6 +1,6 @@
 {
   "siteTitle": "Sportfreunde Winterbach e.V.",
-  "Cool! Password recovery instruction has been sent to your email.": "Eine Email zur Erstellung eines neuen Passwortes wurde gesendet.",
+  "auth/sendPwReminder": "Eine Email zur Erstellung eines neuen Passwortes wurde gesendet.",
   "auth/argument-error": "Es ist ein Systemfehler aufgetreten. Bitte versuche es zu einem späteren Zeitpunkt erneut.",
   "auth/invalid-email": "Du hast keine gültige E-Mail Adresse eingegeben.",
   "auth/too-many-requests": "Die Anmeldung wurde deaktiviert, weil Du zu oft falsche Daten eingegeben hast. Bitte warte ein paar Minuten und versuche es erneut.",

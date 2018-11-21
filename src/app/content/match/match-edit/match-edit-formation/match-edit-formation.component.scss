@@ -4,10 +4,6 @@ mat-card-content {
 }
 
 .playerList {
-  display: flex;
-  /*flex-direction: row;
-  flex-flow: wrap;
-  overflow: hidden;*/
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;

@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import { SeasonService } from '../../../../shared/services/season/season.service';
 import { Observable } from 'rxjs/index';
@@ -40,7 +36,7 @@ export class MemberEditFunctionsComponent implements OnInit {
   }
 
   deleteMemberFromTeam($event: { team: ITeam, member: IMember }) {
-    let index = $event.team.assignedPlayers.indexOf($event.member.id);
+    const index = $event.team.assignedPlayers.indexOf($event.member.id);
     $event.team.assignedPlayers.splice(index, 1);
     this.updateTeam($event.team, 'general.members.edit.removedMemberFromTeamManagement');
   }

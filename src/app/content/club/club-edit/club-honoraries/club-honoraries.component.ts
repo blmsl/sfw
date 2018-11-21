@@ -2,12 +2,12 @@ import {
   Component,
   Input,
   OnInit
-}                         from '@angular/core';
-import { IMember }        from '../../../../shared/interfaces/member/member.interface';
-import { IArticle }       from '../../../../shared/interfaces/article.interface';
-import { IClub }          from '../../../../shared/interfaces/club/club.interface';
-import { MemberService }  from '../../../../shared/services/member/member.service';
-import { Observable }     from 'rxjs/index';
+} from '@angular/core';
+import { IMember } from '../../../../shared/interfaces/member/member.interface';
+import { IArticle } from '../../../../shared/interfaces/article.interface';
+import { IClub } from '../../../../shared/interfaces/club/club.interface';
+import { MemberService } from '../../../../shared/services/member/member.service';
+import { Observable } from 'rxjs/index';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -21,7 +21,7 @@ export class ClubHonorariesComponent implements OnInit {
   @Input() members$: Observable<IMember[]>;
 
   constructor(private memberService: MemberService,
-              private route: ActivatedRoute) {
+    private route: ActivatedRoute) {
   }
 
   ngOnInit() {

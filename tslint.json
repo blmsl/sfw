@@ -12,7 +12,6 @@
     "interface-over-type-literal": true,
     "no-empty-interface": true,
     "no-string-throw": true,
-    "typeof-compare": true,
     "unified-signatures": true,
     "max-line-length": [
       true,
@@ -108,7 +107,6 @@
         }
       }
     ],
-    "no-unused-new": true,
     "no-use-before-declare": true,
     "array-bracket-spacing": [
       true,
@@ -189,9 +187,6 @@
       "Directive"
     ],
     "import-destructuring-spacing": true,
-    "templates-use-public": true,
-    "no-access-missing-member": true,
-    "invoke-injectable": true,
     "space-in-parens": [
       "error",
       "info",
