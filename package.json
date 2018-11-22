@@ -18,6 +18,7 @@
     "start": "ng serve",
     "build": "ng build",
     "compile:server": "tsc -p src/tsconfig.server.json",
+    "build:ci": "npm run build:prod && npm run build:prod:aot",
     "build:prod": "npm run build --prod",
     "test": "ng test",
     "test:coverage": "npm run clean:coverage && ng test -sr -cc",
