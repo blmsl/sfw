@@ -20,6 +20,7 @@
     "compile:server": "tsc -p src/tsconfig.server.json",
     "build:ci": "npm run build:prod && npm run build:prod:aot",
     "build:prod": "npm run build --prod",
+    "build:prod:aot": "npm run build -- --aot",
     "test": "ng test",
     "test:coverage": "npm run clean:coverage && ng test -sr -cc",
     "lint": "ng lint",
