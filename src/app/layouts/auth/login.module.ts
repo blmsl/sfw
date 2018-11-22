@@ -21,7 +21,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { TermsOfUseComponent } from '../../shared/components/terms-of-use/terms-of-use.component';
 import { TranslateModule } from '@ngx-translate/core';
 
-/**/
 
 @NgModule({
   declarations: [

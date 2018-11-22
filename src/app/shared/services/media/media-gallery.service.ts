@@ -25,6 +25,9 @@ export class MediaGalleryService {
   }
 
   getAssignedGalleries(id: string): Observable<IMediaGallery[]> {
+    if(!id){
+      return of([]);
+    }
     return this.afs.collection<IMediaGallery>(this.path, ref => {
       return ref
         .where('assignedItem', '==', id);

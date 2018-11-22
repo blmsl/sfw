@@ -9,9 +9,9 @@ export const userCreated = functions
   .region('europe-west1')
   .runWith({ memory: '512MB', timeoutSeconds: 15 })
   .auth.user()
-  .onCreate((event: any) => {
+  .onCreate((/*event: any*/) => {
 
-    const msg = {
+    /*const msg = {
       to: 'Thomas.handle@gmail.com',
       from: 'admin@sfwinterbach.com',
       subject: 'Neuer Benutzer',
@@ -22,7 +22,7 @@ export const userCreated = functions
         name: 'Thomas',
         siteName: 'sfwinterbach.com'
       }
-    };
+    }; */
 
-    return true // sgMail.send(msg);
+    return true; // sgMail.send(msg);
   });

@@ -38,7 +38,9 @@ export class MatchEditEventFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.assignedPlayers$ = this.memberService.getMembersByIds(this.assignedTeam.assignedPlayers);
+    if(this.assignedTeam){
+      this.assignedPlayers$ = this.memberService.getMembersByIds(this.assignedTeam.assignedPlayers);
+    }
 
     this.form = this.fb.group({
       assignedCategory: null,

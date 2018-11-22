@@ -4,6 +4,8 @@
       <mat-card>
         <mat-card-content>
 
+          <pre>{{authService.user$ | async | json}}</pre>
+
           <div class="text-xs-center pb-1">
             <picture>
               <source srcset="/assets/sfw/sfw.webp" type="image/webp">

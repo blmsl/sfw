@@ -15,6 +15,7 @@
   "Required": "Hier wird eine Eingabe benötigt",
   "Global": {
     "Login": {
+      "forbidden": "Du bist nicht berechtigt um Dich an der Admin-Oberfläche anzumelden.",
       "notVerified": "Deine E-Mail Adresse wurde noch nicht bestätigt.",
       "facebookLogin": "Facebook",
       "twitterLogin": "Twitter",
@@ -799,6 +800,7 @@
         "yellowRedCard": "Gelb-rote Karte"
       },
       "list": {
+        "createMatch": "Neues Spiel erstellen",
         "colTitles": {
           "assignedCategories": "Kategorien",
           "guestTeam": "Gast",
@@ -1561,6 +1563,7 @@
         "visitExternalLink": "Anzeigen"
       },
       "fame": {
+        "noFameTeams": "Es wurde noch keine Mannschaft des Monats erstellt.",
         "categories": "Kategorien",
         "draws": "Unentschieden",
         "highestDefeat": "Höchste Niederlage",
@@ -1815,6 +1818,7 @@
     "and": "und",
     "assignedMedia": "Verknüpfte Dateien",
     "birthdays": "Geburtstage",
+    "chooseDate": "Nach Datum suchen",
     "create": "Erstellen",
     "currentPage": "Aktuelle Seite",
     "darkMode": "Nachtmodus",
@@ -1839,6 +1843,7 @@
     "logout": "Ausloggen",
     "myProfile": "Mein Profil",
     "no": "Nein",
+    "noItemsInList": "Es wurden noch keine Inhalte erstellt.",
     "noTitle": "Unbenannt",
     "number": "#",
     "oClock": "Uhr",

@@ -20,7 +20,7 @@ import { IMediaItem } from '../../../shared/interfaces/media/media-item.interfac
 export class FameTeamComponent implements OnInit, OnDestroy {
 
   public teamOfTheMonth: ITeam;
-  public currentMonth: string;
+  public loaded = false;
   public title: string;
 
   public assignedSeason$: Observable<ISeason>;
@@ -33,10 +33,10 @@ export class FameTeamComponent implements OnInit, OnDestroy {
   private teamSubscription: Subscription;
 
   constructor(private seasonService: SeasonService,
-    private categoryService: CategoryService,
-    private memberService: MemberService,
-    private mediaItemService: MediaItemService,
-    private teamOfTheMonthService: TeamOfTheMonthService) {
+              private categoryService: CategoryService,
+              private memberService: MemberService,
+              private mediaItemService: MediaItemService,
+              private teamOfTheMonthService: TeamOfTheMonthService) {
   }
 
   ngOnInit() {
@@ -44,10 +44,12 @@ export class FameTeamComponent implements OnInit, OnDestroy {
     const currentMonth = moment().add('1', 'month').month();
 
     this.teamSubscription = this.teamOfTheMonthService.getTeamOfTheMonthByTitle(currentYear + '-' + currentMonth)
-      .subscribe((team: ITeam) => {
-        this.teamOfTheMonth = team;
+      .subscribe((teams: ITeam[]) => {
 
-        if (this.teamOfTheMonth) {
+        this.loaded = true;
+
+        if (teams.length > 0) {
+          this.teamOfTheMonth = teams[0];
           this.assignedSeason$ = this.seasonService.getSeasonById(this.teamOfTheMonth.assignedSeason);
           this.assignedCategories$ = this.categoryService.getCategoriesByIds(this.teamOfTheMonth.assignedTeamCategories);
           this.assignedPlayers$ = this.memberService.getMembersByIds(this.teamOfTheMonth.assignedPlayers);
@@ -56,7 +58,6 @@ export class FameTeamComponent implements OnInit, OnDestroy {
           if (!this.teamImage) {
             this.teamImage = this.mediaItemService.getCurrentImage(['teams', 'profile'], this.teamOfTheMonth.id);
           }
-
         }
       });
 

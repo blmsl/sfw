@@ -14,7 +14,7 @@ export class AuthService {
   public userId: string;
 
   constructor(private afAuth: AngularFireAuth,
-    private afs: AngularFirestore) {
+              private afs: AngularFirestore) {
 
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
@@ -31,12 +31,13 @@ export class AuthService {
   public async signIn(credentials): Promise<any> {
     const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
     if (signInAction.user) {
-      return this.updateUser({
+      await this.updateUser({
         id: signInAction.user.uid,
         lastSignInTime: signInAction.user.metadata.lastSignInTime,
         emailVerified: signInAction.user.emailVerified
       });
     }
+    return signInAction;
   }
 
   public async register(values: IUser): Promise<any> {

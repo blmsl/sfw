@@ -24,10 +24,12 @@ export class TeamOfTheMonthService {
   }
 
   getTeamOfTheMonthByTitle(title: string): Observable<ITeam | ITeam[]> {
-    return this.afs.collection<ITeamOfTheMonth>(this.path, ref => ref.where('title', '==', title)).valueChanges().pipe(
+    return this.afs.collection<ITeamOfTheMonth>(this.path, ref => ref.where('title', '==', title))
+      .valueChanges()
+      .pipe(
       switchMap((teamsOfTheMonth: ITeamOfTheMonth[]) => {
         return (!teamsOfTheMonth || teamsOfTheMonth.length === 0)
-          ? EMPTY
+          ? of([])
           : this.teamService.getTeamById(teamsOfTheMonth[0].assignedTeamId).pipe(take(1));
       })
     );

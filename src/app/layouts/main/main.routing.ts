@@ -12,5 +12,9 @@ export const mainRoutes: Routes = [
     path: '',
     loadChildren: '../admin/admin.module#AdminModule',
     canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
   }
 ];

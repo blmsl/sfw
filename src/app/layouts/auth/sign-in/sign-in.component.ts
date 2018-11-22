@@ -1,20 +1,6 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
+import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 
@@ -38,11 +24,11 @@ export class SignInComponent implements OnInit {
   public error: string;
 
   constructor(private alertService: AlertService,
-    public authService: AuthService,
-    private cfr: ComponentFactoryResolver,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router) {
+              public authService: AuthService,
+              private cfr: ComponentFactoryResolver,
+              private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {

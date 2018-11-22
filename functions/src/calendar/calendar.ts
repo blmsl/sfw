@@ -27,11 +27,23 @@ export const getGoogleCalendarEvents = functions
     // console.log(timeMin);
     // console.log(timeMax);
 
+    resp.set('Access-Control-Allow-Origin', '*');
+    resp.set('Access-Control-Allow-Methods', 'GET');
+    resp.set('Access-Control-Allow-Headers', 'application/json');
+
     try {
       const eventList: any[] = [];
 
       const auth = await google.auth.getClient({ scopes: ['https://www.googleapis.com/auth/calendar'] });
       const appSnapshot = await db.collection('applications').where('isCurrentApplication', '==', true).get();
+
+      if(appSnapshot.size === 0){
+        return corsHandler(req, resp, () => {
+          resp.send({
+            data: eventList
+          });
+        });
+      }
 
       for (const cal of appSnapshot.docs[0].data().assignedCalendars) {
         if (cal.isActive) {
@@ -61,10 +73,6 @@ export const getGoogleCalendarEvents = functions
         }
       }
 
-      resp.set('Access-Control-Allow-Origin', '*');
-      resp.set('Access-Control-Allow-Methods', 'GET');
-      resp.set('Access-Control-Allow-Headers', 'application/json');
-
       return corsHandler(req, resp, () => {
         resp.send({
           data: eventList
@@ -73,7 +81,6 @@ export const getGoogleCalendarEvents = functions
 
     }
     catch (e) {
-      console.error(e);
       return resp.send(e.message);
     }
 

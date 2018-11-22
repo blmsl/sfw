@@ -3,20 +3,28 @@
   <mat-card-subtitle>{{'general.articles.dashboard.description' | translate}}</mat-card-subtitle>
   <hr>
   <mat-card-content>
-    <div fxLayout="column"
-         fxLayout.gt-sm="row"
-         fxLayoutGap="10px" *ngIf="articles$ | async as articles; else loadingTemplate">
-      <div fxFlex="70">
-        <article-dashboard-list [articles]="articles"></article-dashboard-list>
-      </div>
-      <div fxFlex="30">
-        <article-authors-stats *ngIf="users$ | async as users"
-                               [users]="users"
-                               [articles]="articles | groupBy: 'creationBy'">
-        </article-authors-stats>
-      </div>
-    </div>
+    <ng-container *ngIf="articles$ | async as articles; else loadingTemplate">
 
+      <div class="alert alert-info" *ngIf="!articles || articles.length === 0">
+        {{'general.noItemsInList' | translate}}
+      </div>
+
+      <div fxLayout="column"
+           fxLayout.gt-sm="row"
+           fxLayoutGap="10px"
+           *ngIf="articles.length > 0">
+        <div fxFlex="70">
+          <article-dashboard-list [articles]="articles"></article-dashboard-list>
+        </div>
+        <div fxFlex="30">
+          <article-authors-stats *ngIf="users$ | async as users"
+                                 [users]="users"
+                                 [articles]="articles | groupBy: 'creationBy'">
+          </article-authors-stats>
+        </div>
+      </div>
+
+    </ng-container>
   </mat-card-content>
 </mat-card>
 

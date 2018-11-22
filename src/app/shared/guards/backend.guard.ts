@@ -28,16 +28,15 @@ export class BackendGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.user$.pipe(
-      take(1),
+      first(),
       map((user: IUser) => {
-        return user && (user.assignedRoles.admin || user.assignedRoles.editor);
+        return user && user.assignedRoles && (user.assignedRoles.admin || user.assignedRoles.editor);
       }),
       tap((isAllowed: boolean) => {
         if (!isAllowed) {
-          console.log(isAllowed);
-          this.authService.signOut().then(() => {
-            this.alertService.showSnackBar('error', 'general.forbidden.text', 15000);
-            return this.router.navigate(['login']);
+           this.authService.signOut().then(() => {
+            this.alertService.showSnackBar('error', 'Global.Login.forbidden', 7500);
+            return this.router.navigate(['/login']);
           });
         }
       })

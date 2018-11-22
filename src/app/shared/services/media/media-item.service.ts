@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of, } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { IMediaItem } from '../../interfaces/media/media-item.interface';
 import { AuthService } from '../auth/auth.service';
 import { FileType } from '../../interfaces/media/file-type.interface';
 import { map, take } from 'rxjs/operators';
-import { share } from 'rxjs/internal/operators';
 
 @Injectable()
 export class MediaItemService {
@@ -15,7 +14,7 @@ export class MediaItemService {
   public mediaItems$: Observable<IMediaItem[]>;
 
   constructor(private afs: AngularFirestore,
-    private authService: AuthService) {
+              private authService: AuthService) {
     this.collectionRef = this.afs.collection<IMediaItem>(this.path);
     this.mediaItems$ = this.collectionRef.valueChanges();
   }
@@ -63,6 +62,9 @@ export class MediaItemService {
   }
 
   getMediaItems(assignedObjects: any[], itemId: string): Observable<IMediaItem[]> {
+    if (assignedObjects.length === 0 && !itemId) {
+      return of([]);
+    }
     return this.afs.collection<IMediaItem>('files', ref => {
       if (!assignedObjects) {
         return ref

@@ -7,20 +7,15 @@ export const loginRoutes: Routes = [
   {
     path: 'forbidden',
     component: LoginComponent,
-    canActivate: [AuthGuard],
+    /*canActivate: [AuthGuard],
     data: {
       page: 'forbidden'
-    }
+    } */
   },
   {
     path: '',
     component: LoginComponent,
-    canActivate: [UnAuthGuard]
-  },
-  {
-    path: '',
-    component: LoginComponent,
-    canActivate: [UnAuthGuard]
+    // canActivate: [UnAuthGuard]
   },
   {
     path: '**',

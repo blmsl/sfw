@@ -1,17 +1,22 @@
-<mat-card *ngIf="teamOfTheMonth; else loadingTemplate">
+<mat-card>
   <mat-card-header>
     <div mat-card-avatar
-         style="background-size: cover;"
-         [ngStyle]="{ 'background-image': 'url(' + teamOfTheMonth.logoURL + ')'}">
+         style="background-size: cover;">
+      <!-- [ngStyle]="{ 'background-image': 'url(' + teamOfTheMonth.logoURL + ')'}" -->
     </div>
-    <mat-card-title>{{teamOfTheMonth.title}} ({{teamOfTheMonth.subTitle}})</mat-card-title>
-    <mat-card-subtitle>{{'general.teams.fame.title' | translate}} {{title}}</mat-card-subtitle>
+    <mat-card-title>{{'general.teams.fame.title' | translate}} {{title}}</mat-card-title>
+    <mat-card-subtitle *ngIf="loaded && teamOfTheMonth">{{teamOfTheMonth.title}} ({{teamOfTheMonth.subTitle}})</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
 
+    <div class="alert alert-info" *ngIf="loaded && !teamOfTheMonth">
+      {{'general.teams.fame.noFameTeams' | translate}}
+    </div>
+
     <div fxLayout="column"
          fxLayoutGap="10px"
-         fxLayout.gt-sm="row">
+         fxLayout.gt-sm="row"
+         *ngIf="loaded && teamOfTheMonth">
 
       <div fxFlex="20">
         <mat-card>

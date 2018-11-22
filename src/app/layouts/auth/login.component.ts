@@ -3,6 +3,7 @@ import { zoomIn, zoomOut } from 'ng-animate';
 import { state, style, transition, trigger, useAnimation } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -40,7 +41,9 @@ export class LoginComponent implements OnInit {
   public signUpStatus;
   public currentLang = 'en';
 
-  constructor(private route: ActivatedRoute, private translate: TranslateService) {
+  constructor(private route: ActivatedRoute,
+              public authService: AuthService,
+              private translate: TranslateService) {
     translate.addLangs(['de', 'en', 'fr']);
     translate.setDefaultLang('de');
 
