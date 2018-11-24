@@ -1,69 +1,77 @@
 <mat-card [formGroup]="form">
 
-  <mat-card-title>
-    <mat-icon>euro_symbol</mat-icon>
-    {{'general.menu.sponsor.main' | translate }}
-  </mat-card-title>
+    <mat-card-title>
+        <mat-icon>euro_symbol</mat-icon>
+        {{'general.menu.sponsor.main' | translate }}
+    </mat-card-title>
 
-  <hr />
+    <hr/>
 
-  <mat-card-actions>
-    <div style="margin-top: 25px"
-         fxLayoutGap="10px"
-         fxLayout.gt-sm="row"
-         fxLayout="column">
-      <span fxFlex></span>
+    <mat-card-actions>
+        <div style="margin-top: 25px"
+             fxLayoutGap="10px"
+             fxLayout.gt-sm="row"
+             fxLayout="column">
+            <span fxFlex></span>
 
-      <mat-form-field *ngIf="categories$ | async as categories">
-        <mat-select placeholder="{{'general.sponsors.edit.chooseAssignedCategories' | translate}}"
-                    formControlName="assignedCategories" multiple>
-          <mat-option *ngFor="let category of categories | orderBy: ['title']"
-                      [value]="category.id">
-            {{category.title}}
-          </mat-option>
-        </mat-select>
-        <mat-hint align="end" *ngIf="!form.controls['assignedCategories']">
-          {{'general.sponsors.edit.chooseCategories' | translate}}
-        </mat-hint>
-      </mat-form-field>
+            <mat-form-field *ngIf="categories$ | async as categories">
+                <mat-select placeholder="{{'general.sponsors.edit.chooseAssignedCategories' | translate}}"
+                            formControlName="assignedCategories" multiple>
+                    <mat-option *ngFor="let category of categories | orderBy: ['title']"
+                                [value]="category.id">
+                        {{category.title}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint align="end" *ngIf="!form.controls['assignedCategories']">
+                    {{'general.sponsors.edit.chooseCategories' | translate}}
+                </mat-hint>
+            </mat-form-field>
 
-      <div>
-        <button type="button"
-                mat-raised-button
-                color="accent"
-                [routerLink]="['/sponsors/create']">
-          {{'general.menu.sponsor.create' | translate }}
-        </button>
-      </div>
-    </div>
-  </mat-card-actions>
+            <div>
+                <button type="button"
+                        mat-raised-button
+                        color="accent"
+                        [routerLink]="['/sponsors/create']">
+                    {{'general.menu.sponsor.create' | translate }}
+                </button>
+            </div>
+        </div>
+    </mat-card-actions>
 
-  <hr />
+    <hr/>
 
-  <mat-card-content>
+    <mat-card-content>
 
-    <div fxLayout="column"
-         fxLayout.gt-sm="row"
-         fxLayoutGap="30px"
-         *ngIf="sponsors$ | async as sponsors; else loadingTemplate">
+        <ng-container *ngIf="sponsors$ | async as sponsors; else loadingTemplate">
 
-      <sponsor-item fxFlex.gt-sm="25"
-                    *ngFor="let sponsor of sponsors | categoryFilter: 'assignedCategories' : categoryFilter"
-                    (removeSponsor)="removeSponsor($event)"
-                    [sponsor]="sponsor">
-      </sponsor-item>
+            <div class="alert alert-info"
+                 *ngIf="!sponsors || sponsors.length === 0">
+                <p>{{'general.sponsors.list.noSponsorsFound' | translate}}</p>
+            </div>
 
-      <p *ngIf="!sponsors || sponsors.length === 0">{{'general.sponsors.list.noSponsorsFound' | translate}}</p>
+            <div class="alert alert-info"
+                 *ngIf="sponsors.length > 0 && !(sponsors | categoryFilter: 'assignedCategories' : categoryFilter).length">
+                <p>
+                    {{'general.sponsors.list.noResult' | translate}}
+                </p>
+            </div>
 
-      <p *ngIf="sponsors.length > 0 && !(sponsors | categoryFilter: 'assignedCategories' : categoryFilter).length">
-        {{'general.sponsors.list.noResult' | translate}}
-      </p>
+            <div fxLayout="column"
+                 fxLayout.gt-sm="row"
+                 fxLayoutGap="30px">
+                <sponsor-item fxFlex.gt-sm="25"
+                              *ngFor="let sponsor of sponsors | categoryFilter: 'assignedCategories' : categoryFilter"
+                              (removeSponsor)="removeSponsor($event)"
+                              [sponsor]="sponsor">
+                </sponsor-item>
+            </div>
 
-    </div>
-  </mat-card-content>
+
+        </ng-container>
+    </mat-card-content>
 </mat-card>
 
 
 <ng-template #loadingTemplate>
-  <loading-indicator></loading-indicator>
+    <loading-indicator></loading-indicator>
 </ng-template>

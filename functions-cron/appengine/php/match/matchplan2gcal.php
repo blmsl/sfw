@@ -20,6 +20,7 @@ echo $project->generateHeader();
 echo "<h1>Exportiere den Spielplan in den Google-Kalender</h1>";
 
 $jahr = isset($_GET['jahr']) ? DateTime::createFromFormat('Y', $_GET['jahr']) : new DateTime();
+
 // falls ein Jahr übergeben wurde wird die komplette Saison als Start- und Ende gesetzt,
 // ansonsten die nächsten 4 Monate ab heute
 $loadingLimit = null;
@@ -36,66 +37,71 @@ if (isset($_GET['jahr'])) {
   echo "<h3>Lade Daten vom " . $seasonStart->format('d.m.Y') . " bis " . $loadingLimit->format('d.m.Y') . " </h3>";
 }
 
-// App aus der DB laden
-$app = $project->getCurrentApplication();
-if (!$app) {
-  echo "Keine aktuelle App ausgewählt";
-  exit();
-}
+$project->client->setUseBatch(true);
+$batch = new Google_Http_Batch($project->client);
+
+$app = $project->getCurrentApplication($batch);
 
 $savedMatches = array();
 $calendarEvents = array();
 $locations = $project->getLocationList();
 
+
 foreach ($app[0]["assignedCalendars"] as $calendar) {
   if ($calendar["title"] === 'Spielplan') {
 
-    if (isset($_GET['delete'])) {
-      #$project->getCal->deleteEvents();
-    } else {
-
-      $matches = $project->getMatchesBetweenStartAndEndDate($seasonStart, $loadingLimit);
-      foreach ($matches as $match) {
-        $matchStartDate = $match["matchStartDate"];
-        /**
-         * @var $matchStartDate Google\Cloud\Core\Timestamp
-         */
-        if ($match["assignedLocation"] !== '' && $match["assignedLocation"] !== 0) {
-          $title = $match['title'] . '-' . $project->getLocationById($match["assignedLocation"])["title"] . '-' . $matchStartDate->get()->format('d.m.Y H:i:s');
-          $matchEvent = $project->generateEventItem($match, $project->getLocationById($match["assignedLocation"])["title"]);
-          $savedMatches[$title] = $matchEvent;
-        }
+      if (!isset($_GET['delete'])) {
+          $matches = $project->getMatchesBetweenStartAndEndDate($seasonStart, $loadingLimit);
+          foreach ($matches as $match) {
+              $matchStartDate = $match["matchStartDate"];
+              /**
+               * @var $matchStartDate Google\Cloud\Core\Timestamp
+               */
+              if ($match["assignedLocation"] !== '' && $match["assignedLocation"] !== 0) {
+                  $title = $match['title'] . '-' . $project->getLocationById($match["assignedLocation"])["title"] . '-' . $matchStartDate->get()->format('d.m.Y H:i:s');
+                  $matchEvent = $project->generateEventItem($match, $project->getLocationById($match["assignedLocation"])["title"]);
+                  $savedMatches[$title] = $matchEvent;
+              }
+          }
       }
 
       $googleCalendarEvents = $project->getEvents($calendar["link"], $seasonStart, $loadingLimit);
-
-      $project->client->setUseBatch(true);
-      $batch = new Google_Http_Batch($project->client);
-      foreach ($googleCalendarEvents as $key => $event) {
-        $startDate = new DateTime($event->getStart()->dateTime);
-        $title = $event["summary"] . "-" . $event["location"] . "-" . $startDate->format('d.m.Y H:i:s');
-        if (!array_key_exists($title, $savedMatches)) {
-          echo $title . " gelöscht<br />";
-          $request = $project->calendarService->events->delete($calendar["link"], $event->getId());
-          $batch->add($request);
-        } else {
-          $calendarEvents[$event["summary"] . "-" . $event["location"] . "-" . $startDate->format('d.m.Y H:i:s')] = true;
-          echo $event["summary"] . "<br />";
-        }
+      if (isset($_GET['delete'])) {
+          foreach ($googleCalendarEvents as $key => $event) {
+              $request = $project->calendarService->events->delete($calendar["link"], $event->getId());
+              $batch->add($request);
+          }
+          $result = $batch->execute();
       }
+      else {
 
-      // create event, if it not exists in the gcalEventList
-      foreach ($savedMatches as $key => $matchEvent) {
-        if (!array_key_exists($key, $calendarEvents)) {
-          $request = $project->calendarService->events->insert($calendar["link"], $project->setCalendarEvent($matchEvent));
-          $batch->add($request);
-        }
+          $project->client->setUseBatch(true);
+          $batch = new Google_Http_Batch($project->client);
+          foreach ($googleCalendarEvents as $key => $event) {
+              $startDate = new DateTime($event->getStart()->dateTime);
+              $title = $event["summary"] . "-" . $event["location"] . "-" . $startDate->format('d.m.Y H:i:s');
+              if (!array_key_exists($title, $savedMatches)) {
+                  echo $title . " gelöscht<br />";
+                  $request = $project->calendarService->events->delete($calendar["link"], $event->getId());
+                  $batch->add($request);
+              } else {
+                  $calendarEvents[$event["summary"] . "-" . $event["location"] . "-" . $startDate->format('d.m.Y H:i:s')] = true;
+                  echo $event["summary"] . "<br />";
+              }
+          }
+
+          // create event, if it not exists in the gcalEventList
+          foreach ($savedMatches as $key => $matchEvent) {
+              if (!array_key_exists($key, $calendarEvents)) {
+                  $request = $project->calendarService->events->insert($calendar["link"], $project->setCalendarEvent($matchEvent));
+                  $batch->add($request);
+              }
+          }
+
+          $result = $batch->execute();
       }
-
-      $result = $batch->execute();
     }
 
-  }
 }
 
 

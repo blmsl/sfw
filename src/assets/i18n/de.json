@@ -94,6 +94,7 @@
         "fieldTitle": "Name des Kalenders",
         "title": "Verknüpfte Google-Kalender"
       },
+      "canceledAction": "Der Vorgang wurde abgebrochen",
       "downtime": {
         "checkbox": "Status der Hauptseite",
         "isActive": "Wartungsmodus aktiv",
@@ -666,7 +667,7 @@
         },
         "locationsByCategory": "Spielstätten pro Kategorie",
         "noMatchingResult": "Es wurden keine Treffpunkte mit den eingegebenen Suchkriterien gefunden",
-        "noResult": "Es wurden keine Treffpunkte gefunden"
+        "noResult": "Es wurden keine noch Treffpunkte erstellt."
       },
       "map": {
         "filterByTitle": "Name des Treffpunktes",
@@ -1085,11 +1086,13 @@
         "phoneWork": "Dienstlich",
         "honorary": "Ehrenmitglied",
         "memberOfTheWeekForThe": "Ausgewählte Mitglieder für die ",
+        "noResult": "Es wurden noch keine Spieler der Woche ernannt.",
         "player": "Spieler",
         "viewProfile": "Profil anzeigen"
       },
       "list": {
-        "deleted": "Das Mitglied wurde gelöscht."
+        "deleted": "Das Mitglied wurde gelöscht.",
+        "noMembers": "Es wurden noch keine Mitglieder erstellt."
       },
       "statistics": {
         "ahTitle": "Alte Herren",
@@ -1393,6 +1396,7 @@
       "colTitles": {
         "assignedPlayers": "Spieler",
         "creation": "Erstellung",
+        "creationDescription": "Wann und von wem wurde dieser Inhalt erstellt?",
         "description": "Beschreibung",
         "hasPhoto": "Foto?",
         "publication": "Veröffentlichung",
@@ -1528,9 +1532,12 @@
           "description": "Hier können die Aufgaben in der Mannschaft aufgelistet werden, z.B. wer ist Trainer, wer ist Spielführer.",
           "managements": "Mannschaftsverwaltung",
           "noCategoryTypesDefined": "Es wurde noch kein Kategory-Typ für Mannschaftsaufgaben gespeichert",
+          "noMembers": "Es wurden noch keine Spieler zu dieser Mannschaft hinzugefügt.",
+          "noMembersFound": "Es sind noch keine Mitglieder vorhanden.",
           "noPosition": "Es wurden noch keine Aufgaben festgelegt. Füge doch einfach einige hinzu.",
           "noPositionsDefined": "Es wurden noch keine Positionen in der Mannschaftsbetreuung definiert.",
           "players": "Spieler der Mannschaft",
+          "playersDescription": "Aufgelistet werden die Spieler in alphabetischer Reihenfolge",
           "title": "Titel der Aufgabe",
           "type": "Aufgabentyp"
         },
@@ -1604,6 +1611,7 @@
         "createTeam": "Mannschaft hinzufügen",
         "latestMatchPreviews": "Letzte Vorberichte",
         "latestMatchReviews": "Letzte Spielberichte",
+        "noChartData": "Es sind noch keine Kategorien oder Mannschaften vorhanden.",
         "pagination": {
           "allCategories": "Alle Mannschaftsarten",
           "allSeasons": "Alle Saisons",
@@ -1616,6 +1624,9 @@
         "title": "Mannschaften"
       },
       "media": {
+        "latestFiles": "Letzte Dateien",
+        "latestGalleries": "Letzte Galerien",
+        "latestImages": "Letzte Fotos",
         "list": "Dateien der Mannschaft"
       }
     },

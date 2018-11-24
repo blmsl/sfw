@@ -15,7 +15,7 @@ import {
   MatListModule,
   MatSelectModule,
   MatSnackBarModule,
-  MatTabsModule
+  MatTabsModule, MatToolbarModule
 } from '@angular/material';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
 import { TeamEditComponent } from './team-edit/team-edit.component';
@@ -75,6 +75,7 @@ import { TeamDetailSeriesComponent } from './team-detail/team-detail-standings/t
     MatSelectModule,
     MatSnackBarModule,
     MatTabsModule,
+    MatToolbarModule,
     SharedMatchModule,
     RouterModule.forChild(teamRoutes),
     SharedModule,

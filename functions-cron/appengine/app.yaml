@@ -1,5 +1,4 @@
 runtime: php55
-# env: flex
 
 api_version: 1
 service: default
@@ -20,39 +19,32 @@ handlers:
 
 - url: /php/match/matchplan2gcal.php
   script: /php/match/matchplan2gcal.php
-  #secure: always
-  #login: admin
+  secure: always
+  login: admin
 
 - url: /php/match/matchplan-import.php
   script: /php/match/matchplan-import.php
   secure: always
   login: admin
 
-# Member
+
 - url: /php/member/dfb-import.php
   script: /php/member/dfb-import.php
   secure: always
   login: admin
 
-- url: /php/member/drive-import.php
+- url: /php/member/drive-import
   script: /php/member/drive-import.php
   secure: always
   login: admin
 
-# Other
-#- url: /_ah/.*
-#  script: /php/index.php
+- url: /php/application/setup
+  script: /php/application/setup.php
+  secure: always
+  login: admin
 
 - url: /.*
   script: /index.php
-
-- url: /php/.*
-  script: /php/index.php
-
-#- url: /.*
-#  script: /php/index.php
-#  secure: always
-#  login: admin
 
 
 #resources:

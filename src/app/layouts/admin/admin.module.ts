@@ -27,6 +27,8 @@ import { AdminGuard } from '../../shared/guards/admin.guard';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { TimeagoModule } from 'ngx-timeago';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import {AgmCoreModule} from "@agm/core";
+import {googleMapsConfig} from "../../shared/config/google-maps.config";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -49,7 +51,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ToggleFullscreenDirective
   ],
   imports: [
-    // AgmCoreModule.forRoot({ apiKey: googleMapsConfig.apiKey }),
+    AgmCoreModule.forRoot({ apiKey: googleMapsConfig.apiKey }),
     AngularFireDatabaseModule,
     FormsModule,
     FroalaEditorModule.forRoot(),

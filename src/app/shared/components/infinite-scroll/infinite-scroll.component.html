@@ -17,7 +17,15 @@
           {{ moment(creation).fromNow() }}
           ({{moment(creation).format('L') }},
           {{moment(creation).format('LT') }}
-          {{'general.oClock' | translate}})</p>
+          {{'general.oClock' | translate}})
+        </p>
+      </li>
+    </ng-container>
+
+    <ng-container *ngIf="listType === 'teams'">
+      <li *cdkVirtualFor="let item of items; let i = index; trackBy: trackByIdx">
+        <h3><a [routerLink]="['/' + listType + '/edit', item.id]">{{ item.title }}</a></h3>
+        <div [innerHTML]="item.subTitle"></div>
       </li>
     </ng-container>
 

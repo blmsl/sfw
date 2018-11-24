@@ -38,19 +38,11 @@ if (isset($_GET['jahr'])) {
     echo "<h3>Lade Daten vom " . $seasonStart->format('d.m.Y') . " bis " . $loadingLimit->format('d.m.Y') . " </h3>";
 }
 
-// nur definierte Vereine zulassen
-$clubData = isset($_GET['club']) ? $project->getClubDataByTitle($_GET['club']) : $project->getClubDataByTitle('SF Winterbach');
-if (!$clubData) {
-    echo "Kein Verein mit diesen Daten im Skript hinterlegt (vgl. club.class.php).";
-    exit();
-}
 
-// Verein aus der DB laden
-$club = $project->getClubByTitle($clubData["title"]);
-if (!$club) {
-    echo "Kein Verein mit diesen Daten in der Datenbank vorhanden. Bitte den Verein " . $clubData["title"] . " erst in der Datenbank anlegen";
-    exit();
-}
+// nur definierte Vereine zulassen
+$club = isset($_GET['club'])
+    ? $project->getClubByTitle(array('title' => $_GET['club']))
+    : $project->getClubByTitle($defaultClub);
 
 if (!$club["fussballde"]["clubId"]) {
     echo "Bei dem Verein " . $clubData["title"] . " fehlt die Fussball.de-Id.";

@@ -5,14 +5,14 @@
   <hr/>
   <mat-card-content formArrayName="assignedPositions">
 
+    <p *ngIf="!members.length">{{'general.teams.edit.position.noMembersFound' | translate}}</p>
+
     <p
-      *ngIf="!team.assignedPositions || team.assignedPositions.length === 0">
+      *ngIf="members.length && (!team.assignedPositions || team.assignedPositions.length === 0)">
       {{'general.teams.edit.position.noPosition' | translate}}
     </p>
 
-    <p *ngIf="!members.length">{{'general.teams.edit.position.noMembers' | translate}}</p>
-
-    <p *ngIf="categories.length === 0">
+    <p *ngIf="members.length && categories.length === 0">
       {{'general.teams.edit.position.noPositionsDefined' | translate}}
     </p>
 
