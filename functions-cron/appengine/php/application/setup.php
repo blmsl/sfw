@@ -16,10 +16,11 @@ echo $project->generateHeader();
 
 echo "<h1>Erstelle die Grundkonfiguration</h1>";
 
-// set batch
-$batch = $project->db->batch();
-
 try {
+
+    // set batch
+    $batch = $project->db->batch();
+
     // set application
     $project->getCurrentApplication($batch);
 
