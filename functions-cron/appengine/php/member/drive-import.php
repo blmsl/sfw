@@ -9,15 +9,9 @@ header("Content-Type: text/html; charset=utf-8");
 require "../../vendor/autoload.php";
 require "../base.class.php";
 
-require_once "../utils.global.php"; # by emre isik
-
-if (!strpos(gethostname(), 'appspot.com')) {
-    putenv('GOOGLE_APPLICATION_CREDENTIALS=../../client_secret.json');
-}
-
 $time_start = microtime(true);
 
-$project = new sfwApp('sportfreunde-winterbach', array('driveService', 'sheetService'));
+$project = new sfwApp(null, array('driveService', 'sheetService'));
 
 echo $project->generateHeader();
 
@@ -105,5 +99,7 @@ try {
 
 
 } catch (Exception $e) {
+    debug_print_backtrace();
+    var_dump($e);
     echo($e->getMessage());
 }

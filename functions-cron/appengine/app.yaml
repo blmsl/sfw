@@ -17,18 +17,18 @@ handlers:
 #- url: /php/article/publish-article.php
 #  script: /php/article/publish-article.php
 
-- url: /php/match/matchplan2gcal.php
+- url: /php/match/matchplan2gcal
   script: /php/match/matchplan2gcal.php
   secure: always
   login: admin
 
-- url: /php/match/matchplan-import.php
+- url: /php/match/matchplan-import
   script: /php/match/matchplan-import.php
   secure: always
   login: admin
 
 
-- url: /php/member/dfb-import.php
+- url: /php/member/dfb-import
   script: /php/member/dfb-import.php
   secure: always
   login: admin

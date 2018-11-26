@@ -55,10 +55,11 @@ trait sfwApplication
         if ($snapshot->size() > 0) {
             foreach ($snapshot as $doc) {
                 $application = array(
-                    'id' => $doc[0]["id"],
-                    'page' => $doc[0]["page"],
-                    'assignedCalendars' => $doc[0]["assignedCalendars"]
+                    'id' => $doc["id"],
+                    'page' => $doc["page"],
+                    'assignedCalendars' => $doc["assignedCalendars"]
                 );
+                break;
             }
         }
         return $application;
