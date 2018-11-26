@@ -11,7 +11,7 @@ require "../base.class.php";
 
 $time_start = microtime(true);
 
-$project = new sfwApp(null, array('driveService', 'sheetService'));
+$project = new sfwApp('sportfreunde-winterbach', array('driveService', 'sheetService'));
 
 echo $project->generateHeader();
 
