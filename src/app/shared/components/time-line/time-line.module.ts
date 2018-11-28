@@ -6,16 +6,12 @@ import { TimeLineFormComponent } from './time-line-form/time-line-form.component
 import { TimeLineListComponent } from './time-line-list/time-line-list.component';
 import { TimeLineGraphHorizontalComponent } from './time-line-graph-horizontal/time-line-graph-horizontal.component';
 import {
-  MatButtonModule,
-  MatCardModule, MatDatepickerModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule,
-  MatNativeDateModule,
-  MatOptionModule,
-  MatSelectModule
+  MatButtonModule, MatCardModule, MatDatepickerModule, MatExpansionModule, MatFormFieldModule, MatIconModule,
+  MatInputModule, MatNativeDateModule, MatOptionModule, MatSelectModule
 } from '@angular/material';
 import { NgPipesModule } from 'ngx-pipes';
 import { ArticleService } from '../../services/article/article.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TimeLineComponent } from './time-line.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -40,14 +36,12 @@ import { RouterModule } from '@angular/router';
   declarations: [
     TimeLineFormComponent,
     TimeLineGraphHorizontalComponent,
-    TimeLineListComponent,
-    TimeLineComponent
+    TimeLineListComponent
   ],
   exports: [
     TimeLineFormComponent,
     TimeLineGraphHorizontalComponent,
-    TimeLineListComponent,
-    TimeLineComponent
+    TimeLineListComponent
   ],
   providers: [
     ArticleService
