@@ -16,11 +16,13 @@ import { NgPipesModule } from 'ngx-pipes';
 import { ArticleService } from '../../services/article/article.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TimeLineComponent } from './time-line.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     FlexLayoutModule,
+    RouterModule,
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,

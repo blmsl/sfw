@@ -1,12 +1,12 @@
 <mat-accordion dense>
-  <mat-expansion-panel *ngFor="let control of form.controls; let i = index; let first = first; let last = last"
+  <mat-expansion-panel *ngFor="let event of events; let i = index; let first = first; let last = last"
                        [expanded]="false"
                        [hideToggle]="true">
     <mat-expansion-panel-header>
       <mat-panel-title fxLayout.gt-sm="row"
                        fxLayout="column"
                        fxLayoutAlign="start center">
-        <mat-icon *ngIf="control.get('icon').value">{{control.get('icon').value}}</mat-icon>
+        <!--<mat-icon *ngIf="control.get('icon').value">{{control.get('icon').value}}</mat-icon>
         <span>{{control.get('title').value}}</span>
         <span fxFlex></span>
         <span *ngIf="control.get('startDate').value">
@@ -26,11 +26,11 @@
 
         <a (click)="delete.emit(i)" title="{{'general.delete' | translate}}" *ngIf="showLinks">
           <mat-icon color="warn">delete</mat-icon>
-        </a>
+        </a>-->
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <ng-template matExpansionPanelContent>
+    <!--<ng-template matExpansionPanelContent>
       <div *ngFor="let article of articles | filterBy: ['id']: control.get('assignedArticle').value">
         <h3>{{article.title}}</h3>
         <strong *ngIf="article.subTitle">{{article.subTitle}}</strong><br/>
@@ -39,7 +39,7 @@
       <p *ngIf="!control.get('assignedArticle').value">
         {{'general.timeLine.noAssignedArticle' | translate}}
       </p>
-    </ng-template>
+    </ng-template>-->
 
   </mat-expansion-panel>
 </mat-accordion>
@@ -52,6 +52,6 @@
   {{ 'general.timeLine.addEvent' | translate}}
 </button>
 
-<p *ngIf="!form['controls'][0]">
-  {{'general.timeLine.noEvents' | translate}}
-</p>
+<div class="alert alert-info" *ngIf="!events || events.length === 0">
+  <p>{{'general.timeLine.noEvents' | translate}}</p>
+</div>

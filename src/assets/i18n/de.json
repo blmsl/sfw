@@ -1628,6 +1628,7 @@
       "icon": "Verknüpftes Icon",
       "listEvents": "Liste",
       "noAssignedArticle": "Mit diesem Ereignis wurde noch kein Artikel verknüpft.",
+      "noAssignableArticlesFound": "Es sind keine Artikel zum Verknüpfen vorhanden. Es muss zunächst ein Artikel zu einem Ereignis existieren.",
       "noEvents": "Es wurden noch keine Ereignisse gespeichert",
       "saveEvent": "Ereignis speichern",
       "startDate": "Startdatum",

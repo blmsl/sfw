@@ -1,101 +1,113 @@
-<mat-card [formGroup]="form"
-          *ngFor="let control of form.controls; let i = index; let first = first; let last = last">
+<mat-card [formGroup]="form">
 
-  <mat-card-title *ngIf="i === selectedTimeLineEvent">
-    {{'general.timeLine.addEvent' | translate}}
-  </mat-card-title>
+  <mat-card-title>{{'general.timeLine.addEvent' | translate}}</mat-card-title>
 
-  <mat-card-content *ngIf="i === selectedTimeLineEvent"
-                    [formGroupName]="i">
+  <mat-card-content>
 
-    <div fxLayout.gt-sm="row"
-         fxLayout="column"
-         fxLayoutGap="10px">
+    <ng-container *ngIf="articles && articles.length > 0; else noArticlesTemplate">
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           fxLayoutGap="10px">
 
-      <mat-form-field fxFlex.gt-sm="50">
-        <input matInput placeholder="{{ 'general.timeLine.title' | translate}}" formControlName="title"/>
-      </mat-form-field>
+        <mat-form-field fxFlex.gt-sm="50">
+          <input matInput placeholder="{{ 'general.timeLine.title' | translate}}" formControlName="title"/>
+        </mat-form-field>
 
-      <mat-form-field fxFlex.gt-sm="50">
-        <input matInput placeholder="{{ 'general.timeLine.subTitle' | translate}}" formControlName="subTitle"/>
-      </mat-form-field>
-    </div>
+        <mat-form-field fxFlex.gt-sm="50">
+          <input matInput placeholder="{{ 'general.timeLine.subTitle' | translate}}" formControlName="subTitle"/>
+        </mat-form-field>
+      </div>
 
-    <div fxLayout.gt-sm="row"
-         fxLayout="column"
-         fxLayoutGap="10px">
-      <mat-form-field fxFlex.gt-sm="50">
-        <input matInput
-               readonly="readonly"
-               [matDatepicker]="dp3"
-               formControlName="startDate"
-               placeholder="{{'general.timeLine.startDate' | translate}}">
-        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-      </mat-form-field>
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           fxLayoutGap="10px">
+        <mat-form-field fxFlex.gt-sm="50">
+          <input matInput
+                 readonly="readonly"
+                 [matDatepicker]="dp3"
+                 formControlName="startDate"
+                 placeholder="{{'general.timeLine.startDate' | translate}}">
+          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+          <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+        </mat-form-field>
 
-      <mat-form-field fxFlex.gt-sm="50">
-        <input matInput
-               readonly
-               [matDatepicker]="dp4"
-               formControlName="endDate"
-               placeholder="{{'general.timeLine.endDate' | translate}}">
-        <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
-        <mat-datepicker #dp4 disabled="false"></mat-datepicker>
-      </mat-form-field>
-    </div>
+        <mat-form-field fxFlex.gt-sm="50">
+          <input matInput
+                 readonly
+                 [matDatepicker]="dp4"
+                 formControlName="endDate"
+                 placeholder="{{'general.timeLine.endDate' | translate}}">
+          <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+          <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+        </mat-form-field>
+      </div>
 
-    <div fxLayout.gt-sm="row"
-         fxLayout="column"
-         fxLayoutGap="10px">
-      <mat-form-field fxFlex.gt-sm="50">
-        <input matInput placeholder="{{ 'general.timeLine.icon' | translate}}" formControlName="icon"/>
-      </mat-form-field>
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           fxLayoutGap="10px">
+        <mat-form-field fxFlex.gt-sm="50">
+          <input matInput placeholder="{{ 'general.timeLine.icon' | translate}}" formControlName="icon"/>
+        </mat-form-field>
 
-      <mat-form-field fxFlex.gt-sm="50">
-        <mat-select placeholder="{{ 'general.timeLine.color' | translate}}" formControlName="color">
-          <mat-option *ngFor="let color of colors"
-                      [value]="color">
-            {{color | translate}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+        <mat-form-field fxFlex.gt-sm="50">
+          <mat-select placeholder="{{ 'general.timeLine.color' | translate}}" formControlName="color">
+            <mat-option *ngFor="let color of colors"
+                        [value]="color">
+              {{color | translate}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-    <div fxLayout.gt-sm="row"
-         fxLayout="column"
-         fxLayoutGap="10px">
-      <mat-form-field fxFlex="50">
-        <mat-select placeholder="{{ 'general.timeLine.assignedArticle' | translate}}"
-                    formControlName="assignedArticle">
-          <mat-option *ngFor="let article of articles | orderBy: ['title']"
-                      [value]="article.id">
-            {{article.title}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+      <div fxLayout.gt-sm="row"
+           fxLayout="column"
+           fxLayoutGap="10px">
+        <mat-form-field fxFlex="50">
+          <mat-select placeholder="{{ 'general.timeLine.assignedArticle' | translate}}"
+                      formControlName="assignedArticle">
+            <mat-option *ngFor="let article of articles | orderBy: ['title']"
+                        [value]="article.id">
+              {{article.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </ng-container>
 
   </mat-card-content>
 
-  <mat-card-actions *ngIf="i === selectedTimeLineEvent">
+  <mat-card-actions *ngIf="articles && articles.length > 0">
     <div fxLayout.gt-sm="row"
          fxLayout="column"
          fxLayoutGap="10px">
       <button mat-raised-button
-              [disabled]="!form.controls[i].valid"
+              [disabled]="!form.valid"
               color="primary"
               type="button"
               (click)="save.emit()">
         {{ 'general.timeLine.saveEvent' | translate}}
       </button>
       <button type="button"
+              *ngIf="editEvent"
               mat-raised-button
               color="accent"
-              (click)="delete.emit(i)">
+              (click)="delete.emit(editEvent)">
         {{'general.timeLine.deleteEvent' | translate}}
       </button>
     </div>
+
   </mat-card-actions>
 
 </mat-card>
+
+<ng-template #noArticlesTemplate>
+  <div class="alert alert-warning">
+    <p>{{ 'general.timeLine.noAssignableArticlesFound' | translate}}</p>
+  </div>
+  <button type="button"
+          mat-raised-button
+          color="accent"
+          [routerLink]="['/articles/create']">
+    {{'general.articles.list.createArticle' | translate}}
+  </button>
+</ng-template>

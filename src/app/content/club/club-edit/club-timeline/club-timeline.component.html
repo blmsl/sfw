@@ -1,10 +1,11 @@
-<mat-card [formGroup]="form">
+<mat-card>
   <mat-card-title>
     {{'general.clubs.edit.timeLineTitle' | translate}}
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
-  <mat-card-content>123
-    <!--<time-line (add)="addTimeLineEvent()"
+  <mat-card-content>
+    <!-- [formGroup]="form"
+              (add)="addTimeLineEvent()"
                (cancel)="cancel()"
                (delete)="removeTimeLineEvent($event)"
                (edit)="editTimeLineEvent($event)"
@@ -12,8 +13,14 @@
                [showLinks]="true"
                [selectedTimeLineEvent]="selectedTimeLineEvent"
                [articles]="articles"
-               [form]="form.controls['timeLine']">
-    </time-line>-->
+               [form]="form.controls['timeLine']"-->
+
+    <time-line-list [articles]="articles"
+                    [events]="club.timeLine">
+    </time-line-list>
+    <time-line-form [articles]="articles"
+                    [editEvent]="editEvent">
+    </time-line-form>
   </mat-card-content>
 </mat-card>
 
