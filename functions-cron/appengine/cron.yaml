@@ -1,12 +1,16 @@
 cron:
 - description: Import Matches from fussball.de
-  url: /php/match/matchplan-import.php
-  schedule: every 60 hours
+  url: /php/match/matchplan-import
+  schedule: every 72 hours
 
 - description: Google-Calender Export
-  url: /php/match/matchplan2gcal.php
-  schedule: every 61 hours
+  url: /php/match/matchplan2gcal
+  schedule: every 72 hours
 
 - description: Import Drive-Members from Google-Drive
-  url: /php/member/drive-import.php
-  schedule: every 48 hours
+  url: /php/member/drive-import
+  schedule: every 72 hours
+
+- description: Import Dfb-Members from Google-Drive
+  url: /php/member/dfb-import
+  schedule: every 72 hours

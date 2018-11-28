@@ -7,6 +7,6 @@
     "google/cloud-firestore": "^0.15.5",
     "google/cloud-storage": "^1.9",
     "duzun/hquery": "^2.2",
-    "paragonie/random_compat": "^9.99"
+    "paragonie/random_compat": "=2.0.17"
   }
 }

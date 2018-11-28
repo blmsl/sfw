@@ -67,8 +67,9 @@
 
       <ngx-datatable-column name="{{'general.categories.list.colTitles.category' | translate}}">
         <ng-template let-row="row" let-value="assignedCategoryType" ngx-datatable-cell-template>
-          {{ 'general.menu.' + (categoryTypes | filterBy: ['id'] : row.assignedCategoryType)[0].link + '.main' |
-          translate}}
+          <span *ngIf="categoryTypes | filterBy: ['id'] : row.assignedCategoryType as categoryType">
+            {{ 'general.menu.' + categoryType[0].link + '.main' | translate}}
+          </span>
         </ng-template>
       </ngx-datatable-column>
 
@@ -96,8 +97,8 @@
           let-curPage="curPage"
           let-offset="offset">
           <div style="padding: 5px 10px" fxHide.xs fxHide.sm>
-            <div class="">{{ 'general.items' | translate}}: {{rowCount}} |
-              {{pageSize}} {{'general.itemsPerPage' | translate}} |
+            <div>{{ 'general.items' | translate}}: {{rowCount}} <br />
+              {{pageSize}} {{'general.itemsPerPage' | translate}}
               {{'general.currentPage' | translate}}: {{curPage}}
             </div>
           </div>

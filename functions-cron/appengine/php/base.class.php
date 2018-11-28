@@ -3,6 +3,7 @@
 use Google\Cloud\Firestore\FieldValue;
 use Google\Cloud\Firestore\FirestoreClient;
 use Google\Cloud\Storage\StorageClient;
+
 // use Abraham\TwitterOAuth\TwitterOAuth;
 // use Facebook\Facebook;
 
@@ -23,230 +24,244 @@ require_once "team.class.php";
 
 class sfwApp
 {
-  use sfwApplication;
-  use sfwArticle;
-  use sfwBase;
-  use sfwCalendar;
-  use sfwCategory;
-  use sfwCategoryType;
-  use sfwClub;
-  use sfwDrive;
-  use sfwLocation;
-  use sfwMatch;
-  use sfwMember;
-  use sfwSeason;
-  use sfwTeam;
+    use sfwApplication;
+    use sfwArticle;
+    use sfwBase;
+    use sfwCalendar;
+    use sfwCategory;
+    use sfwCategoryType;
+    use sfwClub;
+    use sfwDrive;
+    use sfwLocation;
+    use sfwMatch;
+    use sfwMember;
+    use sfwSeason;
+    use sfwTeam;
 }
 
 trait sfwBase
 {
-  public $projectId = null;
-  /**
-   * @var $db Google\Cloud\Firestore\FirestoreClient
-   */
-  public $db;
-  /**
-   * @var $client Google_Client
-   */
-  public $client;
+    public $projectId = null;
+    /**
+     * @var $db Google\Cloud\Firestore\FirestoreClient
+     */
+    public $db;
+    /**
+     * @var $client Google_Client
+     */
+    public $client;
 
-  public $sheetService = null;
-  public $driveService = null;
-  public $calendarService = null;
-  public $twitterConfig = null;
-  public $storage = null;
+    public $sheetService = null;
+    public $driveService = null;
+    public $calendarService = null;
+    public $twitterConfig = null;
+    public $storage = null;
 
-  public $twitter = null;
+    public $twitter = null;
 
-  public function __construct($projectId, $initParts = array())
-  {
-    $this->projectId = $projectId;
-    $this->client = $this->getGoogleClient($projectId);
-    $this->db = $this->getFireStoreConnection($projectId);
+    public function __construct($projectId = 'sportfreunde-winterbach', $initParts = array())
+    {
+        $this->projectId = $projectId;
+        $this->client = $this->getGoogleClient($projectId);
+        $this->db = $this->getFireStoreConnection($projectId);
 
-    if (in_array('sheetService', $initParts)) {
-      $this->sheetService = new Google_Service_Sheets($this->client);
+        if (in_array('sheetService', $initParts)) {
+            $this->sheetService = new Google_Service_Sheets($this->client);
+        }
+        if (in_array('driveService', $initParts)) {
+            $this->driveService = new Google_Service_Drive($this->client);
+        }
+        if (in_array('calendarService', $initParts)) {
+            $this->calendarService = new Google_Service_Calendar($this->client);
+        }
+        if (in_array('storageService', $initParts)) {
+            $this->storage = $this->getStorageConnection($projectId);
+        }
+
+        $this->applicationCollection = $this->db->collection('applications');
+        $this->articleCollection = $this->db->collection('articles');
+        $this->categoryCollection = $this->db->collection('categories');
+        $this->categoryTypeCollection = $this->db->collection('category-types');
+        $this->clubCollection = $this->db->collection('clubs');
+        $this->locationCollection = $this->db->collection('locations');
+        $this->matchCollection = $this->db->collection('matches');
+        $this->memberCollection = $this->db->collection('members');
+        $this->seasonCollection = $this->db->collection('seasons');
+        $this->teamCollection = $this->db->collection('teams');
     }
-    if (in_array('driveService', $initParts)) {
-      $this->driveService = new Google_Service_Drive($this->client);
-    }
-    if (in_array('calendarService', $initParts)) {
-      $this->calendarService = new Google_Service_Calendar($this->client);
-    }
-    if (in_array('storageService', $initParts)) {
-      $this->storage = $this->getStorageConnection($projectId);
+
+    /**
+     * @param $projectId string
+     * @return Google_Client
+     */
+    public function getGoogleClient($projectId)
+    {
+        try {
+            $client = new Google_Client([
+                'projectId' => $projectId
+            ]);
+            $client->useApplicationDefaultCredentials();
+
+            $client->setApplicationName("SFW via FlexEngine");
+            $client->setScopes([
+                    Google_Service_Drive::DRIVE,
+                    Google_Service_Drive::DRIVE_FILE,
+                    Google_Service_Sheets::DRIVE,
+                    Google_Service_Sheets::DRIVE_FILE,
+                    Google_Service_Sheets::SPREADSHEETS,
+                    Google_Service_Calendar::CALENDAR
+                ]
+            );
+        } catch (Exception $e) {
+            var_dump($e);
+            exit();
+        }
+        return $client;
     }
 
-    $this->applicationCollection = $this->db->collection('applications');
-    $this->articleCollection = $this->db->collection('articles');
-    $this->categoryCollection = $this->db->collection('categories');
-    $this->categoryTypeCollection = $this->db->collection('category-types');
-    $this->clubCollection = $this->db->collection('clubs');
-    $this->locationCollection = $this->db->collection('locations');
-    $this->matchCollection = $this->db->collection('matches');
-    $this->memberCollection = $this->db->collection('members');
-    $this->seasonCollection = $this->db->collection('seasons');
-    $this->teamCollection = $this->db->collection('teams');
-  }
+    /*
+    public function setUpFacebook()
+    {
+      /*if (!getenv('FACEBOOK_APP_ID') || !file_get_contents(getenv('FACEBOOK_APP_SECRET'))) {
+          exit('Facebook Config not loaded');
+      }
 
-  public function getGoogleClient($projectId)
-  {
-    try {
-      $client = new Google_Client([
-        'projectId' => $projectId
-      ]);
-      $client->useApplicationDefaultCredentials();
-
-      $client->setApplicationName("SFW via FlexEngine");
-      $client->setScopes([
-          Google_Service_Drive::DRIVE,
-          Google_Service_Drive::DRIVE_FILE,
-          Google_Service_Sheets::DRIVE,
-          Google_Service_Sheets::DRIVE_FILE,
-          Google_Service_Sheets::SPREADSHEETS,
-          Google_Service_Calendar::CALENDAR
-        ]
+      $string = file_get_contents(getenv('FACEBOOK_APP_CREDENTIALS'));
+      $config = json_decode($string, true); *
+      $config = array(
+        'app_id' => '431939683855219',
+        'app_secret' => '578ec9e8836c3a216cc3ed52b6d90bec'
       );
-    } catch (Exception $e) {
-      var_dump($e);
-      exit();
-    }
-    return $client;
-  }
 
-  /*
-  public function setUpFacebook()
-  {
-    /*if (!getenv('FACEBOOK_APP_ID') || !file_get_contents(getenv('FACEBOOK_APP_SECRET'))) {
-        exit('Facebook Config not loaded');
+      try {
+        return new Facebook($config);
+      } catch (Exception $exception) {
+        exit($exception);
+      }
     }
 
-    $string = file_get_contents(getenv('FACEBOOK_APP_CREDENTIALS'));
-    $config = json_decode($string, true); *
-    $config = array(
-      'app_id' => '431939683855219',
-      'app_secret' => '578ec9e8836c3a216cc3ed52b6d90bec'
-    );
+    public function setUpTwitter()
+    {
+      if (!getenv('TWITTER_APPLICATION_CREDENTIALS') || !file_get_contents(getenv('TWITTER_APPLICATION_CREDENTIALS'))) {
+        exit('Twitter Config not loaded');
+      }
 
-    try {
-      return new Facebook($config);
-    } catch (Exception $exception) {
-      exit($exception);
+      $string = file_get_contents(getenv('TWITTER_APPLICATION_CREDENTIALS'));
+      $config = json_decode($string, true);
+
+      return new TwitterOAuth(
+        $config["consumerKey"],
+        $config["consumerSecret"],
+        $config["accessToken"],
+        $config["accessTokenSecret"]
+      );
+    } */
+
+    /**
+     * @param $projectId string
+     * @return StorageClient
+     */
+    public function getStorageConnection($projectId)
+    {
+        try {
+            $storage = new StorageClient([
+                'projectId' => $projectId
+            ]);
+        } catch (Exception $e) {
+            var_dump($e);
+            exit();
+        }
+        return $storage;
     }
-  }
 
-  public function setUpTwitter()
-  {
-    if (!getenv('TWITTER_APPLICATION_CREDENTIALS') || !file_get_contents(getenv('TWITTER_APPLICATION_CREDENTIALS'))) {
-      exit('Twitter Config not loaded');
+    /**
+     * @param $projectId string
+     * @return FirestoreClient
+     */
+    public function getFireStoreConnection($projectId)
+    {
+        try {
+            return new FirestoreClient([
+                'projectId' => $projectId
+            ]);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit();
+        }
     }
 
-    $string = file_get_contents(getenv('TWITTER_APPLICATION_CREDENTIALS'));
-    $config = json_decode($string, true);
-
-    return new TwitterOAuth(
-      $config["consumerKey"],
-      $config["consumerSecret"],
-      $config["accessToken"],
-      $config["accessTokenSecret"]
-    );
-  } */
-
-  public function getStorageConnection($projectId)
-  {
-    try {
-      $storage = new StorageClient([
-        'projectId' => $projectId
-      ]);
-    } catch (Exception $e) {
-      var_dump($e);
-      exit();
+    /**
+     * @param $link string
+     * @return hQuery
+     */
+    public function loadRemoteHTML($link)
+    {
+        return hQuery::fromUrl($link); // , ['Accept' => 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8']
     }
-    return $storage;
-  }
 
-  public function getFireStoreConnection($projectId)
-  {
-    try {
-      $db = new FirestoreClient([
-        'projectId' => $projectId
-      ]);
-    } catch (\Google\Cloud\Core\Exception\GoogleException $e) {
-      var_dump($e);
-      exit();
+    /**
+     * @param $collection Google\Cloud\Firestore\CollectionReference
+     * @param $data array
+     * @param $batch \Google\Cloud\Firestore\WriteBatch
+     * @return mixed
+     */
+    public function saveFireStoreObject($collection, $data, $batch)
+    {
+        $addedDocRef = $collection->newDocument();
+        $data["id"] = $addedDocRef->id();
+        $data["creationAt"] = $this->generateCreationAt();
+        $data["creationBy"] = $this->generateCreationBy();
+        $data["isImported"] = true;
+        $data["publicationAt"] = $this->generatePublicationAt();
+        $data["publicationFrom"] = $this->generatePublicationFrom();
+        $data["publicationStatus"] = $this->generatePublicationStatus();
+
+        $batch->create($addedDocRef, $data);
+        return $data;
     }
-    return $db;
-  }
 
-  public function loadRemoteHTML($link)
-  {
-    return hQuery::fromUrl($link); // , ['Accept' => 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8']
-  }
+    /**
+     * @param $collection Google\Cloud\Firestore\CollectionReference
+     * @param $id string
+     * @param $data array
+     * @param $batch object
+     * @return mixed
+     */
+    public function updateFireStoreObject($collection, $id, $data, $batch)
+    {
+        $doc = $collection->name() . '/' . $id;
+        $batch->update($doc, $data);
+        return $data;
+    }
 
-  /**
-   * @param $collection Google\Cloud\Firestore\CollectionReference
-   * @param $data
-   * @param $batch Google\Cloud\Firestore\WriteBatch
-   * @return mixed
-   */
-  public function saveFireStoreObject($collection, $data, $batch)
-  {
-    $addedDocRef = $collection->newDocument();
-    $data["id"] = $addedDocRef->id();
-    $data["creationAt"] = $this->generateCreationAt();
-    $data["creationBy"] = $this->generateCreationBy();
-    $data["isImported"] = true;
-    $data["publicationAt"] = $this->generatePublicationAt();
-    $data["publicationFrom"] = $this->generatePublicationFrom();
-    $data["publicationStatus"] = $this->generatePublicationStatus();
+    public function generateCreationAt()
+    {
+        return FieldValue::serverTimestamp();
+    }
 
+    public function generateCreationBy()
+    {
+        return 'system';
+    }
 
-    $batch->create($addedDocRef, $data);
-    return $data;
-  }
+    public function generatePublicationStatus()
+    {
+        return 0;
+    }
 
-  /**
-   * @param $collection Google\Cloud\Firestore\CollectionReference
-   * @param $id string
-   * @param $data
-   * @param $batch Google\Cloud\Firestore\WriteBatch
-   * @return mixed
-   */
-  public function updateFireStoreObject($collection, $id, $data, $batch)
-  {
-    $doc = $collection->name() . '/' . $id;
-    $batch->update($doc, $data);
-    return $data;
-  }
+    public function generatePublicationFrom()
+    {
+        return null;
+    }
 
-  public function generateCreationAt()
-  {
-    return FieldValue::serverTimestamp();
-  }
+    public function generatePublicationAt()
+    {
+        return null;
+    }
 
-  public function generateCreationBy()
-  {
-    return 'system';
-  }
-
-  public function generatePublicationStatus()
-  {
-    return 0;
-  }
-
-  public function generatePublicationFrom()
-  {
-    return null;
-  }
-
-  public function generatePublicationAt()
-  {
-    return null;
-  }
-
-  public function generateHeader()
-  {
-    return '<!DOCTYPE html><html lang="de">
+    public function generateHeader()
+    {
+        return '<!DOCTYPE html><html lang="de">
               <head>
                 <meta charset="utf-8" />
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -269,41 +284,55 @@ trait sfwBase
               </head>
               <body>
                 <div class="container-fluid">' . PHP_EOL;
-  }
+    }
 
-  public function generateFooter()
-  {
-    return '</div>' . PHP_EOL . '</body>' . PHP_EOL . '</html>';
-  }
+    public function generateFooter()
+    {
+        return '</div>' . PHP_EOL . '</body>' . PHP_EOL . '</html>';
+    }
 
-  /**
-   * Round up minutes to the nearest upper interval of a DateTime object.
-   *
-   * @param \DateTime $dateTime
-   * @param int $minuteInterval
-   * @return \DateTime
-   */
-  public function roundUpToMinuteInterval(\DateTime $dateTime, $minuteInterval = 10)
-  {
-    return $dateTime->setTime(
-      $dateTime->format('H'),
-      ceil($dateTime->format('i') / $minuteInterval) * $minuteInterval,
-      0
-    );
-  }
+    /**
+     * @param $title string
+     * @param $items array
+     */
+    public function generateList($title, $items)
+    {
+        echo "<h3>".$title."</h3>";
+        echo "<ul>";
+        foreach ($items as $item) {
+            echo "<li>" . $item . "</li>";
+        }
+        echo "</ul>";
+    }
 
-  /**
-   * @param DateTime $dateTime
-   * @param int $minuteInterval
-   * @return DateTime|false
-   */
-  public function roundDownToMinuteInterval(\DateTime $dateTime, $minuteInterval = 10)
-  {
-    return $dateTime->setTime(
-      $dateTime->format('H'),
-      floor($dateTime->format('i') / $minuteInterval) * $minuteInterval,
-      0
-    );
-  }
+    /**
+     * Round up minutes to the nearest upper interval of a DateTime object.
+     *
+     * @param \DateTime $dateTime
+     * @param int $minuteInterval
+     * @return \DateTime
+     */
+    public function roundUpToMinuteInterval(\DateTime $dateTime, $minuteInterval = 10)
+    {
+        return $dateTime->setTime(
+            $dateTime->format('H'),
+            ceil($dateTime->format('i') / $minuteInterval) * $minuteInterval,
+            0
+        );
+    }
+
+    /**
+     * @param DateTime $dateTime
+     * @param int $minuteInterval
+     * @return DateTime|false
+     */
+    public function roundDownToMinuteInterval(\DateTime $dateTime, $minuteInterval = 10)
+    {
+        return $dateTime->setTime(
+            $dateTime->format('H'),
+            floor($dateTime->format('i') / $minuteInterval) * $minuteInterval,
+            0
+        );
+    }
 
 }

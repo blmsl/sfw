@@ -1,19 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ITeam } from '../../../shared/interfaces/team/team.interface';
 import { TeamService } from '../../../shared/services/team/team.service';
@@ -23,18 +10,14 @@ import { ClubService } from '../../../shared/services/club/club.service';
 import { IClub } from '../../../shared/interfaces/club/club.interface';
 import { ICategory } from '../../../shared/interfaces/category.interface';
 import { CategoryService } from '../../../shared/services/category/category.service';
-import { ICategoryType } from '../../../shared/interfaces/category-type.interface';
 import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
 import { MemberService } from '../../../shared/services/member/member.service';
 import { IMember } from '../../../shared/interfaces/member/member.interface';
 import { ISeason } from '../../../shared/interfaces/season.interface';
 import { SeasonService } from '../../../shared/services/season/season.service';
-import { ITraining } from '../../../shared/interfaces/training.interface';
 import { LocationService } from '../../../shared/services/location/location.service';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
 // import { ITimeLineEvent }      from '../../../shared/interfaces/time-line-event.interface';
-import { IUploaderConfig } from '../../../shared/interfaces/media/uploader-config.interface';
-import { IUploaderOptions } from '../../../shared/interfaces/media/uploader-options.interface';
 import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
@@ -55,18 +38,18 @@ export class TeamEditComponent implements OnInit {
   public locations$: Observable<ILocation[]>;
 
   constructor(private teamService: TeamService,
-    private categoryTypeService: CategoryTypeService,
-    private memberService: MemberService,
-    private seasonService: SeasonService,
-    private clubService: ClubService,
-    private categoryService: CategoryService,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private cd: ChangeDetectorRef,
-    private router: Router,
-    private alertService: AlertService,
-    private locationService: LocationService,
-    private userService: UserService) {
+              private categoryTypeService: CategoryTypeService,
+              private memberService: MemberService,
+              private seasonService: SeasonService,
+              private clubService: ClubService,
+              private categoryService: CategoryService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private cd: ChangeDetectorRef,
+              private router: Router,
+              private alertService: AlertService,
+              private locationService: LocationService,
+              private userService: UserService) {
     this.users$ = userService.users$;
     this.members$ = memberService.members$;
     this.clubs$ = clubService.clubs$;
@@ -98,10 +81,20 @@ export class TeamEditComponent implements OnInit {
   }
 
   removeTeam(team: ITeam) {
-    this.teamService.removeTeam(team).then(
-      () => this.alertService.showSnackBar('success', 'general.applications.removedMessage'),
-      (error: any) => this.alertService.showSnackBar('error', error.message)
-    );
+    if (!team.id) {
+      this.alertService.showSnackBar('success', 'general.applications.canceledAction', 2500);
+      this.redirectToList();
+    } else {
+      this.teamService.removeTeam(team).then(
+        () => this.alertService.showSnackBar('success', 'general.applications.removedMessage', 2500),
+        (error: any) => this.alertService.showSnackBar('error', error.message)
+      );
+    }
   }
+
+  redirectToList() {
+    this.router.navigate(['list']).then();
+  }
+
 
 }

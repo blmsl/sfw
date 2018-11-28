@@ -8,6 +8,12 @@ trait sfwCategory
   public $categoryCollection = null;
   private $categories = array();
 
+    /**
+     * @param $title string
+     * @param $categoryType string
+     * @param $batch \Google\Cloud\Firestore\WriteBatch
+     * @return array
+     */
   public function getCategoryByTitleAndCategoryType($title, $categoryType, $batch)
   {
 
@@ -17,7 +23,7 @@ trait sfwCategory
 
     $query = $this->categoryCollection
       ->where('title', '=', $title)
-      ->where('assignedCategoryType', '=', $categoryType["id"]);
+      ->where('assignedCategoryType', '=', $categoryType);
     $snapshot = $query->documents();
 
     if ($snapshot->isEmpty()) {
@@ -25,7 +31,7 @@ trait sfwCategory
         $this->categoryCollection,
         array(
           'title' => $title,
-          'assignedCategoryType' => $categoryType["id"]
+          'assignedCategoryType' => $categoryType
         ),
         $batch);
     }

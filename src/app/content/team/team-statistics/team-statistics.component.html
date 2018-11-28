@@ -9,7 +9,10 @@
       </mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
       <mat-card-content>
-        <p>ToDo</p>
+        <!-- ToDo: Letzte Vorberichte -->
+        <div class="alert alert-info">
+          <p>{{ 'toDo' | translate }}</p>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
@@ -23,16 +26,23 @@
       </mat-card-title>
       <mat-card-subtitle></mat-card-subtitle>
       <mat-card-content>
-        <canvas *ngIf="isLoaded; else loadingTemplate"
-                baseChart
-                width="400"
-                height="400"
-                [datasets]="lineChartData"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptions"
-                legend="true"
-                chartType="line">
-        </canvas>
+        <ng-container *ngIf="isLoaded; else loadingTemplate">
+
+          <div class="alert alert-info" *ngIf="lineChartData.length === 0">
+            <p>{{ 'general.teams.list.noChartData' | translate }}</p>
+          </div>
+
+          <canvas baseChart
+                  *ngIf="lineChartData.length > 0"
+                  width="400"
+                  height="400"
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  legend="true"
+                  chartType="line">
+          </canvas>
+        </ng-container>
       </mat-card-content>
     </mat-card>
   </div>

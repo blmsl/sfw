@@ -1,15 +1,26 @@
 <mat-card>
   <mat-card-title>
-    <mat-icon>list</mat-icon>
-    {{'general.menu.team.main' | translate}}
+    <mat-toolbar-row>
+      <mat-icon>list</mat-icon>
+      {{'general.menu.team.main' | translate}}
+      <span class="spacer"></span>
+      <button mat-raised-button [routerLink]="['/teams/create']" color="primary">
+        {{'general.teams.list.createTeam' | translate}}
+      </button>
+    </mat-toolbar-row>
+
   </mat-card-title>
-  <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-    <team-list [teams]="teams$ | async"
-               [categories]="categories$ | async"
-               [clubs]="clubs$ | async"
-               [seasons]="seasons$ | async"
-               (remove)="removeTeam($event)">
-    </team-list>
+    <infinite-scroll [listType]="listType"
+                     [viewPortHeight]="viewPortHeight"
+                     [itemSize]="itemSize"
+                     [maxItems]="maxItems"
+                     [sortOrder]="sortOrder"
+                     [sortField]="sortField">
+    </infinite-scroll>
   </mat-card-content>
 </mat-card>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>

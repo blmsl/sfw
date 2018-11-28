@@ -6,12 +6,16 @@
 [![GitHub version](https://badge.fury.io/gh/Meistercoach83%2Fsfw.svg)](https://badge.fury.io/gh/Meistercoach83%2Fsfw)
 
 ## Based on
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/Meistercoach83/sfw.svg)](https://greenkeeper.io/)
 - Primer Admin Theme
-- AppEngine / FlexEngine: Google Cloud CronJobs (PHP & Python)
+- AppEngine: Google Cloud CronJobs (PHP)
 - Angularfire 2
-- Firebase (Auth, Storage, Firestore-DB, Firebase-Admin)
+- Firebase (Auth, Storage, Firestore-DB, Firebase-Admin, Cloud-Functions)
 - Sendgrid/mail
+
+
+### Install and Configuration
+- Enable sheets API at [Google Dev Console](https://console.developers.google.com/apis/api/sheets.googleapis.com)
+- Enable drive API at [Google Dev Console](https://console.developers.google.com/apis/api/drive.googleapis.com)
+- Give Service Account read access to member-lists in google-Drive
 
 [MIT](LICENSE.txt) license.

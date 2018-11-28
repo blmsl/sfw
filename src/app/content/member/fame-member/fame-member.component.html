@@ -2,9 +2,17 @@
   <mat-card-title>{{'general.menu.member.fame' | translate}}</mat-card-title>
   <mat-card-subtitle innerHTML="{{'general.members.fame.description' | translate}}"></mat-card-subtitle>
   <mat-card-content>
-    <fame-member-list *ngIf="membersOfTheWeeks$ | async as membersOfTheWeeks; else loadingTemplate"
-                      [membersOfTheWeeks]="membersOfTheWeeks">
-    </fame-member-list>
+    <ng-container *ngIf="membersOfTheWeeks$ | async as membersOfTheWeeks; else loadingTemplate">
+
+      <div class="alert alert-info" *ngIf="!membersOfTheWeeks || membersOfTheWeeks.length === 0">
+        <p>{{'general.members.fame.noResult' | translate}}</p>
+      </div>
+
+      <fame-member-list *ngIf="membersOfTheWeeks.length > 0"
+                        [membersOfTheWeeks]="membersOfTheWeeks">
+      </fame-member-list>
+
+    </ng-container>
   </mat-card-content>
 </mat-card>
 

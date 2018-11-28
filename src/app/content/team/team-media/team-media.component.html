@@ -1,9 +1,58 @@
-<h3>Letzte ...</h3>
-<ul>
-  <li>Mannschaftsfotos</li>
-  <li>Trainingspläne?</li>
-  <li>Fotos in Galerien</li>
-  <li>Logos</li>
-  <li>Videos</li>
-  <li>sonstige Dateien</li>
-</ul>
+<div fxLayout="row">
+
+  <div fxFlex.gt-sm="35"
+       fxflex="100">
+    <mat-card>
+      <mat-card-title>
+        <mat-icon>list</mat-icon>
+        {{ 'general.teams.media.latestImages' | translate }}
+      </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+      <mat-card-content>
+        <!-- ToDo: Latest Images -->
+        <div class="alert alert-info">
+          <p>{{ 'toDo' | translate }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex.gt-sm="35"
+       fxflex="100">
+    <mat-card>
+      <mat-card-title>
+        <mat-icon>list</mat-icon>
+        {{ 'general.teams.media.latestFiles' | translate }}
+      </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+      <mat-card-content>
+        <!-- ToDo: Latest Files -->
+        <div class="alert alert-info">
+          <p>{{ 'toDo' | translate }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex.gt-sm="30"
+       fxflex="100">
+    <mat-card>
+      <mat-card-title>
+        <mat-icon>list</mat-icon>
+        {{ 'general.teams.media.latestGalleries' | translate }}
+      </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+      <mat-card-content>
+        <!-- ToDo: Latest Galleries -->
+        <div class="alert alert-info">
+          <p>{{ 'toDo' | translate }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>
