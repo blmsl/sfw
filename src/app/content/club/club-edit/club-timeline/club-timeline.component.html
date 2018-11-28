@@ -4,22 +4,17 @@
   </mat-card-title>
   <mat-card-subtitle></mat-card-subtitle>
   <mat-card-content>
-    <!-- [formGroup]="form"
-              (add)="addTimeLineEvent()"
-               (cancel)="cancel()"
-               (delete)="removeTimeLineEvent($event)"
-               (edit)="editTimeLineEvent($event)"
-               (save)="saveTimeLineEvent()"
-               [showLinks]="true"
-               [selectedTimeLineEvent]="selectedTimeLineEvent"
-               [articles]="articles"
-               [form]="form.controls['timeLine']"-->
-
     <time-line-list [articles]="articles"
-                    [events]="club.timeLine">
+                    [showLinks]="true"
+                    [events]="club.timeLine"
+                    (edit)="editTimeLineEvent($event)"
+                    (delete)="deleteTimeLineEvent($event)">
     </time-line-list>
     <time-line-form [articles]="articles"
-                    [editEvent]="editEvent">
+                    [editEvent]="editEvent"
+                    (cancel)="cancelEditTimeLineEvent()"
+                    (update)="updateTimeLineEvent($event)"
+                    (save)="saveTimeLineEvent($event)">
     </time-line-form>
   </mat-card-content>
 </mat-card>

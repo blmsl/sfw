@@ -1,9 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { IArticle } from '../../../../shared/interfaces/article.interface';
 import { IClub } from '../../../../shared/interfaces/club/club.interface';
 import { ITimeLineEvent } from '../../../../shared/interfaces/time-line-event.interface';
-import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -14,68 +13,47 @@ import { ActivatedRoute } from '@angular/router';
 export class ClubTimelineComponent implements OnInit {
 
   @Input() articles: IArticle[];
+  @Output() saveClub: EventEmitter<IClub> = new EventEmitter<IClub>(false);
 
   public club: IClub;
   public form: FormGroup;
   public editEvent: ITimeLineEvent;
 
-  constructor(private route: ActivatedRoute,
-    private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.route.data.subscribe((data: { club: IClub }) => {
       this.club = data.club;
     });
-
-    /* this.form = this.fb.group({
-      timeLine: this.club.timeLine ? this.club.timeLine : []
-    }); */
   }
 
-  /* initTimeLineEvent(event: ITimeLineEvent): FormGroup {
-    return this.fb.group({
-      title: [event.title, [Validators.required, Validators.maxLength(100)]],
-      subTitle: event.subTitle,
-      icon: event.icon,
-      color: event.color,
-      assignedMediaItem: event.assignedMediaItem,
-      assignedArticle: event.assignedArticle,
-      startDate: [event.startDate ? new Date(event.startDate.seconds * 1000) : new Date()],
-      endDate: [event.endDate ? new Date(event.endDate.seconds * 1000) : null]
-    });
+  saveTimeLineEvent($event: ITimeLineEvent): void {
+    this.club.timeLine ? this.club.timeLine.push($event) : this.club.timeLine = [$event];
+    this.saveClub.emit(this.club);
   }
 
-  addTimeLineEvent(): void {
-    const control = <FormArray>this.form.controls['timeLine'];
-    const event: ITimeLineEvent = {
-      title: '',
-      startDate: {
-        nanoseconds: 0,
-        seconds: moment().unix()
-      }
-    };
-    const addCtrl = this.initTimeLineEvent(event);
-    control.push(addCtrl);
-    this.selectedClubTimeLineEvent = this.form.controls['timeLine']['controls'].length - 1;
+  updateTimeLineEvent($event: ITimeLineEvent): void {
+    console.log('new', $event);
+    const idx = this.club.timeLine.indexOf(this.editEvent);
+    console.log('old', this.club.timeLine[idx]);
+    console.log(idx);
+    this.club.timeLine[idx] = $event;
+    this.saveClub.emit(this.club);
+    this.editEvent = null;
   }
 
-  editTimeLineEvent($event: number): void {
-    this.selectedClubTimeLineEvent = $event;
+  editTimeLineEvent($event: ITimeLineEvent): void {
+    this.editEvent = $event;
   }
 
-  saveTimeLineEvent(): void {
-    this.selectedClubTimeLineEvent = -1;
+  deleteTimeLineEvent($event: ITimeLineEvent): void {
+    console.log($event);
+    this.club.timeLine.splice(this.club.timeLine.indexOf($event), 1);
+    this.saveClub.emit(this.club);
   }
 
-  removeTimeLineEvent($event: number): void {
-    const control = <FormArray>this.form.controls['timeLine'];
-    control.removeAt($event);
-    this.selectedClubTimeLineEvent = -1;
+  cancelEditTimeLineEvent(): void {
+    delete this.editEvent;
   }
-
-  cancel() {
-    this.selectedClubTimeLineEvent = -1;
-  } */
-
 }

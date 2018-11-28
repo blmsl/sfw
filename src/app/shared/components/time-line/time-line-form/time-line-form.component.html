@@ -1,6 +1,8 @@
 <mat-card [formGroup]="form">
 
-  <mat-card-title>{{'general.timeLine.addEvent' | translate}}</mat-card-title>
+  <mat-card-title>
+    {{editEvent ? ('general.timeLine.editEvent' | translate) : 'general.timeLine.addEvent' | translate}}
+  </mat-card-title>
 
   <mat-card-content>
 
@@ -53,7 +55,7 @@
           <mat-select placeholder="{{ 'general.timeLine.color' | translate}}" formControlName="color">
             <mat-option *ngFor="let color of colors"
                         [value]="color">
-              {{color | translate}}
+              {{ 'general.timeLine.colors.' + color | translate}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -84,15 +86,15 @@
               [disabled]="!form.valid"
               color="primary"
               type="button"
-              (click)="save.emit()">
+              (click)="saveForm()">
         {{ 'general.timeLine.saveEvent' | translate}}
       </button>
       <button type="button"
-              *ngIf="editEvent"
               mat-raised-button
               color="accent"
-              (click)="delete.emit(editEvent)">
-        {{'general.timeLine.deleteEvent' | translate}}
+              [disabled]="!form.touched || !editEvent"
+              (click)="cancelEdit()">
+        {{'general.cancel' | translate}}
       </button>
     </div>
 

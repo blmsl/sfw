@@ -33,12 +33,6 @@ export class ClubEditComponent implements OnInit {
   public members$: Observable<IMember[]>;
   public positions$: Observable<ICategory[]>;
 
-  /*public showForm: boolean;
-
-   public selectedClubManagementPosition: number = -1;
-   public selectedHonorary: number = -1;
-   */
-
   constructor(public clubService: ClubService,
     private alertService: AlertService,
     private articleService: ArticleService,

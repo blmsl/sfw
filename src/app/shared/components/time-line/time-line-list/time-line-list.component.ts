@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { IArticle } from '../../../interfaces/article.interface';
 import { ITimeLineEvent } from '../../../interfaces/time-line-event.interface';
 
@@ -14,9 +13,8 @@ export class TimeLineListComponent implements OnInit {
   @Input() showLinks: boolean;
   @Input() articles: IArticle[];
 
-  /* @Output() add: EventEmitter<void> = new EventEmitter<void>(false);
-  @Output() delete: EventEmitter<number> = new EventEmitter<number>(false);
-  @Output() edit: EventEmitter<number> = new EventEmitter<number>(false); */
+  @Output() delete: EventEmitter<ITimeLineEvent> = new EventEmitter<ITimeLineEvent>(false);
+  @Output() edit: EventEmitter<ITimeLineEvent> = new EventEmitter<ITimeLineEvent>(false);
 
   constructor() {
   }
@@ -24,8 +22,12 @@ export class TimeLineListComponent implements OnInit {
   ngOnInit() {
   }
 
-  isFunction(val) {
-    return typeof val === 'function';
+  getDate(dateString){
+    if(dateString.seconds){
+      return dateString.seconds * 1000;
+    } else {
+      return new Date(dateString);
+    }
   }
 
 }

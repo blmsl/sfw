@@ -5,6 +5,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection
 } from '@angular/fire/firestore';
+import { map } from 'rxjs/internal/operators';
 
 @Injectable()
 export class ApplicationService {
@@ -33,6 +34,13 @@ export class ApplicationService {
     return this.afs.collection<IApplication>(this.path, ref =>
       ref.where('isCurrentApplication', '==', true)
     ).valueChanges();
+  }
+
+  getAppData(): any {
+    return this.getCurrentApplication().pipe(
+      map((applications: IApplication[]) => {
+      return applications[0].registration;
+    }));
   }
 
   setNewApplication(): IApplication {

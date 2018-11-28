@@ -21,6 +21,7 @@ import { UnAuthGuard } from '../../shared/guards/unauth.guard';
 import { AlertService } from '../../shared/services/alert/alert.service';
 import { MatSnackBarModule } from '@angular/material';
 import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
+import { ApplicationService } from '../../shared/services/application/application.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -48,6 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     AlertService,
     AngularFireAuth,
+    ApplicationService,
     AuthGuard,
     AuthService,
     UnAuthGuard

@@ -6,6 +6,11 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { IUser } from '../../interfaces/user/user.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
+import { ApplicationService } from '../application/application.service';
+import { take, tap } from 'rxjs/internal/operators';
+import { ITeam } from '../../interfaces/team/team.interface';
+import { ITeamOfTheMonth } from '../../interfaces/member/team-of-the-month.interface';
+import { IApplication } from '../../interfaces/application.interface';
 
 @Injectable()
 export class AuthService {
@@ -14,8 +19,8 @@ export class AuthService {
   public userId: string;
 
   constructor(private afAuth: AngularFireAuth,
+              private applicationService: ApplicationService,
               private afs: AngularFirestore) {
-
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user: any) => {
         if (user) {
@@ -29,6 +34,8 @@ export class AuthService {
   }
 
   public async signIn(credentials): Promise<any> {
+    const data = await this.applicationService.getAppData();
+    console.log(data);
     const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
     if (signInAction.user) {
       await this.updateUser({
@@ -41,6 +48,7 @@ export class AuthService {
   }
 
   public async register(values: IUser): Promise<any> {
+    const currentApplication = await this.applicationService.getCurrentApplication();
     const registerAction = await this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password);
     const sendVerificationMail = await this.sendVerificationMail();
     const updateUser = this.updateUser({
@@ -50,7 +58,7 @@ export class AuthService {
       creationTime: registerAction.user.metadata.creationTime,
       lastSignInTime: registerAction.user.metadata.lastSignInTime,
       assignedRoles: {
-        admin: false,
+        admin: currentApplication,
         editor: false,
         subscriber: true
       }
