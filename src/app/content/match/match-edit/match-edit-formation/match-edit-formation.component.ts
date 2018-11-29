@@ -9,6 +9,8 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ICoord } from '../../../../shared/interfaces/match/coord.interface';
 import { MatSelectChange } from '@angular/material';
 import { MemberService } from '../../../../shared/services/member/member.service';
+import { Observable, of } from 'rxjs/index';
+import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
 
 @Component({
   selector: 'match-edit-formation',
@@ -23,9 +25,9 @@ export class MatchEditFormationComponent implements OnInit {
 
   private emptyMember: IMember;
 
+  public emptyMemberImage: Observable<IMediaItem>;
   public tacticalFormations: IFormation[];
   public form: FormGroup;
-
   public thirty: IMember[][];
   public playerPositions: ICoord[];
   public coordinates = [];
@@ -40,6 +42,7 @@ export class MatchEditFormationComponent implements OnInit {
     this.tacticalFormations = matchFormationService.getFormations();
     this.memberService.setNewMember().pipe(first()).subscribe((member: IMember) =>
       this.emptyMember = Object.assign({}, member));
+
   }
 
   ngOnInit() {
@@ -951,6 +954,10 @@ export class MatchEditFormationComponent implements OnInit {
       this.setPlayerPositions(this.match.assignedFormation);
       this.initializeFieldPositions();
     }
+
+    this.emptyMemberImage = of({
+      downloadURL: '/assets/sfw/placeholder/avatar_male.jpg'
+    });
 
 
     this.form.valueChanges.pipe(
