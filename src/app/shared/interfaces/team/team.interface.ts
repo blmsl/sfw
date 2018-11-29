@@ -15,6 +15,7 @@ export interface ITeam {
   info?: string;
 
   externalTeamLink?: string;
+  logoURL?: string;
   isOfficialTeam: boolean;
   isMainTeam?: boolean;
 
