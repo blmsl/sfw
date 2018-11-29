@@ -57,10 +57,12 @@
            (cdkDropListDropped)="drop($event)"
            class="soccer-field-list">
         <div *ngFor="let item of thirty[i]; let j = index" cdkDrag [cdkDragData]="item">
+
           <div class="soccer-field-list-item">
             <div
               [ngClass]="{placeholder: checkCoordinates(i, j) && !item.id, 'player': !!item.id}">
               <p *ngIf="!item.id">&nbsp;</p>
+
               {{item.mainData.firstName}} {{item.mainData.lastName}}
             </div>
           </div>

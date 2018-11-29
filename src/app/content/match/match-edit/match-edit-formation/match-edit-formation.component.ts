@@ -981,12 +981,7 @@ export class MatchEditFormationComponent implements OnInit {
     for (const i of [...Array(6)]) {
       const row: IMember[] = [];
       for (const j of [...Array(5)]) {
-
-        this.memberService.setNewMember().pipe(first()).subscribe((member: IMember) =>
-          row.push(member));
-
         row.push(Object.assign({}, this.emptyMember));
-
       }
       this.thirty.push(row);
     }
@@ -1014,11 +1009,18 @@ export class MatchEditFormationComponent implements OnInit {
   }
 
   updatePositionList(x: number, y: number, newMember: IMember, list: IMember[]) {
+    const currentPosition = this.checkCoordinates(x, y);
+    const previousPosition = this.checkCoordinates(x, y - 1);
+
+    const correctIdx = currentPosition ? y : previousPosition ? y - 1 : false;
+
+    if (correctIdx === false) {
+      return list;
+    }
+
     return list.map((member: IMember, memberIndex: number) => {
-      if (memberIndex === y) {
-        if (this.checkCoordinates(x, memberIndex)) {
-          return newMember;
-        }
+      if (memberIndex === correctIdx) {
+        return newMember;
       }
       return member;
     });
@@ -1048,6 +1050,7 @@ export class MatchEditFormationComponent implements OnInit {
     });
 
   }
+
 
 
   drop(event: CdkDragDrop<string[]>) {
