@@ -1,0 +1,8 @@
+<p *ngIf="categories$ | async as categories">
+  <a *ngFor="let category of categories; let last = last"
+     [routerLink]="['/categories/detail', category.id]">
+    {{category.title}}
+    <span *ngIf="!last">,</span>
+  </a>
+</p>
+

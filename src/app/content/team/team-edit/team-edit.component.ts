@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -17,8 +17,9 @@ import { ISeason } from '../../../shared/interfaces/season.interface';
 import { SeasonService } from '../../../shared/services/season/season.service';
 import { LocationService } from '../../../shared/services/location/location.service';
 import { ILocation } from '../../../shared/interfaces/location/location.interface';
-// import { ITimeLineEvent }      from '../../../shared/interfaces/time-line-event.interface';
 import { AlertService } from '../../../shared/services/alert/alert.service';
+import { ArticleService } from '../../../shared/services/article/article.service';
+import { IArticle } from '../../../shared/interfaces/article.interface';
 
 @Component({
   selector: 'team-edit',
@@ -29,6 +30,7 @@ import { AlertService } from '../../../shared/services/alert/alert.service';
 export class TeamEditComponent implements OnInit {
 
   public team: ITeam;
+  public articles$: Observable<IArticle[]>;
   public members$: Observable<IMember[]>;
   public users$: Observable<IUser[]>;
   public clubs$: Observable<IClub[]>;
@@ -38,6 +40,7 @@ export class TeamEditComponent implements OnInit {
   public locations$: Observable<ILocation[]>;
 
   constructor(private teamService: TeamService,
+              private articleService: ArticleService,
               private categoryTypeService: CategoryTypeService,
               private memberService: MemberService,
               private seasonService: SeasonService,
@@ -45,11 +48,11 @@ export class TeamEditComponent implements OnInit {
               private categoryService: CategoryService,
               private fb: FormBuilder,
               private route: ActivatedRoute,
-              private cd: ChangeDetectorRef,
               private router: Router,
               private alertService: AlertService,
               private locationService: LocationService,
               private userService: UserService) {
+    this.articles$ = articleService.articles$;
     this.users$ = userService.users$;
     this.members$ = memberService.members$;
     this.clubs$ = clubService.clubs$;

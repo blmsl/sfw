@@ -1580,6 +1580,7 @@
         "management": "Mannschaftsbetreuung",
         "noPhoto": "Es wurde noch kein Mannschaftsfoto hochgeladen",
         "noPlayers": "Es wurden noch keiner Spieler zu dieser Mannschaft hinzugefügt",
+        "noStandings": "Es sind keine Tabellenstände zu dieser Mannschaft hinterlegt.",
         "playerList": "Spielerliste",
         "players": "Spieler",
         "photoDescription": "Bild-Beschreibung",

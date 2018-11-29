@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
+import { FormGroup } from '@angular/forms';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import { ITimeLineEvent } from '../../../../shared/interfaces/time-line-event.interface';
+import { ActivatedRoute } from '@angular/router';
+import { IArticle } from '../../../../shared/interfaces/article.interface';
 
 @Component({
   selector: 'team-edit-timeline',
@@ -11,72 +12,45 @@ import { ITimeLineEvent } from '../../../../shared/interfaces/time-line-event.in
 })
 export class TeamEditTimelineComponent implements OnInit {
 
-  @Input() team: ITeam;
+  @Input() articles: IArticle[];
   @Output() saveTeam: EventEmitter<ITeam> = new EventEmitter<ITeam>(false);
 
-  public form: FormGroup;
-  public selectedEvent = -1;
+  public team: ITeam;
+  public editEvent: ITimeLineEvent;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      assignedEvents: this.initAssignedEvents()
-    });
-
-    this.form.valueChanges.pipe(
-      debounceTime(1000),
-      distinctUntilChanged()
-    ).subscribe((changes: ITeam) => {
-      if (this.form.valid) {
-        this.saveTeam.emit(changes);
-      }
+    this.route.data.subscribe((data: { team: ITeam }) => {
+      this.team = data.team;
     });
   }
 
-  initAssignedEvents(): FormArray {
-    const formArray = [];
-    if (this.team.assignedEvents) {
-      for (let i = 0; i < this.team.assignedEvents.length; i++) {
-        formArray.push(this.initAssignedEvent(this.team.assignedEvents[i]));
-      }
-    }
-    return this.fb.array(formArray);
+  saveTimeLineEvent($event: ITimeLineEvent): void {
+    this.team.assignedEvents ? this.team.assignedEvents.push($event) : this.team.assignedEvents = [$event];
+    this.saveTeam.emit(this.team);
   }
 
-  initAssignedEvent(event: ITimeLineEvent): FormGroup {
-    return this.fb.group({
-      title: [event ? event.title : '', [Validators.required, Validators.maxLength(100)]],
-      subTitle: [event ? event.subTitle : ''],
-      icon: [event ? event.icon : ''],
-      color: [event ? event.color : ''],
-      assignedMediaItem: [event ? event.assignedMediaItem : ''],
-      assignedArticle: [event ? event.assignedArticle : ''],
-      startDate: [event ? event.startDate : new Date()],
-      endDate: [event ? event.endDate : new Date()]
-    });
+  updateTimeLineEvent($event: ITimeLineEvent): void {
+    const idx = this.team.assignedEvents.indexOf(this.editEvent);
+    this.team.assignedEvents[idx] = $event;
+    this.saveTeam.emit(this.team);
+    this.editEvent = null;
   }
 
-  addEvent(): void {
-    const control = this.form.controls['assignedEvents'] as FormArray;
-    control.push(this.initAssignedEvent(null));
-    // this.selectedEvent = this.form.controls[ 'assignedEvents' ][ 'controls' ].length - 1;
+  editTimeLineEvent($event: ITimeLineEvent): void {
+    this.editEvent = $event;
   }
 
-  editEvent($event: number): void {
-    // this.selectedEvent = $event;
-    // this.cd.detectChanges();
+  deleteTimeLineEvent($event: ITimeLineEvent): void {
+    console.log($event);
+    this.team.assignedEvents.splice(this.team.assignedEvents.indexOf($event), 1);
+    this.saveTeam.emit(this.team);
   }
 
-  saveEvent(): void {
-    // this.selectedEvent = -1;
-  }
-
-  removeEvent($event: number): void {
-    const control = this.form.controls['assignedEvents'] as FormArray;
-    control.removeAt($event);
-    // this.selectedEvent = -1;
+  cancelEditTimeLineEvent(): void {
+    delete this.editEvent;
   }
 
 }

@@ -32,7 +32,8 @@
   <mat-card-actions>
     <div fxLayout="column"
          fxLayout.gt-sm="row"
-         fxLayoutGap="10px">
+         fxLayoutGap="10px"
+         *ngIf="members.length">
       <span></span>
       <span fxFlex=""></span>
       <button mat-raised-button

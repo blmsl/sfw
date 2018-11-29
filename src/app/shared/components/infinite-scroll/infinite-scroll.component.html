@@ -4,10 +4,10 @@
     {{'general.noItemsInList' | translate}}
   </div>
 
-  <cdk-virtual-scroll-viewport  *ngIf="viewPortHeight && itemSize && items.length > 0"
-                                [style.height]="viewPortHeight"
-                                [itemSize]="itemSize"
-                                (scrolledIndexChange)="nextBatch($event, (items[items.length - 1][sortField]))">
+  <cdk-virtual-scroll-viewport *ngIf="viewPortHeight && itemSize && items.length > 0"
+                               [style.height]="viewPortHeight"
+                               [itemSize]="itemSize"
+                               (scrolledIndexChange)="nextBatch($event, (items[items.length - 1][sortField]))">
 
     <ng-container *ngIf="listType === 'articles'">
       <li *cdkVirtualFor="let item of items; let i = index; trackBy: trackByIdx">
@@ -23,9 +23,20 @@
     </ng-container>
 
     <ng-container *ngIf="listType === 'teams'">
-      <li *cdkVirtualFor="let item of items; let i = index; trackBy: trackByIdx">
-        <h3><a [routerLink]="['/' + listType + '/edit', item.id]">{{ item.title }}</a></h3>
-        <div [innerHTML]="item.subTitle"></div>
+      <li *cdkVirtualFor="let item of items | orderBy: ['title', 'subTitle']; let i = index; trackBy: trackByIdx" class="team-list-item">
+        <img [src]="item.logoURL" *ngIf="item.logoURL"/>
+        <h3>
+          <a [routerLink]="['/' + listType + '/edit', item.id]">{{ item.title }} {{item.subTitle}}</a>
+          <a *ngIf="item.isOfficialTeam"
+             target="_blank"
+             [href]="item.externalTeamLink">
+            <mat-icon *ngIf="item.isOfficialTeam">link</mat-icon>
+            {{'general.clubs.edit.fussballDeUrl' | translate}}
+          </a>
+        </h3>
+
+        <season-link [seasonId]="item.assignedSeason"></season-link>
+        <category-link [categoryIds]="item.assignedTeamCategories"></category-link>
       </li>
     </ng-container>
 

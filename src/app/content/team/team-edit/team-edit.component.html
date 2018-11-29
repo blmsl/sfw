@@ -75,7 +75,7 @@
 
       <mat-tab label="{{'general.teams.edit.timeLine.title' | translate}}">
         <team-edit-timeline (saveTeam)="saveTeam($event)"
-                            [team]="team">
+                            [articles]="articles$ | async">
         </team-edit-timeline>
       </mat-tab>
 

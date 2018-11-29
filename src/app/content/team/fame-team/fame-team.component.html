@@ -1,8 +1,8 @@
 <mat-card>
   <mat-card-header>
     <div mat-card-avatar
+         [ngStyle]="{ 'background-image': 'url(' + teamOfTheMonth.logoURL + ')'}"
          style="background-size: cover;">
-      <!-- [ngStyle]="{ 'background-image': 'url(' + teamOfTheMonth.logoURL + ')'}" -->
     </div>
     <mat-card-title>{{'general.teams.fame.title' | translate}} {{title}}</mat-card-title>
     <mat-card-subtitle *ngIf="loaded && teamOfTheMonth">{{teamOfTheMonth.title}} ({{teamOfTheMonth.subTitle}})</mat-card-subtitle>

@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IApplication } from '../../interfaces/application.interface';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from '@angular/fire/firestore';
-import { map } from 'rxjs/internal/operators';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { first, map } from 'rxjs/internal/operators';
 
 @Injectable()
 export class ApplicationService {
@@ -36,11 +33,16 @@ export class ApplicationService {
     ).valueChanges();
   }
 
-  getAppData(): any {
-    return this.getCurrentApplication().pipe(
+  async getAppData(): Promise<IApplication> {
+    return await this.afs.collection<IApplication>(this.path, ref =>
+      ref.where('isCurrentApplication', '==', true)
+    ).valueChanges().pipe(
+      first(),
       map((applications: IApplication[]) => {
-      return applications[0].registration;
-    }));
+        console.log(applications[0]);
+        return applications[0];
+      })
+    ).toPromise();
   }
 
   setNewApplication(): IApplication {

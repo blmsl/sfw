@@ -2,6 +2,21 @@ cdk-virtual-scroll-viewport {
 
   li {
     border-bottom: 1px dashed #cecece;
+    list-style-type: none;
+  }
+
+  .team-list-item img {
+    float: left;
+    margin: 0 15px 0 0;
+  }
+
+  .team-list-item {
+    padding: 10px;
+    overflow: auto;
+  }
+
+  .team-list-item a:first-child {
+    margin-right: 10%;
   }
 
   h3 {

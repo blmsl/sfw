@@ -34,10 +34,7 @@ export class ClubTimelineComponent implements OnInit {
   }
 
   updateTimeLineEvent($event: ITimeLineEvent): void {
-    console.log('new', $event);
     const idx = this.club.timeLine.indexOf(this.editEvent);
-    console.log('old', this.club.timeLine[idx]);
-    console.log(idx);
     this.club.timeLine[idx] = $event;
     this.saveClub.emit(this.club);
     this.editEvent = null;

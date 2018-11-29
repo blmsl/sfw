@@ -35,7 +35,7 @@ try {
 
     // set category-types
     $savedCategoryTypes = [];
-    $categoryTypes = array('team.types', 'location.types', 'club.position.types', 'team.position.types', 'sponsor.types');
+    $categoryTypes = array('team.types', 'location.types', 'club.position.types', 'team.position.types', 'sponsor.types', 'static.types');
     $project->generateList('Gespeicherte Kategorie-Arten', $categoryTypes);
     foreach ($categoryTypes as $link) {
         $savedCategoryTypes[$link] = $project->getCategoryTypeByLink($link, $batch);

@@ -15,7 +15,7 @@ export const environment = {
     authDomain: 'sportfreunde-winterbach.firebaseapp.com',
     databaseURL: 'https://sportfreunde-winterbach.firebaseio.com',
     projectId: 'sportfreunde-winterbach',
-    storageBucket: '',
+    storageBucket: "sportfreunde-winterbach.appspot.com",
     messagingSenderId: '693126399443',
     timestampsInSnapshots: true
   },

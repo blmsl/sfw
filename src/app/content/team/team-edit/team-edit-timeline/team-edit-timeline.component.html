@@ -1,15 +1,19 @@
-<mat-card [formGroup]="form">
+<mat-card>
   <mat-card-title>{{'general.teams.edit.timeLine.title' | translate}}</mat-card-title>
   <mat-card-subtitle>{{'general.teams.edit.timeLineTitle' | translate}}</mat-card-subtitle>
   <hr/>
   <mat-card-content>
-    <time-line [showLinks]="true"
-               (delete)="removeEvent($event)"
-               (add)="addEvent()"
-               (edit)="editEvent($event)"
-               (save)="saveEvent()"
-               [selectedTimeLineEvent]="selectedEvent"
-               [form]="form.controls['assignedEvents']">
-    </time-line>
+    <time-line-list [articles]="articles"
+                    [showLinks]="true"
+                    [events]="team.assignedEvents"
+                    (edit)="editTimeLineEvent($event)"
+                    (delete)="deleteTimeLineEvent($event)">
+    </time-line-list>
+    <time-line-form [articles]="articles"
+                    [editEvent]="editEvent"
+                    (cancel)="cancelEditTimeLineEvent()"
+                    (update)="updateTimeLineEvent($event)"
+                    (save)="saveTimeLineEvent($event)">
+    </time-line-form>
   </mat-card-content>
 </mat-card>

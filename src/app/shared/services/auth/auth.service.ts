@@ -34,8 +34,6 @@ export class AuthService {
   }
 
   public async signIn(credentials): Promise<any> {
-    const data = await this.applicationService.getAppData();
-    console.log(data);
     const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
     if (signInAction.user) {
       await this.updateUser({
@@ -48,7 +46,7 @@ export class AuthService {
   }
 
   public async register(values: IUser): Promise<any> {
-    const currentApplication = await this.applicationService.getCurrentApplication();
+    const registrationData = await this.applicationService.getAppData();
     const registerAction = await this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password);
     const sendVerificationMail = await this.sendVerificationMail();
     const updateUser = this.updateUser({
@@ -58,9 +56,9 @@ export class AuthService {
       creationTime: registerAction.user.metadata.creationTime,
       lastSignInTime: registerAction.user.metadata.lastSignInTime,
       assignedRoles: {
-        admin: currentApplication,
-        editor: false,
-        subscriber: true
+        admin: registrationData.registration && registrationData.registration === 'admin',
+        editor: registrationData.registration && registrationData.registration === 'editor',
+        subscriber: registrationData.registration && registrationData.registration === 'subscriber'
       }
     });
     return Promise.all([registerAction, sendVerificationMail, updateUser]);

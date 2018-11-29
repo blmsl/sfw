@@ -44,12 +44,12 @@ export class FameTeamComponent implements OnInit, OnDestroy {
     const currentMonth = moment().add('1', 'month').month();
 
     this.teamSubscription = this.teamOfTheMonthService.getTeamOfTheMonthByTitle(currentYear + '-' + currentMonth)
-      .subscribe((teams: ITeam[]) => {
-
+      .subscribe((team: ITeam) => {
+        console.log(team);
         this.loaded = true;
 
-        if (teams.length > 0) {
-          this.teamOfTheMonth = teams[0];
+        if (team) {
+          this.teamOfTheMonth = team;
           this.assignedSeason$ = this.seasonService.getSeasonById(this.teamOfTheMonth.assignedSeason);
           this.assignedCategories$ = this.categoryService.getCategoriesByIds(this.teamOfTheMonth.assignedTeamCategories);
           this.assignedPlayers$ = this.memberService.getMembersByIds(this.teamOfTheMonth.assignedPlayers);
