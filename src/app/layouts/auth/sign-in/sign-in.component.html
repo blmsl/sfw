@@ -44,29 +44,7 @@
     </button>
   </div>
 
-  <!--<div class="pt-1 pb-1 text-xs-center">
-    <h3>{{ 'Global.Login.socialLogin' | translate }}</h3>
-    <button mat-button
-            (click)="socialLogin('google')"
-            color="warn"
-            type="button">
-      {{ 'Global.Login.googleLogin' | translate }}
-    </button>
-
-    <button mat-button
-            (click)="socialLogin('facebook')"
-            color="warn"
-            type="button">
-      {{ 'Global.Login.facebookLogin' | translate }}
-    </button>
-
-    <button mat-button
-            (click)="socialLogin('twitter')"
-            color="warn"
-            type="button">
-      {{ 'Global.Login.twitterLogin' | translate }}
-    </button>
-  </div>-->
+  <social-signin (isLoading)="isLoading"></social-signin>
 
   <div class="pt-1 pb-1 text-xs-center">
     <button mat-button

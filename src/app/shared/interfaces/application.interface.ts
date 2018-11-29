@@ -34,4 +34,9 @@ export interface IApplication {
 
   staticPages: IStaticPage[];
   social: ISocialNetwork[];
+
+  signInProviders: {
+    title: string,
+    isEnabled: boolean
+  }[];
 }

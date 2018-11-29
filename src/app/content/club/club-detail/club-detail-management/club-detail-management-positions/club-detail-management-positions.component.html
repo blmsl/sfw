@@ -1,11 +1,21 @@
 <mat-card>
   <mat-card-title>{{'general.clubs.edit.management.positions.title' | translate}}</mat-card-title>
+  <hr/>
   <mat-card-content>
 
-    <p *ngIf="!positions || positions.length === 0">Es wurden noch keine Vorstandspositionen angelegt.</p>
-    <p *ngIf="!members">Es sind keine Mitglieder vorhanden.</p>
+    <div *ngIf="!members || members.length === 0"
+         class="alert alert-info">
+      {{'general.members.list.noMembers' | translate}}
+    </div>
 
-    <mat-accordion [displayMode]="'flat'">
+    <div *ngIf="members && members.length > 0 && (!club.positions || club.positions.length === 0)"
+         class="alert alert-info">
+      {{'general.clubs.edit.management.positions.noManagementPositions' | translate}}
+    </div>
+
+    <mat-accordion [displayMode]="'flat'"
+                   *ngIf="club.positions && members">
+
       <mat-expansion-panel
         *ngFor="let category of positions | orderBy: ['title']; let i = index; let first = first; let last = last"
         [expanded]="step === i"
@@ -24,11 +34,11 @@
             <div [innerHtml]="category.description | sanitizeHtml"></div>
           </mat-tab>
           <mat-tab label="{{'general.clubs.edit.management.positions.timeLineTitle' | translate}}">
-            <p *ngIf="( club.management.positions | filterBy: ['assignedPosition'] : category.id).length === 0">
+            <p *ngIf="club.positions && ( club.positions | filterBy: ['assignedPosition'] : category.id).length === 0">
               {{'general.clubs.edit.management.positions.noPersons' | translate}}
             </p>
             <mat-list>
-              <mat-list-item *ngFor="let position of club.management.positions | filterBy: ['assignedPosition'] : category.id | orderBy: 'startDate'">
+              <mat-list-item *ngFor="let position of club.positions | filterBy: ['assignedPosition'] : category.id | orderBy: 'startDate'">
                 <span style="display: block; width: 50%">
                   {{position.startDate.seconds *1000 | date: 'dd.MM.yy' }}
                   <span *ngIf="position.endDate">&ndash; {{position.endDate.seconds *1000 | date: 'dd.MM.yy' }}</span>

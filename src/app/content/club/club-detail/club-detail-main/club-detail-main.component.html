@@ -5,6 +5,7 @@
   <div fxFlex.gt-sm="75">
     <mat-card>
       <mat-card-title>{{'general.menu.club.detail' | translate}}</mat-card-title>
+      <hr/>
       <mat-card-content>
         <mat-list fxLayout="column">
 
@@ -65,9 +66,13 @@
 
     <mat-card>
       <mat-card-title>{{'general.clubs.edit.description' | translate}}</mat-card-title>
+      <hr/>
       <mat-card-content>
         <div *ngIf="club.description" [innerHTML]="club.description"></div>
-        <div *ngIf="!club.description">{{'general.clubs.edit.noDescription' | translate}}</div>
+        <div class="alert alert-info"
+             *ngIf="!club.description">
+          <p>{{'general.clubs.edit.noDescription' | translate}}</p>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
@@ -78,6 +83,7 @@
       <mat-card-title>
         {{'general.clubs.edit.logoTitle' | translate}}
       </mat-card-title>
+      <hr/>
       <mat-card-content>
         <img *ngIf="clubLogo | async as image; else loadingTemplate"
              mat-card-image

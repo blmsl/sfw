@@ -1,5 +1,6 @@
 <mat-card [formGroup]="form">
   <mat-card-title>{{'general.clubs.edit.timeLineTitle' | translate}}</mat-card-title>
+  <hr/>
   <mat-card-content>
     <time-line-list [articles]="articles$ | async"
                     [showLinks]="false"

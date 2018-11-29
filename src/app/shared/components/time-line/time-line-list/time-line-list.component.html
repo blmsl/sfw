@@ -1,4 +1,4 @@
-<mat-accordion dense>
+<mat-accordion dense *ngIf="events.length > 0">
   <mat-expansion-panel *ngFor="let event of events"
                        [expanded]="false"
                        [hideToggle]="true">

@@ -17,9 +17,10 @@
     "Login": {
       "forbidden": "Du bist nicht berechtigt um Dich an der Admin-Oberfläche anzumelden.",
       "notVerified": "Deine E-Mail Adresse wurde noch nicht bestätigt.",
-      "facebookLogin": "Facebook",
-      "twitterLogin": "Twitter",
-      "googleLogin": "Google",
+      "Facebook": "Facebook-Anmeldung",
+      "Twitter": "Twitter-Anmeldung",
+      "Github": "Github-Anmeldung",
+      "Google": "Google-Anmeldung",
       "socialLogin": "Anmeldung mit ...",
       "defaultLoginMessage": "Benutze die E-Mail <span style='font-weight: 500;'>demo@demo.com</span> und das Passwort <span style='font-weight: 500;'>demo123</span> für einen Demo&ndash;Zugang!",
       "passwordResetSentMessage": "Eine E-Mail zum Zurücksetzen Deines Passwortes wurde gesendet.",
@@ -120,6 +121,13 @@
       },
       "mainTitle": "Einstellungen",
       "noUrlShorteningService": "Keine kürzeren Links verwenden.",
+      "socialSignIn": {
+        "provider": {
+          "status": "Aktiviert?",
+          "title": "Anmeldung über ..."
+        },
+        "title": "Anmeldung über soziale Netzwerke"
+      },
       "staticPagesTitle": "Statische Seiten",
       "page": {
         "descriptionDescription": "Die Beschreibung hilft Suchmaschinen, passende Seiten zu filtern.",
@@ -400,6 +408,7 @@
     "clubs": {
       "edit": {
         "assignedTeams": {
+          "noAssignedTeams": "Es sind keine Mannschaften für diese Saison gemeldet.",
           "season": "Saison",
           "teamCount": "Anzahl der Mannschaften",
           "teams": "Gemeldete Mannschaften"
@@ -1836,7 +1845,8 @@
       "creation": "Erstellung",
       "creationDate": "Datum",
       "creationTime": "Uhrzeit",
-      "viaScript": "durch Script importiert"
+      "viaScript": "durch Script importiert",
+      "title": "Informationen zur Erstellung"
     },
     "and": "und",
     "assignedMedia": "Verknüpfte Dateien",

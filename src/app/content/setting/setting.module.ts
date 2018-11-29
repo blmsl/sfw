@@ -27,6 +27,7 @@ import { SettingsUrlshorteningComponent } from './settings/settings-urlshortenin
 import { SettingsCalendarsComponent } from './settings/settings-calendars/settings-calendars.component';
 import { TagInputModule } from 'ngx-chips';
 import { SettingsRegistrationComponent } from './settings/settings-registration/settings-registration.component';
+import { SettingsSocialSignInComponent } from './settings/settings-social-sign-in/settings-social-sign-in.component';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { SettingsRegistrationComponent } from './settings/settings-registration/
     SettingsDowntimeComponent,
     SettingsUrlshorteningComponent,
     SettingsCalendarsComponent,
-    SettingsRegistrationComponent
+    SettingsRegistrationComponent,
+    SettingsSocialSignInComponent
   ],
   providers: [
     ApplicationResolver,

@@ -1,10 +1,15 @@
 <mat-card>
   <mat-card-title>{{'general.clubs.edit.management.current.title' | translate}}</mat-card-title>
+  <hr/>
   <mat-card-content>
     <img *ngIf="clubManagementImage | async as image; else loadingTemplate"
          mat-card-image
          [src]="image.downloadURL">
     <p [innerHTML]="club.photoDescription"></p>
+
+    <div class="alert alert-info" *ngIf="!club.photoDescription">
+      {{'general.clubs.edit.noManagementPhoto' | translate}}
+    </div>
   </mat-card-content>
 </mat-card>
 

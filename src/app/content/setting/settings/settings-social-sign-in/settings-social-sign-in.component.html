@@ -1,0 +1,27 @@
+<mat-card [formGroup]="form">
+  <mat-card-title>{{'general.applications.socialSignIn.title' | translate}}</mat-card-title>
+  <hr/>
+  <mat-card-content formArrayName="signInProviders">
+
+    <div *ngFor="let control of form.get('signInProviders')['controls']; let i = index; let last = last">
+      <div fxLayout="column"
+           fxLayout.gt-sm="row"
+           fxLayoutAlign="space-between stretch"
+           [formGroupName]="i">
+
+        <mat-form-field fxFlex="50">
+          <input matInput
+                 formControlName="title"/>
+        </mat-form-field>
+
+        <div>
+          <mat-checkbox formControlName="isEnabled">
+            {{'general.applications.socialSignIn.provider.status' | translate}}
+          </mat-checkbox>
+        </div>
+
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>

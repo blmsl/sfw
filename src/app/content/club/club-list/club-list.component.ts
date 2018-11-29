@@ -24,7 +24,7 @@ export class ClubListComponent {
 
   getClubLogo(club: IClub): Observable<IMediaItem> {
     if (!this.clubLogo) {
-      this.clubLogo = this.mediaItemService.getCurrentImage(['clubs', 'profile'], club.id);
+      this.clubLogo = this.mediaItemService.getCurrentImage(['clubs', 'profile'], club.id, '/assets/sfw/placeholder/no-club-image-found.jpg');
     }
     return this.clubLogo;
   }

@@ -40,7 +40,9 @@ export class ClubEditMainComponent implements OnInit {
     showDropZone: true,
     removeAfterUpload: true,
     showQueue: false,
-    headerTitle: 'general.clubs.edit.logoUrl'
+    headerTitle: 'general.clubs.edit.logoUrl',
+    showHeader: true,
+    placeHolderImage: '/assets/sfw/placeholder/no-club-image-found.jpg'
   };
 
   public uploaderOptions: IUploaderOptions = {

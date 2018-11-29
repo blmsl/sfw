@@ -1,7 +1,10 @@
-<p *ngIf="!club.honoraries || club.honoraries.length === 0">
-  {{'general.clubs.edit.honoraries.noHonoraries' | translate}}
-</p>
-<p *ngIf="members.length === 0">{{'general.clubs.edit.noMembers' | translate}}</p>
+<div class="alert alert-info" *ngIf="!members || members.length === 0">
+  <p>{{'general.clubs.edit.noMembers' | translate}}</p>
+</div>
+
+<div class="alert alert-info" *ngIf="members &&  members.length > 0 && (!club.honoraries || club.honoraries.length === 0)">
+  <p>{{'general.clubs.edit.honoraries.noHonoraries' | translate}}</p>
+</div>
 
 <mat-accordion *ngIf="club.honoraries"
                fxLayout="column"

@@ -30,6 +30,7 @@
     </button>-->
 
   </mat-card-header>
+  <hr *ngIf="uploaderConfig.showHeader"/>
 
   <mat-card-content>
     <ng-container *ngIf="currentMediaItem$ | async  as currentMediaItem">

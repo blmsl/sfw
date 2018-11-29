@@ -47,9 +47,20 @@
       </mat-tab>
 
       <mat-tab label="{{'general.applications.socialTitle' | translate}}">
-        <settings-social-data (saveApplication)="saveApplication($event)"
-                              [application]="application">
-        </settings-social-data>
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px">
+          <div fxFlex="60">
+            <settings-social-data (saveApplication)="saveApplication($event)"
+                                  [application]="application">
+            </settings-social-data>
+          </div>
+          <div fxFlex="40">
+            <settings-social-sign-in (saveApplication)="saveApplication($event)"
+                                     [application]="application">
+            </settings-social-sign-in>
+          </div>
+        </div>
       </mat-tab>
 
       <mat-tab label="{{'general.applications.staticTitle' | translate}}">

@@ -4,8 +4,13 @@
   <div fxFlex.gt-sm="50">
     <mat-card>
       <mat-card-title>{{'general.clubs.edit.statistics.title' | translate}}</mat-card-title>
+      <hr/>
       <mat-card-content *ngIf="members; else loadingTemplate">
-        <p *ngIf="members.length === 0">Es sind noch keine Mitglieder vorhanden.</p>
+
+        <div class="alert alert-info" *ngIf="!members || members.length === 0">
+          <p>{{'general.clubs.edit.noMembers' | translate}}</p>
+        </div>
+
         <mat-list dense *ngIf="members.length > 0">
           <mat-list-item *ngFor="let memberState of memberStateService.getMemberStates()">
             <div matLine
@@ -31,10 +36,13 @@
   <div fxFlex.gt-sm="50">
     <mat-card *ngFor="let season of seasons | orderBy: ['-title']">
       <mat-card-title>{{'general.clubs.edit.assignedTeams.teams' | translate}} {{season.title}}</mat-card-title>
+      <hr/>
       <mat-card-content *ngIf="teams && members; else loadingTemplate">
-        <p *ngIf="!(teams | filterBy: ['assignedSeason']: season.id).length">
-          Für diese Saison wurden keine Mannschaften angemeldet.
-        </p>
+
+        <div class="alert alert-info" *ngIf="!(teams | filterBy: ['assignedSeason']: season.id).length">
+          <p>{{'general.clubs.edit.assignedTeams.noAssignedTeams' | translate}}</p>
+        </div>
+
         <mat-list dense>
           <mat-list-item
             *ngFor="let team of teams | filterBy: ['assignedSeason']: season.id | orderBy: ['title']; let last = last">

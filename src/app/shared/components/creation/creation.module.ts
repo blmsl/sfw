@@ -5,7 +5,7 @@ import { CreationDateComponent } from './creation-date/creation-date.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgPipesModule } from 'ngx-pipes';
-import { MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule } from '@angular/material';
+import { MatCardModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule } from '@angular/material';
 import { UserService } from '../../services/user/user.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -13,6 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   imports: [
     CommonModule,
     FlexLayoutModule,
+    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatOptionModule,

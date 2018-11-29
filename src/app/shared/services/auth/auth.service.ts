@@ -7,10 +7,6 @@ import { IUser } from '../../interfaces/user/user.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { ApplicationService } from '../application/application.service';
-import { take, tap } from 'rxjs/internal/operators';
-import { ITeam } from '../../interfaces/team/team.interface';
-import { ITeamOfTheMonth } from '../../interfaces/member/team-of-the-month.interface';
-import { IApplication } from '../../interfaces/application.interface';
 
 @Injectable()
 export class AuthService {
@@ -65,6 +61,7 @@ export class AuthService {
   }
 
   private async oAuthLogin(provider) {
+    const registrationData = await this.applicationService.getAppData();
     const loginAction = await this.afAuth.auth.signInWithPopup(provider);
     return this.updateUser({
       id: loginAction.user.uid,
@@ -74,9 +71,9 @@ export class AuthService {
       creationTime: loginAction.user.metadata.creationTime,
       lastSignInTime: loginAction.user.metadata.lastSignInTime,
       assignedRoles: {
-        subscriber: true,
-        editor: false,
-        admin: false
+        admin: registrationData.registration && registrationData.registration === 'admin',
+        editor: registrationData.registration && registrationData.registration === 'editor',
+        subscriber: registrationData.registration && registrationData.registration === 'subscriber'
       }
     });
   }
@@ -93,6 +90,11 @@ export class AuthService {
 
   twitterLogin(): Promise<void> {
     const provider = new firebase.auth.TwitterAuthProvider();
+    return this.oAuthLogin(provider);
+  }
+
+  githubLogin(): Promise<void> {
+    const provider = new firebase.auth.GithubAuthProvider();
     return this.oAuthLogin(provider);
   }
 

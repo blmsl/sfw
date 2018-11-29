@@ -75,32 +75,4 @@ export class SignInComponent implements OnInit {
     );
   }
 
-  socialLogin(provider: string): Promise<any> {
-    const _that = this;
-    this.isLoading = true;
-    let loginAction;
-    switch (provider) {
-
-      case 'facebook':
-        loginAction = this.authService.facebookLogin();
-        break;
-      case 'google':
-        loginAction = this.authService.googleLogin();
-        break;
-      case 'twitter':
-        loginAction = this.authService.twitterLogin();
-        break;
-    }
-    return loginAction
-      .then(() => {
-        this.alertService.showSnackBar('success', 'successful.social.login');
-        return this.router.navigate([this.returnUrl]);
-      })
-      .catch((error: any) => {
-        this.isLoading = false;
-        this.showDemoLoginMessage = false;
-        this.alertService.showSnackBar('error', error.message);
-      });
-  }
-
 }

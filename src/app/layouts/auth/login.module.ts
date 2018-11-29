@@ -10,7 +10,7 @@ import {
   MatCheckboxModule,
   MatFormFieldModule,
   MatInputModule,
-  MatProgressSpinnerModule,
+  MatProgressSpinnerModule, MatSelectModule,
   MatSnackBarModule
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
@@ -20,6 +20,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { TermsOfUseComponent } from '../../shared/components/terms-of-use/terms-of-use.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { SocialSigninComponent } from './social-signin/social-signin.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -28,10 +30,12 @@ import { TranslateModule } from '@ngx-translate/core';
     LoginComponent,
     SignInComponent,
     SignUpComponent,
-    TermsOfUseComponent
+    TermsOfUseComponent,
+    SocialSigninComponent
   ],
   imports: [
     CommonModule,
+    FlexLayoutModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,

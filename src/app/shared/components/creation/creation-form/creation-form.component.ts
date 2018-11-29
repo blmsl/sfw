@@ -15,7 +15,7 @@ export class CreationFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.form.get('from').value) {
+    if (!this.form.get('from').value || this.form.get('from').value === 'system') {
       this.form.get('from').setValue('system');
       this.form.disable();
     }
