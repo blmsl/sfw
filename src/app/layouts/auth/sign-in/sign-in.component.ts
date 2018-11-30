@@ -75,4 +75,8 @@ export class SignInComponent implements OnInit {
     );
   }
 
+  updateLoadingIndicator($event: boolean) {
+    this.isLoading = $event;
+  }
+
 }

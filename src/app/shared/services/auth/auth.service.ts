@@ -61,21 +61,30 @@ export class AuthService {
   }
 
   private async oAuthLogin(provider) {
-    const registrationData = await this.applicationService.getAppData();
     const loginAction = await this.afAuth.auth.signInWithPopup(provider);
-    return this.updateUser({
+    console.log(loginAction);
+    const userRef = await this.afs.doc(`users/${loginAction.user.uid}`).valueChanges().pipe(first()).toPromise();
+    console.log(userRef);
+
+    const updateObject: any = {
       id: loginAction.user.uid,
       displayName: loginAction.user.displayName,
       emailVerified: true,
       email: loginAction.user.email,
       creationTime: loginAction.user.metadata.creationTime,
-      lastSignInTime: loginAction.user.metadata.lastSignInTime,
-      assignedRoles: {
+      lastSignInTime: loginAction.user.metadata.lastSignInTime
+    };
+
+    if (!userRef) {
+      const registrationData = await this.applicationService.getAppData();
+      console.log('create');
+      updateObject.assignedRoles = {
         admin: registrationData.registration && registrationData.registration === 'admin',
         editor: registrationData.registration && registrationData.registration === 'editor',
         subscriber: registrationData.registration && registrationData.registration === 'subscriber'
-      }
-    });
+      };
+    }
+    return this.updateUser(updateObject);
   }
 
   googleLogin(): Promise<void> {

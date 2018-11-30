@@ -39,7 +39,6 @@ export class ApplicationService {
     ).valueChanges().pipe(
       first(),
       map((applications: IApplication[]) => {
-        console.log(applications[0]);
         return applications[0];
       })
     ).toPromise();

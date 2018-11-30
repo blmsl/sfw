@@ -13,7 +13,7 @@ import { IApplication } from '../../../shared/interfaces/application.interface';
 })
 export class SocialSigninComponent implements OnInit {
 
-  @Output() isLoading: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() updateLoadingIndicator: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
   public application$: Observable<IApplication[]>;
 
@@ -29,7 +29,7 @@ export class SocialSigninComponent implements OnInit {
 
   socialLogin(provider: string) {
 
-    this.isLoading.emit(true);
+    this.updateLoadingIndicator.emit(true);
     let loginAction;
 
     switch (provider) {
@@ -49,10 +49,9 @@ export class SocialSigninComponent implements OnInit {
     }
 
     loginAction.then(() => {
-      this.alertService.showSnackBar('success', 'successful.social.login');
       return this.router.navigate(['dashboard']);
     }).catch((error: any) => {
-      this.isLoading.emit(false);
+      this.updateLoadingIndicator.emit(false);
       console.log(error);
       this.alertService.showSnackBar('error', error.code);
     });

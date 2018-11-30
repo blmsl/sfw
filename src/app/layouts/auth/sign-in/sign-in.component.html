@@ -1,16 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div fxLayout="column" fxLayoutAlign="space-around">
 
-    <ng-template #signInAlertContainer></ng-template>
-
-    <!--<div *ngIf="emailNotVerified" class="pb-1">
-      <button type="button"
-              mat-raised-button
-              color="primary">
-        {{ 'Global.Login.loginButton' | translate }}
-      </button>
-    </div>-->
-
     <div class="pb-1">
       <mat-form-field style="width: 100%">
         <input matInput placeholder="{{'Global.Login.Email' | translate}}" formControlName="email">
@@ -44,7 +34,7 @@
     </button>
   </div>
 
-  <social-signin (isLoading)="isLoading"></social-signin>
+  <social-signin (updateLoadingIndicator)="updateLoadingIndicator($event)"></social-signin>
 
   <div class="pt-1 pb-1 text-xs-center">
     <button mat-button
