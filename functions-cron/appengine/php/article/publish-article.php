@@ -25,9 +25,10 @@ try {
             case "Facebook":
 
                 $fb = new \Facebook\Facebook([
-                    'app_id' => '{app-id}',
-                    'app_secret' => '{app-secret}',
-                    'default_graph_version' => 'v2.10'
+                    'app_id' => $socialNetwork["appId"],
+                    'app_secret' => $socialNetwork["appSecret"],
+                    'default_graph_version' => 'v2.10',
+                    $socialNetwork["accessToken"]
                 ]);
 
                 $helper = $fb->getJavaScriptHelper();
