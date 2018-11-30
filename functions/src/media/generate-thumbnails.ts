@@ -1,62 +1,59 @@
-/* const functions = require('firebase-functions');
-const gcs = require('@google-cloud/storage')();
-const sharp = require('sharp');
-const _ = require('lodash');
-const path = require('path');
-const os = require('os');
+import * as functions from 'firebase-functions';
+import * as sharp from 'sharp';
+import * as fs from 'fs-extra';
+import { Storage } from '@google-cloud/storage';
 
-export const generateThumbnailCron = functions
+import { tmpdir } from 'os';
+import { dirname, join } from 'path';
+
+const gcs = new Storage();
+
+export const generateThumbnails = functions
   .region('europe-west1')
-  .runWith({ memory: '128MB', timeoutSeconds: 5 })
-  .storage.object('uploads/{imageId}').onFinalize(object => {
-
-    console.log(object);
-
-    const fileBucket = object.bucket; // The Storage bucket that contains the file.
-    const filePath = object.name; // File path in the bucket.
-    const contentType = object.contentType; // File content type.
-    const resourceState = object.resourceState; // The resourceState is 'exists' or 'not_exists' (for file/folder deletions).
-    //const metageneration = object.metageneration; // Number of times metadata has been generated. New objects have a
-    // value of 1.
-
-    const SIZES = [64, 256, 512]; // Resize target width in pixels
-
-    if (!contentType.startsWith('image/') || resourceState === 'not_exists') {
-      console.log('This is not an image.');
-      return;
-    }
-
-    if (_.includes(filePath, '_thumb')) {
-      console.log('already processed image');
-      return;
-    }
-
-
+  .runWith({ memory: '512MB', timeoutSeconds: 15 })
+  .storage.object().onFinalize(async object => {
+    const bucket = gcs.bucket(object.bucket);
+    const filePath = object.name;
     const fileName = filePath.split('/').pop();
-    const bucket = gcs.bucket(fileBucket);
-    const tempFilePath = path.join(os.tmpdir(), fileName);
+    const bucketDir = dirname(filePath);
 
-    return bucket.file(filePath).download({
-      destination: tempFilePath
-    }).then(() => {
+    const workingDir = join(tmpdir(), 'thumbs');
+    const tmpFilePath = join(workingDir, 'source.png');
 
-      _.each(SIZES, (size) => {
+    if (fileName.includes('thumb@') || !object.contentType.includes('image')) {
+      console.log('exiting function');
+      return false;
+    }
 
-        const newFileName = `${fileName}_${size}_thumb.png`;
-        const newFileTemp = path.join(os.tmpdir(), newFileName);
-        const newFilePath = `thumbs/${newFileName}`;
+    // 1. Ensure thumbnail dir exists
+    await fs.ensureDir(workingDir);
 
-        sharp(tempFilePath)
-          .resize(size, null)
-          .toFile(newFileTemp, () => {
+    // 2. Download Source File
+    await bucket.file(filePath).download({
+      destination: tmpFilePath
+    });
 
-            bucket.upload(newFileTemp, {
-              destination: newFilePath
-            });
+    // 3. Resize the images and define an array of upload promises
+    const sizes = [64, 128, 256, 512];
 
-          });
+    const uploadPromises = sizes.map(async size => {
+      const thumbName = `thumb@${size}_${fileName}`;
+      const thumbPath = join(workingDir, thumbName);
 
-      })
-    })
+      // Resize source image
+      await sharp(tmpFilePath)
+        .resize(size, size)
+        .toFile(thumbPath);
+
+      // Upload to GCS
+      return bucket.upload(thumbPath, {
+        destination: join(bucketDir, thumbName)
+      });
+    });
+
+    // 4. Run the upload operations
+    await Promise.all(uploadPromises);
+
+    // 5. Cleanup remove the tmp/thumbs from the filesystem
+    return fs.remove(workingDir);
   });
-*/

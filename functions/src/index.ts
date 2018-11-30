@@ -30,6 +30,7 @@ import * as user from './user/index';
 export const googleCalendar = calendar.getGoogleCalendarEvents;
 // export const matchDeleted = match.matchDeleteCron;
 export const deleteMediaItem = media.deleteMediaCron;
+export const generateThumbnails = media.generateThumbnailCron;
 export const birthdayReminder = member.birthdayReminderCron;
 export const memberDeleted = member.memberDeletedCron;
 export const memberOfTheWeek = member.memberOfTheWeekCron;

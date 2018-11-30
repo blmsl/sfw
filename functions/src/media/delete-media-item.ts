@@ -1,5 +1,8 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import * as fs from 'fs-extra';
+import { tmpdir } from 'os';
+import { join, dirname } from 'path';
 
 export const deleteMediaItemCron = functions
   .region('europe-west1')
@@ -7,6 +10,9 @@ export const deleteMediaItemCron = functions
   .firestore.document('files/{mediaItemId}').onDelete(async (snap) => {
 
     const data = snap.data() || {};
+    const workingDir = join(tmpdir(), 'thumbnails');
+
+    await fs.ensureDir(workingDir);
 
     let path: string = '/';
     if ('assignedObjects' in data) {
@@ -28,5 +34,16 @@ export const deleteMediaItemCron = functions
     });
 
     const storage = admin.storage();
+
+    const sizes = [64, 128, 256, 512];
+
+    const deletePromises = sizes.map(async size => {
+      const thumbName = `thumb@${size}_${data.itemId}`;
+      const thumbPath = join(workingDir, thumbName);
+      return storage.bucket().file(thumbPath).delete();
+    });
+
+    await Promise.all(deletePromises);
     return storage.bucket().file(path + '/' + data.itemId).delete();
+
   });
