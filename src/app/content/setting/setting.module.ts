@@ -28,6 +28,7 @@ import { SettingsCalendarsComponent } from './settings/settings-calendars/settin
 import { TagInputModule } from 'ngx-chips';
 import { SettingsRegistrationComponent } from './settings/settings-registration/settings-registration.component';
 import { SettingsSocialSignInComponent } from './settings/settings-social-sign-in/settings-social-sign-in.component';
+import { SettingsSocialNetworksComponent } from './settings/settings-social-networks/settings-social-networks.component';
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import { SettingsSocialSignInComponent } from './settings/settings-social-sign-i
     SettingsUrlshorteningComponent,
     SettingsCalendarsComponent,
     SettingsRegistrationComponent,
-    SettingsSocialSignInComponent
+    SettingsSocialSignInComponent,
+    SettingsSocialNetworksComponent
   ],
   providers: [
     ApplicationResolver,

@@ -14,8 +14,10 @@ runtime_config:
 
 handlers:
 
-#- url: /php/article/publish-article.php
-#  script: /php/article/publish-article.php
+- url: /php/article/publish-article.php
+  script: /php/article/publish-article.php
+  secure: always
+  login: admin
 
 - url: /php/match/matchplan2gcal
   script: /php/match/matchplan2gcal.php

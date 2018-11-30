@@ -122,7 +122,21 @@
       },
       "mainTitle": "Einstellungen",
       "noUrlShorteningService": "Keine kürzeren Links verwenden.",
+      "socialNetworks": {
+        "accessToken": "Access Token",
+        "accessTokenSecret": "Access Token Secret",
+        "addSocialNetwork": "Netzwerk hinzufügen",
+        "appId": "AppId",
+        "apiKey": "ApiKey",
+        "appSecret": "AppSecret",
+        "deleteSocialNetwork": "Löschen",
+        "description": "In den unten genannten Netzwerken können Nachrichten, Fotos oder Videos veröffentlicht werden.",
+        "isEnabled": "Aktiviert?",
+        "name": "Name des sozialen Netzwerkes",
+        "title": "Posten in sozialen Netzwerken"
+      },
       "socialSignIn": {
+        "description": "Über die folgenden sozialen Medien ist eine Anmeldung möglich.",
         "provider": {
           "status": "Aktiviert?",
           "title": "Anmeldung über ..."
@@ -161,6 +175,7 @@
         "visitLink": "Seite besuchen"
       },
       "socialTitle": "Soziale Netzwerke",
+      "socialDescription": "Folgende Links zu socialen Medien werden im Footer angezeigt.",
       "staticTitle": "Statische Seiten",
       "static": {
         "addStaticPage": "Neue Seite erstellen",

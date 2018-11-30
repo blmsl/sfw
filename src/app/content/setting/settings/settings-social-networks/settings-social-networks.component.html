@@ -1,0 +1,86 @@
+<mat-card [formGroup]="form">
+  <mat-card-header>
+    <mat-card-title>{{'general.applications.socialNetworks.title' | translate}}</mat-card-title>
+    <mat-card-subtitle>{{'general.applications.socialNetworks.description' | translate}}</mat-card-subtitle>
+  </mat-card-header>
+  <hr/>
+  <mat-card-content formArrayName="socialNetworks">
+
+    <div *ngFor="let control of form.get('socialNetworks')['controls']; let i = index; let last = last">
+
+      <div fxLayout="column"
+           fxLayout.gt-sm="row"
+           fxLayoutGap="15px"
+           [formGroupName]="i">
+
+        <mat-form-field fxFlex.gt-sm="10">
+          <input matInput
+                 placeholder="{{'general.applications.socialNetworks.name' | translate}}"
+                 formControlName="title"/>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="10">
+          <input matInput
+                 placeholder="{{'general.applications.socialNetworks.appId' | translate}}"
+                 formControlName="appId"/>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="15">
+          <input matInput
+                 placeholder="{{'general.applications.socialNetworks.appSecret' | translate}}"
+                 formControlName="appSecret"/>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="15">
+          <input matInput
+                 placeholder="{{'general.applications.socialNetworks.accessToken' | translate}}"
+                 formControlName="accessToken"/>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="15">
+          <input matInput
+                 placeholder="{{'general.applications.socialNetworks.accessTokenSecret' | translate}}"
+                 formControlName="accessTokenSecret"/>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="10">
+          <input matInput
+                 placeholder="{{'general.applications.socialNetworks.apiKey' | translate}}"
+                 formControlName="apiKey"/>
+        </mat-form-field>
+
+        <div fxFlex.gt-sm="10">
+          <mat-checkbox formControlName="isEnabled">
+            {{'general.applications.socialNetworks.isEnabled' | translate}}
+          </mat-checkbox>
+        </div>
+
+        <div>
+          <button mat-raised-button
+                  type="button"
+                  (click)="removeSocialNetwork(i)"
+                  color="warn">
+            {{'general.applications.socialNetworks.deleteSocialNetwork' | translate}}
+          </button>
+        </div>
+
+        <hr *ngIf="!last" />
+
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutGap="10px">
+      <span></span>
+      <span fxFlex=""></span>
+      <button mat-raised-button
+              type="button"
+              color="primary"
+              (click)="addSocialNetwork()">
+        {{'general.applications.socialNetworks.addSocialNetwork' | translate}}
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

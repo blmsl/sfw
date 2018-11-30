@@ -48,8 +48,7 @@
 
       <mat-tab label="{{'general.applications.socialTitle' | translate}}">
         <div fxLayout="column"
-             fxLayout.gt-sm="row"
-             fxLayoutGap="10px">
+             fxLayout.gt-sm="row wrap">
           <div fxFlex="60">
             <settings-social-data (saveApplication)="saveApplication($event)"
                                   [application]="application">
@@ -59,6 +58,11 @@
             <settings-social-sign-in (saveApplication)="saveApplication($event)"
                                      [application]="application">
             </settings-social-sign-in>
+          </div>
+          <div fxFlex="100">
+            <settings-social-networks (saveApplication)="saveApplication($event)"
+                                      [application]="application">
+            </settings-social-networks>
           </div>
         </div>
       </mat-tab>

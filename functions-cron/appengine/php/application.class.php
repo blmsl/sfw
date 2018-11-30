@@ -20,6 +20,8 @@ trait sfwApplication
         $snapshot = $query->documents();
 
         if ($snapshot->isEmpty()) {
+            echo "isEmpty";
+
             return $this->saveFireStoreObject($this->applicationCollection,
                 array(
                     'assignedCalendars' => array(),
@@ -57,7 +59,8 @@ trait sfwApplication
                 $application = array(
                     'id' => $doc["id"],
                     'page' => $doc["page"],
-                    'assignedCalendars' => $doc["assignedCalendars"]
+                    'assignedCalendars' => $doc["assignedCalendars"],
+                    'socialNetworks' => $doc["socialNetworks"]
                 );
                 break;
             }

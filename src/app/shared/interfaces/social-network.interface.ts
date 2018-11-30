@@ -1,9 +1,10 @@
 export interface ISocialNetwork {
-  link: string;
   title: string;
-  /* providerTitle: string;
-  publicKey?: string;
-  privateKey?: string;
-  accessToken?: string;
-  accessSecret?: string; */
+  isEnabled: boolean;
+  appId: string;
+  appSecret: string;
+  accessToken: string;
+
+  apiKey: string;
+  accessTokenSecret: string;
 }

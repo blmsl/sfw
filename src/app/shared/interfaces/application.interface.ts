@@ -1,8 +1,8 @@
-import { IRole } from './user/role.interface';
 import { IStaticPage } from './static-page.interface';
-import { ISocialNetwork } from './social-network.interface';
+import { ISocialPage } from './social-page.interface';
 import { IGoogleCalendar } from './calendar/google-calendar.interface';
 import { IMailList } from './mail-list.interface';
+import { ISocialNetwork } from './social-network.interface';
 
 export interface IApplication {
   id?: string;
@@ -32,8 +32,9 @@ export interface IApplication {
 
   mailing?: IMailList[];
 
-  staticPages: IStaticPage[];
-  social: ISocialNetwork[];
+  staticPages?: IStaticPage[];
+  social?: ISocialPage[];
+  socialNetworks?: ISocialNetwork[];
 
   signInProviders?: {
     title: string,

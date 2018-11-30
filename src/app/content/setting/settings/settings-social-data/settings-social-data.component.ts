@@ -12,8 +12,7 @@ import {
   Validators
 } from '@angular/forms';
 import { IApplication } from '../../../../shared/interfaces/application.interface';
-import { ISocialNetwork } from '../../../../shared/interfaces/social-network.interface';
-import { IGoogleCalendar } from '../../../../shared/interfaces/calendar/google-calendar.interface';
+import { ISocialPage } from '../../../../shared/interfaces/social-page.interface';
 import {
   debounceTime,
   distinctUntilChanged
@@ -41,7 +40,7 @@ export class SettingsSocialDataComponent implements OnInit {
     this.form.valueChanges.pipe(
       debounceTime(1500),
       distinctUntilChanged()
-    ).subscribe((changes: ISocialNetwork[]) => {
+    ).subscribe((changes: ISocialPage[]) => {
       if (this.form.valid) {
         this.application = Object.assign({}, this.application, changes);
         this.saveApplication.emit(this.application);
@@ -59,7 +58,7 @@ export class SettingsSocialDataComponent implements OnInit {
     return this.fb.array(formArray);
   }
 
-  initSocialProvider(provider: ISocialNetwork): FormGroup {
+  initSocialProvider(provider: ISocialPage): FormGroup {
     return this.fb.group({
       link: [provider.link, [Validators.required]],
       title: [provider.title, [Validators.required]]
