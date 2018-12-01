@@ -1060,11 +1060,12 @@ export class MatchEditFormationComponent implements OnInit {
     } else if (event.previousContainer.id !== event.container.id) {
       if (this.fieldDropListIds.includes(event.container.id)) {
         this.thirty = this.addToStartingEleven(event);
+        event.previousContainer.data.splice(event.previousIndex, 1);
       } else if (this.fieldDropListIds.includes(event.previousContainer.id)) {
         this.thirty = this.removeFromStartingEleven(event);
         event.container.data.splice(event.currentIndex, 0, event.previousContainer.data[event.previousIndex]);
       } else {
-        copyArrayItem(event.previousContainer.data,
+        transferArrayItem(event.previousContainer.data,
           event.container.data,
           event.previousIndex,
           event.currentIndex);

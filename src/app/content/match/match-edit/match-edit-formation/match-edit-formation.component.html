@@ -40,12 +40,13 @@
            [cdkDropListData]="assignedTeamPlayers"
            cdkDropListOrientation="horizontal"
       >
-        <div *ngFor="let item of assignedTeamPlayers"
+        <match-player *ngFor="let item of assignedTeamPlayers"
              cdkDrag
              [cdkDragData]="item"
              class="player"
-        >{{item.mainData.firstName}} {{item.mainData.lastName}}
-        </div>
+             [member]="item"
+        >
+        </match-player>
       </div>
     </div>
 
@@ -64,9 +65,9 @@
 
               <div *ngIf="checkCoordinates(i, j) && !item.id"><img *ngIf="emptyMemberImage | async as image"
                                                                    [src]="image.downloadURL"/></div>
-              <div *ngIf="item.id" class="player">
-                {{item.mainData.firstName}} {{item.mainData.lastName}}
-              </div>
+              <match-player *ngIf="item.id" class="player" [member]="item">
+
+              </match-player>
             </div>
           </div>
         </div>
@@ -75,24 +76,23 @@
 
       <!-- Substitutions -->
       <div
-           fxFlex="10"
+           fxFlex="20"
            fxLayout="column">
         <mat-card-subtitle>{{'general.matches.edit.substituteBench' | translate}}</mat-card-subtitle>
         <div fxFlex="100"
              cdkDropList
-             fxLayout="column"
+             fxLayout="row"
              id="substitutions"
              [cdkDropListConnectedTo]="dropListIds"
              class="substitutions"
              [cdkDropListData]="substitutes"
              (cdkDropListDropped)="drop($event)"
         >
-          <div *ngFor="let item of substitutes"
+          <match-player *ngFor="let item of substitutes"
                cdkDrag
                [cdkDragData]="item"
-               class="player"
-          >{{item.mainData.firstName}} {{item.mainData.lastName}}
-          </div>
+               [member]="item" class="player"
+          ></match-player>
         </div>
       </div>
 
