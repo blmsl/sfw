@@ -28,7 +28,6 @@ mat-card-content {
   background: transparent url('/assets/sfw/match/soccer-field.jpg') center center / cover no-repeat;
   min-height: 550px;
   height: 100%;
-  width: 100%;
   border: 1px solid black;
   display: grid;
   grid-template-columns: repeat(6, 12%);
@@ -37,6 +36,10 @@ mat-card-content {
 
 .cdk-drag-placeholder {
   opacity: 0;
+}
+
+.substitutions {
+  min-height: 200px;
 }
 
 .playerList {

@@ -38,7 +38,8 @@
            [cdkDropListConnectedTo]="dropListIds"
            class="playerList"
            [cdkDropListData]="assignedTeamPlayers"
-           >
+           cdkDropListOrientation="horizontal"
+      >
         <div *ngFor="let item of assignedTeamPlayers"
              cdkDrag
              [cdkDragData]="item"
@@ -48,44 +49,53 @@
       </div>
     </div>
 
-    <div class="soccer-field">
-      <div *ngFor="let list of dropListIds; let i = index"
-           cdkDropList
-           [id]="dropListIds[i]"
-           [cdkDropListConnectedTo]="dropListIds"
-           [cdkDropListData]="thirty[i]"
-           (cdkDropListDropped)="drop($event)"
-           class="soccer-field-list">
-        <div *ngFor="let item of thirty[i]; let j = index" cdkDrag [cdkDragData]="item">
+    <div fxLayout="row" fxLayout.xs="column">
+      <div class="soccer-field" fxFlex="80">
+        <div *ngFor="let list of fieldDropListIds; let i = index"
+             cdkDropList
+             [id]="fieldDropListIds[i]"
+             [cdkDropListConnectedTo]="dropListIds"
+             [cdkDropListData]="thirty[i]"
+             (cdkDropListDropped)="drop($event)"
+             class="soccer-field-list">
+          <div *ngFor="let item of thirty[i]; let j = index" cdkDrag [cdkDragData]="item">
 
-          <div class="soccer-field-list-item">
+            <div class="soccer-field-list-item">
 
-            <div *ngIf="checkCoordinates(i, j) && !item.id"><img *ngIf="emptyMemberImage | async as image"
-                            [src]="image.downloadURL" /></div>
-            <div *ngIf="item.id" class="player">
-              {{item.mainData.firstName}} {{item.mainData.lastName}}
+              <div *ngIf="checkCoordinates(i, j) && !item.id"><img *ngIf="emptyMemberImage | async as image"
+                                                                   [src]="image.downloadURL"/></div>
+              <div *ngIf="item.id" class="player">
+                {{item.mainData.firstName}} {{item.mainData.lastName}}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
 
-    <!-- Substitutions -->
-    <div class="substitutions"
-         fxFlex="10">
-      <mat-card-subtitle>{{'general.matches.edit.substituteBench' | translate}}</mat-card-subtitle>
-      <div fxLayout="column"
-           fxLayout.gt-sm="row">
-        <!--<cdk-drop fxFlex="100"
-                  #playerList
-                  [connectedTo]="[substitutionList]"
-                  class="list-sorted"
-                  (dropped)="addToList($event)"
-                  [data]="items">
-          <match-player *ngFor="let item of items" cdkDrag></match-player>
-        </cdk-drop>-->
+      <!-- Substitutions -->
+      <div
+           fxFlex="10"
+           fxLayout="column">
+        <mat-card-subtitle>{{'general.matches.edit.substituteBench' | translate}}</mat-card-subtitle>
+        <div fxFlex="100"
+             cdkDropList
+             fxLayout="column"
+             id="substitutions"
+             [cdkDropListConnectedTo]="dropListIds"
+             class="substitutions"
+             [cdkDropListData]="substitutes"
+             (cdkDropListDropped)="drop($event)"
+        >
+          <div *ngFor="let item of substitutes"
+               cdkDrag
+               [cdkDragData]="item"
+               class="player"
+          >{{item.mainData.firstName}} {{item.mainData.lastName}}
+          </div>
+        </div>
       </div>
+
     </div>
   </mat-card-content>
 
