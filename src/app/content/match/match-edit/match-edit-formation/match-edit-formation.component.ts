@@ -5,7 +5,7 @@ import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 import { MatchFormationService } from '../../../../shared/services/match/match-formation.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { distinctUntilChanged, first } from 'rxjs/internal/operators';
-import { CdkDragDrop, copyArrayItem, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ICoord } from '../../../../shared/interfaces/match/coord.interface';
 import { MatSelectChange } from '@angular/material';
 import { MemberService } from '../../../../shared/services/member/member.service';
@@ -1006,10 +1006,15 @@ export class MatchEditFormationComponent implements OnInit {
   }
 
   updatePositionList(x: number, y: number, newMember: IMember, list: IMember[]) {
-    const currentPosition: boolean = this.checkCoordinates(x, y);
-    const previousPosition: boolean = this.checkCoordinates(x, y - 1);
+    // ensures that the drag will be successful when the item is dropped before or after the placeholder
+    const positionBeforePlaceholder: boolean = this.checkCoordinates(x, y);
+    const positionAfterPlaceholder: boolean = this.checkCoordinates(x, y - 1);
 
-    const correctIdx: number = currentPosition ? y : previousPosition ? y - 1 : -1;
+    const correctIdx: number = positionBeforePlaceholder ? y : positionAfterPlaceholder ? y - 1 : -1;
+
+    if (correctIdx === -1) {
+      return list;
+    }
 
     return list.map((member: IMember, memberIndex: number) => {
       if (memberIndex === correctIdx) {
@@ -1054,22 +1059,43 @@ export class MatchEditFormationComponent implements OnInit {
     });
   }
 
+  equals(matrix1: IMember[][], matrix2: IMember[][]): boolean {
+    return matrix1.every((arr: [], i: number) => arr.every((el: IMember, j: number) => matrix2[i][j].id === el.id));
+  }
+
   drop(event: CdkDragDrop<string[]>) {
+
     if (this.fieldDropListIds.includes(event.container.id) && this.fieldDropListIds.includes(event.previousContainer.id)) {
+      // handles drag inside the soccer field
       this.thirty = this.replaceInStartingEleven(event);
+
     } else if (event.previousContainer.id !== event.container.id) {
+
       if (this.fieldDropListIds.includes(event.container.id)) {
-        this.thirty = this.addToStartingEleven(event);
-        event.previousContainer.data.splice(event.previousIndex, 1);
+        // target is the soccer field -> delete from the previous container if successful
+        const updatedField = this.addToStartingEleven(event);
+
+        if (!this.equals(updatedField, this.thirty)){
+          this.thirty = this.addToStartingEleven(event);
+          event.previousContainer.data.splice(event.previousIndex, 1);
+        }
+
       } else if (this.fieldDropListIds.includes(event.previousContainer.id)) {
+        // drag from the soccer field to the other lists
         this.thirty = this.removeFromStartingEleven(event);
         event.container.data.splice(event.currentIndex, 0, event.previousContainer.data[event.previousIndex]);
+
       } else {
+        // drag from the initial list to the substitutes list
         transferArrayItem(event.previousContainer.data,
           event.container.data,
           event.previousIndex,
           event.currentIndex);
       }
+    } else {
+      moveItemInArray(event.container.data,
+        event.previousIndex,
+        event.currentIndex);
     }
   }
 
