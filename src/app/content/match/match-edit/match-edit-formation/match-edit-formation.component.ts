@@ -11,6 +11,7 @@ import { MatSelectChange } from '@angular/material';
 import { MemberService } from '../../../../shared/services/member/member.service';
 import { Observable, of } from 'rxjs/index';
 import { IMediaItem } from '../../../../shared/interfaces/media/media-item.interface';
+import { IStartingPosition } from '../../../../shared/interfaces/match/starting-position.interface';
 
 @Component({
   selector: 'match-edit-formation',
@@ -31,11 +32,11 @@ export class MatchEditFormationComponent implements OnInit {
   public thirty: IMember[][];
   public playerPositions: ICoord[];
   public substitutes: IMember[];
+  public playerList: IMember[];
 
   items = ['Zero', 'One', 'Two', 'Three'];
   fieldDropListIds = ['0', '1', '2', '3', '4', '5'];
   dropListIds = [...this.fieldDropListIds, 'substitutions'];
-  playerList = [];
 
   constructor(private matchFormationService: MatchFormationService,
               private memberService: MemberService,
@@ -743,218 +744,24 @@ export class MatchEditFormationComponent implements OnInit {
         },
 
         'title': 'Wolferstedter Bernd'
-      },
-      {
-        'address': {
-          'city': 'St. Wendel',
-
-          'streetName': 'Zum Domweiher'
-
-        },
-        'ahData': {
-          'joined': '',
-          'left': '',
-
-          'status': 1
-        },
-        'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
-          'joined': '',
-          'left': '',
-
-          'positionsInClub': '',
-          'status': 1
-        },
-        'contact': {
-          'email': 'pulverlady@gmx.de',
-          'phoneHome': '06851-4694',
-          'phoneMobile': ''
-        },
-        'creationAt': {
-          'seconds': 1541710738,
-          'nanoseconds': 341000000
-        },
-        'creationBy': 'system',
-        'driveImport': true,
-        'dfbImport': true,
-        'id': 'fd8fcb45f1a44fc38a00',
-
-        'mainData': {
-          'birthday': {
-            'day': '16',
-            'full': '1949-10-16',
-            'month': '10',
-            'monthDay': '10-16',
-            'year': '1949'
-          },
-          'firstName': 'Bernd',
-          'gender': 'male',
-          'lastName': 'Wolferstedter',
-          'title': ''
-        },
-
-        'title': 'Wolferstedter Bernd'
-      },
-      {
-        'address': {
-          'city': 'St. Wendel',
-
-          'streetName': 'Zum Domweiher'
-
-        },
-        'ahData': {
-          'joined': '',
-          'left': '',
-
-          'status': 1
-        },
-        'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
-          'joined': '',
-          'left': '',
-
-          'positionsInClub': '',
-          'status': 1
-        },
-        'contact': {
-          'email': 'pulverlady@gmx.de',
-          'phoneHome': '06851-4694',
-          'phoneMobile': ''
-        },
-        'creationAt': {
-          'seconds': 1541710738,
-          'nanoseconds': 341000000
-        },
-        'creationBy': 'system',
-        'driveImport': true,
-        'dfbImport': true,
-        'id': 'fd8fcb45f1a44fc38a00',
-
-        'mainData': {
-          'birthday': {
-            'day': '16',
-            'full': '1949-10-16',
-            'month': '10',
-            'monthDay': '10-16',
-            'year': '1949'
-          },
-          'firstName': 'Bernd',
-          'gender': 'male',
-          'lastName': 'Wolferstedter',
-          'title': ''
-        },
-
-        'title': 'Wolferstedter Bernd'
-      },
-      {
-        'address': {
-          'city': 'St. Wendel',
-
-          'streetName': 'Zum Domweiher'
-
-        },
-        'ahData': {
-          'joined': '',
-          'left': '',
-
-          'status': 1
-        },
-        'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
-          'joined': '',
-          'left': '',
-
-          'positionsInClub': '',
-          'status': 1
-        },
-        'contact': {
-          'email': 'pulverlady@gmx.de',
-          'phoneHome': '06851-4694',
-          'phoneMobile': ''
-        },
-        'creationAt': {
-          'seconds': 1541710738,
-          'nanoseconds': 341000000
-        },
-        'creationBy': 'system',
-        'driveImport': true,
-        'dfbImport': true,
-        'id': 'fd8fcb45f1a44fc38a00',
-
-        'mainData': {
-          'birthday': {
-            'day': '16',
-            'full': '1949-10-16',
-            'month': '10',
-            'monthDay': '10-16',
-            'year': '1949'
-          },
-          'firstName': 'Bernd',
-          'gender': 'male',
-          'lastName': 'Wolferstedter',
-          'title': ''
-        },
-
-        'title': 'Wolferstedter Bernd'
-      },
-      {
-        'address': {
-          'city': 'St. Wendel',
-
-          'streetName': 'Zum Domweiher'
-
-        },
-        'ahData': {
-          'joined': '',
-          'left': '',
-
-          'status': 1
-        },
-        'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
-          'joined': '',
-          'left': '',
-
-          'positionsInClub': '',
-          'status': 1
-        },
-        'contact': {
-          'email': 'pulverlady@gmx.de',
-          'phoneHome': '06851-4694',
-          'phoneMobile': ''
-        },
-        'creationAt': {
-          'seconds': 1541710738,
-          'nanoseconds': 341000000
-        },
-        'creationBy': 'system',
-        'driveImport': true,
-        'dfbImport': true,
-        'id': 'fd8fcb45f1a44fc38a00',
-
-        'mainData': {
-          'birthday': {
-            'day': '16',
-            'full': '1949-10-16',
-            'month': '10',
-            'monthDay': '10-16',
-            'year': '1949'
-          },
-          'firstName': 'Bernd',
-          'gender': 'male',
-          'lastName': 'Wolferstedter',
-          'title': ''
-        },
-
-        'title': 'Wolferstedter Bernd'
       }
     ];
-
+    this.playerList = [...this.assignedTeamPlayers];
 
     if (this.match.assignedFormation) {
       this.setPlayerPositions(this.match.assignedFormation);
-      this.initializeFieldPositions();
+      this.initializeFieldPositions(this.match.startingEleven);
+
+      if (this.match.assignedSubstitutes) {
+        this.substitutes = this.assignedTeamPlayers.filter((player) => this.match.assignedSubstitutes.includes(player.id));
+        this.playerList = this.playerList.filter((player) => !this.match.assignedSubstitutes.includes(player.id));
+      }
+
+      if (this.match.startingEleven) {
+        this.playerList = this.playerList.filter(player => !this.match.startingEleven.find(position => position.memberId === player.id));
+      }
     }
+
 
     this.emptyMemberImage = of({
       downloadURL: '/assets/sfw/placeholder/avatar_male.jpg'
@@ -968,11 +775,15 @@ export class MatchEditFormationComponent implements OnInit {
         this.saveMatch.emit(changes);
       }
     });
+
   }
 
   changeFormation($event: MatSelectChange) {
     this.setPlayerPositions($event.value);
     this.initializeFieldPositions();
+
+    this.playerList = this.playerList.concat(this.assignedTeamPlayers
+      .filter(player => this.match.startingEleven.find(e => e.memberId === player.id)))
   }
 
   setPlayerPositions(formationTitle: string) {
@@ -983,13 +794,19 @@ export class MatchEditFormationComponent implements OnInit {
     this.playerPositions = this.matchFormationService.getFormationPositions(formation);
   }
 
-  initializeFieldPositions() {
+  initializeFieldPositions(startingEleven = undefined) {
     this.thirty = [];
 
-    for (const i of [...Array(6)]) {
+    for (let i = 0; i < [...Array(6)].length; i++) {
       const row: IMember[] = [];
-      for (const j of [...Array(5)]) {
-        row.push(Object.assign({}, this.emptyMember));
+      for (let j = 0; j < [...Array(5)].length; j++) {
+        const position = startingEleven && startingEleven.find(startingPosition => startingPosition.position.x === i && Math.abs(startingPosition.position.y - 4) === j);
+
+        if (position) {
+          row.push(Object.assign({}, this.assignedTeamPlayers.find(player => player.id === position.memberId)));
+        } else {
+          row.push(Object.assign({}, this.emptyMember));
+        }
       }
       this.thirty.push(row);
     }
@@ -1075,7 +892,7 @@ export class MatchEditFormationComponent implements OnInit {
         // target is the soccer field -> delete from the previous container if successful
         const updatedField = this.addToStartingEleven(event);
 
-        if (!this.equals(updatedField, this.thirty)){
+        if (!this.equals(updatedField, this.thirty)) {
           this.thirty = this.addToStartingEleven(event);
           event.previousContainer.data.splice(event.previousIndex, 1);
         }
@@ -1097,6 +914,20 @@ export class MatchEditFormationComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+
+    const startingEleven: IStartingPosition[] = [];
+
+    this.thirty.forEach((list: IMember[], i: number) => list.forEach((member: IMember, j: number) => {
+      if (member.id) {
+        startingEleven.push({ memberId: member.id, position: { x: i, y: Math.abs(j - 4) } });
+      }
+    }));
+
+    const updatedMatch = Object.assign({}, this.match,
+      { assignedSubstitutes: this.substitutes.map((member: IMember) => member.id) },
+      { startingEleven });
+
+    this.saveMatch.emit(updatedMatch);
   }
 
   /*
