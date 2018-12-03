@@ -3,6 +3,11 @@
   padding: 0.5rem;
 }
 
+.mat-card-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .dragging {
   opacity: 0.4;
   border: 1px solid red;

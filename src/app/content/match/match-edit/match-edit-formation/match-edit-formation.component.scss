@@ -28,7 +28,6 @@ mat-card-content {
   background: transparent url('/assets/sfw/match/soccer-field.jpg') center center / cover no-repeat;
   min-height: 550px;
   height: 100%;
-  width: 100%;
   border: 1px solid black;
   display: grid;
   grid-template-columns: repeat(6, 12%);
@@ -37,6 +36,12 @@ mat-card-content {
 
 .cdk-drag-placeholder {
   opacity: 0;
+}
+
+.substitutions {
+  min-height: 200px;
+  flex-wrap: wrap;
+  align-content: flex-start;
 }
 
 .playerList {
@@ -50,22 +55,11 @@ mat-card-content {
 
 .player {
   margin-top: 5px;
-  padding: 10px;
-  border: solid 1px #ccc;
-  min-width: 100px;
   margin-left: 5px;
   margin-right: 5px;
-  color: white;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
   cursor: move;
-  background: #539260;
-  font-size: 14px;
-  border-radius: 10px;
-
+  max-width: 90px;
+  overflow: hidden;
 }
 
 .soccer-field-list {

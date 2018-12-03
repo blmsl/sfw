@@ -5,7 +5,7 @@ import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 import { MatchFormationService } from '../../../../shared/services/match/match-formation.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { distinctUntilChanged, first } from 'rxjs/internal/operators';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, copyArrayItem, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ICoord } from '../../../../shared/interfaces/match/coord.interface';
 import { MatSelectChange } from '@angular/material';
 import { MemberService } from '../../../../shared/services/member/member.service';
@@ -30,10 +30,11 @@ export class MatchEditFormationComponent implements OnInit {
   public form: FormGroup;
   public thirty: IMember[][];
   public playerPositions: ICoord[];
-  public coordinates = [];
+  public substitutes: IMember[];
 
   items = ['Zero', 'One', 'Two', 'Three'];
-  dropListIds = ['0', '1', '2', '3', '4', '5'];
+  fieldDropListIds = ['0', '1', '2', '3', '4', '5'];
+  dropListIds = [...this.fieldDropListIds, 'substitutions'];
   playerList = [];
 
   constructor(private matchFormationService: MatchFormationService,
@@ -42,7 +43,7 @@ export class MatchEditFormationComponent implements OnInit {
     this.tacticalFormations = matchFormationService.getFormations();
     this.memberService.setNewMember().pipe(first()).subscribe((member: IMember) =>
       this.emptyMember = Object.assign({}, member));
-
+    this.substitutes = [];
   }
 
   ngOnInit() {
@@ -994,17 +995,6 @@ export class MatchEditFormationComponent implements OnInit {
     }
   }
 
-  getCoordinates(i): ICoord {
-    if (this.coordinates[i]) {
-      return this.coordinates[i];
-    }
-    const coords: ICoord = {
-      x: i % 6,
-      y: Math.floor(i / 6)
-    };
-    return this.coordinates[i] = coords;
-  }
-
   checkCoordinates(x: number, y: number): boolean {
     for (const p of this.playerPositions) {
       if (p.x === x && Math.abs(p.y - 4) === y) {
@@ -1016,14 +1006,10 @@ export class MatchEditFormationComponent implements OnInit {
   }
 
   updatePositionList(x: number, y: number, newMember: IMember, list: IMember[]) {
-    const currentPosition = this.checkCoordinates(x, y);
-    const previousPosition = this.checkCoordinates(x, y - 1);
+    const currentPosition: boolean = this.checkCoordinates(x, y);
+    const previousPosition: boolean = this.checkCoordinates(x, y - 1);
 
-    const correctIdx = currentPosition ? y : previousPosition ? y - 1 : false;
-
-    if (correctIdx === false) {
-      return list;
-    }
+    const correctIdx: number = currentPosition ? y : previousPosition ? y - 1 : -1;
 
     return list.map((member: IMember, memberIndex: number) => {
       if (memberIndex === correctIdx) {
@@ -1055,17 +1041,34 @@ export class MatchEditFormationComponent implements OnInit {
       }
       return element;
     });
-
   }
 
+  removeFromStartingEleven(event: CdkDragDrop<string[]>) {
+    const prevX = Number.parseInt(event.previousContainer.id, 10);
 
+    return this.thirty.map((element: IMember[], index: number) => {
+      if (index === prevX) {
+        return this.updatePositionList(prevX, event.previousIndex, Object.assign({}, this.emptyMember), element);
+      }
+      return element;
+    });
+  }
 
   drop(event: CdkDragDrop<string[]>) {
-    if (this.dropListIds.includes(event.container.id) && this.dropListIds.includes(event.previousContainer.id)) {
+    if (this.fieldDropListIds.includes(event.container.id) && this.fieldDropListIds.includes(event.previousContainer.id)) {
       this.thirty = this.replaceInStartingEleven(event);
     } else if (event.previousContainer.id !== event.container.id) {
-      if (this.dropListIds.includes(event.container.id)) {
+      if (this.fieldDropListIds.includes(event.container.id)) {
         this.thirty = this.addToStartingEleven(event);
+        event.previousContainer.data.splice(event.previousIndex, 1);
+      } else if (this.fieldDropListIds.includes(event.previousContainer.id)) {
+        this.thirty = this.removeFromStartingEleven(event);
+        event.container.data.splice(event.currentIndex, 0, event.previousContainer.data[event.previousIndex]);
+      } else {
+        transferArrayItem(event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex);
       }
     }
   }
