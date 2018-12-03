@@ -38,12 +38,12 @@ export const memberOfTheWeekCron = functions
 
         const clubList = memberSnapshot.docs.filter((doc) => {
           const member = doc.data();
-          return member.clubData && member.clubData.status && member.clubData.status > 0 && member.clubData.status !== 2;
+          return member.clubStatus && member.clubStatus > 0 && member.clubStatus !== 2;
         });
 
         const ahList = memberSnapshot.docs.filter((doc) => {
           const member = doc.data();
-          return member.ahData && member.ahData.status && member.ahData.status > 0;
+          return member.ahStatus && member.ahStatus > 0;
         });
 
         const playerList = memberSnapshot.docs.filter((doc) => {
@@ -53,7 +53,7 @@ export const memberOfTheWeekCron = functions
 
         const honoraryList = memberSnapshot.docs.filter((doc) => {
           const member = doc.data();
-          return member.clubData && member.clubData.status && member.clubData.status === 2;
+          return member.clubStatus && member.clubStatus === 2;
         });
 
         if (!clubList && ahList && playerList && honoraryList) {

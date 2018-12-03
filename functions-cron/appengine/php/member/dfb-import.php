@@ -35,7 +35,7 @@ try {
     if (count($driveFileList) > 0) {
 
         $memberList = $project->getMembers($club);
-        $members = $project->sheetService->spreadsheets_values->get($driveFileList[0]->id, 'Liste!' . $startAt . ':O', array())->getValues();
+        $members = $project->sheetService->spreadsheets_values->get($driveFileList[0]->id, 'spielerliste.csv!' . $startAt . ':O', array())->getValues();
 
         echo $project->generateDFBMemberTableHeader();
         $batching = false;

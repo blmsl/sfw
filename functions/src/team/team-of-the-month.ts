@@ -45,7 +45,7 @@ export const teamOfTheWeekCron = functions
         const msg = {
           to: teamOfTheWeekMailing[0].emails,
           from: 'mitglieder@sfwinterbach.com',
-          subject: 'Mannschaft des Monats ' + current.month() + '.' + now.format('YYYY'),
+          subject: 'Mannschaft des Monats ' + now.format('MM') + '.' + now.format('YYYY'),
           templateId: 'cd68a992-a76c-4b47-8dda-a7d9c68fd1b3',
           substitutionWrappers: ['{{', '}}'],
           substitutions: {
