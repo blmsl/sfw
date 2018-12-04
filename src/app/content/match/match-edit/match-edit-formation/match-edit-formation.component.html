@@ -18,7 +18,7 @@
   </mat-card-title>
 
 
-  <mat-card-content *ngIf="assignedTeamPlayers && match.assignedFormation"
+  <mat-card-content *ngIf="playerList && match.assignedFormation"
                     fxLayout="column">
 
     <!-- Starting 11 -->
@@ -37,10 +37,10 @@
            id="playerList"
            [cdkDropListConnectedTo]="dropListIds"
            class="playerList"
-           [cdkDropListData]="assignedTeamPlayers"
+           [cdkDropListData]="playerList"
            cdkDropListOrientation="horizontal"
       >
-        <match-player *ngFor="let item of assignedTeamPlayers"
+        <match-player *ngFor="let item of playerList"
              cdkDrag
              [cdkDragData]="item"
              class="player"
