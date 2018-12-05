@@ -14,7 +14,7 @@ runtime_config:
 
 handlers:
 
-- url: /php/article/publish-article.php
+- url: /php/article/publish-article
   script: /php/article/publish-article.php
   secure: always
   login: admin

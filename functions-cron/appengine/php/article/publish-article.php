@@ -12,6 +12,8 @@ require "../../vendor/autoload.php";
 require "../base.class.php";
 require_once "../utils.global.php";
 
+use Facebook\Facebook;
+
 try {
     $project = new sfwApp();
 
@@ -24,23 +26,20 @@ try {
         switch ($socialNetwork["title"]){
             case "Facebook":
 
-                $fb = new \Facebook\Facebook([
+                $fb = new Facebook(array(
                     'app_id' => $socialNetwork["appId"],
                     'app_secret' => $socialNetwork["appSecret"],
-                    'default_graph_version' => 'v2.10',
-                    $socialNetwork["accessToken"]
-                ]);
+                    'default_graph_version' => 'v2.10'
+                ));
 
-                $helper = $fb->getJavaScriptHelper();
-                $accessToken = $helper->getAccessToken();
-                if ($accessToken) {
-                    echo 'Successfully logged in!';
-                }
+                $fb->getDefaultAccessToken();
 
-                $response = $fb->get('/me', $accessToken);
+                $helper = $fb->getRedirectLoginHelper();
 
-                $me = $response->getGraphUser();
-                echo 'Logged in as ' . $me->getName();
+                $permissions = ['manage_pages','publish_actions','publish_pages'];
+                $loginUrl = $helper->getLoginUrl('fb-callback.php', $permissions);
+
+                echo '<a href="' . htmlspecialchars($loginUrl) . '">Log in with Facebook!</a>';
 
                 break;
         }
@@ -52,6 +51,7 @@ try {
     exit;
 } catch (\Facebook\Exceptions\FacebookSDKException $e) {
     // When validation fails or other local issues
+    var_dump($e);
     echo 'Facebook SDK returned an error: ' . $e->getMessage();
     exit;
 } catch (Exception $exception){
