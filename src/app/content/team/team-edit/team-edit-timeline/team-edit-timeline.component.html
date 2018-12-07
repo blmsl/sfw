@@ -5,7 +5,7 @@
   <mat-card-content>
     <time-line-list [articles]="articles"
                     [showLinks]="true"
-                    [events]="team.assignedEvents"
+                    [events]="team.assignedEvents ? team.assignedEvents : []"
                     (edit)="editTimeLineEvent($event)"
                     (delete)="deleteTimeLineEvent($event)">
     </time-line-list>
