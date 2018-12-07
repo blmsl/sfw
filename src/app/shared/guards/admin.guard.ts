@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
-  CanActivate,
+  CanActivate, Router,
   RouterStateSnapshot
 } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
@@ -18,6 +18,7 @@ import { AlertService } from '../services/alert/alert.service';
 export class AdminGuard implements CanActivate {
 
   constructor(private authService: AuthService,
+    private router: Router,
     private alertService: AlertService) {
   }
 
@@ -26,12 +27,13 @@ export class AdminGuard implements CanActivate {
     return this.authService.user$.pipe(
       take(1),
       map((user: IUser) => {
-        console.log(user);
         return !!(user && user.assignedRoles.admin);
       }),
       tap((isAdmin: boolean) => {
         if (!isAdmin) {
-          this.alertService.showSnackBar('error', 'general.forbidden.page', 15000);
+          return this.router.navigate(['/dashboard']).then(
+            () => this.alertService.showSnackBar('error', 'general.forbidden.text', 3000)
+          );
         }
       })
     );

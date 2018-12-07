@@ -23,7 +23,7 @@ try {
 
     // set batch
     $firestoreBatch = $project->db->batch();
-    $batch = $project->client->batch();
+    $batch = $project->db->batch();
 
     // set application
     $app = $project->getCurrentApplication($firestoreBatch);

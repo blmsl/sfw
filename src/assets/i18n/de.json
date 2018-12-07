@@ -624,7 +624,7 @@
       }
     },
     "forbidden": {
-      "text": "Dir fehlen die Berechtigungen um die Administrationsoberfläche zu laden. Bitte wende Dich an einen Administrator um die Berechtigungen zu erhalten.",
+      "text": "Dir fehlen die Berechtigungen um diese Seite zu laden. Bitte wende Dich an einen Administrator um die Berechtigungen zu erhalten.",
       "title": "Zugriff verboten"
     },
     "home": "Startseite",

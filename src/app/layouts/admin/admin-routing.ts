@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { BackendGuard } from '../../shared/guards/backend.guard';
+import { AdminGuard } from '../../shared/guards/admin.guard';
 
 export const adminRoutes: Routes = [
   {
@@ -19,7 +20,7 @@ export const adminRoutes: Routes = [
       {
         path: 'categories',
         loadChildren: '../../content/category/category.module#CategoryModule',
-        // canActivate: [AdminGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: 'calendar',
@@ -28,12 +29,12 @@ export const adminRoutes: Routes = [
       {
         path: 'clubs',
         loadChildren: '../../content/club/club.module#ClubModule',
-        // canActivate: [AdminGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: 'locations',
         loadChildren: '../../content/location/location.module#LocationModule',
-        // canActivate: [AdminGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: 'matches',
@@ -46,7 +47,7 @@ export const adminRoutes: Routes = [
       {
         path: 'newsletter',
         loadChildren: '../../content/newsletter/newsletter.module#NewsletterModule',
-        // canActivate: [AdminGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: 'uploader',
@@ -55,12 +56,12 @@ export const adminRoutes: Routes = [
       {
         path: 'settings',
         loadChildren: '../../content/setting/setting.module#SettingModule',
-        // canActivate: [AdminGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: 'sponsors',
         loadChildren: '../../content/sponsor/sponsor.module#SponsorModule',
-        // canActivate: [AdminGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: 'teams',
@@ -69,7 +70,7 @@ export const adminRoutes: Routes = [
       {
         path: 'users',
         loadChildren: '../../content/user/user.module#UserModule',
-        // canActivate: [AdminGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: '**',

@@ -396,6 +396,7 @@ trait sfwMember
     $passPrint = DateTime::createFromFormat('d.m.Y', $member[12]) ? DateTime::createFromFormat('d.m.Y', $member[12])->format('Y-m-d') : '';
     $signOut = DateTime::createFromFormat('d.m.Y', $member[7]) ? DateTime::createFromFormat('d.m.Y', $member[7])->format('Y-m-d') : '';
 
+    if($birthday){
     $id = $member[1] . "-" . $member[2] . "-" . $birthday->format('Y-m-d');
 
     $data = array(
@@ -490,6 +491,7 @@ trait sfwMember
           'updateStatus' => false
         );
       }
+    }
     }
   }
 
