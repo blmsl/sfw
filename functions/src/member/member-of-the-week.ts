@@ -10,18 +10,18 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 
 const db = admin.firestore();
 
-const now = moment();
-const docId: string = now.week() + '-' + now.format('YY');
-
 const collectionName = 'members';
 
 export const memberOfTheWeekCron = functions
   .region('europe-west1')
-  .runWith({ memory: '512MB', timeoutSeconds: 7 })
+  .runWith({ memory: '512MB', timeoutSeconds: 15 })
   .pubsub.topic('members-of-the-week')
   .onPublish(async () => {
 
     try {
+
+      const now = moment();
+      const docId: string = now.week() + '-' + now.format('YY');
 
       const applicationsSnapshot = await admin.firestore().collection('applications')
         .where('isCurrentApplication', '==', true)

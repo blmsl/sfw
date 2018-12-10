@@ -34,10 +34,10 @@ export const teamOfTheWeekCron = functions
         const sample = teamsSnapshot.docs[Math.floor(Math.random() * teamsSnapshot.size)];
 
         await admin.firestore().collection(collectionString)
-          .doc(now.format('YYYY') + '-' + now.format('MM'))
+          .doc(now.format('YYYY') + '-' + now.month())
           .create({
             assignedTeamId: sample.data().id,
-            title: now.format('YYYY') + '-' + now.format('MM')
+            title: now.format('YYYY') + '-' + now.month()
           });
 
         const current = moment().add(1, 'month');
