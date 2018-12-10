@@ -1,6 +1,7 @@
 <mat-card>
   <mat-card-header>
     <div mat-card-avatar
+         *ngIf="teamOfTheMonth"
          [ngStyle]="{ 'background-image': 'url(' + teamOfTheMonth.logoURL + ')'}"
          style="background-size: cover;">
     </div>

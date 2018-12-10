@@ -37,15 +37,17 @@ export class SettingsSocialSignInComponent implements OnInit {
 
   initSocialSignInProvider(){
     const formArray: FormArray = this.fb.array([]);
-    this.application.signInProviders.forEach((provider: {
-      title: string,
-      isEnabled: boolean
-    }) => {
-      formArray.push(this.fb.group({
-        title: provider.title,
-        isEnabled: provider.isEnabled
-      }));
-    });
+    if(this.application.signInProviders) {
+      this.application.signInProviders.forEach((provider: {
+        title: string,
+        isEnabled: boolean
+      }) => {
+        formArray.push(this.fb.group({
+          title: provider.title,
+          isEnabled: provider.isEnabled
+        }));
+      });
+    }
     return formArray;
   }
 
