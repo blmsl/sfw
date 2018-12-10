@@ -20,6 +20,7 @@ import {
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MediaCenterComponent } from './media-center/media-center.component';
 import { MediaUploaderService } from '../../services/media/media-uploader.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -65,6 +66,7 @@ import { MediaShowItemComponent } from './media-center/media-show-item/media-sho
 @NgModule({
   imports: [
     DialogModule,
+    DragDropModule,
     MatExpansionModule,
     MatProgressBarModule,
     AngularFireFunctionsModule,

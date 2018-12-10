@@ -1,9 +1,19 @@
-<media-center *ngIf="mediaItems$ | async as mediaItems"
-              [mediaItems]="mediaItems"
-              [uploaderConfig]="uploaderConfig"
-              [uploaderOptions]="uploaderOptions">
-</media-center>
-
 <media-gallery-list *ngIf="mediaGalleries$ | async as mediaGalleries"
-                    [mediaGalleries]="mediaGalleries">
+                    [mediaGalleries]="mediaGalleries"
+                    (editMediaGalleryEvent)="selectGallery($event)">
 </media-gallery-list>
+
+<div fxLayout="row" fxLayout.md="column">
+  <media-center *ngIf="mediaItems$ | async as mediaItems"
+                fxFlex="1 0"
+                [mediaItems]="mediaItems"
+                [uploaderConfig]="uploaderConfig"
+                [uploaderOptions]="uploaderOptions">
+  </media-center>
+
+  <media-gallery-form *ngIf="gallery" [gallery]="gallery" fxFlex="1 0"
+                      [mediaGalleryFormOptions]="mediaGalleryFormOptions">
+  </media-gallery-form>
+
+</div>
+

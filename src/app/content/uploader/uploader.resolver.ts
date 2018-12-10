@@ -22,6 +22,7 @@ export class UploaderResolver implements Resolve<IMediaGallery> {
       take(1),
       map((gallery: IMediaGallery) => {
         if (gallery && gallery.id) {
+          console.log(gallery);
           return gallery;
         } else {
           this.router.navigate(['/uploader/list']).then();

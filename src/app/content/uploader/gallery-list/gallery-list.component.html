@@ -1,5 +1,6 @@
 <media-gallery-list *ngIf="mediaGalleries$ | async as mediaGalleries; else loadingTemplate"
-                    [mediaGalleries]="mediaGalleries">
+                    [mediaGalleries]="mediaGalleries"
+(editMediaGalleryEvent)="redirectToEdit($event)">
 </media-gallery-list>
 
 <ng-template #loadingTemplate>

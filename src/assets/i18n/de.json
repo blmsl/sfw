@@ -852,6 +852,7 @@
         "close": "Schließen",
         "coverSaved": "Das Coverbild für diese Sammlung wurde gespeichert.",
         "create": "Neue Sammlung",
+        "edit": "Sammlung bearbeiten",
         "cancel": "Abbrechen",
         "confirm": "Bestätigen",
         "form": {
@@ -868,6 +869,7 @@
             "sponsor": "Zu einem Sponsor",
             "team": "Zu einer Mannschaft"
           },
+          "emptyDragList": "Hier Dateien zu der Sammlung verschieben",
           "author": "Author",
           "description": "Beschreibung der Sammlung",
           "save": "Sammlung anlegen",

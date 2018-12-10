@@ -1,9 +1,12 @@
-<div fxLayout='row wrap'>
+<div fxLayout='row wrap' cdkDropList [cdkDropListConnectedTo]="['form-items']" id="media-items" [cdkDropListData]="mediaItems">
   <media-item *ngFor="let mediaItem of mediaItems"
               [mediaItem]="mediaItem"
               [showCoverBtn]="!!mediaGallery"
               class="box"
               fxFlex="14"
-              [selected]="false">
+              [selected]="false"
+              cdkDrag
+              [cdkDragData]="mediaItem"
+              >
   </media-item>
 </div>
