@@ -45,8 +45,9 @@
 
   <p matLine>
     <span *ngFor="let categoryId of match.assignedCategories; let last = last">
-      <a [routerLink]="['/categories/detail', categoryId]">
-        {{(categories | filterBy: ['id'] : categoryId)[0].title}}
+      <a [routerLink]="['/categories/detail', categoryId]"
+         *ngIf="(categories | filterBy: ['id'] : categoryId)[0] as category">
+        {{category.title}}
       </a><span *ngIf="!last">,</span>
     </span>
     - {{match.matchType}}
