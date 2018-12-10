@@ -6,7 +6,7 @@
       </mat-card-header>
       <hr>
       <mat-card-content>
-        <time-line-list [articles]="articles$ | async as articles"
+        <time-line-list [articles]="articles$ | async"
                         [showLinks]="false"
                         [events]="team.assignedEvents ? team.assignedEvents : []">
         </time-line-list>
