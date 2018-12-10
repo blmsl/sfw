@@ -32,31 +32,28 @@ export class TeamDetailSeriesComponent implements OnInit {
       }
 
       matches.forEach((match: IMatch) => {
-        // console.log(match);
         if (match.result && match.result.guestTeamGoals && match.result.homeTeamGoals) {
           // Defeats
           if (match.isHomeTeam) {
             if (match.result.homeTeamGoals < match.result.guestTeamGoals) {
-              this.series.push('V');
+              this.series.push('loss');
             } else if (match.result.homeTeamGoals > match.result.guestTeamGoals) {
-              this.series.push('S');
+              this.series.push('victory');
             }
           } else {
             if (match.result.guestTeamGoals < match.result.homeTeamGoals) {
-              this.series.push('V');
+              this.series.push('loss');
             } else if (match.result.guestTeamGoals > match.result.homeTeamGoals) {
-              this.series.push('S');
+              this.series.push('victory');
             }
           }
 
           // Draws
           if (match.result.homeTeamGoals === match.result.guestTeamGoals) {
-            this.series.push('U');
+            this.series.push('draw');
           }
         }
       });
-      // ToDO: Serie der Mannschaft anzeigen
-      console.log(this.series);
     });
   }
 

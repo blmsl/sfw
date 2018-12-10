@@ -8,14 +8,18 @@
 
     <mat-card>
       <mat-card-title>{{'general.teams.edit.position.players' | translate}}</mat-card-title>
+      <hr/>
       <mat-card-content>
-        <p *ngIf="!team.assignedPlayers">{{'general.teams.edit.players.noPlayers' | translate}}</p>
 
-        <mat-list dense>
+        <div class="alert alert-info" *ngIf="!team.assignedPlayers">
+          <p>{{'general.teams.edit.players.noPlayers' | translate}}</p>
+        </div>
+
+        <mat-list dense *ngIf="assignedPlayers">
           <mat-list-item *ngFor="let member of assignedPlayers; let i = index">
             {{i + 1 }}.&nbsp;
             <a [routerLink]="['/members/detail', member.id]">
-              {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday.full.full | date: 'dd.MM.yy'}}
+              {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday.full | date: 'dd.MM.yy'}}
             </a>
           </mat-list-item>
         </mat-list>
@@ -26,11 +30,12 @@
   <div fxFlex.gt-sm="50">
     <mat-card>
       <mat-card-title>{{'general.teams.edit.management.title' | translate}}</mat-card-title>
+      <hr/>
       <mat-card-content>
 
-        <p *ngIf="!team.assignedPositions || !team.assignedPositions.length">
-          {{'general.teams.edit.position.noPosition' |
-          translate}}</p>
+        <div class="alert alert-info" *ngIf="!team.assignedPositions || !team.assignedPositions.length">
+          <p>{{'general.teams.edit.position.noPosition' | translate}}</p>
+        </div>
 
         <mat-card *ngFor="let position of team.assignedPositions">
           <mat-card-title>{{position.position}}</mat-card-title>
@@ -39,7 +44,8 @@
               <mat-list-item *ngFor="let member of assignedPositions |filterBy: ['id'] : position.assignedMember | orderBy: 'type'">
                 <h3 matLine>{{member.type}}</h3>
                 <a matLine [routerLink]="['/members/detail', member.id]">
-                  {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday | date: 'dd.MM.yy'}}
+                  {{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday.full | date:
+                  'dd.MM.yy'}}
                 </a>
               </mat-list-item>
             </mat-list>

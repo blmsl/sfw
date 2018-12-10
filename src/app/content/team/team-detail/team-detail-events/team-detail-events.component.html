@@ -1,6 +1,16 @@
 <div fxLayout="row">
   <div fxFlex="100">
-    <time-line-list [showLinks]="false">
-    </time-line-list>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{'general.teams.edit.timeLine.title' | translate}}</mat-card-title>
+      </mat-card-header>
+      <hr>
+      <mat-card-content>
+        <time-line-list [articles]="articles"
+                        [showLinks]="false"
+                        [events]="team.assignedEvents ? team.assignedEvents : []">
+        </time-line-list>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

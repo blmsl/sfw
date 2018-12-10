@@ -12,19 +12,8 @@ export class TeamDetailPositionsComponent {
   @Input() team: ITeam;
   @Input() assignedPlayers: IMember[];
   @Input() assignedPositions: IMember[];
-  // @Input() categories: ICategoryType[];
-
-  public savedPosition: string;
 
   constructor() {
-  }
-
-  isSavedPosition(position: string) {
-    if (position !== this.savedPosition) {
-      this.savedPosition = position;
-      return false;
-    }
-    return true;
   }
 
 }

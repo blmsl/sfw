@@ -58,7 +58,7 @@
       </mat-tab>
 
       <mat-tab label="{{'general.teams.edit.media.title' | translate}}">
-        <team-detail-media [team]="team"></team-detail-media>
+        <team-detail-media></team-detail-media>
       </mat-tab>
       <mat-tab label="{{'general.teams.edit.playerStatsTitle' | translate}}">
         <team-detail-playerstats *ngIf="assignedPlayers$ | async as assignedPlayers; else loadingTemplate"

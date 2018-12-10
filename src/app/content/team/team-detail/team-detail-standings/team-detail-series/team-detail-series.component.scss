@@ -1,0 +1,28 @@
+.mat-card-content > div {
+  border: 1px solid black;
+}
+
+.mat-card-content > div > div {
+  border-right: 1px solid black;
+  font-weight: bold;
+  list-style-type: none;
+  padding: 10px;
+  text-align: center;
+}
+
+.mat-card-content > div > div:last-child {
+  border-right: 0;
+}
+
+.loss {
+  background-color: red;
+  color: #fff;
+}
+
+.victory {
+  background-color: lawngreen;
+}
+
+.draw {
+  background-color: orange;
+}

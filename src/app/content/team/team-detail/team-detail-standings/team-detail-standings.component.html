@@ -12,7 +12,9 @@
       <mat-card-title>{{'general.teams.detail.standingsTitle' | translate}}</mat-card-title>
       <mat-card-content>
 
-        <p *ngIf="!team.currentStandings">{{'general.teams.fame.noStandings' | translate}}</p>
+        <div class="alert alert-info" *ngIf="!team.currentStandings">
+          <p>{{'general.teams.fame.noStandings' | translate}}</p>
+        </div>
 
         <table class="table" *ngIf="team.currentStandings">
           <thead>

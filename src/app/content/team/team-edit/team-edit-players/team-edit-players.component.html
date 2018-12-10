@@ -26,9 +26,9 @@
               fxFlex="100">
       <mat-list-item *ngFor="let memberId of team.assignedPlayers">
         <span mat-line *ngIf="(members | filterBy: ['id'] : memberId) as selectedMember">
-          {{ selectedMember ? selectedMember.mainData.lastName : '' }}
-          {{ selectedMember ? selectedMember.mainData.firstName : ''}}
-          {{ selectedMember ? (selectedMember.mainData.birthday.full | date: 'dd.MM.yy') : '' }}
+          {{ selectedMember ? selectedMember[0].mainData.lastName : '' }}
+          {{ selectedMember ? selectedMember[0].mainData.firstName : ''}}
+          {{ selectedMember ? (selectedMember[0].mainData.birthday.full | date: 'dd.MM.yy') : '' }}
         </span>
         <button mat-icon-button (click)="deleteFromTeam(memberId)">
           <mat-icon>delete</mat-icon>

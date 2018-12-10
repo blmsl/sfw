@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ITeam } from '../../../../shared/interfaces/team/team.interface';
 import { IMediaGallery } from '../../../../shared/interfaces/media/media-gallery.interface';
 import { IUploaderOptions } from '../../../../shared/interfaces/media/uploader-options.interface';
@@ -11,7 +7,6 @@ import { Observable } from 'rxjs/index';
 import { IUploaderConfig } from '../../../../shared/interfaces/media/uploader-config.interface';
 import { MediaItemService } from '../../../../shared/services/media/media-item.service';
 import { MediaGalleryService } from '../../../../shared/services/media/media-gallery.service';
-import { IMatch } from '../../../../shared/interfaces/match/match.interface';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -27,21 +22,22 @@ export class TeamEditMediaComponent implements OnInit {
     autoUpload: true,
     showDropZone: true,
     removeAfterUpload: true,
-    showQueue: true,
+    showQueue: true
   };
 
   public uploaderOptions: IUploaderOptions = {
     assignedObjects: [],
     itemId: '',
-    queueLimit: 5,
+    queueLimit: 5
   };
 
   public mediaItems$: Observable<IMediaItem[]>;
   public mediaGalleries$: Observable<IMediaGallery[]>;
 
   constructor(private mediaItemService: MediaItemService,
-    private route: ActivatedRoute,
-    private mediaGalleryService: MediaGalleryService) { }
+              private route: ActivatedRoute,
+              private mediaGalleryService: MediaGalleryService) {
+  }
 
   ngOnInit() {
     this.route.data.subscribe((data: { team: ITeam }) => {

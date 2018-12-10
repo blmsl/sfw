@@ -1474,8 +1474,16 @@
           "upcomingMatches": "Nächste Spiele"
         },
         "mediaTitle": "Verknüpfte Dateien",
+        "noCompetitions": "Diese Mannschaft nimmt an keinen Wettberwerben teil.",
         "noMatch": "Es wurden keine Spiele für diese Mannschaft gefunden.",
         "noTeamLogo": "Es wurde noch kein Foto für diese Mannschaft hochgeladen.",
+        "series": {
+          "draw": "Unentschieden",
+          "loss": "Niederlage",
+          "noSeriesFound": "Die Übersicht über die aktuelle Serie der Mannschaft konnte nicht erstellt werden.",
+          "title": "Aktuelle Serie",
+          "victory": "Sieg"
+        },
         "standings": {
           "rank": "Pos.",
           "team": "Verein",

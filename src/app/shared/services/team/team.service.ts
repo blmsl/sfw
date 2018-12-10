@@ -57,7 +57,6 @@ export class TeamService {
   }
 
   getPlayerStatisticById(member: IMember) {
-    console.log(member.id);
     return of(member);
   }
 

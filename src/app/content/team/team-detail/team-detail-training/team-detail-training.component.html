@@ -3,9 +3,9 @@
      fxLayoutGap="10px"
      *ngIf="assignedLocations; else loadingTemplate">
 
-  <p *ngIf="!team.assignedTrainings || !team.assignedTrainings.length">
-    {{'general.teams.edit.training.noTraining' | translate}}
-  </p>
+  <div class="alert alert-info" *ngIf="!team.assignedTrainings || !team.assignedTrainings.length">
+    <p>{{'general.teams.edit.training.noTraining' | translate}}</p>
+  </div>
 
   <mat-card *ngFor="let training of team.assignedTrainings">
     <mat-card-title>{{'general.datetime.weekdays.' + training.day | translate }},

@@ -1,7 +1,12 @@
 <mat-card>
   <mat-card-title>{{'general.teams.detail.competitionsTitle' | translate}}</mat-card-title>
   <mat-card-content>
-    <mat-list>
+
+    <div class="alert alert-info" *ngIf="!team.assignedCompetitions">
+      <p>{{'general.teams.detail.noCompetitions' | translate}}</p>
+    </div>
+
+    <mat-list *ngIf="team.assignedCompetitions && team.assignedCompetitions.length > 0">
       <mat-list-item *ngFor="let competition of team.assignedCompetitions">
         <div matLine
              fxLayout.gt-sm="row"
@@ -14,6 +19,7 @@
         <mat-divider></mat-divider>
       </mat-list-item>
     </mat-list>
+
   </mat-card-content>
 </mat-card>
 

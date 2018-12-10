@@ -1,3 +1,21 @@
-<p>
-  team-detail-series works!
-</p>
+<mat-card>
+  <mat-card-title>{{'general.teams.detail.series.title' | translate}}</mat-card-title>
+  <hr>
+  <mat-card-content>
+
+    <div class="alert alert-info" *ngIf="!series || series.length === 0">
+      <p>{{'general.teams.detail.series.noSeriesFound' | translate}}</p>
+    </div>
+
+    <div *ngIf="series && series.length > 0"
+         fxLayout="row"
+         fxLayoutAlign="space-between stretch" >
+      <div *ngFor="let serie of series | slice: 0: 5"
+           fxFlex="20"
+           [class]="serie">
+        {{'general.teams.detail.series.' + serie | translate}}
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>
