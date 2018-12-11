@@ -3,19 +3,17 @@
   <mat-card-subtitle>{{'general.members.edit.profile.text' | translate}}</mat-card-subtitle>
   <hr/>
   <mat-card-content>
+
+    <div class="alert alert-info" *ngIf="form.get('profile').controls.length === 0">
+      <p>{{'general.members.edit.profile.noEntries' | translate}}</p>
+    </div>
+
+
     <div fxFlex="100"
+         *ngIf="form.get('profile').controls.length > 0"
          formArrayName="profile">
 
-      <button mat-raised-button
-              style="margin-bottom: 25px"
-              type="button"
-              color="primary"
-              (click)="addProfileEntry()">
-        {{'general.members.edit.profile.addEntry' | translate}}
-      </button>
-
       <div fxLayout="row"
-
            *ngFor="let control of form.get('profile')['controls']; let i = index">
 
         <div fxFlex="100"
@@ -53,7 +51,17 @@
       </div>
 
     </div>
+
   </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button
+            style="margin-bottom: 25px"
+            type="button"
+            color="primary"
+            (click)="addProfileEntry()">
+      {{'general.members.edit.profile.addEntry' | translate}}
+    </button>
+  </mat-card-actions>
 </mat-card>
 
 

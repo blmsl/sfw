@@ -35,6 +35,10 @@ export class TeamService {
     return this.afs.collection(this.path).doc(team.id).delete();
   }
 
+  removeTeamById(teamId: string): Promise<void> {
+    return this.afs.collection(this.path).doc(teamId).delete();
+  }
+
   updateTeam(teamId: string, team: ITeam): Promise<any> {
     return this.afs.collection(this.path).doc(teamId).update(team);
   }

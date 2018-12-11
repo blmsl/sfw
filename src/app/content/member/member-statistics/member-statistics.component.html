@@ -60,11 +60,11 @@
                             <mat-list dense>
                                 <mat-list-item *ngFor="let memberState of memberStates | orderBy: ['value']">
                                     <span fxFlex="70">{{'general.members.clubMemberStates.' + memberState.title | translate}}</span>
-                                    {{ (members | filterBy: ['clubData.status'] : memberState.value).length}}
+                                    {{ (members | filterBy: ['clubStatus'] : memberState.value).length}}
                                 </mat-list-item>
                                 <mat-list-item>
                                     <span fxFlex="70">{{'general.members.clubMemberStates.ahOnlyMembers' | translate}}</span>
-                                    {{ (members | filterBy: ['clubData.status'] : 0 | filterBy: ['ahData.status'] :
+                                    {{ (members | filterBy: ['clubStatus'] : 0 | filterBy: ['ahStatus'] :
                                     1).length}}
                                 </mat-list-item>
                             </mat-list>
@@ -82,7 +82,7 @@
                             <mat-list dense>
                                 <mat-list-item *ngFor="let memberState of ahStates | orderBy: ['value']">
                                     <span fxFlex="70">{{'general.members.ahMemberStates.' + memberState.title | translate}}</span>
-                                    {{ (members | filterBy: ['ahData.status'] : memberState.value).length}}
+                                    {{ (members | filterBy: ['ahStatus'] : memberState.value).length}}
                                 </mat-list-item>
                             </mat-list>
                         </mat-card-content>
@@ -100,9 +100,9 @@
                                 <mat-list-item *ngFor="let member of members | birthdayRangeFilter: 5 : 14">
                                     <a [routerLink]="['/members/edit', member.id]">
                                 <span
-                                        [ngStyle]="{ 'font-weight': member.mainData.birthday.substring(5, 10) === today ? 'bold' : ''}">
+                                        [ngStyle]="{ 'font-weight': member.mainData.birthday.monthDay === today ? 'bold' : ''}">
                                     {{member.mainData.firstName}} {{member.mainData.lastName}}
-                                    {{ member.mainData.birthday.full | date: 'dd.MM.yy' }}
+                                    {{ member.mainData.birthday.full | date: 'dd.MM.yyyy' }}
                                 </span>
                                     </a>
                                 </mat-list-item>

@@ -1061,7 +1061,7 @@
           "addEntry": "Interview verknüpfen",
           "articleTitle": "Wähle bitte den Artikel aus der Liste",
           "noArticles": "Es wurden noch keine Artikel erstellt.",
-          "noEntries": "Es wurde noch keine Interviews mit dem Mitglied verlinkt.",
+          "noEntries": "Es wurden noch keine Interviews mit dem Mitglied verlinkt.",
           "text": "Interviews sind längere Fragen und dazugehörige Antworten, die zu einem aktuellen Geschehnis Bezug nehmen. So zum Beispiel das Grußwort des Trainers zu Beginn der Saison",
           "title": "Interviews"
         },
@@ -1576,6 +1576,7 @@
           "type": "Aufgabentyp"
         },
         "removeTeam": "Mannschaft löschen",
+        "removedTeam": "Die Mannschaft wurde unwiderruflich gelöscht.",
         "saveTeam": "Mannschaft speichern",
         "standings": {
           "title": "Tabellen"

@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -24,6 +24,8 @@ export class InfiniteScrollComponent {
   @Input() listType: string;
   @Input() viewPortHeight: string;
 
+  @Output() removeItem: EventEmitter<string> = new EventEmitter<string>(false);
+
   public theEnd = false;
 
   public offset = new BehaviorSubject(null);
@@ -47,6 +49,8 @@ export class InfiniteScrollComponent {
   }
 
   getBatch(offset) {
+    console.log(offset);
+    console.log(this.sortField, this.sortOrder);
     return this.db
       .collection(this.listType, ref =>
         offset

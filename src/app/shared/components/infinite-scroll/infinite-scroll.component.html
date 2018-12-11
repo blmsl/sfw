@@ -23,20 +23,58 @@
     </ng-container>
 
     <ng-container *ngIf="listType === 'teams'">
-      <li *cdkVirtualFor="let item of items | orderBy: ['title', 'subTitle']; let i = index; trackBy: trackByIdx" class="team-list-item">
-        <img [src]="item.logoURL" *ngIf="item.logoURL"/>
-        <h3>
-          <a [routerLink]="['/' + listType + '/edit', item.id]">{{ item.title }} {{item.subTitle}}</a>
-          <a *ngIf="item.isOfficialTeam"
-             target="_blank"
-             [href]="item.externalTeamLink">
-            <mat-icon *ngIf="item.isOfficialTeam">link</mat-icon>
-            {{'general.clubs.edit.fussballDeUrl' | translate}}
-          </a>
-        </h3>
-
-        <season-link [seasonId]="item.assignedSeason"></season-link>
-        <category-link [categoryIds]="item.assignedTeamCategories"></category-link>
+      <li *cdkVirtualFor="let item of items | orderBy: ['title', 'subTitle']; let i = index; trackBy: trackByIdx">
+        <mat-card>
+          <mat-card-header>
+            <div mat-card-avatar
+                 *ngIf="item.logoURL"
+                 [ngStyle]="{ 'background-image': 'url(' + item.logoURL + ')'}"
+                 style="background-size: cover;">
+            </div>
+            <mat-card-title>
+              <a [routerLink]="['/' + listType + '/edit', item.id]">{{ item.title }}</a>
+              <small> {{item.subTitle}}</small>
+            </mat-card-title>
+            <mat-card-subtitle>
+              <a *ngIf="item.isOfficialTeam"
+                 target="_blank"
+                 [href]="item.externalTeamLink">
+                {{'general.clubs.edit.fussballDeUrl' | translate}}
+              </a>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <season-link [seasonId]="item.assignedSeason"></season-link>
+            <category-link [categoryIds]="item.assignedTeamCategories"></category-link>
+          </mat-card-content>
+          <mat-card-actions class="px-1 pt-0">
+            <div style="margin-top: 25px"
+                 fxLayoutGap="10px"
+                 fxLayout.gt-sm="row"
+                 fxLayout="column">
+              <span></span>
+              <span fxFlex></span>
+              <button type="button"
+                      mat-raised-button
+                      color="primary"
+                      [routerLink]="['/teams/detail', item.id]">
+                {{'general.detail' | translate }}
+              </button>
+              <button type="button"
+                      mat-raised-button
+                      color="accent"
+                      [routerLink]="['/teams/edit', item.id]">
+                {{'general.edit' | translate }}
+              </button>
+              <button type="button"
+                      mat-raised-button
+                      color="warn"
+                      (click)="removeItem.emit(item.id)">
+                {{'general.delete' | translate }}
+              </button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
       </li>
     </ng-container>
 

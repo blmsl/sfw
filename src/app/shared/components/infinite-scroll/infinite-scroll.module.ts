@@ -5,8 +5,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { NgPipesModule } from 'ngx-pipes';
-import { MatIconModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatIconModule } from '@angular/material';
 import { LinkModule } from '../links/link.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,10 @@ import { LinkModule } from '../links/link.module';
   ],
   imports: [
     CommonModule,
+    FlexLayoutModule,
     LinkModule,
+    MatButtonModule,
+    MatCardModule,
     MatIconModule,
     NgPipesModule,
     RouterModule,

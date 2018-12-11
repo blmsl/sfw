@@ -5,6 +5,10 @@
   <hr/>
   <mat-card-content formArrayName="opinions">
 
+    <div class="alert alert-info" *ngIf="form.get('opinions').controls.length === 0">
+      <p>{{'general.members.edit.opinions.noEntries' | translate}}</p>
+    </div>
+
     <div *ngFor="let control of form.get('opinions')['controls']; let i = index; let last = last">
 
       <div [formGroupName]="i">

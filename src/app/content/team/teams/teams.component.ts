@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import OrderByDirection = firebase.firestore.OrderByDirection;
+import { TeamService } from '../../../shared/services/team/team.service';
+import { AlertService } from '../../../shared/services/alert/alert.service';
 
 @Component({
   selector: 'teams',
@@ -17,10 +19,19 @@ export class TeamsComponent implements OnInit {
   public listType = 'teams';
   public viewPortHeight = '60vh';
 
-  constructor() {
+  constructor(private teamService: TeamService,
+              private alertService: AlertService) {
   }
 
   ngOnInit() {
+  }
+
+  removeTeam(teamId: string) {
+    this.teamService.removeTeamById(teamId)
+      .then(
+        () => this.alertService.showSnackBar('success', 'general.teams.edit.removedTeam'),
+        (error: any) => this.alertService.showSnackBar('error', error.message)
+      );
   }
 
 }
