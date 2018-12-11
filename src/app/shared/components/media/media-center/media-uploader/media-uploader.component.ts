@@ -111,10 +111,12 @@ export class MediaUploaderComponent implements OnInit {
       this.uploaderOptions.itemId = this.afs.createId();
     }
 
+    const id = this.afs.createId();
+
     const upload: {
       task: AngularFireUploadTask,
       fileRef: AngularFireStorageReference
-    } = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions);
+    } = this.mediaUploaderService.upload(fileUpload, this.uploaderOptions, id);
 
     fileUpload.percentage = upload.task.percentageChanges();
 
@@ -132,7 +134,8 @@ export class MediaUploaderComponent implements OnInit {
             type: fileUpload.file.type
           },
           itemId: this.uploaderOptions.itemId,
-          downloadURL: downloadURL
+          downloadURL: downloadURL,
+
         };
         this.mediaItemService.createMediaItem(mediaItem).then(() => {
           this.alertService.showSnackBar('success', 'general.uploader.singleFinished');

@@ -25,7 +25,7 @@ export class MediaUploaderService {
     private storage: AngularFireStorage) {
   }
 
-  public upload(upload: Upload, options: IUploaderOptions): {
+  public upload(upload: Upload, options: IUploaderOptions, id: string): {
     task: AngularFireUploadTask,
     fileRef: AngularFireStorageReference
   } {
@@ -42,7 +42,11 @@ export class MediaUploaderService {
         subDir += options.assignedObjects[i] + '/';
       }
 
-      const path = subDir + '/' + options.itemId;
+      console.log(options);
+
+      console.log(options.itemId);
+
+      const path = subDir + '/' + id;
       /* const metaData: any = {
         itemId: options.itemId,
         name: upload.file.name,
@@ -51,6 +55,7 @@ export class MediaUploaderService {
         path: path
       }; */
 
+      console.log(path);
       const fileRef = this.storage.ref(path);
       const task = fileRef.put(upload.file); // , metaData
 
