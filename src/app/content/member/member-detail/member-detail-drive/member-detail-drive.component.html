@@ -20,7 +20,7 @@
                fxLayout="column"
                class="py-1">
             <span class="mat-text-muted">{{'general.members.detail.drive.clubData.status' | translate}}&nbsp;</span>
-            <span>{{('general.members.clubMemberStates.' +memberStateService.getMemberStateByValue(member.clubData.status) |
+            <span>{{('general.members.clubMemberStates.' +memberStateService.getMemberStateByValue(member.clubStatus) |
           translate)}}
         </span>
           </div>
@@ -68,7 +68,7 @@
                fxLayout="column"
                class="py-1">
             <span class="mat-text-muted">{{'general.members.detail.drive.ahData.status' | translate}}&nbsp;</span>
-            <span>{{('general.members.ahMemberStates.' +memberStateService.getAHMemberStateByValue(member.ahData.status) |
+            <span>{{('general.members.ahMemberStates.' +memberStateService.getAHMemberStateByValue(member.ahStatus) |
           translate)}}
         </span>
           </div>

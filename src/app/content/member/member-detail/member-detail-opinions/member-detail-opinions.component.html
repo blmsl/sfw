@@ -6,11 +6,11 @@
 
   <mat-card-content>
 
-    <p *ngIf="!member.opinions || member.opinions.length === 0">
-      {{'general.members.detail.opinions.noEntries' | translate}}
-    </p>
+    <div class="alert alert-info" *ngIf="!member.opinions || member.opinions.length === 0">
+      <p>{{'general.members.detail.opinions.noEntries' | translate}}</p>
+    </div>
 
-    <mat-list dense *ngIf="members; else loadingTemplate">
+    <mat-list dense *ngIf="member.opinions">
       <mat-list-item *ngFor="let opinion of member.opinions">
 
         <h3 matLine *ngIf="opinion.type === 'list'">

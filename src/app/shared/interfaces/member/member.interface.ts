@@ -15,6 +15,10 @@ export interface IMember {
   driveImport: boolean;
   dfbImport: boolean;
 
+  ahStatus?:number;
+  clubStatus?: number;
+  assignedClub?: string;
+
   mainData: IMemberMainData;
   address?: IAddress;
   contact?: IContact;

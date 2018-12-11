@@ -943,6 +943,7 @@
     },
     "members": {
       "ahMemberStates": {
+        "false": "Kein Mitglied",
         "honorary": "Ehrenmitglied",
         "member": "Mitglied",
         "none": "Kein Mitglied"

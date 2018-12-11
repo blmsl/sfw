@@ -6,11 +6,11 @@
 
   <mat-card-content>
 
-    <p *ngIf="!member.assignedInterviews || member.assignedInterviews.length === 0">
-      {{'general.members.edit.interviews.noEntries' | translate}}
-    </p>
+    <div class="alert alert-info" *ngIf="!member.assignedInterviews || member.assignedInterviews.length === 0">
+      <p>{{'general.members.edit.interviews.noEntries' | translate}}</p>
+    </div>
 
     <article-card *ngFor="let article of assignedArticles" [article]="article" ></article-card>
-   
+
   </mat-card-content>
 </mat-card>

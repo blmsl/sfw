@@ -2,7 +2,7 @@
      fxLayout="column"
      *ngIf="seasons$ | async as seasons; else loadingTemplate">
 
-  <div fxFlex.gt-sm="33,3333">
+  <div fxFlex="33,3333">
     <mat-card>
       <mat-card-title>
         {{'general.members.edit.assignedAsPlayer' | translate}}
@@ -11,19 +11,18 @@
       <hr/>
       <mat-card-content>
 
-        <p *ngIf="(teams | isTeamMemberFilter : member : 'assignedPlayers').length === 0">
-          {{'general.members.edit.notAssignedToAnyTeams' | translate}}
-        </p>
+        <div class="alert alert-info" *ngIf="(teams | isTeamMemberFilter : member : 'assignedPlayers').length === 0">
+          <p>{{'general.members.edit.notAssignedToAnyTeams' | translate}}</p>
+        </div>
 
         <div *ngIf="(teams | isTeamMemberFilter : member : 'assignedPlayers').length !== 0">
           <div
             *ngFor="let season of seasons | seasonsWithTeamsFilter: (teams | isTeamMemberFilter : member : 'assignedPlayers')">
             <h3>{{season.title}}</h3>
 
-            <p
-              *ngIf="(teams | isTeamMemberFilter : member : 'assignedPlayers'| filterBy: ['assignedSeason'] : season.id).length === 0">
-              {{'general.members.edit.notAssignedToAnyTeamsInSeason' | translate}}
-            </p>
+            <div class="alert alert-info" *ngIf="(teams | isTeamMemberFilter : member : 'assignedPlayers'| filterBy: ['assignedSeason'] : season.id).length === 0">
+              <p>{{'general.members.edit.notAssignedToAnyTeamsInSeason' | translate}}</p>
+            </div>
 
             <mat-list dense *ngIf="(teams | isTeamMemberFilter : member : 'assignedPlayers'
                     | orderBy: ['subTitle', 'title'] | filterBy: ['assignedSeason'] : season.id).length > 0">
@@ -46,7 +45,7 @@
     </mat-card>
   </div>
 
-  <div fxFlex.gt-sm="33,3333">
+  <div fxFlex="33,3333">
     <mat-card>
       <mat-card-title>
         {{'general.members.detail.functions.inTeamManagement' | translate}}
@@ -55,18 +54,17 @@
       <hr/>
       <mat-card-content>
 
-        <p *ngIf="(teams | isTeamManagementFilter : member).length === 0">
-          {{'general.members.edit.notAssignedToAnyTeamManagements' | translate}}
-        </p>
+        <div class="alert alert-info" *ngIf="(teams | isTeamManagementFilter : member).length === 0">
+          <p>{{'general.members.edit.notAssignedToAnyTeamManagements' | translate}}</p>
+        </div>
 
         <div *ngIf="(teams | isTeamManagementFilter : member).length !== 0">
           <div *ngFor="let season of seasons | seasonsWithTeamsFilter: (teams | isTeamManagementFilter : member)">
             <h3>{{season.title}}</h3>
 
-            <p
-              *ngIf="(teams | isTeamManagementFilter : member | filterBy: ['assignedSeason'] : season.id).length === 0">
-              {{'general.members.edit.notAssignedToAnyTeamManagementsInSeason' | translate}}
-            </p>
+            <div class="alert alert-info" *ngIf="(teams | isTeamManagementFilter : member | filterBy: ['assignedSeason'] : season.id).length === 0">
+              <p>{{'general.members.edit.notAssignedToAnyTeamManagementsInSeason' | translate}}</p>
+            </div>
 
             <mat-list dense
                       *ngIf="(teams | isTeamManagementFilter : member | orderBy: ['subTitle', 'title'] | filterBy: ['assignedSeason'] : season.id).length > 0">
@@ -92,7 +90,7 @@
     </mat-card>
   </div>
 
-  <div fxFlex.gt-sm="33,3333">
+  <div fxFlex="33,3333">
     <mat-card>
       <mat-card-title>
         {{'general.members.detail.functions.inClubManagement' | translate}}
@@ -101,15 +99,15 @@
       <hr/>
       <mat-card-content *ngIf="categories$ | async as categories; else loadingTemplate">
 
-        <p *ngIf="(clubs | isMemberInClubManagementFilter: member).length === 0">
-          {{'general.members.detail.functions.noClubManagementPositions' | translate}}
-        </p>
+        <div class="alert alert-info" *ngIf="(clubs | isMemberInClubManagementFilter: member).length === 0">
+          <p>{{'general.members.detail.functions.noClubManagementPositions' | translate}}</p>
+        </div>
 
-        <ul>
+        <ul *ngIf="club.positions | filterBy: ['assignedMember'] : member.id">
           <li *ngFor="let club of clubs | isMemberInClubManagementFilter: member">
             {{club.title}}
             <ul>
-              <li *ngFor="let position of club.management.positions | filterBy: ['assignedMember'] : member.id">
+              <li *ngFor="let position of club.positions | filterBy: ['assignedMember'] : member.id">
                 <span *ngIf="categories | filterBy: ['id'] :position.assignedPosition">
                   {{(categories | filterBy: ['id'] :position.assignedPosition)[0].title}}
                 </span>

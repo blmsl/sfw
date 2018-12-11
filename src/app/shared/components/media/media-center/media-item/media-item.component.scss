@@ -39,6 +39,7 @@
   cursor: pointer;
 }
 
+
 .image-file, .audio-file, .video-file, .other-file-type {
   vertical-align: middle;
   max-height: 12vh;
@@ -49,11 +50,6 @@
 .preview-video {
   width: auto;
   max-height: 10vh;
-}
-
-.preview-audio {
-  width: 100%;
-  height: auto;
 }
 
 .other-file-type, .mat-card-title {
