@@ -58,18 +58,17 @@ export class MatchEditFormationComponent implements OnInit {
           'city': 'St. Wendel',
           'streetName': 'Fichtenstraße'
         },
+        'ahStatus': 0,
+        'assignedClub': '23f95e43c79f4bdba8de',
+        'clubStatus': 4,
         'ahData': {
           'joined': '',
           'left': '',
-          'status': 0
         },
         'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
           'joined': '2017-07-03',
           'left': '',
-
           'positionsInClub': '',
-          'status': 4
         },
         'contact': {
           'email': '',
@@ -116,9 +115,8 @@ export class MatchEditFormationComponent implements OnInit {
         'title': 'Avram Daniil'
       },
       {
-        'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de'
-        },
+        'ahStatus': 0,
+        'assignedClub': '23f95e43c79f4bdba8de',
         'creationAt': {
           'seconds': 1541710411,
           'nanoseconds': 339000000
@@ -162,19 +160,17 @@ export class MatchEditFormationComponent implements OnInit {
           'city': 'Oberthal',
           'streetName': 'Neunkirchenerstraße'
         },
+        'ahStatus': 0,
+        'assignedClub': '23f95e43c79f4bdba8de',
+        'clubStatus': 4,
         'ahData': {
           'joined': '',
           'left': '',
-
-          'status': 1
         },
         'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
           'joined': '',
           'left': '',
-
           'positionsInClub': '',
-          'status': 0
         },
         'contact': {
           'email': 'mutsch2000@t-online.de',
@@ -214,16 +210,14 @@ export class MatchEditFormationComponent implements OnInit {
         'ahData': {
           'joined': '',
           'left': '',
-
-          'status': 2
         },
+        'ahStatus': 0,
+        'assignedClub': '23f95e43c79f4bdba8de',
+        'clubStatus': 2,
         'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
           'joined': '',
           'left': '',
-
           'positionsInClub': '',
-          'status': 2
         },
         'contact': {
           'email': '',
@@ -274,19 +268,17 @@ export class MatchEditFormationComponent implements OnInit {
           'city': 'Tholey - Hasborn',
           'streetName': 'Parkstraße'
         },
+        'ahStatus': 1,
+        'assignedClub': '23f95e43c79f4bdba8de',
+        'clubStatus': 1,
         'ahData': {
           'joined': '',
-          'left': '',
-
-          'status': 1
+          'left': ''
         },
         'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
           'joined': '',
           'left': '',
-
           'positionsInClub': '',
-          'status': 1
         },
         'contact': {
           'email': 'k.wgn@gmx.de',
@@ -333,9 +325,6 @@ export class MatchEditFormationComponent implements OnInit {
         'title': 'Wagner Kai'
       },
       {
-        'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de'
-        },
         'creationAt': {
           'seconds': 1541710411,
           'nanoseconds': 339000000
@@ -379,17 +368,17 @@ export class MatchEditFormationComponent implements OnInit {
           'city': 'St. Wendel',
           'streetName': 'Frankenstraße'
         },
+        'ahStatus': 1,
+        'assignedClub': '23f95e43c79f4bdba8de',
+        'clubStatus': 1,
         'ahData': {
           'joined': '',
           'left': '',
-          'status': 1
         },
         'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
           'joined': '',
           'left': '',
-          'positionsInClub': '',
-          'status': 1
+          'positionsInClub': ''
         },
         'contact': {
           'email': 'enzoarnu@googlemail.com',
@@ -435,9 +424,7 @@ export class MatchEditFormationComponent implements OnInit {
         'title': 'Arnu Christian'
       },
       {
-        'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de'
-        },
+        'assignedClub': '23f95e43c79f4bdba8de',
         'creationAt': {
           'seconds': 1541710411,
           'nanoseconds': 339000000
@@ -481,17 +468,17 @@ export class MatchEditFormationComponent implements OnInit {
           'streetName': 'Am Zwinger',
           'zip': 66606
         },
+        'ahStatus': 0,
+        'assignedClub': '23f95e43c79f4bdba8de',
+        'clubStatus': 1,
         'ahData': {
           'joined': '',
-          'left': '',
-          'status': 0
+          'left': ''
         },
         'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
           'joined': '',
           'left': '',
-          'positionsInClub': '',
-          'status': 1
+          'positionsInClub': ''
         },
         'contact': {
           'email': 'riefer.max@gmail.com',
@@ -538,22 +525,19 @@ export class MatchEditFormationComponent implements OnInit {
       {
         'address': {
           'city': 'St. Wendel',
-
           'streetName': 'Wellwiesstraße'
-
         },
+        'ahStatus': 0,
+        'assignedClub': '23f95e43c79f4bdba8de',
+        'clubStatus': 1,
         'ahData': {
           'joined': '',
           'left': '',
-
-          'status': 0
         },
         'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
           'joined': '',
           'left': '',
-          'positionsInClub': '',
-          'status': 1
+          'positionsInClub': ''
         },
         'contact': {
           'email': 'jprusac@web.de',
@@ -601,9 +585,6 @@ export class MatchEditFormationComponent implements OnInit {
         'title': 'Prusac Jasmin'
       },
       {
-        'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de'
-        },
         'creationAt': {
           'seconds': 1541710411,
           'nanoseconds': 339000000
@@ -646,23 +627,19 @@ export class MatchEditFormationComponent implements OnInit {
       {
         'address': {
           'city': 'Winterbach',
-
           'streetName': 'Seitersstraße'
-
         },
+        'ahStatus': 1,
+        'assignedClub': '23f95e43c79f4bdba8de',
+        'clubStatus': 0,
         'ahData': {
           'joined': '',
           'left': '',
-
-          'status': 1
         },
         'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
           'joined': '',
           'left': '',
-
-          'positionsInClub': '',
-          'status': 0
+          'positionsInClub': ''
         },
         'contact': {
           'email': 'alrup@web.de',
@@ -701,19 +678,17 @@ export class MatchEditFormationComponent implements OnInit {
           'streetName': 'Zum Domweiher'
 
         },
+        'ahStatus': 1,
+        'assignedClub': '23f95e43c79f4bdba8de',
+        'clubStatus': 1,
         'ahData': {
           'joined': '',
-          'left': '',
-
-          'status': 1
+          'left': ''
         },
         'clubData': {
-          'assignedClub': '23f95e43c79f4bdba8de',
           'joined': '',
           'left': '',
-
-          'positionsInClub': '',
-          'status': 1
+          'positionsInClub': ''
         },
         'contact': {
           'email': 'pulverlady@gmx.de',
