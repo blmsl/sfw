@@ -52,7 +52,7 @@ export class MatchEditMediaComponent implements OnInit {
     this.route.data.subscribe((data: { match: IMatch }) => {
       this.match = data.match;
       this.uploaderOptions.itemId = this.match.id;
-      this.uploaderOptions.assignedObjects = ['match'];
+      // this.uploaderOptions.assignedObjects = ['match'];
       this.mediaItems$ = this.mediaItemService.getMediaItems([], this.match.id);
       this.mediaGalleries$ = this.mediaGalleryService.getAssignedGalleries(this.match.id);
 
