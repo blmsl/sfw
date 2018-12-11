@@ -41,11 +41,10 @@ export class FameTeamComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const currentYear = moment().format('YYYY');
-    const currentMonth = moment().add('1', 'month').month();
+    const currentMonth = moment().month();
 
     this.teamSubscription = this.teamOfTheMonthService.getTeamOfTheMonthByTitle(currentYear + '-' + currentMonth)
       .subscribe((team: ITeam) => {
-        console.log(team);
         this.loaded = true;
 
         if (team) {

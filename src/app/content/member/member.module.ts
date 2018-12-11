@@ -54,6 +54,7 @@ import { MemberMatchStatisticsComponent } from './member-match-statistics/member
 import { FameMemberListComponent } from './fame-member/fame-member-list/fame-member-list.component';
 import { FameMemberEntryComponent } from './fame-member/fame-member-entry/fame-member-entry.component';
 import { SharedArticleModule } from '../../shared/components/article/shared-article.module';
+import { MemberMediaComponent } from './member-media/member-media.component';
 
 @NgModule({
   imports: [
@@ -99,7 +100,8 @@ import { SharedArticleModule } from '../../shared/components/article/shared-arti
     SeasonsWithTeamsFilterPipe,
     MemberMatchStatisticsComponent,
     FameMemberListComponent,
-    FameMemberEntryComponent
+    FameMemberEntryComponent,
+    MemberMediaComponent
   ],
   providers: [
     ArticleService,

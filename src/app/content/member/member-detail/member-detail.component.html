@@ -47,9 +47,11 @@
           </member-edit-functions>
         </div>
       </mat-tab>
+
       <mat-tab label="{{'general.members.tabs.media' | translate}}">
-        <p>Mit dem Mitglied verknüpfte Fotos, Videos etc.</p>
+        <member-media></member-media>
       </mat-tab>
+
       <mat-tab label="{{'general.members.tabs.statistics' | translate}}">
         <div *ngIf="teams$ | async as teams; else loadingTemplate">
           <member-match-statistics *ngIf="seasons$ | async as seasons; else loadingTemplate"

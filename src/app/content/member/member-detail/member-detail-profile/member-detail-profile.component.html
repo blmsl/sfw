@@ -6,9 +6,9 @@
 
   <mat-card-content>
 
-    <p *ngIf="!member.profile || member.profile.length === 0">
-      {{'general.members.edit.profile.noEntries' | translate}}
-    </p>
+    <div class="alert alert-info" *ngIf="!member.profile || member.profile.length === 0">
+      <p>{{'general.members.edit.profile.noEntries' | translate}}</p>
+    </div>
 
     <mat-list dense>
       <mat-list-item *ngFor="let entry of member.profile">

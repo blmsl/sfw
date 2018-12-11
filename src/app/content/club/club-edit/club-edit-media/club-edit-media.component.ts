@@ -20,8 +20,7 @@ import { MediaGalleryService } from '../../../../shared/services/media/media-gal
 })
 export class ClubEditMediaComponent implements OnInit {
 
-  @Input() club: IClub;
-
+  public club: IClub;
   public mediaItems$: Observable<IMediaItem[]>;
   public mediaGalleries$: Observable<IMediaGallery[]>;
 

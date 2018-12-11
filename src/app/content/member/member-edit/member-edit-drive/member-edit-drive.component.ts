@@ -66,18 +66,18 @@ export class MemberEditDriveComponent implements OnInit {
       joined: this.member.ahData ? this.member.ahData.joined : '',
       left: this.member.ahData ? this.member.ahData.left : '',
       payment: this.member.ahData ? this.member.ahData.payment : '',
-      status: this.member.ahData ? this.member.ahData.status : ''
+      status: this.member.ahData ? this.member.ahStatus : ''
     });
   }
 
   initClubData(): FormGroup {
     return this.fb.group({
-      assignedClub: this.member.clubData ? this.member.clubData.assignedClub : '',
+      assignedClub: this.member.clubData ? this.member.assignedClub : '',
       joined: this.member.clubData ? this.member.clubData.joined : '',
       left: this.member.clubData ? this.member.clubData.left : '',
       payment: this.member.clubData ? this.member.clubData.payment : '',
       positionsInClub: this.member.clubData ? this.member.clubData.positionsInClub : '',
-      status: this.member.clubData ? this.member.clubData.status : ''
+      status: this.member.clubData ? this.member.clubStatus : ''
     });
   }
 

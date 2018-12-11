@@ -13,6 +13,12 @@
   <img *ngIf="data.mediaItem.file.type.indexOf('image') > -1"
        [src]="data.mediaItem.downloadURL"
        alt="{{data.mediaItem.file.name}}"/>
+
+  <audio controls *ngIf="data.mediaItem.file.type.indexOf('audio') > -1">
+    <source [src]="data.mediaItem.downloadURL" type="audio/ogg">
+    <source [src]="data.mediaItem.downloadURL" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 </div>
 
 <pre class="text-right"
