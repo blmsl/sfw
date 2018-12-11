@@ -10,7 +10,7 @@
       <p>{{'general.members.edit.interviews.noArticles' | translate}}</p>
     </div>
 
-    <div class="alert alert-info" *ngIf="form.get('assignedInterviews').controls.length === 0">
+    <div class="alert alert-info" *ngIf="form.get('assignedInterviews')['controls'].length === 0">
       <p>{{'general.members.edit.interviews.noEntries' | translate}}</p>
     </div>
 
