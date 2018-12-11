@@ -4,11 +4,11 @@
   </mat-card-header>
   <mat-card-content>
 
-    <p *ngIf="!assignedArticles || assignedArticles.length === 0">
-      {{ 'general.locations.detail.noAssignedArticles' | translate }}
-    </p>
+    <div class="alert alert-info" *ngIf="!assignedArticles || assignedArticles.length === 0">
+      <p>{{ 'general.locations.detail.noAssignedArticles' | translate }}</p>
+    </div>
 
-    <ul>
+    <ul *ngIf="assignedArticles && assignedArticles.length > 0">
       <li *ngFor="let article of assignedArticles | orderBy: ['-articleDate']">
         <a [routerLink]="['/articles/detail', article.id]">
           {{article.title}} {{article.articleDate.seconds *1000 | date: 'dd.MM.yy'}}

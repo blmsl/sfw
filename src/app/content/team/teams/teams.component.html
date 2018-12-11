@@ -16,7 +16,8 @@
                      [itemSize]="itemSize"
                      [maxItems]="maxItems"
                      [sortOrder]="sortOrder"
-                     [sortField]="sortField">
+                     [sortField]="sortField"
+                     (removeItem)="removeTeam($event)">
     </infinite-scroll>
   </mat-card-content>
 </mat-card>

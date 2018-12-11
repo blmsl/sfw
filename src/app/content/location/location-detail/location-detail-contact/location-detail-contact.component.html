@@ -2,9 +2,10 @@
   <mat-card-title>{{'general.locations.edit.contactTitle' | translate}}</mat-card-title>
   <mat-card-content>
 
-    <p *ngIf="!location.assignedContacts || location.assignedContacts.length === 0">
-      {{ 'general.locations.edit.contact.noContacts' | translate}}
-    </p>
+    <div class="alert alert-info" *ngIf="!location.assignedContacts || location.assignedContacts.length === 0">
+      <p>{{ 'general.locations.edit.contact.noContacts' | translate}}</p>
+    </div>
+
 
     <ul>
       <li *ngFor="let contact of location.assignedContacts; let i = index">

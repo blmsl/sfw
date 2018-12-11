@@ -33,9 +33,11 @@
       <a *ngIf="location.prices" [href]="location.prices" target="_blank">
         {{ 'general.locations.edit.priceList' | translate}}
       </a>
-      <p style="color: red" *ngIf="!location.prices">
-        {{'general.locations.detail.noPriceList' | translate}}
-      </p>
+
+      <div class="alert alert-info" *ngIf="!location.prices">
+        <p>{{'general.locations.detail.noPriceList' | translate}}</p>
+      </div>
+
     </mat-card-title>
   </mat-card-header>
 
@@ -43,7 +45,11 @@
     <mat-card-subtitle>{{ 'general.locations.edit.opening' | translate }}</mat-card-subtitle>
     <mat-card-title>
       <div *ngIf="location.opening" [innerHtml]="location.opening"></div>
-      <p style="color: red" *ngIf="!location.opening">{{'general.locations.detail.noOpening' | translate}}</p>
+
+      <div class="alert alert-info" *ngIf="!location.opening">
+        <p>{{'general.locations.detail.noOpening' | translate}}</p>
+      </div>
+
     </mat-card-title>
   </mat-card-header>
 

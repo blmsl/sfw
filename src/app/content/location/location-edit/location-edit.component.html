@@ -75,7 +75,7 @@
                   </div>
                 </div>
               </div>
-              <creation-form [form]="form"></creation-form>
+              <creation-form [form]="form.get('creation')"></creation-form>
             </div>
 
             <div fxFlex.gt-sm="40">
@@ -107,10 +107,7 @@
         </mat-tab>
 
         <mat-tab label="{{ 'general.locations.edit.mediaTitle' | translate }}">
-          <!-- ToDo: Mit der Spielstätte verknüpfte Uploads laden -->
-          <!--<media-center [uploaderConfig]="uploaderConfig"
-                        [uploaderOptions]="uploaderOptions">
-          </media-center>-->
+          <location-media></location-media>
         </mat-tab>
 
       </mat-tab-group>
@@ -129,7 +126,7 @@
       </button>
       <button mat-raised-button
               color="accent"
-              [routerLink]="['/locations/detal', location.id]">
+              [routerLink]="['/locations/detail', location.id]">
         {{'general.detail' | translate }}
       </button>
       <button mat-raised-button

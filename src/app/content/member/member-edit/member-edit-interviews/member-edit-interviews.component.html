@@ -6,19 +6,13 @@
   <hr/>
   <mat-card-content formArrayName="assignedInterviews">
 
-    <p *ngIf="articles.length === 0">
-      {{'general.members.edit.interviews.noArticles' | translate}}
-    </p>
+    <div class="alert alert-info" *ngIf="articles.length === 0">
+      <p>{{'general.members.edit.interviews.noArticles' | translate}}</p>
+    </div>
 
-
-    <button mat-raised-button
-            *ngIf="articles.length > 0"
-            style="margin-bottom: 25px"
-            type="button"
-            color="primary"
-            (click)="addInterview()">
-      {{'general.members.edit.interviews.addEntry' | translate}}
-    </button>
+    <div class="alert alert-info" *ngIf="form.get('assignedInterviews').controls.length === 0">
+      <p>{{'general.members.edit.interviews.noEntries' | translate}}</p>
+    </div>
 
     <div *ngIf="showForm">
 
@@ -48,5 +42,15 @@
       </div>
     </div>
   </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button
+            *ngIf="articles.length > 0"
+            style="margin-bottom: 25px"
+            type="button"
+            color="primary"
+            (click)="addInterview()">
+      {{'general.members.edit.interviews.addEntry' | translate}}
+    </button>
+  </mat-card-actions>
 </mat-card>
 

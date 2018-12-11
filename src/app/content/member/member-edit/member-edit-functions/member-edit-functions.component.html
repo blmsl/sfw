@@ -103,7 +103,7 @@
           <p>{{'general.members.detail.functions.noClubManagementPositions' | translate}}</p>
         </div>
 
-        <ul *ngIf="club.positions | filterBy: ['assignedMember'] : member.id">
+        <ul *ngIf="clubs | isMemberInClubManagementFilter: member">
           <li *ngFor="let club of clubs | isMemberInClubManagementFilter: member">
             {{club.title}}
             <ul>
