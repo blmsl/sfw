@@ -60,7 +60,7 @@ import { SharedUserModule } from '../user/shared-user.module';
 import { MediaItemsListComponent } from './media-center/media-items-list/media-items-list.component';
 import { MediaItemsSelectionService } from '../../services/media/media-items-selection.service';
 import { DialogModule } from '../dialogs/dialog.module';
-import { AngularFireFunctions, AngularFireFunctionsModule } from '@angular/fire/functions';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { MediaShowItemComponent } from './media-center/media-show-item/media-show-item.component';
 import { MediaCenterSharedComponent } from './media-center/media-center-shared/media-center-shared.component';
 

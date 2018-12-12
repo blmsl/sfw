@@ -3,23 +3,26 @@
     <mat-icon>file_upload</mat-icon>
     {{ 'general.media.list.title' | translate }}
   </mat-card-title>
-  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-subtitle>{{ 'general.media.list.subTitle' | translate }}</mat-card-subtitle>
 
   <mat-card-content>
-    <button mat-flat-button
-            color="primary"
-            (click)="toggleUploader()">
-      {{ showMediaUploader ? ('general.uploader.hideUploader' | translate) : ('general.uploader.uploadMultiple' | translate)}}
-    </button>
 
-    <media-uploader *ngIf="showMediaUploader"
-                    [uploaderConfig]="uploaderConfig"
-                    [uploaderOptions]="uploaderOptions">
-    </media-uploader>
+    <mat-tab-group>
+      <mat-tab label="{{ 'general.media.list.listTitle' | translate }}">
+        <div *ngIf="mediaItems; else loadingTemplate">
+          <div class="alert alert-info" *ngIf="mediaItems.length === 0">
+            {{ 'general.media.noItemsFound' | translate }}
+          </div>
+          <media-items-list [mediaItems]="mediaItems"></media-items-list>
+        </div>
+      </mat-tab>
+      <mat-tab label="{{'general.uploader.uploadMultiple' | translate}}">
+        <media-uploader  [uploaderConfig]="uploaderConfig"
+                        [uploaderOptions]="uploaderOptions">
+        </media-uploader>
+      </mat-tab>
+    </mat-tab-group>
 
-    <div *ngIf="mediaItems; else loadingTemplate">
-      <media-items-list [mediaItems]="mediaItems"></media-items-list>
-    </div>
   </mat-card-content>
 </mat-card>
 

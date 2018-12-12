@@ -1,7 +1,10 @@
 <div fxLayout="column">
   <div fxFlex="100" *ngIf="matches && categories; else loadingTemplate">
 
-    <p *ngIf="matches.length === 0">{{'general.matches.list.noMatches' | translate}}</p>
+    <div class="alert alert-info"
+         *ngIf="matches.length === 0">
+      <p>{{'general.matches.list.noMatches' | translate}}</p>
+    </div>
 
     <mat-list dense>
       <match-list-item *ngFor="let match of matches"

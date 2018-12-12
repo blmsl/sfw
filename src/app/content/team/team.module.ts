@@ -31,7 +31,6 @@ import { LocationService } from '../../shared/services/location/location.service
 import { ApplicationService } from '../../shared/services/application/application.service';
 import { TeamPositionsComponent } from './team-edit/team-positions/team-positions.component';
 import { TeamPositionFormComponent } from './team-edit/team-positions/team-position-form/team-position-form.component';
-import { TeamMediaComponent } from './team-media/team-media.component';
 import { FameTeamComponent } from './fame-team/fame-team.component';
 import { TeamEditMainComponent } from './team-edit/team-edit-main/team-edit-main.component';
 import { TeamDetailMainComponent } from './team-detail/team-detail-main/team-detail-main.component';
@@ -45,7 +44,6 @@ import { TeamDetailMatchesComponent } from './team-detail/team-detail-matches/te
 import { SharedMatchModule } from '../../shared/components/match/shared-match.module';
 import { MatchService } from '../../shared/services/match/match.service';
 import { TeamDetailStandingsComponent } from './team-detail/team-detail-standings/team-detail-standings.component';
-import { TeamDetailMediaComponent } from './team-detail/team-detail-media/team-detail-media.component';
 import { TeamStatisticsComponent } from './team-statistics/team-statistics.component';
 import { ChartsModule } from 'ng2-charts';
 import { TeamDetailCompetitionsComponent } from './team-detail/team-detail-standings/team-detail-competitions/team-detail-competitions.component';
@@ -59,7 +57,6 @@ import { TeamEditTimelineComponent } from './team-edit/team-edit-timeline/team-e
 import { TeamEditDescriptionComponent } from './team-edit/team-edit-description/team-edit-description.component';
 import { TeamEditCreationComponent } from './team-edit/team-edit-creation/team-edit-creation.component';
 import { TeamEditPhotoComponent } from './team-edit/team-edit-photo/team-edit-photo.component';
-import { TeamEditMediaComponent } from './team-edit/team-edit-media/team-edit-media.component';
 import { TeamDetailSeriesComponent } from './team-detail/team-detail-standings/team-detail-series/team-detail-series.component';
 
 @NgModule({
@@ -92,7 +89,6 @@ import { TeamDetailSeriesComponent } from './team-detail/team-detail-standings/t
     TeamTrainingFormComponent,
     TeamPositionsComponent,
     TeamPositionFormComponent,
-    TeamMediaComponent,
     FameTeamComponent,
     TeamEditMainComponent,
     TeamDetailMainComponent,
@@ -101,7 +97,6 @@ import { TeamDetailSeriesComponent } from './team-detail/team-detail-standings/t
     TeamDetailTrainingComponent,
     TeamDetailMatchesComponent,
     TeamDetailStandingsComponent,
-    TeamDetailMediaComponent,
     TeamStatisticsComponent,
     TeamDetailCompetitionsComponent,
     TeamDetailArticlesComponent,
@@ -113,7 +108,6 @@ import { TeamDetailSeriesComponent } from './team-detail/team-detail-standings/t
     TeamEditDescriptionComponent,
     TeamEditCreationComponent,
     TeamEditPhotoComponent,
-    TeamEditMediaComponent,
     TeamDetailSeriesComponent
   ],
   providers: [

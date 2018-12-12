@@ -888,10 +888,14 @@
         },
         "noGalleriesFound": "Es wurden noch keine Galerien gespeichert",
         "filter": "Sammlung suchen",
+        "saved": "Die Einstellungen für die Sammlung wurden gespeichert.",
         "title": "Sammlungen"
       },
       "list": {
         "coverText": "Das erste Element der Sammlung wird automatisch das Cover-Bild.",
+        "listTitle": "Vorhandene Dateien",
+        "noItemsFound": "Es wurden noch keine Dateien hochgeladen.",
+        "subTitle": "Dateiverwaltung zum Hochladen und Verknüpfen in Sammlungen",
         "title": "Hochgeladene Dateien"
       },
       "noItemsFound": "Es wurden noch keine Dateien hochgeladen",
