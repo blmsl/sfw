@@ -4,13 +4,13 @@
   <hr/>
   <mat-card-content>
 
-    <div class="alert alert-info" *ngIf="form.get('profile').controls.length === 0">
+    <div class="alert alert-info" *ngIf="form.get('profile')['controls'].length === 0">
       <p>{{'general.members.edit.profile.noEntries' | translate}}</p>
     </div>
 
 
     <div fxFlex="100"
-         *ngIf="form.get('profile').controls.length > 0"
+         *ngIf="form.get('profile')['controls'].length > 0"
          formArrayName="profile">
 
       <div fxLayout="row"
