@@ -24,7 +24,7 @@ export const uploaderRoutes: Routes = [
   },
   {
     path: 'edit/:galleryId',
-    component: MediaGalleryFormComponent,
+    component: GalleryEditComponent,
     resolve: {
       gallery: UploaderResolver
     }

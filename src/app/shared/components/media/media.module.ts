@@ -20,6 +20,7 @@ import {
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MediaCenterComponent } from './media-center/media-center.component';
 import { MediaUploaderService } from '../../services/media/media-uploader.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -61,10 +62,12 @@ import { MediaItemsSelectionService } from '../../services/media/media-items-sel
 import { DialogModule } from '../dialogs/dialog.module';
 import { AngularFireFunctions, AngularFireFunctionsModule } from '@angular/fire/functions';
 import { MediaShowItemComponent } from './media-center/media-show-item/media-show-item.component';
+import { MediaCenterSharedComponent } from './media-center/media-center-shared/media-center-shared.component';
 
 @NgModule({
   imports: [
     DialogModule,
+    DragDropModule,
     MatExpansionModule,
     MatProgressBarModule,
     AngularFireFunctionsModule,
@@ -113,6 +116,7 @@ import { MediaShowItemComponent } from './media-center/media-show-item/media-sho
     StopPropagationDirective,
     MediaItemsListComponent,
     MediaShowItemComponent,
+    MediaCenterSharedComponent,
   ],
   exports: [
     MediaItemsListComponent,
@@ -120,7 +124,8 @@ import { MediaShowItemComponent } from './media-center/media-show-item/media-sho
     MediaCenterComponent,
     MediaGalleryFormComponent,
     MediaGalleryListComponent,
-    MediaUploaderComponent
+    MediaUploaderComponent,
+    MediaCenterSharedComponent
   ],
   entryComponents: [
     MediaGalleryListComponent,

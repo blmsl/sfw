@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { matchRoutingModule } from './match-routing.module';
 import { MatchDetailComponent } from './match-detail/match-detail.component';
 import { MatchEditComponent } from './match-edit/match-edit.component';

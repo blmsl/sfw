@@ -66,7 +66,7 @@ export class MediaItemService {
       return of([]);
     }
     return this.afs.collection<IMediaItem>('files', ref => {
-      if (!assignedObjects) {
+      if (!assignedObjects || assignedObjects.length === 0) {
         return ref
           .where('itemId', '==', itemId);
       } else {

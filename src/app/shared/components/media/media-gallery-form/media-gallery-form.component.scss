@@ -1,3 +1,16 @@
 .mat-flat-button.mat-primary {
   align-self: flex-start;
 }
+
+.draggable-placeholder {
+  min-height: 100px;
+}
+
+.click-icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.mat-list-base .mat-list-item .mat-list-text {
+  width: auto !important;
+}

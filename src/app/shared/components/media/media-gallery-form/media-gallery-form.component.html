@@ -1,6 +1,7 @@
 <mat-card>
-  <mat-card-title>{{'general.media.gallery.form.title' | translate}}</mat-card-title>
-  <mat-card-subtitle>{{'general.media.gallery.form.description' | translate}}</mat-card-subtitle>
+  <mat-card-title>{{ (!gallery.id) ? ('general.media.gallery.create' | translate ) : ('general.media.gallery.edit' | translate )}}</mat-card-title>
+
+  <!--<mat-card-subtitle>{{'general.media.gallery.form.description' | translate}}</mat-card-subtitle>-->
   <hr>
   <mat-card-content [formGroup]="form"
                     fxLayout="column">
@@ -45,16 +46,20 @@
       </media-gallery-form-assigned-objects>
     </div>
 
-    <mat-list>
+    <mat-list cdkDropList (cdkDropListDropped)="drop($event)"
+              [cdkDropListConnectedTo]="['media-items']" id="form-items"
+              [ngClass]="{'draggable-placeholder': mediaGalleryFormOptions.draggableList}">
+      <p *ngIf="mediaGalleryFormOptions.draggableList && mediaItems.length === 0">{{'general.media.gallery.form.emptyDragList' | translate}}</p>
       <mat-list-item *ngFor="let item of mediaItems">
         <mat-icon mat-list-icon>attachment</mat-icon>
         <a [href]="item.downloadURL" target="_blank" mat-line>
           {{item.file.name}}
         </a>
+        <mat-icon (click)="removeItem(item.id)" class="click-icon">clear</mat-icon>
       </mat-list-item>
     </mat-list>
 
-    <button mat-flat-button
+    <button *ngIf="!mediaGalleryFormOptions.draggableList" mat-flat-button
             color="primary"
             (click)="openDialog()">
       {{'general.media.gallery.form.uploadFiles' | translate}}

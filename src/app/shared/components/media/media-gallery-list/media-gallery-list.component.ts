@@ -1,13 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { IMediaGallery } from '../../../interfaces/media/media-gallery.interface';
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime, first, map } from 'rxjs/operators';
 import { MediaGalleryService } from '../../../services/media/media-gallery.service';
 import { AlertService } from '../../../services/alert/alert.service';
 import { MediaItemService } from '../../../services/media/media-item.service';
-import { Observable } from 'rxjs';
-import { IMediaItem } from '../../../interfaces/media/media-item.interface';
 import { Subscription } from 'rxjs/index';
 
 @Component({
@@ -18,27 +15,32 @@ import { Subscription } from 'rxjs/index';
 export class MediaGalleryListComponent implements OnInit, OnDestroy {
 
   @Input() mediaGalleries: IMediaGallery[];
+  @Output() editMediaGalleryEvent: EventEmitter<IMediaGallery> = new EventEmitter<IMediaGallery>(false);
 
   private mediaItemsSubscription: Subscription;
   public form: FormGroup;
   public step: number;
   public showCoverBtn = true;
-  public mediaItems: Array<IMediaItem[]>;
+  public mediaItems: any;
 
   constructor(private fb: FormBuilder,
-    private mediaGalleryService: MediaGalleryService,
-    public mediaItemService: MediaItemService,
-    private alertService: AlertService,
-    public dialog: MatDialog) {
+              private mediaGalleryService: MediaGalleryService,
+              public mediaItemService: MediaItemService,
+              private alertService: AlertService,
+              public dialog: MatDialog) {
+
+    this.mediaItems = {};
   }
 
   ngOnInit() {
+
     this.mediaItemsSubscription = this.mediaItemService.mediaItems$
       .subscribe(mediaItems => {
-        this.mediaItems = this.mediaGalleries
-          .map((gallery: IMediaGallery) => mediaItems
-            .filter(item => gallery.assignedMediaItems.includes(item.id)));
+        for (const gallery of this.mediaGalleries) {
+          this.mediaItems[gallery.id] = mediaItems.filter(item => gallery.assignedMediaItems.includes(item.id));
+        }
       });
+
 
     this.form = this.fb.group({
       search: ''
@@ -47,6 +49,10 @@ export class MediaGalleryListComponent implements OnInit, OnDestroy {
 
   setStep(index: number) {
     this.step = index;
+  }
+
+  editMediaGallery(mediaGallery: IMediaGallery): void {
+    this.editMediaGalleryEvent.emit(mediaGallery);
   }
 
   removeMediaGallery(mediaGallery: IMediaGallery) {
